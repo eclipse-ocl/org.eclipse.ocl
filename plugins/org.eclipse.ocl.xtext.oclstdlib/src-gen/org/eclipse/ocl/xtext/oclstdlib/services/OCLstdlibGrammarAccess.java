@@ -5,26 +5,34 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.services;
 
-import com.google.inject.Singleton;
 import com.google.inject.Inject;
-
+import com.google.inject.Singleton;
 import java.util.List;
-
-import org.eclipse.xtext.*;
-import org.eclipse.xtext.service.GrammarProvider;
-import org.eclipse.xtext.service.AbstractElementFinder.*;
-
-import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess;
 import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
+import org.eclipse.ocl.xtext.essentialocl.services.EssentialOCLGrammarAccess;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Group;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.service.AbstractElementFinder;
+import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
-
+public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 
 	public class LibraryElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.Library");
@@ -63,7 +71,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//LibPackageCS
 		public RuleCall getOwnedPackagesLibPackageCSParserRuleCall_1_0() { return cOwnedPackagesLibPackageCSParserRuleCall_1_0; }
 	}
-
 	public class IdentifierElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.Identifier");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -84,7 +91,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//RestrictedKeywords
 		public RuleCall getRestrictedKeywordsParserRuleCall_1() { return cRestrictedKeywordsParserRuleCall_1; }
 	}
-
 	public class RestrictedKeywordsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.RestrictedKeywords");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -212,7 +218,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//'validating'
 		public Keyword getValidatingKeyword_21() { return cValidatingKeyword_21; }
 	}
-
 	public class NameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.Name");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -248,7 +253,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//CollectionTypeIdentifier
 		public RuleCall getCollectionTypeIdentifierParserRuleCall_4() { return cCollectionTypeIdentifierParserRuleCall_4; }
 	}
-
 	public class AnyNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AnyName");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -279,7 +283,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//'Tuple'
 		public Keyword getTupleKeyword_3() { return cTupleKeyword_3; }
 	}
-
 	public class LibPathNameCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibPathNameCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -315,7 +318,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//LibPathElementCS
 		public RuleCall getOwnedPathElementsLibPathElementCSParserRuleCall_1_1_0() { return cOwnedPathElementsLibPathElementCSParserRuleCall_1_1_0; }
 	}
-
 	public class LibPathElementCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibPathElementCS");
 		private final Assignment cReferredElementAssignment = (Assignment)rule.eContents().get(1);
@@ -335,7 +337,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//Name
 		public RuleCall getReferredElementNamedElementNameParserRuleCall_0_1() { return cReferredElementNamedElementNameParserRuleCall_0_1; }
 	}
-
 	public class AccumulatorCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AccumulatorCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -367,7 +368,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedMultiplicityRefCS
 		public RuleCall getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0() { return cOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0; }
 	}
-
 	public class AnnotationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AnnotationCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -465,7 +465,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_3_1() { return cSemicolonKeyword_3_1; }
 	}
-
 	public class AnnotationElementCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.AnnotationElementCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -485,7 +484,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//DocumentationCS
 		public RuleCall getDocumentationCSParserRuleCall_1() { return cDocumentationCSParserRuleCall_1; }
 	}
-
 	public class LibClassCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibClassCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -631,7 +629,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
 	}
-
 	public class ClassCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ClassCS");
 		private final RuleCall cLibClassCSParserRuleCall = (RuleCall)rule.eContents().get(1);
@@ -643,7 +640,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//LibClassCS
 		public RuleCall getLibClassCSParserRuleCall() { return cLibClassCSParserRuleCall; }
 	}
-
 	public class DetailCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.DetailCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -691,7 +687,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//ML_SINGLE_QUOTED_STRING
 		public RuleCall getValuesML_SINGLE_QUOTED_STRINGTerminalRuleCall_2_0_1() { return cValuesML_SINGLE_QUOTED_STRINGTerminalRuleCall_2_0_1; }
 	}
-
 	public class DocumentationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.DocumentationCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -762,7 +757,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
-
 	public class ImportCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ImportCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -810,7 +804,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//'::*'
 		public Keyword getIsAllColonColonAsteriskKeyword_3_0() { return cIsAllColonColonAsteriskKeyword_3_0; }
 	}
-
 	public class InvCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.InvCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -880,7 +873,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
-
 	public class LibCoercionCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibCoercionCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -997,7 +989,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_7_1() { return cSemicolonKeyword_7_1; }
 	}
-
 	public class LibIterationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibIterationCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1235,7 +1226,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_14_1() { return cSemicolonKeyword_14_1; }
 	}
-
 	public class IteratorCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.IteratorCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1267,7 +1257,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedMultiplicityRefCS
 		public RuleCall getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0() { return cOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0; }
 	}
-
 	public class LambdaTypeCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LambdaTypeCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1355,7 +1344,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedRefCS
 		public RuleCall getOwnedResultTypeTypedRefCSParserRuleCall_7_0() { return cOwnedResultTypeTypedRefCSParserRuleCall_7_0; }
 	}
-
 	public class LambdaContextTypeRefCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LambdaContextTypeRefCS");
 		private final Assignment cOwnedPathNameAssignment = (Assignment)rule.eContents().get(1);
@@ -1371,7 +1359,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//LibPathNameCS
 		public RuleCall getOwnedPathNameLibPathNameCSParserRuleCall_0() { return cOwnedPathNameLibPathNameCSParserRuleCall_0; }
 	}
-
 	public class OperationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.OperationCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1395,7 +1382,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//LibOperationCS
 		public RuleCall getLibOperationCSParserRuleCall_2() { return cLibOperationCSParserRuleCall_2; }
 	}
-
 	public class LibOperationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibOperationCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1635,7 +1621,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_13_1() { return cSemicolonKeyword_13_1; }
 	}
-
 	public class LibOppositeCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibOppositeCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1671,7 +1656,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedMultiplicityRefCS
 		public RuleCall getOwnedTypeTypedMultiplicityRefCSParserRuleCall_3_0() { return cOwnedTypeTypedMultiplicityRefCSParserRuleCall_3_0; }
 	}
-
 	public class LibPackageCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibPackageCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1785,7 +1769,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
-
 	public class PackageCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.PackageCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1878,7 +1861,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
-
 	public class ParameterCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.ParameterCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1910,7 +1892,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//TypedMultiplicityRefCS
 		public RuleCall getOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0() { return cOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0; }
 	}
-
 	public class LibPropertyCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.LibPropertyCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2014,7 +1995,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_7_1() { return cSemicolonKeyword_7_1; }
 	}
-
 	public class PostCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.PostCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2084,7 +2064,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
-
 	public class PreCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.PreCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2154,7 +2133,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
-
 	public class PrecedenceCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.PrecedenceCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2194,7 +2172,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//Name
 		public RuleCall getNameNameParserRuleCall_2_0() { return cNameNameParserRuleCall_2_0; }
 	}
-
 	public class SpecificationCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.SpecificationCS");
 		private final Assignment cOwnedExpressionAssignment = (Assignment)rule.eContents().get(1);
@@ -2210,7 +2187,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//ExpCS
 		public RuleCall getOwnedExpressionExpCSParserRuleCall_0() { return cOwnedExpressionExpCSParserRuleCall_0; }
 	}
-
 	public class TypedMultiplicityRefCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedMultiplicityRefCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2250,7 +2226,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//MultiplicityCS
 		public RuleCall getOwnedMultiplicityMultiplicityCSParserRuleCall_1_0() { return cOwnedMultiplicityMultiplicityCSParserRuleCall_1_0; }
 	}
-
 	public class TypedRefCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedRefCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -2282,7 +2257,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//LambdaTypeCS
 		public RuleCall getLambdaTypeCSParserRuleCall_3() { return cLambdaTypeCSParserRuleCall_3; }
 	}
-
 	public class TypedTypeRefCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TypedTypeRefCS");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -2356,7 +2330,6 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_1_1_2() { return cRightParenthesisKeyword_1_1_2; }
 	}
-
 	public class TuplePartCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.oclstdlib.OCLstdlib.TuplePartCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2439,8 +2412,8 @@ public class OCLstdlibGrammarAccess extends AbstractGrammarElementFinder {
 
 	@Inject
 	public OCLstdlibGrammarAccess(GrammarProvider grammarProvider,
-		EssentialOCLGrammarAccess gaEssentialOCL,
-		BaseGrammarAccess gaBase) {
+			EssentialOCLGrammarAccess gaEssentialOCL,
+			BaseGrammarAccess gaBase) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaEssentialOCL = gaEssentialOCL;
 		this.gaBase = gaBase;

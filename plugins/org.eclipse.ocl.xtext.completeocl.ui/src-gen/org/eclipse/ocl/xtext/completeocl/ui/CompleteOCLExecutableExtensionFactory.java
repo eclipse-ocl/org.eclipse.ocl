@@ -5,17 +5,18 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui;
 
+import com.google.inject.Injector;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-
-import com.google.inject.Injector;
-
-import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -25,12 +26,13 @@ public class CompleteOCLExecutableExtensionFactory extends AbstractGuiceAwareExe
 
 	@Override
 	protected Bundle getBundle() {
-		return CompleteOCLActivator.getInstance().getBundle();
+		return Platform.getBundle(CompleteOCLActivator.PLUGIN_ID);
 	}
 
 	@Override
 	protected Injector getInjector() {
-		return CompleteOCLActivator.getInstance().getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL);
+		CompleteOCLActivator activator = CompleteOCLActivator.getInstance();
+		return activator != null ? activator.getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL) : null;
 	}
 
 }

@@ -5,17 +5,18 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.ui;
 
+import com.google.inject.Injector;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
-
-import com.google.inject.Injector;
-
-import org.eclipse.ocl.xtext.oclstdlib.ui.internal.OCLstdlibActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -25,12 +26,13 @@ public class OCLstdlibExecutableExtensionFactory extends AbstractGuiceAwareExecu
 
 	@Override
 	protected Bundle getBundle() {
-		return OCLstdlibActivator.getInstance().getBundle();
+		return Platform.getBundle(OCLstdlibActivator.PLUGIN_ID);
 	}
 
 	@Override
 	protected Injector getInjector() {
-		return OCLstdlibActivator.getInstance().getInjector(OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB);
+		OCLstdlibActivator activator = OCLstdlibActivator.getInstance();
+		return activator != null ? activator.getInjector(OCLstdlibActivator.ORG_ECLIPSE_OCL_XTEXT_OCLSTDLIB_OCLSTDLIB) : null;
 	}
 
 }

@@ -26,6 +26,8 @@ import java.util.HashMap;
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
+ * SPDX-License-Identifier: EPL-2.0
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -106,8 +108,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
 
+
     // $ANTLR start "entryRuleMarkup"
-    // InternalMarkup.g:80:1: entryRuleMarkup returns [EObject current=null] : iv_ruleMarkup= ruleMarkup EOF ;
+    // InternalMarkup.g:79:1: entryRuleMarkup returns [EObject current=null] : iv_ruleMarkup= ruleMarkup EOF ;
     public final EObject entryRuleMarkup() throws RecognitionException {
         EObject current = null;
 
@@ -115,8 +118,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:81:2: (iv_ruleMarkup= ruleMarkup EOF )
-            // InternalMarkup.g:82:2: iv_ruleMarkup= ruleMarkup EOF
+            // InternalMarkup.g:79:47: (iv_ruleMarkup= ruleMarkup EOF )
+            // InternalMarkup.g:80:2: iv_ruleMarkup= ruleMarkup EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMarkupRule());
@@ -147,20 +150,21 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleMarkup"
-    // InternalMarkup.g:89:1: ruleMarkup returns [EObject current=null] : ( (lv_elements_0_0= ruleMarkupElement ) )* ;
+    // InternalMarkup.g:86:1: ruleMarkup returns [EObject current=null] : ( (lv_elements_0_0= ruleMarkupElement ) )* ;
     public final EObject ruleMarkup() throws RecognitionException {
         EObject current = null;
 
         EObject lv_elements_0_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:92:28: ( ( (lv_elements_0_0= ruleMarkupElement ) )* )
-            // InternalMarkup.g:93:1: ( (lv_elements_0_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:92:2: ( ( (lv_elements_0_0= ruleMarkupElement ) )* )
+            // InternalMarkup.g:93:2: ( (lv_elements_0_0= ruleMarkupElement ) )*
             {
-            // InternalMarkup.g:93:1: ( (lv_elements_0_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:93:2: ( (lv_elements_0_0= ruleMarkupElement ) )*
             loop1:
             do {
                 int alt1=2;
@@ -173,14 +177,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalMarkup.g:94:1: (lv_elements_0_0= ruleMarkupElement )
+            	    // InternalMarkup.g:94:3: (lv_elements_0_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:94:1: (lv_elements_0_0= ruleMarkupElement )
-            	    // InternalMarkup.g:95:3: lv_elements_0_0= ruleMarkupElement
+            	    // InternalMarkup.g:94:3: (lv_elements_0_0= ruleMarkupElement )
+            	    // InternalMarkup.g:95:4: lv_elements_0_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0());
+            	      				newCompositeNode(grammarAccess.getMarkupAccess().getElementsMarkupElementParserRuleCall_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_3);
@@ -190,15 +194,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getMarkupRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_0_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      				if (current==null) {
+            	      					current = createModelElementForParent(grammarAccess.getMarkupRule());
+            	      				}
+            	      				add(
+            	      					current,
+            	      					"elements",
+            	      					lv_elements_0_0,
+            	      					"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      				afterParserOrEnumRuleCall();
 
             	    }
 
@@ -217,7 +221,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -233,7 +239,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleMarkupKeyword"
-    // InternalMarkup.g:119:1: entryRuleMarkupKeyword returns [String current=null] : iv_ruleMarkupKeyword= ruleMarkupKeyword EOF ;
+    // InternalMarkup.g:115:1: entryRuleMarkupKeyword returns [String current=null] : iv_ruleMarkupKeyword= ruleMarkupKeyword EOF ;
     public final String entryRuleMarkupKeyword() throws RecognitionException {
         String current = null;
 
@@ -241,8 +247,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:120:2: (iv_ruleMarkupKeyword= ruleMarkupKeyword EOF )
-            // InternalMarkup.g:121:2: iv_ruleMarkupKeyword= ruleMarkupKeyword EOF
+            // InternalMarkup.g:115:53: (iv_ruleMarkupKeyword= ruleMarkupKeyword EOF )
+            // InternalMarkup.g:116:2: iv_ruleMarkupKeyword= ruleMarkupKeyword EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMarkupKeywordRule());
@@ -273,19 +279,20 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleMarkupKeyword"
-    // InternalMarkup.g:128:1: ruleMarkupKeyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' ) ;
+    // InternalMarkup.g:122:1: ruleMarkupKeyword returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' ) ;
     public final AntlrDatatypeRuleToken ruleMarkupKeyword() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token kw=null;
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:131:28: ( (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' ) )
-            // InternalMarkup.g:132:1: (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' )
+            // InternalMarkup.g:128:2: ( (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' ) )
+            // InternalMarkup.g:129:2: (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' )
             {
-            // InternalMarkup.g:132:1: (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' )
+            // InternalMarkup.g:129:2: (kw= 'b' | kw= 'e' | kw= 'bullet' | kw= 'figure' | kw= 'figureRef' | kw= 'footnote' | kw= 'heading' | kw= 'oclCode' | kw= 'oclEval' | kw= 'oclText' )
             int alt2=10;
             switch ( input.LA(1) ) {
             case 16:
@@ -348,130 +355,130 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             switch (alt2) {
                 case 1 :
-                    // InternalMarkup.g:133:2: kw= 'b'
+                    // InternalMarkup.g:130:3: kw= 'b'
                     {
                     kw=(Token)match(input,16,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBKeyword_0());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBKeyword_0());
 
                     }
 
                     }
                     break;
                 case 2 :
-                    // InternalMarkup.g:140:2: kw= 'e'
+                    // InternalMarkup.g:136:3: kw= 'e'
                     {
                     kw=(Token)match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getEKeyword_1());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getEKeyword_1());
 
                     }
 
                     }
                     break;
                 case 3 :
-                    // InternalMarkup.g:147:2: kw= 'bullet'
+                    // InternalMarkup.g:142:3: kw= 'bullet'
                     {
                     kw=(Token)match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getBulletKeyword_2());
 
                     }
 
                     }
                     break;
                 case 4 :
-                    // InternalMarkup.g:154:2: kw= 'figure'
+                    // InternalMarkup.g:148:3: kw= 'figure'
                     {
                     kw=(Token)match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureKeyword_3());
 
                     }
 
                     }
                     break;
                 case 5 :
-                    // InternalMarkup.g:161:2: kw= 'figureRef'
+                    // InternalMarkup.g:154:3: kw= 'figureRef'
                     {
                     kw=(Token)match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFigureRefKeyword_4());
 
                     }
 
                     }
                     break;
                 case 6 :
-                    // InternalMarkup.g:168:2: kw= 'footnote'
+                    // InternalMarkup.g:160:3: kw= 'footnote'
                     {
                     kw=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getFootnoteKeyword_5());
 
                     }
 
                     }
                     break;
                 case 7 :
-                    // InternalMarkup.g:175:2: kw= 'heading'
+                    // InternalMarkup.g:166:3: kw= 'heading'
                     {
                     kw=(Token)match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getHeadingKeyword_6());
 
                     }
 
                     }
                     break;
                 case 8 :
-                    // InternalMarkup.g:182:2: kw= 'oclCode'
+                    // InternalMarkup.g:172:3: kw= 'oclCode'
                     {
                     kw=(Token)match(input,23,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclCodeKeyword_7());
 
                     }
 
                     }
                     break;
                 case 9 :
-                    // InternalMarkup.g:189:2: kw= 'oclEval'
+                    // InternalMarkup.g:178:3: kw= 'oclEval'
                     {
                     kw=(Token)match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclEvalKeyword_8());
 
                     }
 
                     }
                     break;
                 case 10 :
-                    // InternalMarkup.g:196:2: kw= 'oclText'
+                    // InternalMarkup.g:184:3: kw= 'oclText'
                     {
                     kw=(Token)match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9());
+                      			current.merge(kw);
+                      			newLeafNode(kw, grammarAccess.getMarkupKeywordAccess().getOclTextKeyword_9());
 
                     }
 
@@ -484,7 +491,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -500,7 +509,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleMarkupElement"
-    // InternalMarkup.g:209:1: entryRuleMarkupElement returns [EObject current=null] : iv_ruleMarkupElement= ruleMarkupElement EOF ;
+    // InternalMarkup.g:193:1: entryRuleMarkupElement returns [EObject current=null] : iv_ruleMarkupElement= ruleMarkupElement EOF ;
     public final EObject entryRuleMarkupElement() throws RecognitionException {
         EObject current = null;
 
@@ -508,8 +517,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:210:2: (iv_ruleMarkupElement= ruleMarkupElement EOF )
-            // InternalMarkup.g:211:2: iv_ruleMarkupElement= ruleMarkupElement EOF
+            // InternalMarkup.g:193:54: (iv_ruleMarkupElement= ruleMarkupElement EOF )
+            // InternalMarkup.g:194:2: iv_ruleMarkupElement= ruleMarkupElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMarkupElementRule());
@@ -540,7 +549,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleMarkupElement"
-    // InternalMarkup.g:218:1: ruleMarkupElement returns [EObject current=null] : (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement ) ;
+    // InternalMarkup.g:200:1: ruleMarkupElement returns [EObject current=null] : (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement ) ;
     public final EObject ruleMarkupElement() throws RecognitionException {
         EObject current = null;
 
@@ -569,27 +578,28 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_TextElement_11 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:221:28: ( (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement ) )
-            // InternalMarkup.g:222:1: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )
+            // InternalMarkup.g:206:2: ( (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement ) )
+            // InternalMarkup.g:207:2: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )
             {
-            // InternalMarkup.g:222:1: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )
+            // InternalMarkup.g:207:2: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )
             int alt3=12;
             alt3 = dfa3.predict(input);
             switch (alt3) {
                 case 1 :
-                    // InternalMarkup.g:223:2: this_FontElement_0= ruleFontElement
+                    // InternalMarkup.g:208:3: this_FontElement_0= ruleFontElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getFontElementParserRuleCall_0());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -599,24 +609,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_FontElement_0;
-                              afterParserOrEnumRuleCall();
+                      			current = this_FontElement_0;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 2 :
-                    // InternalMarkup.g:236:2: this_NewLineElement_1= ruleNewLineElement
+                    // InternalMarkup.g:220:3: this_NewLineElement_1= ruleNewLineElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getNewLineElementParserRuleCall_1());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -626,24 +636,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_NewLineElement_1;
-                              afterParserOrEnumRuleCall();
+                      			current = this_NewLineElement_1;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 3 :
-                    // InternalMarkup.g:249:2: this_BulletElement_2= ruleBulletElement
+                    // InternalMarkup.g:232:3: this_BulletElement_2= ruleBulletElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getBulletElementParserRuleCall_2());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -653,24 +663,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_BulletElement_2;
-                              afterParserOrEnumRuleCall();
+                      			current = this_BulletElement_2;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 4 :
-                    // InternalMarkup.g:262:2: this_FigureElement_3= ruleFigureElement
+                    // InternalMarkup.g:244:3: this_FigureElement_3= ruleFigureElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureElementParserRuleCall_3());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -680,24 +690,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_FigureElement_3;
-                              afterParserOrEnumRuleCall();
+                      			current = this_FigureElement_3;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 5 :
-                    // InternalMarkup.g:275:2: this_FigureRefElement_4= ruleFigureRefElement
+                    // InternalMarkup.g:256:3: this_FigureRefElement_4= ruleFigureRefElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getFigureRefElementParserRuleCall_4());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -707,24 +717,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_FigureRefElement_4;
-                              afterParserOrEnumRuleCall();
+                      			current = this_FigureRefElement_4;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 6 :
-                    // InternalMarkup.g:288:2: this_FootnoteElement_5= ruleFootnoteElement
+                    // InternalMarkup.g:268:3: this_FootnoteElement_5= ruleFootnoteElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getFootnoteElementParserRuleCall_5());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -734,24 +744,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_FootnoteElement_5;
-                              afterParserOrEnumRuleCall();
+                      			current = this_FootnoteElement_5;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 7 :
-                    // InternalMarkup.g:301:2: this_HeadingElement_6= ruleHeadingElement
+                    // InternalMarkup.g:280:3: this_HeadingElement_6= ruleHeadingElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getHeadingElementParserRuleCall_6());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -761,24 +771,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_HeadingElement_6;
-                              afterParserOrEnumRuleCall();
+                      			current = this_HeadingElement_6;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 8 :
-                    // InternalMarkup.g:314:2: this_NullElement_7= ruleNullElement
+                    // InternalMarkup.g:292:3: this_NullElement_7= ruleNullElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getNullElementParserRuleCall_7());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -788,24 +798,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_NullElement_7;
-                              afterParserOrEnumRuleCall();
+                      			current = this_NullElement_7;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 9 :
-                    // InternalMarkup.g:327:2: this_OCLCodeElement_8= ruleOCLCodeElement
+                    // InternalMarkup.g:304:3: this_OCLCodeElement_8= ruleOCLCodeElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLCodeElementParserRuleCall_8());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -815,24 +825,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_OCLCodeElement_8;
-                              afterParserOrEnumRuleCall();
+                      			current = this_OCLCodeElement_8;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 10 :
-                    // InternalMarkup.g:340:2: this_OCLEvalElement_9= ruleOCLEvalElement
+                    // InternalMarkup.g:316:3: this_OCLEvalElement_9= ruleOCLEvalElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLEvalElementParserRuleCall_9());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -842,24 +852,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_OCLEvalElement_9;
-                              afterParserOrEnumRuleCall();
+                      			current = this_OCLEvalElement_9;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 11 :
-                    // InternalMarkup.g:353:2: this_OCLTextElement_10= ruleOCLTextElement
+                    // InternalMarkup.g:328:3: this_OCLTextElement_10= ruleOCLTextElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getOCLTextElementParserRuleCall_10());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -869,24 +879,24 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_OCLTextElement_10;
-                              afterParserOrEnumRuleCall();
+                      			current = this_OCLTextElement_10;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
                     }
                     break;
                 case 12 :
-                    // InternalMarkup.g:366:2: this_TextElement_11= ruleTextElement
+                    // InternalMarkup.g:340:3: this_TextElement_11= ruleTextElement
                     {
                     if ( state.backtracking==0 ) {
 
-                      	  /* */
+                      			/* */
 
                     }
                     if ( state.backtracking==0 ) {
 
-                              newCompositeNode(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11());
+                      			newCompositeNode(grammarAccess.getMarkupElementAccess().getTextElementParserRuleCall_11());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -896,8 +906,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              current = this_TextElement_11;
-                              afterParserOrEnumRuleCall();
+                      			current = this_TextElement_11;
+                      			afterParserOrEnumRuleCall();
 
                     }
 
@@ -910,7 +920,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -926,7 +938,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleBulletElement"
-    // InternalMarkup.g:385:1: entryRuleBulletElement returns [EObject current=null] : iv_ruleBulletElement= ruleBulletElement EOF ;
+    // InternalMarkup.g:355:1: entryRuleBulletElement returns [EObject current=null] : iv_ruleBulletElement= ruleBulletElement EOF ;
     public final EObject entryRuleBulletElement() throws RecognitionException {
         EObject current = null;
 
@@ -934,8 +946,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:386:2: (iv_ruleBulletElement= ruleBulletElement EOF )
-            // InternalMarkup.g:387:2: iv_ruleBulletElement= ruleBulletElement EOF
+            // InternalMarkup.g:355:54: (iv_ruleBulletElement= ruleBulletElement EOF )
+            // InternalMarkup.g:356:2: iv_ruleBulletElement= ruleBulletElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBulletElementRule());
@@ -966,7 +978,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleBulletElement"
-    // InternalMarkup.g:394:1: ruleBulletElement returns [EObject current=null] : ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) ;
+    // InternalMarkup.g:362:1: ruleBulletElement returns [EObject current=null] : ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) ;
     public final EObject ruleBulletElement() throws RecognitionException {
         EObject current = null;
 
@@ -978,28 +990,29 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_5_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:397:28: ( ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) )
-            // InternalMarkup.g:398:1: ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
+            // InternalMarkup.g:368:2: ( ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) )
+            // InternalMarkup.g:369:2: ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
             {
-            // InternalMarkup.g:398:1: ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
-            // InternalMarkup.g:398:2: () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']'
+            // InternalMarkup.g:369:2: ( () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
+            // InternalMarkup.g:370:3: () otherlv_1= 'bullet' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']'
             {
-            // InternalMarkup.g:398:2: ()
-            // InternalMarkup.g:399:2:
+            // InternalMarkup.g:370:3: ()
+            // InternalMarkup.g:371:4:
             {
             if ( state.backtracking==0 ) {
 
-              	  /* */
+              				/* */
 
             }
             if ( state.backtracking==0 ) {
 
-                      current = forceCreateModelElement(
-                          grammarAccess.getBulletElementAccess().getBulletElementAction_0(),
-                          current);
+              				current = forceCreateModelElement(
+              					grammarAccess.getBulletElementAccess().getBulletElementAction_0(),
+              					current);
 
             }
 
@@ -1008,10 +1021,10 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,18,FollowSets000.FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getBulletElementAccess().getBulletKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getBulletElementAccess().getBulletKeyword_1());
 
             }
-            // InternalMarkup.g:411:1: (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )?
+            // InternalMarkup.g:384:3: (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -1020,36 +1033,36 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt4) {
                 case 1 :
-                    // InternalMarkup.g:411:3: otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) )
+                    // InternalMarkup.g:385:4: otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) )
                     {
                     otherlv_2=(Token)match(input,26,FollowSets000.FOLLOW_5); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_2, grammarAccess.getBulletElementAccess().getColonKeyword_2_0());
+                      				newLeafNode(otherlv_2, grammarAccess.getBulletElementAccess().getColonKeyword_2_0());
 
                     }
-                    // InternalMarkup.g:415:1: ( (lv_level_3_0= RULE_INT ) )
-                    // InternalMarkup.g:416:1: (lv_level_3_0= RULE_INT )
+                    // InternalMarkup.g:389:4: ( (lv_level_3_0= RULE_INT ) )
+                    // InternalMarkup.g:390:5: (lv_level_3_0= RULE_INT )
                     {
-                    // InternalMarkup.g:416:1: (lv_level_3_0= RULE_INT )
-                    // InternalMarkup.g:417:3: lv_level_3_0= RULE_INT
+                    // InternalMarkup.g:390:5: (lv_level_3_0= RULE_INT )
+                    // InternalMarkup.g:391:6: lv_level_3_0= RULE_INT
                     {
                     lv_level_3_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_level_3_0, grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0());
+                      						newLeafNode(lv_level_3_0, grammarAccess.getBulletElementAccess().getLevelINTTerminalRuleCall_2_1_0());
 
                     }
                     if ( state.backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = createModelElement(grammarAccess.getBulletElementRule());
-                      	        }
-                             		setWithLastConsumed(
-                             			current,
-                             			"level",
-                              		lv_level_3_0,
-                              		"org.eclipse.ocl.xtext.markup.Markup.INT");
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getBulletElementRule());
+                      						}
+                      						setWithLastConsumed(
+                      							current,
+                      							"level",
+                      							lv_level_3_0,
+                      							"org.eclipse.ocl.xtext.markup.Markup.INT");
 
                     }
 
@@ -1067,10 +1080,10 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_4=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3());
+              			newLeafNode(otherlv_4, grammarAccess.getBulletElementAccess().getLeftSquareBracketKeyword_3());
 
             }
-            // InternalMarkup.g:437:1: ( (lv_elements_5_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:412:3: ( (lv_elements_5_0= ruleMarkupElement ) )*
             loop5:
             do {
                 int alt5=2;
@@ -1083,14 +1096,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt5) {
             	case 1 :
-            	    // InternalMarkup.g:438:1: (lv_elements_5_0= ruleMarkupElement )
+            	    // InternalMarkup.g:413:4: (lv_elements_5_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:438:1: (lv_elements_5_0= ruleMarkupElement )
-            	    // InternalMarkup.g:439:3: lv_elements_5_0= ruleMarkupElement
+            	    // InternalMarkup.g:413:4: (lv_elements_5_0= ruleMarkupElement )
+            	    // InternalMarkup.g:414:5: lv_elements_5_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0());
+            	      					newCompositeNode(grammarAccess.getBulletElementAccess().getElementsMarkupElementParserRuleCall_4_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -1100,15 +1113,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getBulletElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_5_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getBulletElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_5_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -1126,7 +1139,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_6=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_6, grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5());
+              			newLeafNode(otherlv_6, grammarAccess.getBulletElementAccess().getRightSquareBracketKeyword_5());
 
             }
 
@@ -1136,7 +1149,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -1152,7 +1167,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleFontElement"
-    // InternalMarkup.g:467:1: entryRuleFontElement returns [EObject current=null] : iv_ruleFontElement= ruleFontElement EOF ;
+    // InternalMarkup.g:439:1: entryRuleFontElement returns [EObject current=null] : iv_ruleFontElement= ruleFontElement EOF ;
     public final EObject entryRuleFontElement() throws RecognitionException {
         EObject current = null;
 
@@ -1160,8 +1175,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:468:2: (iv_ruleFontElement= ruleFontElement EOF )
-            // InternalMarkup.g:469:2: iv_ruleFontElement= ruleFontElement EOF
+            // InternalMarkup.g:439:52: (iv_ruleFontElement= ruleFontElement EOF )
+            // InternalMarkup.g:440:2: iv_ruleFontElement= ruleFontElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFontElementRule());
@@ -1192,7 +1207,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleFontElement"
-    // InternalMarkup.g:476:1: ruleFontElement returns [EObject current=null] : ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) ;
+    // InternalMarkup.g:446:1: ruleFontElement returns [EObject current=null] : ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) ;
     public final EObject ruleFontElement() throws RecognitionException {
         EObject current = null;
 
@@ -1203,22 +1218,23 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_2_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:479:28: ( ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) )
-            // InternalMarkup.g:480:1: ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
+            // InternalMarkup.g:452:2: ( ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) )
+            // InternalMarkup.g:453:2: ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
             {
-            // InternalMarkup.g:480:1: ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
-            // InternalMarkup.g:480:2: ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']'
+            // InternalMarkup.g:453:2: ( ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
+            // InternalMarkup.g:454:3: ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) ) otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']'
             {
-            // InternalMarkup.g:480:2: ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) )
-            // InternalMarkup.g:481:1: ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) )
+            // InternalMarkup.g:454:3: ( ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) ) )
+            // InternalMarkup.g:455:4: ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) )
             {
-            // InternalMarkup.g:481:1: ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) )
-            // InternalMarkup.g:482:1: (lv_font_0_1= 'b' | lv_font_0_2= 'e' )
+            // InternalMarkup.g:455:4: ( (lv_font_0_1= 'b' | lv_font_0_2= 'e' ) )
+            // InternalMarkup.g:456:5: (lv_font_0_1= 'b' | lv_font_0_2= 'e' )
             {
-            // InternalMarkup.g:482:1: (lv_font_0_1= 'b' | lv_font_0_2= 'e' )
+            // InternalMarkup.g:456:5: (lv_font_0_1= 'b' | lv_font_0_2= 'e' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1237,40 +1253,40 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt6) {
                 case 1 :
-                    // InternalMarkup.g:483:3: lv_font_0_1= 'b'
+                    // InternalMarkup.g:457:6: lv_font_0_1= 'b'
                     {
                     lv_font_0_1=(Token)match(input,16,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_font_0_1, grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0());
+                      						newLeafNode(lv_font_0_1, grammarAccess.getFontElementAccess().getFontBKeyword_0_0_0());
 
                     }
                     if ( state.backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = createModelElement(grammarAccess.getFontElementRule());
-                      	        }
-                             		setWithLastConsumed(current, "font", lv_font_0_1, null);
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getFontElementRule());
+                      						}
+                      						setWithLastConsumed(current, "font", lv_font_0_1, null);
 
                     }
 
                     }
                     break;
                 case 2 :
-                    // InternalMarkup.g:495:8: lv_font_0_2= 'e'
+                    // InternalMarkup.g:468:6: lv_font_0_2= 'e'
                     {
                     lv_font_0_2=(Token)match(input,17,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_font_0_2, grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1());
+                      						newLeafNode(lv_font_0_2, grammarAccess.getFontElementAccess().getFontEKeyword_0_0_1());
 
                     }
                     if ( state.backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = createModelElement(grammarAccess.getFontElementRule());
-                      	        }
-                             		setWithLastConsumed(current, "font", lv_font_0_2, null);
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getFontElementRule());
+                      						}
+                      						setWithLastConsumed(current, "font", lv_font_0_2, null);
 
                     }
 
@@ -1288,10 +1304,10 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getFontElementAccess().getLeftSquareBracketKeyword_1());
 
             }
-            // InternalMarkup.g:514:1: ( (lv_elements_2_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:485:3: ( (lv_elements_2_0= ruleMarkupElement ) )*
             loop7:
             do {
                 int alt7=2;
@@ -1304,14 +1320,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalMarkup.g:515:1: (lv_elements_2_0= ruleMarkupElement )
+            	    // InternalMarkup.g:486:4: (lv_elements_2_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:515:1: (lv_elements_2_0= ruleMarkupElement )
-            	    // InternalMarkup.g:516:3: lv_elements_2_0= ruleMarkupElement
+            	    // InternalMarkup.g:486:4: (lv_elements_2_0= ruleMarkupElement )
+            	    // InternalMarkup.g:487:5: lv_elements_2_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0());
+            	      					newCompositeNode(grammarAccess.getFontElementAccess().getElementsMarkupElementParserRuleCall_2_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -1321,15 +1337,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getFontElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_2_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getFontElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_2_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -1347,7 +1363,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_3=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_3, grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3());
+              			newLeafNode(otherlv_3, grammarAccess.getFontElementAccess().getRightSquareBracketKeyword_3());
 
             }
 
@@ -1357,7 +1373,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -1373,7 +1391,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleFigureElement"
-    // InternalMarkup.g:544:1: entryRuleFigureElement returns [EObject current=null] : iv_ruleFigureElement= ruleFigureElement EOF ;
+    // InternalMarkup.g:512:1: entryRuleFigureElement returns [EObject current=null] : iv_ruleFigureElement= ruleFigureElement EOF ;
     public final EObject entryRuleFigureElement() throws RecognitionException {
         EObject current = null;
 
@@ -1381,8 +1399,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:545:2: (iv_ruleFigureElement= ruleFigureElement EOF )
-            // InternalMarkup.g:546:2: iv_ruleFigureElement= ruleFigureElement EOF
+            // InternalMarkup.g:512:54: (iv_ruleFigureElement= ruleFigureElement EOF )
+            // InternalMarkup.g:513:2: iv_ruleFigureElement= ruleFigureElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFigureElementRule());
@@ -1413,7 +1431,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleFigureElement"
-    // InternalMarkup.g:553:1: ruleFigureElement returns [EObject current=null] : (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' ) ;
+    // InternalMarkup.g:519:1: ruleFigureElement returns [EObject current=null] : (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' ) ;
     public final EObject ruleFigureElement() throws RecognitionException {
         EObject current = null;
 
@@ -1430,22 +1448,23 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         Token lv_requiredHeight_10_0=null;
         Token otherlv_11=null;
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:556:28: ( (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' ) )
-            // InternalMarkup.g:557:1: (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' )
+            // InternalMarkup.g:525:2: ( (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' ) )
+            // InternalMarkup.g:526:2: (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' )
             {
-            // InternalMarkup.g:557:1: (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' )
-            // InternalMarkup.g:557:3: otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']'
+            // InternalMarkup.g:526:2: (otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']' )
+            // InternalMarkup.g:527:3: otherlv_0= 'figure' (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )? otherlv_3= '[' ( (lv_src_4_0= RULE_STRING ) ) (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )? otherlv_11= ']'
             {
             otherlv_0=(Token)match(input,19,FollowSets000.FOLLOW_8); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getFigureElementAccess().getFigureKeyword_0());
+              			newLeafNode(otherlv_0, grammarAccess.getFigureElementAccess().getFigureKeyword_0());
 
             }
-            // InternalMarkup.g:561:1: (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )?
+            // InternalMarkup.g:531:3: (otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) ) )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1454,36 +1473,36 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt8) {
                 case 1 :
-                    // InternalMarkup.g:561:3: otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) )
+                    // InternalMarkup.g:532:4: otherlv_1= '#' ( (lv_def_2_0= RULE_ID ) )
                     {
                     otherlv_1=(Token)match(input,29,FollowSets000.FOLLOW_9); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_1, grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0());
+                      				newLeafNode(otherlv_1, grammarAccess.getFigureElementAccess().getNumberSignKeyword_1_0());
 
                     }
-                    // InternalMarkup.g:565:1: ( (lv_def_2_0= RULE_ID ) )
-                    // InternalMarkup.g:566:1: (lv_def_2_0= RULE_ID )
+                    // InternalMarkup.g:536:4: ( (lv_def_2_0= RULE_ID ) )
+                    // InternalMarkup.g:537:5: (lv_def_2_0= RULE_ID )
                     {
-                    // InternalMarkup.g:566:1: (lv_def_2_0= RULE_ID )
-                    // InternalMarkup.g:567:3: lv_def_2_0= RULE_ID
+                    // InternalMarkup.g:537:5: (lv_def_2_0= RULE_ID )
+                    // InternalMarkup.g:538:6: lv_def_2_0= RULE_ID
                     {
                     lv_def_2_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_def_2_0, grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0());
+                      						newLeafNode(lv_def_2_0, grammarAccess.getFigureElementAccess().getDefIDTerminalRuleCall_1_1_0());
 
                     }
                     if ( state.backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = createModelElement(grammarAccess.getFigureElementRule());
-                      	        }
-                             		setWithLastConsumed(
-                             			current,
-                             			"def",
-                              		lv_def_2_0,
-                              		"org.eclipse.ocl.xtext.markup.Markup.ID");
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getFigureElementRule());
+                      						}
+                      						setWithLastConsumed(
+                      							current,
+                      							"def",
+                      							lv_def_2_0,
+                      							"org.eclipse.ocl.xtext.markup.Markup.ID");
 
                     }
 
@@ -1501,31 +1520,31 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_3=(Token)match(input,27,FollowSets000.FOLLOW_10); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_3, grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2());
+              			newLeafNode(otherlv_3, grammarAccess.getFigureElementAccess().getLeftSquareBracketKeyword_2());
 
             }
-            // InternalMarkup.g:587:1: ( (lv_src_4_0= RULE_STRING ) )
-            // InternalMarkup.g:588:1: (lv_src_4_0= RULE_STRING )
+            // InternalMarkup.g:559:3: ( (lv_src_4_0= RULE_STRING ) )
+            // InternalMarkup.g:560:4: (lv_src_4_0= RULE_STRING )
             {
-            // InternalMarkup.g:588:1: (lv_src_4_0= RULE_STRING )
-            // InternalMarkup.g:589:3: lv_src_4_0= RULE_STRING
+            // InternalMarkup.g:560:4: (lv_src_4_0= RULE_STRING )
+            // InternalMarkup.g:561:5: lv_src_4_0= RULE_STRING
             {
             lv_src_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_11); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_src_4_0, grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0());
+              					newLeafNode(lv_src_4_0, grammarAccess.getFigureElementAccess().getSrcSTRINGTerminalRuleCall_3_0());
 
             }
             if ( state.backtracking==0 ) {
 
-              	        if (current==null) {
-              	            current = createModelElement(grammarAccess.getFigureElementRule());
-              	        }
-                     		setWithLastConsumed(
-                     			current,
-                     			"src",
-                      		lv_src_4_0,
-                      		"org.eclipse.ocl.xtext.markup.Markup.STRING");
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getFigureElementRule());
+              					}
+              					setWithLastConsumed(
+              						current,
+              						"src",
+              						lv_src_4_0,
+              						"org.eclipse.ocl.xtext.markup.Markup.STRING");
 
             }
 
@@ -1534,7 +1553,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
             }
 
-            // InternalMarkup.g:605:2: (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )?
+            // InternalMarkup.g:577:3: (otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )? )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1543,36 +1562,36 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt11) {
                 case 1 :
-                    // InternalMarkup.g:605:4: otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )?
+                    // InternalMarkup.g:578:4: otherlv_5= ',' ( (lv_alt_6_0= RULE_STRING ) ) (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )?
                     {
                     otherlv_5=(Token)match(input,30,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_5, grammarAccess.getFigureElementAccess().getCommaKeyword_4_0());
+                      				newLeafNode(otherlv_5, grammarAccess.getFigureElementAccess().getCommaKeyword_4_0());
 
                     }
-                    // InternalMarkup.g:609:1: ( (lv_alt_6_0= RULE_STRING ) )
-                    // InternalMarkup.g:610:1: (lv_alt_6_0= RULE_STRING )
+                    // InternalMarkup.g:582:4: ( (lv_alt_6_0= RULE_STRING ) )
+                    // InternalMarkup.g:583:5: (lv_alt_6_0= RULE_STRING )
                     {
-                    // InternalMarkup.g:610:1: (lv_alt_6_0= RULE_STRING )
-                    // InternalMarkup.g:611:3: lv_alt_6_0= RULE_STRING
+                    // InternalMarkup.g:583:5: (lv_alt_6_0= RULE_STRING )
+                    // InternalMarkup.g:584:6: lv_alt_6_0= RULE_STRING
                     {
                     lv_alt_6_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_11); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_alt_6_0, grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0());
+                      						newLeafNode(lv_alt_6_0, grammarAccess.getFigureElementAccess().getAltSTRINGTerminalRuleCall_4_1_0());
 
                     }
                     if ( state.backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = createModelElement(grammarAccess.getFigureElementRule());
-                      	        }
-                             		setWithLastConsumed(
-                             			current,
-                             			"alt",
-                              		lv_alt_6_0,
-                              		"org.eclipse.ocl.xtext.markup.Markup.STRING");
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getFigureElementRule());
+                      						}
+                      						setWithLastConsumed(
+                      							current,
+                      							"alt",
+                      							lv_alt_6_0,
+                      							"org.eclipse.ocl.xtext.markup.Markup.STRING");
 
                     }
 
@@ -1581,7 +1600,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                     }
 
-                    // InternalMarkup.g:627:2: (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )?
+                    // InternalMarkup.g:600:4: (otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )? )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1590,36 +1609,36 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     switch (alt10) {
                         case 1 :
-                            // InternalMarkup.g:627:4: otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )?
+                            // InternalMarkup.g:601:5: otherlv_7= ',' ( (lv_requiredWidth_8_0= RULE_INT ) ) (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )?
                             {
                             otherlv_7=(Token)match(input,30,FollowSets000.FOLLOW_5); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                                  	newLeafNode(otherlv_7, grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0());
+                              					newLeafNode(otherlv_7, grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_0());
 
                             }
-                            // InternalMarkup.g:631:1: ( (lv_requiredWidth_8_0= RULE_INT ) )
-                            // InternalMarkup.g:632:1: (lv_requiredWidth_8_0= RULE_INT )
+                            // InternalMarkup.g:605:5: ( (lv_requiredWidth_8_0= RULE_INT ) )
+                            // InternalMarkup.g:606:6: (lv_requiredWidth_8_0= RULE_INT )
                             {
-                            // InternalMarkup.g:632:1: (lv_requiredWidth_8_0= RULE_INT )
-                            // InternalMarkup.g:633:3: lv_requiredWidth_8_0= RULE_INT
+                            // InternalMarkup.g:606:6: (lv_requiredWidth_8_0= RULE_INT )
+                            // InternalMarkup.g:607:7: lv_requiredWidth_8_0= RULE_INT
                             {
                             lv_requiredWidth_8_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_11); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
-                              			newLeafNode(lv_requiredWidth_8_0, grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0());
+                              							newLeafNode(lv_requiredWidth_8_0, grammarAccess.getFigureElementAccess().getRequiredWidthINTTerminalRuleCall_4_2_1_0());
 
                             }
                             if ( state.backtracking==0 ) {
 
-                              	        if (current==null) {
-                              	            current = createModelElement(grammarAccess.getFigureElementRule());
-                              	        }
-                                     		setWithLastConsumed(
-                                     			current,
-                                     			"requiredWidth",
-                                      		lv_requiredWidth_8_0,
-                                      		"org.eclipse.ocl.xtext.markup.Markup.INT");
+                              							if (current==null) {
+                              								current = createModelElement(grammarAccess.getFigureElementRule());
+                              							}
+                              							setWithLastConsumed(
+                              								current,
+                              								"requiredWidth",
+                              								lv_requiredWidth_8_0,
+                              								"org.eclipse.ocl.xtext.markup.Markup.INT");
 
                             }
 
@@ -1628,7 +1647,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                             }
 
-                            // InternalMarkup.g:649:2: (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )?
+                            // InternalMarkup.g:623:5: (otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) ) )?
                             int alt9=2;
                             int LA9_0 = input.LA(1);
 
@@ -1637,36 +1656,36 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                             }
                             switch (alt9) {
                                 case 1 :
-                                    // InternalMarkup.g:649:4: otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) )
+                                    // InternalMarkup.g:624:6: otherlv_9= ',' ( (lv_requiredHeight_10_0= RULE_INT ) )
                                     {
                                     otherlv_9=(Token)match(input,30,FollowSets000.FOLLOW_5); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
-                                          	newLeafNode(otherlv_9, grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0());
+                                      						newLeafNode(otherlv_9, grammarAccess.getFigureElementAccess().getCommaKeyword_4_2_2_0());
 
                                     }
-                                    // InternalMarkup.g:653:1: ( (lv_requiredHeight_10_0= RULE_INT ) )
-                                    // InternalMarkup.g:654:1: (lv_requiredHeight_10_0= RULE_INT )
+                                    // InternalMarkup.g:628:6: ( (lv_requiredHeight_10_0= RULE_INT ) )
+                                    // InternalMarkup.g:629:7: (lv_requiredHeight_10_0= RULE_INT )
                                     {
-                                    // InternalMarkup.g:654:1: (lv_requiredHeight_10_0= RULE_INT )
-                                    // InternalMarkup.g:655:3: lv_requiredHeight_10_0= RULE_INT
+                                    // InternalMarkup.g:629:7: (lv_requiredHeight_10_0= RULE_INT )
+                                    // InternalMarkup.g:630:8: lv_requiredHeight_10_0= RULE_INT
                                     {
                                     lv_requiredHeight_10_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_12); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
-                                      			newLeafNode(lv_requiredHeight_10_0, grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0());
+                                      								newLeafNode(lv_requiredHeight_10_0, grammarAccess.getFigureElementAccess().getRequiredHeightINTTerminalRuleCall_4_2_2_1_0());
 
                                     }
                                     if ( state.backtracking==0 ) {
 
-                                      	        if (current==null) {
-                                      	            current = createModelElement(grammarAccess.getFigureElementRule());
-                                      	        }
-                                             		setWithLastConsumed(
-                                             			current,
-                                             			"requiredHeight",
-                                              		lv_requiredHeight_10_0,
-                                              		"org.eclipse.ocl.xtext.markup.Markup.INT");
+                                      								if (current==null) {
+                                      									current = createModelElement(grammarAccess.getFigureElementRule());
+                                      								}
+                                      								setWithLastConsumed(
+                                      									current,
+                                      									"requiredHeight",
+                                      									lv_requiredHeight_10_0,
+                                      									"org.eclipse.ocl.xtext.markup.Markup.INT");
 
                                     }
 
@@ -1696,7 +1715,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_11=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_11, grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5());
+              			newLeafNode(otherlv_11, grammarAccess.getFigureElementAccess().getRightSquareBracketKeyword_5());
 
             }
 
@@ -1706,7 +1725,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -1722,7 +1743,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleFigureRefElement"
-    // InternalMarkup.g:683:1: entryRuleFigureRefElement returns [EObject current=null] : iv_ruleFigureRefElement= ruleFigureRefElement EOF ;
+    // InternalMarkup.g:657:1: entryRuleFigureRefElement returns [EObject current=null] : iv_ruleFigureRefElement= ruleFigureRefElement EOF ;
     public final EObject entryRuleFigureRefElement() throws RecognitionException {
         EObject current = null;
 
@@ -1730,8 +1751,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:684:2: (iv_ruleFigureRefElement= ruleFigureRefElement EOF )
-            // InternalMarkup.g:685:2: iv_ruleFigureRefElement= ruleFigureRefElement EOF
+            // InternalMarkup.g:657:57: (iv_ruleFigureRefElement= ruleFigureRefElement EOF )
+            // InternalMarkup.g:658:2: iv_ruleFigureRefElement= ruleFigureRefElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFigureRefElementRule());
@@ -1762,7 +1783,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleFigureRefElement"
-    // InternalMarkup.g:692:1: ruleFigureRefElement returns [EObject current=null] : (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' ) ;
+    // InternalMarkup.g:664:1: ruleFigureRefElement returns [EObject current=null] : (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' ) ;
     public final EObject ruleFigureRefElement() throws RecognitionException {
         EObject current = null;
 
@@ -1771,49 +1792,50 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         Token otherlv_2=null;
         Token otherlv_3=null;
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:695:28: ( (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' ) )
-            // InternalMarkup.g:696:1: (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' )
+            // InternalMarkup.g:670:2: ( (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' ) )
+            // InternalMarkup.g:671:2: (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' )
             {
-            // InternalMarkup.g:696:1: (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' )
-            // InternalMarkup.g:696:3: otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']'
+            // InternalMarkup.g:671:2: (otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']' )
+            // InternalMarkup.g:672:3: otherlv_0= 'figureRef' otherlv_1= '[' ( (otherlv_2= RULE_ID ) ) otherlv_3= ']'
             {
             otherlv_0=(Token)match(input,20,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0());
+              			newLeafNode(otherlv_0, grammarAccess.getFigureRefElementAccess().getFigureRefKeyword_0());
 
             }
             otherlv_1=(Token)match(input,27,FollowSets000.FOLLOW_9); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getFigureRefElementAccess().getLeftSquareBracketKeyword_1());
 
             }
-            // InternalMarkup.g:704:1: ( (otherlv_2= RULE_ID ) )
-            // InternalMarkup.g:705:1: (otherlv_2= RULE_ID )
+            // InternalMarkup.g:680:3: ( (otherlv_2= RULE_ID ) )
+            // InternalMarkup.g:681:4: (otherlv_2= RULE_ID )
             {
-            // InternalMarkup.g:705:1: (otherlv_2= RULE_ID )
-            // InternalMarkup.g:706:3: otherlv_2= RULE_ID
+            // InternalMarkup.g:681:4: (otherlv_2= RULE_ID )
+            // InternalMarkup.g:682:5: otherlv_2= RULE_ID
             {
             if ( state.backtracking==0 ) {
 
-              		  /* */
+              					/* */
 
             }
             if ( state.backtracking==0 ) {
 
-              			if (current==null) {
-              	            current = createModelElement(grammarAccess.getFigureRefElementRule());
-              	        }
+              					if (current==null) {
+              						current = createModelElement(grammarAccess.getFigureRefElementRule());
+              					}
 
             }
             otherlv_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_12); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              		newLeafNode(otherlv_2, grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0());
+              					newLeafNode(otherlv_2, grammarAccess.getFigureRefElementAccess().getRefFigureElementCrossReference_2_0());
 
             }
 
@@ -1825,7 +1847,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_3=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_3, grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3());
+              			newLeafNode(otherlv_3, grammarAccess.getFigureRefElementAccess().getRightSquareBracketKeyword_3());
 
             }
 
@@ -1835,7 +1857,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -1851,7 +1875,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleFootnoteElement"
-    // InternalMarkup.g:732:1: entryRuleFootnoteElement returns [EObject current=null] : iv_ruleFootnoteElement= ruleFootnoteElement EOF ;
+    // InternalMarkup.g:704:1: entryRuleFootnoteElement returns [EObject current=null] : iv_ruleFootnoteElement= ruleFootnoteElement EOF ;
     public final EObject entryRuleFootnoteElement() throws RecognitionException {
         EObject current = null;
 
@@ -1859,8 +1883,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:733:2: (iv_ruleFootnoteElement= ruleFootnoteElement EOF )
-            // InternalMarkup.g:734:2: iv_ruleFootnoteElement= ruleFootnoteElement EOF
+            // InternalMarkup.g:704:56: (iv_ruleFootnoteElement= ruleFootnoteElement EOF )
+            // InternalMarkup.g:705:2: iv_ruleFootnoteElement= ruleFootnoteElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFootnoteElementRule());
@@ -1891,7 +1915,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleFootnoteElement"
-    // InternalMarkup.g:741:1: ruleFootnoteElement returns [EObject current=null] : ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
+    // InternalMarkup.g:711:1: ruleFootnoteElement returns [EObject current=null] : ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
     public final EObject ruleFootnoteElement() throws RecognitionException {
         EObject current = null;
 
@@ -1901,28 +1925,29 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_3_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:744:28: ( ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
-            // InternalMarkup.g:745:1: ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:717:2: ( ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
+            // InternalMarkup.g:718:2: ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
             {
-            // InternalMarkup.g:745:1: ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
-            // InternalMarkup.g:745:2: () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
+            // InternalMarkup.g:718:2: ( () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:719:3: () otherlv_1= 'footnote' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
-            // InternalMarkup.g:745:2: ()
-            // InternalMarkup.g:746:2:
+            // InternalMarkup.g:719:3: ()
+            // InternalMarkup.g:720:4:
             {
             if ( state.backtracking==0 ) {
 
-              	  /* */
+              				/* */
 
             }
             if ( state.backtracking==0 ) {
 
-                      current = forceCreateModelElement(
-                          grammarAccess.getFootnoteElementAccess().getFootnoteElementAction_0(),
-                          current);
+              				current = forceCreateModelElement(
+              					grammarAccess.getFootnoteElementAccess().getFootnoteElementAction_0(),
+              					current);
 
             }
 
@@ -1931,16 +1956,16 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,21,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getFootnoteElementAccess().getFootnoteKeyword_1());
 
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2());
+              			newLeafNode(otherlv_2, grammarAccess.getFootnoteElementAccess().getLeftSquareBracketKeyword_2());
 
             }
-            // InternalMarkup.g:762:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:737:3: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop12:
             do {
                 int alt12=2;
@@ -1953,14 +1978,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt12) {
             	case 1 :
-            	    // InternalMarkup.g:763:1: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:738:4: (lv_elements_3_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:763:1: (lv_elements_3_0= ruleMarkupElement )
-            	    // InternalMarkup.g:764:3: lv_elements_3_0= ruleMarkupElement
+            	    // InternalMarkup.g:738:4: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:739:5: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+            	      					newCompositeNode(grammarAccess.getFootnoteElementAccess().getElementsMarkupElementParserRuleCall_3_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -1970,15 +1995,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getFootnoteElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_3_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getFootnoteElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_3_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -1996,7 +2021,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_4=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4());
+              			newLeafNode(otherlv_4, grammarAccess.getFootnoteElementAccess().getRightSquareBracketKeyword_4());
 
             }
 
@@ -2006,7 +2031,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -2022,7 +2049,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleHeadingElement"
-    // InternalMarkup.g:792:1: entryRuleHeadingElement returns [EObject current=null] : iv_ruleHeadingElement= ruleHeadingElement EOF ;
+    // InternalMarkup.g:764:1: entryRuleHeadingElement returns [EObject current=null] : iv_ruleHeadingElement= ruleHeadingElement EOF ;
     public final EObject entryRuleHeadingElement() throws RecognitionException {
         EObject current = null;
 
@@ -2030,8 +2057,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:793:2: (iv_ruleHeadingElement= ruleHeadingElement EOF )
-            // InternalMarkup.g:794:2: iv_ruleHeadingElement= ruleHeadingElement EOF
+            // InternalMarkup.g:764:55: (iv_ruleHeadingElement= ruleHeadingElement EOF )
+            // InternalMarkup.g:765:2: iv_ruleHeadingElement= ruleHeadingElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getHeadingElementRule());
@@ -2062,7 +2089,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleHeadingElement"
-    // InternalMarkup.g:801:1: ruleHeadingElement returns [EObject current=null] : ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) ;
+    // InternalMarkup.g:771:1: ruleHeadingElement returns [EObject current=null] : ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) ;
     public final EObject ruleHeadingElement() throws RecognitionException {
         EObject current = null;
 
@@ -2074,28 +2101,29 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_5_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:804:28: ( ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) )
-            // InternalMarkup.g:805:1: ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
+            // InternalMarkup.g:777:2: ( ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' ) )
+            // InternalMarkup.g:778:2: ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
             {
-            // InternalMarkup.g:805:1: ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
-            // InternalMarkup.g:805:2: () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']'
+            // InternalMarkup.g:778:2: ( () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']' )
+            // InternalMarkup.g:779:3: () otherlv_1= 'heading' (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )? otherlv_4= '[' ( (lv_elements_5_0= ruleMarkupElement ) )* otherlv_6= ']'
             {
-            // InternalMarkup.g:805:2: ()
-            // InternalMarkup.g:806:2:
+            // InternalMarkup.g:779:3: ()
+            // InternalMarkup.g:780:4:
             {
             if ( state.backtracking==0 ) {
 
-              	  /* */
+              				/* */
 
             }
             if ( state.backtracking==0 ) {
 
-                      current = forceCreateModelElement(
-                          grammarAccess.getHeadingElementAccess().getHeadingElementAction_0(),
-                          current);
+              				current = forceCreateModelElement(
+              					grammarAccess.getHeadingElementAccess().getHeadingElementAction_0(),
+              					current);
 
             }
 
@@ -2104,10 +2132,10 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,22,FollowSets000.FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getHeadingElementAccess().getHeadingKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getHeadingElementAccess().getHeadingKeyword_1());
 
             }
-            // InternalMarkup.g:818:1: (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )?
+            // InternalMarkup.g:793:3: (otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) ) )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -2116,36 +2144,36 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt13) {
                 case 1 :
-                    // InternalMarkup.g:818:3: otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) )
+                    // InternalMarkup.g:794:4: otherlv_2= ':' ( (lv_level_3_0= RULE_INT ) )
                     {
                     otherlv_2=(Token)match(input,26,FollowSets000.FOLLOW_5); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_2, grammarAccess.getHeadingElementAccess().getColonKeyword_2_0());
+                      				newLeafNode(otherlv_2, grammarAccess.getHeadingElementAccess().getColonKeyword_2_0());
 
                     }
-                    // InternalMarkup.g:822:1: ( (lv_level_3_0= RULE_INT ) )
-                    // InternalMarkup.g:823:1: (lv_level_3_0= RULE_INT )
+                    // InternalMarkup.g:798:4: ( (lv_level_3_0= RULE_INT ) )
+                    // InternalMarkup.g:799:5: (lv_level_3_0= RULE_INT )
                     {
-                    // InternalMarkup.g:823:1: (lv_level_3_0= RULE_INT )
-                    // InternalMarkup.g:824:3: lv_level_3_0= RULE_INT
+                    // InternalMarkup.g:799:5: (lv_level_3_0= RULE_INT )
+                    // InternalMarkup.g:800:6: lv_level_3_0= RULE_INT
                     {
                     lv_level_3_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			newLeafNode(lv_level_3_0, grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0());
+                      						newLeafNode(lv_level_3_0, grammarAccess.getHeadingElementAccess().getLevelINTTerminalRuleCall_2_1_0());
 
                     }
                     if ( state.backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = createModelElement(grammarAccess.getHeadingElementRule());
-                      	        }
-                             		setWithLastConsumed(
-                             			current,
-                             			"level",
-                              		lv_level_3_0,
-                              		"org.eclipse.ocl.xtext.markup.Markup.INT");
+                      						if (current==null) {
+                      							current = createModelElement(grammarAccess.getHeadingElementRule());
+                      						}
+                      						setWithLastConsumed(
+                      							current,
+                      							"level",
+                      							lv_level_3_0,
+                      							"org.eclipse.ocl.xtext.markup.Markup.INT");
 
                     }
 
@@ -2163,10 +2191,10 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_4=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3());
+              			newLeafNode(otherlv_4, grammarAccess.getHeadingElementAccess().getLeftSquareBracketKeyword_3());
 
             }
-            // InternalMarkup.g:844:1: ( (lv_elements_5_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:821:3: ( (lv_elements_5_0= ruleMarkupElement ) )*
             loop14:
             do {
                 int alt14=2;
@@ -2179,14 +2207,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt14) {
             	case 1 :
-            	    // InternalMarkup.g:845:1: (lv_elements_5_0= ruleMarkupElement )
+            	    // InternalMarkup.g:822:4: (lv_elements_5_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:845:1: (lv_elements_5_0= ruleMarkupElement )
-            	    // InternalMarkup.g:846:3: lv_elements_5_0= ruleMarkupElement
+            	    // InternalMarkup.g:822:4: (lv_elements_5_0= ruleMarkupElement )
+            	    // InternalMarkup.g:823:5: lv_elements_5_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0());
+            	      					newCompositeNode(grammarAccess.getHeadingElementAccess().getElementsMarkupElementParserRuleCall_4_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -2196,15 +2224,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getHeadingElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_5_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getHeadingElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_5_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -2222,7 +2250,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_6=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_6, grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5());
+              			newLeafNode(otherlv_6, grammarAccess.getHeadingElementAccess().getRightSquareBracketKeyword_5());
 
             }
 
@@ -2232,7 +2260,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -2248,7 +2278,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleNewLineElement"
-    // InternalMarkup.g:874:1: entryRuleNewLineElement returns [EObject current=null] : iv_ruleNewLineElement= ruleNewLineElement EOF ;
+    // InternalMarkup.g:848:1: entryRuleNewLineElement returns [EObject current=null] : iv_ruleNewLineElement= ruleNewLineElement EOF ;
     public final EObject entryRuleNewLineElement() throws RecognitionException {
         EObject current = null;
 
@@ -2256,8 +2286,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:875:2: (iv_ruleNewLineElement= ruleNewLineElement EOF )
-            // InternalMarkup.g:876:2: iv_ruleNewLineElement= ruleNewLineElement EOF
+            // InternalMarkup.g:848:55: (iv_ruleNewLineElement= ruleNewLineElement EOF )
+            // InternalMarkup.g:849:2: iv_ruleNewLineElement= ruleNewLineElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNewLineElementRule());
@@ -2288,40 +2318,41 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleNewLineElement"
-    // InternalMarkup.g:883:1: ruleNewLineElement returns [EObject current=null] : ( (lv_text_0_0= RULE_NL ) ) ;
+    // InternalMarkup.g:855:1: ruleNewLineElement returns [EObject current=null] : ( (lv_text_0_0= RULE_NL ) ) ;
     public final EObject ruleNewLineElement() throws RecognitionException {
         EObject current = null;
 
         Token lv_text_0_0=null;
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:886:28: ( ( (lv_text_0_0= RULE_NL ) ) )
-            // InternalMarkup.g:887:1: ( (lv_text_0_0= RULE_NL ) )
+            // InternalMarkup.g:861:2: ( ( (lv_text_0_0= RULE_NL ) ) )
+            // InternalMarkup.g:862:2: ( (lv_text_0_0= RULE_NL ) )
             {
-            // InternalMarkup.g:887:1: ( (lv_text_0_0= RULE_NL ) )
-            // InternalMarkup.g:888:1: (lv_text_0_0= RULE_NL )
+            // InternalMarkup.g:862:2: ( (lv_text_0_0= RULE_NL ) )
+            // InternalMarkup.g:863:3: (lv_text_0_0= RULE_NL )
             {
-            // InternalMarkup.g:888:1: (lv_text_0_0= RULE_NL )
-            // InternalMarkup.g:889:3: lv_text_0_0= RULE_NL
+            // InternalMarkup.g:863:3: (lv_text_0_0= RULE_NL )
+            // InternalMarkup.g:864:4: lv_text_0_0= RULE_NL
             {
             lv_text_0_0=(Token)match(input,RULE_NL,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_text_0_0, grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0());
+              				newLeafNode(lv_text_0_0, grammarAccess.getNewLineElementAccess().getTextNLTerminalRuleCall_0());
 
             }
             if ( state.backtracking==0 ) {
 
-              	        if (current==null) {
-              	            current = createModelElement(grammarAccess.getNewLineElementRule());
-              	        }
-                     		setWithLastConsumed(
-                     			current,
-                     			"text",
-                      		lv_text_0_0,
-                      		"org.eclipse.ocl.xtext.markup.Markup.NL");
+              				if (current==null) {
+              					current = createModelElement(grammarAccess.getNewLineElementRule());
+              				}
+              				setWithLastConsumed(
+              					current,
+              					"text",
+              					lv_text_0_0,
+              					"org.eclipse.ocl.xtext.markup.Markup.NL");
 
             }
 
@@ -2334,7 +2365,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -2350,7 +2383,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleNullElement"
-    // InternalMarkup.g:913:1: entryRuleNullElement returns [EObject current=null] : iv_ruleNullElement= ruleNullElement EOF ;
+    // InternalMarkup.g:883:1: entryRuleNullElement returns [EObject current=null] : iv_ruleNullElement= ruleNullElement EOF ;
     public final EObject entryRuleNullElement() throws RecognitionException {
         EObject current = null;
 
@@ -2358,8 +2391,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:914:2: (iv_ruleNullElement= ruleNullElement EOF )
-            // InternalMarkup.g:915:2: iv_ruleNullElement= ruleNullElement EOF
+            // InternalMarkup.g:883:52: (iv_ruleNullElement= ruleNullElement EOF )
+            // InternalMarkup.g:884:2: iv_ruleNullElement= ruleNullElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNullElementRule());
@@ -2390,7 +2423,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleNullElement"
-    // InternalMarkup.g:922:1: ruleNullElement returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) ;
+    // InternalMarkup.g:890:1: ruleNullElement returns [EObject current=null] : ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) ;
     public final EObject ruleNullElement() throws RecognitionException {
         EObject current = null;
 
@@ -2399,28 +2432,29 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_2_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:925:28: ( ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) )
-            // InternalMarkup.g:926:1: ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
+            // InternalMarkup.g:896:2: ( ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' ) )
+            // InternalMarkup.g:897:2: ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
             {
-            // InternalMarkup.g:926:1: ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
-            // InternalMarkup.g:926:2: () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']'
+            // InternalMarkup.g:897:2: ( () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']' )
+            // InternalMarkup.g:898:3: () otherlv_1= '[' ( (lv_elements_2_0= ruleMarkupElement ) )* otherlv_3= ']'
             {
-            // InternalMarkup.g:926:2: ()
-            // InternalMarkup.g:927:2:
+            // InternalMarkup.g:898:3: ()
+            // InternalMarkup.g:899:4:
             {
             if ( state.backtracking==0 ) {
 
-              	  /* */
+              				/* */
 
             }
             if ( state.backtracking==0 ) {
 
-                      current = forceCreateModelElement(
-                          grammarAccess.getNullElementAccess().getNullElementAction_0(),
-                          current);
+              				current = forceCreateModelElement(
+              					grammarAccess.getNullElementAccess().getNullElementAction_0(),
+              					current);
 
             }
 
@@ -2429,10 +2463,10 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getNullElementAccess().getLeftSquareBracketKeyword_1());
 
             }
-            // InternalMarkup.g:939:1: ( (lv_elements_2_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:912:3: ( (lv_elements_2_0= ruleMarkupElement ) )*
             loop15:
             do {
                 int alt15=2;
@@ -2445,14 +2479,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt15) {
             	case 1 :
-            	    // InternalMarkup.g:940:1: (lv_elements_2_0= ruleMarkupElement )
+            	    // InternalMarkup.g:913:4: (lv_elements_2_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:940:1: (lv_elements_2_0= ruleMarkupElement )
-            	    // InternalMarkup.g:941:3: lv_elements_2_0= ruleMarkupElement
+            	    // InternalMarkup.g:913:4: (lv_elements_2_0= ruleMarkupElement )
+            	    // InternalMarkup.g:914:5: lv_elements_2_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0());
+            	      					newCompositeNode(grammarAccess.getNullElementAccess().getElementsMarkupElementParserRuleCall_2_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -2462,15 +2496,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getNullElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_2_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getNullElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_2_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -2488,7 +2522,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_3=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_3, grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3());
+              			newLeafNode(otherlv_3, grammarAccess.getNullElementAccess().getRightSquareBracketKeyword_3());
 
             }
 
@@ -2498,7 +2532,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -2514,7 +2550,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleOCLCodeElement"
-    // InternalMarkup.g:969:1: entryRuleOCLCodeElement returns [EObject current=null] : iv_ruleOCLCodeElement= ruleOCLCodeElement EOF ;
+    // InternalMarkup.g:939:1: entryRuleOCLCodeElement returns [EObject current=null] : iv_ruleOCLCodeElement= ruleOCLCodeElement EOF ;
     public final EObject entryRuleOCLCodeElement() throws RecognitionException {
         EObject current = null;
 
@@ -2522,8 +2558,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:970:2: (iv_ruleOCLCodeElement= ruleOCLCodeElement EOF )
-            // InternalMarkup.g:971:2: iv_ruleOCLCodeElement= ruleOCLCodeElement EOF
+            // InternalMarkup.g:939:55: (iv_ruleOCLCodeElement= ruleOCLCodeElement EOF )
+            // InternalMarkup.g:940:2: iv_ruleOCLCodeElement= ruleOCLCodeElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getOCLCodeElementRule());
@@ -2554,7 +2590,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleOCLCodeElement"
-    // InternalMarkup.g:978:1: ruleOCLCodeElement returns [EObject current=null] : ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
+    // InternalMarkup.g:946:1: ruleOCLCodeElement returns [EObject current=null] : ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
     public final EObject ruleOCLCodeElement() throws RecognitionException {
         EObject current = null;
 
@@ -2564,28 +2600,29 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_3_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:981:28: ( ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
-            // InternalMarkup.g:982:1: ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:952:2: ( ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
+            // InternalMarkup.g:953:2: ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
             {
-            // InternalMarkup.g:982:1: ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
-            // InternalMarkup.g:982:2: () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
+            // InternalMarkup.g:953:2: ( () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:954:3: () otherlv_1= 'oclCode' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
-            // InternalMarkup.g:982:2: ()
-            // InternalMarkup.g:983:2:
+            // InternalMarkup.g:954:3: ()
+            // InternalMarkup.g:955:4:
             {
             if ( state.backtracking==0 ) {
 
-              	  /* */
+              				/* */
 
             }
             if ( state.backtracking==0 ) {
 
-                      current = forceCreateModelElement(
-                          grammarAccess.getOCLCodeElementAccess().getOCLCodeElementAction_0(),
-                          current);
+              				current = forceCreateModelElement(
+              					grammarAccess.getOCLCodeElementAccess().getOCLCodeElementAction_0(),
+              					current);
 
             }
 
@@ -2594,16 +2631,16 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,23,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getOCLCodeElementAccess().getOclCodeKeyword_1());
 
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2());
+              			newLeafNode(otherlv_2, grammarAccess.getOCLCodeElementAccess().getLeftSquareBracketKeyword_2());
 
             }
-            // InternalMarkup.g:999:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:972:3: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop16:
             do {
                 int alt16=2;
@@ -2616,14 +2653,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt16) {
             	case 1 :
-            	    // InternalMarkup.g:1000:1: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:973:4: (lv_elements_3_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:1000:1: (lv_elements_3_0= ruleMarkupElement )
-            	    // InternalMarkup.g:1001:3: lv_elements_3_0= ruleMarkupElement
+            	    // InternalMarkup.g:973:4: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:974:5: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+            	      					newCompositeNode(grammarAccess.getOCLCodeElementAccess().getElementsMarkupElementParserRuleCall_3_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -2633,15 +2670,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getOCLCodeElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_3_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getOCLCodeElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_3_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -2659,7 +2696,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_4=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4());
+              			newLeafNode(otherlv_4, grammarAccess.getOCLCodeElementAccess().getRightSquareBracketKeyword_4());
 
             }
 
@@ -2669,7 +2706,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -2685,7 +2724,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleOCLEvalElement"
-    // InternalMarkup.g:1029:1: entryRuleOCLEvalElement returns [EObject current=null] : iv_ruleOCLEvalElement= ruleOCLEvalElement EOF ;
+    // InternalMarkup.g:999:1: entryRuleOCLEvalElement returns [EObject current=null] : iv_ruleOCLEvalElement= ruleOCLEvalElement EOF ;
     public final EObject entryRuleOCLEvalElement() throws RecognitionException {
         EObject current = null;
 
@@ -2693,8 +2732,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:1030:2: (iv_ruleOCLEvalElement= ruleOCLEvalElement EOF )
-            // InternalMarkup.g:1031:2: iv_ruleOCLEvalElement= ruleOCLEvalElement EOF
+            // InternalMarkup.g:999:55: (iv_ruleOCLEvalElement= ruleOCLEvalElement EOF )
+            // InternalMarkup.g:1000:2: iv_ruleOCLEvalElement= ruleOCLEvalElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getOCLEvalElementRule());
@@ -2725,7 +2764,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleOCLEvalElement"
-    // InternalMarkup.g:1038:1: ruleOCLEvalElement returns [EObject current=null] : ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
+    // InternalMarkup.g:1006:1: ruleOCLEvalElement returns [EObject current=null] : ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
     public final EObject ruleOCLEvalElement() throws RecognitionException {
         EObject current = null;
 
@@ -2735,28 +2774,29 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_3_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:1041:28: ( ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
-            // InternalMarkup.g:1042:1: ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:1012:2: ( ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
+            // InternalMarkup.g:1013:2: ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
             {
-            // InternalMarkup.g:1042:1: ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
-            // InternalMarkup.g:1042:2: () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
+            // InternalMarkup.g:1013:2: ( () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:1014:3: () otherlv_1= 'oclEval' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
-            // InternalMarkup.g:1042:2: ()
-            // InternalMarkup.g:1043:2:
+            // InternalMarkup.g:1014:3: ()
+            // InternalMarkup.g:1015:4:
             {
             if ( state.backtracking==0 ) {
 
-              	  /* */
+              				/* */
 
             }
             if ( state.backtracking==0 ) {
 
-                      current = forceCreateModelElement(
-                          grammarAccess.getOCLEvalElementAccess().getOCLEvalElementAction_0(),
-                          current);
+              				current = forceCreateModelElement(
+              					grammarAccess.getOCLEvalElementAccess().getOCLEvalElementAction_0(),
+              					current);
 
             }
 
@@ -2765,16 +2805,16 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,24,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getOCLEvalElementAccess().getOclEvalKeyword_1());
 
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2());
+              			newLeafNode(otherlv_2, grammarAccess.getOCLEvalElementAccess().getLeftSquareBracketKeyword_2());
 
             }
-            // InternalMarkup.g:1059:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:1032:3: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop17:
             do {
                 int alt17=2;
@@ -2787,14 +2827,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt17) {
             	case 1 :
-            	    // InternalMarkup.g:1060:1: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:1033:4: (lv_elements_3_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:1060:1: (lv_elements_3_0= ruleMarkupElement )
-            	    // InternalMarkup.g:1061:3: lv_elements_3_0= ruleMarkupElement
+            	    // InternalMarkup.g:1033:4: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:1034:5: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+            	      					newCompositeNode(grammarAccess.getOCLEvalElementAccess().getElementsMarkupElementParserRuleCall_3_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -2804,15 +2844,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getOCLEvalElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_3_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getOCLEvalElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_3_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -2830,7 +2870,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_4=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4());
+              			newLeafNode(otherlv_4, grammarAccess.getOCLEvalElementAccess().getRightSquareBracketKeyword_4());
 
             }
 
@@ -2840,7 +2880,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -2856,7 +2898,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleOCLTextElement"
-    // InternalMarkup.g:1089:1: entryRuleOCLTextElement returns [EObject current=null] : iv_ruleOCLTextElement= ruleOCLTextElement EOF ;
+    // InternalMarkup.g:1059:1: entryRuleOCLTextElement returns [EObject current=null] : iv_ruleOCLTextElement= ruleOCLTextElement EOF ;
     public final EObject entryRuleOCLTextElement() throws RecognitionException {
         EObject current = null;
 
@@ -2864,8 +2906,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:1090:2: (iv_ruleOCLTextElement= ruleOCLTextElement EOF )
-            // InternalMarkup.g:1091:2: iv_ruleOCLTextElement= ruleOCLTextElement EOF
+            // InternalMarkup.g:1059:55: (iv_ruleOCLTextElement= ruleOCLTextElement EOF )
+            // InternalMarkup.g:1060:2: iv_ruleOCLTextElement= ruleOCLTextElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getOCLTextElementRule());
@@ -2896,7 +2938,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleOCLTextElement"
-    // InternalMarkup.g:1098:1: ruleOCLTextElement returns [EObject current=null] : ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
+    // InternalMarkup.g:1066:1: ruleOCLTextElement returns [EObject current=null] : ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) ;
     public final EObject ruleOCLTextElement() throws RecognitionException {
         EObject current = null;
 
@@ -2906,28 +2948,29 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject lv_elements_3_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:1101:28: ( ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
-            // InternalMarkup.g:1102:1: ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:1072:2: ( ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' ) )
+            // InternalMarkup.g:1073:2: ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
             {
-            // InternalMarkup.g:1102:1: ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
-            // InternalMarkup.g:1102:2: () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
+            // InternalMarkup.g:1073:2: ( () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']' )
+            // InternalMarkup.g:1074:3: () otherlv_1= 'oclText' otherlv_2= '[' ( (lv_elements_3_0= ruleMarkupElement ) )* otherlv_4= ']'
             {
-            // InternalMarkup.g:1102:2: ()
-            // InternalMarkup.g:1103:2:
+            // InternalMarkup.g:1074:3: ()
+            // InternalMarkup.g:1075:4:
             {
             if ( state.backtracking==0 ) {
 
-              	  /* */
+              				/* */
 
             }
             if ( state.backtracking==0 ) {
 
-                      current = forceCreateModelElement(
-                          grammarAccess.getOCLTextElementAccess().getOCLTextElementAction_0(),
-                          current);
+              				current = forceCreateModelElement(
+              					grammarAccess.getOCLTextElementAccess().getOCLTextElementAction_0(),
+              					current);
 
             }
 
@@ -2936,16 +2979,16 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_1=(Token)match(input,25,FollowSets000.FOLLOW_6); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1());
+              			newLeafNode(otherlv_1, grammarAccess.getOCLTextElementAccess().getOclTextKeyword_1());
 
             }
             otherlv_2=(Token)match(input,27,FollowSets000.FOLLOW_7); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_2, grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2());
+              			newLeafNode(otherlv_2, grammarAccess.getOCLTextElementAccess().getLeftSquareBracketKeyword_2());
 
             }
-            // InternalMarkup.g:1119:1: ( (lv_elements_3_0= ruleMarkupElement ) )*
+            // InternalMarkup.g:1092:3: ( (lv_elements_3_0= ruleMarkupElement ) )*
             loop18:
             do {
                 int alt18=2;
@@ -2958,14 +3001,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                 switch (alt18) {
             	case 1 :
-            	    // InternalMarkup.g:1120:1: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:1093:4: (lv_elements_3_0= ruleMarkupElement )
             	    {
-            	    // InternalMarkup.g:1120:1: (lv_elements_3_0= ruleMarkupElement )
-            	    // InternalMarkup.g:1121:3: lv_elements_3_0= ruleMarkupElement
+            	    // InternalMarkup.g:1093:4: (lv_elements_3_0= ruleMarkupElement )
+            	    // InternalMarkup.g:1094:5: lv_elements_3_0= ruleMarkupElement
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      	        newCompositeNode(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0());
+            	      					newCompositeNode(grammarAccess.getOCLTextElementAccess().getElementsMarkupElementParserRuleCall_3_0());
 
             	    }
             	    pushFollow(FollowSets000.FOLLOW_7);
@@ -2975,15 +3018,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getOCLTextElementRule());
-            	      	        }
-            	             		add(
-            	             			current,
-            	             			"elements",
-            	              		lv_elements_3_0,
-            	              		"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
-            	      	        afterParserOrEnumRuleCall();
+            	      					if (current==null) {
+            	      						current = createModelElementForParent(grammarAccess.getOCLTextElementRule());
+            	      					}
+            	      					add(
+            	      						current,
+            	      						"elements",
+            	      						lv_elements_3_0,
+            	      						"org.eclipse.ocl.xtext.markup.Markup.MarkupElement");
+            	      					afterParserOrEnumRuleCall();
 
             	    }
 
@@ -3001,7 +3044,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             otherlv_4=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4());
+              			newLeafNode(otherlv_4, grammarAccess.getOCLTextElementAccess().getRightSquareBracketKeyword_4());
 
             }
 
@@ -3011,7 +3054,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -3027,7 +3072,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "entryRuleTextElement"
-    // InternalMarkup.g:1149:1: entryRuleTextElement returns [EObject current=null] : iv_ruleTextElement= ruleTextElement EOF ;
+    // InternalMarkup.g:1119:1: entryRuleTextElement returns [EObject current=null] : iv_ruleTextElement= ruleTextElement EOF ;
     public final EObject entryRuleTextElement() throws RecognitionException {
         EObject current = null;
 
@@ -3035,8 +3080,8 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
         try {
-            // InternalMarkup.g:1150:2: (iv_ruleTextElement= ruleTextElement EOF )
-            // InternalMarkup.g:1151:2: iv_ruleTextElement= ruleTextElement EOF
+            // InternalMarkup.g:1119:52: (iv_ruleTextElement= ruleTextElement EOF )
+            // InternalMarkup.g:1120:2: iv_ruleTextElement= ruleTextElement EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTextElementRule());
@@ -3067,7 +3112,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
 
     // $ANTLR start "ruleTextElement"
-    // InternalMarkup.g:1158:1: ruleTextElement returns [EObject current=null] : ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) ) ;
+    // InternalMarkup.g:1126:1: ruleTextElement returns [EObject current=null] : ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) ) ;
     public final EObject ruleTextElement() throws RecognitionException {
         EObject current = null;
 
@@ -3081,13 +3126,14 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         AntlrDatatypeRuleToken lv_text_1_0 = null;
 
 
-         enterRule();
+
+        	enterRule();
 
         try {
-            // InternalMarkup.g:1161:28: ( ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) ) )
-            // InternalMarkup.g:1162:1: ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) )
+            // InternalMarkup.g:1132:2: ( ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) ) )
+            // InternalMarkup.g:1133:2: ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) )
             {
-            // InternalMarkup.g:1162:1: ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) )
+            // InternalMarkup.g:1133:2: ( ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+ | ( (lv_text_1_0= ruleMarkupKeyword ) ) )
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -3106,9 +3152,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
             switch (alt21) {
                 case 1 :
-                    // InternalMarkup.g:1162:2: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+
+                    // InternalMarkup.g:1134:3: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+
                     {
-                    // InternalMarkup.g:1162:2: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+
+                    // InternalMarkup.g:1134:3: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+
                     int cnt20=0;
                     loop20:
                     do {
@@ -3116,12 +3162,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                         alt20 = dfa20.predict(input);
                         switch (alt20) {
                     	case 1 :
-                    	    // InternalMarkup.g:1163:1: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
+                    	    // InternalMarkup.g:1135:4: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
                     	    {
-                    	    // InternalMarkup.g:1163:1: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
-                    	    // InternalMarkup.g:1164:1: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
+                    	    // InternalMarkup.g:1135:4: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
+                    	    // InternalMarkup.g:1136:5: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
                     	    {
-                    	    // InternalMarkup.g:1164:1: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
+                    	    // InternalMarkup.g:1136:5: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
                     	    int alt19=7;
                     	    switch ( input.LA(1) ) {
                     	    case RULE_ID:
@@ -3169,156 +3215,156 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
                     	    switch (alt19) {
                     	        case 1 :
-                    	            // InternalMarkup.g:1165:3: lv_text_0_1= RULE_ID
+                    	            // InternalMarkup.g:1137:6: lv_text_0_1= RULE_ID
                     	            {
                     	            lv_text_0_1=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_1, grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0());
+                    	              						newLeafNode(lv_text_0_1, grammarAccess.getTextElementAccess().getTextIDTerminalRuleCall_0_0_0());
 
                     	            }
                     	            if ( state.backtracking==0 ) {
 
-                    	              	        if (current==null) {
-                    	              	            current = createModelElement(grammarAccess.getTextElementRule());
-                    	              	        }
-                    	                     		addWithLastConsumed(
-                    	                     			current,
-                    	                     			"text",
-                    	                      		lv_text_0_1,
-                    	                      		"org.eclipse.ocl.xtext.markup.Markup.ID");
+                    	              						if (current==null) {
+                    	              							current = createModelElement(grammarAccess.getTextElementRule());
+                    	              						}
+                    	              						addWithLastConsumed(
+                    	              							current,
+                    	              							"text",
+                    	              							lv_text_0_1,
+                    	              							"org.eclipse.ocl.xtext.markup.Markup.ID");
 
                     	            }
 
                     	            }
                     	            break;
                     	        case 2 :
-                    	            // InternalMarkup.g:1180:8: lv_text_0_2= RULE_WORD
+                    	            // InternalMarkup.g:1152:6: lv_text_0_2= RULE_WORD
                     	            {
                     	            lv_text_0_2=(Token)match(input,RULE_WORD,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_2, grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1());
+                    	              						newLeafNode(lv_text_0_2, grammarAccess.getTextElementAccess().getTextWORDTerminalRuleCall_0_0_1());
 
                     	            }
                     	            if ( state.backtracking==0 ) {
 
-                    	              	        if (current==null) {
-                    	              	            current = createModelElement(grammarAccess.getTextElementRule());
-                    	              	        }
-                    	                     		addWithLastConsumed(
-                    	                     			current,
-                    	                     			"text",
-                    	                      		lv_text_0_2,
-                    	                      		"org.eclipse.ocl.xtext.markup.Markup.WORD");
+                    	              						if (current==null) {
+                    	              							current = createModelElement(grammarAccess.getTextElementRule());
+                    	              						}
+                    	              						addWithLastConsumed(
+                    	              							current,
+                    	              							"text",
+                    	              							lv_text_0_2,
+                    	              							"org.eclipse.ocl.xtext.markup.Markup.WORD");
 
                     	            }
 
                     	            }
                     	            break;
                     	        case 3 :
-                    	            // InternalMarkup.g:1195:8: lv_text_0_3= RULE_INT
+                    	            // InternalMarkup.g:1167:6: lv_text_0_3= RULE_INT
                     	            {
                     	            lv_text_0_3=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_3, grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2());
+                    	              						newLeafNode(lv_text_0_3, grammarAccess.getTextElementAccess().getTextINTTerminalRuleCall_0_0_2());
 
                     	            }
                     	            if ( state.backtracking==0 ) {
 
-                    	              	        if (current==null) {
-                    	              	            current = createModelElement(grammarAccess.getTextElementRule());
-                    	              	        }
-                    	                     		addWithLastConsumed(
-                    	                     			current,
-                    	                     			"text",
-                    	                      		lv_text_0_3,
-                    	                      		"org.eclipse.ocl.xtext.markup.Markup.INT");
+                    	              						if (current==null) {
+                    	              							current = createModelElement(grammarAccess.getTextElementRule());
+                    	              						}
+                    	              						addWithLastConsumed(
+                    	              							current,
+                    	              							"text",
+                    	              							lv_text_0_3,
+                    	              							"org.eclipse.ocl.xtext.markup.Markup.INT");
 
                     	            }
 
                     	            }
                     	            break;
                     	        case 4 :
-                    	            // InternalMarkup.g:1210:8: lv_text_0_4= RULE_WS
+                    	            // InternalMarkup.g:1182:6: lv_text_0_4= RULE_WS
                     	            {
                     	            lv_text_0_4=(Token)match(input,RULE_WS,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	              			newLeafNode(lv_text_0_4, grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3());
+                    	              						newLeafNode(lv_text_0_4, grammarAccess.getTextElementAccess().getTextWSTerminalRuleCall_0_0_3());
 
                     	            }
                     	            if ( state.backtracking==0 ) {
 
-                    	              	        if (current==null) {
-                    	              	            current = createModelElement(grammarAccess.getTextElementRule());
-                    	              	        }
-                    	                     		addWithLastConsumed(
-                    	                     			current,
-                    	                     			"text",
-                    	                      		lv_text_0_4,
-                    	                      		"org.eclipse.ocl.xtext.markup.Markup.WS");
+                    	              						if (current==null) {
+                    	              							current = createModelElement(grammarAccess.getTextElementRule());
+                    	              						}
+                    	              						addWithLastConsumed(
+                    	              							current,
+                    	              							"text",
+                    	              							lv_text_0_4,
+                    	              							"org.eclipse.ocl.xtext.markup.Markup.WS");
 
                     	            }
 
                     	            }
                     	            break;
                     	        case 5 :
-                    	            // InternalMarkup.g:1225:8: lv_text_0_5= ':'
+                    	            // InternalMarkup.g:1197:6: lv_text_0_5= ':'
                     	            {
                     	            lv_text_0_5=(Token)match(input,26,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	                      newLeafNode(lv_text_0_5, grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4());
+                    	              						newLeafNode(lv_text_0_5, grammarAccess.getTextElementAccess().getTextColonKeyword_0_0_4());
 
                     	            }
                     	            if ( state.backtracking==0 ) {
 
-                    	              	        if (current==null) {
-                    	              	            current = createModelElement(grammarAccess.getTextElementRule());
-                    	              	        }
-                    	                     		addWithLastConsumed(current, "text", lv_text_0_5, null);
+                    	              						if (current==null) {
+                    	              							current = createModelElement(grammarAccess.getTextElementRule());
+                    	              						}
+                    	              						addWithLastConsumed(current, "text", lv_text_0_5, null);
 
                     	            }
 
                     	            }
                     	            break;
                     	        case 6 :
-                    	            // InternalMarkup.g:1237:8: lv_text_0_6= '#'
+                    	            // InternalMarkup.g:1208:6: lv_text_0_6= '#'
                     	            {
                     	            lv_text_0_6=(Token)match(input,29,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	                      newLeafNode(lv_text_0_6, grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5());
+                    	              						newLeafNode(lv_text_0_6, grammarAccess.getTextElementAccess().getTextNumberSignKeyword_0_0_5());
 
                     	            }
                     	            if ( state.backtracking==0 ) {
 
-                    	              	        if (current==null) {
-                    	              	            current = createModelElement(grammarAccess.getTextElementRule());
-                    	              	        }
-                    	                     		addWithLastConsumed(current, "text", lv_text_0_6, null);
+                    	              						if (current==null) {
+                    	              							current = createModelElement(grammarAccess.getTextElementRule());
+                    	              						}
+                    	              						addWithLastConsumed(current, "text", lv_text_0_6, null);
 
                     	            }
 
                     	            }
                     	            break;
                     	        case 7 :
-                    	            // InternalMarkup.g:1249:8: lv_text_0_7= ','
+                    	            // InternalMarkup.g:1219:6: lv_text_0_7= ','
                     	            {
                     	            lv_text_0_7=(Token)match(input,30,FollowSets000.FOLLOW_13); if (state.failed) return current;
                     	            if ( state.backtracking==0 ) {
 
-                    	                      newLeafNode(lv_text_0_7, grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6());
+                    	              						newLeafNode(lv_text_0_7, grammarAccess.getTextElementAccess().getTextCommaKeyword_0_0_6());
 
                     	            }
                     	            if ( state.backtracking==0 ) {
 
-                    	              	        if (current==null) {
-                    	              	            current = createModelElement(grammarAccess.getTextElementRule());
-                    	              	        }
-                    	                     		addWithLastConsumed(current, "text", lv_text_0_7, null);
+                    	              						if (current==null) {
+                    	              							current = createModelElement(grammarAccess.getTextElementRule());
+                    	              						}
+                    	              						addWithLastConsumed(current, "text", lv_text_0_7, null);
 
                     	            }
 
@@ -3348,17 +3394,17 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     }
                     break;
                 case 2 :
-                    // InternalMarkup.g:1265:6: ( (lv_text_1_0= ruleMarkupKeyword ) )
+                    // InternalMarkup.g:1233:3: ( (lv_text_1_0= ruleMarkupKeyword ) )
                     {
-                    // InternalMarkup.g:1265:6: ( (lv_text_1_0= ruleMarkupKeyword ) )
-                    // InternalMarkup.g:1266:1: (lv_text_1_0= ruleMarkupKeyword )
+                    // InternalMarkup.g:1233:3: ( (lv_text_1_0= ruleMarkupKeyword ) )
+                    // InternalMarkup.g:1234:4: (lv_text_1_0= ruleMarkupKeyword )
                     {
-                    // InternalMarkup.g:1266:1: (lv_text_1_0= ruleMarkupKeyword )
-                    // InternalMarkup.g:1267:3: lv_text_1_0= ruleMarkupKeyword
+                    // InternalMarkup.g:1234:4: (lv_text_1_0= ruleMarkupKeyword )
+                    // InternalMarkup.g:1235:5: lv_text_1_0= ruleMarkupKeyword
                     {
                     if ( state.backtracking==0 ) {
 
-                      	        newCompositeNode(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0());
+                      					newCompositeNode(grammarAccess.getTextElementAccess().getTextMarkupKeywordParserRuleCall_1_0());
 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
@@ -3368,15 +3414,15 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getTextElementRule());
-                      	        }
-                             		add(
-                             			current,
-                             			"text",
-                              		lv_text_1_0,
-                              		"org.eclipse.ocl.xtext.markup.Markup.MarkupKeyword");
-                      	        afterParserOrEnumRuleCall();
+                      					if (current==null) {
+                      						current = createModelElementForParent(grammarAccess.getTextElementRule());
+                      					}
+                      					add(
+                      						current,
+                      						"text",
+                      						lv_text_1_0,
+                      						"org.eclipse.ocl.xtext.markup.Markup.MarkupKeyword");
+                      					afterParserOrEnumRuleCall();
 
                     }
 
@@ -3395,7 +3441,9 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             }
 
             if ( state.backtracking==0 ) {
-               leaveRule();
+
+              	leaveRule();
+
             }
         }
 
@@ -3414,12 +3462,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_FontElement_0 = null;
 
 
-        // InternalMarkup.g:223:2: (this_FontElement_0= ruleFontElement )
-        // InternalMarkup.g:223:2: this_FontElement_0= ruleFontElement
+        // InternalMarkup.g:208:3: (this_FontElement_0= ruleFontElement )
+        // InternalMarkup.g:208:3: this_FontElement_0= ruleFontElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3437,12 +3485,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_BulletElement_2 = null;
 
 
-        // InternalMarkup.g:249:2: (this_BulletElement_2= ruleBulletElement )
-        // InternalMarkup.g:249:2: this_BulletElement_2= ruleBulletElement
+        // InternalMarkup.g:232:3: (this_BulletElement_2= ruleBulletElement )
+        // InternalMarkup.g:232:3: this_BulletElement_2= ruleBulletElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3460,12 +3508,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_FigureElement_3 = null;
 
 
-        // InternalMarkup.g:262:2: (this_FigureElement_3= ruleFigureElement )
-        // InternalMarkup.g:262:2: this_FigureElement_3= ruleFigureElement
+        // InternalMarkup.g:244:3: (this_FigureElement_3= ruleFigureElement )
+        // InternalMarkup.g:244:3: this_FigureElement_3= ruleFigureElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3483,12 +3531,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_FigureRefElement_4 = null;
 
 
-        // InternalMarkup.g:275:2: (this_FigureRefElement_4= ruleFigureRefElement )
-        // InternalMarkup.g:275:2: this_FigureRefElement_4= ruleFigureRefElement
+        // InternalMarkup.g:256:3: (this_FigureRefElement_4= ruleFigureRefElement )
+        // InternalMarkup.g:256:3: this_FigureRefElement_4= ruleFigureRefElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3506,12 +3554,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_FootnoteElement_5 = null;
 
 
-        // InternalMarkup.g:288:2: (this_FootnoteElement_5= ruleFootnoteElement )
-        // InternalMarkup.g:288:2: this_FootnoteElement_5= ruleFootnoteElement
+        // InternalMarkup.g:268:3: (this_FootnoteElement_5= ruleFootnoteElement )
+        // InternalMarkup.g:268:3: this_FootnoteElement_5= ruleFootnoteElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3529,12 +3577,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_HeadingElement_6 = null;
 
 
-        // InternalMarkup.g:301:2: (this_HeadingElement_6= ruleHeadingElement )
-        // InternalMarkup.g:301:2: this_HeadingElement_6= ruleHeadingElement
+        // InternalMarkup.g:280:3: (this_HeadingElement_6= ruleHeadingElement )
+        // InternalMarkup.g:280:3: this_HeadingElement_6= ruleHeadingElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3552,12 +3600,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_OCLCodeElement_8 = null;
 
 
-        // InternalMarkup.g:327:2: (this_OCLCodeElement_8= ruleOCLCodeElement )
-        // InternalMarkup.g:327:2: this_OCLCodeElement_8= ruleOCLCodeElement
+        // InternalMarkup.g:304:3: (this_OCLCodeElement_8= ruleOCLCodeElement )
+        // InternalMarkup.g:304:3: this_OCLCodeElement_8= ruleOCLCodeElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3575,12 +3623,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_OCLEvalElement_9 = null;
 
 
-        // InternalMarkup.g:340:2: (this_OCLEvalElement_9= ruleOCLEvalElement )
-        // InternalMarkup.g:340:2: this_OCLEvalElement_9= ruleOCLEvalElement
+        // InternalMarkup.g:316:3: (this_OCLEvalElement_9= ruleOCLEvalElement )
+        // InternalMarkup.g:316:3: this_OCLEvalElement_9= ruleOCLEvalElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3598,12 +3646,12 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         EObject this_OCLTextElement_10 = null;
 
 
-        // InternalMarkup.g:353:2: (this_OCLTextElement_10= ruleOCLTextElement )
-        // InternalMarkup.g:353:2: this_OCLTextElement_10= ruleOCLTextElement
+        // InternalMarkup.g:328:3: (this_OCLTextElement_10= ruleOCLTextElement )
+        // InternalMarkup.g:328:3: this_OCLTextElement_10= ruleOCLTextElement
         {
         if ( state.backtracking==0 ) {
 
-          	  /* */
+          			/* */
 
         }
         pushFollow(FollowSets000.FOLLOW_2);
@@ -3626,13 +3674,13 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
         Token lv_text_0_6=null;
         Token lv_text_0_7=null;
 
-        // InternalMarkup.g:1163:1: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )
-        // InternalMarkup.g:1163:1: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
+        // InternalMarkup.g:1135:4: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )
+        // InternalMarkup.g:1135:4: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
         {
-        // InternalMarkup.g:1163:1: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
-        // InternalMarkup.g:1164:1: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
+        // InternalMarkup.g:1135:4: ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) )
+        // InternalMarkup.g:1136:5: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
         {
-        // InternalMarkup.g:1164:1: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
+        // InternalMarkup.g:1136:5: (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' )
         int alt25=7;
         switch ( input.LA(1) ) {
         case RULE_ID:
@@ -3680,49 +3728,49 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
 
         switch (alt25) {
             case 1 :
-                // InternalMarkup.g:1165:3: lv_text_0_1= RULE_ID
+                // InternalMarkup.g:1137:6: lv_text_0_1= RULE_ID
                 {
                 lv_text_0_1=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
                 }
                 break;
             case 2 :
-                // InternalMarkup.g:1180:8: lv_text_0_2= RULE_WORD
+                // InternalMarkup.g:1152:6: lv_text_0_2= RULE_WORD
                 {
                 lv_text_0_2=(Token)match(input,RULE_WORD,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
                 }
                 break;
             case 3 :
-                // InternalMarkup.g:1195:8: lv_text_0_3= RULE_INT
+                // InternalMarkup.g:1167:6: lv_text_0_3= RULE_INT
                 {
                 lv_text_0_3=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
                 }
                 break;
             case 4 :
-                // InternalMarkup.g:1210:8: lv_text_0_4= RULE_WS
+                // InternalMarkup.g:1182:6: lv_text_0_4= RULE_WS
                 {
                 lv_text_0_4=(Token)match(input,RULE_WS,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
                 }
                 break;
             case 5 :
-                // InternalMarkup.g:1225:8: lv_text_0_5= ':'
+                // InternalMarkup.g:1197:6: lv_text_0_5= ':'
                 {
                 lv_text_0_5=(Token)match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
                 }
                 break;
             case 6 :
-                // InternalMarkup.g:1237:8: lv_text_0_6= '#'
+                // InternalMarkup.g:1208:6: lv_text_0_6= '#'
                 {
                 lv_text_0_6=(Token)match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
                 }
                 break;
             case 7 :
-                // InternalMarkup.g:1249:8: lv_text_0_7= ','
+                // InternalMarkup.g:1219:6: lv_text_0_7= ','
                 {
                 lv_text_0_7=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -3943,7 +3991,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             this.transition = dfa_6;
         }
         public String getDescription() {
-            return "222:1: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )";
+            return "207:2: (this_FontElement_0= ruleFontElement | this_NewLineElement_1= ruleNewLineElement | this_BulletElement_2= ruleBulletElement | this_FigureElement_3= ruleFigureElement | this_FigureRefElement_4= ruleFigureRefElement | this_FootnoteElement_5= ruleFootnoteElement | this_HeadingElement_6= ruleHeadingElement | this_NullElement_7= ruleNullElement | this_OCLCodeElement_8= ruleOCLCodeElement | this_OCLEvalElement_9= ruleOCLEvalElement | this_OCLTextElement_10= ruleOCLTextElement | this_TextElement_11= ruleTextElement )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -4148,7 +4196,7 @@ public class InternalMarkupParser extends org.eclipse.ocl.xtext.base.utilities.C
             this.transition = dfa_13;
         }
         public String getDescription() {
-            return "()+ loopback of 1162:2: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+";
+            return "()+ loopback of 1134:3: ( ( (lv_text_0_1= RULE_ID | lv_text_0_2= RULE_WORD | lv_text_0_3= RULE_INT | lv_text_0_4= RULE_WS | lv_text_0_5= ':' | lv_text_0_6= '#' | lv_text_0_7= ',' ) ) )+";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;

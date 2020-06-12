@@ -23,7 +23,7 @@ import com.google.inject.Module;
 public class XtextConsolePlugin extends EssentialOCLActivator
 {
 	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.examples.xtext.console";
-	
+
 	// The shared instance.
 	private static XtextConsolePlugin plugin;
 
@@ -36,7 +36,7 @@ public class XtextConsolePlugin extends EssentialOCLActivator
 
 	/**
 	 * Obtains my plug-in ID.
-	 * 
+	 *
 	 * @return my plug-in ID
 	 */
 	public static String getPluginId() {
@@ -50,22 +50,22 @@ public class XtextConsolePlugin extends EssentialOCLActivator
 		super();
 		plugin = this;
 	}
-	
+
 	@Override
 	protected Module getRuntimeModule(String grammar) {
 		if (EssentialOCLPlugin.LANGUAGE_ID.equals(grammar)) {
 		  return new XtextConsoleRuntimeModule();
 		}
-		
+
 		throw new IllegalArgumentException(grammar);
 	}
-	
+
 	@Override
 	protected Module getUiModule(String grammar) {
 		if (EssentialOCLPlugin.LANGUAGE_ID.equals(grammar)) {
 		  return new XtextConsoleUiModule(this);
 		}
-		
+
 		throw new IllegalArgumentException(grammar);
 	}
 }

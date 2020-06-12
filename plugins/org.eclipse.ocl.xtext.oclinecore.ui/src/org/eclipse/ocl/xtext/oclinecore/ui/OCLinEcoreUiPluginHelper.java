@@ -17,8 +17,8 @@ import org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator;
 
 public class OCLinEcoreUiPluginHelper extends EMFPlugin.InternalHelper
 {
-	public static final OCLinEcoreUiPluginHelper INSTANCE = new OCLinEcoreUiPluginHelper(OCLinEcoreActivator.getInstance()); 
-	
+	public static final OCLinEcoreUiPluginHelper INSTANCE = new OCLinEcoreUiPluginHelper(OCLinEcoreActivator.getInstance());
+
 	private OCLinEcoreUiPluginHelper(Plugin plugin) {
 		super(plugin);
 	}
