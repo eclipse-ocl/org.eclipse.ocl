@@ -19,6 +19,14 @@
       <category id="org.eclipse.ocl.examples.category"
             name="%OCL_category"
             parentCategory="org.eclipse.ui.Examples"/>
+      <wizard id="org.eclipse.ocl.examples.extlibrary"
+            category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            project="true"
+            name="%OCL_ExtLibrary_name"
+            icon="$nl$/icons/elcl16/oclconsole_co.gif">
+         <description>%OCL_ExtLibrary_description</description>
+      </wizard>
       <wizard id="org.eclipse.ocl.examples.interpreter"
             category="org.eclipse.ui.Examples/org.eclipse.ocl.examples.category"
             class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
@@ -77,21 +85,28 @@
                contentURI="zips/empty.zip"
                description="%EmptyOCL_description"/>
       </example>
+      <example id="org.eclipse.ocl.examples.project.EXTlibrary"
+            wizardID="org.eclipse.ocl.examples.extlibrary"
+            pageImage="$nl$/icons/elcl16/oclconsole_co.gif">
+         <projectDescriptor name="org.eclipse.ocl.examples.extlibrary"
+               contentURI="zips/extlibrary.zip"
+               description="%OCL_Interpreter_description"/>
+      </example>
       <example id="org.eclipse.ocl.examples.project.Interpreter"
             wizardID="org.eclipse.ocl.examples.interpreter"
             pageImage="$nl$/icons/elcl16/oclconsole_co.gif">
          <projectDescriptor name="org.eclipse.ocl.examples.project.interpreter"
                contentURI="zips/interpreter.zip"
                description="%OCL_Interpreter_description"/>
-         <projectDescriptor name="org.eclipse.emf.examples.library"
-               contentURI="zips/library.zip"
-               description="%_UI_LibraryModelProject_desc"/>
-         <projectDescriptor name="org.eclipse.emf.examples.library.edit"
+         <projectDescriptor name="org.eclipse.ocl.examples.extlibrary"
+               contentURI="zips/extlibrary.zip"
+               description="%OCL_ExtLibrary_description"/>
+         <!--projectDescriptor name="org.eclipse.emf.examples.library.edit"
                contentURI="zips/libraryEdit.zip"
                description="%_UI_LibraryEditProject_desc"/>
          <projectDescriptor name="org.eclipse.emf.examples.library.editor"
                contentURI="zips/libraryEditor.zip"
-               description="%_UI_LibraryEditorProjector_desc"/>
+               description="%_UI_LibraryEditorProjector_desc"/-->
       </example>
       <example id="org.eclipse.ocl.examples.project.OCLinEcore"
             wizardID="org.eclipse.ocl.examples.oclinecoretutorial"

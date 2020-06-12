@@ -24,6 +24,7 @@
       <module>org.eclipse.ocl.examples.emf.validation.validity</module>
       <module>org.eclipse.ocl.examples.emf.validation.validity.ui</module>
       <module>org.eclipse.ocl.examples.eventmanager</module>
+      <module>org.eclipse.ocl.examples.extlibrary</module>
       <module>org.eclipse.ocl.examples.impactanalyzer</module>
       <module>org.eclipse.ocl.examples.impactanalyzer.ui</module>
       <module>org.eclipse.ocl.examples.impactanalyzer.util</module>
