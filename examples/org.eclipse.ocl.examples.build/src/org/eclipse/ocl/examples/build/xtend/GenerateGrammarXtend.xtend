@@ -51,6 +51,7 @@ import java.util.GregorianCalendar
 {
 	/*@NonNull*/ protected override String generate(/*@NonNull*/ Resource grammarResource) {
 		var year = new GregorianCalendar().get(GregorianCalendar.YEAR);
+		var boolean hasEnumRules = hasRules(grammarResource, EnumRule);
 		'''
 			/*******************************************************************************
 			 * Copyright (c) 2015, «year» Willink Transformations and others.
@@ -78,7 +79,9 @@ import java.util.GregorianCalendar
 			import «AbstractGrammarResource.getName()»;
 			import «AbstractMetamodelDeclaration.getName()»;
 			import «AbstractRule.getName()»;
+			«IF hasEnumRules»
 			import «EnumRule.getName()»;
+			«ENDIF»
 			import «Grammar.getName()»;
 			import «ParserRule.getName()»;
 			import «ReferencedMetamodel.getName()»;
