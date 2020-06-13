@@ -158,7 +158,7 @@ import java.util.GregorianCalendar
 
 		private static void initEnumRules() {
 			«FOR eObject : eObjects»
-			«emit(grammar, eObject)».setAlternatives(«emit(grammar, eObject.alternatives)»);
+			«emit(grammar, eObject)».setAlternatives(«pushIndent»«emitIndent»«emit(grammar, eObject.alternatives)»«popIndent»);
 			«ENDFOR»
 		}
 
@@ -244,7 +244,7 @@ import java.util.GregorianCalendar
 
 		private static void initParserRules() {
 			«FOR eObject : eObjects»
-			«emit(grammar, eObject)».setAlternatives(«emit(grammar, eObject.alternatives)»);
+			«emit(grammar, eObject)».setAlternatives(«pushIndent»«emitIndent»«emit(grammar, eObject.alternatives)»«popIndent»);
 			«ENDFOR»
 		}
 
@@ -271,7 +271,7 @@ import java.util.GregorianCalendar
 			«IF eObject.isFragment()»
 			«emit(grammar, eObject)».setFragment(true);
 			«ENDIF»
-			«emit(grammar, eObject)».setAlternatives(«emit(grammar, eObject.alternatives)»);
+			«emit(grammar, eObject)».setAlternatives(«pushIndent»«emitIndent»«emit(grammar, eObject.alternatives)»«popIndent»);
 			«ENDFOR»
 		}
 
@@ -316,7 +316,7 @@ import java.util.GregorianCalendar
 	
 	/*@NonNull*/ protected def String emitAlternatives(/*@NonNull*/ Grammar grammar, /*@NonNull*/ Alternatives eObject) {
 		return wrapCardinality(eObject, wrapFirstSetPredicated(eObject, wrapPredicated(eObject,
-			'''createAlternatives(«FOR element : eObject.getElements() SEPARATOR ", "»«emit(grammar, element)»«ENDFOR»)''')));
+			'''createAlternatives(«pushIndent()»«FOR element : eObject.getElements() SEPARATOR ", "»«emitIndent()»«emit(grammar, element)»«ENDFOR»«popIndent()»)''')));
 	}
 	
 	/*@NonNull*/ protected def String emitAssignment(/*@NonNull*/ Grammar grammar, /*@NonNull*/ Assignment eObject) {
@@ -331,7 +331,7 @@ import java.util.GregorianCalendar
 	
 	/*@NonNull*/ protected def String emitCrossReference(/*@NonNull*/ Grammar grammar, /*@NonNull*/ CrossReference eObject) {
 		return wrapCardinality(eObject, wrapFirstSetPredicated(eObject, wrapPredicated(eObject,
-			'''createCrossReference(«emit(grammar, eObject.getType())», «emit(grammar, eObject.getTerminal())»)''')));
+			'''createCrossReference(«pushIndent()»«emitIndent()»«emit(grammar, eObject.getType())», «emit(grammar, eObject.getTerminal())»«popIndent()»)''')));
 	}
 	
 	/*@NonNull*/ protected def String emitEnumLiteralDeclaration(/*@NonNull*/ Grammar grammar, /*@NonNull*/ EnumLiteralDeclaration eObject) {
@@ -342,7 +342,7 @@ import java.util.GregorianCalendar
 	}
 	/*@NonNull*/ protected def String emitGroup(/*@NonNull*/ Grammar grammar, /*@NonNull*/ Group eObject) {
 		return wrapCardinality(eObject, wrapFirstSetPredicated(eObject, wrapPredicated(eObject,
-			'''createGroup(«FOR element : eObject.getElements() SEPARATOR ", "»«emit(grammar, element)»«ENDFOR»)''')));
+			'''createGroup(«pushIndent()»«FOR element : eObject.getElements() SEPARATOR ", "»«emitIndent()»«emit(grammar, element)»«ENDFOR»«popIndent()»)''')));
 	}
 	
 	/*@NonNull*/ protected def String emitKeyword(/*@NonNull*/ Keyword eObject) {
@@ -366,7 +366,7 @@ import java.util.GregorianCalendar
 	
 	/*@NonNull*/ protected def String emitUnorderedGroup(/*@NonNull*/ Grammar grammar, /*@NonNull*/ UnorderedGroup eObject) {
 		return wrapCardinality(eObject, wrapFirstSetPredicated(eObject, wrapPredicated(eObject,
-			'''createUnorderedGroup(«FOR element : eObject.getElements() SEPARATOR ", "»«emit(grammar, element)»«ENDFOR»)''')));
+			'''createUnorderedGroup(«pushIndent()»«FOR element : eObject.getElements() SEPARATOR ", "»«emitIndent()»«emit(grammar, element)»«ENDFOR»«popIndent()»)''')));
 	}
 	
 	/*@NonNull*/ protected def String emitUntilToken(/*@NonNull*/ Grammar grammar, /*@NonNull*/ UntilToken eObject) {
