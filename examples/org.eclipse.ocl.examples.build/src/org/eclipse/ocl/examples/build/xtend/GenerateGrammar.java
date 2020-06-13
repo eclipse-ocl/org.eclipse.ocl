@@ -66,6 +66,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	protected AbstractGenModelHelper genModelHelper;
 	private Map<EClassifier, Map<Notifier, String>> nameMaps = new HashMap<EClassifier, Map<Notifier, String>>();
 	private Map<String, Grammar> name2grammar = new HashMap<String, Grammar>();
+	private int indent = 0;
 
 	@Override
 	public void checkConfiguration(Issues issues) {
@@ -108,6 +109,18 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 			return "<<" + ePackage.getNsURI() + ">>";
 		}
 		return genPackage.getQualifiedPackageInterfaceName() + ".Literals" + "." + genModelHelper.getLiteralName(eClassifier)+".getEEnumLiteral(\""+ enumLiteral.getName() + "\")";
+	}
+
+	/*
+	 * Emit the prevailing indent
+	 */
+	protected @NonNull String emitIndent() {
+		StringBuilder s = new StringBuilder();
+		s.append("\n");
+		for (int i = 0; i < indent; i++) {
+			s.append("\t");
+		}
+		return s.toString();
 	}
 
 	protected @NonNull String emitParserRuleLiteral(@NonNull Grammar grammar, @NonNull ParserRule parserRule) {
@@ -293,6 +306,17 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 		} finally {
 			ocl.dispose();
 		}
+	}
+
+	protected @NonNull String pushIndent() {
+		indent++;
+		return "";
+	}
+
+	protected @NonNull String popIndent() {
+		assert indent > 0;
+		indent--;
+		return "";
 	}
 
 	/**
