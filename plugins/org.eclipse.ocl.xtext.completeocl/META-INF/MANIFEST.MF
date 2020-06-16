@@ -31,6 +31,7 @@ Export-Package: org.eclipse.ocl.xtext.completeocl,
  org.eclipse.ocl.xtext.completeocl.validation,
  org.eclipse.ocl.xtext.completeoclcs,
  org.eclipse.ocl.xtext.completeoclcs.impl,
- org.eclipse.ocl.xtext.completeoclcs.util
+ org.eclipse.ocl.xtext.completeoclcs.util,
+ org.eclipse.ocl.xtext.completeocl.formatting2
 Bundle-Activator: org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLPlugin$Implementation
 Automatic-Module-Name: org.eclipse.ocl.xtext.completeocl

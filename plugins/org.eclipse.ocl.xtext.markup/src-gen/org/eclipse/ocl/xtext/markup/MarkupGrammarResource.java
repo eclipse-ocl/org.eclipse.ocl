@@ -101,23 +101,80 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 		private static final @NonNull TerminalRule TR_WS = createTerminalRule("WS", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 
 		private static void initTerminalRules() {
-			TR_ANY_OTHER.setAlternatives(createWildcard());
+			TR_ANY_OTHER.setAlternatives(
+				createWildcard());
 			TR_ESCAPED.setFragment(true);
-			TR_ESCAPED.setAlternatives(createGroup(createKeyword("\\"), createAlternatives(createKeyword("b"), createKeyword("t"), createKeyword("n"), createKeyword("f"), createKeyword("r"), createKeyword("\""), createKeyword("\'"), createKeyword("\\"), createKeyword("<"), createKeyword(">"), createKeyword("["), createKeyword("]"))));
+			TR_ESCAPED.setAlternatives(
+				createGroup(
+					createKeyword("\\"),
+					createAlternatives(
+						createKeyword("b"),
+						createKeyword("t"),
+						createKeyword("n"),
+						createKeyword("f"),
+						createKeyword("r"),
+						createKeyword("\""),
+						createKeyword("\'"),
+						createKeyword("\\"),
+						createKeyword("<"),
+						createKeyword(">"),
+						createKeyword("["),
+						createKeyword("]"))));
 			TR_HORIZONTAL_WS.setFragment(true);
-			TR_HORIZONTAL_WS.setAlternatives(createAlternatives(createKeyword(" "), createKeyword("\t")));
-			TR_ID.setAlternatives(createGroup(createRuleCall(TR_LETTER), setCardinality("*", createAlternatives(createRuleCall(TR_LETTER), createRuleCall(TR_NUMBER)))));
-			TR_INT.setAlternatives(setCardinality("+", createRuleCall(TR_NUMBER)));
+			TR_HORIZONTAL_WS.setAlternatives(
+				createAlternatives(
+					createKeyword(" "),
+					createKeyword("\t")));
+			TR_ID.setAlternatives(
+				createGroup(
+					createRuleCall(TR_LETTER),
+					setCardinality("*", createAlternatives(
+						createRuleCall(TR_LETTER),
+						createRuleCall(TR_NUMBER)))));
+			TR_INT.setAlternatives(
+				setCardinality("+", createRuleCall(TR_NUMBER)));
 			TR_LETTER.setFragment(true);
-			TR_LETTER.setAlternatives(createAlternatives(createCharacterRange(createKeyword("a"), createKeyword("z")), createCharacterRange(createKeyword("A"), createKeyword("Z")), createKeyword("_")));
-			TR_NL.setAlternatives(setCardinality("+", createGroup(setCardinality("*", createRuleCall(TR_HORIZONTAL_WS)), createRuleCall(TR_VERTICAL_WS))));
+			TR_LETTER.setAlternatives(
+				createAlternatives(
+					createCharacterRange(createKeyword("a"), createKeyword("z")),
+					createCharacterRange(createKeyword("A"), createKeyword("Z")),
+					createKeyword("_")));
+			TR_NL.setAlternatives(
+				setCardinality("+", createGroup(
+					setCardinality("*", createRuleCall(TR_HORIZONTAL_WS)),
+					createRuleCall(TR_VERTICAL_WS))));
 			TR_NUMBER.setFragment(true);
-			TR_NUMBER.setAlternatives(createCharacterRange(createKeyword("0"), createKeyword("9")));
-			TR_STRING.setAlternatives(createGroup(createKeyword("\""), setCardinality("*", createAlternatives(createRuleCall(TR_ESCAPED), createNegatedToken(createAlternatives(createKeyword("\\"), createKeyword("\""))))), createKeyword("\"")));
+			TR_NUMBER.setAlternatives(
+				createCharacterRange(createKeyword("0"), createKeyword("9")));
+			TR_STRING.setAlternatives(
+				createGroup(
+					createKeyword("\""),
+					setCardinality("*", createAlternatives(
+						createRuleCall(TR_ESCAPED),
+						createNegatedToken(createAlternatives(
+							createKeyword("\\"),
+							createKeyword("\""))))),
+					createKeyword("\"")));
 			TR_VERTICAL_WS.setFragment(true);
-			TR_VERTICAL_WS.setAlternatives(createAlternatives(createKeyword("\n"), createKeyword("\r")));
-			TR_WORD.setAlternatives(setCardinality("+", createAlternatives(createRuleCall(TR_ESCAPED), createNegatedToken(createAlternatives(createKeyword("\\"), createKeyword("\""), createKeyword("["), createKeyword("]"), createKeyword(":"), createKeyword("#"), createKeyword(","), createRuleCall(TR_HORIZONTAL_WS), createRuleCall(TR_VERTICAL_WS))))));
-			TR_WS.setAlternatives(setCardinality("+", createRuleCall(TR_HORIZONTAL_WS)));
+			TR_VERTICAL_WS.setAlternatives(
+				createAlternatives(
+					createKeyword("\n"),
+					createKeyword("\r")));
+			TR_WORD.setAlternatives(
+				setCardinality("+", createAlternatives(
+					createRuleCall(TR_ESCAPED),
+					createNegatedToken(createAlternatives(
+						createKeyword("\\"),
+						createKeyword("\""),
+						createKeyword("["),
+						createKeyword("]"),
+						createKeyword(":"),
+						createKeyword("#"),
+						createKeyword(","),
+						createRuleCall(TR_HORIZONTAL_WS),
+						createRuleCall(TR_VERTICAL_WS))))));
+			TR_WS.setAlternatives(
+				setCardinality("+", createRuleCall(TR_HORIZONTAL_WS)));
 		}
 
 		private static final @NonNull ParserRule PR_BulletElement = createParserRule("BulletElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.BULLET_ELEMENT));
@@ -137,21 +194,134 @@ public class MarkupGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_TextElement = createParserRule("TextElement", createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.TEXT_ELEMENT));
 
 		private static void initParserRules() {
-			PR_BulletElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.BULLET_ELEMENT)), createKeyword("bullet"), setCardinality("?", createGroup(createKeyword(":"), createAssignment("level", "=", createRuleCall(TR_INT)))), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_FigureElement.setAlternatives(createGroup(createKeyword("figure"), setCardinality("?", createGroup(createKeyword("#"), createAssignment("def", "=", createRuleCall(TR_ID)))), createKeyword("["), createAssignment("src", "=", createRuleCall(TR_STRING)), setCardinality("?", createGroup(createKeyword(","), createAssignment("alt", "=", createRuleCall(TR_STRING)), setCardinality("?", createGroup(createKeyword(","), createAssignment("requiredWidth", "=", createRuleCall(TR_INT)), setCardinality("?", createGroup(createKeyword(","), createAssignment("requiredHeight", "=", createRuleCall(TR_INT)))))))), createKeyword("]")));
-			PR_FigureRefElement.setAlternatives(createGroup(createKeyword("figureRef"), createKeyword("["), createAssignment("ref", "=", createCrossReference(createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.FIGURE_ELEMENT), createRuleCall(TR_ID))), createKeyword("]")));
-			PR_FontElement.setAlternatives(createGroup(createAssignment("font", "=", createAlternatives(createKeyword("b"), createKeyword("e"))), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_FootnoteElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.FOOTNOTE_ELEMENT)), createKeyword("footnote"), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_HeadingElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.HEADING_ELEMENT)), createKeyword("heading"), setCardinality("?", createGroup(createKeyword(":"), createAssignment("level", "=", createRuleCall(TR_INT)))), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_Markup.setAlternatives(setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))));
-			PR_MarkupElement.setAlternatives(createAlternatives(createRuleCall(PR_FontElement), createRuleCall(PR_NewLineElement), createRuleCall(PR_BulletElement), createRuleCall(PR_FigureElement), createRuleCall(PR_FigureRefElement), createRuleCall(PR_FootnoteElement), createRuleCall(PR_HeadingElement), createRuleCall(PR_NullElement), createRuleCall(PR_OCLCodeElement), createRuleCall(PR_OCLEvalElement), createRuleCall(PR_OCLTextElement), createRuleCall(PR_TextElement)));
-			PR_MarkupKeyword.setAlternatives(createAlternatives(createKeyword("b"), createKeyword("e"), createKeyword("bullet"), createKeyword("figure"), createKeyword("figureRef"), createKeyword("footnote"), createKeyword("heading"), createKeyword("oclCode"), createKeyword("oclEval"), createKeyword("oclText")));
-			PR_NewLineElement.setAlternatives(createAssignment("text", "=", createRuleCall(TR_NL)));
-			PR_NullElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.NULL_ELEMENT)), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_OCLCodeElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_CODE_ELEMENT)), createKeyword("oclCode"), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_OCLEvalElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_EVAL_ELEMENT)), createKeyword("oclEval"), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_OCLTextElement.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_TEXT_ELEMENT)), createKeyword("oclText"), createKeyword("["), setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))), createKeyword("]")));
-			PR_TextElement.setAlternatives(createAlternatives(setCardinality("+", createAssignment("text", "+=", createAlternatives(createRuleCall(TR_ID), createRuleCall(TR_WORD), createRuleCall(TR_INT), createRuleCall(TR_WS), createKeyword(":"), createKeyword("#"), createKeyword(",")))), createAssignment("text", "+=", createRuleCall(PR_MarkupKeyword))));
+			PR_BulletElement.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.BULLET_ELEMENT)),
+					createKeyword("bullet"),
+					setCardinality("?", createGroup(
+						createKeyword(":"),
+						createAssignment("level", "=", createRuleCall(TR_INT)))),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_FigureElement.setAlternatives(
+				createGroup(
+					createKeyword("figure"),
+					setCardinality("?", createGroup(
+						createKeyword("#"),
+						createAssignment("def", "=", createRuleCall(TR_ID)))),
+					createKeyword("["),
+					createAssignment("src", "=", createRuleCall(TR_STRING)),
+					setCardinality("?", createGroup(
+						createKeyword(","),
+						createAssignment("alt", "=", createRuleCall(TR_STRING)),
+						setCardinality("?", createGroup(
+							createKeyword(","),
+							createAssignment("requiredWidth", "=", createRuleCall(TR_INT)),
+							setCardinality("?", createGroup(
+								createKeyword(","),
+								createAssignment("requiredHeight", "=", createRuleCall(TR_INT)))))))),
+					createKeyword("]")));
+			PR_FigureRefElement.setAlternatives(
+				createGroup(
+					createKeyword("figureRef"),
+					createKeyword("["),
+					createAssignment("ref", "=", createCrossReference(
+						createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.FIGURE_ELEMENT), createRuleCall(TR_ID))),
+					createKeyword("]")));
+			PR_FontElement.setAlternatives(
+				createGroup(
+					createAssignment("font", "=", createAlternatives(
+						createKeyword("b"),
+						createKeyword("e"))),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_FootnoteElement.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.FOOTNOTE_ELEMENT)),
+					createKeyword("footnote"),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_HeadingElement.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.HEADING_ELEMENT)),
+					createKeyword("heading"),
+					setCardinality("?", createGroup(
+						createKeyword(":"),
+						createAssignment("level", "=", createRuleCall(TR_INT)))),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_Markup.setAlternatives(
+				setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))));
+			PR_MarkupElement.setAlternatives(
+				createAlternatives(
+					createRuleCall(PR_FontElement),
+					createRuleCall(PR_NewLineElement),
+					createRuleCall(PR_BulletElement),
+					createRuleCall(PR_FigureElement),
+					createRuleCall(PR_FigureRefElement),
+					createRuleCall(PR_FootnoteElement),
+					createRuleCall(PR_HeadingElement),
+					createRuleCall(PR_NullElement),
+					createRuleCall(PR_OCLCodeElement),
+					createRuleCall(PR_OCLEvalElement),
+					createRuleCall(PR_OCLTextElement),
+					createRuleCall(PR_TextElement)));
+			PR_MarkupKeyword.setAlternatives(
+				createAlternatives(
+					createKeyword("b"),
+					createKeyword("e"),
+					createKeyword("bullet"),
+					createKeyword("figure"),
+					createKeyword("figureRef"),
+					createKeyword("footnote"),
+					createKeyword("heading"),
+					createKeyword("oclCode"),
+					createKeyword("oclEval"),
+					createKeyword("oclText")));
+			PR_NewLineElement.setAlternatives(
+				createAssignment("text", "=", createRuleCall(TR_NL)));
+			PR_NullElement.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.NULL_ELEMENT)),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_OCLCodeElement.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_CODE_ELEMENT)),
+					createKeyword("oclCode"),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_OCLEvalElement.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_EVAL_ELEMENT)),
+					createKeyword("oclEval"),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_OCLTextElement.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.markupcs.MarkupPackage.Literals.OCL_TEXT_ELEMENT)),
+					createKeyword("oclText"),
+					createKeyword("["),
+					setCardinality("*", createAssignment("elements", "+=", createRuleCall(PR_MarkupElement))),
+					createKeyword("]")));
+			PR_TextElement.setAlternatives(
+				createAlternatives(
+					setCardinality("+", createAssignment("text", "+=", createAlternatives(
+						createRuleCall(TR_ID),
+						createRuleCall(TR_WORD),
+						createRuleCall(TR_INT),
+						createRuleCall(TR_WS),
+						createKeyword(":"),
+						createKeyword("#"),
+						createKeyword(",")))),
+					createAssignment("text", "+=", createRuleCall(PR_MarkupKeyword))));
 		}
 
 		private static @NonNull Grammar initGrammar() {

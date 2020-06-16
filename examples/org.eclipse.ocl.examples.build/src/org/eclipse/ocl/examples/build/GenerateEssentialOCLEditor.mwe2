@@ -98,8 +98,9 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			fragment = org.eclipse.xtext.generator.adapter.FragmentAdapter {
-				fragment = org.eclipse.xtext.generator.formatting.FormatterFragment {}
+			formatter = {
+				generateStub = true
+				generateXtendStub = true
 			}
 			// EssentialOCL bindings 
 			fragment = org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment {}			

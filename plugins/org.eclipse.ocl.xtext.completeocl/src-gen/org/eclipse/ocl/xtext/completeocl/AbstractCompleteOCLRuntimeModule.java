@@ -28,7 +28,7 @@ import org.eclipse.ocl.xtext.base.services.PivotResourceServiceProvider;
 import org.eclipse.ocl.xtext.base.utilities.CS2ASLinker;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
-import org.eclipse.ocl.xtext.completeocl.formatting.CompleteOCLFormatter;
+import org.eclipse.ocl.xtext.completeocl.formatting2.CompleteOCLFormatter;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLParser;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLLexer;
@@ -41,7 +41,9 @@ import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 import org.eclipse.xtext.Constants;
 import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.formatting.IFormatter;
+import org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider;
+import org.eclipse.xtext.formatting2.FormatterPreferences;
+import org.eclipse.xtext.formatting2.IFormatter2;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.linking.ILinkingDiagnosticMessageProvider;
 import org.eclipse.xtext.linking.ILinkingService;
@@ -56,6 +58,7 @@ import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
 import org.eclipse.xtext.parser.antlr.Lexer;
 import org.eclipse.xtext.parser.antlr.LexerBindings;
 import org.eclipse.xtext.parser.antlr.LexerProvider;
+import org.eclipse.xtext.preferences.IPreferenceValuesProvider;
 import org.eclipse.xtext.resource.IContainer;
 import org.eclipse.xtext.resource.IFragmentProvider;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -215,9 +218,14 @@ public abstract class AbstractCompleteOCLRuntimeModule extends DefaultRuntimeMod
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
-	public Class<? extends IFormatter> bindIFormatter() {
+	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	public Class<? extends IFormatter2> bindIFormatter2() {
 		return CompleteOCLFormatter.class;
+	}
+
+	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	public void configureFormatterPreferences(Binder binder) {
+		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment

@@ -102,20 +102,81 @@ public class BaseGrammarResource extends AbstractGrammarResource
 		private static final @NonNull TerminalRule TR_WS = createTerminalRule("WS", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 
 		private static void initTerminalRules() {
-			TR_ANY_OTHER.setAlternatives(createWildcard());
-			TR_DOUBLE_QUOTED_STRING.setAlternatives(createGroup(createKeyword("\""), setCardinality("*", createAlternatives(createRuleCall(TR_ESCAPED_CHARACTER), createNegatedToken(createAlternatives(createKeyword("\\"), createKeyword("\""))))), createKeyword("\"")));
+			TR_ANY_OTHER.setAlternatives(
+				createWildcard());
+			TR_DOUBLE_QUOTED_STRING.setAlternatives(
+				createGroup(
+					createKeyword("\""),
+					setCardinality("*", createAlternatives(
+						createRuleCall(TR_ESCAPED_CHARACTER),
+						createNegatedToken(createAlternatives(
+							createKeyword("\\"),
+							createKeyword("\""))))),
+					createKeyword("\"")));
 			TR_ESCAPED_CHARACTER.setFragment(true);
-			TR_ESCAPED_CHARACTER.setAlternatives(createGroup(createKeyword("\\"), createAlternatives(createKeyword("b"), createKeyword("t"), createKeyword("n"), createKeyword("f"), createKeyword("r"), createKeyword("u"), createKeyword("\""), createKeyword("\'"), createKeyword("\\"))));
-			TR_ESCAPED_ID.setAlternatives(createGroup(createKeyword("_"), createRuleCall(TR_SINGLE_QUOTED_STRING)));
-			TR_INT.setAlternatives(setCardinality("+", createCharacterRange(createKeyword("0"), createKeyword("9"))));
+			TR_ESCAPED_CHARACTER.setAlternatives(
+				createGroup(
+					createKeyword("\\"),
+					createAlternatives(
+						createKeyword("b"),
+						createKeyword("t"),
+						createKeyword("n"),
+						createKeyword("f"),
+						createKeyword("r"),
+						createKeyword("u"),
+						createKeyword("\""),
+						createKeyword("\'"),
+						createKeyword("\\"))));
+			TR_ESCAPED_ID.setAlternatives(
+				createGroup(
+					createKeyword("_"),
+					createRuleCall(TR_SINGLE_QUOTED_STRING)));
+			TR_INT.setAlternatives(
+				setCardinality("+", createCharacterRange(createKeyword("0"), createKeyword("9"))));
 			TR_LETTER_CHARACTER.setFragment(true);
-			TR_LETTER_CHARACTER.setAlternatives(createAlternatives(createCharacterRange(createKeyword("a"), createKeyword("z")), createCharacterRange(createKeyword("A"), createKeyword("Z")), createKeyword("_")));
-			TR_ML_COMMENT.setAlternatives(createGroup(createKeyword("/*"), createUntilToken(createKeyword("*/"))));
-			TR_ML_SINGLE_QUOTED_STRING.setAlternatives(createGroup(createKeyword("/\'"), createUntilToken(createKeyword("\'/"))));
-			TR_SIMPLE_ID.setAlternatives(createGroup(createRuleCall(TR_LETTER_CHARACTER), setCardinality("*", createAlternatives(createRuleCall(TR_LETTER_CHARACTER), createCharacterRange(createKeyword("0"), createKeyword("9"))))));
-			TR_SINGLE_QUOTED_STRING.setAlternatives(createGroup(createKeyword("\'"), setCardinality("*", createAlternatives(createRuleCall(TR_ESCAPED_CHARACTER), createNegatedToken(createAlternatives(createKeyword("\\"), createKeyword("\'"))))), createKeyword("\'")));
-			TR_SL_COMMENT.setAlternatives(createGroup(createKeyword("--"), setCardinality("*", createNegatedToken(createAlternatives(createKeyword("\n"), createKeyword("\r")))), setCardinality("?", createGroup(setCardinality("?", createKeyword("\r")), createKeyword("\n")))));
-			TR_WS.setAlternatives(setCardinality("+", createAlternatives(createKeyword(" "), createKeyword("\t"), createKeyword("\r"), createKeyword("\n"))));
+			TR_LETTER_CHARACTER.setAlternatives(
+				createAlternatives(
+					createCharacterRange(createKeyword("a"), createKeyword("z")),
+					createCharacterRange(createKeyword("A"), createKeyword("Z")),
+					createKeyword("_")));
+			TR_ML_COMMENT.setAlternatives(
+				createGroup(
+					createKeyword("/*"),
+					createUntilToken(createKeyword("*/"))));
+			TR_ML_SINGLE_QUOTED_STRING.setAlternatives(
+				createGroup(
+					createKeyword("/\'"),
+					createUntilToken(createKeyword("\'/"))));
+			TR_SIMPLE_ID.setAlternatives(
+				createGroup(
+					createRuleCall(TR_LETTER_CHARACTER),
+					setCardinality("*", createAlternatives(
+						createRuleCall(TR_LETTER_CHARACTER),
+						createCharacterRange(createKeyword("0"), createKeyword("9"))))));
+			TR_SINGLE_QUOTED_STRING.setAlternatives(
+				createGroup(
+					createKeyword("\'"),
+					setCardinality("*", createAlternatives(
+						createRuleCall(TR_ESCAPED_CHARACTER),
+						createNegatedToken(createAlternatives(
+							createKeyword("\\"),
+							createKeyword("\'"))))),
+					createKeyword("\'")));
+			TR_SL_COMMENT.setAlternatives(
+				createGroup(
+					createKeyword("--"),
+					setCardinality("*", createNegatedToken(createAlternatives(
+						createKeyword("\n"),
+						createKeyword("\r")))),
+					setCardinality("?", createGroup(
+						setCardinality("?", createKeyword("\r")),
+						createKeyword("\n")))));
+			TR_WS.setAlternatives(
+				setCardinality("+", createAlternatives(
+					createKeyword(" "),
+					createKeyword("\t"),
+					createKeyword("\r"),
+					createKeyword("\n"))));
 		}
 
 		private static final @NonNull ParserRule PR_FirstPathElementCS = createParserRule("FirstPathElementCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_ELEMENT_CS));
@@ -143,29 +204,107 @@ public class BaseGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_WildcardTypeRefCS = createParserRule("WildcardTypeRefCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS));
 
 		private static void initParserRules() {
-			PR_FirstPathElementCS.setAlternatives(createAssignment("referredElement", "=", createCrossReference(createTypeRef(MM_pivot, org.eclipse.ocl.pivot.PivotPackage.Literals.NAMED_ELEMENT), createRuleCall(PR_UnrestrictedName))));
-			PR_ID.setAlternatives(createAlternatives(createRuleCall(TR_SIMPLE_ID), createRuleCall(TR_ESCAPED_ID)));
-			PR_Identifier.setAlternatives(createRuleCall(PR_ID));
-			PR_LOWER.setAlternatives(createRuleCall(TR_INT));
-			PR_MultiplicityBoundsCS.setAlternatives(createGroup(createAssignment("lowerBound", "=", createRuleCall(PR_LOWER)), setCardinality("?", createGroup(createKeyword(".."), createAssignment("upperBound", "=", createRuleCall(PR_UPPER))))));
-			PR_MultiplicityCS.setAlternatives(createGroup(createKeyword("["), createAlternatives(createRuleCall(PR_MultiplicityBoundsCS), createRuleCall(PR_MultiplicityStringCS)), setCardinality("?", createAlternatives(createKeyword("|?"), createAssignment("isNullFree", "?=", createKeyword("|1")))), createKeyword("]")));
-			PR_MultiplicityStringCS.setAlternatives(createAssignment("stringBounds", "=", createAlternatives(createKeyword("*"), createKeyword("+"), createKeyword("?"))));
-			PR_NUMBER_LITERAL.setAlternatives(createRuleCall(TR_INT));
-			PR_NextPathElementCS.setAlternatives(createAssignment("referredElement", "=", createCrossReference(createTypeRef(MM_pivot, org.eclipse.ocl.pivot.PivotPackage.Literals.NAMED_ELEMENT), createRuleCall(PR_UnreservedName))));
-			PR_PathNameCS.setAlternatives(createGroup(createAssignment("ownedPathElements", "+=", createRuleCall(PR_FirstPathElementCS)), setCardinality("*", createGroup(createKeyword("::"), createAssignment("ownedPathElements", "+=", createRuleCall(PR_NextPathElementCS))))));
-			PR_StringLiteral.setAlternatives(createRuleCall(TR_SINGLE_QUOTED_STRING));
-			PR_TemplateBindingCS.setAlternatives(createGroup(createAssignment("ownedSubstitutions", "+=", createRuleCall(PR_TemplateParameterSubstitutionCS)), setCardinality("*", createGroup(createKeyword(","), createAssignment("ownedSubstitutions", "+=", createRuleCall(PR_TemplateParameterSubstitutionCS)))), setCardinality("?", createAssignment("ownedMultiplicity", "=", createRuleCall(PR_MultiplicityCS)))));
-			PR_TemplateParameterSubstitutionCS.setAlternatives(createAssignment("ownedActualParameter", "=", createRuleCall(PR_TypeRefCS)));
-			PR_TemplateSignatureCS.setAlternatives(createGroup(createKeyword("("), createAssignment("ownedParameters", "+=", createRuleCall(PR_TypeParameterCS)), setCardinality("*", createGroup(createKeyword(","), createAssignment("ownedParameters", "+=", createRuleCall(PR_TypeParameterCS)))), createKeyword(")")));
-			PR_TypeParameterCS.setAlternatives(createGroup(createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)), setCardinality("?", createGroup(createKeyword("extends"), createAssignment("ownedExtends", "+=", createRuleCall(PR_TypedRefCS)), setCardinality("*", createGroup(createKeyword("&&"), createAssignment("ownedExtends", "+=", createRuleCall(PR_TypedRefCS))))))));
-			PR_TypeRefCS.setAlternatives(createAlternatives(createRuleCall(PR_TypedRefCS), createRuleCall(PR_WildcardTypeRefCS)));
-			PR_TypedRefCS.setAlternatives(createRuleCall(PR_TypedTypeRefCS));
-			PR_TypedTypeRefCS.setAlternatives(createGroup(createAssignment("ownedPathName", "=", createRuleCall(PR_PathNameCS)), setCardinality("?", createGroup(createKeyword("("), createAssignment("ownedBinding", "=", createRuleCall(PR_TemplateBindingCS)), createKeyword(")")))));
-			PR_UPPER.setAlternatives(createAlternatives(createRuleCall(TR_INT), createKeyword("*")));
-			PR_URI.setAlternatives(createRuleCall(TR_SINGLE_QUOTED_STRING));
-			PR_UnreservedName.setAlternatives(createRuleCall(PR_UnrestrictedName));
-			PR_UnrestrictedName.setAlternatives(createRuleCall(PR_Identifier));
-			PR_WildcardTypeRefCS.setAlternatives(createGroup(createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS)), createKeyword("?"), setCardinality("?", createGroup(createKeyword("extends"), createAssignment("ownedExtends", "=", createRuleCall(PR_TypedRefCS))))));
+			PR_FirstPathElementCS.setAlternatives(
+				createAssignment("referredElement", "=", createCrossReference(
+					createTypeRef(MM_pivot, org.eclipse.ocl.pivot.PivotPackage.Literals.NAMED_ELEMENT), createRuleCall(PR_UnrestrictedName))));
+			PR_ID.setAlternatives(
+				createAlternatives(
+					createRuleCall(TR_SIMPLE_ID),
+					createRuleCall(TR_ESCAPED_ID)));
+			PR_Identifier.setAlternatives(
+				createRuleCall(PR_ID));
+			PR_LOWER.setAlternatives(
+				createRuleCall(TR_INT));
+			PR_MultiplicityBoundsCS.setAlternatives(
+				createGroup(
+					createAssignment("lowerBound", "=", createRuleCall(PR_LOWER)),
+					setCardinality("?", createGroup(
+						createKeyword(".."),
+						createAssignment("upperBound", "=", createRuleCall(PR_UPPER))))));
+			PR_MultiplicityCS.setAlternatives(
+				createGroup(
+					createKeyword("["),
+					createAlternatives(
+						createRuleCall(PR_MultiplicityBoundsCS),
+						createRuleCall(PR_MultiplicityStringCS)),
+					setCardinality("?", createAlternatives(
+						createKeyword("|?"),
+						createAssignment("isNullFree", "?=", createKeyword("|1")))),
+					createKeyword("]")));
+			PR_MultiplicityStringCS.setAlternatives(
+				createAssignment("stringBounds", "=", createAlternatives(
+					createKeyword("*"),
+					createKeyword("+"),
+					createKeyword("?"))));
+			PR_NUMBER_LITERAL.setAlternatives(
+				createRuleCall(TR_INT));
+			PR_NextPathElementCS.setAlternatives(
+				createAssignment("referredElement", "=", createCrossReference(
+					createTypeRef(MM_pivot, org.eclipse.ocl.pivot.PivotPackage.Literals.NAMED_ELEMENT), createRuleCall(PR_UnreservedName))));
+			PR_PathNameCS.setAlternatives(
+				createGroup(
+					createAssignment("ownedPathElements", "+=", createRuleCall(PR_FirstPathElementCS)),
+					setCardinality("*", createGroup(
+						createKeyword("::"),
+						createAssignment("ownedPathElements", "+=", createRuleCall(PR_NextPathElementCS))))));
+			PR_StringLiteral.setAlternatives(
+				createRuleCall(TR_SINGLE_QUOTED_STRING));
+			PR_TemplateBindingCS.setAlternatives(
+				createGroup(
+					createAssignment("ownedSubstitutions", "+=", createRuleCall(PR_TemplateParameterSubstitutionCS)),
+					setCardinality("*", createGroup(
+						createKeyword(","),
+						createAssignment("ownedSubstitutions", "+=", createRuleCall(PR_TemplateParameterSubstitutionCS)))),
+					setCardinality("?", createAssignment("ownedMultiplicity", "=", createRuleCall(PR_MultiplicityCS)))));
+			PR_TemplateParameterSubstitutionCS.setAlternatives(
+				createAssignment("ownedActualParameter", "=", createRuleCall(PR_TypeRefCS)));
+			PR_TemplateSignatureCS.setAlternatives(
+				createGroup(
+					createKeyword("("),
+					createAssignment("ownedParameters", "+=", createRuleCall(PR_TypeParameterCS)),
+					setCardinality("*", createGroup(
+						createKeyword(","),
+						createAssignment("ownedParameters", "+=", createRuleCall(PR_TypeParameterCS)))),
+					createKeyword(")")));
+			PR_TypeParameterCS.setAlternatives(
+				createGroup(
+					createAssignment("name", "=", createRuleCall(PR_UnrestrictedName)),
+					setCardinality("?", createGroup(
+						createKeyword("extends"),
+						createAssignment("ownedExtends", "+=", createRuleCall(PR_TypedRefCS)),
+						setCardinality("*", createGroup(
+							createKeyword("&&"),
+							createAssignment("ownedExtends", "+=", createRuleCall(PR_TypedRefCS))))))));
+			PR_TypeRefCS.setAlternatives(
+				createAlternatives(
+					createRuleCall(PR_TypedRefCS),
+					createRuleCall(PR_WildcardTypeRefCS)));
+			PR_TypedRefCS.setAlternatives(
+				createRuleCall(PR_TypedTypeRefCS));
+			PR_TypedTypeRefCS.setAlternatives(
+				createGroup(
+					createAssignment("ownedPathName", "=", createRuleCall(PR_PathNameCS)),
+					setCardinality("?", createGroup(
+						createKeyword("("),
+						createAssignment("ownedBinding", "=", createRuleCall(PR_TemplateBindingCS)),
+						createKeyword(")")))));
+			PR_UPPER.setAlternatives(
+				createAlternatives(
+					createRuleCall(TR_INT),
+					createKeyword("*")));
+			PR_URI.setAlternatives(
+				createRuleCall(TR_SINGLE_QUOTED_STRING));
+			PR_UnreservedName.setAlternatives(
+				createRuleCall(PR_UnrestrictedName));
+			PR_UnrestrictedName.setAlternatives(
+				createRuleCall(PR_Identifier));
+			PR_WildcardTypeRefCS.setAlternatives(
+				createGroup(
+					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS)),
+					createKeyword("?"),
+					setCardinality("?", createGroup(
+						createKeyword("extends"),
+						createAssignment("ownedExtends", "=", createRuleCall(PR_TypedRefCS))))));
 		}
 
 		private static @NonNull Grammar initGrammar() {

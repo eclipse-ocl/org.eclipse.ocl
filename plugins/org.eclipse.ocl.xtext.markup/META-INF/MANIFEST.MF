@@ -19,7 +19,8 @@ Export-Package: org.eclipse.ocl.xtext.markup,
  org.eclipse.ocl.xtext.markupcs,
  org.eclipse.ocl.xtext.markupcs.impl,
  org.eclipse.ocl.xtext.markupcs.util,
- org.eclipse.ocl.xtext.markupcs.validation;x-internal:=true
+ org.eclipse.ocl.xtext.markupcs.validation;x-internal:=true,
+ org.eclipse.ocl.xtext.markup.formatting2
 Require-Bundle: org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.xtext;bundle-version="[2.9.0,3.0.0)";visibility:=reexport,

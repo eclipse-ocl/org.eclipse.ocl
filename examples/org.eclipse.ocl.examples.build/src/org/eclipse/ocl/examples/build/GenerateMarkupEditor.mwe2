@@ -97,8 +97,9 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			fragment = org.eclipse.xtext.generator.adapter.FragmentAdapter {
-				fragment = org.eclipse.xtext.generator.formatting.FormatterFragment {}
+			formatter = {
+				generateStub = true
+				generateXtendStub = true
 			}
 			// *.xtextbin support on Xtext 2.3		
 			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}			

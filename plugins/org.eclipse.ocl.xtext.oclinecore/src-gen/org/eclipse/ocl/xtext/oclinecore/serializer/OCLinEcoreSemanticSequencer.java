@@ -745,18 +745,18 @@ public class OCLinEcoreSemanticSequencer extends EssentialOCLSemanticSequencer {
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='!derived'?
+	 *         qualifiers+='ordered'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='derived' |
-	 *                 qualifiers+='ordered' |
+	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
 	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique'
 	 *             )?
-	 *             qualifiers+='!derived'?
+	 *             qualifiers+='ordered'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -855,11 +855,12 @@ public class OCLinEcoreSemanticSequencer extends EssentialOCLSemanticSequencer {
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='derived'?
+	 *         qualifiers+='unsettable'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='composes' |
 	 *                 qualifiers+='!composes' |
+	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
@@ -871,12 +872,11 @@ public class OCLinEcoreSemanticSequencer extends EssentialOCLSemanticSequencer {
 	 *                 qualifiers+='!transient' |
 	 *                 qualifiers+='unique' |
 	 *                 qualifiers+='!unique' |
-	 *                 qualifiers+='unsettable' |
 	 *                 qualifiers+='!unsettable' |
 	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='derived'?
+	 *             qualifiers+='unsettable'?
 	 *         )*
 	 *         (
 	 *             (
