@@ -15,8 +15,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -181,31 +179,28 @@ public class UserModelAnalysis
 			s.append(" <=>");
 			Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses2 = productionRuleAnalysis2containingAssignmentAnalyses;
 			if (productionRuleAnalysis2containingAssignmentAnalyses2 != null) {
-				Set<@NonNull Entry<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>>> entrySet = productionRuleAnalysis2containingAssignmentAnalyses2.entrySet();
-				boolean isMany = entrySet.size() > 1;
-				for (@NonNull Entry<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> entry : entrySet) {
-					if (isMany) {
-						s.append("\n\t\t");
+				List<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = new ArrayList<>(productionRuleAnalysis2containingAssignmentAnalyses2.keySet());
+				Collections.sort(productionRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
+				boolean isMany1 = productionRuleAnalyses.size() > 1;
+				for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
+					s.append(isMany1 ? "\n\t\t" : " ");
+					s.append(productionRuleAnalysis.getName());
+					s.append("-");
+					List<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalyses = productionRuleAnalysis2containingAssignmentAnalyses2.get(productionRuleAnalysis);
+					assert containingAssignmentAnalyses != null;
+					boolean isMany2 = containingAssignmentAnalyses.size() > 1;
+					if (isMany2) {
+						s.append("{");
 					}
-					else {
-						s.append(" ");
-					}
-					XtextParserRuleAnalysis productionRuleAnalysis = entry.getKey();
-					List<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalyses = entry.getValue();
-					if (containingAssignmentAnalyses.size() == 1) {
-						s.append(containingAssignmentAnalyses.get(0));
-					}
-					else {
-						s.append(productionRuleAnalysis.getName());
-						s.append("-{");
-						boolean isFirst2 = true;
-						for (@NonNull XtextAssignmentAnalysis containingAssignmentAnalysis : containingAssignmentAnalyses) {
-							if (!isFirst2) {
-								s.append(",");
-							}
-							s.append(containingAssignmentAnalysis.getEStructuralFeature().getName());
-							isFirst2 = false;
+					boolean isFirst2 = true;
+					for (@NonNull XtextAssignmentAnalysis containingAssignmentAnalysis : containingAssignmentAnalyses) {
+						if (!isFirst2) {
+							s.append(",");
 						}
+						s.append(containingAssignmentAnalysis.getEStructuralFeature().getName());
+						isFirst2 = false;
+					}
+					if (isMany2) {
 						s.append("}");
 					}
 				}
@@ -226,6 +221,9 @@ public class UserModelAnalysis
 		return ClassUtil.nonNullState(eObject.eContainer());
 	}
 
+	/**
+	 * The overall (multi-)grammar analysis.
+	 */
 	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
 
 	private @NonNull Map<@NonNull EObject, @NonNull List<@NonNull Assignment>> modelObject2assignments = new HashMap<>();
