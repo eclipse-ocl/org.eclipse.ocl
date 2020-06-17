@@ -25,8 +25,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis.XtextAbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis.XtextAssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis.XtextParserRuleAnalysis;
 import org.eclipse.xtext.Assignment;
 
 /**
@@ -75,14 +75,14 @@ public class UserModelAnalysis
 	 */
 	public static class RootUserElementAnalysis extends AbstractUserElementAnalysis
 	{
-		private @NonNull List<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses;
+		private @NonNull List<@NonNull XtextAbstractRuleAnalysis> productionRuleAnalyses;
 
 		public RootUserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 			super(modelAnalysis, element);
 			assert element.eContainer() == null;
 			EClass targetEClass = eClass(element);
 			XtextGrammarAnalysis grammarAnalysis = getGrammarAnalysis();
-			this.productionRuleAnalyses = grammarAnalysis.getParserRuleAnalyses(targetEClass);
+			this.productionRuleAnalyses = grammarAnalysis.getActiveRuleAnalyses(targetEClass);
 		}
 
 		@Override
@@ -96,7 +96,7 @@ public class UserModelAnalysis
 			s.append(getName());
 			s.append(" <=>");
 			boolean isMany = productionRuleAnalyses.size() > 1;
-			for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
+			for (@NonNull XtextAbstractRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
 				if (isMany) {
 					s.append("\n\t\t");
 				}
@@ -117,7 +117,7 @@ public class UserModelAnalysis
 	{
 		protected final @NonNull EStructuralFeature eContainingFeature;
 		protected final @NonNull AbstractUserElementAnalysis containingElementAnalysis;
-		private @Nullable Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses = null;
+		private @Nullable Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses = null;
 
 		public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 			super(modelAnalysis, element);
@@ -130,13 +130,14 @@ public class UserModelAnalysis
 		/**
 		 * Determine the rules able to produce this element and the containing assignments by which it can be contained.
 		 */
-		private @NonNull Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> analyzeProduction() {
+		private @NonNull Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> analyzeProduction() {
 			EClass targetEClass = eClass(element);
-			Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> parserRuleAnalysis2assignmentAnalyses = new HashMap<>();
+			String eClassname = targetEClass.getName();
+			Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> parserRuleAnalysis2assignmentAnalyses = new HashMap<>();
 			XtextGrammarAnalysis grammarAnalysis = getGrammarAnalysis();
-			Iterable<@NonNull XtextParserRuleAnalysis> targetRuleAnalysisCandidates = grammarAnalysis.getParserRuleAnalyses(targetEClass);
+			Iterable<@NonNull XtextAbstractRuleAnalysis> targetRuleAnalysisCandidates = grammarAnalysis.getActiveRuleAnalyses(targetEClass);
 			Iterable<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalysisCandidates = grammarAnalysis.getAssignmentAnalyses(eContainingFeature);
-			for (@NonNull XtextParserRuleAnalysis targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
+			for (@NonNull XtextAbstractRuleAnalysis targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
 				for (@NonNull XtextAssignmentAnalysis containingAssignmentAnalysisCandidate : containingAssignmentAnalysisCandidates) {
 					if (containingAssignmentAnalysisCandidate.isAssignableAsTarget(targetRuleAnalysisCandidate)) {
 					//	if (isCompatibleContainmentHierarchy(containingAssignmentAnalysisCandidate)) {
@@ -153,7 +154,7 @@ public class UserModelAnalysis
 			return parserRuleAnalysis2assignmentAnalyses;
 		}
 
-		public @NonNull Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> getParserRuleAnalysis2assignmentAnalyses() {
+		public @NonNull Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> getParserRuleAnalysis2assignmentAnalyses() {
 			return ClassUtil.nonNullState(productionRuleAnalysis2containingAssignmentAnalyses);
 		}
 
@@ -177,12 +178,12 @@ public class UserModelAnalysis
 			StringBuilder s = new StringBuilder();
 			s.append(getName());
 			s.append(" <=>");
-			Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses2 = productionRuleAnalysis2containingAssignmentAnalyses;
+			Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses2 = productionRuleAnalysis2containingAssignmentAnalyses;
 			if (productionRuleAnalysis2containingAssignmentAnalyses2 != null) {
-				List<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = new ArrayList<>(productionRuleAnalysis2containingAssignmentAnalyses2.keySet());
+				List<@NonNull XtextAbstractRuleAnalysis> productionRuleAnalyses = new ArrayList<>(productionRuleAnalysis2containingAssignmentAnalyses2.keySet());
 				Collections.sort(productionRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 				boolean isMany1 = productionRuleAnalyses.size() > 1;
-				for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
+				for (@NonNull XtextAbstractRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
 					s.append(isMany1 ? "\n\t\t" : " ");
 					s.append(productionRuleAnalysis.getName());
 					s.append("-");

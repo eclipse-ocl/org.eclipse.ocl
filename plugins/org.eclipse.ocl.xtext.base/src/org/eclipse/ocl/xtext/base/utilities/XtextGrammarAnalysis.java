@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -147,14 +148,14 @@ public class XtextGrammarAnalysis
 		/**
 		 * Return true if targetRuleAnalysis produces an acceptable result for use as the target of this assignment.
 		 */
-		public boolean isAssignableAsTarget(@NonNull XtextParserRuleAnalysis targetRuleAnalysis) {
+		public boolean isAssignableAsTarget(@NonNull XtextAbstractRuleAnalysis targetRuleAnalysis) {
 			if (targetRuleAnalyses.contains(targetRuleAnalysis)) {
 				return true;
 			}
 			Iterable<@NonNull XtextAbstractRuleAnalysis> baseRuleAnalyses = targetRuleAnalysis.getBaseRuleAnalyses();
 			if (baseRuleAnalyses != null) {
-				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : baseRuleAnalyses) {
-					if (targetRuleAnalyses.contains(ruleAnalysis)) {
+				for (@NonNull XtextAbstractRuleAnalysis baseRuleAnalysis : baseRuleAnalyses) {
+					if (isAssignableAsTarget(baseRuleAnalysis)) {
 						return true;
 					}
 				}
@@ -206,6 +207,11 @@ public class XtextGrammarAnalysis
 		 */
 		private @Nullable List<@NonNull XtextAbstractRuleAnalysis> baseRuleAnalyses = null;
 
+		/**
+		 * RuleCalls of this parser rule.
+		 */
+		private @NonNull List<@NonNull RuleCall> ruleCalls = new ArrayList<>();
+
 		public XtextAbstractRuleAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull AbstractRule abstractRule) {
 			this.grammarAnalysis = grammarAnalysis;
 			this.abstractRule = abstractRule;
@@ -230,11 +236,15 @@ public class XtextGrammarAnalysis
 		protected void addProducedTypeRef(@NonNull TypeRef type) {
 			EClassifier eClassifier = getClassifier(type);
 			if (!this.eClassifiers.contains(eClassifier)) {
-				if ("AttributeCS".equals(eClassifier.getName())) {
-					getClass();
-				}
+			//	if ("AttributeCS".equals(eClassifier.getName())) {
+			//		getClass();
+			//	}
 				this.eClassifiers.add(eClassifier);
 			}
+		}
+
+		public void addRuleCall(@NonNull RuleCall ruleCall) {
+			ruleCalls.add(ruleCall);
 		}
 
 		protected void analyze() {}
@@ -260,6 +270,10 @@ public class XtextGrammarAnalysis
 			return abstractRule;
 		}
 
+		public @NonNull List<@NonNull RuleCall> getRuleCalls() {
+			return ruleCalls;
+		}
+
 		public void postAnalyze() {
 			List<@NonNull XtextAbstractRuleAnalysis> baseRuleAnalyses2 = baseRuleAnalyses;
 			if (baseRuleAnalyses2 != null) {
@@ -279,6 +293,9 @@ public class XtextGrammarAnalysis
 		public @NonNull String toString() {
 			StringBuilder s = new StringBuilder();
 			s.append(getName());
+			s.append("[");
+			s.append(ruleCalls.size());
+			s.append("]");
 			List<@NonNull XtextAbstractRuleAnalysis> baseRuleAnalyses2 = baseRuleAnalyses;
 			if (baseRuleAnalyses2 != null) {
 				s.append(" -> ");
@@ -523,13 +540,13 @@ public class XtextGrammarAnalysis
 			XtextParserRuleAnalysis parserRuleAnalysis = (XtextParserRuleAnalysis)getRuleAnalysis(parserRule);
 			rule2ruleAnalysis.put(parserRule, parserRuleAnalysis);
 			for (@NonNull EClassifier eClassifier : parserRuleAnalysis.getEClassifiers()) {
-				if ("AttributeCS".equals(eClassifier.getName())) {
-					getClass();
-				}
-				List<@NonNull XtextParserRuleAnalysis> parserRuleAnalyses = eClassifier2parserRuleAnalyses.get(eClassifier);
+			//	if ("AttributeCS".equals(eClassifier.getName())) {
+			//		getClass();
+			//	}
+				List<@NonNull XtextAbstractRuleAnalysis> parserRuleAnalyses = eClassifier2allRuleAnalyses.get(eClassifier);
 				if (parserRuleAnalyses == null) {
 					parserRuleAnalyses = new ArrayList<>();
-					eClassifier2parserRuleAnalyses.put(eClassifier, parserRuleAnalyses);
+					eClassifier2allRuleAnalyses.put(eClassifier, parserRuleAnalyses);
 				}
 				parserRuleAnalyses.add(parserRuleAnalysis);
 			}
@@ -546,7 +563,10 @@ public class XtextGrammarAnalysis
 		}
 
 		@Override
-		public Object caseRuleCall(RuleCall object) {
+		public Object caseRuleCall(RuleCall ruleCall) {
+			assert ruleCall != null;
+			XtextAbstractRuleAnalysis ruleAnalysis = getRuleAnalysis(getRule(ruleCall));
+			ruleAnalysis.addRuleCall(ruleCall);
 			return this;
 		}
 
@@ -655,15 +675,44 @@ public class XtextGrammarAnalysis
 		return ClassUtil.nonNullState(action.getType());
 	}
 
+	/**
+	 * The (multi-)grammar model.
+	 */
 	protected final @NonNull AbstractGrammarResource grammarResource;
+
+	/**
+	 * The grammar model tranersal aid.
+	 */
 	private final @NonNull GrammarSwitch grammarSwitch = new GrammarSwitch();
 
-//	private @NonNull Map<@Nullable String, @NonNull EPackage> alias2ePackage = new HashMap<>();
-//	private @NonNull Map<@NonNull ParserRule, @NonNull EClassifier> parserRule2eClassifier = new HashMap<>();
-//	private @NonNull Map<@NonNull Assignment, @NonNull EStructuralFeature> assignment2eFeature = new HashMap<>();
-	private @NonNull Map<@NonNull EClassifier, List<@NonNull XtextParserRuleAnalysis>> eClassifier2parserRuleAnalyses = new HashMap<>();
+	/**
+	 * The rule analyses for each rule name.
+	 */
+	private @NonNull Map<@NonNull String, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> ruleName2ruleAnalyses = new HashMap<>();
+
+	/**
+	 * The possible producing rule analyses for each EClassifier. This analysis includes overrides.
+	 */
+	private @NonNull Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2allRuleAnalyses = new HashMap<>();
+
+	/**
+	 * The possible producing rule analyses for each EClassifier. This analysis excludes overrides.
+	 */
+	private @Nullable Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2activeRuleAnalyses = null;
+
+	/**
+	 * The possible assignment analyses for containment EReference.
+	 */
 	private @NonNull Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
+
+	/**
+	 * The rule analysis for each rule.
+	 */
 	private @NonNull Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis = new HashMap<>();
+
+	/**
+	 * The assignment analysis for each assignment.
+	 */
 	private @NonNull Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
 
 	public XtextGrammarAnalysis(@NonNull AbstractGrammarResource grammarResource) {
@@ -674,6 +723,7 @@ public class XtextGrammarAnalysis
 		for (@NonNull EObject eObject : new TreeIterable(grammarResource)) {
 			grammarSwitch.doSwitch(eObject);
 		}
+		pruneOverriddenRules();
 	//	for (@NonNull XtextAbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
 	//		abstractRuleAnalysis.analyze();
 	//	}
@@ -682,12 +732,13 @@ public class XtextGrammarAnalysis
 		}
 	}
 
-	public @NonNull List<@NonNull XtextAssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {
-		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
+	public @NonNull List<@NonNull XtextAbstractRuleAnalysis> getActiveRuleAnalyses(@NonNull EClassifier eClassifier) {
+		assert eClassifier2activeRuleAnalyses != null;
+		return ClassUtil.nonNullState(eClassifier2activeRuleAnalyses.get(eClassifier));
 	}
 
-	public @NonNull List<@NonNull XtextParserRuleAnalysis> getParserRuleAnalyses(@NonNull EClassifier eClassifier) {
-		return ClassUtil.nonNullState(eClassifier2parserRuleAnalyses.get(eClassifier));
+	public @NonNull List<@NonNull XtextAssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {
+		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
 	}
 
 	public @NonNull XtextAbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractElement abstractElement) {
@@ -712,8 +763,61 @@ public class XtextGrammarAnalysis
 				throw new UnsupportedOperationException();
 			}
 			rule2ruleAnalysis.put(abstractRule, ruleAnalysis);
+			String ruleName = getName(abstractRule);
+			List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = ruleName2ruleAnalyses.get(ruleName);
+			if (ruleAnalyses == null) {
+				ruleAnalyses = new ArrayList<>();
+				ruleName2ruleAnalyses.put(ruleName, ruleAnalyses);
+			}
+			ruleAnalyses.add(ruleAnalysis);
 		}
 		return ClassUtil.nonNullState(ruleAnalysis);
+	}
+
+	protected void pruneOverriddenRules() {
+		//
+		// Clone eClassifier2allRuleAnalyses to eClassifier2activeRuleAnalyses
+		//
+		Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2activeRuleAnalyses = new HashMap<>(eClassifier2allRuleAnalyses.size());
+		for (@NonNull Entry<@NonNull EClassifier, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> entry2 : eClassifier2allRuleAnalyses.entrySet()) {
+			EClassifier eClassifier = entry2.getKey();
+			List<@NonNull XtextAbstractRuleAnalysis> allRuleAnalyses = entry2.getValue();
+			List<@NonNull XtextAbstractRuleAnalysis> activeRuleAnalyses = new ArrayList<>(allRuleAnalyses);
+			eClassifier2activeRuleAnalyses.put(eClassifier, activeRuleAnalyses);
+		}
+		//
+		for (@NonNull Entry<@NonNull String, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> entry1 : ruleName2ruleAnalyses.entrySet()) {
+			List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = entry1.getValue();
+			if (ruleAnalyses.size() > 1) {
+				XtextAbstractRuleAnalysis activeRuleAnalysis = null;
+				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+					List<@NonNull RuleCall> ruleCalls = ruleAnalysis.getRuleCalls();
+					if (ruleCalls.size() > 0) {
+						if (activeRuleAnalysis != null) {
+							throw new IllegalStateException("Duplicate overridden rule '" + entry1.getKey() + "'");
+						}
+						activeRuleAnalysis = ruleAnalysis;
+					}
+				}
+				if (activeRuleAnalysis == null) {
+					throw new IllegalStateException("No overridden rule '" + entry1.getKey() + "'");
+				}
+				//
+				// Prune overriddens from eClassifier2activeRuleAnalyses
+				//
+				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+					if (ruleAnalysis != activeRuleAnalysis) {
+						for (@NonNull EClassifier eClassifier : ruleAnalysis.getEClassifiers()) {
+							List<@NonNull XtextAbstractRuleAnalysis> activeRuleAnalyses = eClassifier2activeRuleAnalyses.get(eClassifier);
+							assert activeRuleAnalyses != null;
+							boolean removed = activeRuleAnalyses.remove(ruleAnalysis);
+							assert removed;
+						}
+					}
+				}
+			}
+		}
+		this.eClassifier2activeRuleAnalyses = eClassifier2activeRuleAnalyses;
 	}
 
 	@Override
@@ -751,19 +855,42 @@ public class XtextGrammarAnalysis
 				}
 			}
 		}
-		s.append("\n\nUser EClass <=> Xtext production rule(s)");
-		List<@NonNull EClassifier> eClassifiers = new ArrayList<>(eClassifier2parserRuleAnalyses.keySet());
-		Collections.sort(eClassifiers, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-		for (@NonNull EClassifier eClassifier : eClassifiers) {
-			List<@NonNull XtextParserRuleAnalysis> parserRuleAnalyses2 = new ArrayList<>(eClassifier2parserRuleAnalyses.get(eClassifier));
+		s.append("\n\nUser EClass <=> All Xtext production rule(s)");
+		List<@NonNull EClassifier> eClassifiers1 = new ArrayList<>(eClassifier2allRuleAnalyses.keySet());
+		Collections.sort(eClassifiers1, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		for (@NonNull EClassifier eClassifier : eClassifiers1) {
+			List<@NonNull XtextAbstractRuleAnalysis> parserRuleAnalyses2 = new ArrayList<>(eClassifier2allRuleAnalyses.get(eClassifier));
 		//	assert parserRuleAnalyses2 != null;
 			Collections.sort(parserRuleAnalyses2, NameUtil.NAMEABLE_COMPARATOR);
 			s.append("\n\t");;
 			s.append(eClassifier.getName());
 			s.append(" <=>");;
-			for (@NonNull XtextParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses2) {
+			for (@NonNull XtextAbstractRuleAnalysis parserRuleAnalysis : parserRuleAnalyses2) {
 				s.append(" ");;
 				s.append(parserRuleAnalysis.getName());;
+				s.append("[");
+				s.append(parserRuleAnalysis.getRuleCalls().size());
+				s.append("]");
+			}
+		}
+		s.append("\n\nUser EClass <=> Active Xtext production rule(s)");
+		Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2activeRuleAnalyses2 = eClassifier2activeRuleAnalyses;
+		assert eClassifier2activeRuleAnalyses2 != null;
+		List<@NonNull EClassifier> eClassifiers2 = new ArrayList<>(eClassifier2activeRuleAnalyses2.keySet());
+		Collections.sort(eClassifiers2, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		for (@NonNull EClassifier eClassifier : eClassifiers2) {
+			List<@NonNull XtextAbstractRuleAnalysis> parserRuleAnalyses2 = new ArrayList<>(eClassifier2activeRuleAnalyses2.get(eClassifier));
+		//	assert parserRuleAnalyses2 != null;
+			Collections.sort(parserRuleAnalyses2, NameUtil.NAMEABLE_COMPARATOR);
+			s.append("\n\t");;
+			s.append(eClassifier.getName());
+			s.append(" <=>");;
+			for (@NonNull XtextAbstractRuleAnalysis parserRuleAnalysis : parserRuleAnalyses2) {
+				s.append(" ");;
+				s.append(parserRuleAnalysis.getName());;
+				s.append("[");
+				s.append(parserRuleAnalysis.getRuleCalls().size());
+				s.append("]");
 			}
 		}
 		return s.toString();
