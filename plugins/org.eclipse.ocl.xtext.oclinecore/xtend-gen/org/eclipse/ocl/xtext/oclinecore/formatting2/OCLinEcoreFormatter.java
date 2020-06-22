@@ -17,9 +17,9 @@ import java.util.Arrays;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.ocl.xtext.base.cs2text.UserModelAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.XtextGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource;
-import org.eclipse.ocl.xtext.base.utilities.UserModelAnalysis;
-import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis;
 import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.PackageCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -58,6 +58,8 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
     modelAnalysis.analyze(topLevelCS);
     String s2 = modelAnalysis.toString();
     System.out.println(s2);
+    String s3 = modelAnalysis.serialize(topLevelCS);
+    System.out.println(s3);
     EList<ImportCS> _ownedImports = topLevelCS.getOwnedImports();
     for (final ImportCS importCS : _ownedImports) {
       document.<ImportCS>format(importCS);

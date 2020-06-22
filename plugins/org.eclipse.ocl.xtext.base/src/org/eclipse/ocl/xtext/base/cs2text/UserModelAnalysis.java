@@ -1,0 +1,101 @@
+/*******************************************************************************
+ * Copyright (c) 2020 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.xtext.base.cs2text;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
+
+/**
+ * The UserModelAnalysis provides the working context to assist in the determination of the Xtext grammar rule
+ * that can produce and assign a user model element.
+ */
+public class UserModelAnalysis
+{
+	public static @NonNull EClass eClass(@NonNull EObject eObject) {
+		return ClassUtil.nonNullState(eObject.eClass());
+	}
+
+	public static @NonNull EStructuralFeature eContainingFeature(@NonNull EObject eObject) {
+		return ClassUtil.nonNullState(eObject.eContainingFeature());
+	}
+
+	public static @NonNull EObject eContainer(@NonNull EObject eObject) {
+		return ClassUtil.nonNullState(eObject.eContainer());
+	}
+
+	/**
+	 * The overall (multi-)grammar analysis.
+	 */
+	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
+
+//	private @NonNull Map<@NonNull EObject, @NonNull List<@NonNull Assignment>> modelObject2assignments = new HashMap<>();
+	private @NonNull Map<@NonNull EObject, @NonNull UserAbstractElementAnalysis> element2elementAnalysis = new HashMap<>();
+
+	public UserModelAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis) {
+		this.grammarAnalysis = grammarAnalysis;
+	}
+
+	public void analyze(@NonNull EObject model) {
+		assert model.eContainer() == null;
+		element2elementAnalysis.put(model, new UserRootElementAnalysis(this, model));
+		List<@NonNull UserElementAnalysis> unresolvedModelObjects = new ArrayList<>();
+		for (@NonNull EObject eObject : new TreeIterable(model, false)) {
+			UserElementAnalysis elementAnalysis = new UserElementAnalysis(this, eObject);
+			element2elementAnalysis.put(eObject, elementAnalysis);
+			if (elementAnalysis.getParserRuleAnalysis2assignmentAnalyses().size() > 1) {
+				unresolvedModelObjects.add(elementAnalysis);
+			}
+		}
+	}
+
+	public @NonNull UserAbstractElementAnalysis getElementAnalysis(@NonNull EObject element) {
+		return ClassUtil.nonNullState(element2elementAnalysis.get(element));
+	}
+
+	public @NonNull XtextGrammarAnalysis getGrammarAnalysis() {
+		return grammarAnalysis;
+	}
+
+	public @NonNull String serialize(@NonNull EObject rootElement) {
+		SerializationBuilder serializationBuilder = new SerializationBuilder(this, new StringBuilder());
+		serializationBuilder.serialize(rootElement);
+		return serializationBuilder.toRenderedString();
+	}
+
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append("User object <=> Xtext containing assignment(s) : Xtext production rule\n");
+		List<@NonNull UserAbstractElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
+		Collections.sort(elementAnalyses, NameUtil.NAMEABLE_COMPARATOR);
+		boolean isFirst = true;
+		for (@NonNull UserAbstractElementAnalysis elementAnalysis : elementAnalyses) {
+			if (!isFirst) {
+				s.append("\n");
+			}
+			s.append("\t");
+			s.append(elementAnalysis);
+			isFirst = false;
+		}
+		return s.toString();
+	}
+}

@@ -23,8 +23,8 @@ import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource
-import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis
-import org.eclipse.ocl.xtext.base.utilities.UserModelAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.XtextGrammarAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.UserModelAnalysis
 
 class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	

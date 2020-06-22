@@ -1,0 +1,61 @@
+/*******************************************************************************
+ * Copyright (c) 2020 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.xtext.base.cs2text;
+
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
+{
+	protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+
+	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+		super(grammarAnalysis, eFeature, cardinality);
+		this.ruleAnalysis = ruleAnalysis;
+	}
+
+	@Override
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+		// serializationBuilder.serialize(element);
+		int index = serializationBuilder.consume(eFeature);
+		Object eGet = element.eGet(eFeature);
+		if (eFeature instanceof EReference) {
+			assert ((EReference)eFeature).isContainment();
+			if (eFeature.isMany()) {
+				@SuppressWarnings("unchecked")
+				List<EObject> eList = (List<EObject>)eGet;
+				assert index < eList.size();
+				eGet = eList.get(index);
+			}
+			else {
+				assert index == 0;
+			}
+			assert eGet != null;
+			serializationBuilder.serialize((EObject)eGet);
+		}
+		else {
+			serializationBuilder.append("<<attribute-call>>");
+		}
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s, int depth) {
+		s.append(XtextGrammarUtil.getName(eFeature));
+		s.append(eFeature.isMany() ? "+=" : "=");
+		s.append(ruleAnalysis.getRuleName());
+		appendCardinality(s);
+	}
+}
