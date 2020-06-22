@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis.XtextAbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.XtextGrammarAnalysis.XtextAssignmentAnalysis;
 import org.eclipse.xtext.Assignment;
@@ -47,6 +48,7 @@ public class UserModelAnalysis
 		protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
 		protected final @NonNull EObject element;
 		private final @NonNull String name;
+//		private @NonNull List<@NonNull XtextTermsAnalysis> correlators = new ArrayList<>();
 
 		public AbstractUserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 			this.modelAnalysis = modelAnalysis;
@@ -54,6 +56,10 @@ public class UserModelAnalysis
 			this.element = element;
 			this.name = element.eClass().getName() + "@" + ++count;
 		}
+
+//		public void addCorrelation(@NonNull XtextTermsAnalysis correlator) {
+//			correlators.add(correlator);
+//		}
 
 		public abstract @Nullable AbstractUserElementAnalysis getContainingElementAnalysis();
 
@@ -77,7 +83,7 @@ public class UserModelAnalysis
 		protected abstract boolean hasCompatibleContainmentHierarchy();
 
 		/**
-		 * Return true if the containing feature is compatoble with one of its containing assignments.
+		 * Return true if the containing feature is compatible with one of its containing assignments.
 		 *
 		 * If non-null each compatible assignme nt is assign to its corresponding production rulein ruleAnalysis2assignmentAnalyses.
 		 *
@@ -88,6 +94,10 @@ public class UserModelAnalysis
 		 * Recursively the container of this element has a similarly compatoble assignement.
 		 */
 		protected abstract boolean isCompatible(@Nullable Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses);
+
+		public void serialize(@NonNull StringBuilder s) {
+			s.append("<<<unsupported '" + element.eClass().getName() + "'>>>");
+		}
 	}
 
 	/**
@@ -129,6 +139,17 @@ public class UserModelAnalysis
 		protected boolean isCompatible(@Nullable Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses) {
 			return true;
 		}
+
+	/*	@Override
+		public void serialize(@NonNull StringBuilder s) {
+			for (@NonNull XtextAbstractRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
+				if (productionRuleAnalysis.isCompatible(element)) {
+					productionRuleAnalysis.serialize(s, element);
+					return;
+				}
+			}
+			s.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
+		} */
 
 		@Override
 		public @NonNull String toString() {
@@ -298,6 +319,7 @@ public class UserModelAnalysis
 		}
 	}
 
+
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eClass());
 	}
@@ -344,6 +366,15 @@ public class UserModelAnalysis
 				assert assignments2 != null;
 			} */
 		}
+
+		for (@NonNull AbstractUserElementAnalysis elementAnalysis : element2elementAnalysis.values()) {
+			for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : elementAnalysis.getProductionRules()) {
+			//	XtextCorrelator correlation = new XtextCorrelator(ruleAnalysis);
+			//	if (correlation.correlate()) {
+			//		elementAnalysis.addCorrelation(correlation);
+			//	}
+			}
+		}
 	}
 
 	public @NonNull AbstractUserElementAnalysis getElementAnalysis(@NonNull EObject element) {
@@ -353,6 +384,17 @@ public class UserModelAnalysis
 	public @NonNull XtextGrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
 	}
+
+	public @NonNull String serialize(@NonNull EObject rootElement) {
+		SerializationBuilder serializationBuilder = new SerializationBuilder(this, new StringBuilder());
+		serializationBuilder.serialize(rootElement);
+		return serializationBuilder.toRenderedString();
+	}
+
+//	public void serialize(@NonNull StringBuilder s, @NonNull EObject element) {
+//	  AbstractUserElementAnalysis elementAnalysis = getElementAnalysis(element);
+//	  elementAnalysis.serialize(s);
+//	}
 
 	@Override
 	public @NonNull String toString() {

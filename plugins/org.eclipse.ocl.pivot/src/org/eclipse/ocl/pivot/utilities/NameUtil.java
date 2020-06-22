@@ -76,6 +76,9 @@ public class NameUtil
 		}
 	}
 
+	/**
+	 * @since 1.13
+	 */
 	public static final @NonNull ENamedElementComparator ENAMED_ELEMENT_COMPARATOR = ENamedElementComparator.INSTANCE;
 
 	public static final @NonNull NameableComparator NAMEABLE_COMPARATOR = NameableComparator.INSTANCE;

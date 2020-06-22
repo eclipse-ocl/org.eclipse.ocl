@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -27,21 +28,31 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
+import org.eclipse.ocl.xtext.base.utilities.UserModelAnalysis.AbstractUserElementAnalysis;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CharacterRange;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Group;
 import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.NegatedToken;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.TypeRef;
+import org.eclipse.xtext.UntilToken;
+import org.eclipse.xtext.Wildcard;
+import org.eclipse.xtext.util.Strings;
+import org.eclipse.xtext.util.XtextSwitch;
+
+import com.google.common.collect.Lists;
 
 /**
  * An XtextGrammarAnalysis provides the extended analysis of an Xtext (multi-)grammar.
@@ -114,6 +125,25 @@ public class XtextGrammarAnalysis
 			return assignment;
 		}
 
+		public @NonNull String getCardinality() {
+			String cardinality = assignment.getCardinality();
+			return cardinality != null ?  cardinality : "@";
+		/*	int lowerBound = eFeature.getLowerBound();
+			int upperBound = eFeature.getUpperBound();
+			if (upperBound < 0) {
+				return lowerBound != 0 ? "+" : "*";
+			}
+			else if (upperBound == 1) {
+				return lowerBound != 0 ? "1" : "?";
+			}
+			else if (upperBound == lowerBound) {
+				return Integer.toString(lowerBound);
+			}
+			else {
+				return lowerBound + ".." + upperBound;
+			} */
+		}
+
 		public @NonNull EClass getEContainingClass() {
 			return XtextGrammarAnalysis.getEContainingClass(eFeature);
 		}
@@ -172,6 +202,544 @@ public class XtextGrammarAnalysis
 		}
 	}
 
+	public static interface SerializationNode
+	{
+		@NonNull String getCardinality();
+		@Nullable SerializationBuilder isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element);
+		boolean isNull();
+		void setCardinality(@NonNull String cardinality);
+		void toString(@NonNull StringBuilder s, int depth);
+		void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element);
+	}
+
+	public static interface AssignedSerializationNode extends SerializationNode
+	{
+		@NonNull EStructuralFeature getEStructuralFeature();
+	}
+
+	public static abstract class AbstractSerializationNode implements SerializationNode
+	{
+		/**
+		 * The overall (multi-)grammar analysis.
+		 */
+		protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
+	//	protected final @NonNull String cardinality;
+		private int lowerBound;
+		private int upperBound;
+
+		public AbstractSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality) {
+			this.grammarAnalysis = grammarAnalysis;
+			if (cardinality == null) {
+				this.lowerBound = 1;
+				this.upperBound = 1;
+			}
+			else if (cardinality.equals("?")) {
+				this.lowerBound = 0;
+				this.upperBound = 1;
+			}
+			else if (cardinality.equals("*")) {
+				this.lowerBound = 0;
+				this.upperBound = -1;
+			}
+			else if (cardinality.equals("+")) {
+				this.lowerBound = 1;
+				this.upperBound = -1;
+			}
+			else {
+				throw new UnsupportedOperationException("Unsupported cardinality '" + cardinality + "'");
+			}
+		}
+
+//		public boolean addAlternative(@NonNull SerializationNode nestedContent) {
+//			return false;
+//		}
+
+//		public boolean addAlternative(@NonNull AbstractElement newContent) {
+//			return false;
+//		}
+
+		protected void appendCardinality(@NonNull StringBuilder s) {
+			if ((lowerBound != 1) || (upperBound != 1)) {
+				s.append(getCardinality());
+			}
+		}
+
+		@Override
+		public @NonNull String getCardinality() {
+			if (upperBound < 0) {
+				return lowerBound != 0 ? "+" : "*";
+			}
+			else if (upperBound == 1) {
+				return lowerBound != 0 ? "1" : "?";
+			}
+			else if (upperBound == lowerBound) {
+				return Integer.toString(lowerBound);
+			}
+			else {
+				return lowerBound + ".." + upperBound;
+			}
+		}
+
+		@Override
+		public @Nullable SerializationBuilder isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element) {
+			return new SerializationBuilder(modelAnalysis, s);
+		}
+
+		@Override
+		public boolean isNull() {
+			return false;
+		}
+
+		@Override
+		public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+			serializationBuilder.append("<<<Unsupported serialize '" + getClass().getSimpleName() + "'>>>");
+		}
+
+		@Override
+		public void setCardinality(@NonNull String cardinality) {
+			if ("?".equals(cardinality)) {
+				lowerBound = 0;
+			}
+			else if ("*".equals(cardinality)) {
+				lowerBound = 0;
+				upperBound = -1;
+			}
+			else if ("+".equals(cardinality)) {
+			//??	lowerBound = 1;
+				upperBound = -1;
+			}
+			else {
+				throw new UnsupportedOperationException("Unsupported cardinality '" + cardinality + "'");
+			}
+		}
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			toString(s, 0);
+			return s.toString();
+		}
+	}
+
+	public static abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
+	{
+		protected final @NonNull EStructuralFeature eFeature;
+
+		protected AbstractAssignedSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality) {
+			super(grammarAnalysis, cardinality);
+			this.eFeature = eFeature;
+		}
+
+		@Override
+		public @NonNull EStructuralFeature getEStructuralFeature() {
+			return eFeature;
+		}
+	}
+
+	public static class AlternativeAssignedKeywordsSerializationNode extends AbstractAssignedSerializationNode
+	{
+		protected final @NonNull List<@NonNull String> values = new ArrayList<>();
+
+		public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature) {
+			super(grammarAnalysis, eFeature, null);
+		}
+
+		public void addKeyword(@NonNull Keyword keyword) {
+			assert keyword.getCardinality() == null;
+			values.add(getValue(keyword));
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			boolean isFirst = true;
+			s.append(XtextGrammarAnalysis.getName(eFeature));
+			s.append(eFeature.isMany() ? "+=" : "=");
+			s.append("{");
+			for (@NonNull String value : values) {
+				if (!isFirst) {
+					s.append("|");
+				}
+				s.append("\"");
+				s.append(Strings.convertToJavaString(value));
+				s.append("\"");
+				isFirst = false;
+			}
+			s.append("}");
+			appendCardinality(s);
+		}
+	}
+
+	public static class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssignedSerializationNode
+	{
+		protected final @NonNull List<@NonNull  XtextAbstractRuleAnalysis> ruleAnalyses;
+
+		public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature) {
+			super(grammarAnalysis, eFeature, null);
+			this.ruleAnalyses = eFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
+		}
+
+		public void addRuleAnalysis(@NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+			ruleAnalyses.add(ruleAnalysis);
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append(XtextGrammarAnalysis.getName(eFeature));
+			s.append(eFeature.isMany() ? "+=" : "=");
+			if (ruleAnalyses.size() > 1) {
+				s.append("{");
+			}
+			boolean isFirst = true;
+			for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+				if (!isFirst) {
+					s.append("|");
+				}
+				s.append(ruleAnalysis.getRuleName());
+				isFirst = false;
+			}
+			if (ruleAnalyses.size() > 1) {
+				s.append("}");
+			}
+			appendCardinality(s);
+		}
+	}
+
+	public static class AlternativeKeywordsSerializationNode extends AbstractSerializationNode
+	{
+		protected final @NonNull List<@NonNull String> values = new ArrayList<>();
+
+		public AlternativeKeywordsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis) {
+			super(grammarAnalysis, null);
+		}
+
+		public void addKeyword(@NonNull Keyword keyword) {
+			assert keyword.getCardinality() == null;
+			values.add(getValue(keyword));
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			boolean isFirst = true;
+			if (values.size() > 1) {
+				s.append("{");
+			}
+			for (@NonNull String value : values) {
+				if (!isFirst) {
+					s.append("|");
+				}
+				s.append("\"");
+				s.append(Strings.convertToJavaString(value));
+				s.append("\"");
+				isFirst = false;
+			}
+			if (values.size() > 1) {
+				s.append("}");
+			}
+			appendCardinality(s);
+		}
+	}
+
+	public static class AlternativesSerializationNode extends CompositeSerializationNode
+	{
+		public AlternativesSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality, @NonNull List<@NonNull SerializationNode> alternatives) {
+			super(grammarAnalysis, cardinality, alternatives);
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append("\t");
+			s.append("{");
+		//	boolean isFirst = true;
+			for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			//	if (!isFirst) {
+					s.append("\n");
+			//	}
+				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("| ");
+				serializationNode.toString(s, depth+1);
+			//	isFirst = false;
+			}
+			s.append("\n");
+			StringUtil.appendIndentation(s, depth, "\t");
+			s.append("}");
+			appendCardinality(s);
+		}
+	}
+
+	public static class AssignedCrossReferenceSerializationNode extends AbstractAssignedSerializationNode
+	{
+		protected final @NonNull CrossReference crossReference;
+		protected final @NonNull RuleCall ruleCall;
+
+		public AssignedCrossReferenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality, @NonNull CrossReference crossReference) {
+			super(grammarAnalysis, eFeature, cardinality);
+			this.crossReference = crossReference;
+			this.ruleCall = (RuleCall) crossReference.getTerminal();
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append(XtextGrammarAnalysis.getName(eFeature));
+			s.append(eFeature.isMany() ? "+=" : "=");
+			s.append(ruleCall.getRule().getName());
+			appendCardinality(s);
+		}
+	}
+
+	public static class AssignedKeywordSerializationNode extends AbstractAssignedSerializationNode
+	{
+		protected final @NonNull String value;
+
+		public AssignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality, @NonNull Keyword keyword) {
+			super(grammarAnalysis, eFeature, cardinality);
+			this.value = getValue(keyword);
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append(XtextGrammarAnalysis.getName(eFeature));
+			s.append(eFeature.isMany() ? "+=" : "=");
+			s.append("\"");
+			s.append(value);
+			s.append("\"");
+			appendCardinality(s);
+		}
+	}
+
+	public static class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
+	{
+		protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+
+		public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+			super(grammarAnalysis, eFeature, cardinality);
+			this.ruleAnalysis = ruleAnalysis;
+		}
+
+		@Override
+		public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+			// serializationBuilder.serialize(element);
+			int index = serializationBuilder.consume(eFeature);
+			Object eGet = element.eGet(eFeature);
+			if (eFeature instanceof EReference) {
+				assert ((EReference)eFeature).isContainment();
+				if (eFeature.isMany()) {
+					List<EObject> eList = (List<EObject>)eGet;
+					assert index < eList.size();
+					eGet = eList.get(index);
+				}
+				else {
+					assert index == 0;
+				}
+				serializationBuilder.serialize((EObject)eGet);
+			}
+			else {
+				serializationBuilder.append("<<attribute-call>>");
+			}
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append(XtextGrammarAnalysis.getName(eFeature));
+			s.append(eFeature.isMany() ? "+=" : "=");
+			s.append(ruleAnalysis.getRuleName());
+			appendCardinality(s);
+		}
+	}
+
+	public static class CharacterRangeSerializationNode extends AbstractSerializationNode
+	{
+	//	protected final @NonNull CharacterRange characterRange;
+		protected final @NonNull String left;
+		protected final @NonNull String right;
+
+
+		public CharacterRangeSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull CharacterRange characterRange) {
+			super(grammarAnalysis, characterRange.getCardinality());
+		//	this.characterRange = characterRange;
+			this.left = getValue(characterRange.getLeft());
+			this.right = getValue(characterRange.getRight());
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append("[\"");
+			s.append(Strings.convertToJavaString(left));
+			s.append("\"-\"");
+			s.append(Strings.convertToJavaString(right));
+			s.append("\"]");
+			appendCardinality(s);
+		}
+	}
+
+	public static abstract class CompositeSerializationNode extends AbstractSerializationNode
+	{
+		protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
+
+		public CompositeSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality, @NonNull List<@NonNull SerializationNode> serializationNodes) {
+			super(grammarAnalysis, cardinality);
+			this.serializationNodes = serializationNodes;
+		//	assert serializationNodes.size() > 1;
+		}
+
+/*		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			appendPrefixCardinality(s);
+			s.append("{");
+		//	boolean isFirst = true;
+			for (@NonNull SerializationNode element : elements) {
+			//	if (!isFirst) {
+					s.append("\n");
+			//	}
+				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("| ");
+				element.toString(s, depth+1);
+			//	isFirst = false;
+			}
+			s.append("\n");
+			StringUtil.appendIndentation(s, depth, "\t");
+			s.append("}");
+		} */
+	}
+
+	public static class KeywordSerializationNode extends AbstractSerializationNode
+	{
+		protected final @NonNull String value;
+
+		public KeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Keyword keyword) {
+			super(grammarAnalysis, keyword.getCardinality());
+			this.value = getValue(keyword);
+		}
+
+		@Override
+		public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+			serializationBuilder.appendSoftSpace();
+			serializationBuilder.append(value);
+			serializationBuilder.appendSoftSpace();
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append("\"");
+			s.append(Strings.convertToJavaString(value));
+			s.append("\"");
+			appendCardinality(s);
+		}
+	}
+
+	public static class NegatedTokenSerializationNode extends CompositeSerializationNode
+	{
+		public NegatedTokenSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull NegatedToken negatedToken, @NonNull SerializationNode serializationNode) {
+			super(grammarAnalysis, negatedToken.getCardinality(), Lists.newArrayList(serializationNode));
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append("\t");
+		//	s.append("~ ");
+		//	boolean isFirst = true;
+			for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			//	StringUtil.appendIndentation(s, depth, "\t");
+				s.append("~");
+				appendCardinality(s);
+				s.append(" ");
+				serializationNode.toString(s, depth);
+			//	isFirst = false;
+			}
+		}
+	}
+
+	public static class NullSerializationNode extends AbstractSerializationNode
+	{
+		public NullSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis) {
+			super(grammarAnalysis, null);
+		}
+
+		@Override
+		public boolean isNull() {
+			return true;
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append("<<null>>");
+			appendCardinality(s);
+		}
+	}
+
+	public static class SequenceSerializationNode extends CompositeSerializationNode
+	{
+		public SequenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality, @NonNull List<@NonNull SerializationNode> elements) {
+			super(grammarAnalysis, cardinality, elements);
+		}
+
+		@Override
+		public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+			for (@NonNull SerializationNode serializationNode : serializationNodes) {
+				serializationBuilder.appendSoftSpace();
+				serializationNode.serialize(serializationBuilder, element);
+				serializationBuilder.appendSoftSpace();
+			}
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append("\t");
+			s.append("{");
+		//	boolean isFirst = true;
+			for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			//	if (!isFirst) {
+					s.append("\n");
+			//	}
+				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("+ ");
+				serializationNode.toString(s, depth+1);
+			//	isFirst = false;
+			}
+			s.append("\n");
+			StringUtil.appendIndentation(s, depth, "\t");
+			s.append("}");
+			appendCardinality(s);
+		}
+	}
+
+	public static abstract class SimpleSerializationNode extends AbstractSerializationNode
+	{
+		public SimpleSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality) {
+			super(grammarAnalysis, cardinality);
+		}
+	}
+
+	public static class UntilTokenSerializationNode extends AbstractSerializationNode
+	{
+		protected final @NonNull String value;
+
+		public UntilTokenSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull UntilToken untilToken) {
+			super(grammarAnalysis, untilToken.getCardinality());
+			this.value = getValue((Keyword)untilToken.getTerminal());
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append(" -> \"");
+			s.append(Strings.convertToJavaString(value));
+			s.append("\"");
+			appendCardinality(s);
+		}
+	}
+
+	public static class WildcardSerializationNode extends AbstractSerializationNode
+	{
+		public WildcardSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Wildcard wildcard) {
+			super(grammarAnalysis, wildcard.getCardinality());
+		}
+
+		@Override
+		public void toString(@NonNull StringBuilder s, int depth) {
+			s.append("<<WILDCARD>>");
+			appendCardinality(s);
+		}
+	}
+
 	/**
 	 * An XtextAbstractRuleAnalysis provides the extended analysis of an Xtext AbstractRule
 	 */
@@ -207,6 +775,12 @@ public class XtextGrammarAnalysis
 		 */
 		private @Nullable UniqueList<@NonNull XtextAbstractRuleAnalysis> baseRuleAnalysesClosure = null;
 
+		/**
+		 * The terms for each possible permutation of alternatives.
+		 */
+	//	private @Nullable List<@NonNull XtextTermsAnalysis> termsAnalyses = null;
+		private @Nullable SerializationNode serializationNode = null;
+
 		public XtextAbstractRuleAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull AbstractRule abstractRule) {
 			this.grammarAnalysis = grammarAnalysis;
 			this.abstractRule = abstractRule;
@@ -238,8 +812,21 @@ public class XtextGrammarAnalysis
 			}
 		}
 
+	//	public void addTermsAnalysis(@NonNull XtextTermsAnalysis termsAnalysis) {
+	//		assert termsAnalyses != null;
+	//		termsAnalyses.add(termsAnalysis);
+	//	}
+
 		public @Nullable List<@NonNull XtextAbstractRuleAnalysis> basicGetBaseRuleAnalyses() {
 			return baseRuleAnalyses;
+		}
+
+	//	public @Nullable List<@NonNull XtextTermsAnalysis> basicGetTermsAnalyses() {
+	//		return termsAnalyses;
+	//	}
+
+		public @Nullable SerializationNode basicGetContents() {
+			return serializationNode;
 		}
 
 		public @NonNull UniqueList<@NonNull XtextAbstractRuleAnalysis> getBaseRuleAnalysisClosure() {
@@ -280,6 +867,11 @@ public class XtextGrammarAnalysis
 		public @NonNull String getRuleName() {
 			return XtextGrammarAnalysis.getName(abstractRule);
 		}
+
+	//	public @NonNull List<@NonNull XtextTermsAnalysis> getTermsAnalyses() {
+	//		assert termsAnalyses != null;
+	//		return termsAnalyses;
+	//	}
 
 		/**
 		 * Perform the inter analysis to determine the base rule closure.
@@ -323,6 +915,7 @@ public class XtextGrammarAnalysis
 					}
 				}
 			}
+			this.serializationNode = new XtextTermsSwitch(this).correlate();
 		}
 
 		/**
@@ -356,6 +949,11 @@ public class XtextGrammarAnalysis
 			throw new UnsupportedOperationException();
 		}
 
+		public @Nullable SerializationBuilder isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element) {
+			assert serializationNode != null;
+			return serializationNode.isCompatible(modelAnalysis, s, element);
+		}
+
 		private boolean isFirstResultType(@NonNull AbstractElement element) {
 			EObject eContainer = element.eContainer();
 			if (eContainer instanceof Group) {
@@ -383,6 +981,11 @@ public class XtextGrammarAnalysis
 				throw new UnsupportedOperationException();
 			}
 			return isFirstResultType((AbstractElement)eContainer);
+		}
+
+		public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+			assert serializationNode != null;
+			serializationNode.serialize(serializationBuilder, element);
 		}
 
 		@Override
@@ -455,6 +1058,112 @@ public class XtextGrammarAnalysis
 		}
 	}
 
+	public static class SerializationBuilder
+	{
+		private static final @NonNull Character SOFT_SPACE = new Character(Character.highSurrogate(' '));
+
+		protected final @NonNull UserModelAnalysis modelAnalysis;
+		protected final @NonNull StringBuilder s;
+		private int startIndex;
+		private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
+
+		public SerializationBuilder(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s) {
+			this.modelAnalysis = modelAnalysis;
+			this.s = s;
+			this.startIndex = s.length();
+		}
+
+		public void append(@NonNull String string) {
+			s.append(string);
+		}
+
+		public void appendSoftSpace() {
+			s.append(SOFT_SPACE);
+		}
+
+		/**
+		 * Return the consumption index of the next feature slot.
+		 */
+		public int consume(@NonNull EStructuralFeature feature) {
+			Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = this.feature2consumptions;
+			if (feature2consumptions == null) {
+				this.feature2consumptions = feature2consumptions = new HashMap<>();
+			}
+			Integer count = feature2consumptions.get(feature);
+			if (count == null) {
+				feature2consumptions.put(feature, Integer.valueOf(1));
+				return 0;
+			}
+			else {
+				int intValue = count.intValue();
+				feature2consumptions.put(feature, Integer.valueOf(intValue+1));
+				return intValue;
+			}
+		}
+
+		public void serialize(@NonNull EObject element) {
+			AbstractUserElementAnalysis userElementAnalysis = modelAnalysis.getElementAnalysis(element);
+			Iterable<@NonNull XtextAbstractRuleAnalysis> productionRuleAnalyses = userElementAnalysis.getProductionRules();
+			for (@NonNull XtextAbstractRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
+				SerializationBuilder nestedSerializationBuilder = productionRuleAnalysis.isCompatible(modelAnalysis, s, element);
+				if (nestedSerializationBuilder != null) {
+					productionRuleAnalysis.serialize(nestedSerializationBuilder, element);
+					return;
+				}
+			}
+			s.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
+			// TODO Auto-generated method stub
+
+		}
+
+		public @NonNull String toRenderedString() {
+			StringBuilder s = new StringBuilder();
+			for (int i = 0; i < this.s.length(); i++) {
+				char ch = this.s.charAt(i);
+				int length = s.length();
+				char prevCh = length <= 0 ? ' ' : s.charAt(length-1);
+				switch (prevCh) {
+				/*	case -1: {
+						if (ch == SOFT_SPACE) {}
+						else {
+							s.append(ch);
+						}
+						break;
+					} */
+					case ' ': {
+						if (ch == SOFT_SPACE) {}
+						else {
+							s.append(ch);
+						}
+						break;
+					}
+					case '\n': {
+						if (ch == SOFT_SPACE) {}
+						else {
+							s.append(ch);
+						}
+						break;
+					}
+					default: {
+						if (ch == SOFT_SPACE) {
+							s.append(' ');
+						}
+						else {
+							s.append(ch);
+						}
+						break;
+					}
+				}
+			}
+			return String.valueOf(s);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return String.valueOf(s.substring(startIndex));
+		}
+	}
+
 	public static @NonNull EClassifier getClassifier(TypeRef type) {
 		return ClassUtil.nonNullState(type.getClassifier());
 	}
@@ -483,6 +1192,368 @@ public class XtextGrammarAnalysis
 		}
 		throw new IllegalStateException();
 	}
+
+/*	public static class XtextTermsAnalysis extends XtextSwitch<@NonNull Object>
+	{
+	//	private final @NonNull Map<@NonNull EStructuralFeature,  @NonNull List<@NonNull XtextAssignmentAnalysis>> feature2assignmentAnalyses;
+
+		public XtextTermsAnalysis(@NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+		//	this.ruleAnalysis = ruleAnalysis;
+		//	this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
+		//	this.feature2assignmentAnalyses = new HashMap<>();
+		//	this.userElement2element = new HashMap<>();
+		}
+
+	//	private XtextTermsAnalysis(@NonNull XtextTermsAnalysis correlator) {
+		//	this.ruleAnalysis = correlator.ruleAnalysis;
+		//	this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
+		//	this.feature2assignmentAnalyses = new HashMap<>(correlator.feature2assignmentAnalyses);
+		//	this.userElement2element = new HashMap<>(correlator.userElement2element);
+	//	}
+	} */
+
+	public static class XtextTermsSwitch extends XtextSwitch<@NonNull SerializationNode>
+	{
+		protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+
+		/**
+		 * The overall (multi-)grammar analysis.
+		 */
+		protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
+
+		protected final @NonNull NullSerializationNode nullSerializationNode;
+
+//		private final @NonNull Map<@NonNull EObject, @NonNull AbstractElement> userElement2element;
+
+		public XtextTermsSwitch(@NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+			this.ruleAnalysis = ruleAnalysis;
+			this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
+			this.nullSerializationNode = new NullSerializationNode(grammarAnalysis);
+		//	this.feature2assignmentAnalyses = new HashMap<>();
+		//	this.userElement2element = new HashMap<>();
+		}
+
+	/*	private void addCorrelators(@NonNull List<@NonNull XtextTermsAnalysis> correlators, @NonNull Object correlatorOrCorrelators) {
+			if (correlatorOrCorrelators instanceof XtextTermsAnalysis) {
+				correlators.add((XtextTermsAnalysis)correlatorOrCorrelators);
+			}
+			else {
+				correlators.addAll((Collection<@NonNull XtextTermsAnalysis>)correlatorOrCorrelators);
+			}
+		} */
+
+/*		protected void accumulateContents(@NonNull List<@NonNull AbstractSerializationNode> contents, @NonNull Object nestedContentOrContents) {
+			if (nestedContentOrContents instanceof AbstractSerializationNode) {
+				contents.add((AbstractSerializationNode)nestedContentOrContents);
+			}
+			else {
+				@SuppressWarnings("unchecked")
+				List<@NonNull AbstractSerializationNode> nestedContents = (List<@NonNull AbstractSerializationNode>)nestedContentOrContents;
+				contents.addAll(nestedContents);
+			}
+		} */
+
+/*		private boolean addContent(@NonNull List<@NonNull AbstractSerializationNode> oldContents, @NonNull AbstractElement newContent) {
+			for (@NonNull AbstractSerializationNode oldContent : oldContents) {
+				if (oldContent.addAlternative(newContent)) {
+					return true;
+				}
+			}
+			return false;
+		} */
+
+		@Override
+		public @NonNull SerializationNode caseAction(Action object) {
+			return nullSerializationNode;
+		}
+
+		@Override
+		public @NonNull SerializationNode caseAlternatives(Alternatives alternatives) {
+			assert alternatives != null;
+			List<@NonNull SerializationNode> serializationNodes = new ArrayList<>();
+			AlternativeKeywordsSerializationNode alternativeKeywordsSerializationNode = null;
+			Map<@NonNull EStructuralFeature, @NonNull AlternativeAssignedRuleCallsSerializationNode> eFeature2ruleCallSerializationNode = null;
+			Map<@NonNull EStructuralFeature, @NonNull AlternativeAssignedKeywordsSerializationNode> eFeature2keywordsSerializationNode = null;
+		//	boolean hasAlternativeAssignedRuleCalls = false;
+			for (@NonNull AbstractElement element : getElements(alternatives)) {
+				boolean doSwitchNeeded = true;
+				if (element instanceof Keyword) {
+					if (alternativeKeywordsSerializationNode == null) {
+						alternativeKeywordsSerializationNode = new AlternativeKeywordsSerializationNode(grammarAnalysis);
+						serializationNodes.add(alternativeKeywordsSerializationNode);
+					}
+					alternativeKeywordsSerializationNode.addKeyword((Keyword)element);
+					doSwitchNeeded = false;
+				}
+				else if (element instanceof Assignment) {
+					Assignment assignment = (Assignment)element;
+					XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
+					EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
+					AbstractElement terminal = assignment.getTerminal();
+					if (terminal instanceof Keyword) {
+						Keyword keyword = (Keyword)terminal;
+						if (eFeature2keywordsSerializationNode == null) {
+							eFeature2keywordsSerializationNode = new HashMap<>();
+						}
+						AlternativeAssignedKeywordsSerializationNode serializationNode = eFeature2keywordsSerializationNode.get(eFeature);
+						if (serializationNode == null) {
+							serializationNode = new AlternativeAssignedKeywordsSerializationNode(grammarAnalysis, eFeature);
+							eFeature2keywordsSerializationNode.put(eFeature, serializationNode);
+							serializationNodes.add(serializationNode);
+						}
+						serializationNode.addKeyword(keyword);
+						doSwitchNeeded = false;
+					}
+					else if (terminal instanceof RuleCall) {
+						RuleCall ruleCall = (RuleCall)terminal;
+						if (eFeature2ruleCallSerializationNode == null) {
+							eFeature2ruleCallSerializationNode = new HashMap<>();
+						}
+						AlternativeAssignedRuleCallsSerializationNode serializationNode = eFeature2ruleCallSerializationNode.get(eFeature);
+						if (serializationNode == null) {
+							serializationNode = new AlternativeAssignedRuleCallsSerializationNode(grammarAnalysis, eFeature);
+							eFeature2ruleCallSerializationNode.put(eFeature, serializationNode);
+							serializationNodes.add(serializationNode);
+						}
+						serializationNode.addRuleAnalysis(grammarAnalysis.getRuleAnalysis(getRule(ruleCall)));
+						doSwitchNeeded = false;
+					}
+				}
+				if (doSwitchNeeded) {
+					SerializationNode serializationNode = doSwitch(element);
+					if (!serializationNode.isNull()) {
+						serializationNodes.add(serializationNode);
+					}
+				/*	boolean merged = false;
+					if (nestedContentOrContents instanceof AbstractAssignedSerializationNode) {
+						for (@NonNull SerializationNode content : contents) {
+							if (content.addAlternative((AssignedSerializationNode)nestedContentOrContents)) {
+								merged = true;
+								break;
+							}
+						}
+					}
+					if (!merged) {
+						if (nestedContentOrContents instanceof AbstractSerializationNode) {
+							SerializationNode nestedContent = (SerializationNode)nestedContentOrContents;
+							if ((contents.size() != 1) || !contents.get(0).addAlternative(nestedContent)) {
+								contents.add(nestedContent);		// XXX alternatives case
+							}
+						}
+						else {
+							@SuppressWarnings("unchecked")
+							List<@NonNull SerializationNode> nestedContents = (List<@NonNull SerializationNode>)nestedContentOrContents;
+							if ((contents.size() != 1) || (nestedContents.size() != 1) || !contents.get(0).addAlternative(nestedContents.get(0))) {
+								contents.addAll(nestedContents);		// XXX alternatives case
+							}
+						}
+					} */
+				}
+			}
+		/*	String cardinality = alternatives.getCardinality();
+			if ((contents.size() > 1) && !"*".equals(cardinality)) {
+				return new AlternativesSerializationNode(grammarAnalysis, cardinality, contents);
+			}
+			if (cardinality != null) {
+				for (@NonNull SerializationNode content : contents) {
+					content.setCardinality(cardinality);
+				}
+			} */
+			if (serializationNodes.size() <= 0) {
+				return nullSerializationNode;
+			}
+			String cardinality = alternatives.getCardinality();
+			if (serializationNodes.size() == 1) {
+				if (alternativeKeywordsSerializationNode != null) {
+					if (cardinality != null) {
+						alternativeKeywordsSerializationNode.setCardinality(cardinality);
+					}
+					return alternativeKeywordsSerializationNode;
+				}
+				else if ((eFeature2keywordsSerializationNode != null) && (eFeature2keywordsSerializationNode.size() == 1)) {
+					for (@NonNull AlternativeAssignedKeywordsSerializationNode serializationNode : eFeature2keywordsSerializationNode.values()) {		// All one value
+						if (cardinality != null) {
+							serializationNode.setCardinality(cardinality);
+						}
+						return serializationNode;
+					}
+				}
+				else if ((eFeature2ruleCallSerializationNode != null) && (eFeature2ruleCallSerializationNode.size() == 1)) {
+					for (@NonNull AlternativeAssignedRuleCallsSerializationNode serializationNode : eFeature2ruleCallSerializationNode.values()) {		// All one value
+						if (cardinality != null) {
+							serializationNode.setCardinality(cardinality);
+							}
+						return serializationNode;
+					}
+				}
+			}
+			return new AlternativesSerializationNode(grammarAnalysis, cardinality, serializationNodes);
+		}
+
+		@Override
+		public @NonNull SerializationNode caseAssignment(Assignment assignment) {
+			assert assignment != null;
+			XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
+			EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
+			String cardinality = assignment.getCardinality();
+			AbstractElement terminal = getTerminal(assignment);
+			if (terminal instanceof RuleCall) {
+				return new AssignedRuleCallSerializationNode(grammarAnalysis, eStructuralFeature, cardinality, grammarAnalysis.getRuleAnalysis(getRule((RuleCall)terminal)));
+			}
+			else if (terminal instanceof Keyword) {
+				return new AssignedKeywordSerializationNode(grammarAnalysis, eStructuralFeature, cardinality, (Keyword)terminal);
+			}
+			else if (terminal instanceof Alternatives) {
+				Alternatives alternatives = (Alternatives)terminal;
+			//	List<@NonNull XtextAbstractContent> contents = new ArrayList<>();
+				SerializationNode content = null;
+		/*		for (@NonNull AbstractElement alternative : getElements(alternatives)) {
+					if (content == null) {
+						if (alternative instanceof RuleCall) {
+							content = new AssignedRuleCallSerializationNode(grammarAnalysis, eStructuralFeature, cardinality, grammarAnalysis.getRuleAnalysis(getRule((RuleCall)alternative)));
+						}
+						else if (alternative instanceof Keyword) {
+							content = new AssignedKeywordSerializationNode(grammarAnalysis, eStructuralFeature, cardinality, (Keyword)alternative);
+						}
+						else {
+							throw new UnsupportedOperationException("Unsupported Assignment alternative terminal '" + alternative.eClass().getName() + "'");
+						}
+					//	content = doSwitch(alternative);
+					}
+					else if (content instanceof AbstractSerializationNode) {
+						if (!((AbstractSerializationNode)content).addAlternative(alternative)) {
+							content = null;
+							break;
+						}
+					}
+				/ *	Object nestedContentOrContents = doSwitch(alternative);
+					if (alternative instanceof XtextAbstractContent) {
+						addContent(contents, alternative);
+					}
+					else if (alternative instanceof RuleCall) {
+						addContent(contents, alternative);
+					}
+					else {
+						throw new UnsupportedOperationException("Unsupported Assignment alternative terminal '" + alternative.eClass().getName() + "'");
+					} * /
+				} */
+				if (content != null) {
+					return content;
+				}
+			//	return contents;
+				return nullSerializationNode;
+			}
+			else if (terminal instanceof CrossReference) {
+				return new AssignedCrossReferenceSerializationNode(grammarAnalysis, eStructuralFeature, cardinality, (CrossReference)terminal);
+			}
+			else {
+				throw new UnsupportedOperationException("Unsupported Assignment terminal '" + terminal.eClass().getName() + "'");
+			}
+		//	return new XtextAbstractContent(eStructuralFeature);
+		}
+
+		@Override
+		public @NonNull SerializationNode caseCharacterRange(CharacterRange characterRange) {
+			assert characterRange != null;
+			return new CharacterRangeSerializationNode(grammarAnalysis, characterRange);
+		}
+
+	/*	@Override
+		public @NonNull SerializationNode caseCrossReference(CrossReference object) {
+			return nullSerializationNode;
+		} */
+
+		@Override
+		public @NonNull SerializationNode caseGroup(Group group) {
+			assert group != null;
+			List<@NonNull SerializationNode> serializationNodes = new ArrayList<>();
+			for (@NonNull AbstractElement element : getElements(group)) {		// XXX optimize the no alternatives case
+				SerializationNode serializationNode = doSwitch(element);
+				if (!serializationNode.isNull()) {
+					serializationNodes.add(serializationNode);
+				}
+			}
+			return new SequenceSerializationNode(grammarAnalysis, group.getCardinality(), serializationNodes);
+		}
+
+		@Override
+		public @NonNull SerializationNode caseKeyword(Keyword keyword) {
+			assert keyword != null;
+			return new KeywordSerializationNode(grammarAnalysis, keyword);
+		}
+
+		@Override
+		public @NonNull SerializationNode caseNegatedToken(NegatedToken negatedToken) {
+			assert negatedToken != null;
+			return new NegatedTokenSerializationNode(grammarAnalysis, negatedToken, doSwitch(negatedToken.getTerminal()));
+		}
+
+		@Override
+		public @NonNull SerializationNode caseRuleCall(RuleCall ruleCall) {
+			assert ruleCall != null;
+			assert !(ruleCall.eContainer() instanceof Assignment);
+			return nullSerializationNode;
+		}
+
+/*		@Override
+		public @NonNull SerializationNode caseTypeRef(TypeRef object) {
+			return nullSerializationNode;
+		} */
+
+		@Override
+		public @NonNull SerializationNode caseUntilToken(UntilToken untilToken) {
+			assert untilToken != null;
+			return new UntilTokenSerializationNode(grammarAnalysis, untilToken);
+		}
+
+		@Override
+		public @NonNull SerializationNode caseWildcard(Wildcard wildcard) {
+			assert wildcard != null;
+			return new WildcardSerializationNode(grammarAnalysis, wildcard);
+		}
+
+		public @NonNull SerializationNode correlate() {
+			AbstractElement rootElement = ruleAnalysis.getRule().getAlternatives();
+			return doSwitch(rootElement);
+		}
+
+		@Override
+		public @NonNull SerializationNode defaultCase(EObject object) {
+			throw new UnsupportedOperationException("Unsupported '" + object.eClass().getName() + "' in Correlator");
+		//	return null;
+		}
+
+	/*	@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			List<@NonNull EStructuralFeature> features = new ArrayList<>(feature2assignmentAnalyses.keySet());
+			Collections.sort(features, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		//	if (conten)
+			boolean isFirst1 = true;
+			for (@NonNull EStructuralFeature feature : features) {
+				List<@NonNull XtextAssignmentAnalysis> assignmentAnalyses = feature2assignmentAnalyses.get(feature);
+				assert assignmentAnalyses != null;
+				if (!isFirst1) {
+					s.append(",");
+				}
+				s.append(feature.getName());
+				s.append("(");
+				boolean isFirst2 = true;
+				for (@NonNull XtextAssignmentAnalysis assignmentAnalysis : assignmentAnalyses) {
+					assert assignmentAnalyses != null;
+					if (!isFirst2) {
+						s.append(",");
+					}
+					s.append(assignmentAnalysis.getCardinality());
+					isFirst2 = false;
+				}
+				s.append(")");
+				isFirst1 = false;
+			}
+			return s.toString();
+		}*/
+	}
+
 
 	public static @NonNull EClass getEContainingClass(@NonNull EStructuralFeature eFeature) {
 		return ClassUtil.nonNullState(eFeature.getEContainingClass());
@@ -517,6 +1588,10 @@ public class XtextGrammarAnalysis
 		return ClassUtil.nonNullState(abstractRule.getName());
 	}
 
+	public static @NonNull String getName(@NonNull ENamedElement eNamedElement) {
+		return ClassUtil.nonNullState(eNamedElement.getName());
+	}
+
 	public static @NonNull AbstractRule getRule(@NonNull RuleCall ruleCall) {
 		return ClassUtil.nonNullState(ruleCall.getRule());
 	}
@@ -533,6 +1608,10 @@ public class XtextGrammarAnalysis
 		return ClassUtil.nonNullState(action.getType());
 	}
 
+	public static @NonNull String getValue(@NonNull Keyword keyword) {
+		return ClassUtil.nonNullState(keyword.getValue());
+	}
+
 	/**
 	 * The (multi-)grammar model.
 	 */
@@ -542,6 +1621,11 @@ public class XtextGrammarAnalysis
 	 * The rule analysis for each rule.
 	 */
 	private @Nullable Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis = null;
+
+	/**
+	 * The assignment analysis for each assignment.
+	 */
+	private @Nullable Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis = null;
 
 	/**
 	 * The possible assignment analyses for containment EReference.
@@ -565,7 +1649,8 @@ public class XtextGrammarAnalysis
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = analyzeRuleNames(rule2ruleCalls);
 		Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis = createRuleAnalyses(ruleName2rules, rule2ruleCalls);
 		this.rule2ruleAnalysis = rule2ruleAnalysis;
-		this.containment2assignmentAnalyses = analyzeAssignments(rule2ruleAnalysis);
+		this.assignment2assignmentAnalysis = analyzeAssignments(rule2ruleAnalysis);
+		this.containment2assignmentAnalyses = analyzeContainnments(assignment2assignmentAnalysis);
 		Iterable<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = rule2ruleAnalysis.values();
 		//
 		// Perform the intra rule analysis to determine the locally produced EClassifiers and local base rules.
@@ -583,11 +1668,10 @@ public class XtextGrammarAnalysis
 	}
 
 	/**
-	 *	Identify the rules for each rule name and the ruleCalls from each rule.
+	 *	Create an assignment analysis for each assignment..
 	 */
-	protected @NonNull Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> analyzeAssignments(
+	protected @NonNull Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> analyzeAssignments(
 			@NonNull Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis) {
-		Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
 		/**
 		 * The assignment analysis for each assignment.
 		 */
@@ -601,18 +1685,29 @@ public class XtextGrammarAnalysis
 					XtextAssignmentAnalysis assignmentAnalysis = new XtextAssignmentAnalysis(parserRuleAnalysis, assignment);
 					assignment2assignmentAnalysis.put(assignment, assignmentAnalysis);
 					parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
-					EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
-					if (eFeature instanceof EReference) {
-						EReference eReference = (EReference)eFeature;
-						if (eReference.isContainment()) {
-							List<@NonNull XtextAssignmentAnalysis> assignmentAnalyses = containment2assignmentAnalyses.get(eReference);
-							if (assignmentAnalyses == null) {
-								assignmentAnalyses = new ArrayList<>();
-								containment2assignmentAnalyses.put(eReference, assignmentAnalyses);
-							}
-							assignmentAnalyses.add(assignmentAnalysis);
-						}
+				}
+			}
+		}
+		return assignment2assignmentAnalysis;
+	}
+
+	/**
+	 *	Identify the assignment analyses that are containments.
+	 */
+	protected @NonNull Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> analyzeContainnments(
+			@NonNull Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis) {
+		Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
+		for (@NonNull XtextAssignmentAnalysis assignmentAnalysis : assignment2assignmentAnalysis.values()) {
+			EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
+			if (eFeature instanceof EReference) {
+				EReference eReference = (EReference)eFeature;
+				if (eReference.isContainment()) {
+					List<@NonNull XtextAssignmentAnalysis> assignmentAnalyses = containment2assignmentAnalyses.get(eReference);
+					if (assignmentAnalyses == null) {
+						assignmentAnalyses = new ArrayList<>();
+						containment2assignmentAnalyses.put(eReference, assignmentAnalyses);
 					}
+					assignmentAnalyses.add(assignmentAnalysis);
 				}
 			}
 		}
@@ -714,6 +1809,11 @@ public class XtextGrammarAnalysis
 		return rule2ruleAnalysis;
 	}
 
+	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis(@NonNull Assignment assignment) {
+		assert assignment2assignmentAnalysis != null;
+		return ClassUtil.nonNullState(assignment2assignmentAnalysis.get(assignment));
+	}
+
 	public @NonNull List<@NonNull XtextAssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {
 		assert containment2assignmentAnalyses != null;
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
@@ -775,6 +1875,12 @@ public class XtextGrammarAnalysis
 					s.append(eFeature.getName());
 					isFirstFeature = false;
 				}
+			}
+			SerializationNode abstractContent = abstractRuleAnalysis.basicGetContents();
+			if (abstractContent != null) {
+				s.append("\n");
+				StringUtil.appendIndentation(s, abstractContent instanceof CompositeSerializationNode ? 1 : 2, "\t");
+				abstractContent.toString(s, 2);
 			}
 		}
 		s.append("\n\nUser EClass <=> Active Xtext production rule(s)");

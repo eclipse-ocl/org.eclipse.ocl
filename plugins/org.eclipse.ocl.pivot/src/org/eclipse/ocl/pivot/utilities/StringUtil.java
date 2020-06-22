@@ -33,6 +33,15 @@ public class StringUtil
 	private static final char[] nibble2uchex = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 	/**
+	 * @since 1.13
+	 */
+	public static void appendIndentation(@NonNull StringBuilder s, int depth, @NonNull String string) {
+		for (int i = 0; i < depth; i++) {
+			s.append(string);
+		}
+	}
+
+	/**
 	 * Append a multiplicity string such as "[1..5]" to a StringBuilder.
 	 * <br>
 	 * Shortforms such as "[?]",  "[+]",  "[*]",  "[1]",  "[2..*]" are used if possible.

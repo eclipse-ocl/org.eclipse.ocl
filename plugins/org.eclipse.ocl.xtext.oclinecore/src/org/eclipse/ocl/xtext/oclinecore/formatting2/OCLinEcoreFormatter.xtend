@@ -42,6 +42,8 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 		modelAnalysis.analyze(topLevelCS);
 		var String s2 = modelAnalysis.toString();
 		System.out.println(s2);
+		var String s3 = modelAnalysis.serialize(topLevelCS);
+		System.out.println(s3);
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		for (importCS : topLevelCS.ownedImports) {
 			importCS.format
