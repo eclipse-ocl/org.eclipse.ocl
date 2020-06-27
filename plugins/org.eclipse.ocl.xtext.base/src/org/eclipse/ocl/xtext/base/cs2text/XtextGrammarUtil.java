@@ -53,6 +53,14 @@ public class XtextGrammarUtil
 		s.append("]");
 	}
 
+	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
+		if (eFeatureScope != getEContainingClass(eStructuralFeature)) {
+			s.append(XtextGrammarUtil.getName(eFeatureScope));
+			s.append("::");
+		}
+		s.append(XtextGrammarUtil.getName(eStructuralFeature));
+	}
+
 	public static @NonNull EClassifier getClassifier(TypeRef type) {
 		return ClassUtil.nonNullState(type.getClassifier());
 	}
@@ -62,6 +70,10 @@ public class XtextGrammarUtil
 		for (EObject eObject = abstractElement, eChild = null; (type == null) && (eObject != null); eChild = eObject, eObject = eObject.eContainer()) {
 			if (eObject instanceof ParserRule) {
 				type = ((ParserRule)eObject).getType();
+			}
+			else if ((eObject instanceof Action) && (((Action)eObject).getFeature() != null))  {
+				type = ((Action)eObject).getType();
+				break;
 			}
 			else if (eObject instanceof Group) {
 				List<@NonNull AbstractElement> elements = getElements((Group)eObject);
@@ -124,6 +136,10 @@ public class XtextGrammarUtil
 
 	public static @NonNull List<@NonNull AbstractElement> getElements(@NonNull Group group) {
 		return ClassUtil.nullFree(group.getElements());
+	}
+
+	public static @NonNull String getFeature(@NonNull Action action) {
+		return ClassUtil.nonNullState(action.getFeature());
 	}
 
 	public static @NonNull String getFeature(@NonNull Assignment assignment) {

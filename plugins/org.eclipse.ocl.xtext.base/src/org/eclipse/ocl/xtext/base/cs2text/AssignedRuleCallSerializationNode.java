@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,8 +29,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 //	@Inject
 	private LinkingHelper linkingHelper;
 
-	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
-		super(grammarAnalysis, eFeature, cardinality);
+	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, cardinality);
 		this.ruleAnalysis = ruleAnalysis;
 		this.valueConverterService = grammarAnalysis.getValueConverterService();
 		this.linkingHelper = grammarAnalysis.getLinkingHelper();
@@ -38,9 +39,9 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	@Override
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		// serializationBuilder.serialize(element);
-		int index = serializationBuilder.consume(eFeature);
-		Object eGet = element.eGet(eFeature);
-		if (eFeature.isMany()) {
+		int index = serializationBuilder.consume(eStructuralFeature);
+		Object eGet = element.eGet(eStructuralFeature);
+		if (eStructuralFeature.isMany()) {
 			@SuppressWarnings("unchecked")
 			List<EObject> eList = (List<EObject>)eGet;
 			assert index < eList.size();
@@ -49,8 +50,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		else {
 			assert index == 0;
 		}
-		if (eFeature instanceof EReference) {
-			assert ((EReference)eFeature).isContainment();
+		if (eStructuralFeature instanceof EReference) {
+			assert ((EReference)eStructuralFeature).isContainment();
 			assert eGet != null;
 			serializationBuilder.serialize((EObject)eGet);
 		}
@@ -77,8 +78,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(XtextGrammarUtil.getName(eFeature));
-		s.append(eFeature.isMany() ? "+=" : "=");
+		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(ruleAnalysis.getRuleName());
 		appendCardinality(s);
 	}

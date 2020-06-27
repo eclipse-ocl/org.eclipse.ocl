@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 {
@@ -63,6 +64,8 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 		for (@NonNull RequiredSlotsConjunction conjunction : conjunctions) {
 			if (!isFirst1) {
 				s.append("\n");
+				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("|& ");
 			}
 			conjunction.toString(s,depth);
 /*			StringUtil.appendIndentation(s, depth, "\t");

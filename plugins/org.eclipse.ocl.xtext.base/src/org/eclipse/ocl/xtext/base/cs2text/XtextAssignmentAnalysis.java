@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
@@ -39,7 +40,7 @@ public class XtextAssignmentAnalysis implements Nameable
 	/**
 	 * The analyzed assignment.
 	 */
-	protected final @NonNull Assignment assignment;
+	protected final @NonNull AbstractElement assignment;			// Assignment or Action
 
 	/**
 	 * The overall grammar analysis.
@@ -66,6 +67,16 @@ public class XtextAssignmentAnalysis implements Nameable
 		addTerminal(XtextGrammarUtil.getTerminal(assignment));
 	}
 
+	public XtextAssignmentAnalysis(@NonNull XtextParserRuleAnalysis sourceRuleAnalysis, @NonNull Action action) {
+		this.sourceRuleAnalysis = sourceRuleAnalysis;
+		this.assignment = action;
+		this.grammarAnalysis = sourceRuleAnalysis.getGrammarAnalysis();
+		String featureName = XtextGrammarUtil.getFeature(action);
+		EClass eClass = (EClass)XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(action));
+		this.eFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
+	//	addTerminal(XtextGrammarUtil.getTerminal(assignment));
+	}
+
 	private void addTerminal(@NonNull AbstractElement terminal) {
 		if (terminal instanceof RuleCall) {
 			addTerminalRuleCall((RuleCall)terminal);
@@ -88,7 +99,7 @@ public class XtextAssignmentAnalysis implements Nameable
 		targetRuleAnalyses.add(terminalRuleAnalysis);
 	}
 
-	public @NonNull Assignment getAssignment() {
+	public @NonNull AbstractElement getAssignment() {
 		return assignment;
 	}
 

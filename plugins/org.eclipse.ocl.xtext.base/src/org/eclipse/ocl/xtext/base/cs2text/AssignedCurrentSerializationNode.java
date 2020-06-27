@@ -14,25 +14,21 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.xtext.CrossReference;
-import org.eclipse.xtext.RuleCall;
 
-public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSerializationNode
+public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
-	protected final @NonNull CrossReference crossReference;
-	protected final @NonNull RuleCall ruleCall;
-
-	public AssignedCrossReferenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality, @NonNull CrossReference crossReference) {
+	public AssignedCurrentSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality) {
 		super(grammarAnalysis, eFeatureScope, eStructuralFeature, cardinality);
-		this.crossReference = crossReference;
-		this.ruleCall = (RuleCall)XtextGrammarUtil.getTerminal(crossReference);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+//		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		s.append(XtextGrammarUtil.getName(eFeatureScope));
+		s.append("::");
+		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append(ruleCall.getRule().getName());
+		s.append("<<current>>");
 		appendCardinality(s);
 	}
 }

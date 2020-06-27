@@ -77,8 +77,8 @@ public class SerializationBuilder
 
 	public void serialize(@NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = modelAnalysis.getElementAnalysis(element);
-		Iterable<@NonNull XtextAbstractRuleAnalysis> productionRuleAnalyses = userElementAnalysis.getProductionRules();
-		for (@NonNull XtextAbstractRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
+		Iterable<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = userElementAnalysis.getProductionRules();
+		for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
 			ConsumedSlotsDisjunction consumedSlotsDisjunction = productionRuleAnalysis.isCompatible(modelAnalysis, element);
 			if (consumedSlotsDisjunction != null) {
 				productionRuleAnalysis.serialize(new SerializationBuilder(modelAnalysis, consumedSlotsDisjunction, s), element);

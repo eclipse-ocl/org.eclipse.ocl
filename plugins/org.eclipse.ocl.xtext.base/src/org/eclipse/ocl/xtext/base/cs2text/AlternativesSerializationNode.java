@@ -38,31 +38,66 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 			RequiredSlotsConjunction emptyConjunction = null;
 			List<@NonNull RequiredSlotsConjunction> outerDisjunction = new ArrayList<>();
 			String cardinality2 = cardinality;
-			if ("?".equals(cardinality) ) {
-				emptyConjunction = new RequiredSlotsConjunction();
-				emptyConjunction.accumulate(this, null);
-				outerDisjunction.add(emptyConjunction);
-				cardinality2 = "1";
-			}
-			for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
-				RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
-				if (innerRequiredSlots.isNull()) {
-					if (emptyConjunction == null) {
-						emptyConjunction = new RequiredSlotsConjunction();
-						emptyConjunction.accumulate(this, null);
-						outerDisjunction.add(emptyConjunction);
+			if ("*".equals(cardinality) ) {
+				RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+				for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
+					RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
+					if (!innerRequiredSlots.isNull()) {
+						for (int i = 0; i < innerRequiredSlots.getConjunctionCount(); i++) {
+							RequiredSlotsConjunction innerConjunction = innerRequiredSlots.getConjunction(i);
+							outerConjunction.accumulate(innerConjunction, "*");
+						}
 					}
 				}
-				else {
-					for (int i = 0; i < innerRequiredSlots.getConjunctionCount(); i++) {
+				outerConjunction.getConjunction();		// XXX eager
+				outerDisjunction.add(outerConjunction);
+			}
+			else if ("+".equals(cardinality) ) {
+				for (@NonNull SerializationNode alternativeSerializationNode1 : alternativeSerializationNodes) {
+					RequiredSlots innerRequiredSlots1 = alternativeSerializationNode1.getRequiredSlots();
+					if (!innerRequiredSlots1.isNull()) {
 						RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
-						RequiredSlotsConjunction innerConjunction = innerRequiredSlots.getConjunction(i);
-						for (@NonNull SimpleRequiredSlot simpleRequiredSlot : innerConjunction.getConjunction()) {
-							outerConjunction.accumulate(simpleRequiredSlot, cardinality2);
+						for (int i = 0; i < innerRequiredSlots1.getConjunctionCount(); i++) {
+							RequiredSlotsConjunction innerConjunction1 = innerRequiredSlots1.getConjunction(i);
+							for (@NonNull SerializationNode alternativeSerializationNode2 : alternativeSerializationNodes) {
+								RequiredSlots innerRequiredSlots2 = alternativeSerializationNode2.getRequiredSlots();
+								if (!innerRequiredSlots2.isNull()) {
+									for (int j = 0; j < innerRequiredSlots2.getConjunctionCount(); j++) {
+										RequiredSlotsConjunction innerConjunction2 = innerRequiredSlots2.getConjunction(j);
+										outerConjunction.accumulate(innerConjunction2, alternativeSerializationNode1 == alternativeSerializationNode2 ? "+" : "*");
+									}
+								}
+							}
 						}
-						outerConjunction.accumulate(innerConjunction.getAlternativesChoices());
 						outerConjunction.getConjunction();		// XXX eager
 						outerDisjunction.add(outerConjunction);
+					}
+				}
+			}
+			else {
+				if ("?".equals(cardinality) ) {
+					emptyConjunction = new RequiredSlotsConjunction();
+					emptyConjunction.accumulate(this, null);
+					outerDisjunction.add(emptyConjunction);
+					cardinality2 = "1";
+				}
+				for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
+					RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
+					if (innerRequiredSlots.isNull()) {
+						if (emptyConjunction == null) {
+							emptyConjunction = new RequiredSlotsConjunction();
+							emptyConjunction.accumulate(this, null);
+							outerDisjunction.add(emptyConjunction);
+						}
+					}
+					else {
+						for (int i = 0; i < innerRequiredSlots.getConjunctionCount(); i++) {
+							RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+							RequiredSlotsConjunction innerConjunction = innerRequiredSlots.getConjunction(i);
+							outerConjunction.accumulate(innerConjunction, "1");
+							outerConjunction.getConjunction();		// XXX eager
+							outerDisjunction.add(outerConjunction);
+						}
 					}
 				}
 			}

@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 public class RequiredSlotsConjunction extends AbstractRequiredSlots
 {
@@ -32,14 +32,28 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 
 	protected RequiredSlotsConjunction() {}
 
-/*	public void accumulate(@NonNull RequiredSlotsConjunction requiredConjunction) {
-		for (@NonNull SimpleRequiredSlot simpleRequiredSlot : serializationNode.getRequiredSlots()) {
-			for (@NonNull SimpleRequiredSlot simpleRequiredSlot : serializationNode.getRequiredSlots()) {
-				accumulate(simpleRequiredSlot);
-			}
-			accumulate(simpleRequiredSlot);
+	public void accumulate(@NonNull AlternativesSerializationNode alternatives, @Nullable SerializationNode choice) {
+		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice2 = alternatives2choice;
+		if (alternatives2choice2 == null) {
+			alternatives2choice2 = alternatives2choice = new HashMap<>();
 		}
-	} */
+		boolean hadKey = alternatives2choice2.containsKey(alternatives);
+		SerializationNode oldChoice = alternatives2choice2.put(alternatives, choice);
+		assert !hadKey || (oldChoice == choice);
+	}
+
+	public void accumulate(@NonNull RequiredSlotsConjunction innerConjunction, @NonNull String cardinality) {
+		for (@NonNull SimpleRequiredSlot simpleRequiredSlot : innerConjunction.getConjunction()) {
+			accumulate(simpleRequiredSlot, cardinality);
+		}
+		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
+		if (alternativesChoices != null) {
+			for (Entry<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> entry : alternativesChoices.entrySet()) {
+				accumulate(entry.getKey(), entry.getValue());
+			}
+		}
+	//	getConjunction();		// XXX eager
+	}
 
 	public void accumulate(@NonNull SimpleRequiredSlot requiredSlot, @NonNull String cardinality) {
 		EStructuralFeature eStructuralFeature = requiredSlot.getEStructuralFeature();
@@ -70,24 +84,6 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		eFeature2upper.put(eStructuralFeature, newUpper);
 	}
 
-	public void accumulate(@Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices) {
-		if (alternativesChoices != null) {
-			for (Entry<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> entry : alternativesChoices.entrySet()) {
-				accumulate(entry.getKey(), entry.getValue());
-			}
-		}
-	}
-
-	public void accumulate(@NonNull AlternativesSerializationNode alternatives, @Nullable SerializationNode choice) {
-		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice2 = alternatives2choice;
-		if (alternatives2choice2 == null) {
-			alternatives2choice2 = alternatives2choice = new HashMap<>();
-		}
-		boolean hadKey = alternatives2choice2.containsKey(alternatives);
-		SerializationNode oldChoice = alternatives2choice2.put(alternatives, choice);
-		assert !hadKey || (oldChoice == choice);
-	}
-
 	public @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> getAlternativesChoices() {
 		return alternatives2choice;
 	}
@@ -103,7 +99,8 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 				Integer lower = eFeature2lower.get(eStructuralFeature);
 				Integer upper = eFeature2upper.get(eStructuralFeature);
 				assert (lower != null) && (upper != null);
-				conjunction.add(new SimpleRequiredSlot(eStructuralFeature, lower, upper));
+				EClass eFeatureScope = XtextGrammarUtil.getEContainingClass(eStructuralFeature);		// XXX do we need scope ??
+				conjunction.add(new SimpleRequiredSlot(eFeatureScope, eStructuralFeature, lower, upper));
 			}
 		}
 		return conjunction;
@@ -138,8 +135,6 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	public void toString(@NonNull StringBuilder s, int depth) {
 	//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
 	//	if (conjunction != null) {
-		StringUtil.appendIndentation(s, depth, "\t");
-		s.append("|& ");
 		boolean isFirst = true;
 		for (@NonNull SimpleRequiredSlot requiredSlot : getConjunction()) {	// XXX lazy
 			if (!isFirst) {

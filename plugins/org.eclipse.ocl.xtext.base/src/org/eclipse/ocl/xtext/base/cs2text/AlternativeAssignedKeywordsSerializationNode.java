@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
@@ -22,8 +23,8 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature) {
-		super(grammarAnalysis, eFeature, null);
+	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, null);
 	}
 
 	public void addKeyword(@NonNull Keyword keyword) {
@@ -34,8 +35,8 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		boolean isFirst = true;
-		s.append(XtextGrammarUtil.getName(eFeature));
-		s.append(eFeature.isMany() ? "+=" : "=");
+		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("{");
 		for (@NonNull String value : values) {
 			if (!isFirst) {

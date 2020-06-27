@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,22 +22,17 @@ import org.eclipse.jdt.annotation.Nullable;
 public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Iterable<@NonNull RequiredSlots>
 {
 //	protected final @NonNull AssignedSerializationNode serializationNode;
+	protected final @NonNull EClass eFeatureScope;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final int lowerBound;
 	protected final int upperBound;
 
-	public SimpleRequiredSlot(@NonNull AssignedSerializationNode assignedSerializationNode) {
-//		this.serializationNode = assignedSerializationNode;
-		this.eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
-		this.lowerBound = assignedSerializationNode.getLowerBound();
-		this.upperBound = assignedSerializationNode.getUpperBound();
-		assert (upperBound < 0) || ((upperBound > 0) && (lowerBound <= upperBound));
-	}
-
-	public SimpleRequiredSlot(@NonNull EStructuralFeature eStructuralFeature, int lowerBound, int upperBound) {
+	public SimpleRequiredSlot(@NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, int lowerBound, int upperBound) {
+		this.eFeatureScope = eFeatureScope;
 		this.eStructuralFeature = eStructuralFeature;
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;
+		assert (upperBound < 0) || ((upperBound > 0) && (lowerBound <= upperBound));
 	}
 
 	@Override
@@ -67,6 +63,10 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
 		// return Collections.singletonList(getConjunction());
 		throw new UnsupportedOperationException();
+	}
+
+	public @NonNull EClass getEFeatureScope() {
+		return eFeatureScope;
 	}
 
 	public @NonNull EStructuralFeature getEStructuralFeature() {
@@ -115,12 +115,12 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		if ((upperBound >= 0) && (upper > upperBound)) {
 			return null;		// Too many
 		}
-		return new SimpleConsumedSlot(eStructuralFeature, lower, upper);
+		return new SimpleConsumedSlot(eFeatureScope, eStructuralFeature, lower, upper);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(XtextGrammarUtil.getName(getEStructuralFeature()));
+		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
 		XtextGrammarUtil.appendCardinality(s, lowerBound, upperBound);
 	}
 }

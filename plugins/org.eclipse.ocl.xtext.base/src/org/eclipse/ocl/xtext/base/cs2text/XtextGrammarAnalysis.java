@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
@@ -52,9 +53,9 @@ public class XtextGrammarAnalysis
 	private @Nullable Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis = null;
 
 	/**
-	 * The assignment analysis for each assignment.
+	 * The assignment analysis for each assignment or action.
 	 */
-	private @Nullable Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis = null;
+	private @Nullable Map<@NonNull AbstractElement, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis = null;
 
 	/**
 	 * The possible assignment analyses for containment EReference.
@@ -86,7 +87,7 @@ public class XtextGrammarAnalysis
 		Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis = createRuleAnalyses(ruleName2rules, rule2ruleCalls);
 		this.rule2ruleAnalysis = rule2ruleAnalysis;
 		this.assignment2assignmentAnalysis = analyzeAssignments(rule2ruleAnalysis);
-		this.containment2assignmentAnalyses = analyzeContainnments(assignment2assignmentAnalysis);
+		this.containment2assignmentAnalyses = analyzeContainments(assignment2assignmentAnalysis);
 		Iterable<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = rule2ruleAnalysis.values();
 		//
 		// Perform the intra rule analysis to determine the locally produced EClassifiers and local base rules.
@@ -106,12 +107,12 @@ public class XtextGrammarAnalysis
 	/**
 	 *	Create an assignment analysis for each assignment..
 	 */
-	protected @NonNull Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> analyzeAssignments(
+	protected @NonNull Map<@NonNull AbstractElement, @NonNull XtextAssignmentAnalysis> analyzeAssignments(
 			@NonNull Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis) {
 		/**
 		 * The assignment analysis for each assignment.
 		 */
-		Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
+		Map<@NonNull AbstractElement, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
 		for (@NonNull XtextAbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
 			AbstractRule abstractRule = abstractRuleAnalysis.getRule();
 			for (@NonNull EObject eObject : new TreeIterable(abstractRule, false)) {
@@ -122,6 +123,16 @@ public class XtextGrammarAnalysis
 					assignment2assignmentAnalysis.put(assignment, assignmentAnalysis);
 					parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
 				}
+				else if (eObject instanceof Action) {
+					Action action = (Action)eObject;
+					String feature = action.getFeature();
+					if (feature != null) {
+						XtextParserRuleAnalysis parserRuleAnalysis = (XtextParserRuleAnalysis)getRuleAnalysis(action);
+						XtextAssignmentAnalysis assignmentAnalysis = new XtextAssignmentAnalysis(parserRuleAnalysis, action);
+						assignment2assignmentAnalysis.put(action, assignmentAnalysis);
+						parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
+					}
+				}
 			}
 		}
 		return assignment2assignmentAnalysis;
@@ -130,8 +141,8 @@ public class XtextGrammarAnalysis
 	/**
 	 *	Identify the assignment analyses that are containments.
 	 */
-	protected @NonNull Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> analyzeContainnments(
-			@NonNull Map<@NonNull Assignment, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis) {
+	protected @NonNull Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> analyzeContainments(
+			@NonNull Map<@NonNull AbstractElement, @NonNull XtextAssignmentAnalysis> assignment2assignmentAnalysis) {
 		Map<@NonNull EReference, @NonNull List<@NonNull XtextAssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
 		for (@NonNull XtextAssignmentAnalysis assignmentAnalysis : assignment2assignmentAnalysis.values()) {
 			EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
@@ -245,6 +256,10 @@ public class XtextGrammarAnalysis
 		return rule2ruleAnalysis;
 	}
 
+	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis(@NonNull Action action) {
+		assert assignment2assignmentAnalysis != null;
+		return ClassUtil.nonNullState(assignment2assignmentAnalysis.get(action));
+	}
 	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis(@NonNull Assignment assignment) {
 		assert assignment2assignmentAnalysis != null;
 		return ClassUtil.nonNullState(assignment2assignmentAnalysis.get(assignment));
@@ -319,7 +334,7 @@ public class XtextGrammarAnalysis
 					s.append(eFeature.getName());
 					isFirstFeature = false;
 				}
-				SerializationNode abstractContent = abstractRuleAnalysis.basicGetContents();
+				SerializationNode abstractContent = parserRuleAnalysis.basicGetContents();
 				if (abstractContent != null) {
 					s.append("\n");
 					StringUtil.appendIndentation(s, abstractContent instanceof CompositeSerializationNode ? 1 : 2, "\t");
@@ -327,6 +342,8 @@ public class XtextGrammarAnalysis
 					RequiredSlots requiredSlots = abstractContent.getRequiredSlots();
 					if (!requiredSlots.isNull()) {
 						s.append("\n");
+						StringUtil.appendIndentation(s, 2, "\t");
+						s.append("|& ");
 						requiredSlots.toString(s, 2);
 					}
 				}

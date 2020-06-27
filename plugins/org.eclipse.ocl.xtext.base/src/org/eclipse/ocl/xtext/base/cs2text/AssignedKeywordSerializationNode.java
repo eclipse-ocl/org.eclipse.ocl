@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -19,15 +20,15 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 {
 	protected final @NonNull String value;
 
-	public AssignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality, @NonNull Keyword keyword) {
-		super(grammarAnalysis, eFeature, cardinality);
+	public AssignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality, @NonNull Keyword keyword) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, cardinality);
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(XtextGrammarUtil.getName(eFeature));
-		s.append(eFeature.isMany() ? "+=" : "=");
+		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("\"");
 		s.append(value);
 		s.append("\"");

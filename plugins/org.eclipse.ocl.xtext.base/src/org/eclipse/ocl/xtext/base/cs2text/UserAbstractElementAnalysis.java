@@ -61,7 +61,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 			return name;
 		}
 
-		public abstract @NonNull Iterable<@NonNull XtextAbstractRuleAnalysis> getProductionRules();
+		public abstract @NonNull Iterable<@NonNull XtextParserRuleAnalysis> getProductionRules();
 
 		protected abstract boolean hasCompatibleContainmentHierarchy();
 
@@ -76,5 +76,5 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 		 * The produced rule for the container of this element is assignable to the assignment source's rule.
 		 * Recursively the container of this element has a similarly compatoble assignement.
 		 */
-		protected abstract boolean isCompatible(@Nullable Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses);
+		protected abstract boolean isCompatible(@Nullable Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses);
 	}

@@ -92,10 +92,11 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			RequiredSlots requiredSlots = serializationNode.getRequiredSlots();
 			if (!requiredSlots.isNull()) {
 				RequiredSlotsConjunction innerConjunction = requiredSlots.getConjunction(nodesIndexes[nodesIndex]);
-				for (@NonNull SimpleRequiredSlot innerSlot : innerConjunction.getConjunction()) {
-					outerConjunction.accumulate(innerSlot, cardinality);
-				}
-				outerConjunction.accumulate(innerConjunction.getAlternativesChoices());
+			//	for (@NonNull SimpleRequiredSlot innerSlot : innerConjunction.getConjunction()) {
+			//		outerConjunction.accumulate(innerSlot, cardinality);
+			//	}
+			//	outerConjunction.accumulate(innerConjunction.getAlternativesChoices());
+				outerConjunction.accumulate(innerConjunction, cardinality);
 			}
 		}
 		outerConjunction.getConjunction();		// XXX eager

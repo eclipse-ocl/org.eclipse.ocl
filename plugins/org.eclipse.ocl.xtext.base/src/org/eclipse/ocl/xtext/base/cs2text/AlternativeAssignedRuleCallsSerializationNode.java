@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -21,9 +22,9 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 {
 	protected final @NonNull List<@NonNull  XtextAbstractRuleAnalysis> ruleAnalyses;
 
-	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature) {
-		super(grammarAnalysis, eFeature, null);
-		this.ruleAnalyses = eFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
+	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, null);
+		this.ruleAnalyses = eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
 	}
 
 	public void addRuleAnalysis(@NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
@@ -32,8 +33,8 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(XtextGrammarUtil.getName(eFeature));
-		s.append(eFeature.isMany() ? "+=" : "=");
+		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		if (ruleAnalyses.size() > 1) {
 			s.append("{");
 		}

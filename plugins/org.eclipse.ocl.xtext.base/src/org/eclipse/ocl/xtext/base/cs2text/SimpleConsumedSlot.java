@@ -10,17 +10,20 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
 public class SimpleConsumedSlot extends AbstractConsumedSlots //implements Iterable<@NonNull RequiredSlots>
 {
+	protected final @NonNull EClass eFeatureScope;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final int lower;
 	protected final int upper;
 
-	public SimpleConsumedSlot(@NonNull EStructuralFeature eStructuralFeature, int lower, int upper) {
+	public SimpleConsumedSlot(@NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, int lower, int upper) {
 		super();
+		this.eFeatureScope = eFeatureScope;
 		this.eStructuralFeature = eStructuralFeature;
 		this.lower = lower;
 		this.upper = upper;
@@ -83,7 +86,7 @@ public class SimpleConsumedSlot extends AbstractConsumedSlots //implements Itera
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append(XtextGrammarUtil.getName(eStructuralFeature));
+		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
 		s.append("[");
 		s.append(lower);
 		s.append("..");

@@ -25,13 +25,13 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class UserRootElementAnalysis extends UserAbstractElementAnalysis
 {
-	private @NonNull List<@NonNull XtextAbstractRuleAnalysis> productionRuleAnalyses;
+	private @NonNull List<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses;
 
 	public UserRootElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		super(modelAnalysis, element);
 		assert element.eContainer() == null;
 		EClass targetEClass = UserModelAnalysis.eClass(element);
-		this.productionRuleAnalyses = grammarAnalysis.getProducingRuleAnalyses(targetEClass);
+		this.productionRuleAnalyses = (List<@NonNull XtextParserRuleAnalysis>)(Object)grammarAnalysis.getProducingRuleAnalyses(targetEClass);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class UserRootElementAnalysis extends UserAbstractElementAnalysis
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull XtextAbstractRuleAnalysis> getProductionRules() {
+	public @NonNull Iterable<@NonNull XtextParserRuleAnalysis> getProductionRules() {
 		return productionRuleAnalyses;
 	}
 
@@ -55,7 +55,7 @@ public class UserRootElementAnalysis extends UserAbstractElementAnalysis
 	}
 
 	@Override
-	protected boolean isCompatible(@Nullable Map<@NonNull XtextAbstractRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses) {
+	protected boolean isCompatible(@Nullable Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses) {
 		return true;
 	}
 

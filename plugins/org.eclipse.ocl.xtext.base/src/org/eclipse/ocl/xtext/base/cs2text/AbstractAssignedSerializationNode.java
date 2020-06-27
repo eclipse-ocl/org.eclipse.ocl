@@ -10,24 +10,27 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
 {
-	protected final @NonNull EStructuralFeature eFeature;
+	protected final @NonNull EClass eFeatureScope;
+	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final @NonNull RequiredSlots requiredSlots;
 
-	protected AbstractAssignedSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality) {
+	protected AbstractAssignedSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality) {
 		super(grammarAnalysis, cardinality);
-		this.eFeature = eFeature;
-		this.requiredSlots = new SimpleRequiredSlot(this);
+		this.eFeatureScope = eFeatureScope;
+		this.eStructuralFeature = eStructuralFeature;
+		this.requiredSlots = new SimpleRequiredSlot(eFeatureScope, eStructuralFeature, getLowerBound(), getUpperBound());
 	}
 
 	@Override
 	public @NonNull EStructuralFeature getEStructuralFeature() {
-		return eFeature;
+		return eStructuralFeature;
 	}
 
 	@Override
