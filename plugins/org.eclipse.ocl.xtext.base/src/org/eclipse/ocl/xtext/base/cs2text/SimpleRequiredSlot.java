@@ -1,0 +1,126 @@
+/*******************************************************************************
+ * Copyright (c) 2020 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.xtext.base.cs2text;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Iterable<@NonNull RequiredSlots>
+{
+//	protected final @NonNull AssignedSerializationNode serializationNode;
+	protected final @NonNull EStructuralFeature eStructuralFeature;
+	protected final int lowerBound;
+	protected final int upperBound;
+
+	public SimpleRequiredSlot(@NonNull AssignedSerializationNode assignedSerializationNode) {
+//		this.serializationNode = assignedSerializationNode;
+		this.eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
+		this.lowerBound = assignedSerializationNode.getLowerBound();
+		this.upperBound = assignedSerializationNode.getUpperBound();
+		assert (upperBound < 0) || ((upperBound > 0) && (lowerBound <= upperBound));
+	}
+
+	public SimpleRequiredSlot(@NonNull EStructuralFeature eStructuralFeature, int lowerBound, int upperBound) {
+		this.eStructuralFeature = eStructuralFeature;
+		this.lowerBound = lowerBound;
+		this.upperBound = upperBound;
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
+		return Collections.singletonList(this);
+	}
+
+	@Override
+	public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
+		assert conjunctionIndex == 0;
+		RequiredSlotsConjunction requiredSlotsConjunction = new RequiredSlotsConjunction();
+		requiredSlotsConjunction.accumulate(this, "1");
+		requiredSlotsConjunction.getConjunction();		// XXX eager
+		return requiredSlotsConjunction;
+	}
+
+	@Override
+	public int getConjunctionCount() {
+		return 1;
+	}
+
+//	@Override
+//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
+//		return Collections.singletonList(this);
+//	}
+
+	@Override
+	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
+		// return Collections.singletonList(getConjunction());
+		throw new UnsupportedOperationException();
+	}
+
+	public @NonNull EStructuralFeature getEStructuralFeature() {
+		return eStructuralFeature;
+	}
+
+	public int getLowerBound() {
+		return lowerBound;
+	}
+
+	public int getUpperBound() {
+		return upperBound;
+	}
+
+	public @Nullable SimpleConsumedSlot isCompatible(@NonNull EObject element) {
+		assert eStructuralFeature.getContainerClass().isInstance(element);
+		Object object = element.eGet(eStructuralFeature);
+		int lower;
+		int upper;
+		if (eStructuralFeature.isMany()) {
+			List<?> list = (List<?>)object;
+			lower = 0;
+			upper = list.size();
+		}
+		else if (object != null) {
+			lower = 1;
+			upper = 1;
+		}
+		else if (element.eIsSet(eStructuralFeature)) {
+			lower = 1;
+			upper = 1;
+		}
+		else {
+			lower = 0;
+			upper = 0;
+		}
+		assert (upper < 0) || ((upper > 0) && (lower <= upper));
+		if (lower < lowerBound) {
+			if (lowerBound <= upper) {
+				lower = lowerBound;
+			}
+			else {
+				return null;		// Too few
+			}
+		}
+		if ((upperBound >= 0) && (upper > upperBound)) {
+			return null;		// Too many
+		}
+		return new SimpleConsumedSlot(eStructuralFeature, lower, upper);
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s, int depth) {
+		s.append(XtextGrammarUtil.getName(getEStructuralFeature()));
+		XtextGrammarUtil.appendCardinality(s, lowerBound, upperBound);
+	}
+}

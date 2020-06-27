@@ -20,12 +20,13 @@ public abstract class AbstractSerializationNode implements SerializationNode
 		 * The overall (multi-)grammar analysis.
 		 */
 		protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
-	//	protected final @NonNull String cardinality;
+		protected final @NonNull String cardinality;
 		private int lowerBound;
 		private int upperBound;
 
 		public AbstractSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality) {
 			this.grammarAnalysis = grammarAnalysis;
+			this.cardinality = cardinality != null ? cardinality : "1";
 			if (cardinality == null) {
 				this.lowerBound = 1;
 				this.upperBound = 1;
@@ -57,29 +58,59 @@ public abstract class AbstractSerializationNode implements SerializationNode
 
 		protected void appendCardinality(@NonNull StringBuilder s) {
 			if ((lowerBound != 1) || (upperBound != 1)) {
-				s.append(getCardinality());
+				String cardinality2;
+				if (upperBound < 0) {
+					cardinality2 = lowerBound != 0 ? "+" : "*";
+				}
+				else if (upperBound == 1) {
+					cardinality2 = lowerBound != 0 ? "1" : "?";
+				}
+				else if (upperBound == lowerBound) {
+					cardinality2 = Integer.toString(lowerBound);
+				}
+				else {
+					cardinality2 = lowerBound + ".." + upperBound;
+				}
+				s.append(cardinality2);
 			}
 		}
 
-		@Override
-		public @NonNull String getCardinality() {
-			if (upperBound < 0) {
-				return lowerBound != 0 ? "+" : "*";
-			}
-			else if (upperBound == 1) {
-				return lowerBound != 0 ? "1" : "?";
-			}
-			else if (upperBound == lowerBound) {
-				return Integer.toString(lowerBound);
-			}
-			else {
-				return lowerBound + ".." + upperBound;
-			}
+/*		@Override
+		public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
+			RequiredSlots requiredSlots = getRequiredSlots();
+			return requiredSlots.getConjunction(conjunctionIndex);
+		} */
+
+		public int getLowerBound() {
+			assert (lowerBound == 0) == ("?".equals(cardinality) || "*".equals(cardinality));
+			return lowerBound;
+		}
+
+		public int getUpperBound() {
+			assert (upperBound < 0) == ("+".equals(cardinality) || "*".equals(cardinality));
+			return upperBound;
 		}
 
 		@Override
-		public @Nullable SerializationBuilder isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element) {
-			return new SerializationBuilder(modelAnalysis, s);
+		public @Nullable ConsumedSlotsDisjunction isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
+			ConsumedSlotsDisjunction consumedSlotsDisjunction = new ConsumedSlotsDisjunction();
+			for (@NonNull RequiredSlotsConjunction conjunction : getRequiredSlots().getDisjunction()) {
+				ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction);
+				for (@NonNull SimpleRequiredSlot simpleRequiredSlot : conjunction.getConjunction()) {
+					SimpleConsumedSlot consumedSlot = simpleRequiredSlot.isCompatible(element);
+					if (consumedSlot != null) {
+						consumedSlotsConjunction.addConsumedSlot(consumedSlot);
+					}
+					else {
+						consumedSlotsConjunction = null;
+						break;
+					}
+				}
+				if (consumedSlotsConjunction != null) {
+					consumedSlotsDisjunction.addConsumedSlot(consumedSlotsConjunction);
+				}
+			}
+			return consumedSlotsDisjunction;
 		}
 
 		@Override

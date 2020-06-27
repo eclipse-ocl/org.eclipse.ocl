@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.jdt.annotation.NonNull;
-
-public interface AssignedSerializationNode extends SerializationNode
+/**
+ * The RequiredSlots are a disjunction (alternatives) of conjunctions of SimpleRequiredSlot identifying the cardinality for a single
+ * assigned feature.
+ */
+public interface ConsumedSlots
 {
-	@NonNull EStructuralFeature getEStructuralFeature();
-	int getLowerBound();
-	int getUpperBound();
+//	@NonNull Iterable<@NonNull ConsumedSlots> getConjunctions();
+//	@NonNull Iterable<@NonNull SimpleRequiredSlot> getSimpleRequiredSlots();
+	boolean isNull();
 }

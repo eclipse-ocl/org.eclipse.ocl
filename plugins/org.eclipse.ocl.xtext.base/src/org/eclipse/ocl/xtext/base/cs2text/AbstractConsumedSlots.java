@@ -10,12 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.jdt.annotation.NonNull;
-
-public interface AssignedSerializationNode extends SerializationNode
+public abstract class AbstractConsumedSlots implements ConsumedSlots
 {
-	@NonNull EStructuralFeature getEStructuralFeature();
-	int getLowerBound();
-	int getUpperBound();
+//	protected final @NonNull SerializationNode serializationNode;
+
+	protected AbstractConsumedSlots() {
+//		this.serializationNode = serializationNode;
+	}
+
+	@Override
+	public boolean isNull() {
+		return false;
+	}
 }

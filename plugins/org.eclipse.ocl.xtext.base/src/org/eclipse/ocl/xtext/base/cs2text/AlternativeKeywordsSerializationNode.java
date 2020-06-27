@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
@@ -28,6 +29,18 @@ public class AlternativeKeywordsSerializationNode extends AbstractSerializationN
 	public void addKeyword(@NonNull Keyword keyword) {
 		assert keyword.getCardinality() == null;
 		values.add(XtextGrammarUtil.getValue(keyword));
+	}
+
+	@Override
+	public @NonNull RequiredSlots getRequiredSlots() {
+		return NullRequiredSlots.INSTANCE;
+	}
+
+	@Override
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+		serializationBuilder.appendSoftSpace();
+		serializationBuilder.append(values.get(0));
+		serializationBuilder.appendSoftSpace();
 	}
 
 	@Override

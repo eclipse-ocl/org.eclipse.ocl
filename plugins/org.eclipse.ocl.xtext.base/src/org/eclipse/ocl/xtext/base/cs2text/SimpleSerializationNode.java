@@ -18,4 +18,9 @@ public abstract class SimpleSerializationNode extends AbstractSerializationNode
 	public SimpleSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality) {
 		super(grammarAnalysis, cardinality);
 	}
+
+	@Override
+	public @NonNull RequiredSlots getRequiredSlots() {
+		return NullRequiredSlots.INSTANCE;
+	}
 }

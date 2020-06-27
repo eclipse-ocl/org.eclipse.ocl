@@ -33,6 +33,8 @@ import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.conversion.IValueConverterService;
+import org.eclipse.xtext.linking.impl.LinkingHelper;
 
 /**
  * An XtextGrammarAnalysis provides the extended analysis of an Xtext (multi-)grammar.
@@ -64,8 +66,15 @@ public class XtextGrammarAnalysis
 	 */
 	private @Nullable Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses = null;
 
-	public XtextGrammarAnalysis(@NonNull AbstractGrammarResource grammarResource) {
+	protected final @NonNull IValueConverterService valueConverterService;
+	protected final @NonNull LinkingHelper linkingHelper;
+
+	public XtextGrammarAnalysis(@NonNull AbstractGrammarResource grammarResource, IValueConverterService valueConverterService, LinkingHelper linkingHelper) {
 		this.grammarResource = grammarResource;
+		assert valueConverterService != null;
+		this.valueConverterService = valueConverterService;
+		assert linkingHelper != null;
+		this.linkingHelper = linkingHelper;
 	}
 
 	/**
@@ -246,6 +255,10 @@ public class XtextGrammarAnalysis
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
 	}
 
+	public @NonNull LinkingHelper getLinkingHelper() {
+		return linkingHelper;
+	}
+
 	public @NonNull List<@NonNull XtextAbstractRuleAnalysis> getProducingRuleAnalyses(@NonNull EClassifier eClassifier) {
 		assert eClassifier2ruleAnalyses != null;
 		return ClassUtil.nonNullState(eClassifier2ruleAnalyses.get(eClassifier));
@@ -263,6 +276,10 @@ public class XtextGrammarAnalysis
 	public @NonNull XtextAbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractRule abstractRule) {
 		assert rule2ruleAnalysis != null;
 		return ClassUtil.nonNullState(rule2ruleAnalysis.get(abstractRule));
+	}
+
+	public @NonNull IValueConverterService getValueConverterService() {
+		return valueConverterService;
 	}
 
 	@Override
@@ -302,12 +319,17 @@ public class XtextGrammarAnalysis
 					s.append(eFeature.getName());
 					isFirstFeature = false;
 				}
-			}
-			SerializationNode abstractContent = abstractRuleAnalysis.basicGetContents();
-			if (abstractContent != null) {
-				s.append("\n");
-				StringUtil.appendIndentation(s, abstractContent instanceof CompositeSerializationNode ? 1 : 2, "\t");
-				abstractContent.toString(s, 2);
+				SerializationNode abstractContent = abstractRuleAnalysis.basicGetContents();
+				if (abstractContent != null) {
+					s.append("\n");
+					StringUtil.appendIndentation(s, abstractContent instanceof CompositeSerializationNode ? 1 : 2, "\t");
+					abstractContent.toString(s, 2);
+					RequiredSlots requiredSlots = abstractContent.getRequiredSlots();
+					if (!requiredSlots.isNull()) {
+						s.append("\n");
+						requiredSlots.toString(s, 2);
+					}
+				}
 			}
 		}
 		s.append("\n\nUser EClass <=> Active Xtext production rule(s)");

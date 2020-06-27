@@ -16,8 +16,12 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public interface SerializationNode
 {
-	@NonNull String getCardinality();
-	@Nullable SerializationBuilder isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element);
+//	@NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex);
+	/**
+	 * Return the required slots in disjunctive normal form.
+	 */
+	@NonNull RequiredSlots getRequiredSlots();
+	@Nullable ConsumedSlotsDisjunction isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
 	boolean isNull();
 	void setCardinality(@NonNull String cardinality);
 	void toString(@NonNull StringBuilder s, int depth);

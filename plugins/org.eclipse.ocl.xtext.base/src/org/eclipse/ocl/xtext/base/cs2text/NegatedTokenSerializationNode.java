@@ -13,26 +13,26 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.NegatedToken;
 
-import com.google.common.collect.Lists;
-
-public class NegatedTokenSerializationNode extends CompositeSerializationNode
+public class NegatedTokenSerializationNode extends AbstractSerializationNode
 {
+	protected final @NonNull SerializationNode serializationNode;
+
 	public NegatedTokenSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull NegatedToken negatedToken, @NonNull SerializationNode serializationNode) {
-		super(grammarAnalysis, negatedToken.getCardinality(), Lists.newArrayList(serializationNode));
+		super(grammarAnalysis, negatedToken.getCardinality());
+		this.serializationNode = serializationNode;
+	}
+
+	@Override
+	public @NonNull RequiredSlots getRequiredSlots() {
+		return NullRequiredSlots.INSTANCE;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("\t");
-	//	s.append("~ ");
-	//	boolean isFirst = true;
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-		//	StringUtil.appendIndentation(s, depth, "\t");
-			s.append("~");
-			appendCardinality(s);
-			s.append(" ");
-			serializationNode.toString(s, depth);
-		//	isFirst = false;
-		}
+		s.append("~");
+		appendCardinality(s);
+		s.append(" ");
+		serializationNode.toString(s, depth);
 	}
 }

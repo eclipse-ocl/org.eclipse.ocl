@@ -17,14 +17,22 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.xtext.conversion.IValueConverterService;
+import org.eclipse.xtext.linking.impl.LinkingHelper;
 
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+//	@Inject
+	private IValueConverterService valueConverterService;
+//	@Inject
+	private LinkingHelper linkingHelper;
 
 	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
 		super(grammarAnalysis, eFeature, cardinality);
 		this.ruleAnalysis = ruleAnalysis;
+		this.valueConverterService = grammarAnalysis.getValueConverterService();
+		this.linkingHelper = grammarAnalysis.getLinkingHelper();
 	}
 
 	@Override
@@ -32,22 +40,38 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		// serializationBuilder.serialize(element);
 		int index = serializationBuilder.consume(eFeature);
 		Object eGet = element.eGet(eFeature);
+		if (eFeature.isMany()) {
+			@SuppressWarnings("unchecked")
+			List<EObject> eList = (List<EObject>)eGet;
+			assert index < eList.size();
+			eGet = eList.get(index);
+		}
+		else {
+			assert index == 0;
+		}
 		if (eFeature instanceof EReference) {
 			assert ((EReference)eFeature).isContainment();
-			if (eFeature.isMany()) {
-				@SuppressWarnings("unchecked")
-				List<EObject> eList = (List<EObject>)eGet;
-				assert index < eList.size();
-				eGet = eList.get(index);
-			}
-			else {
-				assert index == 0;
-			}
 			assert eGet != null;
 			serializationBuilder.serialize((EObject)eGet);
 		}
 		else {
-			serializationBuilder.append("<<attribute-call>>");
+//			serializationBuilder.append("<<attribute-call>>");
+		///	final String lexerRule = linkingHelper.getRuleNameFrom();
+
+
+			String val = valueConverterService.toString(eGet, ruleAnalysis.getRule().getName());
+		/*	if ("URI".equals(ruleName)) {
+				if (semanticObject instanceof PathElementWithURICS) {
+					PathElementWithURICS pathElementWithURICS = (PathElementWithURICS)semanticObject;
+					String uri = pathElementWithURICS.getUri();
+					if (uri != null) {
+						String converted = helper.convert(uri, ruleName);
+						if (converted != null) {
+							return converted;
+						}
+					}
+				} */
+			serializationBuilder.append(val);
 		}
 	}
 

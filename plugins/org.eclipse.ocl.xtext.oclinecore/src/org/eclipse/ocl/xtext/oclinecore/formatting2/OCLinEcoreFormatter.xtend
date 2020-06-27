@@ -25,15 +25,23 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource
 import org.eclipse.ocl.xtext.base.cs2text.XtextGrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.UserModelAnalysis
+import org.eclipse.xtext.conversion.IValueConverterService
+import org.eclipse.xtext.linking.impl.LinkingHelper
 
 class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	
 	@Inject extension OCLinEcoreGrammarAccess
 
+	@Inject
+	private IValueConverterService valueConverterService;
+
+	@Inject
+	private LinkingHelper linkingHelper;
+
 	def dispatch void format(TopLevelCS topLevelCS, extension IFormattableDocument document) {
 		val IEObjectRegion regionForEObject = topLevelCS.regionForEObject;
 		val EObject grammarElement = regionForEObject.grammarElement;
-		var XtextGrammarAnalysis grammarAnalysis = new XtextGrammarAnalysis(grammarElement.eResource() as AbstractGrammarResource);
+		var XtextGrammarAnalysis grammarAnalysis = new XtextGrammarAnalysis(grammarElement.eResource() as AbstractGrammarResource, valueConverterService, linkingHelper);
 		grammarAnalysis.analyze();
 		var String s1 = grammarAnalysis.toString();
 		System.out.println(s1);

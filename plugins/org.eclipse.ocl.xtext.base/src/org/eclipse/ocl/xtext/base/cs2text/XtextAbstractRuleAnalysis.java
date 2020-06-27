@@ -222,7 +222,7 @@ public class XtextAbstractRuleAnalysis implements Nameable
 					}
 				}
 			}
-			return new AlternativesSerializationNode(grammarAnalysis, cardinality, serializationNodes);
+			return new AlternativesSerializationNode(grammarAnalysis, alternatives, serializationNodes);
 		}
 
 		@Override
@@ -308,7 +308,7 @@ public class XtextAbstractRuleAnalysis implements Nameable
 					serializationNodes.add(serializationNode);
 				}
 			}
-			return new SequenceSerializationNode(grammarAnalysis, group.getCardinality(), serializationNodes);
+			return new SequenceSerializationNode(grammarAnalysis, group, serializationNodes);
 		}
 
 		@Override
@@ -598,9 +598,9 @@ public class XtextAbstractRuleAnalysis implements Nameable
 		throw new UnsupportedOperationException();
 	}
 
-	public @Nullable SerializationBuilder isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element) {
+	public @Nullable ConsumedSlotsDisjunction isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		assert serializationNode != null;
-		return serializationNode.isCompatible(modelAnalysis, s, element);
+		return serializationNode.isCompatible(modelAnalysis, element);
 	}
 
 	private boolean isFirstResultType(@NonNull AbstractElement element) {

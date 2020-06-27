@@ -10,16 +10,72 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.xtext.Alternatives;
 
 public class AlternativesSerializationNode extends CompositeSerializationNode
 {
-	public AlternativesSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality, @NonNull List<@NonNull SerializationNode> alternatives) {
-		super(grammarAnalysis, cardinality, alternatives);
+	protected final @NonNull Alternatives alternatives;
+	protected final @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes;
+	private @Nullable RequiredSlots requiredSlots = null;
+
+	public AlternativesSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
+		super(grammarAnalysis, alternatives);
+		this.alternatives = alternatives;
+		this.alternativeSerializationNodes = alternativeSerializationNodes;
+	}
+
+	@Override
+	public @NonNull RequiredSlots getRequiredSlots() {
+		RequiredSlots requiredSlots = this.requiredSlots;
+		if (requiredSlots == null) {
+			RequiredSlotsConjunction emptyConjunction = null;
+			List<@NonNull RequiredSlotsConjunction> outerDisjunction = new ArrayList<>();
+			String cardinality2 = cardinality;
+			if ("?".equals(cardinality) ) {
+				emptyConjunction = new RequiredSlotsConjunction();
+				emptyConjunction.accumulate(this, null);
+				outerDisjunction.add(emptyConjunction);
+				cardinality2 = "1";
+			}
+			for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
+				RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
+				if (innerRequiredSlots.isNull()) {
+					if (emptyConjunction == null) {
+						emptyConjunction = new RequiredSlotsConjunction();
+						emptyConjunction.accumulate(this, null);
+						outerDisjunction.add(emptyConjunction);
+					}
+				}
+				else {
+					for (int i = 0; i < innerRequiredSlots.getConjunctionCount(); i++) {
+						RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+						RequiredSlotsConjunction innerConjunction = innerRequiredSlots.getConjunction(i);
+						for (@NonNull SimpleRequiredSlot simpleRequiredSlot : innerConjunction.getConjunction()) {
+							outerConjunction.accumulate(simpleRequiredSlot, cardinality2);
+						}
+						outerConjunction.accumulate(innerConjunction.getAlternativesChoices());
+						outerConjunction.getConjunction();		// XXX eager
+						outerDisjunction.add(outerConjunction);
+					}
+				}
+			}
+			requiredSlots = createRequiredSlots(outerDisjunction);
+			this.requiredSlots = requiredSlots;
+		}
+		return requiredSlots;
+	}
+
+	@Override
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+		SerializationNode serializationNode = serializationBuilder.getAlternative(this);
+	//	serializationNode.serialize(serializationBuilder, element);
 	}
 
 	@Override
@@ -27,13 +83,13 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 		s.append("\t");
 		s.append("{");
 	//	boolean isFirst = true;
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+		for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
 		//	if (!isFirst) {
 				s.append("\n");
 		//	}
 			StringUtil.appendIndentation(s, depth, "\t");
 			s.append("| ");
-			serializationNode.toString(s, depth+1);
+			alternativeSerializationNode.toString(s, depth+1);
 		//	isFirst = false;
 		}
 		s.append("\n");

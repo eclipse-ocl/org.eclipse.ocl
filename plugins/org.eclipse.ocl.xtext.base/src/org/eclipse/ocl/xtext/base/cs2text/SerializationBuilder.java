@@ -23,12 +23,21 @@ public class SerializationBuilder
 	private static final @NonNull Character SOFT_SPACE = new Character(Character.highSurrogate(' '));
 
 	protected final @NonNull UserModelAnalysis modelAnalysis;
+	protected final @Nullable ConsumedSlotsDisjunction consumedSlotsDisjunction;
 	protected final @NonNull StringBuilder s;
 	private int startIndex;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
 	public SerializationBuilder(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s) {
 		this.modelAnalysis = modelAnalysis;
+		this.consumedSlotsDisjunction = null;
+		this.s = s;
+		this.startIndex = s.length();
+	}
+
+	public SerializationBuilder(@NonNull UserModelAnalysis modelAnalysis, @NonNull ConsumedSlotsDisjunction consumedSlotsDisjunction, @NonNull StringBuilder s) {
+		this.modelAnalysis = modelAnalysis;
+		this.consumedSlotsDisjunction = consumedSlotsDisjunction;
 		this.s = s;
 		this.startIndex = s.length();
 	}
@@ -61,13 +70,18 @@ public class SerializationBuilder
 		}
 	}
 
+	public @Nullable SerializationNode getAlternative(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public void serialize(@NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = modelAnalysis.getElementAnalysis(element);
 		Iterable<@NonNull XtextAbstractRuleAnalysis> productionRuleAnalyses = userElementAnalysis.getProductionRules();
 		for (@NonNull XtextAbstractRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
-			SerializationBuilder nestedSerializationBuilder = productionRuleAnalysis.isCompatible(modelAnalysis, s, element);
-			if (nestedSerializationBuilder != null) {
-				productionRuleAnalysis.serialize(nestedSerializationBuilder, element);
+			ConsumedSlotsDisjunction consumedSlotsDisjunction = productionRuleAnalysis.isCompatible(modelAnalysis, element);
+			if (consumedSlotsDisjunction != null) {
+				productionRuleAnalysis.serialize(new SerializationBuilder(modelAnalysis, consumedSlotsDisjunction, s), element);
 				return;
 			}
 		}

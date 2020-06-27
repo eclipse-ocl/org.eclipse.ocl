@@ -13,15 +13,24 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.xtext.CompoundElement;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {
-	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
-
-	public CompositeSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality, @NonNull List<@NonNull SerializationNode> serializationNodes) {
-		super(grammarAnalysis, cardinality);
-		this.serializationNodes = serializationNodes;
+	public CompositeSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
+		super(grammarAnalysis, compoundElement.getCardinality());
+//		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
+	}
+
+	protected @NonNull RequiredSlots createRequiredSlots(@NonNull List<@NonNull RequiredSlotsConjunction> outerDisjunctions) {
+		//
+		//	No alternatives => a Conjunction
+		//
+		switch (outerDisjunctions.size()) {
+			case 0: return NullRequiredSlots.INSTANCE;
+			case 1: return outerDisjunctions.get(0);
+			default: return new RequiredSlotsDisjunction(this, outerDisjunctions);
+		}
 	}
 }

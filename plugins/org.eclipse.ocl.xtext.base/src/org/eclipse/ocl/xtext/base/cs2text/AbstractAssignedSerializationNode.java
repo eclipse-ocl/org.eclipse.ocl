@@ -17,14 +17,21 @@ import org.eclipse.jdt.annotation.Nullable;
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
 {
 	protected final @NonNull EStructuralFeature eFeature;
+	protected final @NonNull RequiredSlots requiredSlots;
 
 	protected AbstractAssignedSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EStructuralFeature eFeature, @Nullable String cardinality) {
 		super(grammarAnalysis, cardinality);
 		this.eFeature = eFeature;
+		this.requiredSlots = new SimpleRequiredSlot(this);
 	}
 
 	@Override
 	public @NonNull EStructuralFeature getEStructuralFeature() {
 		return eFeature;
+	}
+
+	@Override
+	public @NonNull RequiredSlots getRequiredSlots() {
+		return requiredSlots;
 	}
 }

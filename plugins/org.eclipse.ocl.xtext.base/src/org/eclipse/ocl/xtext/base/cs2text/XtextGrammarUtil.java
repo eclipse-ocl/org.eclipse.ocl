@@ -36,6 +36,23 @@ import org.eclipse.xtext.UntilToken;
 
 public class XtextGrammarUtil
 {
+	public static void appendCardinality(@NonNull StringBuilder s, int lowerBound, int upperBound) {
+		s.append("[");
+		if (upperBound < 0) {
+			s.append(lowerBound != 0 ? "+" : "*");
+		}
+		else if (upperBound == 1) {
+			s.append(lowerBound != 0 ? "1" : "?");
+		}
+		else if (upperBound == lowerBound) {
+			s.append(Integer.toString(lowerBound));
+		}
+		else {
+			s.append(lowerBound + ".." + upperBound);
+		}
+		s.append("]");
+	}
+
 	public static @NonNull EClassifier getClassifier(TypeRef type) {
 		return ClassUtil.nonNullState(type.getClassifier());
 	}
