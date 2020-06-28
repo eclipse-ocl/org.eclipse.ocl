@@ -13,19 +13,20 @@
 package org.eclipse.ocl.xtext.oclinecore.formatting2
 
 import com.google.inject.Inject
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder
+import org.eclipse.ocl.xtext.base.cs2text.UserModelAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.XtextGrammarAnalysis
+import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource
 import org.eclipse.ocl.xtext.basecs.ImportCS
 import org.eclipse.ocl.xtext.basecs.TypedRefCS
 import org.eclipse.ocl.xtext.essentialocl.formatting2.EssentialOCLFormatter
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreConstraintCS
 import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS
+import org.eclipse.xtext.conversion.IValueConverterService
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource
-import org.eclipse.ocl.xtext.base.cs2text.XtextGrammarAnalysis
-import org.eclipse.ocl.xtext.base.cs2text.UserModelAnalysis
-import org.eclipse.xtext.conversion.IValueConverterService
 import org.eclipse.xtext.linking.impl.LinkingHelper
 
 class OCLinEcoreFormatter extends EssentialOCLFormatter {
@@ -50,7 +51,9 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 		modelAnalysis.analyze(topLevelCS);
 		var String s2 = modelAnalysis.toString();
 		System.out.println(s2);
-		var String s3 = modelAnalysis.serialize(topLevelCS);
+		var SerializationBuilder serializationBuilder = new SerializationBuilder(modelAnalysis, new StringBuilder(), topLevelCS);
+		modelAnalysis.serialize(serializationBuilder, topLevelCS);
+		var String s3 = serializationBuilder.toRenderedString();
 		System.out.println(s3);
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		for (importCS : topLevelCS.ownedImports) {

@@ -172,11 +172,6 @@ public class XtextAbstractRuleAnalysis implements Nameable
 		}
 	}*/
 
-	/**
-	 * Perform the intra analysis to determine the locally produced EClassifiers and local base rules.
-	 */
-	protected void intraAnalyze() {	}
-
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();

@@ -12,9 +12,10 @@ package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
@@ -37,7 +38,12 @@ public class AlternativeKeywordsSerializationNode extends AbstractSerializationN
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+	public void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
+		serializedNodes.add(this);
+	}
+
+	@Override
+	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.appendSoftSpace();
 		serializationBuilder.append(values.get(0));
 		serializationBuilder.appendSoftSpace();

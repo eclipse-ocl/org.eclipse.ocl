@@ -463,7 +463,10 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+
+	/**
+	 * Perform the intra analysis to determine the locally produced EClassifiers and local base rules.
+	 */
 	protected void intraAnalyze() {
 		addProducedTypeRef(XtextGrammarUtil.getType(abstractRule));
 		for (EObject eObject : new TreeIterable(abstractRule, false)) {
@@ -514,13 +517,27 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return isFirstResultType((AbstractElement)eContainer);
 	}
 
-	public @Nullable ConsumedSlotsDisjunction isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
+	public @Nullable List<@NonNull SerializationNode> selectSerializedNodes( @NonNull EObject element) {
 		assert serializationNode != null;
-		return serializationNode.isCompatible(modelAnalysis, element);
+		return serializationNode.selectSerializedNodes(element);
 	}
 
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
-		assert serializationNode != null;
-		serializationNode.serialize(serializationBuilder, element);
+	public void preSerialize() {
+		if ("OCLinEcore::AttributeCS".equals(name)) {
+			getClass();		// XXX
+		}
+		SerializationNode serializationNode2 = serializationNode;
+		assert serializationNode2 != null;
+		RequiredSlots requiredSlots = serializationNode2.getRequiredSlots();
+		int conjunctionCount = requiredSlots.getConjunctionCount();
+		for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
+			RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
+			conjunction.preSerialize(serializationNode2);
+		}
 	}
+
+//	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+//		assert serializationNode != null;
+//		serializationNode.serialize(serializationBuilder, element);
+//	}
 }

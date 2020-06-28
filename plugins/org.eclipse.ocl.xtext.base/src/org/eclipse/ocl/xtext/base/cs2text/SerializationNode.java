@@ -10,20 +10,23 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 public interface SerializationNode
 {
-//	@NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex);
 	/**
 	 * Return the required slots in disjunctive normal form.
 	 */
 	@NonNull RequiredSlots getRequiredSlots();
-	@Nullable ConsumedSlotsDisjunction isCompatible(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
 	boolean isNull();
+	void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice);
+	@Nullable List<@NonNull SerializationNode> selectSerializedNodes(@NonNull EObject element);
+	void serialize(@NonNull SerializationBuilder serializationBuilder);
 	void setCardinality(@NonNull String cardinality);
 	void toString(@NonNull StringBuilder s, int depth);
-	void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element);
 }

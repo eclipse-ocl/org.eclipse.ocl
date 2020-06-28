@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
@@ -25,7 +24,7 @@ public class KeywordSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.appendSoftSpace();
 		serializationBuilder.append(value);
 		serializationBuilder.appendSoftSpace();

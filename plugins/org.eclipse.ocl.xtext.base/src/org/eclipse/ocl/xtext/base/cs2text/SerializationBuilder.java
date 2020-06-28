@@ -23,23 +23,16 @@ public class SerializationBuilder
 	private static final @NonNull Character SOFT_SPACE = new Character(Character.highSurrogate(' '));
 
 	protected final @NonNull UserModelAnalysis modelAnalysis;
-	protected final @Nullable ConsumedSlotsDisjunction consumedSlotsDisjunction;
 	protected final @NonNull StringBuilder s;
-	private int startIndex;
+	private final int startIndex;
+	protected final @NonNull EObject element;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	public SerializationBuilder(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s) {
+	public SerializationBuilder(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element) {
 		this.modelAnalysis = modelAnalysis;
-		this.consumedSlotsDisjunction = null;
 		this.s = s;
 		this.startIndex = s.length();
-	}
-
-	public SerializationBuilder(@NonNull UserModelAnalysis modelAnalysis, @NonNull ConsumedSlotsDisjunction consumedSlotsDisjunction, @NonNull StringBuilder s) {
-		this.modelAnalysis = modelAnalysis;
-		this.consumedSlotsDisjunction = consumedSlotsDisjunction;
-		this.s = s;
-		this.startIndex = s.length();
+		this.element = element;
 	}
 
 	public void append(@NonNull String string) {
@@ -75,19 +68,16 @@ public class SerializationBuilder
 		return null;
 	}
 
-	public void serialize(@NonNull EObject element) {
-		UserAbstractElementAnalysis userElementAnalysis = modelAnalysis.getElementAnalysis(element);
-		Iterable<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = userElementAnalysis.getProductionRules();
-		for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
-			ConsumedSlotsDisjunction consumedSlotsDisjunction = productionRuleAnalysis.isCompatible(modelAnalysis, element);
-			if (consumedSlotsDisjunction != null) {
-				productionRuleAnalysis.serialize(new SerializationBuilder(modelAnalysis, consumedSlotsDisjunction, s), element);
-				return;
-			}
-		}
-		s.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
-		// TODO Auto-generated method stub
+	public @NonNull EObject getElement() {
+		return element;
+	}
 
+	public void serialize() {
+		modelAnalysis.serialize(this, element);
+	}
+
+	public void serialize(@NonNull EObject element) {
+		new SerializationBuilder(modelAnalysis, s, element).serialize();
 	}
 
 	public @NonNull String toRenderedString() {
@@ -136,4 +126,5 @@ public class SerializationBuilder
 	public @NonNull String toString() {
 		return String.valueOf(s.substring(startIndex));
 	}
+
 }

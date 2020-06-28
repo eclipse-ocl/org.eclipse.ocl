@@ -54,14 +54,8 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return 1;
 	}
 
-//	@Override
-//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
-//		return Collections.singletonList(this);
-//	}
-
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
-		// return Collections.singletonList(getConjunction());
 		throw new UnsupportedOperationException();
 	}
 
@@ -73,12 +67,32 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return eStructuralFeature;
 	}
 
+	@Override
+	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
+		return Collections.singletonList(eStructuralFeature);
+	}
+
 	public int getLowerBound() {
 		return lowerBound;
 	}
 
+	@Override
+	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
+		return eStructuralFeature == this.eStructuralFeature ? eStructuralFeature.getLowerBound() : 0;
+	}
+
+	@Override
+	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
+		return eStructuralFeature == this.eStructuralFeature ? 1 : 0;
+	}
+
 	public int getUpperBound() {
 		return upperBound;
+	}
+
+	@Override
+	public int getUpperBound(@NonNull EStructuralFeature eStructuralFeature) {
+		return eStructuralFeature == this.eStructuralFeature ? eStructuralFeature.getUpperBound() : 0;
 	}
 
 	public @Nullable SimpleConsumedSlot isCompatible(@NonNull EObject element) {

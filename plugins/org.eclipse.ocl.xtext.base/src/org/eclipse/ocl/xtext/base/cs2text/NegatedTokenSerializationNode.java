@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.NegatedToken;
 
 public class NegatedTokenSerializationNode extends AbstractSerializationNode
@@ -25,6 +29,11 @@ public class NegatedTokenSerializationNode extends AbstractSerializationNode
 	@Override
 	public @NonNull RequiredSlots getRequiredSlots() {
 		return NullRequiredSlots.INSTANCE;
+	}
+
+	@Override
+	public void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

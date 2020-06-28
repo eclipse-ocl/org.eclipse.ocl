@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -34,12 +35,15 @@ public interface RequiredSlots
 	 */
 	int getConjunctionCount();
 
-//	@NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms2(int conjunctionIndex);
-
 	/**
 	 * Return the conjunctions of the disjunction, or iterable of this for a unit conjunction/disjunction.
 	 */
 	@NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction();
+
+	@NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures();
+	int getLowerBound(@NonNull EStructuralFeature eStructuralFeature);
+	int getQuantum(@NonNull EStructuralFeature eStructuralFeature);
+	int getUpperBound(@NonNull EStructuralFeature eStructuralFeature);
 
 	/**
 	 * Return true if this the null RequiredSlots denoting nothing required.

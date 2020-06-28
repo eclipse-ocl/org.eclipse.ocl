@@ -17,6 +17,7 @@ import java.util.Arrays;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.XtextGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource;
@@ -66,7 +67,10 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
     modelAnalysis.analyze(topLevelCS);
     String s2 = modelAnalysis.toString();
     System.out.println(s2);
-    String s3 = modelAnalysis.serialize(topLevelCS);
+    StringBuilder _stringBuilder = new StringBuilder();
+    SerializationBuilder serializationBuilder = new SerializationBuilder(modelAnalysis, _stringBuilder, topLevelCS);
+    modelAnalysis.serialize(serializationBuilder, topLevelCS);
+    String s3 = serializationBuilder.toRenderedString();
     System.out.println(s3);
     EList<ImportCS> _ownedImports = topLevelCS.getOwnedImports();
     for (final ImportCS importCS : _ownedImports) {

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -37,15 +38,31 @@ public class NullRequiredSlots extends AbstractRequiredSlots
 		return 0;
 	}
 
-//	@Override
-//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
-//		return EMPTY_CONJUNCTION_TERMS;
-//	}
-
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
 		return EMPTY_DISJUNCTION_TERMS;
 	}
+
+	@Override
+	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
+		return 0;
+	}
+
+	@Override
+	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
+		return 0;
+	}
+
+	@Override
+	public int getUpperBound(@NonNull EStructuralFeature eStructuralFeature) {
+		return 0;
+	}
+
 
 	@Override
 	public boolean isNull() {

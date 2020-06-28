@@ -89,19 +89,25 @@ public class XtextGrammarAnalysis
 		this.assignment2assignmentAnalysis = analyzeAssignments(rule2ruleAnalysis);
 		this.containment2assignmentAnalyses = analyzeContainments(assignment2assignmentAnalysis);
 		Iterable<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = rule2ruleAnalysis.values();
+		List<@NonNull XtextParserRuleAnalysis> parserRuleAnalyses = new ArrayList<>(rule2ruleAnalysis.size());
+		for (@NonNull XtextAbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
+			if (abstractRuleAnalysis instanceof XtextParserRuleAnalysis) {
+				parserRuleAnalyses.add((XtextParserRuleAnalysis)abstractRuleAnalysis);
+			}
+		}
+		Collections.sort(parserRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 		//
 		// Perform the intra rule analysis to determine the locally produced EClassifiers and local base rules.
 		//
-		for (@NonNull XtextAbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
-			abstractRuleAnalysis.intraAnalyze();
+		for (@NonNull XtextParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
+			parserRuleAnalysis.intraAnalyze();
 		}
 		this.eClassifier2ruleAnalyses = analyzeProductions(rule2ruleAnalysis);
 		//
 		// Perform the inter rule analysis to determine the base rule closure.
-		/*
-		for (@NonNull XtextAbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
-			abstractRuleAnalysis.interAnalyze();
-		} */
+		for (@NonNull XtextParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
+			parserRuleAnalysis.preSerialize();
+		}
 	}
 
 	/**

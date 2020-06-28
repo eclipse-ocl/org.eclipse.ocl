@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
@@ -23,10 +24,14 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 	protected RequiredSlotsDisjunction(@NonNull CompositeSerializationNode serializationNode, @NonNull List<@NonNull RequiredSlotsConjunction> conjunctions) {
 		this.serializationNode = serializationNode;
 		this.conjunctions = conjunctions;
+	//	for (@NonNull RequiredSlotsConjunction conjunction : conjunctions) {
+	//		assert conjunction.getAlternativesChoices() != null;
+	//	}
 	}
 
 	public void addRequiredSlotConjunction(@NonNull RequiredSlotsConjunction requiredSlotConjunction) {
 		conjunctions.add(requiredSlotConjunction);
+	//	assert requiredSlotConjunction.getAlternativesChoices() != null;
 	}
 
 	@Override
@@ -43,11 +48,6 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 		return conjunctions.get(conjunctionIndex);
 	}
 
-//	@Override
-//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
-//		return conjunctions.get(conjunctionIndex).getConjunction();
-//	}
-
 	@Override
 	public int getConjunctionCount() {
 		return conjunctions.size();
@@ -56,6 +56,26 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
 		return conjunctions;
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public int getUpperBound(@NonNull EStructuralFeature eStructuralFeature) {
+		throw new IllegalStateException();
 	}
 
 	@Override

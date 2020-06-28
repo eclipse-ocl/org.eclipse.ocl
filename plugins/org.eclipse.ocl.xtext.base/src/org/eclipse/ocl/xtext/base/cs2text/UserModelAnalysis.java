@@ -75,10 +75,16 @@ public class UserModelAnalysis
 		return grammarAnalysis;
 	}
 
-	public @NonNull String serialize(@NonNull EObject rootElement) {
-		SerializationBuilder serializationBuilder = new SerializationBuilder(this, new StringBuilder());
-		serializationBuilder.serialize(rootElement);
-		return serializationBuilder.toRenderedString();
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
+		List<@NonNull SerializationNode> serializedNodes = userElementAnalysis.selectSerializedNodes();
+		if (serializedNodes != null) {
+			for (@NonNull SerializationNode serializedNode : serializedNodes) {
+				serializedNode.serialize(serializationBuilder);
+			}
+			return;
+		}
+		serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
 	}
 
 	@Override

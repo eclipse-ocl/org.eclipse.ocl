@@ -11,9 +11,10 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -61,7 +62,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			//	No alternatives => a Conjunction
 			//
 			if (outerSize == 1) {
-				requiredSlots = permute(nodesIndexes);
+				requiredSlots = permute(nodesIndexes, nodesSizes);
 			}
 			else {
 				//
@@ -69,7 +70,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 				//
 				List<@NonNull RequiredSlotsConjunction> outerDisjunctions = new ArrayList<>(outerSize);
 				for (int outerIndex = 0; outerIndex < outerSize; outerIndex++) {
-					outerDisjunctions.add(permute(nodesIndexes));
+					outerDisjunctions.add(permute(nodesIndexes, nodesSizes));
 					for (int nodesIndex = 0; nodesIndex < nodesSize; nodesIndex++) {
 						nodesIndexes[nodesIndex]++;
 						if (nodesIndexes[nodesIndex] < nodesSizes[nodesIndex]) {
@@ -85,13 +86,29 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		return requiredSlots;
 	}
 
-	private @NonNull RequiredSlotsConjunction permute(int[] nodesIndexes) {
+	private @NonNull RequiredSlotsConjunction permute(int @NonNull [] nodesIndexes, int @NonNull [] nodesSizes) {
+		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerAlternatives2choice = null;
 		RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+	//	boolean hasAlternatives = false;
 		for (int nodesIndex = 0; nodesIndex < nodesIndexes.length; nodesIndex++) {
 			SerializationNode serializationNode = serializationNodes.get(nodesIndex);
+		//	if (serializationNode instanceof AlternativesSerializationNode) {
+		//		hasAlternatives = true;
+		//	}
 			RequiredSlots requiredSlots = serializationNode.getRequiredSlots();
 			if (!requiredSlots.isNull()) {
-				RequiredSlotsConjunction innerConjunction = requiredSlots.getConjunction(nodesIndexes[nodesIndex]);
+				int subSize = nodesSizes[nodesIndex];
+				int subIndex = nodesIndexes[nodesIndex];
+				RequiredSlotsConjunction innerConjunction = requiredSlots.getConjunction(subIndex);
+				if (subSize > 1) {
+					Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> innerAlternatives2choice = innerConjunction.getAlternativesChoices();
+					if (innerAlternatives2choice != null) {
+						if (outerAlternatives2choice == null) {
+							outerAlternatives2choice = new HashMap<>();
+						}
+						outerAlternatives2choice.putAll(outerAlternatives2choice);
+					}
+				}
 			//	for (@NonNull SimpleRequiredSlot innerSlot : innerConjunction.getConjunction()) {
 			//		outerConjunction.accumulate(innerSlot, cardinality);
 			//	}
@@ -100,15 +117,43 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			}
 		}
 		outerConjunction.getConjunction();		// XXX eager
+		if (outerAlternatives2choice != null) {
+			outerConjunction.setAlternatives(outerAlternatives2choice);
+		}
+	//	assert hasAlternatives == (alternatives2choice != null);
 		return outerConjunction;
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+	public void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
+		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>();
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-		//	serializationBuilder.appendSoftSpace();
-			serializationNode.serialize(serializationBuilder, element);
-		//	serializationBuilder.appendSoftSpace();
+			serializationNode.preSerialize(nestedSerializedNodes, alternatives2choice);
+		}
+		serializedNodes.add(new SequenceSerializationNode(grammarAnalysis, group, nestedSerializedNodes)
+		{
+			@Override
+			public void toString(@NonNull StringBuilder s, int depth) {
+			//	StringUtil.appendIndentation(s, depth, "\t");
+				s.append("{");
+			//	boolean isFirst = true;
+				for (@NonNull SerializationNode serializationNode : serializationNodes) {
+				//	if (!isFirst) {
+						s.append(" ");
+				//	}
+					serializationNode.toString(s, depth+1);
+				//	isFirst = false;
+				}
+				s.append(" }");
+				appendCardinality(s);
+			}
+		});			// XXX parent counted list
+	}
+
+	@Override
+	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			serializationNode.serialize(serializationBuilder);
 		}
 	}
 

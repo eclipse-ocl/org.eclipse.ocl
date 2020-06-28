@@ -37,8 +37,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
-		// serializationBuilder.serialize(element);
+	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
+		EObject element = serializationBuilder.getElement();
 		int index = serializationBuilder.consume(eStructuralFeature);
 		Object eGet = element.eGet(eStructuralFeature);
 		if (eStructuralFeature.isMany()) {
