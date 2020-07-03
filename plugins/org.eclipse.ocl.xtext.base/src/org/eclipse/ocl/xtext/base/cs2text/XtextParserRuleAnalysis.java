@@ -110,6 +110,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		@Override
 		public @NonNull SerializationNode caseAlternatives(Alternatives alternatives) {
 			assert alternatives != null;
+			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives.getCardinality());
 			List<@NonNull SerializationNode> serializationNodes = new ArrayList<>();
 			AlternativeKeywordsSerializationNode alternativeKeywordsSerializationNode = null;
 			Map<@NonNull EStructuralFeature, @NonNull AlternativeAssignedRuleCallsSerializationNode> eFeature2ruleCallSerializationNode = null;
@@ -119,7 +120,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				boolean doSwitchNeeded = true;
 				if (element instanceof Keyword) {
 					if (alternativeKeywordsSerializationNode == null) {
-						alternativeKeywordsSerializationNode = new AlternativeKeywordsSerializationNode(grammarAnalysis);
+						alternativeKeywordsSerializationNode = new AlternativeKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality);
 						serializationNodes.add(alternativeKeywordsSerializationNode);
 					}
 					alternativeKeywordsSerializationNode.addKeyword((Keyword)element);
@@ -138,7 +139,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 						AlternativeAssignedKeywordsSerializationNode serializationNode = eFeature2keywordsSerializationNode.get(eFeature);
 						if (serializationNode == null) {
 							EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
-							serializationNode = new AlternativeAssignedKeywordsSerializationNode(grammarAnalysis, eContainingClass, eFeature);
+							serializationNode = new AlternativeAssignedKeywordsSerializationNode(grammarAnalysis, eContainingClass, eFeature, multiplicativeCardinality);
 							eFeature2keywordsSerializationNode.put(eFeature, serializationNode);
 							serializationNodes.add(serializationNode);
 						}
@@ -153,7 +154,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 						AlternativeAssignedRuleCallsSerializationNode serializationNode = eFeature2ruleCallSerializationNode.get(eFeature);
 						if (serializationNode == null) {
 							EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(ruleCall);
-							serializationNode = new AlternativeAssignedRuleCallsSerializationNode(grammarAnalysis, eContainingClass, eFeature);
+							serializationNode = new AlternativeAssignedRuleCallsSerializationNode(grammarAnalysis, eContainingClass, eFeature, multiplicativeCardinality);
 							eFeature2ruleCallSerializationNode.put(eFeature, serializationNode);
 							serializationNodes.add(serializationNode);
 						}
@@ -204,27 +205,17 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			if (serializationNodes.size() <= 0) {
 				return nullSerializationNode;
 			}
-			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives.getCardinality());
 			if (serializationNodes.size() == 1) {
 				if (alternativeKeywordsSerializationNode != null) {
-					if (multiplicativeCardinality != null) {
-						alternativeKeywordsSerializationNode.setCardinality(multiplicativeCardinality);
-					}
 					return alternativeKeywordsSerializationNode;
 				}
 				else if ((eFeature2keywordsSerializationNode != null) && (eFeature2keywordsSerializationNode.size() == 1)) {
 					for (@NonNull AlternativeAssignedKeywordsSerializationNode serializationNode : eFeature2keywordsSerializationNode.values()) {		// All one value
-						if (multiplicativeCardinality != null) {
-							serializationNode.setCardinality(multiplicativeCardinality);
-						}
 						return serializationNode;
 					}
 				}
 				else if ((eFeature2ruleCallSerializationNode != null) && (eFeature2ruleCallSerializationNode.size() == 1)) {
 					for (@NonNull AlternativeAssignedRuleCallsSerializationNode serializationNode : eFeature2ruleCallSerializationNode.values()) {		// All one value
-						if (multiplicativeCardinality != null) {
-							serializationNode.setCardinality(multiplicativeCardinality);
-							}
 						return serializationNode;
 					}
 				}

@@ -22,7 +22,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	 * The overall (multi-)grammar analysis.
 	 */
 	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
-	protected /*final*/ @NonNull MultiplicativeCardinality multiplicativeCardinality;	// XXX
+	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;	// XXX
 //	private int lowerBound;
 //	private int upperBound;
 
@@ -112,11 +112,6 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	@Override
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.append("<<<Unsupported serialize '" + getClass().getSimpleName() + "'>>>");
-	}
-
-	@Override
-	public void setCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
 	@Override

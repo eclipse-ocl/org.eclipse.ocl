@@ -22,8 +22,8 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 {
 	protected final @NonNull List<@NonNull  XtextAbstractRuleAnalysis> ruleAnalyses;
 
-	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, MultiplicativeCardinality.ONE);
+	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 		this.ruleAnalyses = eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
 	}
 
