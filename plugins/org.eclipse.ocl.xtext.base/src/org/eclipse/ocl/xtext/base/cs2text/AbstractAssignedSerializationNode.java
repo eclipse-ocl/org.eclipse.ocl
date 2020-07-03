@@ -24,7 +24,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 		super(grammarAnalysis, multiplicativeCardinality);
 		this.eFeatureScope = eFeatureScope;
 		this.eStructuralFeature = eStructuralFeature;
-		this.requiredSlots = new SimpleRequiredSlot(eFeatureScope, eStructuralFeature, getLowerBound(), getUpperBound());
+		this.requiredSlots = new SimpleRequiredSlot(eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 	}
 
 	@Override

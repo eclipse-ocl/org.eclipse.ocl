@@ -24,15 +24,12 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 //	protected final @NonNull AssignedSerializationNode serializationNode;
 	protected final @NonNull EClass eFeatureScope;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
-	protected final int lowerBound;
-	protected final int upperBound;
+	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public SimpleRequiredSlot(@NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, int lowerBound, int upperBound) {
+	public SimpleRequiredSlot(@NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.eFeatureScope = eFeatureScope;
 		this.eStructuralFeature = eStructuralFeature;
-		this.lowerBound = lowerBound;
-		this.upperBound = upperBound;
-		assert (upperBound < 0) || ((upperBound > 0) && (lowerBound <= upperBound));
+		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
 	@Override
@@ -73,12 +70,16 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	}
 
 	public int getLowerBound() {
-		return lowerBound;
+		return multiplicativeCardinality.mayBeZero() ? 0 : 1;
 	}
 
 	@Override
 	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
 		return eStructuralFeature == this.eStructuralFeature ? eStructuralFeature.getLowerBound() : 0;
+	}
+
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+		return multiplicativeCardinality;
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	}
 
 	public int getUpperBound() {
-		return upperBound;
+		return multiplicativeCardinality.mayBeMany() ? -1 : 1;
 	}
 
 	@Override
@@ -118,15 +119,15 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 			upper = 0;
 		}
 		assert (upper < 0) || ((upper > 0) && (lower <= upper));
-		if (lower < lowerBound) {
-			if (lowerBound <= upper) {
-				lower = lowerBound;
+		if (lower < getLowerBound()) {
+			if (getLowerBound() <= upper) {
+				lower = getLowerBound();
 			}
 			else {
 				return null;		// Too few
 			}
 		}
-		if ((upperBound >= 0) && (upper > upperBound)) {
+		if ((getUpperBound() >= 0) && (upper > getUpperBound())) {
 			return null;		// Too many
 		}
 		return new SimpleConsumedSlot(eFeatureScope, eStructuralFeature, lower, upper);
@@ -135,6 +136,6 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
-		XtextGrammarUtil.appendCardinality(s, lowerBound, upperBound);
+		XtextGrammarUtil.appendCardinality(s, getLowerBound(), getUpperBound());
 	}
 }
