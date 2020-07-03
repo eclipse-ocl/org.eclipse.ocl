@@ -13,12 +13,11 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
-	public AssignedCurrentSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, cardinality);
+	public AssignedCurrentSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 	}
 
 	@Override

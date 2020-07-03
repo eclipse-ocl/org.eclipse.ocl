@@ -44,7 +44,7 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
 		assert conjunctionIndex == 0;
 		RequiredSlotsConjunction requiredSlotsConjunction = new RequiredSlotsConjunction();
-		requiredSlotsConjunction.accumulate(this, "1");
+		requiredSlotsConjunction.accumulate(this, MultiplicativeCardinality.ONE);
 		requiredSlotsConjunction.getConjunction();		// XXX eager
 		return requiredSlotsConjunction;
 	}

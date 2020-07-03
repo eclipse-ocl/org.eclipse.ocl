@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.linking.impl.LinkingHelper;
 
@@ -29,8 +28,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 //	@Inject
 	private LinkingHelper linkingHelper;
 
-	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, cardinality);
+	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 		this.ruleAnalysis = ruleAnalysis;
 		this.valueConverterService = grammarAnalysis.getValueConverterService();
 		this.linkingHelper = grammarAnalysis.getLinkingHelper();

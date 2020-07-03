@@ -13,15 +13,14 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.Keyword;
 
 public class AssignedKeywordSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull String value;
 
-	public AssignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality, @NonNull Keyword keyword) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, cardinality);
+	public AssignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 

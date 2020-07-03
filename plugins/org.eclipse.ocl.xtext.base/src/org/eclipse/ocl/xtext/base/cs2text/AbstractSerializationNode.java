@@ -22,14 +22,14 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	 * The overall (multi-)grammar analysis.
 	 */
 	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
-	protected final @NonNull String cardinality;
-	private int lowerBound;
-	private int upperBound;
+	protected /*final*/ @NonNull MultiplicativeCardinality multiplicativeCardinality;	// XXX
+//	private int lowerBound;
+//	private int upperBound;
 
-	public AbstractSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality) {
+	public AbstractSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.grammarAnalysis = grammarAnalysis;
-		this.cardinality = cardinality != null ? cardinality : "1";
-		if (cardinality == null) {
+		this.multiplicativeCardinality = multiplicativeCardinality;
+/*		if (cardinality == null) {
 			this.lowerBound = 1;
 			this.upperBound = 1;
 		}
@@ -47,7 +47,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 		}
 		else {
 			throw new UnsupportedOperationException("Unsupported cardinality '" + cardinality + "'");
-		}
+		} */
 	}
 
 	//		public boolean addAlternative(@NonNull SerializationNode nestedContent) {
@@ -59,22 +59,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	//		}
 
 	protected void appendCardinality(@NonNull StringBuilder s) {
-		if ((lowerBound != 1) || (upperBound != 1)) {
-			String cardinality2;
-			if (upperBound < 0) {
-				cardinality2 = lowerBound != 0 ? "+" : "*";
-			}
-			else if (upperBound == 1) {
-				cardinality2 = lowerBound != 0 ? "1" : "?";
-			}
-			else if (upperBound == lowerBound) {
-				cardinality2 = Integer.toString(lowerBound);
-			}
-			else {
-				cardinality2 = lowerBound + ".." + upperBound;
-			}
-			s.append(cardinality2);
-		}
+		s.append(multiplicativeCardinality);
 	}
 
 	/*		@Override
@@ -84,13 +69,11 @@ public abstract class AbstractSerializationNode implements SerializationNode
 		} */
 
 	public int getLowerBound() {
-		assert (lowerBound == 0) == ("?".equals(cardinality) || "*".equals(cardinality));
-		return lowerBound;
+		return multiplicativeCardinality.mayBeZero() ? 0 : 1;
 	}
 
 	public int getUpperBound() {
-		assert (upperBound < 0) == ("+".equals(cardinality) || "*".equals(cardinality));
-		return upperBound;
+		return multiplicativeCardinality.mayBeMany() ? -1 : 1;
 	}
 
 	@Override
@@ -132,21 +115,8 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	}
 
 	@Override
-	public void setCardinality(@NonNull String cardinality) {
-		if ("?".equals(cardinality)) {
-			lowerBound = 0;
-		}
-		else if ("*".equals(cardinality)) {
-			lowerBound = 0;
-			upperBound = -1;
-		}
-		else if ("+".equals(cardinality)) {
-			//??	lowerBound = 1;
-			upperBound = -1;
-		}
-		else {
-			throw new UnsupportedOperationException("Unsupported cardinality '" + cardinality + "'");
-		}
+	public void setCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
 	@Override

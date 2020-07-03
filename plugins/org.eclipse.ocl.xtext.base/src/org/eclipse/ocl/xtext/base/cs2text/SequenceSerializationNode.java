@@ -113,7 +113,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			//		outerConjunction.accumulate(innerSlot, cardinality);
 			//	}
 			//	outerConjunction.accumulate(innerConjunction.getAlternativesChoices());
-				outerConjunction.accumulate(innerConjunction, cardinality);
+				outerConjunction.accumulate(innerConjunction, multiplicativeCardinality);
 			}
 		}
 		outerConjunction.getConjunction();		// XXX eager

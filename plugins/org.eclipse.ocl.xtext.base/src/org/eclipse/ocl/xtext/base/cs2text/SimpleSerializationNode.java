@@ -18,8 +18,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class SimpleSerializationNode extends AbstractSerializationNode
 {
-	public SimpleSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @Nullable String cardinality) {
-		super(grammarAnalysis, cardinality);
+	public SimpleSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(grammarAnalysis, multiplicativeCardinality);
 	}
 
 	@Override

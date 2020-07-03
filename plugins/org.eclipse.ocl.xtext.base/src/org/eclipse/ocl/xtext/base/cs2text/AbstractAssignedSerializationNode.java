@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
 {
@@ -21,8 +20,8 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final @NonNull RequiredSlots requiredSlots;
 
-	protected AbstractAssignedSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality) {
-		super(grammarAnalysis, cardinality);
+	protected AbstractAssignedSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(grammarAnalysis, multiplicativeCardinality);
 		this.eFeatureScope = eFeatureScope;
 		this.eStructuralFeature = eStructuralFeature;
 		this.requiredSlots = new SimpleRequiredSlot(eFeatureScope, eStructuralFeature, getLowerBound(), getUpperBound());

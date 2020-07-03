@@ -24,7 +24,7 @@ public class AlternativeKeywordsSerializationNode extends AbstractSerializationN
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
 	public AlternativeKeywordsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis) {
-		super(grammarAnalysis, null);
+		super(grammarAnalysis, MultiplicativeCardinality.ONE);
 	}
 
 	public void addKeyword(@NonNull Keyword keyword) {

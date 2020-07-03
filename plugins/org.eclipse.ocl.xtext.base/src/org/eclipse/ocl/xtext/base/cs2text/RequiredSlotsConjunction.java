@@ -44,9 +44,9 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		assert !hadKey || (oldChoice == choice);
 	} */
 
-	public void accumulate(@NonNull RequiredSlotsConjunction innerConjunction, @NonNull String cardinality) {
+	public void accumulate(@NonNull RequiredSlotsConjunction innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		for (@NonNull SimpleRequiredSlot simpleRequiredSlot : innerConjunction.getConjunction()) {
-			accumulate(simpleRequiredSlot, cardinality);
+			accumulate(simpleRequiredSlot, multiplicativeCardinality);
 		}
 	/*	Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
 		if (alternativesChoices != null) {
@@ -57,7 +57,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	//	getConjunction();		// XXX eager
 	}
 
-	public void accumulate(@NonNull SimpleRequiredSlot requiredSlot, @NonNull String cardinality) {
+	public void accumulate(@NonNull SimpleRequiredSlot requiredSlot, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		EStructuralFeature eStructuralFeature = requiredSlot.getEStructuralFeature();
 		if ("ownedProperties".equals(eStructuralFeature.getName())) {
 			getClass();	// XXX
@@ -65,14 +65,10 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		int lower = requiredSlot.getLowerBound();
 		int quantum = 1;		// XXX
 		int upper = requiredSlot.getUpperBound();
-		if ("*".equals(cardinality)) {
+		if (multiplicativeCardinality.mayBeZero()) {
 			lower = 0;
-			upper = -1;
-		}
-		else if ("?".equals(cardinality)) {
-			lower = 0;
-		}
-		else if ("+".equals(cardinality)) {
+			}
+		if (multiplicativeCardinality.mayBeMany()) {
 			upper = -1;
 		}
 		Integer oldLower = eFeature2lower.get(eStructuralFeature);

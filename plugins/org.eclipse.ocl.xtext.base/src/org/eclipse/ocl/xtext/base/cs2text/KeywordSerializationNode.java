@@ -19,7 +19,7 @@ public class KeywordSerializationNode extends SimpleSerializationNode
 	protected final @NonNull String value;
 
 	public KeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Keyword keyword) {
-		super(grammarAnalysis, keyword.getCardinality());
+		super(grammarAnalysis, MultiplicativeCardinality.toEnum(keyword.getCardinality()));
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 

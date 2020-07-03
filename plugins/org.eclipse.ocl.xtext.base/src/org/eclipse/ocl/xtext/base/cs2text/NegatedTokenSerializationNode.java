@@ -22,7 +22,7 @@ public class NegatedTokenSerializationNode extends AbstractSerializationNode
 	protected final @NonNull SerializationNode serializationNode;
 
 	public NegatedTokenSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull NegatedToken negatedToken, @NonNull SerializationNode serializationNode) {
-		super(grammarAnalysis, negatedToken.getCardinality());
+		super(grammarAnalysis, MultiplicativeCardinality.toEnum(negatedToken.getCardinality()));
 		this.serializationNode = serializationNode;
 	}
 

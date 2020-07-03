@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
 
@@ -22,8 +21,8 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	protected final @NonNull CrossReference crossReference;
 	protected final @NonNull RuleCall ruleCall;
 
-	public AssignedCrossReferenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @Nullable String cardinality, @NonNull CrossReference crossReference) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, cardinality);
+	public AssignedCrossReferenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
+		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 		this.crossReference = crossReference;
 		this.ruleCall = (RuleCall)XtextGrammarUtil.getTerminal(crossReference);
 	}

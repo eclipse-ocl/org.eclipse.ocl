@@ -18,7 +18,7 @@ import org.eclipse.xtext.CompoundElement;
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {
 	public CompositeSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
-		super(grammarAnalysis, compoundElement.getCardinality());
+		super(grammarAnalysis, MultiplicativeCardinality.toEnum(compoundElement.getCardinality()));
 //		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
 	}

@@ -20,7 +20,7 @@ public class UntilTokenSerializationNode extends SimpleSerializationNode
 	protected final @NonNull String value;
 
 	public UntilTokenSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull UntilToken untilToken) {
-		super(grammarAnalysis, untilToken.getCardinality());
+		super(grammarAnalysis, MultiplicativeCardinality.toEnum(untilToken.getCardinality()));
 		this.value = XtextGrammarUtil.getValue((Keyword)XtextGrammarUtil.getTerminal(untilToken));
 	}
 

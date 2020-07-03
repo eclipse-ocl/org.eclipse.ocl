@@ -27,6 +27,6 @@ public interface SerializationNode
 	void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice);
 	@Nullable List<@NonNull SerializationNode> selectSerializedNodes(@NonNull EObject element);
 	void serialize(@NonNull SerializationBuilder serializationBuilder);
-	void setCardinality(@NonNull String cardinality);
+	void setCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality);
 	void toString(@NonNull StringBuilder s, int depth);
 }
