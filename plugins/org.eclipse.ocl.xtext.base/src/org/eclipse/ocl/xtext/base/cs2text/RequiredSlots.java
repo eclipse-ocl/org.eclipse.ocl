@@ -26,7 +26,7 @@ public interface RequiredSlots
 	/**
 	 * Return the terms of a conjunction, or iterable of this for a unit conjunction/disjunction, or an ISE for a real disjunction..
 	 */
-	@NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction();
+	@NonNull Iterable<@NonNull RequiredSlots> getConjunction();
 
 	@NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex);
 
@@ -54,6 +54,6 @@ public interface RequiredSlots
 	void toString(@NonNull StringBuilder s, int i);
 
 	static final @NonNull RequiredSlotsConjunction EMPTY_CONJUNCTION = new RequiredSlotsConjunction();
-	static final @NonNull List<@NonNull SimpleRequiredSlot> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
+	static final @NonNull List<@NonNull RequiredSlots> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
 	static final @NonNull List<@NonNull RequiredSlotsConjunction> EMPTY_DISJUNCTION_TERMS = Collections.emptyList();
 }

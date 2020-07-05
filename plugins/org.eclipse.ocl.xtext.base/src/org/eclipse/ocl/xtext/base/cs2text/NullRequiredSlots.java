@@ -23,7 +23,7 @@ public class NullRequiredSlots extends AbstractRequiredSlots
 	private NullRequiredSlots() {}
 
 	@Override
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
+	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
 		return EMPTY_CONJUNCTION_TERMS;
 	}
 

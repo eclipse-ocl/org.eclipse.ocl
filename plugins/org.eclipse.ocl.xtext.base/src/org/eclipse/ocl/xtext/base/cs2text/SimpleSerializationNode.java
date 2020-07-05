@@ -10,11 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.List;
-import java.util.Map;
-
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class SimpleSerializationNode extends AbstractSerializationNode
 {
@@ -28,7 +24,7 @@ public abstract class SimpleSerializationNode extends AbstractSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
-		serializedNodes.add(this);
+	public void preSerialize(@NonNull PreSerializer preSerializer) {
+		preSerializer.addSerializedNode(this);
 	}
 }

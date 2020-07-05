@@ -125,12 +125,13 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
-		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>();
+	public void preSerialize(@NonNull PreSerializer preSerializer) {
+		PreSerializer nestedPreSerializer = preSerializer.createNestedPreSerializer(/*this*/);
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializationNode.preSerialize(nestedSerializedNodes, alternatives2choice);
+			serializationNode.preSerialize(nestedPreSerializer);
 		}
-		serializedNodes.add(new SequenceSerializationNode(grammarAnalysis, group, nestedSerializedNodes)
+		List<@NonNull SerializationNode> nestedSerializedNodes = nestedPreSerializer.getSerializedNodes();
+		preSerializer.addSerializedNode(new SequenceSerializationNode(grammarAnalysis, group, nestedSerializedNodes)
 		{
 			@Override
 			public void toString(@NonNull StringBuilder s, int depth) {

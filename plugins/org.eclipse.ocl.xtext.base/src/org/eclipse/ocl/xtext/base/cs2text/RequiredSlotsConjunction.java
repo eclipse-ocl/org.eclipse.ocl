@@ -27,7 +27,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 {
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
-	private @Nullable List<@NonNull SimpleRequiredSlot> conjunction = null;
+	private @Nullable List<@NonNull RequiredSlots> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable List<@NonNull SerializationNode> serializedNodes = null;
 
@@ -44,8 +44,13 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	} */
 
 	public void accumulate(@NonNull RequiredSlotsConjunction innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		for (@NonNull SimpleRequiredSlot simpleRequiredSlot : innerConjunction.getConjunction()) {
-			accumulate(simpleRequiredSlot, multiplicativeCardinality);
+		for (@NonNull RequiredSlots requiredSlots : innerConjunction.getConjunction()) {
+			if (requiredSlots instanceof RequiredSlotsConjunction) {
+				accumulate((RequiredSlotsConjunction)requiredSlots, multiplicativeCardinality);
+			}
+			else {
+				accumulate((SimpleRequiredSlot)requiredSlots, multiplicativeCardinality);
+			}
 		}
 	/*	Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
 		if (alternativesChoices != null) {
@@ -102,8 +107,8 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
-		List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
+	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
+		List<@NonNull RequiredSlots> conjunction = this.conjunction;
 		if (conjunction == null) {
 			this.conjunction = conjunction = new ArrayList<>();
 			List<@NonNull EStructuralFeature> features = new ArrayList<>(eFeature2multiplicativeCardinality.keySet());
@@ -164,7 +169,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return serializedNodes;
 	}
 
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getTerms() {
+	public @NonNull Iterable<@NonNull RequiredSlots> getTerms() {
 		return getConjunction();
 	}
 
@@ -175,17 +180,9 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	}
 
 	public void preSerialize(@NonNull SerializationNode serializationNode) {
-	//	assert this.serializedNodes == null;
-		List<@NonNull SerializationNode> serializedNodes = new ArrayList<>();
-		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice2 = alternatives2choice;
-	//	if ((alternatives2choice2 == null) && (serializationNode instanceof AlternativesSerializationNode)) {
-	//		alternatives2choice2 = new HashMap<>();
-	//		alternatives2choice2.put((AlternativesSerializationNode)serializationNode, null);		// XXX
-	//	}
-	//	else {
-			serializationNode.preSerialize(serializedNodes, alternatives2choice2);
-			this.serializedNodes = serializedNodes;
-	//	}
+		PreSerializer preSerializer = new PreSerializer(/*serializationNode,*/ alternatives2choice);
+		serializationNode.preSerialize(preSerializer);
+		this.serializedNodes = preSerializer.getSerializedNodes();
 	}
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
@@ -198,11 +195,17 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
 	//	if (conjunction != null) {
 		boolean isFirst = true;
-		for (@NonNull SimpleRequiredSlot requiredSlot : getConjunction()) {	// XXX lazy
+		for (@NonNull RequiredSlots requiredSlot : getConjunction()) {	// XXX lazy
 			if (!isFirst) {
 				s.append(" & ");
 			}
+			if (requiredSlot instanceof RequiredSlotsConjunction) {
+				s.append("{");
+			}
 			requiredSlot.toString(s, depth);
+			if (requiredSlot instanceof RequiredSlotsConjunction) {
+				s.append("}");
+			}
 			isFirst = false;
 		}
 		List<@NonNull SerializationNode> serializedNodes2 = serializedNodes;

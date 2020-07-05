@@ -33,7 +33,7 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
+	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
 		return Collections.singletonList(this);
 	}
 

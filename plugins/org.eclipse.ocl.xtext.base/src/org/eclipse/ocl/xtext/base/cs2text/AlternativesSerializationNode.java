@@ -137,17 +137,11 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull List<@NonNull SerializationNode> serializedNodes, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
-		assert alternatives2choice != null;
-		//	if (alternatives2choice != null) {
-			SerializationNode chosenNode = alternatives2choice.get(this);
-			if (chosenNode != null) {
-				chosenNode.preSerialize(serializedNodes, alternatives2choice);
-			}
-	//	}
-	//	else {
-
-	//	}
+	public void preSerialize(@NonNull PreSerializer preSerializer) {
+		SerializationNode chosenNode = preSerializer.getChosenNode(this);
+		if (chosenNode != null) {
+			chosenNode.preSerialize(preSerializer);
+		}
 	}
 
 //	@Override

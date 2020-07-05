@@ -35,7 +35,7 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
+	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
 		switch (conjunctions.size()) {
 			case 0: return EMPTY_CONJUNCTION_TERMS;
 			case 1: return conjunctions.get(0).getConjunction();
