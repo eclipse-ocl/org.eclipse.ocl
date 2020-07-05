@@ -126,7 +126,9 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 
 	@Override
 	public void preSerialize(@NonNull PreSerializer preSerializer) {
-		PreSerializer nestedPreSerializer = preSerializer.createNestedPreSerializer(/*this*/);
+//		super.preSerialize(preSerializer);
+		preSerializer.addSerializedNode2(this);		// XXX promote
+		PreSerializer nestedPreSerializer = preSerializer.createNestedPreSerializer(this);
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			serializationNode.preSerialize(nestedPreSerializer);
 		}

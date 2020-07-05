@@ -36,4 +36,10 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	public @NonNull RequiredSlots getRequiredSlots() {
 		return requiredSlots;
 	}
+
+	@Override
+	public void preSerialize(@NonNull PreSerializer preSerializer) {
+		super.preSerialize(preSerializer);
+		preSerializer.addAssignedNode(this);
+	}
 }

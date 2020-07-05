@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 
 public class RequiredSlotsConjunction extends AbstractRequiredSlots
 {
@@ -29,11 +28,11 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
 	private @Nullable List<@NonNull RequiredSlots> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
-	private @Nullable List<@NonNull SerializationNode> serializedNodes = null;
+	private @Nullable PreSerializer preSerializer = null;
 
 	protected RequiredSlotsConjunction() {}
 
-/*	public void accumulate(@NonNull AlternativesSerializationNode alternatives, @Nullable SerializationNode choice) {
+	/*	public void accumulate(@NonNull AlternativesSerializationNode alternatives, @Nullable SerializationNode choice) {
 		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice2 = alternatives2choice;
 		if (alternatives2choice2 == null) {
 			alternatives2choice2 = alternatives2choice = new HashMap<>();
@@ -52,13 +51,13 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 				accumulate((SimpleRequiredSlot)requiredSlots, multiplicativeCardinality);
 			}
 		}
-	/*	Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
+		/*	Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
 		if (alternativesChoices != null) {
 			for (Entry<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> entry : alternativesChoices.entrySet()) {
 				accumulate(entry.getKey(), entry.getValue());
 			}
 		} */
-	//	getConjunction();		// XXX eager
+		//	getConjunction();		// XXX eager
 	}
 
 	public void accumulate(@NonNull SimpleRequiredSlot requiredSlot, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
@@ -91,13 +90,13 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		Integer oldQuantum = eFeature2quantum.get(eStructuralFeature);
 		int newQuantum = oldQuantum != null ? oldQuantum.intValue() : 0;
 		newQuantum += quantum;
-	//	assert newQuantum == 1;
+		//	assert newQuantum == 1;
 		eFeature2quantum.put(eStructuralFeature, newQuantum);
 
 
 
 		MultiplicativeCardinality newMultiplicativeCardinality = newMayBeMany
-					? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
+				? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
 					: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
 		eFeature2multiplicativeCardinality.put(eStructuralFeature, newMultiplicativeCardinality);
 	}
@@ -134,10 +133,10 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return 1;
 	}
 
-//	@Override
-//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
-//		return getConjunction();
-//	}
+	//	@Override
+	//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
+	//		return getConjunction();
+	//	}
 
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
@@ -157,16 +156,16 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 
 	@Override
 	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
-//		MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
-//		Integer quantum = eFeature2quantum.get(eStructuralFeature);
-//		return multiplicativeCardinality != null ? 1/*quantum.intValue()*/ : 0;
+		//		MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
+		//		Integer quantum = eFeature2quantum.get(eStructuralFeature);
+		//		return multiplicativeCardinality != null ? 1/*quantum.intValue()*/ : 0;
 		Integer quantum = eFeature2quantum.get(eStructuralFeature);
 		return quantum != null ? quantum.intValue() : 0;
 	}
 
 	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
-		assert serializedNodes != null;
-		return serializedNodes;
+		assert preSerializer != null;
+		return preSerializer.getSerializedNodes();
 	}
 
 	public @NonNull Iterable<@NonNull RequiredSlots> getTerms() {
@@ -180,9 +179,8 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	}
 
 	public void preSerialize(@NonNull SerializationNode serializationNode) {
-		PreSerializer preSerializer = new PreSerializer(/*serializationNode,*/ alternatives2choice);
+		this.preSerializer = new PreSerializer(alternatives2choice);
 		serializationNode.preSerialize(preSerializer);
-		this.serializedNodes = preSerializer.getSerializedNodes();
 	}
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
@@ -192,8 +190,8 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-	//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
-	//	if (conjunction != null) {
+		//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
+		//	if (conjunction != null) {
 		boolean isFirst = true;
 		for (@NonNull RequiredSlots requiredSlot : getConjunction()) {	// XXX lazy
 			if (!isFirst) {
@@ -208,14 +206,8 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 			}
 			isFirst = false;
 		}
-		List<@NonNull SerializationNode> serializedNodes2 = serializedNodes;
-		if (serializedNodes2 != null) {
-			s.append("\n");
-			StringUtil.appendIndentation(s, depth+1, "\t");
-			for (@NonNull SerializationNode serializedNode : serializedNodes2) {
-				serializedNode.toString(s, depth+2);
-			}
+		if (preSerializer != null) {
+			preSerializer.toString(s, depth+1);
 		}
-	//	}
 	}
 }

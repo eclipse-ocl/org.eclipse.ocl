@@ -52,6 +52,10 @@ public enum MultiplicativeCardinality
 		this.state = state;
 	}
 
+	boolean isOne() {
+		return (state & 3) == 0;
+	}
+
 	public boolean mayBeMany() {
 		return (state & 2) != 0;
 	}

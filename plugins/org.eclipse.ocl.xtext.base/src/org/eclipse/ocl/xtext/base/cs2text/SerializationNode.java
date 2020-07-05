@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public interface SerializationNode
 {
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality();
 	/**
 	 * Return the required slots in disjunctive normal form.
 	 */

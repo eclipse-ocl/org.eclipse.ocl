@@ -69,10 +69,12 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return Collections.singletonList(eStructuralFeature);
 	}
 
+	@Deprecated
 	public int getLowerBound() {
 		return multiplicativeCardinality.mayBeZero() ? 0 : 1;
 	}
 
+	@Deprecated
 	@Override
 	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
 		return eStructuralFeature == this.eStructuralFeature ? eStructuralFeature.getLowerBound() : 0;
@@ -82,15 +84,18 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return multiplicativeCardinality;
 	}
 
+	@Deprecated
 	@Override
 	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
 		return eStructuralFeature == this.eStructuralFeature ? 1 : 0;
 	}
 
+	@Deprecated
 	public int getUpperBound() {
 		return multiplicativeCardinality.mayBeMany() ? -1 : 1;
 	}
 
+	@Deprecated
 	@Override
 	public int getUpperBound(@NonNull EStructuralFeature eStructuralFeature) {
 		return eStructuralFeature == this.eStructuralFeature ? eStructuralFeature.getUpperBound() : 0;

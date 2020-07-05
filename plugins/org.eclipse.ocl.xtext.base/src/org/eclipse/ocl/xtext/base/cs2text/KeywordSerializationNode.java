@@ -24,6 +24,18 @@ public class KeywordSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+		return MultiplicativeCardinality.ONE;			// ?? could more ccurately be ZERO or ONE
+	}
+
+	@Override
+	public void preSerialize(@NonNull PreSerializer preSerializer) {
+		if (!multiplicativeCardinality.mayBeZero()) {
+			super.preSerialize(preSerializer);
+		}
+	}
+
+	@Override
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.appendSoftSpace();
 		serializationBuilder.append(value);

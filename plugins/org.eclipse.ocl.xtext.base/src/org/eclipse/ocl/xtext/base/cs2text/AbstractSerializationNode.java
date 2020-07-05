@@ -22,41 +22,12 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	 * The overall (multi-)grammar analysis.
 	 */
 	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
-	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;	// XXX
-//	private int lowerBound;
-//	private int upperBound;
+	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
 	public AbstractSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.grammarAnalysis = grammarAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
-/*		if (cardinality == null) {
-			this.lowerBound = 1;
-			this.upperBound = 1;
-		}
-		else if (cardinality.equals("?")) {
-			this.lowerBound = 0;
-			this.upperBound = 1;
-		}
-		else if (cardinality.equals("*")) {
-			this.lowerBound = 0;
-			this.upperBound = -1;
-		}
-		else if (cardinality.equals("+")) {
-			this.lowerBound = 1;
-			this.upperBound = -1;
-		}
-		else {
-			throw new UnsupportedOperationException("Unsupported cardinality '" + cardinality + "'");
-		} */
 	}
-
-	//		public boolean addAlternative(@NonNull SerializationNode nestedContent) {
-	//			return false;
-	//		}
-
-	//		public boolean addAlternative(@NonNull AbstractElement newContent) {
-	//			return false;
-	//		}
 
 	protected void appendCardinality(@NonNull StringBuilder s) {
 		s.append(multiplicativeCardinality);
@@ -68,12 +39,8 @@ public abstract class AbstractSerializationNode implements SerializationNode
 			return requiredSlots.getConjunction(conjunctionIndex);
 		} */
 
-	public int getLowerBound() {
-		return multiplicativeCardinality.mayBeZero() ? 0 : 1;
-	}
-
-	public int getUpperBound() {
-		return multiplicativeCardinality.mayBeMany() ? -1 : 1;
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+		return multiplicativeCardinality;
 	}
 
 	@Override

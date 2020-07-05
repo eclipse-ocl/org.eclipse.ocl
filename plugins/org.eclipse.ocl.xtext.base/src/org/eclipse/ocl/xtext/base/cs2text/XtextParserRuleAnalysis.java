@@ -514,7 +514,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 	}
 
 	public void preSerialize() {
-		if ("OCLinEcore::AttributeCS".equals(name)) {
+		if ("Base::NextPathElementCS".equals(name)) {
 			getClass();		// XXX
 		}
 		SerializationNode serializationNode2 = serializationNode;

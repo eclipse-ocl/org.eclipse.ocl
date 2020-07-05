@@ -87,7 +87,7 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 				StringUtil.appendIndentation(s, depth, "\t");
 				s.append("|& ");
 			}
-			conjunction.toString(s,depth);
+			conjunction.toString(s, depth);
 /*			StringUtil.appendIndentation(s, depth, "\t");
 			s.append("|& ");
 			boolean isFirst2 = true;

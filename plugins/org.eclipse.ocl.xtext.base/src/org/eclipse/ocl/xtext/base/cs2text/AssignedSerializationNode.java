@@ -16,6 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface AssignedSerializationNode extends SerializationNode
 {
 	@NonNull EStructuralFeature getEStructuralFeature();
-	int getLowerBound();
-	int getUpperBound();
+//	int getLowerBound();
+//	int getUpperBound();
 }

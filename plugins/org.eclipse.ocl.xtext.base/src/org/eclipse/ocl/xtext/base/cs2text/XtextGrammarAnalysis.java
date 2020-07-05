@@ -340,17 +340,31 @@ public class XtextGrammarAnalysis
 					s.append(eFeature.getName());
 					isFirstFeature = false;
 				}
-				SerializationNode abstractContent = parserRuleAnalysis.basicGetContents();
-				if (abstractContent != null) {
+				//
+				if ("Base::NextPathElementCS".equals(parserRuleAnalysis.getName())) {
+					getClass();		// XXX
+				}
+				SerializationNode rootSerializationNode = parserRuleAnalysis.basicGetContents();
+				if (rootSerializationNode != null) {
 					s.append("\n");
-					StringUtil.appendIndentation(s, abstractContent instanceof CompositeSerializationNode ? 1 : 2, "\t");
-					abstractContent.toString(s, 2);
-					RequiredSlots requiredSlots = abstractContent.getRequiredSlots();
+					StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
+					rootSerializationNode.toString(s, 2);
+					RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
 					if (!requiredSlots.isNull()) {
-						s.append("\n");
+
+						int conjunctionCount = requiredSlots.getConjunctionCount();
+						for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
+							RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
+							conjunction.preSerialize(rootSerializationNode);
+							s.append("\n");
+							StringUtil.appendIndentation(s, 2, "\t");
+							s.append("|& ");
+							conjunction.toString(s, 2);
+						}
+					/*	s.append("\n");
 						StringUtil.appendIndentation(s, 2, "\t");
 						s.append("|& ");
-						requiredSlots.toString(s, 2);
+						requiredSlots.toString(s, 2); */
 					}
 				}
 			}
