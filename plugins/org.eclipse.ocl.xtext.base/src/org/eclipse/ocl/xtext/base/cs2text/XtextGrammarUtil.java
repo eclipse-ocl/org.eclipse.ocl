@@ -36,7 +36,7 @@ import org.eclipse.xtext.UntilToken;
 
 public class XtextGrammarUtil
 {
-	public static void appendCardinality(@NonNull StringBuilder s, int lowerBound, int upperBound) {
+/*	public static void appendCardinality(@NonNull StringBuilder s, int lowerBound, int upperBound) {
 		s.append("[");
 		if (upperBound < 0) {
 			s.append(lowerBound != 0 ? "+" : "*");
@@ -51,7 +51,7 @@ public class XtextGrammarUtil
 			s.append(lowerBound + ".." + upperBound);
 		}
 		s.append("]");
-	}
+	} */
 
 	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
 		if (eFeatureScope != getEContainingClass(eStructuralFeature)) {

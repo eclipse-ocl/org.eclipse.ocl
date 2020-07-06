@@ -141,6 +141,8 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
-		XtextGrammarUtil.appendCardinality(s, getLowerBound(), getUpperBound());
+		s.append("[");
+		s.append(multiplicativeCardinality);
+		s.append("]");
 	}
 }

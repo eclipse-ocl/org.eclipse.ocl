@@ -514,7 +514,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 	}
 
 	public void preSerialize() {
-		if ("Base::NextPathElementCS".equals(name)) {
+		if ("Base::MultiplicityBoundsCS".equals(name)) {
 			getClass();		// XXX
 		}
 		SerializationNode serializationNode2 = serializationNode;

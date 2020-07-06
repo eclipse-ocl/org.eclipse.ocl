@@ -30,7 +30,9 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	}
 
 	protected void appendCardinality(@NonNull StringBuilder s) {
+		s.append("[");
 		s.append(multiplicativeCardinality);
+		s.append("]");
 	}
 
 	/*		@Override
@@ -39,6 +41,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 			return requiredSlots.getConjunction(conjunctionIndex);
 		} */
 
+	@Override
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
 		return multiplicativeCardinality;
 	}

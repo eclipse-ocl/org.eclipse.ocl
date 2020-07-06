@@ -179,8 +179,10 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	}
 
 	public void preSerialize(@NonNull SerializationNode serializationNode) {
-		this.preSerializer = new PreSerializer(alternatives2choice);
-		serializationNode.preSerialize(preSerializer);
+		PreSerializer preSerializer2 = new PreSerializer(alternatives2choice);
+		this.preSerializer = preSerializer2;
+		serializationNode.preSerialize(preSerializer2);
+		preSerializer2.solve();
 	}
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {

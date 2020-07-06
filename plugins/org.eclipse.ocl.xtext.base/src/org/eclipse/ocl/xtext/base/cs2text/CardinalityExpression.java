@@ -18,10 +18,68 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
- * A CardinalityExpression represents the cardinality of a grammar term as a sum of scaled variables.
+ * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
+ *
+ * Multiple CardinalityExpressions provide a set of simultaneous equations for which an integer solution mmust be found to
+ * select a potential serialization option.
  */
 public class CardinalityExpression implements Nameable
 {
+	private static class Solution
+	{
+		protected final @NonNull EStructuralFeature eStructuralFeature;
+		protected final int subtrahend;
+		protected final int divisor;
+
+		public Solution(@NonNull EStructuralFeature eStructuralFeature, int subtrahend, int divisor) {
+			this.eStructuralFeature = eStructuralFeature;
+			this.subtrahend = subtrahend;
+			this.divisor = divisor;
+			assert subtrahend >= 0;
+			assert divisor >= 1;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+			if (!(obj instanceof Solution)) {
+				return false;
+			}
+			Solution that = (Solution) obj;
+			return (this.eStructuralFeature ==  that.eStructuralFeature) && (this.subtrahend == that.subtrahend) && (this.divisor == that.divisor);
+		}
+
+		@Override
+		public int hashCode() {
+			return eStructuralFeature.hashCode() + 3 * subtrahend + 7 * (divisor-1);
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			if (((subtrahend != 0)) && (divisor != 1)) {
+				s.append("(");
+			}
+			s.append("|");
+			s.append(eStructuralFeature.getName());
+			s.append("|");
+			if (subtrahend != 0) {
+				s.append(" - ");
+				s.append(subtrahend);
+			}
+			if (((subtrahend != 0)) && (divisor != 1)) {
+				s.append(")");
+			}
+			if (divisor != 1) {
+				s.append(" / ");
+				s.append(divisor);
+			}
+			return String.valueOf(s);
+		}
+	}
+
 	protected final @NonNull String name;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	private final List<@NonNull List<@NonNull CardinalityVariable>> sumOfProducts = new ArrayList<>();
@@ -38,6 +96,42 @@ public class CardinalityExpression implements Nameable
 	@Override
 	public @NonNull String getName() {
 		return name;
+	}
+
+	public boolean solveForConstants(@NonNull PreSerializer preSerializer) {
+		CardinalityVariable sumVariable = null;
+		int sum = 0;
+		int factor = 0;
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			CardinalityVariable productVariable = null;
+			int product = 1;
+			for (@NonNull CardinalityVariable variable : products) {
+				Object solution = preSerializer.getSolution(variable);
+				if (solution instanceof Integer) {
+					product *= ((Integer)solution).intValue();
+				}
+				else {
+					if ((sumVariable != null) && (sumVariable != variable)) {
+						return false;		// Cannot solve 2 variables here
+					}
+					sumVariable = variable;
+					if (productVariable != null) {
+						return false;		// Cannot solve quadratic variables here
+					}
+					productVariable = variable;
+				}
+			}
+			if (productVariable == null) {
+				sum += product;
+			}
+			else {
+				factor += product;
+			}
+		}
+		if (sumVariable == null) {
+			return false;
+		}
+		return preSerializer.addSolution(sumVariable, new Solution(eStructuralFeature, sum, factor));
 	}
 
 	@Override
