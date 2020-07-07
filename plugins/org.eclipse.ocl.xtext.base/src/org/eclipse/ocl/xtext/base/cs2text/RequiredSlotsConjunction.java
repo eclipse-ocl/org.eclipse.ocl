@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -168,12 +167,6 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		this.preSerializer = preSerializer2;
 		serializationNode.preSerialize(preSerializer2);
 		preSerializer2.solve();
-	}
-
-	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> selectSerializedNodes(@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
-		assert preSerializer != null;
-		return preSerializer.selectSerializedNodes(element, eFeature2size);
-//		return null;
 	}
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {

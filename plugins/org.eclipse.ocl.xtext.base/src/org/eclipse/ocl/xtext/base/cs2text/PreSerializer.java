@@ -128,34 +128,7 @@ public class PreSerializer
 		}
 	}
 
-	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
-		addChildNode(sequenceSerializationNode);
-		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
-		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.group, nestedSerializedNodes);
-		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
-		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
-		return nestedPreSerializer;
-	}
-
-	public @Nullable SerializationNode getChosenNode(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
-		assert alternatives2choice != null;
-		return alternatives2choice.get(alternativesSerializationNode);
-	}
-
-	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
-		return serializedNodes;
-	}
-
-	public @Nullable Object getSolution(@NonNull CardinalityVariable variable) {
-		assert variable2solutions != null;
-		return variable2solutions.get(variable);
-	}
-
-	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializedNode) {
-		return ClassUtil.nonNullState(node2variable.get(serializedNode));
-	}
-
-	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> selectSerializedNodes(@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
 		Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions2 = variable2solutions;
 		assert variable2solutions2 != null;
 		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
@@ -189,6 +162,33 @@ public class PreSerializer
 			}
 		}
 		return variable2value;
+	}
+
+	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
+		addChildNode(sequenceSerializationNode);
+		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
+		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.group, nestedSerializedNodes);
+		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
+		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
+		return nestedPreSerializer;
+	}
+
+	public @Nullable SerializationNode getChosenNode(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
+		assert alternatives2choice != null;
+		return alternatives2choice.get(alternativesSerializationNode);
+	}
+
+	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
+		return serializedNodes;
+	}
+
+	public @Nullable Object getSolution(@NonNull CardinalityVariable variable) {
+		assert variable2solutions != null;
+		return variable2solutions.get(variable);
+	}
+
+	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializedNode) {
+		return ClassUtil.nonNullState(node2variable.get(serializedNode));
 	}
 
 	public void solve() {

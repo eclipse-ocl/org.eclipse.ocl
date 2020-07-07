@@ -508,9 +508,9 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return isFirstResultType((AbstractElement)eContainer);
 	}
 
-	public @Nullable ConsumedSlotsConjunction selectSerializedNodes(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
+	public @Nullable Serializer selectCompatibleCardinalities(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		assert serializationNode != null;
-		return serializationNode.selectSerializedNodes(modelAnalysis, element);
+		return serializationNode.selectCompatibleCardinalities(modelAnalysis, element);
 	}
 
 	public void preSerialize() {

@@ -36,7 +36,7 @@ public class KeywordSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.appendSoftSpace();
 		serializationBuilder.append(value);
 		serializationBuilder.appendSoftSpace();

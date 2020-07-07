@@ -154,8 +154,8 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder) {
-		consumedSlotsConjunction.serializeN(serializationBuilder, serializationNodes);
+	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		serializer.serializeElements(serializationBuilder, serializationNodes);
 	//	for (@NonNull SerializationNode serializationNode : serializationNodes) {
 	//		serializationNode.serialize(serializationBuilder);
 	//	}

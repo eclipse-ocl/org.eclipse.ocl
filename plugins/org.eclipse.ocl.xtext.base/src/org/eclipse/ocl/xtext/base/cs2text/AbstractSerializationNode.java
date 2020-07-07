@@ -40,12 +40,6 @@ public abstract class AbstractSerializationNode implements SerializationNode
 		}
 	}
 
-	/*		@Override
-		public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
-			RequiredSlots requiredSlots = getRequiredSlots();
-			return requiredSlots.getConjunction(conjunctionIndex);
-		} */
-
 	@Override
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
 		return multiplicativeCardinality;
@@ -57,8 +51,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	}
 
 	@Override
-	public @Nullable ConsumedSlotsConjunction selectSerializedNodes(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
-	//	ConsumedSlotsDisjunction consumedSlotsDisjunction = new ConsumedSlotsDisjunction();
+	public @Nullable Serializer selectCompatibleCardinalities(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size = new HashMap<>();
 		for (EStructuralFeature eFeature : element.eClass().getEAllStructuralFeatures()) {
 			assert eFeature != null;
@@ -80,35 +73,16 @@ public abstract class AbstractSerializationNode implements SerializationNode
 			}
 		}
 		for (@NonNull RequiredSlotsConjunction conjunction : getRequiredSlots().getDisjunction()) {
-		//	ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction);
-		/*	boolean allOk = true;
-			for (@NonNull SimpleRequiredSlot simpleRequiredSlot : conjunction.getConjunction()) {
-				SimpleConsumedSlot consumedSlot = simpleRequiredSlot.isCompatible(element);
-				if (consumedSlot != null) {
-				//	consumedSlotsConjunction.addConsumedSlot(consumedSlot);
-				}
-				else {
-				//	consumedSlotsConjunction = null;
-					allOk = false;
-					break;
-				}
+			Serializer serializer = new Serializer(conjunction, modelAnalysis, element, eFeature2size);
+			if (serializer.hasCompatibleCardinalities(conjunction, element)) {
+				return serializer;
 			}
-			if (allOk) { //consumedSlotsConjunction != null) { */
-				Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = conjunction.selectSerializedNodes(element, eFeature2size);
-				if (variable2value == null) {
-					conjunction.selectSerializedNodes(element, eFeature2size);
-				}
-				ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction, modelAnalysis, element, eFeature2size);
-				if (consumedSlotsConjunction.selectSerializedNodes(conjunction, element)) {
-					return consumedSlotsConjunction;
-				}
-		//	}
 		}
 		return null;
 	}
 
 	@Override
-	public void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.append("<<<Unsupported serialize '" + getClass().getSimpleName() + "'>>>");
 	}
 

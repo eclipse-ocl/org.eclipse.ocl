@@ -47,7 +47,6 @@ public class UserModelAnalysis
 	 */
 	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
 
-//	private @NonNull Map<@NonNull EObject, @NonNull List<@NonNull Assignment>> modelObject2assignments = new HashMap<>();
 	private @NonNull Map<@NonNull EObject, @NonNull UserAbstractElementAnalysis> element2elementAnalysis = new HashMap<>();
 
 	public UserModelAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis) {
@@ -77,11 +76,8 @@ public class UserModelAnalysis
 
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		ConsumedSlotsConjunction consumedSlotsConjunction = userElementAnalysis.selectSerializedNodes();
-		if (consumedSlotsConjunction != null) {
-		//	for (@NonNull SerializationNode serializedNode : serializedNodes) {
-				consumedSlotsConjunction.serialize(serializationBuilder);
-		//	}
+		Serializer serializer = userElementAnalysis.selectCompatibleCardinalities();
+		if (serializer != null) {
 			return;
 		}
 		serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");

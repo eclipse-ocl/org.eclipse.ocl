@@ -22,35 +22,24 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-public class ConsumedSlotsConjunction extends AbstractConsumedSlots
+public class Serializer
 {
 	protected final @NonNull RequiredSlotsConjunction requiredSlotsConjunction;
-	protected final @NonNull EObject element;
-
-	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size;
+	protected final @NonNull PreSerializer preSerializer;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
-//	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2lower = new HashMap<>();
-//	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2upper = new HashMap<>();
-//	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2consumed = new HashMap<>();
+	protected final @NonNull EObject element;
+	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = null;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	protected ConsumedSlotsConjunction(@NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+	protected Serializer(@NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis,
+			@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
 		this.requiredSlotsConjunction = requiredSlotsConjunction;
+		this.preSerializer = requiredSlotsConjunction.getPreSerializer();
 		this.modelAnalysis = modelAnalysis;
 		this.element = element;
 		this.eFeature2size = eFeature2size;
 	}
-
-/*	public void addConsumedSlot(@NonNull SimpleConsumedSlot consumedSlot) {
-		EStructuralFeature eStructuralFeature = consumedSlot.getEStructuralFeature();
-		int lower = consumedSlot.getLower();
-		int upper = consumedSlot.getUpper();
-		Integer oldLower = eFeature2lower.get(eStructuralFeature);
-		Integer oldUpper = eFeature2upper.get(eStructuralFeature);
-		eFeature2lower.put(eStructuralFeature, lower + (oldLower != null ? oldLower.intValue() : 0));
-		eFeature2upper.put(eStructuralFeature, upper + (oldUpper != null ? oldUpper.intValue() : 0));
-	} */
 
 	/**
 	 * Return the consumption index of the next feature slot.
@@ -76,42 +65,36 @@ public class ConsumedSlotsConjunction extends AbstractConsumedSlots
 		return element;
 	}
 
-	public boolean selectSerializedNodes(@NonNull RequiredSlotsConjunction conjunction, @NonNull EObject element) {
+	public boolean hasCompatibleCardinalities(@NonNull RequiredSlotsConjunction conjunction, @NonNull EObject element) {
 		assert variable2value == null;
-		this.variable2value = requiredSlotsConjunction.selectSerializedNodes(element, eFeature2size);
-		if (variable2value == null) {
-			conjunction.selectSerializedNodes(element, eFeature2size);
-			return false;
-		}
-		return true;
+		this.variable2value = preSerializer.computeActualCardinalities(element, eFeature2size);
+		return variable2value != null;
 	}
 
-	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
+	public void serializeConjunction(@NonNull SerializationBuilder serializationBuilder) {
 		List<@NonNull SerializationNode> serializedNodes = requiredSlotsConjunction.getSerializedNodes();
-		serializeN(serializationBuilder, serializedNodes);
+		serializeElements(serializationBuilder, serializedNodes);
 	}
 
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		SerializationBuilder nestedSerializationBuilder = serializationBuilder.createNestedSerializationBuilder();
 		modelAnalysis.serialize(nestedSerializationBuilder, element);
 	}
 
-	protected void serializeN(@NonNull SerializationBuilder serializationBuilder, @NonNull List<@NonNull SerializationNode> serializedNodes) {
+	protected void serializeElements(@NonNull SerializationBuilder serializationBuilder, @NonNull List<@NonNull SerializationNode> serializedNodes) {
+		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value2 = variable2value;
+		assert variable2value2 != null;
 		for (@NonNull SerializationNode serializedNode : serializedNodes) {
-			serialize1(serializationBuilder, serializedNode);
+			CardinalityVariable variable = preSerializer.getVariable(serializedNode);
+			Integer value = variable2value2.get(variable);
+			assert value != null;
+			for (int i = 0; i < value.intValue(); i++) {
+				serializedNode.serialize(this, serializationBuilder);
+			}
 		}
 	}
 
 	protected void serialize1(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializedNode) {
-		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value2 = variable2value;
-		assert variable2value2 != null;
-		PreSerializer preSerializer = requiredSlotsConjunction.getPreSerializer();
-		CardinalityVariable variable = preSerializer.getVariable(serializedNode);
-		Integer value = variable2value2.get(variable);
-		assert value != null;
-		for (int i = 0; i < value.intValue(); i++) {
-			serializedNode.serialize(this, serializationBuilder);
-		}
 	}
 
 	@Override

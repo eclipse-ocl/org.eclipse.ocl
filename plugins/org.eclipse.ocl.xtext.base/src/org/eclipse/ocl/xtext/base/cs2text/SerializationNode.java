@@ -23,7 +23,7 @@ public interface SerializationNode
 	@NonNull RequiredSlots getRequiredSlots();
 	boolean isNull();
 	void preSerialize(@NonNull PreSerializer preSerializer);
-	@Nullable ConsumedSlotsConjunction selectSerializedNodes(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
-	void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder);
+	@Nullable Serializer selectCompatibleCardinalities(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
+	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 	void toString(@NonNull StringBuilder s, int depth);
 }
