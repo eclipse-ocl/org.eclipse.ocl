@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,7 +29,12 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  */
 public class CardinalityExpression implements Nameable
 {
-	private static class AdjustedFeatureSolution
+	public static interface Solution
+	{
+		@NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size);
+	}
+
+	private static class AdjustedFeatureSolution implements Solution
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
 		protected final int subtrahend;
@@ -60,6 +66,13 @@ public class CardinalityExpression implements Nameable
 		}
 
 		@Override
+		public @NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+			Integer size = eFeature2size.get(eStructuralFeature);
+			int intSize = size != null ? size.intValue() : 0;
+			return (intSize - subtrahend) / divisor;
+		}
+
+		@Override
 		public String toString() {
 			StringBuilder s = new StringBuilder();
 			if (((subtrahend != 0)) && (divisor != 1)) {
@@ -83,7 +96,7 @@ public class CardinalityExpression implements Nameable
 		}
 	}
 
-	private static class BooleanCommonFactorSolution
+	private static class BooleanCommonFactorSolution implements Solution
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
 		protected final int subtrahend;
@@ -109,6 +122,13 @@ public class CardinalityExpression implements Nameable
 		@Override
 		public int hashCode() {
 			return eStructuralFeature.hashCode() + 3 * subtrahend;
+		}
+
+		@Override
+		public @NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+			Integer size = eFeature2size.get(eStructuralFeature);
+			int intSize = size != null ? size.intValue() : 0;
+			return (intSize - subtrahend) > 0 ? 1 : 0;
 		}
 
 		@Override
@@ -188,6 +208,20 @@ public class CardinalityExpression implements Nameable
 		else {
 			return constantProduct;
 		}
+	}
+
+	public int solve(@NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
+		int sum = 0;
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			int product = 1;
+			for (@NonNull CardinalityVariable variable : products) {
+				Integer value = variable2value.get(variable);
+				int intValue = value != null ? value.intValue() : 1;
+				product *= intValue;
+			}
+			sum += product;
+		}
+		return sum;
 	}
 
 	public void solveForBooleanCommonFactors(@NonNull PreSerializer preSerializer) {

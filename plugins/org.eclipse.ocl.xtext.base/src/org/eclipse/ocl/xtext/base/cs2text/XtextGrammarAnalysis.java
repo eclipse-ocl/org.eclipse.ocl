@@ -355,7 +355,7 @@ public class XtextGrammarAnalysis
 						int conjunctionCount = requiredSlots.getConjunctionCount();
 						for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
 							RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
-							conjunction.preSerialize(rootSerializationNode);
+							conjunction.preSerialize(parserRuleAnalysis, rootSerializationNode);
 							s.append("\n");
 							StringUtil.appendIndentation(s, 2, "\t");
 							s.append("|& ");

@@ -10,9 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -56,6 +59,26 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	@Override
 	public @Nullable List<@NonNull SerializationNode> selectSerializedNodes(@NonNull EObject element) {
 	//	ConsumedSlotsDisjunction consumedSlotsDisjunction = new ConsumedSlotsDisjunction();
+		Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size = new HashMap<>();
+		for (EStructuralFeature eFeature : element.eClass().getEAllStructuralFeatures()) {
+			assert eFeature != null;
+			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile()) {
+				int size;
+				Object object = element.eGet(eFeature);
+				if (eFeature.isMany()) {
+					size = ((List<?>)object).size();
+				}
+				else if (element.eIsSet(eFeature)) {
+					size = 1;
+				}
+				else {
+					size = 0;
+				}
+				if (size > 0) {
+					eFeature2size.put(eFeature, size);
+				}
+			}
+		}
 		for (@NonNull RequiredSlotsConjunction conjunction : getRequiredSlots().getDisjunction()) {
 		//	ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction);
 		/*	boolean allOk = true;
@@ -71,7 +94,11 @@ public abstract class AbstractSerializationNode implements SerializationNode
 				}
 			}
 			if (allOk) { //consumedSlotsConjunction != null) { */
-				ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction);
+				Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = conjunction.selectSerializedNodes(element, eFeature2size);
+				if (variable2value == null) {
+					conjunction.selectSerializedNodes(element, eFeature2size);
+				}
+				ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction, eFeature2size);
 				List<@NonNull SerializationNode> serializedNodes = consumedSlotsConjunction.selectSerializedNodes(conjunction, element);
 				if (serializedNodes != null) {
 					return serializedNodes;

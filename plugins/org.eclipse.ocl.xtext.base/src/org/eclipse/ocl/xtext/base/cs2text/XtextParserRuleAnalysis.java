@@ -523,7 +523,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		int conjunctionCount = requiredSlots.getConjunctionCount();
 		for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
 			RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
-			conjunction.preSerialize(serializationNode2);
+			conjunction.preSerialize(this, serializationNode2);
 		}
 	}
 

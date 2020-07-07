@@ -25,12 +25,14 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class ConsumedSlotsConjunction extends AbstractConsumedSlots
 {
 	protected final @NonNull RequiredSlotsConjunction requiredSlotsConjunction;
+	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size;
 //	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2lower = new HashMap<>();
 //	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2upper = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2consumed = new HashMap<>();
 
-	protected ConsumedSlotsConjunction(@NonNull RequiredSlotsConjunction requiredSlotsConjunction) {
+	protected ConsumedSlotsConjunction(@NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
 		this.requiredSlotsConjunction = requiredSlotsConjunction;
+		this.eFeature2size = eFeature2size;
 	}
 
 /*	public void addConsumedSlot(@NonNull SimpleConsumedSlot consumedSlot) {
@@ -44,6 +46,10 @@ public class ConsumedSlotsConjunction extends AbstractConsumedSlots
 	} */
 
 	public @Nullable List<@NonNull SerializationNode> selectSerializedNodes(@NonNull RequiredSlotsConjunction conjunction, @NonNull EObject element) {
+		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = requiredSlotsConjunction.selectSerializedNodes(element, eFeature2size);
+		if (variable2value == null) {
+			conjunction.selectSerializedNodes(element, eFeature2size);
+		}
 		Iterable<@NonNull EStructuralFeature> eStructuralFeatures = conjunction.getEStructuralFeatures();
 		List<@NonNull SerializationNode> serializedNodes = conjunction.getSerializedNodes();
 		List<@NonNull SerializationNode> resultSerializedNodes = new ArrayList<>();
