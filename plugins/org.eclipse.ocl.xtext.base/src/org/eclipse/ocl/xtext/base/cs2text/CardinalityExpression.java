@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
@@ -82,12 +83,12 @@ public class CardinalityExpression implements Nameable
 		}
 	}
 
-	private static class BooleanFeatureSolution
+	private static class BooleanCommonFactorSolution
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
 		protected final int subtrahend;
 
-		public BooleanFeatureSolution(@NonNull EStructuralFeature eStructuralFeature, int subtrahend) {
+		public BooleanCommonFactorSolution(@NonNull EStructuralFeature eStructuralFeature, int subtrahend) {
 			this.eStructuralFeature = eStructuralFeature;
 			this.subtrahend = subtrahend;
 			assert subtrahend >= 0;
@@ -98,10 +99,10 @@ public class CardinalityExpression implements Nameable
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof BooleanFeatureSolution)) {
+			if (!(obj instanceof BooleanCommonFactorSolution)) {
 				return false;
 			}
-			BooleanFeatureSolution that = (BooleanFeatureSolution) obj;
+			BooleanCommonFactorSolution that = (BooleanCommonFactorSolution) obj;
 			return (this.eStructuralFeature ==  that.eStructuralFeature) && (this.subtrahend == that.subtrahend);
 		}
 
@@ -113,13 +114,10 @@ public class CardinalityExpression implements Nameable
 		@Override
 		public String toString() {
 			StringBuilder s = new StringBuilder();
-			s.append("||");
+			s.append("|");
 			s.append(eStructuralFeature.getName());
-			s.append("||");
-			if (subtrahend != 0) {
-				s.append(" - ");
-				s.append(subtrahend);
-			}
+			s.append("|>");
+			s.append(subtrahend);
 			return String.valueOf(s);
 		}
 	}
@@ -135,6 +133,26 @@ public class CardinalityExpression implements Nameable
 
 	public void addMultiplicityProduct(@NonNull List<@NonNull CardinalityVariable> variables) {
 		sumOfProducts.add(variables);
+	}
+
+	private @Nullable Integer getIntegerSolution(@Nullable Object solution) {
+		if (solution instanceof Integer) {
+			return ((Integer)solution).intValue();
+		}
+		if (solution instanceof BooleanCommonFactorSolution) {
+			return 1;
+		}
+		if (solution instanceof Iterable) {
+			for (Object solutionElement : ((Iterable<?>)solution) ) {
+				if (solutionElement instanceof Integer) {
+					return ((Integer)solutionElement).intValue();
+				}
+				if (solutionElement instanceof BooleanCommonFactorSolution) {
+					return 1;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -172,8 +190,7 @@ public class CardinalityExpression implements Nameable
 		}
 	}
 
-	public boolean solveForBooleanFactors(@NonNull PreSerializer preSerializer) {
-		CardinalityVariable sumVariable = null;
+	public void solveForBooleanCommonFactors(@NonNull PreSerializer preSerializer) {
 		int sum = 0;
 		Set<@NonNull CardinalityVariable> intersection = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
@@ -192,18 +209,14 @@ public class CardinalityExpression implements Nameable
 				}
 			}
 		}
-		if (intersection == null) {
-			return false;
-		}
-		boolean gotOne = false;
-		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
-			if (!cardinalityVariable.mayBeMany()) {
-				assert cardinalityVariable.mayBeNone();
-				preSerializer.addSolution(cardinalityVariable, new BooleanFeatureSolution(eStructuralFeature, sum));
-				gotOne = true;
+		if (intersection != null) {
+			for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
+				if (!cardinalityVariable.mayBeMany()) {
+					assert cardinalityVariable.mayBeNone();
+					preSerializer.addSolution(cardinalityVariable, new BooleanCommonFactorSolution(eStructuralFeature, sum));
+				}
 			}
 		}
-		return gotOne;
 	}
 
 	public boolean solveForConstants(@NonNull PreSerializer preSerializer) {
@@ -215,8 +228,9 @@ public class CardinalityExpression implements Nameable
 			int product = 1;
 			for (@NonNull CardinalityVariable variable : products) {
 				Object solution = preSerializer.getSolution(variable);
-				if (solution instanceof Integer) {
-					product *= ((Integer)solution).intValue();
+				Integer integerSolution = getIntegerSolution(solution);
+				if (integerSolution != null) {
+					product *= integerSolution.intValue();
 				}
 				else {
 					if ((sumVariable != null) && (sumVariable != variable)) {
@@ -240,6 +254,18 @@ public class CardinalityExpression implements Nameable
 			return true;
 		}
 		return preSerializer.addSolution(sumVariable, new AdjustedFeatureSolution(eStructuralFeature, sum, factor));
+	}
+
+	public boolean solveForNoVariables(PreSerializer preSerializer) {
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			for (@NonNull CardinalityVariable variable : products) {
+				Object solution = preSerializer.getSolution(variable);
+				if (!(solution instanceof Integer)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override

@@ -47,6 +47,6 @@ public class KeywordSerializationNode extends SimpleSerializationNode
 		s.append("\"");
 		s.append(Strings.convertToJavaString(value));
 		s.append("\"");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

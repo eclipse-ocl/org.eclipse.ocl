@@ -35,6 +35,6 @@ public class CharacterRangeSerializationNode extends SimpleSerializationNode
 		s.append("\"-\"");
 		s.append(Strings.convertToJavaString(right));
 		s.append("\"]");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

@@ -48,6 +48,6 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 			isFirst = false;
 		}
 		s.append("}");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

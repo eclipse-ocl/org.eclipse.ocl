@@ -152,21 +152,23 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("\t");
+		if (depth >= 0) {
+			s.append("\t");
+		}
 		s.append("{");
 	//	boolean isFirst = true;
 		for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
 		//	if (!isFirst) {
-				s.append("\n");
+				s.append(depth >= 0 ? "\n" : " ");
 		//	}
 			StringUtil.appendIndentation(s, depth, "\t");
 			s.append("| ");
-			alternativeSerializationNode.toString(s, depth+1);
+			alternativeSerializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		//	isFirst = false;
 		}
-		s.append("\n");
+		s.append(depth >= 0 ? "\n" : " ");
 		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

@@ -80,6 +80,6 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(ruleAnalysis.getRuleName());
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

@@ -49,6 +49,6 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 		if (ruleAnalyses.size() > 1) {
 			s.append("}");
 		}
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

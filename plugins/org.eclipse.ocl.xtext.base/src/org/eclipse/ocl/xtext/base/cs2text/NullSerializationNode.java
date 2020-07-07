@@ -30,6 +30,6 @@ public class NullSerializationNode extends SimpleSerializationNode
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("<<null>>");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

@@ -127,7 +127,6 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	@Override
 	public void preSerialize(@NonNull PreSerializer preSerializer) {
 //		super.preSerialize(preSerializer);
-		preSerializer.addSerializedNode1(this);		// XXX promote
 		PreSerializer nestedPreSerializer = preSerializer.createNestedPreSerializer(this);
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			serializationNode.preSerialize(nestedPreSerializer);
@@ -163,21 +162,25 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("\t");
+		if (depth >= 0) {
+			s.append("\t");
+		}
 		s.append("{");
 	//	boolean isFirst = true;
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 		//	if (!isFirst) {
-				s.append("\n");
+				s.append(depth >= 0 ? "\n" : " ");
 		//	}
 			StringUtil.appendIndentation(s, depth, "\t");
-			s.append("+ ");
-			serializationNode.toString(s, depth+1);
+			if (depth >= 0) {
+				s.append("+ ");
+			}
+			serializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		//	isFirst = false;
 		}
-		s.append("\n");
+		s.append(depth >= 0 ? "\n" : " ");
 		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

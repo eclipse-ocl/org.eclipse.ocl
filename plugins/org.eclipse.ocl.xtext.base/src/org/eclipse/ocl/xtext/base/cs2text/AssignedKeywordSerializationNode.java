@@ -31,6 +31,6 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 		s.append("\"");
 		s.append(value);
 		s.append("\"");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

@@ -29,10 +29,12 @@ public abstract class AbstractSerializationNode implements SerializationNode
 		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
-	protected void appendCardinality(@NonNull StringBuilder s) {
-		s.append("[");
-		s.append(multiplicativeCardinality);
-		s.append("]");
+	protected void appendCardinality(@NonNull StringBuilder s, int depth) {
+		if ((depth >= 0) || !multiplicativeCardinality.isOne()) {
+			s.append("[");
+			s.append(multiplicativeCardinality);
+			s.append("]");
+		}
 	}
 
 	/*		@Override

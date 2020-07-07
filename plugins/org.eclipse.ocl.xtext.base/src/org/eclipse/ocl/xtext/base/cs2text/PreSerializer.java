@@ -57,8 +57,9 @@ public class PreSerializer
 		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 		CardinalityExpression cardinalityExpression = feature2expression.get(eStructuralFeature);
 		if (cardinalityExpression == null) {
-			String string = "E" + feature2expression.size();
-			cardinalityExpression = new CardinalityExpression(string, eStructuralFeature);
+			String name = String.format("E%02d", feature2expression.size());
+			assert name != null;;
+			cardinalityExpression = new CardinalityExpression(name, eStructuralFeature);
 			feature2expression.put(eStructuralFeature, cardinalityExpression);
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>();
@@ -73,24 +74,22 @@ public class PreSerializer
 		cardinalityExpression.addMultiplicityProduct(variables);
 	}
 
+	private void addChildNode(@NonNull SerializationNode serializationNode) {
+		assert serializationNode != parentSerializedNode;
+		assert !node2parent.containsKey(serializationNode);
+		SerializationNode old = node2parent.put(serializationNode, parentSerializedNode);
+		assert old == null;
+	}
+
 	public void addSerializedNode(@NonNull SerializationNode serializationNode) {
 		serializedNodes.add(serializationNode);
-		addSerializedNode2(serializationNode);
-	}
-
-	public void addSerializedNode1(@NonNull SerializationNode serializationNode) {
-		assert serializationNode != parentSerializedNode;			// XXX
-		assert !node2parent.containsKey(serializationNode);
-		SerializationNode old1 = node2parent.put(serializationNode, parentSerializedNode);
-	}
-
-	public void addSerializedNode2(@NonNull SerializationNode serializationNode) {
-		addSerializedNode1(serializationNode);
+		addChildNode(serializationNode);
 //		assert old1 == null;
 //		serializedNodes.add(serializationNode);
 		MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 //		if (!multiplicativeCardinality.isOne()) {
-			String name = "V" + variable2node.size();
+			String name = String.format("C%02d", variable2node.size());
+			assert name != null;
 			CardinalityVariable cardinalityVariable = new CardinalityVariable(name, multiplicativeCardinality);
 			CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 			assert old2 == null;
@@ -133,27 +132,9 @@ public class PreSerializer
 	}
 
 	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
-
-
+		addChildNode(sequenceSerializationNode);
 		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
-		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.group, nestedSerializedNodes)
-		{
-		/*	@Override
-			public void toString(@NonNull StringBuilder s, int depth) {
-			//	StringUtil.appendIndentation(s, depth, "\t");
-				s.append("{");
-			//	boolean isFirst = true;
-				for (@NonNull SerializationNode serializationNode : serializationNodes) {
-				//	if (!isFirst) {
-						s.append(" ");
-				//	}
-					serializationNode.toString(s, depth+1);
-				//	isFirst = false;
-				}
-				s.append(" }");
-				appendCardinality(s);
-			} */
-		};
+		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.group, nestedSerializedNodes);
 		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
 		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
 		return nestedPreSerializer;
@@ -187,65 +168,40 @@ public class PreSerializer
 				variable2solutions2.put(variable, Integer.valueOf(1));
 			}
 		}
-
-		boolean gotOne;
-//		do {
-			gotOne = false;
-			for (@NonNull CardinalityExpression expression : expressions) {
+		int oldSize;
+		do {
+			oldSize = expressions.size();
+			for (int i = oldSize; --i >= 0; ) {
+				CardinalityExpression expression = expressions.get(i);
+				if (expression.solveForNoVariables(this)) {
+					expressions.remove(i);
+				}
+				else {
+					expression.solveForBooleanCommonFactors(this);
+				}
+			}
+		} while (expressions.size() < oldSize);
+		do {
+			oldSize = expressions.size();
+			for (int i = oldSize; --i >= 0; ) {
+				CardinalityExpression expression = expressions.get(i);
 				if (expression.solveForConstants(this)) {
-					gotOne = true;
+					expressions.remove(i);
 				}
 			}
-			if (gotOne) {
-				gotOne = false;
-				for (@NonNull CardinalityExpression expression : expressions) {
-					if (expression.solveForConstants(this)) {
-						gotOne = true;
-					}
-				}
-				if (gotOne) {
-					gotOne = false;
-					for (@NonNull CardinalityExpression expression : expressions) {
-						if (expression.solveForConstants(this)) {
-							gotOne = true;
-						}
-					}
-				}
-			}
-//		} while (gotOne);
-
-
-			if (!gotOne) {
-				gotOne = false;
-				for (@NonNull CardinalityExpression expression : expressions) {
-					if (expression.solveForBooleanFactors(this)) {
-						gotOne = true;
-					}
-				}
-				if (gotOne) {
-					gotOne = false;
-					for (@NonNull CardinalityExpression expression : expressions) {
-						if (expression.solveForBooleanFactors(this)) {
-							gotOne = true;
-						}
-					}
-					if (gotOne) {
-						gotOne = false;
-						for (@NonNull CardinalityExpression expression : expressions) {
-							if (expression.solveForBooleanFactors(this)) {
-								gotOne = true;
-							}
-						}
-					}
-				}
-			}
+		} while (expressions.size() < oldSize);
 
 
 //			toString();
 		for (@NonNull CardinalityVariable variable : variables) {
 			if (!variable2solutions2.containsKey(variable)) {
 //				toString();
-				variable2solutions2.put(variable, "?");
+				if (expressions.isEmpty()) {
+					variable2solutions2.put(variable, variable.mayBeNone() ? 0 : 1);
+				}
+				else {
+					variable2solutions2.put(variable, "?");
+				}
 			}
 		}
 //		toString();
@@ -274,7 +230,7 @@ public class PreSerializer
 				StringUtil.appendIndentation(s, depth, "\t");
 				s.append(variable);
 				s.append(": ");
-				s.append(serializationNode.toString().replace("\n", "\\n"));
+				serializationNode.toString(s, -1);
 		//	}
 		}
 		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
@@ -295,7 +251,7 @@ public class PreSerializer
 				if (solutions instanceof List) {
 					boolean isFirst = true;
 					for (Object solution : (List<?>)solutions) {
-						if (isFirst) {
+						if (!isFirst) {
 							s.append(", ");
 						}
 						s.append(solution);

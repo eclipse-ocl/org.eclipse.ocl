@@ -32,6 +32,6 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(ruleCall.getRule().getName());
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

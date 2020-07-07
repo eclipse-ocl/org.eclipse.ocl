@@ -65,6 +65,6 @@ public class AlternativeKeywordsSerializationNode extends AbstractSerializationN
 		if (values.size() > 1) {
 			s.append("}");
 		}
-		appendCardinality(s);
+		appendCardinality(s, depth);
 	}
 }

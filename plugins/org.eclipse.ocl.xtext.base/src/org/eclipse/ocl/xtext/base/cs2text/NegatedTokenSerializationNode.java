@@ -36,7 +36,7 @@ public class NegatedTokenSerializationNode extends AbstractSerializationNode
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("\t");
 		s.append("~");
-		appendCardinality(s);
+		appendCardinality(s, depth);
 		s.append(" ");
 		serializationNode.toString(s, depth);
 	}
