@@ -11,7 +11,9 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -25,13 +27,13 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  */
 public class CardinalityExpression implements Nameable
 {
-	private static class Solution
+	private static class AdjustedFeatureSolution
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
 		protected final int subtrahend;
 		protected final int divisor;
 
-		public Solution(@NonNull EStructuralFeature eStructuralFeature, int subtrahend, int divisor) {
+		public AdjustedFeatureSolution(@NonNull EStructuralFeature eStructuralFeature, int subtrahend, int divisor) {
 			this.eStructuralFeature = eStructuralFeature;
 			this.subtrahend = subtrahend;
 			this.divisor = divisor;
@@ -44,10 +46,10 @@ public class CardinalityExpression implements Nameable
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof Solution)) {
+			if (!(obj instanceof AdjustedFeatureSolution)) {
 				return false;
 			}
-			Solution that = (Solution) obj;
+			AdjustedFeatureSolution that = (AdjustedFeatureSolution) obj;
 			return (this.eStructuralFeature ==  that.eStructuralFeature) && (this.subtrahend == that.subtrahend) && (this.divisor == that.divisor);
 		}
 
@@ -80,6 +82,48 @@ public class CardinalityExpression implements Nameable
 		}
 	}
 
+	private static class BooleanFeatureSolution
+	{
+		protected final @NonNull EStructuralFeature eStructuralFeature;
+		protected final int subtrahend;
+
+		public BooleanFeatureSolution(@NonNull EStructuralFeature eStructuralFeature, int subtrahend) {
+			this.eStructuralFeature = eStructuralFeature;
+			this.subtrahend = subtrahend;
+			assert subtrahend >= 0;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+			if (!(obj instanceof BooleanFeatureSolution)) {
+				return false;
+			}
+			BooleanFeatureSolution that = (BooleanFeatureSolution) obj;
+			return (this.eStructuralFeature ==  that.eStructuralFeature) && (this.subtrahend == that.subtrahend);
+		}
+
+		@Override
+		public int hashCode() {
+			return eStructuralFeature.hashCode() + 3 * subtrahend;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("||");
+			s.append(eStructuralFeature.getName());
+			s.append("||");
+			if (subtrahend != 0) {
+				s.append(" - ");
+				s.append(subtrahend);
+			}
+			return String.valueOf(s);
+		}
+	}
+
 	protected final @NonNull String name;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	private final List<@NonNull List<@NonNull CardinalityVariable>> sumOfProducts = new ArrayList<>();
@@ -96,6 +140,70 @@ public class CardinalityExpression implements Nameable
 	@Override
 	public @NonNull String getName() {
 		return name;
+	}
+
+	/**
+	 * Simplify a product term returning
+	 * - Integer for a constant
+	 * - CardinalityVariable for a scaled variable
+	 * - Set(CardinalityVariable) for a scaled product of non-quadratic variable
+	 * - null for a quadratic variable
+	 */
+	public Object resolveProduct(@NonNull PreSerializer preSerializer, @NonNull List<@NonNull CardinalityVariable> product) {
+		Set<@NonNull CardinalityVariable> productVariables = null;
+		int constantProduct = 1;
+		for (@NonNull CardinalityVariable variable : product) {
+			Object solution = preSerializer.getSolution(variable);
+			if (solution instanceof Integer) {
+				constantProduct *= ((Integer)solution).intValue();
+			}
+			else {
+				if (productVariables == null) {
+					productVariables = new HashSet<>();
+				}
+				productVariables.add(variable);
+			}
+		}
+		if (productVariables != null) {
+			return productVariables;
+		}
+		else {
+			return constantProduct;
+		}
+	}
+
+	public boolean solveForBooleanFactors(@NonNull PreSerializer preSerializer) {
+		CardinalityVariable sumVariable = null;
+		int sum = 0;
+		Set<@NonNull CardinalityVariable> intersection = null;
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			Object resolution = resolveProduct(preSerializer, products);
+			if (resolution instanceof Integer) {
+				sum += ((Integer)resolution).intValue();
+			}
+			else if (resolution instanceof Set){
+				@SuppressWarnings("unchecked")
+				Set<@NonNull CardinalityVariable> resolutions = (Set<@NonNull CardinalityVariable>)resolution;
+				if (intersection == null) {
+					intersection = new HashSet<>(resolutions);
+				}
+				else {
+					intersection.retainAll(resolutions);
+				}
+			}
+		}
+		if (intersection == null) {
+			return false;
+		}
+		boolean gotOne = false;
+		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
+			if (!cardinalityVariable.mayBeMany()) {
+				assert cardinalityVariable.mayBeNone();
+				preSerializer.addSolution(cardinalityVariable, new BooleanFeatureSolution(eStructuralFeature, sum));
+				gotOne = true;
+			}
+		}
+		return gotOne;
 	}
 
 	public boolean solveForConstants(@NonNull PreSerializer preSerializer) {
@@ -129,9 +237,9 @@ public class CardinalityExpression implements Nameable
 			}
 		}
 		if (sumVariable == null) {
-			return false;
+			return true;
 		}
-		return preSerializer.addSolution(sumVariable, new Solution(eStructuralFeature, sum, factor));
+		return preSerializer.addSolution(sumVariable, new AdjustedFeatureSolution(eStructuralFeature, sum, factor));
 	}
 
 	@Override

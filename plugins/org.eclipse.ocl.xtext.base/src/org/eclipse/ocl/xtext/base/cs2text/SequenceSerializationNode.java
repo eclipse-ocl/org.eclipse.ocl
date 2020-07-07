@@ -132,7 +132,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			serializationNode.preSerialize(nestedPreSerializer);
 		}
-		List<@NonNull SerializationNode> nestedSerializedNodes = nestedPreSerializer.getSerializedNodes();
+	/*	List<@NonNull SerializationNode> nestedSerializedNodes = nestedPreSerializer.getSerializedNodes();
 		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(grammarAnalysis, group, nestedSerializedNodes)
 		{
 			@Override
@@ -151,7 +151,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 				appendCardinality(s);
 			}
 		};
-		preSerializer.addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
+		preSerializer.addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list */
 	}
 
 	@Override

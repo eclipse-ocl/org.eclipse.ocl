@@ -30,7 +30,7 @@ public class PreSerializer
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
-	private final @NonNull List<@NonNull SerializationNode> serializedNodes = new ArrayList<>();
+	private final @NonNull List<@NonNull SerializationNode> serializedNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions = null;
 
 	public PreSerializer(@Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
@@ -40,15 +40,17 @@ public class PreSerializer
 		this.node2variable = new HashMap<>();
 		this.variable2node = new HashMap<>();
 		this.feature2expression = new HashMap<>();
+		this.serializedNodes = new ArrayList<>();
 	}
 
-	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode) {
+	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode, @NonNull List<@NonNull SerializationNode> serializedNodes) {
 		this.parentSerializedNode = parentSerializedNode;
 		this.alternatives2choice = preSerializer.alternatives2choice;
 		this.node2parent = preSerializer.node2parent;
 		this.node2variable = preSerializer.node2variable;
 		this.variable2node = preSerializer.variable2node;
 		this.feature2expression = preSerializer.feature2expression;
+		this.serializedNodes = serializedNodes;
 	}
 
 	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode) {
@@ -108,6 +110,9 @@ public class PreSerializer
 		if (oldSolutions instanceof List<?>) {
 			@SuppressWarnings("unchecked")
 			List<Object> castOldSolutions = (List<Object>)oldSolutions;
+			if (castOldSolutions.contains(solution)) {
+				return false;
+			}
 			castOldSolutions.add(solution);
 			return true;
 		}
@@ -128,7 +133,30 @@ public class PreSerializer
 	}
 
 	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
-		return new PreSerializer(this, sequenceSerializationNode);
+
+
+		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
+		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.group, nestedSerializedNodes)
+		{
+		/*	@Override
+			public void toString(@NonNull StringBuilder s, int depth) {
+			//	StringUtil.appendIndentation(s, depth, "\t");
+				s.append("{");
+			//	boolean isFirst = true;
+				for (@NonNull SerializationNode serializationNode : serializationNodes) {
+				//	if (!isFirst) {
+						s.append(" ");
+				//	}
+					serializationNode.toString(s, depth+1);
+				//	isFirst = false;
+				}
+				s.append(" }");
+				appendCardinality(s);
+			} */
+		};
+		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
+		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
+		return nestedPreSerializer;
 	}
 
 	public @Nullable SerializationNode getChosenNode(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
@@ -168,7 +196,49 @@ public class PreSerializer
 					gotOne = true;
 				}
 			}
+			if (gotOne) {
+				gotOne = false;
+				for (@NonNull CardinalityExpression expression : expressions) {
+					if (expression.solveForConstants(this)) {
+						gotOne = true;
+					}
+				}
+				if (gotOne) {
+					gotOne = false;
+					for (@NonNull CardinalityExpression expression : expressions) {
+						if (expression.solveForConstants(this)) {
+							gotOne = true;
+						}
+					}
+				}
+			}
 //		} while (gotOne);
+
+
+			if (!gotOne) {
+				gotOne = false;
+				for (@NonNull CardinalityExpression expression : expressions) {
+					if (expression.solveForBooleanFactors(this)) {
+						gotOne = true;
+					}
+				}
+				if (gotOne) {
+					gotOne = false;
+					for (@NonNull CardinalityExpression expression : expressions) {
+						if (expression.solveForBooleanFactors(this)) {
+							gotOne = true;
+						}
+					}
+					if (gotOne) {
+						gotOne = false;
+						for (@NonNull CardinalityExpression expression : expressions) {
+							if (expression.solveForBooleanFactors(this)) {
+								gotOne = true;
+							}
+						}
+					}
+				}
+			}
 
 
 //			toString();
