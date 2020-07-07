@@ -57,7 +57,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	}
 
 	@Override
-	public @Nullable List<@NonNull SerializationNode> selectSerializedNodes(@NonNull EObject element) {
+	public @Nullable ConsumedSlotsConjunction selectSerializedNodes(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 	//	ConsumedSlotsDisjunction consumedSlotsDisjunction = new ConsumedSlotsDisjunction();
 		Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size = new HashMap<>();
 		for (EStructuralFeature eFeature : element.eClass().getEAllStructuralFeatures()) {
@@ -98,10 +98,9 @@ public abstract class AbstractSerializationNode implements SerializationNode
 				if (variable2value == null) {
 					conjunction.selectSerializedNodes(element, eFeature2size);
 				}
-				ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction, eFeature2size);
-				List<@NonNull SerializationNode> serializedNodes = consumedSlotsConjunction.selectSerializedNodes(conjunction, element);
-				if (serializedNodes != null) {
-					return serializedNodes;
+				ConsumedSlotsConjunction consumedSlotsConjunction = new ConsumedSlotsConjunction(conjunction, modelAnalysis, element, eFeature2size);
+				if (consumedSlotsConjunction.selectSerializedNodes(conjunction, element)) {
+					return consumedSlotsConjunction;
 				}
 		//	}
 		}
@@ -109,7 +108,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.append("<<<Unsupported serialize '" + getClass().getSimpleName() + "'>>>");
 	}
 

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
@@ -148,6 +149,10 @@ public class PreSerializer
 	public @Nullable Object getSolution(@NonNull CardinalityVariable variable) {
 		assert variable2solutions != null;
 		return variable2solutions.get(variable);
+	}
+
+	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializedNode) {
+		return ClassUtil.nonNullState(node2variable.get(serializedNode));
 	}
 
 	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> selectSerializedNodes(@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {

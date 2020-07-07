@@ -41,12 +41,6 @@ public interface RequiredSlots
 	@NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction();
 
 	@NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures();
-	@Deprecated
-	int getLowerBound(@NonNull EStructuralFeature eStructuralFeature);
-	@Deprecated
-	int getQuantum(@NonNull EStructuralFeature eStructuralFeature);
-	@Deprecated
-	int getUpperBound(@NonNull EStructuralFeature eStructuralFeature);
 
 	/**
 	 * Return true if this the null RequiredSlots denoting nothing required.

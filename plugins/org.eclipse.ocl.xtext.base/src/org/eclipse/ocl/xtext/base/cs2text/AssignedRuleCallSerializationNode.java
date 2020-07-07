@@ -36,9 +36,9 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
-		EObject element = serializationBuilder.getElement();
-		int index = serializationBuilder.consume(eStructuralFeature);
+	public void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder) {
+		EObject element = consumedSlotsConjunction.getElement();
+		int index = consumedSlotsConjunction.consume(eStructuralFeature);
 		Object eGet = element.eGet(eStructuralFeature);
 		if (eStructuralFeature.isMany()) {
 			@SuppressWarnings("unchecked")
@@ -52,7 +52,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		if (eStructuralFeature instanceof EReference) {
 			assert ((EReference)eStructuralFeature).isContainment();
 			assert eGet != null;
-			serializationBuilder.serialize((EObject)eGet);
+			consumedSlotsConjunction.serialize(serializationBuilder, (EObject)eGet);
 		}
 		else {
 //			serializationBuilder.append("<<attribute-call>>");

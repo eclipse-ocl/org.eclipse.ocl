@@ -64,21 +64,6 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 	}
 
 	@Override
-	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
-		throw new IllegalStateException();
-	}
-
-	@Override
-	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
-		throw new IllegalStateException();
-	}
-
-	@Override
-	public int getUpperBound(@NonNull EStructuralFeature eStructuralFeature) {
-		throw new IllegalStateException();
-	}
-
-	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		boolean isFirst1 = true;
 		for (@NonNull RequiredSlotsConjunction conjunction : conjunctions) {

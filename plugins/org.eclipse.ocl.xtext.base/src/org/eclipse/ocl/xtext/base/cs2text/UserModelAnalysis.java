@@ -77,11 +77,11 @@ public class UserModelAnalysis
 
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		List<@NonNull SerializationNode> serializedNodes = userElementAnalysis.selectSerializedNodes();
-		if (serializedNodes != null) {
-			for (@NonNull SerializationNode serializedNode : serializedNodes) {
-				serializedNode.serialize(serializationBuilder);
-			}
+		ConsumedSlotsConjunction consumedSlotsConjunction = userElementAnalysis.selectSerializedNodes();
+		if (consumedSlotsConjunction != null) {
+		//	for (@NonNull SerializationNode serializedNode : serializedNodes) {
+				consumedSlotsConjunction.serialize(serializationBuilder);
+		//	}
 			return;
 		}
 		serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");

@@ -78,12 +78,12 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 		 */
 		protected abstract boolean isCompatible(@Nullable Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses);
 
-		public @Nullable List<@NonNull SerializationNode> selectSerializedNodes() {
+		public @Nullable ConsumedSlotsConjunction selectSerializedNodes() {
 			Iterable<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = getProductionRules();
 			for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
-				List<@NonNull SerializationNode> serializedNodes = productionRuleAnalysis.selectSerializedNodes(element);
-				if (serializedNodes != null) {
-					return serializedNodes;
+				ConsumedSlotsConjunction consumedSlotsConjunction = productionRuleAnalysis.selectSerializedNodes(modelAnalysis, element);
+				if (consumedSlotsConjunction != null) {
+					return consumedSlotsConjunction;
 				}
 			}
 			return null;

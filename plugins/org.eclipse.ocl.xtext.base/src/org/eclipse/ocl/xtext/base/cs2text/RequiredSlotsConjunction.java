@@ -149,19 +149,9 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return eFeature2multiplicativeCardinality.keySet();
 	}
 
-	@Override
-	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
-		MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
-		return (multiplicativeCardinality == null) || multiplicativeCardinality.mayBeZero() ? 0 : 1;
-	}
-
-	@Override
-	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
-		//		MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
-		//		Integer quantum = eFeature2quantum.get(eStructuralFeature);
-		//		return multiplicativeCardinality != null ? 1/*quantum.intValue()*/ : 0;
-		Integer quantum = eFeature2quantum.get(eStructuralFeature);
-		return quantum != null ? quantum.intValue() : 0;
+	public @NonNull PreSerializer getPreSerializer() {
+		assert preSerializer != null;
+		return preSerializer;
 	}
 
 	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
@@ -171,12 +161,6 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 
 	public @NonNull Iterable<@NonNull RequiredSlots> getTerms() {
 		return getConjunction();
-	}
-
-	@Override
-	public int getUpperBound(@NonNull EStructuralFeature eStructuralFeature) {
-		MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
-		return (multiplicativeCardinality != null) && multiplicativeCardinality.mayBeMany() ? -1 : 0;
 	}
 
 	public void preSerialize(@NonNull XtextParserRuleAnalysis xtextParserRuleAnalysis, @NonNull SerializationNode serializationNode) {

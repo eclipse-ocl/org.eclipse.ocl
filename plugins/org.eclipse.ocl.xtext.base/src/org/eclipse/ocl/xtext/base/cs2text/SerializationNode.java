@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -25,7 +23,7 @@ public interface SerializationNode
 	@NonNull RequiredSlots getRequiredSlots();
 	boolean isNull();
 	void preSerialize(@NonNull PreSerializer preSerializer);
-	@Nullable List<@NonNull SerializationNode> selectSerializedNodes(@NonNull EObject element);
-	void serialize(@NonNull SerializationBuilder serializationBuilder);
+	@Nullable ConsumedSlotsConjunction selectSerializedNodes(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
+	void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder);
 	void toString(@NonNull StringBuilder s, int depth);
 }

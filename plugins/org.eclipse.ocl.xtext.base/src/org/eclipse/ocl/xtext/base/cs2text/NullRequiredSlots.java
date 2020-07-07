@@ -49,22 +49,6 @@ public class NullRequiredSlots extends AbstractRequiredSlots
 	}
 
 	@Override
-	public int getLowerBound(@NonNull EStructuralFeature eStructuralFeature) {
-		return 0;
-	}
-
-	@Override
-	public int getQuantum(@NonNull EStructuralFeature eStructuralFeature) {
-		return 0;
-	}
-
-	@Override
-	public int getUpperBound(@NonNull EStructuralFeature eStructuralFeature) {
-		return 0;
-	}
-
-
-	@Override
 	public boolean isNull() {
 		return true;
 	}

@@ -41,7 +41,7 @@ public class AlternativeKeywordsSerializationNode extends AbstractSerializationN
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull ConsumedSlotsConjunction consumedSlotsConjunction, @NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.appendSoftSpace();
 		serializationBuilder.append(values.get(0));
 		serializationBuilder.appendSoftSpace();

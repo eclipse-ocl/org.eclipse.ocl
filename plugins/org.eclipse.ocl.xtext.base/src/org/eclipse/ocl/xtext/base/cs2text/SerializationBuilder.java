@@ -10,29 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 public class SerializationBuilder
 {
 	private static final @NonNull Character SOFT_SPACE = new Character(Character.highSurrogate(' '));
 
-	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull StringBuilder s;
 	private final int startIndex;
-	protected final @NonNull EObject element;
-	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	public SerializationBuilder(@NonNull UserModelAnalysis modelAnalysis, @NonNull StringBuilder s, @NonNull EObject element) {
-		this.modelAnalysis = modelAnalysis;
+	public SerializationBuilder(@NonNull StringBuilder s) {
 		this.s = s;
 		this.startIndex = s.length();
-		this.element = element;
 	}
 
 	public void append(@NonNull String string) {
@@ -43,41 +32,8 @@ public class SerializationBuilder
 		s.append(SOFT_SPACE);
 	}
 
-	/**
-	 * Return the consumption index of the next feature slot.
-	 */
-	public int consume(@NonNull EStructuralFeature feature) {
-		Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = this.feature2consumptions;
-		if (feature2consumptions == null) {
-			this.feature2consumptions = feature2consumptions = new HashMap<>();
-		}
-		Integer count = feature2consumptions.get(feature);
-		if (count == null) {
-			feature2consumptions.put(feature, Integer.valueOf(1));
-			return 0;
-		}
-		else {
-			int intValue = count.intValue();
-			feature2consumptions.put(feature, Integer.valueOf(intValue+1));
-			return intValue;
-		}
-	}
-
-	public @Nullable SerializationNode getAlternative(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public @NonNull EObject getElement() {
-		return element;
-	}
-
-	public void serialize() {
-		modelAnalysis.serialize(this, element);
-	}
-
-	public void serialize(@NonNull EObject element) {
-		new SerializationBuilder(modelAnalysis, s, element).serialize();
+	public @NonNull SerializationBuilder createNestedSerializationBuilder() {
+		return new SerializationBuilder(s);
 	}
 
 	public @NonNull String toRenderedString() {
