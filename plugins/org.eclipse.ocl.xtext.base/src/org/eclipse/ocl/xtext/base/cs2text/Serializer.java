@@ -28,73 +28,85 @@ public class Serializer
 	protected final @NonNull PreSerializer preSerializer;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject element;
-	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size;
-	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = null;
+	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
 	protected Serializer(@NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis,
-			@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+			@NonNull EObject element, @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
 		this.requiredSlotsConjunction = requiredSlotsConjunction;
 		this.preSerializer = requiredSlotsConjunction.getPreSerializer();
 		this.modelAnalysis = modelAnalysis;
 		this.element = element;
-		this.eFeature2size = eFeature2size;
+		this.variable2value = variable2value;
 	}
 
-	/**
-	 * Return the consumption index of the next feature slot.
-	 */
-	public int consume(@NonNull EStructuralFeature feature) {
+	public Object consumeNext(@NonNull EStructuralFeature eStructuralFeature) {
 		Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = this.feature2consumptions;
 		if (feature2consumptions == null) {
 			this.feature2consumptions = feature2consumptions = new HashMap<>();
 		}
-		Integer count = feature2consumptions.get(feature);
+		int index;
+		Integer count = feature2consumptions.get(eStructuralFeature);
 		if (count == null) {
-			feature2consumptions.put(feature, Integer.valueOf(1));
-			return 0;
+			feature2consumptions.put(eStructuralFeature, Integer.valueOf(1));
+			index = 0;
 		}
 		else {
 			int intValue = count.intValue();
-			feature2consumptions.put(feature, Integer.valueOf(intValue+1));
-			return intValue;
+			feature2consumptions.put(eStructuralFeature, Integer.valueOf(intValue+1));
+			index = intValue;
 		}
+		Object eGet = element.eGet(eStructuralFeature);
+		if (eStructuralFeature.isMany()) {
+			@SuppressWarnings("unchecked")
+			List<EObject> eList = (List<EObject>)eGet;
+			assert index < eList.size();
+			eGet = eList.get(index);
+		}
+		else {
+			assert index == 0;
+		}
+		return eGet;
 	}
 
 	public @NonNull EObject getElement() {
 		return element;
 	}
 
-	public boolean hasCompatibleCardinalities(@NonNull RequiredSlotsConjunction conjunction, @NonNull EObject element) {
-		assert variable2value == null;
-		this.variable2value = preSerializer.computeActualCardinalities(element, eFeature2size);
-		return variable2value != null;
+	/**
+	 * Serialize this serializer's configured element to the serializationBuilder.
+	 */
+	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
+		List<@NonNull SerializationNode> serializationNodes = requiredSlotsConjunction.getSerializedNodes();
+		serializeNodes(serializationBuilder, serializationNodes);
 	}
 
-	public void serializeConjunction(@NonNull SerializationBuilder serializationBuilder) {
-		List<@NonNull SerializationNode> serializedNodes = requiredSlotsConjunction.getSerializedNodes();
-		serializeElements(serializationBuilder, serializedNodes);
-	}
-
+	/**
+	 * Create and use a new serilaizer to to serialize element to the serializationBuilder.
+	 */
 	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
-		SerializationBuilder nestedSerializationBuilder = serializationBuilder.createNestedSerializationBuilder();
-		modelAnalysis.serialize(nestedSerializationBuilder, element);
+		modelAnalysis.serialize(serializationBuilder, element);
 	}
 
-	protected void serializeElements(@NonNull SerializationBuilder serializationBuilder, @NonNull List<@NonNull SerializationNode> serializedNodes) {
-		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value2 = variable2value;
-		assert variable2value2 != null;
-		for (@NonNull SerializationNode serializedNode : serializedNodes) {
-			CardinalityVariable variable = preSerializer.getVariable(serializedNode);
-			Integer value = variable2value2.get(variable);
-			assert value != null;
-			for (int i = 0; i < value.intValue(); i++) {
-				serializedNode.serialize(this, serializationBuilder);
-			}
+	/**
+	 * Serialize a serializationNode to the serializationBuilder.
+	 */
+	protected void serializeNode(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializationNode) {
+		CardinalityVariable variable = preSerializer.getVariable(serializationNode);
+		Integer value = variable2value.get(variable);
+		assert value != null;
+		for (int i = 0; i < value.intValue(); i++) {
+			serializationNode.serialize(this, serializationBuilder);
 		}
 	}
 
-	protected void serialize1(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializedNode) {
+	/**
+	 * Serialize a sequence of serializationNodes to the serializationBuilder.
+	 */
+	protected void serializeNodes(@NonNull SerializationBuilder serializationBuilder, @NonNull Iterable<@NonNull SerializationNode> serializationNodes) {
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			serializeNode(serializationBuilder, serializationNode);
+		}
 	}
 
 	@Override

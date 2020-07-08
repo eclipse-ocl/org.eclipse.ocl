@@ -76,12 +76,27 @@ public class UserModelAnalysis
 
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		Serializer serializer = userElementAnalysis.selectCompatibleCardinalities();
+		Serializer serializer = userElementAnalysis.createSerializer();
 		if (serializer != null) {
-			return;
+			serializer.serialize(serializationBuilder);
 		}
-		serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
+		else {
+			serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
+		}
 	}
+
+/*	public @NonNull SerializationBuilder serializeRoot(@NonNull EObject element) {
+		SerializationBuilder serializationBuilder = new SerializationBuilder();
+		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
+		Serializer serializer = userElementAnalysis.selectCompatibleCardinalities();
+		if (serializer == null) {
+			serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
+		}
+		else {
+			serializer.serializeConjunction(serializationBuilder);
+		}
+		return serializationBuilder;
+	} */
 
 	@Override
 	public @NonNull String toString() {

@@ -10,38 +10,40 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * SerializationBuilder builds the intermediate serialization as an interleaving of concrete strings and virtual
+ * characters such as soft-space. The append merthods do the building.
+ *
+ * Finally the toRenderedString returns a simple string with the virtual characters converted to concrete equivalents where
+ * appropriate.
+ */
 public class SerializationBuilder
 {
-	private static final @NonNull Character SOFT_SPACE = new Character(Character.highSurrogate(' '));
+	private static final @NonNull String SOFT_SPACE = new String("« »");
 
-	protected final @NonNull StringBuilder s;
-	private final int startIndex;
+	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
 
-	public SerializationBuilder(@NonNull StringBuilder s) {
-		this.s = s;
-		this.startIndex = s.length();
-	}
+	public SerializationBuilder() {}
 
 	public void append(@NonNull String string) {
-		s.append(string);
+		strings.add(string);
 	}
 
 	public void appendSoftSpace() {
-		s.append(SOFT_SPACE);
-	}
-
-	public @NonNull SerializationBuilder createNestedSerializationBuilder() {
-		return new SerializationBuilder(s);
+		strings.add(SOFT_SPACE);
 	}
 
 	public @NonNull String toRenderedString() {
 		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < this.s.length(); i++) {
-			char ch = this.s.charAt(i);
-			int length = s.length();
-			char prevCh = length <= 0 ? ' ' : s.charAt(length-1);
+		char prevCh = ' ';
+		for (@NonNull String nextString : strings) {
+		//	int nextLength = nextString.length();
+		//	char nextCh = nextLength <= 0 ? ' ' : nextString.charAt(0);
 			switch (prevCh) {
 			/*	case -1: {
 					if (ch == SOFT_SPACE) {}
@@ -51,28 +53,32 @@ public class SerializationBuilder
 					break;
 				} */
 				case ' ': {
-					if (ch == SOFT_SPACE) {}
+					if (nextString == SOFT_SPACE) {}
 					else {
-						s.append(ch);
+						s.append(nextString);
 					}
 					break;
 				}
 				case '\n': {
-					if (ch == SOFT_SPACE) {}
+					if (nextString == SOFT_SPACE) {}
 					else {
-						s.append(ch);
+						s.append(nextString);
 					}
 					break;
 				}
 				default: {
-					if (ch == SOFT_SPACE) {
+					if (nextString == SOFT_SPACE) {
 						s.append(' ');
 					}
 					else {
-						s.append(ch);
+						s.append(nextString);
 					}
 					break;
 				}
+			}
+			int length = s.length();
+			if (length > 0) {
+				prevCh = s.charAt(length-1);
 			}
 		}
 		return String.valueOf(s);
@@ -80,7 +86,11 @@ public class SerializationBuilder
 
 	@Override
 	public @NonNull String toString() {
-		return String.valueOf(s.substring(startIndex));
+		StringBuilder s = new StringBuilder();
+		for (@NonNull String string : strings) {
+			s.append(string);
+		}
+		return String.valueOf(s);
 	}
 
 }

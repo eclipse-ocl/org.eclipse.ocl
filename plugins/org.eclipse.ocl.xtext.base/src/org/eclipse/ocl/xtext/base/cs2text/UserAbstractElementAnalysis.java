@@ -44,6 +44,17 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 //			correlators.add(correlator);
 //		}
 
+		public @Nullable Serializer createSerializer() {
+			Iterable<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = getProductionRules();
+			for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
+				Serializer serializer = productionRuleAnalysis.createSerializer(modelAnalysis, element);
+				if (serializer != null) {
+					return serializer;
+				}
+			}
+			return null;
+		}
+
 		public abstract @Nullable UserAbstractElementAnalysis getContainingElementAnalysis();
 
 		public abstract @Nullable EStructuralFeature geteContainingFeature();
@@ -77,15 +88,4 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 		 * Recursively the container of this element has a similarly compatoble assignement.
 		 */
 		protected abstract boolean isCompatible(@Nullable Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses);
-
-		public @Nullable Serializer selectCompatibleCardinalities() {
-			Iterable<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = getProductionRules();
-			for (@NonNull XtextParserRuleAnalysis productionRuleAnalysis : productionRuleAnalyses) {
-				Serializer serializer = productionRuleAnalysis.selectCompatibleCardinalities(modelAnalysis, element);
-				if (serializer != null) {
-					return serializer;
-				}
-			}
-			return null;
-		}
 	}

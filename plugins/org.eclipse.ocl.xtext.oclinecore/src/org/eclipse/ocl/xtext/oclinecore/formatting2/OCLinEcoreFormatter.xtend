@@ -51,7 +51,7 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 		modelAnalysis.analyze(topLevelCS);
 		var String s2 = modelAnalysis.toString();
 		System.out.println(s2);
-		var SerializationBuilder serializationBuilder = new SerializationBuilder(new StringBuilder());
+		var SerializationBuilder serializationBuilder = new SerializationBuilder();
 		modelAnalysis.serialize(serializationBuilder, topLevelCS);
 		var String s3 = serializationBuilder.toRenderedString();
 		System.out.println(s3);

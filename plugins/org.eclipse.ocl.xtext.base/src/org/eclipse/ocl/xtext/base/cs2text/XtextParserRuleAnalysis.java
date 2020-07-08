@@ -314,7 +314,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		@Override
 		public @NonNull SerializationNode caseKeyword(Keyword keyword) {
 			assert keyword != null;
-			return new KeywordSerializationNode(grammarAnalysis, keyword);
+			return new UnassignedKeywordSerializationNode(grammarAnalysis, keyword);
 		}
 
 		@Override
@@ -327,7 +327,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		public @NonNull SerializationNode caseRuleCall(RuleCall ruleCall) {
 			assert ruleCall != null;
 			assert !(ruleCall.eContainer() instanceof Assignment);
-			return nullSerializationNode;
+			return new UnassignedRuleCallSerializationNode(grammarAnalysis, ruleCall, grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule(ruleCall)));
 		}
 
 /*		@Override
@@ -508,9 +508,9 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return isFirstResultType((AbstractElement)eContainer);
 	}
 
-	public @Nullable Serializer selectCompatibleCardinalities(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
+	public @Nullable Serializer createSerializer(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		assert serializationNode != null;
-		return serializationNode.selectCompatibleCardinalities(modelAnalysis, element);
+		return serializationNode.createSerializer(modelAnalysis, element);
 	}
 
 	public void preSerialize() {

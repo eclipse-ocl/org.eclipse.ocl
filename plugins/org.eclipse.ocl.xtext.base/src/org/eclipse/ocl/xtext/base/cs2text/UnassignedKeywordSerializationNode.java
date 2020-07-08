@@ -14,18 +14,18 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
-public class KeywordSerializationNode extends SimpleSerializationNode
+public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 {
 	protected final @NonNull String value;
 
-	public KeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Keyword keyword) {
+	public UnassignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Keyword keyword) {
 		super(grammarAnalysis, MultiplicativeCardinality.toEnum(keyword.getCardinality()));
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 
 	@Override
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return MultiplicativeCardinality.ONE;			// ?? could more ccurately be ZERO or ONE
+		return MultiplicativeCardinality.ONE;			// ?? could more accurately be ZERO or ONE
 	}
 
 	@Override

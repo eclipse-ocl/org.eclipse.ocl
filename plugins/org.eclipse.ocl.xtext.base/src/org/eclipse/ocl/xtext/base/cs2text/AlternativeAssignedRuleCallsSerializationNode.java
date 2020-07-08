@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssignedSerializationNode
 {
-	protected final @NonNull List<@NonNull  XtextAbstractRuleAnalysis> ruleAnalyses;
+	protected final @NonNull List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses;
 
 	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);

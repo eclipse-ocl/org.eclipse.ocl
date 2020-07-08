@@ -16,14 +16,14 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public interface SerializationNode
 {
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality();
+	@Nullable Serializer createSerializer(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
+	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
 	/**
 	 * Return the required slots in disjunctive normal form.
 	 */
 	@NonNull RequiredSlots getRequiredSlots();
 	boolean isNull();
 	void preSerialize(@NonNull PreSerializer preSerializer);
-	@Nullable Serializer selectCompatibleCardinalities(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 	void toString(@NonNull StringBuilder s, int depth);
 }

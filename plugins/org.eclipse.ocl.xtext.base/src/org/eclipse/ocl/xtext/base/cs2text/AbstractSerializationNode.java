@@ -41,17 +41,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	}
 
 	@Override
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return multiplicativeCardinality;
-	}
-
-	@Override
-	public boolean isNull() {
-		return false;
-	}
-
-	@Override
-	public @Nullable Serializer selectCompatibleCardinalities(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
+	public @Nullable Serializer createSerializer(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size = new HashMap<>();
 		for (EStructuralFeature eFeature : element.eClass().getEAllStructuralFeatures()) {
 			assert eFeature != null;
@@ -73,12 +63,22 @@ public abstract class AbstractSerializationNode implements SerializationNode
 			}
 		}
 		for (@NonNull RequiredSlotsConjunction conjunction : getRequiredSlots().getDisjunction()) {
-			Serializer serializer = new Serializer(conjunction, modelAnalysis, element, eFeature2size);
-			if (serializer.hasCompatibleCardinalities(conjunction, element)) {
-				return serializer;
+			Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = conjunction.computeActualCardinalities(element, eFeature2size);
+			if (variable2value != null) {
+				return new Serializer(conjunction, modelAnalysis, element, variable2value);
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+		return multiplicativeCardinality;
+	}
+
+	@Override
+	public boolean isNull() {
+		return false;
 	}
 
 	@Override

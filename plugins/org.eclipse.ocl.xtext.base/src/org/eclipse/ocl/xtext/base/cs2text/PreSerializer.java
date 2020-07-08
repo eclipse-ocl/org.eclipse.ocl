@@ -33,7 +33,7 @@ public class PreSerializer
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
-	private final @NonNull List<@NonNull SerializationNode> serializedNodes;
+	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions = null;
 
 	public PreSerializer(@NonNull XtextParserRuleAnalysis parserRuleAnalysis, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
@@ -44,10 +44,10 @@ public class PreSerializer
 		this.node2variable = new HashMap<>();
 		this.variable2node = new HashMap<>();
 		this.feature2expression = new HashMap<>();
-		this.serializedNodes = new ArrayList<>();
+		this.serializationNodes = new ArrayList<>();
 	}
 
-	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode, @NonNull List<@NonNull SerializationNode> serializedNodes) {
+	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode, @NonNull List<@NonNull SerializationNode> serializationNodes) {
 		this.parserRuleAnalysis = preSerializer.parserRuleAnalysis;
 		this.parentSerializedNode = parentSerializedNode;
 		this.alternatives2choice = preSerializer.alternatives2choice;
@@ -55,7 +55,7 @@ public class PreSerializer
 		this.node2variable = preSerializer.node2variable;
 		this.variable2node = preSerializer.variable2node;
 		this.feature2expression = preSerializer.feature2expression;
-		this.serializedNodes = serializedNodes;
+		this.serializationNodes = serializationNodes;
 	}
 
 	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode) {
@@ -87,7 +87,7 @@ public class PreSerializer
 	}
 
 	public void addSerializedNode(@NonNull SerializationNode serializationNode) {
-		serializedNodes.add(serializationNode);
+		serializationNodes.add(serializationNode);
 		addChildNode(serializationNode);
 		MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 		String name = String.format("C%02d", variable2node.size());
@@ -179,7 +179,7 @@ public class PreSerializer
 	}
 
 	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
-		return serializedNodes;
+		return serializationNodes;
 	}
 
 	public @Nullable Object getSolution(@NonNull CardinalityVariable variable) {
@@ -187,8 +187,8 @@ public class PreSerializer
 		return variable2solutions.get(variable);
 	}
 
-	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializedNode) {
-		return ClassUtil.nonNullState(node2variable.get(serializedNode));
+	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
+		return ClassUtil.nonNullState(node2variable.get(serializationNode));
 	}
 
 	public void solve() {
@@ -264,8 +264,8 @@ public class PreSerializer
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("\n");
 		StringUtil.appendIndentation(s, depth+1, "\t");
-		for (@NonNull SerializationNode serializedNode : serializedNodes) {
-			serializedNode.toString(s, depth+2);
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			serializationNode.toString(s, depth+2);
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2node.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);

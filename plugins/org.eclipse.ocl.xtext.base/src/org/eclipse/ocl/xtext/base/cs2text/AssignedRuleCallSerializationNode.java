@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -37,18 +35,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		EObject element = serializer.getElement();
-		int index = serializer.consume(eStructuralFeature);
-		Object eGet = element.eGet(eStructuralFeature);
-		if (eStructuralFeature.isMany()) {
-			@SuppressWarnings("unchecked")
-			List<EObject> eList = (List<EObject>)eGet;
-			assert index < eList.size();
-			eGet = eList.get(index);
-		}
-		else {
-			assert index == 0;
-		}
+		Object eGet = serializer.consumeNext(eStructuralFeature);
 		if (eStructuralFeature instanceof EReference) {
 			assert ((EReference)eStructuralFeature).isContainment();
 			assert eGet != null;

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -99,6 +100,12 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 				? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
 					: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
 		eFeature2multiplicativeCardinality.put(eStructuralFeature, newMultiplicativeCardinality);
+	}
+
+	public Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element,
+			@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+		assert preSerializer != null;
+		return preSerializer.computeActualCardinalities(element, eFeature2size);
 	}
 
 	public @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> getAlternativesChoices() {
