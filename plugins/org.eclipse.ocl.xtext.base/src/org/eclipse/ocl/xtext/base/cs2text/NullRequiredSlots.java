@@ -55,6 +55,6 @@ public class NullRequiredSlots extends AbstractRequiredSlots
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("<<null>>");
+		s.append("«null»");
 	}
 }

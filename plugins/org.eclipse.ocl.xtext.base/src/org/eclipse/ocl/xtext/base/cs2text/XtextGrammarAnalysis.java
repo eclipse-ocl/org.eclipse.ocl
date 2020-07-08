@@ -307,7 +307,7 @@ public class XtextGrammarAnalysis
 	public @NonNull String toString() {
 		Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis = this.rule2ruleAnalysis;
 		if (rule2ruleAnalysis == null) {
-			return "<<not-ready>>";
+			return "«not-ready»";
 		}
 		StringBuilder s = new StringBuilder();
 		s.append("Xtext production rule -> Xtext base rules <=> User EClass - User EStructuralFeatures");

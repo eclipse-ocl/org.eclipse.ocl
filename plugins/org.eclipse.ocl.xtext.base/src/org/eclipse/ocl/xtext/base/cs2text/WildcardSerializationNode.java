@@ -21,7 +21,7 @@ public class WildcardSerializationNode extends SimpleSerializationNode
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("<<WILDCARD>>");
+		s.append("«WILDCARD»");
 		appendCardinality(s, depth);
 	}
 }

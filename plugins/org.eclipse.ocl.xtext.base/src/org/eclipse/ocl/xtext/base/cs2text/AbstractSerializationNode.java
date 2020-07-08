@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -45,7 +46,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 		Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size = new HashMap<>();
 		for (EStructuralFeature eFeature : element.eClass().getEAllStructuralFeatures()) {
 			assert eFeature != null;
-			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile()) {
+			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile() && (!(eFeature instanceof EReference) || !((EReference)eFeature).isContainer())) {
 				int size;
 				Object object = element.eGet(eFeature);
 				if (eFeature.isMany()) {
@@ -83,7 +84,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializationBuilder.append("<<<Unsupported serialize '" + getClass().getSimpleName() + "'>>>");
+		serializationBuilder.append("«Unsupported serialize '" + getClass().getSimpleName() + "'»");
 	}
 
 	@Override

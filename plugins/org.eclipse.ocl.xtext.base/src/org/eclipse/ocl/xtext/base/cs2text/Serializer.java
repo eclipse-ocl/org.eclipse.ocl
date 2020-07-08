@@ -22,6 +22,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
+/**
+ * A Serializer supports the serialization of a user model element, automatocally creating a hierarchy
+ * of Serizers for the containment herarchy od the user model element.
+ */
 public class Serializer
 {
 	protected final @NonNull RequiredSlotsConjunction requiredSlotsConjunction;
@@ -31,7 +35,7 @@ public class Serializer
 	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	protected Serializer(@NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis,
+	public Serializer(@NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis,
 			@NonNull EObject element, @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
 		this.requiredSlotsConjunction = requiredSlotsConjunction;
 		this.preSerializer = requiredSlotsConjunction.getPreSerializer();
@@ -40,7 +44,10 @@ public class Serializer
 		this.variable2value = variable2value;
 	}
 
-	public Object consumeNext(@NonNull EStructuralFeature eStructuralFeature) {
+	/**
+	 * Return the next eStructuralFeature child object of this serializer's element.
+	 */
+	public @Nullable Object consumeNext(@NonNull EStructuralFeature eStructuralFeature) {
 		Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = this.feature2consumptions;
 		if (feature2consumptions == null) {
 			this.feature2consumptions = feature2consumptions = new HashMap<>();
@@ -56,17 +63,16 @@ public class Serializer
 			feature2consumptions.put(eStructuralFeature, Integer.valueOf(intValue+1));
 			index = intValue;
 		}
-		Object eGet = element.eGet(eStructuralFeature);
+		Object object = element.eGet(eStructuralFeature);
 		if (eStructuralFeature.isMany()) {
-			@SuppressWarnings("unchecked")
-			List<EObject> eList = (List<EObject>)eGet;
+			@SuppressWarnings("unchecked") List<EObject> eList = (List<EObject>)object;
 			assert index < eList.size();
-			eGet = eList.get(index);
+			object = eList.get(index);
 		}
 		else {
 			assert index == 0;
 		}
-		return eGet;
+		return object;
 	}
 
 	public @NonNull EObject getElement() {

@@ -232,7 +232,8 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			EClass eFeatureScope = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
 			AbstractElement terminal = XtextGrammarUtil.getTerminal(assignment);
 			if (terminal instanceof RuleCall) {
-				return new AssignedRuleCallSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)terminal)));
+				XtextAbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)terminal));
+				return new AssignedRuleCallSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, ruleAnalysis2);
 			}
 			else if (terminal instanceof Keyword) {
 				return new AssignedKeywordSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (Keyword)terminal);
@@ -278,8 +279,9 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				return nullSerializationNode;
 			}
 			else if (terminal instanceof CrossReference) {
-				EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
-				return new AssignedCrossReferenceSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (CrossReference)terminal);
+			//	EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
+				XtextAbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getTerminal((CrossReference)terminal));
+				return new AssignedCrossReferenceSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, ruleAnalysis2);
 			}
 			else {
 				throw new UnsupportedOperationException("Unsupported Assignment terminal '" + terminal.eClass().getName() + "'");

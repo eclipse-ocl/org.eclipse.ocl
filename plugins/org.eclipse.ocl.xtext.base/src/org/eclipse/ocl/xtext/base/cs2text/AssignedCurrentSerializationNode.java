@@ -27,7 +27,7 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 		s.append("::");
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append("<<current>>");
+		s.append("«current»");
 		appendCardinality(s, depth);
 	}
 }

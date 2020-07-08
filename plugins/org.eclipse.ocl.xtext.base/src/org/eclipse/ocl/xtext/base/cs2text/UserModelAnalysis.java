@@ -47,12 +47,18 @@ public class UserModelAnalysis
 	 */
 	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
 
-	private @NonNull Map<@NonNull EObject, @NonNull UserAbstractElementAnalysis> element2elementAnalysis = new HashMap<>();
+	/**
+	 * The analysis of each user model element.
+	 */
+	private final @NonNull Map<@NonNull EObject, @NonNull UserAbstractElementAnalysis> element2elementAnalysis = new HashMap<>();
 
 	public UserModelAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis) {
 		this.grammarAnalysis = grammarAnalysis;
 	}
 
+	/**
+	 * Perform analysis of each user model element.
+	 */
 	public void analyze(@NonNull EObject model) {
 		assert model.eContainer() == null;
 		element2elementAnalysis.put(model, new UserRootElementAnalysis(this, model));
@@ -66,6 +72,9 @@ public class UserModelAnalysis
 		}
 	}
 
+	/**
+	 * Return the analysis of a user model element.
+	 */
 	public @NonNull UserAbstractElementAnalysis getElementAnalysis(@NonNull EObject element) {
 		return ClassUtil.nonNullState(element2elementAnalysis.get(element));
 	}
@@ -74,6 +83,10 @@ public class UserModelAnalysis
 		return grammarAnalysis;
 	}
 
+	/**
+	 * Create a Serializer for the appropriate configuration of element, then use it to serialize it and its descendants
+	 * to the serializationBuilder.
+	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
 		Serializer serializer = userElementAnalysis.createSerializer();
@@ -81,22 +94,10 @@ public class UserModelAnalysis
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
+			userElementAnalysis.createSerializer();		// XXX debugging
+			serializationBuilder.append("«incompatible '" + element.eClass().getName() + "'»");
 		}
 	}
-
-/*	public @NonNull SerializationBuilder serializeRoot(@NonNull EObject element) {
-		SerializationBuilder serializationBuilder = new SerializationBuilder();
-		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		Serializer serializer = userElementAnalysis.selectCompatibleCardinalities();
-		if (serializer == null) {
-			serializationBuilder.append("<<<incompatible '" + element.eClass().getName() + "'>>>");
-		}
-		else {
-			serializer.serializeConjunction(serializationBuilder);
-		}
-		return serializationBuilder;
-	} */
 
 	@Override
 	public @NonNull String toString() {

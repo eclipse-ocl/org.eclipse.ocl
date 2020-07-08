@@ -42,11 +42,11 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 			serializer.serializeElement(serializationBuilder, (EObject)eGet);
 		}
 		else {
-//			serializationBuilder.append("<<attribute-call>>");
+//			serializationBuilder.append("«attribute-call»");
 		///	final String lexerRule = linkingHelper.getRuleNameFrom();
 
 
-			String val = valueConverterService.toString(eGet, ruleAnalysis.getRule().getName());
+			String val = valueConverterService.toString(eGet, ruleAnalysis.getRuleName());
 		/*	if ("URI".equals(ruleName)) {
 				if (semanticObject instanceof PathElementWithURICS) {
 					PathElementWithURICS pathElementWithURICS = (PathElementWithURICS)semanticObject;
