@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 		protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
 		protected final @NonNull EObject element;
 		private final @NonNull String name;
-//		private @NonNull List<@NonNull XtextTermsAnalysis> correlators = new ArrayList<>();
 
 		public UserAbstractElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 			this.modelAnalysis = modelAnalysis;
@@ -39,10 +38,6 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 			this.element = element;
 			this.name = element.eClass().getName() + "@" + ++count;
 		}
-
-//		public void addCorrelation(@NonNull XtextTermsAnalysis correlator) {
-//			correlators.add(correlator);
-//		}
 
 		public @Nullable Serializer createSerializer() {
 			Iterable<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = getProductionRules();

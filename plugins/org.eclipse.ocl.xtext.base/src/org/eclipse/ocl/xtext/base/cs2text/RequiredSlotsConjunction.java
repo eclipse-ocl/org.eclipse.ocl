@@ -169,11 +169,10 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return getConjunction();
 	}
 
-	public void preSerialize(@NonNull XtextParserRuleAnalysis xtextParserRuleAnalysis, @NonNull SerializationNode serializationNode) {
-		PreSerializer preSerializer2 = new PreSerializer(xtextParserRuleAnalysis, alternatives2choice);
+	public void preSerialize(@NonNull XtextParserRuleAnalysis xtextParserRuleAnalysis, @NonNull SerializationNode rootSerializationNode) {
+		PreSerializer preSerializer2 = new PreSerializer(xtextParserRuleAnalysis, this, rootSerializationNode);
 		this.preSerializer = preSerializer2;
-		serializationNode.preSerialize(preSerializer2);
-		preSerializer2.solve();
+		preSerializer2.preSerialize();
 	}
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {

@@ -24,9 +24,17 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
+/**
+ * A PreSerializer analyses a particular serialization rule to determine
+ * - a multiplicity variable fro each term
+ * - expressions relating the multiplicity variables to the number of elements of each feature
+ * - the solutins for each variable as an equation involvinf the feature sizes.
+ */
 public class PreSerializer
 {
 	protected final @NonNull XtextParserRuleAnalysis parserRuleAnalysis;
+	protected final @NonNull RequiredSlotsConjunction requiredSlotsConjunction;
+	protected final @NonNull SerializationNode rootSerializationNode;
 	protected final @Nullable SerializationNode parentSerializedNode;
 	private final @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice;
 	private final @NonNull Map<@NonNull SerializationNode, @Nullable SerializationNode> node2parent;
@@ -36,10 +44,12 @@ public class PreSerializer
 	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions = null;
 
-	public PreSerializer(@NonNull XtextParserRuleAnalysis parserRuleAnalysis, @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
+	public PreSerializer(@NonNull XtextParserRuleAnalysis parserRuleAnalysis, @NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull SerializationNode rootSerializationNode) {
 		this.parserRuleAnalysis = parserRuleAnalysis;
+		this.requiredSlotsConjunction = requiredSlotsConjunction;
+		this.rootSerializationNode = rootSerializationNode;
 		this.parentSerializedNode = null;
-		this.alternatives2choice = alternatives2choice;
+		this.alternatives2choice = requiredSlotsConjunction.getAlternativesChoices();
 		this.node2parent = new HashMap<>();
 		this.node2variable = new HashMap<>();
 		this.variable2node = new HashMap<>();
@@ -49,6 +59,8 @@ public class PreSerializer
 
 	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode, @NonNull List<@NonNull SerializationNode> serializationNodes) {
 		this.parserRuleAnalysis = preSerializer.parserRuleAnalysis;
+		this.requiredSlotsConjunction = preSerializer.requiredSlotsConjunction;
+		this.rootSerializationNode = preSerializer.rootSerializationNode;
 		this.parentSerializedNode = parentSerializedNode;
 		this.alternatives2choice = preSerializer.alternatives2choice;
 		this.node2parent = preSerializer.node2parent;
@@ -191,7 +203,15 @@ public class PreSerializer
 		return ClassUtil.nonNullState(node2variable.get(serializationNode));
 	}
 
-	public void solve() {
+	public void preSerialize() {
+		//
+		//	Traverse the chosen serialization tree path to trigger addAssignedNode/addSerializedNode call-backs to determine the
+		//	cardinality variables and expressions to be solved to characterize the serialization.
+		//
+		rootSerializationNode.preSerialize(this);
+		//
+		//	Prepare to restructure the variables/expressions as solutions.
+		//
 		Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions2 = variable2solutions;
 		assert variable2solutions2 == null;
 		variable2solutions = variable2solutions2 = new HashMap<>();
