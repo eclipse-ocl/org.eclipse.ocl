@@ -14,13 +14,13 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class SimpleSerializationNode extends AbstractSerializationNode
 {
-	public SimpleSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(grammarAnalysis, multiplicativeCardinality);
+	public SimpleSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, multiplicativeCardinality);
 	}
 
 	@Override
 	public @NonNull RequiredSlots getRequiredSlots() {
-		return NullRequiredSlots.INSTANCE;
+		return ruleAnalysis.getNullRequiredSlots();
 	}
 
 	@Override

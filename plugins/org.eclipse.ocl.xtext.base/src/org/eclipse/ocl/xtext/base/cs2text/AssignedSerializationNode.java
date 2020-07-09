@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
+	@NonNull EClass getEFeatureScope();
 	@NonNull EStructuralFeature getEStructuralFeature();
-//	int getLowerBound();
-//	int getUpperBound();
 }

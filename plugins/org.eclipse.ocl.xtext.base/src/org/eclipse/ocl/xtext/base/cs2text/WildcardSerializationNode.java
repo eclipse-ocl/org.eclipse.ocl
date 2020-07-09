@@ -15,8 +15,8 @@ import org.eclipse.xtext.Wildcard;
 
 public class WildcardSerializationNode extends SimpleSerializationNode
 {
-	public WildcardSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Wildcard wildcard) {
-		super(grammarAnalysis, MultiplicativeCardinality.toEnum(wildcard.getCardinality()));
+	public WildcardSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Wildcard wildcard) {
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(wildcard.getCardinality()));
 	}
 
 	@Override

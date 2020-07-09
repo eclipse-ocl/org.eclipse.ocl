@@ -19,8 +19,8 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 {
 	protected final @NonNull String value;
 
-	public AssignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AssignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
+		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 

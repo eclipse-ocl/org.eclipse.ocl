@@ -21,7 +21,8 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 	protected final @NonNull CompositeSerializationNode serializationNode;
 	private @NonNull List<@NonNull RequiredSlotsConjunction> conjunctions;
 
-	protected RequiredSlotsDisjunction(@NonNull CompositeSerializationNode serializationNode, @NonNull List<@NonNull RequiredSlotsConjunction> conjunctions) {
+	protected RequiredSlotsDisjunction(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CompositeSerializationNode serializationNode, @NonNull List<@NonNull RequiredSlotsConjunction> conjunctions) {
+		super(ruleAnalysis);
 		this.serializationNode = serializationNode;
 		this.conjunctions = conjunctions;
 	//	for (@NonNull RequiredSlotsConjunction conjunction : conjunctions) {

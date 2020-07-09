@@ -24,6 +24,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
+import com.google.common.collect.Iterables;
+
 /**
  * The UserModelAnalysis provides the working context to assist in the determination of the Xtext grammar rule
  * that can produce and assign a user model element.
@@ -66,7 +68,7 @@ public class UserModelAnalysis
 		for (@NonNull EObject eObject : new TreeIterable(model, false)) {
 			UserElementAnalysis elementAnalysis = new UserElementAnalysis(this, eObject);
 			element2elementAnalysis.put(eObject, elementAnalysis);
-			if (elementAnalysis.getParserRuleAnalysis2assignmentAnalyses().size() > 1) {
+			if (Iterables.size(elementAnalysis.getSerializationRules()) > 1) {
 				unresolvedModelObjects.add(elementAnalysis);
 			}
 		}

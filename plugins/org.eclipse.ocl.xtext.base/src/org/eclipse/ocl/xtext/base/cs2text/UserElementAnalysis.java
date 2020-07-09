@@ -10,19 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
+
+import com.google.common.collect.Iterables;
 
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -34,75 +26,28 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 
 	protected final @NonNull UserAbstractElementAnalysis containingElementAnalysis;
 
-	private @Nullable Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses = null;
+//	private @Nullable List<@NonNull RequiredSlotsConjunction> productionRuleAnalysis2containingAssignmentAnalyses = null;
 
 	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		super(modelAnalysis, element);
 		assert element.eContainer() != null;
 		this.eContainingFeature = UserModelAnalysis.eContainingFeature(element);
 		this.containingElementAnalysis = modelAnalysis.getElementAnalysis(UserModelAnalysis.eContainer(element));
-		this.productionRuleAnalysis2containingAssignmentAnalyses = analyzeProduction();
+//		this.productionRuleAnalysis2containingAssignmentAnalyses = analyzeProduction();
 	}
 
 	/**
 	 * Determine the rules able to produce this element and the containing assignments by which it can be contained.
-	 */
-	private @NonNull Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> analyzeProduction() {
+	 *
+	private @NonNull List<@NonNull RequiredSlotsConjunction> analyzeProduction() {
 		EClass targetEClass = UserModelAnalysis.eClass(element);
 		@SuppressWarnings("unused") String eClassName = targetEClass.getName();
 		if ("MultiplicityStringCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
-		Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses = new HashMap<>();
-		isCompatible(ruleAnalysis2assignmentAnalyses);  // XXX terrible name for a function with side effects
+		List<@NonNull RequiredSlotsConjunction> ruleAnalysis2assignmentAnalyses = isCompatible(ruleAnalysis2assignmentAnalyses);  // XXX terrible name for a function with side effects
 		return ruleAnalysis2assignmentAnalyses;
-	}
-
-	@Override
-	protected boolean isCompatible(@Nullable Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses) {
-		Iterable<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalysisCandidates = grammarAnalysis.getAssignmentAnalyses(eContainingFeature);
-		for (@NonNull XtextAssignmentAnalysis containingAssignmentAnalysisCandidate : containingAssignmentAnalysisCandidates) {
-			List<@NonNull XtextParserRuleAnalysis> compatibleTargetRuleAnalysisCandidates = null;
-			EClass targetEClass = UserModelAnalysis.eClass(element);
-			Iterable<@NonNull XtextAbstractRuleAnalysis> targetRuleAnalysisCandidates = grammarAnalysis.getProducingRuleAnalyses(targetEClass);
-			for (@NonNull XtextAbstractRuleAnalysis targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
-				if (targetRuleAnalysisCandidate instanceof XtextParserRuleAnalysis) {
-					if (containingAssignmentAnalysisCandidate.targetIsAssignableFrom(targetRuleAnalysisCandidate)) {					// If target rule compatible
-						boolean isOkSource = false;
-						Iterable<@NonNull XtextParserRuleAnalysis> containerProductionRules = containingElementAnalysis.getProductionRules();
-						for (@NonNull XtextAbstractRuleAnalysis sourceRuleAnalysisCandidate : containerProductionRules) {
-							if (containingAssignmentAnalysisCandidate.sourceIsAssignableFrom(sourceRuleAnalysisCandidate)) {			// If source rule compatible
-								if (containingElementAnalysis.isCompatible(null)) {													// If transitively compatible
-									isOkSource = true;
-									break;
-								}
-							}
-						}
-						if (isOkSource) {
-							if (compatibleTargetRuleAnalysisCandidates == null) {
-								compatibleTargetRuleAnalysisCandidates = new ArrayList<>(4);
-							}
-							compatibleTargetRuleAnalysisCandidates.add((XtextParserRuleAnalysis)targetRuleAnalysisCandidate);
-						}
-					}
-				}
-			}
-			if (compatibleTargetRuleAnalysisCandidates != null) {
-				for (@NonNull XtextParserRuleAnalysis compatibleTargetRuleAnalysisCandidate : compatibleTargetRuleAnalysisCandidates) {
-					if (ruleAnalysis2assignmentAnalyses == null) {
-						return true;
-					}
-					List<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalyses = ruleAnalysis2assignmentAnalyses.get(compatibleTargetRuleAnalysisCandidate);
-					if (containingAssignmentAnalyses == null) {
-						containingAssignmentAnalyses = new ArrayList<>();
-						ruleAnalysis2assignmentAnalyses.put(compatibleTargetRuleAnalysisCandidate, containingAssignmentAnalyses);
-					}
-					containingAssignmentAnalyses.add(containingAssignmentAnalysisCandidate);
-				}
-			}
-		}
-		return false;
-	}
+	}*/
 
 	@Override
 	public @NonNull UserAbstractElementAnalysis getContainingElementAnalysis() {
@@ -114,19 +59,15 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 		return eContainingFeature;
 	}
 
-	public @NonNull Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> getParserRuleAnalysis2assignmentAnalyses() {
-		return ClassUtil.nonNullState(productionRuleAnalysis2containingAssignmentAnalyses);
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull XtextParserRuleAnalysis> getProductionRules() {
+/*	@Override
+	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getSerializationRules() {
 		assert productionRuleAnalysis2containingAssignmentAnalyses != null;
-		return productionRuleAnalysis2containingAssignmentAnalyses.keySet();
-	}
+		return productionRuleAnalysis2containingAssignmentAnalyses;
+	} */
 
 	@Override
 	protected boolean hasCompatibleContainmentHierarchy() {
-		return getParserRuleAnalysis2assignmentAnalyses().size() > 0;
+		return Iterables.size(getSerializationRules()) > 0;
 	}
 
 	@Override
@@ -134,7 +75,7 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 		StringBuilder s = new StringBuilder();
 		s.append(getName());
 		s.append(" <=>");
-		Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses2 = productionRuleAnalysis2containingAssignmentAnalyses;
+/*		Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses2 = productionRuleAnalysis2containingAssignmentAnalyses;
 		if (productionRuleAnalysis2containingAssignmentAnalyses2 != null) {
 			List<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = new ArrayList<>(productionRuleAnalysis2containingAssignmentAnalyses2.keySet());
 			Collections.sort(productionRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
@@ -152,7 +93,7 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 					if (!isFirst2) {
 						s.append(",");
 					}
-					s.append(containingAssignmentAnalysis./*getEStructuralFeature().*/getName());
+					s.append(containingAssignmentAnalysis./ *getEStructuralFeature().* /getName());
 					s.append(":");
 					boolean isFirst3 = true;
 					for (@NonNull XtextAbstractRuleAnalysis targetAnalysis : containingAssignmentAnalysis.getTargetRuleAnalyses()) {
@@ -170,7 +111,7 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 				s.append(" : ");
 				s.append(productionRuleAnalysis.getName());
 			}
-		}
+		} */
 		return s.toString();
 	}
 }

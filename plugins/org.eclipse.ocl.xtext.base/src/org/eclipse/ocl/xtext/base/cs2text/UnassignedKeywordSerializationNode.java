@@ -18,8 +18,8 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 {
 	protected final @NonNull String value;
 
-	public UnassignedKeywordSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Keyword keyword) {
-		super(grammarAnalysis, MultiplicativeCardinality.toEnum(keyword.getCardinality()));
+	public UnassignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Keyword keyword) {
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(keyword.getCardinality()));
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 

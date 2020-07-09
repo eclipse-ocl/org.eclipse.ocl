@@ -21,8 +21,8 @@ public class AlternativeKeywordsSerializationNode extends AbstractSerializationN
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeKeywordsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(grammarAnalysis, multiplicativeCardinality);
+	public AlternativeKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, multiplicativeCardinality);
 	}
 
 	public void addKeyword(@NonNull Keyword keyword) {
@@ -32,7 +32,7 @@ public class AlternativeKeywordsSerializationNode extends AbstractSerializationN
 
 	@Override
 	public @NonNull RequiredSlots getRequiredSlots() {
-		return NullRequiredSlots.INSTANCE;
+		return ruleAnalysis.getNullRequiredSlots();
 	}
 
 	@Override

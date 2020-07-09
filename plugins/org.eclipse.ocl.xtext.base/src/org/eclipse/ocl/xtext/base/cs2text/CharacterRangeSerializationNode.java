@@ -21,8 +21,8 @@ public class CharacterRangeSerializationNode extends SimpleSerializationNode
 	protected final @NonNull String right;
 
 
-	public CharacterRangeSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull CharacterRange characterRange) {
-		super(grammarAnalysis, MultiplicativeCardinality.toEnum(characterRange.getCardinality()));
+	public CharacterRangeSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CharacterRange characterRange) {
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(characterRange.getCardinality()));
 	//	this.characterRange = characterRange;
 		this.left = XtextGrammarUtil.getValue(XtextGrammarUtil.getLeft(characterRange));
 		this.right = XtextGrammarUtil.getValue(XtextGrammarUtil.getRight(characterRange));

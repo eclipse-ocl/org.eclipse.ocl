@@ -15,11 +15,11 @@ import org.eclipse.xtext.RuleCall;
 
 public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 {
-	protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+	protected final @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull RuleCall ruleCall,@NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
-		super(grammarAnalysis, MultiplicativeCardinality.toEnum(ruleCall.getCardinality()));
-		this.ruleAnalysis = ruleAnalysis;
+	public UnassignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull RuleCall ruleCall,@NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(ruleCall.getCardinality()));
+		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(ruleAnalysis.getRuleName());
+		s.append(calledRuleAnalysis.getRuleName());
 		appendCardinality(s, depth);
 	}
 }

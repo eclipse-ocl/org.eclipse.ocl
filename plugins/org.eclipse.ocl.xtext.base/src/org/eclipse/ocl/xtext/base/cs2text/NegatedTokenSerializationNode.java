@@ -17,14 +17,14 @@ public class NegatedTokenSerializationNode extends AbstractSerializationNode
 {
 	protected final @NonNull SerializationNode serializationNode;
 
-	public NegatedTokenSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull NegatedToken negatedToken, @NonNull SerializationNode serializationNode) {
-		super(grammarAnalysis, MultiplicativeCardinality.toEnum(negatedToken.getCardinality()));
+	public NegatedTokenSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull NegatedToken negatedToken, @NonNull SerializationNode serializationNode) {
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(negatedToken.getCardinality()));
 		this.serializationNode = serializationNode;
 	}
 
 	@Override
 	public @NonNull RequiredSlots getRequiredSlots() {
-		return NullRequiredSlots.INSTANCE;
+		return ruleAnalysis.getNullRequiredSlots();
 	}
 
 	@Override

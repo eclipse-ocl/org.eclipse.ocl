@@ -17,8 +17,8 @@ import org.eclipse.xtext.CompoundElement;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {
-	public CompositeSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
-		super(grammarAnalysis, MultiplicativeCardinality.toEnum(compoundElement.getCardinality()));
+	public CompositeSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(compoundElement.getCardinality()));
 //		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
 	}
@@ -28,9 +28,9 @@ public abstract class CompositeSerializationNode extends AbstractSerializationNo
 		//	No alternatives => a Conjunction
 		//
 		switch (outerDisjunctions.size()) {
-			case 0: return NullRequiredSlots.INSTANCE;
+			case 0: return ruleAnalysis.getNullRequiredSlots();
 			case 1: return outerDisjunctions.get(0);
-			default: return new RequiredSlotsDisjunction(this, outerDisjunctions);
+			default: return new RequiredSlotsDisjunction(ruleAnalysis, this, outerDisjunctions);
 		}
 	}
 }

@@ -20,15 +20,16 @@ import org.eclipse.xtext.linking.impl.LinkingHelper;
 
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
-	protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+	protected final @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis;
 //	@Inject
 	private @NonNull IValueConverterService valueConverterService;
 //	@Inject
 	private @NonNull LinkingHelper linkingHelper;
 
-	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
-		this.ruleAnalysis = ruleAnalysis;
+	public AssignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
+		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+		this.calledRuleAnalysis = calledRuleAnalysis;
+		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		this.valueConverterService = grammarAnalysis.getValueConverterService();
 		this.linkingHelper = grammarAnalysis.getLinkingHelper();
 	}
@@ -46,7 +47,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		///	final String lexerRule = linkingHelper.getRuleNameFrom();
 
 
-			String val = valueConverterService.toString(eGet, ruleAnalysis.getRuleName());
+			String val = valueConverterService.toString(eGet, calledRuleAnalysis.getRuleName());
 		/*	if ("URI".equals(ruleName)) {
 				if (semanticObject instanceof PathElementWithURICS) {
 					PathElementWithURICS pathElementWithURICS = (PathElementWithURICS)semanticObject;
@@ -66,7 +67,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append(ruleAnalysis.getRuleName());
+		s.append(calledRuleAnalysis.getRuleName());
 		appendCardinality(s, depth);
 	}
 }

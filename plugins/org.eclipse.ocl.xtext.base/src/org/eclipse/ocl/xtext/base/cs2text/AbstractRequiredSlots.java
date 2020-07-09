@@ -14,6 +14,12 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class AbstractRequiredSlots implements RequiredSlots
 {
+	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
+
+	protected AbstractRequiredSlots(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
+		this.ruleAnalysis = ruleAnalysis;
+	}
+
 	@Override
 	public boolean isNull() {
 		return false;

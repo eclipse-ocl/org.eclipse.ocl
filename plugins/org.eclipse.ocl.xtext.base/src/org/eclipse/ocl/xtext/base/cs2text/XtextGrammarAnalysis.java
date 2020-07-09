@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -66,7 +67,12 @@ public class XtextGrammarAnalysis
 	/**
 	 * The possible producing rule analyses for each EClassifier. This analysis excludes overrides.
 	 */
-	private @Nullable Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses = null;
+	private @Nullable Map<@NonNull EClassifier, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses = null;
+
+	/**
+	 * The prioritized serialization rules for each EClass.
+	 */
+	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> eClass2serializationRules = null;
 
 	protected final @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 	protected final @NonNull IValueConverterService valueConverterService;
@@ -110,8 +116,13 @@ public class XtextGrammarAnalysis
 		//
 		// Perform the inter rule analysis to determine the base rule closure.
 		for (@NonNull XtextParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
+			if ("EssentialOCL::BooleanLiteralExpCS".equals(parserRuleAnalysis.getName())) {
+				getClass();
+			}
 			parserRuleAnalysis.preSerialize();
 		}
+		assert eClassifier2ruleAnalyses != null;
+		this.eClass2serializationRules = analyzeSerializations(eClassifier2ruleAnalyses);
 	}
 
 	/**
@@ -225,6 +236,105 @@ public class XtextGrammarAnalysis
 	}
 
 	/**
+	 * Return true if the containing feature is compatible with one of its containing assignments.
+	 *
+	 * If non-null each compatible assignment is assign to its corresponding production rulein ruleAnalysis2assignmentAnalyses.
+	 *
+	 * Compatbility requires
+	 *
+	 * The produced rule for this element is assignable to the assignment target's rule.
+	 * The produced rule for the container of this element is assignable to the assignment source's rule.
+	 * Recursively the container of this element has a similarly compatoble assignement.
+	 */
+	//protected abstract @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible();
+/*	@Override
+	protected @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible() {
+		List<@NonNull RequiredSlotsConjunction> ruleAnalysis2assignmentAnalyses = new ArrayList<>();
+		Iterable<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalysisCandidates = grammarAnalysis.getAssignmentAnalyses(eContainingFeature);
+		for (@NonNull XtextAssignmentAnalysis containingAssignmentAnalysisCandidate : containingAssignmentAnalysisCandidates) {
+			List<@NonNull XtextParserRuleAnalysis> compatibleTargetRuleAnalysisCandidates = null;
+			EClass targetEClass = UserModelAnalysis.eClass(element);
+			Iterable<@NonNull RequiredSlotsConjunction> targetRuleAnalysisCandidates = grammarAnalysis.getProducingRuleAnalyses(targetEClass);
+			for (@NonNull RequiredSlotsConjunction targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
+			//	if (targetRuleAnalysisCandidate instanceof XtextParserRuleAnalysis) {
+					if (containingAssignmentAnalysisCandidate.targetIsAssignableFrom(targetRuleAnalysisCandidate)) {					// If target rule compatible
+						boolean isOkSource = false;
+						Iterable<@NonNull XtextParserRuleAnalysis> containerProductionRules = containingElementAnalysis.getSerializationRules();
+						for (@NonNull XtextAbstractRuleAnalysis sourceRuleAnalysisCandidate : containerProductionRules) {
+							if (containingAssignmentAnalysisCandidate.sourceIsAssignableFrom(sourceRuleAnalysisCandidate)) {			// If source rule compatible
+								if (containingElementAnalysis.isCompatible(null)) {													// If transitively compatible
+									isOkSource = true;
+									break;
+								}
+							}
+						}
+						if (isOkSource) {
+							if (compatibleTargetRuleAnalysisCandidates == null) {
+								compatibleTargetRuleAnalysisCandidates = new ArrayList<>(4);
+							}
+							compatibleTargetRuleAnalysisCandidates.add((XtextParserRuleAnalysis)targetRuleAnalysisCandidate);
+						}
+					}
+			//	}
+			}
+			if (compatibleTargetRuleAnalysisCandidates != null) {
+				for (@NonNull XtextParserRuleAnalysis compatibleTargetRuleAnalysisCandidate : compatibleTargetRuleAnalysisCandidates) {
+					if (ruleAnalysis2assignmentAnalyses == null) {
+						return true;
+					}
+					List<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalyses = ruleAnalysis2assignmentAnalyses.get(compatibleTargetRuleAnalysisCandidate);
+					if (containingAssignmentAnalyses == null) {
+						containingAssignmentAnalyses = new ArrayList<>();
+						ruleAnalysis2assignmentAnalyses.put(compatibleTargetRuleAnalysisCandidate, containingAssignmentAnalyses);
+					}
+					containingAssignmentAnalyses.add(containingAssignmentAnalysisCandidate);
+				}
+			}
+		}
+		return false;
+	} */
+	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> analyzeSerializations(
+			@NonNull Map<@NonNull EClassifier, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses) {
+		Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> eClass2serializationRules = new HashMap<>();
+		List<@NonNull EClassifier> eClasses = new ArrayList<>(eClassifier2ruleAnalyses.keySet());
+		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);		// XXX debug aid
+		for (@NonNull EClassifier eClassifier : eClasses) {
+			if (eClassifier instanceof EClass) {
+				EClass eRuleClass = (EClass)eClassifier;
+				List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eRuleClass);
+				assert ruleAnalyses != null;
+				List<@NonNull RequiredSlotsConjunction> serializationRules = new ArrayList<>();
+				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+					SerializationNode rootSerializationNode = ((XtextParserRuleAnalysis)ruleAnalysis).basicGetContents();
+					assert rootSerializationNode != null;
+					RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
+					for (int i = 0; i < requiredSlots.getConjunctionCount(); i++) {
+						RequiredSlotsConjunction serializationRule = requiredSlots.getConjunction(i);
+						EClass eActionClass = eRuleClass;
+						boolean allOk = true;
+						for (@NonNull SerializationNode serializationNode : serializationRule.getSerializedNodes()) {
+							if (serializationNode instanceof AssignedSerializationNode) {
+								EClass eFeatureClass = ((AssignedSerializationNode)serializationNode).getEFeatureScope();
+								if (eActionClass.isSuperTypeOf(eFeatureClass)) {
+									eActionClass = eFeatureClass;
+								}
+							}
+						}
+						if (eActionClass == eRuleClass) {
+							serializationRules.add(serializationRule);
+						}
+						else {
+							getClass();		// XXX debugging
+						}
+					}
+				}
+				eClass2serializationRules.put(eRuleClass, serializationRules);
+			}
+		}
+		return eClass2serializationRules;
+	}
+
+	/**
 	 *	Create a RuleAnalysis for each distinct name.
 	 */
 	protected @NonNull Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> createRuleAnalyses(
@@ -291,12 +401,12 @@ public class XtextGrammarAnalysis
 		return linkingHelper;
 	}
 
-	public @NonNull List<@NonNull XtextAbstractRuleAnalysis> getProducingRuleAnalyses(@NonNull EClassifier eClassifier) {
-		if ("PathElementWithURICS".equals(eClassifier.getName())) {
+	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getSerializationRules(@NonNull EClass eClass) {
+		if ("PathElementWithURICS".equals(eClass.getName())) {
 			getClass(); // XXX
 		}
-		assert eClassifier2ruleAnalyses != null;
-		return ClassUtil.nonNullState(eClassifier2ruleAnalyses.get(eClassifier));
+		assert eClass2serializationRules != null;
+		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass));
 	}
 
 	public @NonNull XtextAbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractElement abstractElement) {
@@ -369,7 +479,7 @@ public class XtextGrammarAnalysis
 						int conjunctionCount = requiredSlots.getConjunctionCount();
 						for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
 							RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
-							conjunction.preSerialize(parserRuleAnalysis, rootSerializationNode);
+							conjunction.getPreSerializer();		// XXX redundant/lazy
 							s.append("\n");
 							StringUtil.appendIndentation(s, 2, "\t");
 							s.append("|& ");
@@ -383,7 +493,7 @@ public class XtextGrammarAnalysis
 				}
 			}
 		}
-		s.append("\n\nUser EClass <=> Active Xtext production rule(s)");
+/*		s.append("\n\nUser EClass <=> Active Xtext production rule(s)");
 		Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses2 = eClassifier2ruleAnalyses;
 		assert eClassifier2ruleAnalyses2 != null;
 		List<@NonNull EClassifier> eClassifiers2 = new ArrayList<>(eClassifier2ruleAnalyses2.keySet());
@@ -398,6 +508,26 @@ public class XtextGrammarAnalysis
 			for (@NonNull XtextAbstractRuleAnalysis parserRuleAnalysis : parserRuleAnalyses2) {
 				s.append(" ");;
 				s.append(parserRuleAnalysis.getName());;
+			}
+		} */
+		s.append("\n\nUser EClass <=> Prioritized serialization rule(s)");
+		Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> eClass2serializationRules2 = eClass2serializationRules;
+		assert eClass2serializationRules2 != null;
+		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2serializationRules2.keySet());
+		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		for (@NonNull EClass eClass : eClasses) {
+			Iterable<@NonNull RequiredSlotsConjunction> serializationRules = eClass2serializationRules2.get(eClass);
+			assert serializationRules != null;
+			s.append("\n  ");;
+			s.append(eClass.getName());
+			s.append(" <=>");;
+			for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules) {
+				s.append(" ");;
+			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
+				s.append("\n");
+				StringUtil.appendIndentation(s, 1, "\t");
+				s.append("|& ");
+				serializationRule.toString(s, 1);
 			}
 		}
 		return s.toString();

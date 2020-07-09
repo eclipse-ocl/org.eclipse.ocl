@@ -26,7 +26,7 @@ import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull CrossReference crossReference;
-	protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+	protected final @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis;
 //	@Inject
 	private IValueConverterService valueConverterService;
 //	@Inject
@@ -34,11 +34,12 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 //	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
-	public AssignedCrossReferenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AssignedCrossReferenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
+		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
-		this.ruleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
+		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
+		this.calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
 		this.crossReference = crossReference;
 		this.crossReferenceSerializer = grammarAnalysis.getCrossReferenceSerializer();
 		this.valueConverterService = grammarAnalysis.getValueConverterService();

@@ -25,13 +25,15 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class RequiredSlotsConjunction extends AbstractRequiredSlots
 {
-	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
+//	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
 	private @Nullable List<@NonNull RequiredSlots> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
 
-	protected RequiredSlotsConjunction() {}
+	public RequiredSlotsConjunction(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
+		super(ruleAnalysis);
+	}
 
 	/*	public void accumulate(@NonNull AlternativesSerializationNode alternatives, @Nullable SerializationNode choice) {
 		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice2 = alternatives2choice;
@@ -87,12 +89,12 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		}
 
 
-		int quantum = 1;		// XXX
-		Integer oldQuantum = eFeature2quantum.get(eStructuralFeature);
-		int newQuantum = oldQuantum != null ? oldQuantum.intValue() : 0;
-		newQuantum += quantum;
+	//	int quantum = 1;		// XXX
+	//	Integer oldQuantum = eFeature2quantum.get(eStructuralFeature);
+	//	int newQuantum = oldQuantum != null ? oldQuantum.intValue() : 0;
+	//	newQuantum += quantum;
 		//	assert newQuantum == 1;
-		eFeature2quantum.put(eStructuralFeature, newQuantum);
+	//	eFeature2quantum.put(eStructuralFeature, newQuantum);
 
 
 
@@ -104,7 +106,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 
 	public Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element,
 			@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
-		assert preSerializer != null;
+		PreSerializer preSerializer = getPreSerializer();
 		return preSerializer.computeActualCardinalities(element, eFeature2size);
 	}
 
@@ -123,7 +125,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 				MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
 				assert multiplicativeCardinality != null;
 				EClass eFeatureScope = XtextGrammarUtil.getEContainingClass(eStructuralFeature);		// XXX do we need scope ??
-				conjunction.add(new SimpleRequiredSlot(eFeatureScope, eStructuralFeature, multiplicativeCardinality));
+				conjunction.add(new SimpleRequiredSlot(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality));
 			}
 		}
 		return conjunction;
@@ -155,13 +157,22 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return eFeature2multiplicativeCardinality.keySet();
 	}
 
+	public @NonNull String getName() {
+		return "FIXME";		// XXX
+	}
+
 	public @NonNull PreSerializer getPreSerializer() {
+		if (preSerializer == null) {
+			PreSerializer preSerializer2 = new PreSerializer(ruleAnalysis, this, ruleAnalysis.getRootSerializationNode());
+			this.preSerializer = preSerializer2;
+			preSerializer2.preSerialize();
+		}
 		assert preSerializer != null;
 		return preSerializer;
 	}
 
 	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
-		assert preSerializer != null;
+		PreSerializer preSerializer = getPreSerializer();
 		return preSerializer.getSerializedNodes();
 	}
 
@@ -169,11 +180,13 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return getConjunction();
 	}
 
-	public void preSerialize(@NonNull XtextParserRuleAnalysis xtextParserRuleAnalysis, @NonNull SerializationNode rootSerializationNode) {
-		PreSerializer preSerializer2 = new PreSerializer(xtextParserRuleAnalysis, this, rootSerializationNode);
+/*	public void preSerialize(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
+		assert ruleAnalysis == this.ruleAnalysis;
+		assert rootSerializationNode == ruleAnalysis.getRootSerializationNode();
+		PreSerializer preSerializer2 = new PreSerializer(ruleAnalysis, this, rootSerializationNode);
 		this.preSerializer = preSerializer2;
 		preSerializer2.preSerialize();
-	}
+	} */
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
 		assert this.alternatives2choice == null;

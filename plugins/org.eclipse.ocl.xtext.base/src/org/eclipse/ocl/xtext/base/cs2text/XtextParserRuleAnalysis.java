@@ -45,7 +45,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 {
 	public static class XtextTermsSwitch extends XtextSwitch<@NonNull SerializationNode>
 	{
-		protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
+		protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 
 		/**
 		 * The overall (multi-)grammar analysis.
@@ -56,10 +56,10 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 
 //		private final @NonNull Map<@NonNull EObject, @NonNull AbstractElement> userElement2element;
 
-		public XtextTermsSwitch(@NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+		public XtextTermsSwitch(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
 			this.ruleAnalysis = ruleAnalysis;
 			this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
-			this.nullSerializationNode = new NullSerializationNode(grammarAnalysis);
+			this.nullSerializationNode = new NullSerializationNode(ruleAnalysis);
 		//	this.feature2assignmentAnalyses = new HashMap<>();
 		//	this.userElement2element = new HashMap<>();
 		}
@@ -101,7 +101,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(action);
 				EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 				EClass eFeatureScope = (EClass) XtextGrammarUtil.getEClassifierScope(action);
-				return new AssignedCurrentSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, MultiplicativeCardinality.toEnum(action.getCardinality()));
+				return new AssignedCurrentSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, MultiplicativeCardinality.toEnum(action.getCardinality()));
 
 			}
 			return nullSerializationNode;
@@ -120,7 +120,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				boolean doSwitchNeeded = true;
 				if (element instanceof Keyword) {
 					if (alternativeKeywordsSerializationNode == null) {
-						alternativeKeywordsSerializationNode = new AlternativeKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality);
+						alternativeKeywordsSerializationNode = new AlternativeKeywordsSerializationNode(ruleAnalysis, multiplicativeCardinality);
 						serializationNodes.add(alternativeKeywordsSerializationNode);
 					}
 					alternativeKeywordsSerializationNode.addKeyword((Keyword)element);
@@ -139,7 +139,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 						AlternativeAssignedKeywordsSerializationNode serializationNode = eFeature2keywordsSerializationNode.get(eFeature);
 						if (serializationNode == null) {
 							EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
-							serializationNode = new AlternativeAssignedKeywordsSerializationNode(grammarAnalysis, eContainingClass, eFeature, multiplicativeCardinality);
+							serializationNode = new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eContainingClass, eFeature, multiplicativeCardinality);
 							eFeature2keywordsSerializationNode.put(eFeature, serializationNode);
 							serializationNodes.add(serializationNode);
 						}
@@ -154,7 +154,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 						AlternativeAssignedRuleCallsSerializationNode serializationNode = eFeature2ruleCallSerializationNode.get(eFeature);
 						if (serializationNode == null) {
 							EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(ruleCall);
-							serializationNode = new AlternativeAssignedRuleCallsSerializationNode(grammarAnalysis, eContainingClass, eFeature, multiplicativeCardinality);
+							serializationNode = new AlternativeAssignedRuleCallsSerializationNode(ruleAnalysis, eContainingClass, eFeature, multiplicativeCardinality);
 							eFeature2ruleCallSerializationNode.put(eFeature, serializationNode);
 							serializationNodes.add(serializationNode);
 						}
@@ -220,7 +220,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 					}
 				}
 			}
-			return new AlternativesSerializationNode(grammarAnalysis, alternatives, serializationNodes);
+			return new AlternativesSerializationNode(ruleAnalysis, alternatives, serializationNodes);
 		}
 
 		@Override
@@ -233,10 +233,10 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			AbstractElement terminal = XtextGrammarUtil.getTerminal(assignment);
 			if (terminal instanceof RuleCall) {
 				XtextAbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)terminal));
-				return new AssignedRuleCallSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, ruleAnalysis2);
+				return new AssignedRuleCallSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, ruleAnalysis2);
 			}
 			else if (terminal instanceof Keyword) {
-				return new AssignedKeywordSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (Keyword)terminal);
+				return new AssignedKeywordSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (Keyword)terminal);
 			}
 			else if (terminal instanceof Alternatives) {
 				Alternatives alternatives = (Alternatives)terminal;
@@ -280,10 +280,10 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			}
 			else if (terminal instanceof CrossReference) {
 			//	EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
-				RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal((CrossReference)terminal);
-				AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
-				XtextAbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
-				return new AssignedCrossReferenceSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (CrossReference)terminal, calledRuleAnalysis);
+			//	RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal((CrossReference)terminal);
+			//	AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
+			//	XtextAbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
+				return new AssignedCrossReferenceSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (CrossReference)terminal);
 			}
 			else {
 				throw new UnsupportedOperationException("Unsupported Assignment terminal '" + terminal.eClass().getName() + "'");
@@ -294,7 +294,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		@Override
 		public @NonNull SerializationNode caseCharacterRange(CharacterRange characterRange) {
 			assert characterRange != null;
-			return new CharacterRangeSerializationNode(grammarAnalysis, characterRange);
+			return new CharacterRangeSerializationNode(ruleAnalysis, characterRange);
 		}
 
 	/*	@Override
@@ -312,26 +312,26 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 					serializationNodes.add(serializationNode);
 				}
 			}
-			return new SequenceSerializationNode(grammarAnalysis, group, serializationNodes);
+			return new SequenceSerializationNode(ruleAnalysis, group, serializationNodes);
 		}
 
 		@Override
 		public @NonNull SerializationNode caseKeyword(Keyword keyword) {
 			assert keyword != null;
-			return new UnassignedKeywordSerializationNode(grammarAnalysis, keyword);
+			return new UnassignedKeywordSerializationNode(ruleAnalysis, keyword);
 		}
 
 		@Override
 		public @NonNull SerializationNode caseNegatedToken(NegatedToken negatedToken) {
 			assert negatedToken != null;
-			return new NegatedTokenSerializationNode(grammarAnalysis, negatedToken, doSwitch(negatedToken.getTerminal()));
+			return new NegatedTokenSerializationNode(ruleAnalysis, negatedToken, doSwitch(negatedToken.getTerminal()));
 		}
 
 		@Override
 		public @NonNull SerializationNode caseRuleCall(RuleCall ruleCall) {
 			assert ruleCall != null;
 			assert !(ruleCall.eContainer() instanceof Assignment);
-			return new UnassignedRuleCallSerializationNode(grammarAnalysis, ruleCall, grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule(ruleCall)));
+			return new UnassignedRuleCallSerializationNode(ruleAnalysis, ruleCall, grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule(ruleCall)));
 		}
 
 /*		@Override
@@ -342,13 +342,13 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		@Override
 		public @NonNull SerializationNode caseUntilToken(UntilToken untilToken) {
 			assert untilToken != null;
-			return new UntilTokenSerializationNode(grammarAnalysis, untilToken);
+			return new UntilTokenSerializationNode(ruleAnalysis, untilToken);
 		}
 
 		@Override
 		public @NonNull SerializationNode caseWildcard(Wildcard wildcard) {
 			assert wildcard != null;
-			return new WildcardSerializationNode(grammarAnalysis, wildcard);
+			return new WildcardSerializationNode(ruleAnalysis, wildcard);
 		}
 
 		public @NonNull SerializationNode correlate() {
@@ -400,6 +400,8 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull XtextAssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable SerializationNode serializationNode = null;
+	private @Nullable NullRequiredSlots nullRequiredSlots = null;
+	private @Nullable RequiredSlotsConjunction nullConjunction = null;
 
 	public XtextParserRuleAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule) {
 		super(grammarAnalysis, parserRule);
@@ -423,8 +425,30 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return eFeature2assignmentAnalyses;
 	}
 
+	public @NonNull RequiredSlotsConjunction getNullConjunction() {
+		if (nullConjunction == null) {
+			nullConjunction = new RequiredSlotsConjunction(this);
+		}
+		assert nullConjunction != null;
+		return nullConjunction;
+	}
+
+	public @NonNull NullRequiredSlots getNullRequiredSlots() {
+		if (nullRequiredSlots == null) {
+			nullRequiredSlots = new NullRequiredSlots(this);
+		}
+		assert nullRequiredSlots != null;
+		return nullRequiredSlots;
+	}
+
+
 	public @NonNull ParserRule getParserRule() {
 		return (ParserRule) abstractRule;
+	}
+
+	public @NonNull SerializationNode getRootSerializationNode() {
+		assert serializationNode != null;
+		return serializationNode;
 	}
 
 	/**
@@ -512,11 +536,6 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return isFirstResultType((AbstractElement)eContainer);
 	}
 
-	public @Nullable Serializer createSerializer(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
-		assert serializationNode != null;
-		return serializationNode.createSerializer(modelAnalysis, element);
-	}
-
 	public void preSerialize() {
 		if ("EssentialOCL::CollectionPatternCS".equals(name)) {
 			getClass();		// XXX
@@ -527,7 +546,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		int conjunctionCount = requiredSlots.getConjunctionCount();
 		for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
 			RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
-			conjunction.preSerialize(this, serializationNode2);
+			conjunction.getPreSerializer();		// XXX redundant/lazy
 		}
 	}
 

@@ -23,8 +23,8 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 	}
 
 	public void addKeyword(@NonNull Keyword keyword) {

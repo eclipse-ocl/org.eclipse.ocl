@@ -50,7 +50,7 @@ public interface RequiredSlots
 
 	void toString(@NonNull StringBuilder s, int i);
 
-	static final @NonNull RequiredSlotsConjunction EMPTY_CONJUNCTION = new RequiredSlotsConjunction();
+//	static final @NonNull RequiredSlotsConjunction EMPTY_CONJUNCTION = new RequiredSlotsConjunction();
 	static final @NonNull List<@NonNull RequiredSlots> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
 	static final @NonNull List<@NonNull RequiredSlotsConjunction> EMPTY_DISJUNCTION_TERMS = Collections.emptyList();
 }

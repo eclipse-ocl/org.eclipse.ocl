@@ -16,8 +16,8 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
-	public AssignedCurrentSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AssignedCurrentSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
 	}
 
 	@Override

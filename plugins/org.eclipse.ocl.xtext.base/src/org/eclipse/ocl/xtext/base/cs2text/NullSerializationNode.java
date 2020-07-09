@@ -18,8 +18,8 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class NullSerializationNode extends SimpleSerializationNode
 {
-	public NullSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis) {
-		super(grammarAnalysis, MultiplicativeCardinality.ZERO_OR_MORE);
+	public NullSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
+		super(ruleAnalysis, MultiplicativeCardinality.ZERO_OR_MORE);
 	}
 
 	@Override

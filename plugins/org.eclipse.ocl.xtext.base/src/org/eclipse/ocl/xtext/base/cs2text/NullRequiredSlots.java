@@ -18,9 +18,9 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class NullRequiredSlots extends AbstractRequiredSlots
 {
-	public static final @NonNull NullRequiredSlots INSTANCE = new NullRequiredSlots();
-
-	private NullRequiredSlots() {}
+	public NullRequiredSlots(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
+		super(ruleAnalysis);
+	}
 
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
@@ -30,7 +30,7 @@ public class NullRequiredSlots extends AbstractRequiredSlots
 	@Override
 	public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
 		assert conjunctionIndex == 0;
-		return EMPTY_CONJUNCTION;
+		return ruleAnalysis.getNullConjunction();
 	}
 
 	@Override

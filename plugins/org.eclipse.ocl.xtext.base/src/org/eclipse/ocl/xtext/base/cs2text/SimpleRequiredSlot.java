@@ -23,7 +23,8 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public SimpleRequiredSlot(@NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public SimpleRequiredSlot(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis);
 		this.eFeatureScope = eFeatureScope;
 		this.eStructuralFeature = eStructuralFeature;
 		this.multiplicativeCardinality = multiplicativeCardinality;
@@ -37,7 +38,7 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	@Override
 	public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
 		assert conjunctionIndex == 0;
-		RequiredSlotsConjunction requiredSlotsConjunction = new RequiredSlotsConjunction();
+		RequiredSlotsConjunction requiredSlotsConjunction = new RequiredSlotsConjunction(ruleAnalysis);
 		requiredSlotsConjunction.accumulate(this, MultiplicativeCardinality.ONE);
 		requiredSlotsConjunction.getConjunction();		// XXX eager
 		return requiredSlotsConjunction;

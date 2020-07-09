@@ -26,8 +26,8 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	protected final @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes;
 	private @Nullable RequiredSlots requiredSlots = null;
 
-	public AlternativesSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
-		super(grammarAnalysis, alternatives);
+	public AlternativesSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
+		super(ruleAnalysis, alternatives);
 		this.alternatives = alternatives;
 		this.alternativeSerializationNodes = alternativeSerializationNodes;
 	}
@@ -49,7 +49,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 		//	String cardinality2 = cardinality;
 			if (multiplicativeCardinality.mayBeMany()) {
 				if (multiplicativeCardinality.mayBeZero()) {	// (A|B)* => A* | B*
-					RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+					RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
 					for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
 						RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
 						if (!innerRequiredSlots.isNull()) {
@@ -69,7 +69,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 					for (@NonNull SerializationNode alternativeSerializationNode1 : alternativeSerializationNodes) {
 						RequiredSlots innerRequiredSlots1 = alternativeSerializationNode1.getRequiredSlots();
 						if (!innerRequiredSlots1.isNull()) {
-							RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+							RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
 							for (int i = 0; i < innerRequiredSlots1.getConjunctionCount(); i++) {
 							//	RequiredSlotsConjunction innerConjunction1 = innerRequiredSlots1.getConjunction(i);
 								for (@NonNull SerializationNode alternativeSerializationNode2 : alternativeSerializationNodes) {
@@ -93,7 +93,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 			}
 			else {
 				if (multiplicativeCardinality.mayBeZero()) {	// (A|B)? => A|B|epsilon
-					emptyConjunction = new RequiredSlotsConjunction();
+					emptyConjunction = new RequiredSlotsConjunction(ruleAnalysis);
 				//	emptyConjunction.accumulate(this, null);
 					Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = new HashMap<>();
 					alternatives2choice.put(this, null);
@@ -105,7 +105,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 					RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
 					if (innerRequiredSlots.isNull()) {
 						if (emptyConjunction == null) {
-							emptyConjunction = new RequiredSlotsConjunction();
+							emptyConjunction = new RequiredSlotsConjunction(ruleAnalysis);
 						//	emptyConjunction.accumulate(this, null);
 							Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = new HashMap<>();
 							alternatives2choice.put(this, null);
@@ -114,7 +114,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 						}
 					}
 					else {
-						RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+						RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
 						for (int i = 0; i < innerRequiredSlots.getConjunctionCount(); i++) {
 						//	RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
 							RequiredSlotsConjunction innerConjunction = innerRequiredSlots.getConjunction(i);

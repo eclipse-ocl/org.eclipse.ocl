@@ -26,8 +26,8 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable RequiredSlots requiredSlots = null;
 
-	public SequenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Group group, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(grammarAnalysis, group);
+	public SequenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Group group, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+		super(ruleAnalysis, group);
 		this.group = group;
 		this.serializationNodes = groupSerializationNodes;
 	}
@@ -88,7 +88,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 
 	private @NonNull RequiredSlotsConjunction permute(int @NonNull [] nodesIndexes, int @NonNull [] nodesSizes) {
 		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerAlternatives2choice = null;
-		RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
+		RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
 	//	boolean hasAlternatives = false;
 		for (int nodesIndex = 0; nodesIndex < nodesIndexes.length; nodesIndex++) {
 			SerializationNode serializationNode = serializationNodes.get(nodesIndex);
