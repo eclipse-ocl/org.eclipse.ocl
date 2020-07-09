@@ -127,9 +127,16 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 	@Inject
 	private IValueConverterService valueConverter;
 
+	public BaseCrossReferenceSerializer() {
+		super();
+	}
+
 	@Override
 	protected String getCrossReferenceNameFromScope(EObject semanticObject,
 			CrossReference crossref, EObject target, IScope scope, Acceptor errors) {
+		if (semanticObject instanceof PathElementWithURICS) {
+			getClass();			// XXX
+		}
 		AcceptorHelper helper = new AcceptorHelper(semanticObject, crossref, target, scope, errors);
 		boolean foundOne = false;
 		final String ruleName = linkingHelper.getRuleNameFrom(crossref);

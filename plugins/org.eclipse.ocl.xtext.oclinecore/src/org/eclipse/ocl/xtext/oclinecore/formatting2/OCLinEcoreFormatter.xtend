@@ -28,6 +28,8 @@ import org.eclipse.xtext.conversion.IValueConverterService
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
 import org.eclipse.xtext.linking.impl.LinkingHelper
+import org.eclipse.jdt.annotation.NonNull
+import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer
 
 class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	
@@ -38,11 +40,14 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 
 	@Inject
 	private LinkingHelper linkingHelper;
+	
+	@Inject
+	private ICrossReferenceSerializer crossReferenceSerializer;
 
 	def dispatch void format(TopLevelCS topLevelCS, extension IFormattableDocument document) {
 		val IEObjectRegion regionForEObject = topLevelCS.regionForEObject;
 		val EObject grammarElement = regionForEObject.grammarElement;
-		var XtextGrammarAnalysis grammarAnalysis = new XtextGrammarAnalysis(grammarElement.eResource() as AbstractGrammarResource, valueConverterService, linkingHelper);
+		var XtextGrammarAnalysis grammarAnalysis = new XtextGrammarAnalysis(grammarElement.eResource() as AbstractGrammarResource, crossReferenceSerializer, valueConverterService, linkingHelper);
 		grammarAnalysis.analyze();
 		var String s1 = grammarAnalysis.toString();
 		System.out.println(s1);

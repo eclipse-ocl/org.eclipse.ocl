@@ -54,7 +54,7 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 			getClass();				// XXX
 		}
 		Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> ruleAnalysis2assignmentAnalyses = new HashMap<>();
-		isCompatible(ruleAnalysis2assignmentAnalyses);
+		isCompatible(ruleAnalysis2assignmentAnalyses);  // XXX terrible name for a function with side effects
 		return ruleAnalysis2assignmentAnalyses;
 	}
 

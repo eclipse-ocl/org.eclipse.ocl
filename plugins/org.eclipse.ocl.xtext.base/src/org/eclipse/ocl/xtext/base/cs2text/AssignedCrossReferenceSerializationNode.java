@@ -11,26 +11,36 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.linking.impl.LinkingHelper;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 
 public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSerializationNode
 {
-//	protected final @NonNull CrossReference crossReference;
+	protected final @NonNull CrossReference crossReference;
 	protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
 //	@Inject
 	private IValueConverterService valueConverterService;
 //	@Inject
 	private LinkingHelper linkingHelper;
+//	@Inject
+	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
-	public AssignedCrossReferenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
+	public AssignedCrossReferenceSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
 		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
-		this.ruleAnalysis = ruleAnalysis;
-	//	this.crossReference = crossReference;
-	//	this.ruleCall = (RuleCall)XtextGrammarUtil.getTerminal(crossReference);
+		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
+		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
+		this.ruleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
+		this.crossReference = crossReference;
+		this.crossReferenceSerializer = grammarAnalysis.getCrossReferenceSerializer();
 		this.valueConverterService = grammarAnalysis.getValueConverterService();
 		this.linkingHelper = grammarAnalysis.getLinkingHelper();
 		assert !((EReference)eStructuralFeature).isContainment();
@@ -38,11 +48,23 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		Object eGet = serializer.consumeNext(eStructuralFeature);
+		EObject eGet = (EObject)serializer.consumeNext(eStructuralFeature);
 		///	final String lexerRule = linkingHelper.getRuleNameFrom();
 
+		EObject context = serializer.getElement();
+		EObject target = eGet;
+		INode node = null;
+	/*	ISerializationDiagnostic.Acceptor errorAcceptor = new ISerializationDiagnostic.Acceptor()
+		{
+			@Override
+			public void accept(ISerializationDiagnostic diagnostic) {
+				// TODO Auto-generated method stub
 
-		String val = String.valueOf(eGet); //valueConverterService.toString(eGet, ruleAnalysis.getRuleName());
+			}
+		}; */
+		String val = crossReferenceSerializer.serializeCrossRef(context, crossReference, target, node, null);
+
+	//	String val = valueConverterService.toString(eGet, ruleAnalysis.getRuleName());
 		/*	if ("URI".equals(ruleName)) {
 				if (semanticObject instanceof PathElementWithURICS) {
 					PathElementWithURICS pathElementWithURICS = (PathElementWithURICS)semanticObject;

@@ -36,6 +36,7 @@ import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.linking.impl.LinkingHelper;
+import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 
 /**
  * An XtextGrammarAnalysis provides the extended analysis of an Xtext (multi-)grammar.
@@ -67,11 +68,14 @@ public class XtextGrammarAnalysis
 	 */
 	private @Nullable Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses = null;
 
+	protected final @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 	protected final @NonNull IValueConverterService valueConverterService;
 	protected final @NonNull LinkingHelper linkingHelper;
 
-	public XtextGrammarAnalysis(@NonNull AbstractGrammarResource grammarResource, IValueConverterService valueConverterService, LinkingHelper linkingHelper) {
+	public XtextGrammarAnalysis(@NonNull AbstractGrammarResource grammarResource, @NonNull ICrossReferenceSerializer crossReferenceSerializer, IValueConverterService valueConverterService, LinkingHelper linkingHelper) {
 		this.grammarResource = grammarResource;
+		assert crossReferenceSerializer != null;
+		this.crossReferenceSerializer = crossReferenceSerializer;
 		assert valueConverterService != null;
 		this.valueConverterService = valueConverterService;
 		assert linkingHelper != null;
@@ -174,6 +178,9 @@ public class XtextGrammarAnalysis
 			@NonNull Map<@NonNull AbstractRule, @NonNull XtextAbstractRuleAnalysis> rule2ruleAnalysis) {
 		Map<@NonNull EClassifier, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses = new HashMap<>();
 		for (@NonNull XtextAbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
+			if ("EssentialOCL::URIFirstPathElementCS".equals(abstractRuleAnalysis.getName())) {
+				getClass(); // XXX
+			}
 			for (@NonNull EClassifier eClassifier : abstractRuleAnalysis.getEClassifiers()) {
 				List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eClassifier);
 				if (ruleAnalyses == null) {
@@ -276,11 +283,18 @@ public class XtextGrammarAnalysis
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
 	}
 
+	public @NonNull ICrossReferenceSerializer getCrossReferenceSerializer() {
+		return crossReferenceSerializer;
+	}
+
 	public @NonNull LinkingHelper getLinkingHelper() {
 		return linkingHelper;
 	}
 
 	public @NonNull List<@NonNull XtextAbstractRuleAnalysis> getProducingRuleAnalyses(@NonNull EClassifier eClassifier) {
+		if ("PathElementWithURICS".equals(eClassifier.getName())) {
+			getClass(); // XXX
+		}
 		assert eClassifier2ruleAnalyses != null;
 		return ClassUtil.nonNullState(eClassifier2ruleAnalyses.get(eClassifier));
 	}

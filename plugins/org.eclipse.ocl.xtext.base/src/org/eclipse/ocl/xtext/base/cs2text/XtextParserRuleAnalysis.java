@@ -280,8 +280,10 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			}
 			else if (terminal instanceof CrossReference) {
 			//	EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
-				XtextAbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getTerminal((CrossReference)terminal));
-				return new AssignedCrossReferenceSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, ruleAnalysis2);
+				RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal((CrossReference)terminal);
+				AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
+				XtextAbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
+				return new AssignedCrossReferenceSerializationNode(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (CrossReference)terminal, calledRuleAnalysis);
 			}
 			else {
 				throw new UnsupportedOperationException("Unsupported Assignment terminal '" + terminal.eClass().getName() + "'");

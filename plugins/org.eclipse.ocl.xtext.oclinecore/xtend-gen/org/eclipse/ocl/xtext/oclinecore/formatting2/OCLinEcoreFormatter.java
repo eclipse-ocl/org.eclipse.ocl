@@ -39,6 +39,7 @@ import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion;
 import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegionsFinder;
 import org.eclipse.xtext.linking.impl.LinkingHelper;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
@@ -54,11 +55,14 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
   @Inject
   private LinkingHelper linkingHelper;
   
+  @Inject
+  private ICrossReferenceSerializer crossReferenceSerializer;
+  
   protected void _format(final TopLevelCS topLevelCS, @Extension final IFormattableDocument document) {
     final IEObjectRegion regionForEObject = this.textRegionExtensions.regionForEObject(topLevelCS);
     final EObject grammarElement = regionForEObject.getGrammarElement();
     Resource _eResource = grammarElement.eResource();
-    XtextGrammarAnalysis grammarAnalysis = new XtextGrammarAnalysis(((AbstractGrammarResource) _eResource), this.valueConverterService, this.linkingHelper);
+    XtextGrammarAnalysis grammarAnalysis = new XtextGrammarAnalysis(((AbstractGrammarResource) _eResource), this.crossReferenceSerializer, this.valueConverterService, this.linkingHelper);
     grammarAnalysis.analyze();
     String s1 = grammarAnalysis.toString();
     System.out.println(s1);

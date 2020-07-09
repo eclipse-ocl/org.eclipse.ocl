@@ -22,9 +22,9 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 {
 	protected final @NonNull XtextAbstractRuleAnalysis ruleAnalysis;
 //	@Inject
-	private IValueConverterService valueConverterService;
+	private @NonNull IValueConverterService valueConverterService;
 //	@Inject
-	private LinkingHelper linkingHelper;
+	private @NonNull LinkingHelper linkingHelper;
 
 	public AssignedRuleCallSerializationNode(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
 		super(grammarAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
