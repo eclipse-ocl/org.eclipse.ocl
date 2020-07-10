@@ -86,6 +86,10 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		return requiredSlots;
 	}
 
+	public @NonNull List<@NonNull SerializationNode> getSerializationNodes() {
+		return serializationNodes;
+	}
+
 	private @NonNull RequiredSlotsConjunction permute(int @NonNull [] nodesIndexes, int @NonNull [] nodesSizes) {
 		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerAlternatives2choice = null;
 		RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);

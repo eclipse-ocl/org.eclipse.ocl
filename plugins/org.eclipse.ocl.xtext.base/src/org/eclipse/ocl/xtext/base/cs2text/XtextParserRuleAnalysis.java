@@ -446,6 +446,10 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return (ParserRule) abstractRule;
 	}
 
+	public @NonNull EClass getReturnedEClass() {
+		return (EClass) XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(abstractRule));
+	}
+
 	public @NonNull SerializationNode getRootSerializationNode() {
 		assert serializationNode != null;
 		return serializationNode;
@@ -537,7 +541,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 	}
 
 	public void preSerialize() {
-		if ("EssentialOCL::CollectionPatternCS".equals(name)) {
+		if ("EssentialOCL::URIFirstPathElementCS".equals(name)) {
 			getClass();		// XXX
 		}
 		SerializationNode serializationNode2 = serializationNode;

@@ -30,6 +30,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	private @Nullable List<@NonNull RequiredSlots> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
+	private @Nullable EClass producedEClass = null;
 
 	public RequiredSlotsConjunction(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
 		super(ruleAnalysis);
@@ -150,6 +151,40 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
 		return Collections.singletonList(this);
+	}
+
+	public @NonNull EClass getProducedEClass() {
+		EClass producedEClass2 = producedEClass;
+		if (producedEClass2  == null) {
+			producedEClass2 = getProducedEClass(getSerializedNodes());
+			if (producedEClass2 == null) {
+				producedEClass2 = ruleAnalysis.getReturnedEClass();
+			}
+			producedEClass = producedEClass2;
+		}
+		return producedEClass2;
+	}
+
+	private @Nullable EClass getProducedEClass(@NonNull List<@NonNull SerializationNode> serializedNodes) {
+		EClass producedEClass = null;
+		for (@NonNull SerializationNode serializationNode : serializedNodes) {
+			EClass nestedEClass = null;
+			if (serializationNode instanceof AssignedSerializationNode) {
+				nestedEClass = ((AssignedSerializationNode)serializationNode).getEFeatureScope();
+			}
+			else if (serializationNode instanceof SequenceSerializationNode) {
+				nestedEClass = getProducedEClass(((SequenceSerializationNode)serializationNode).getSerializationNodes());
+			}
+			if (nestedEClass != null) {
+				if ((producedEClass == null) || producedEClass.isSuperTypeOf(nestedEClass)) {
+					producedEClass = nestedEClass;
+				}
+				else {
+					assert nestedEClass.isSuperTypeOf(producedEClass);
+				}
+			}
+		}
+		return producedEClass;
 	}
 
 	@Override

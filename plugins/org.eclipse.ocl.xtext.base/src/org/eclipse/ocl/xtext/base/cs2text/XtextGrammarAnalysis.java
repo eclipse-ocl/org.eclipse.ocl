@@ -116,7 +116,7 @@ public class XtextGrammarAnalysis
 		//
 		// Perform the inter rule analysis to determine the base rule closure.
 		for (@NonNull XtextParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
-			if ("EssentialOCL::BooleanLiteralExpCS".equals(parserRuleAnalysis.getName())) {
+			if ("EssentialOCL::URIFirstPathElementCS".equals(parserRuleAnalysis.getName())) {
 				getClass();
 			}
 			parserRuleAnalysis.preSerialize();
@@ -301,25 +301,19 @@ public class XtextGrammarAnalysis
 		for (@NonNull EClassifier eClassifier : eClasses) {
 			if (eClassifier instanceof EClass) {
 				EClass eRuleClass = (EClass)eClassifier;
+				if ("PathElementWithURICS".equals(eRuleClass.getName())) {
+					getClass();
+				}
 				List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eRuleClass);
 				assert ruleAnalyses != null;
 				List<@NonNull RequiredSlotsConjunction> serializationRules = new ArrayList<>();
 				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-					SerializationNode rootSerializationNode = ((XtextParserRuleAnalysis)ruleAnalysis).basicGetContents();
-					assert rootSerializationNode != null;
+					SerializationNode rootSerializationNode = ((XtextParserRuleAnalysis)ruleAnalysis).getRootSerializationNode();
+				//	assert rootSerializationNode != null;
 					RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
 					for (int i = 0; i < requiredSlots.getConjunctionCount(); i++) {
 						RequiredSlotsConjunction serializationRule = requiredSlots.getConjunction(i);
-						EClass eActionClass = eRuleClass;
-						boolean allOk = true;
-						for (@NonNull SerializationNode serializationNode : serializationRule.getSerializedNodes()) {
-							if (serializationNode instanceof AssignedSerializationNode) {
-								EClass eFeatureClass = ((AssignedSerializationNode)serializationNode).getEFeatureScope();
-								if (eActionClass.isSuperTypeOf(eFeatureClass)) {
-									eActionClass = eFeatureClass;
-								}
-							}
-						}
+						EClass eActionClass = serializationRule.getProducedEClass();
 						if (eActionClass == eRuleClass) {
 							serializationRules.add(serializationRule);
 						}
