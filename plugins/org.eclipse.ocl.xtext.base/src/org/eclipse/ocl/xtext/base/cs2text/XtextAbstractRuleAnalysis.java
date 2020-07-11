@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.xtext.AbstractRule;
-import org.eclipse.xtext.TypeRef;
 
 /**
  * An XtextAbstractRuleAnalysis provides the extended analysis of an Xtext AbstractRule
@@ -81,16 +80,6 @@ public class XtextAbstractRuleAnalysis implements Nameable
 		}
 		if (!baseRuleAnalyses2.contains(baseRuleAnalysis)) {
 			baseRuleAnalyses2.add(baseRuleAnalysis);
-		}
-	}
-
-	protected void addProducedTypeRef(@NonNull TypeRef type) {
-		EClassifier eClassifier = XtextGrammarUtil.getClassifier(type);
-		if (!this.eClassifiers.contains(eClassifier)) {
-		//	if ("AttributeCS".equals(eClassifier.getName())) {
-		//		getClass();
-		//	}
-			this.eClassifiers.add(eClassifier);
 		}
 	}
 

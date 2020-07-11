@@ -14,14 +14,18 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public interface SerializationNode
 {
-//	@Nullable Serializer createSerializer(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element);
+	/**
+	 * Ceate a shallow copy of this node with a changed multiplicativeCardinality.
+	 */
+	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
 	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
+	@NonNull XtextParserRuleAnalysis getRuleAnalysis();
 	/**
 	 * Return the required slots in disjunctive normal form.
 	 */
 	@NonNull RequiredSlots getRequiredSlots();
 	boolean isNull();
-	void preSerialize(@NonNull PreSerializer preSerializer);
+	void preSerialize(@NonNull PreSerializer preSerialize);
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 	void toString(@NonNull StringBuilder s, int depth);
 }

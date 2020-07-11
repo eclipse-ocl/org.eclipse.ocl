@@ -26,10 +26,15 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable RequiredSlots requiredSlots = null;
 
-	public SequenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Group group, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(ruleAnalysis, group);
+	public SequenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Group group, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+		super(ruleAnalysis, multiplicativeCardinality);
 		this.group = group;
 		this.serializationNodes = groupSerializationNodes;
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return new SequenceSerializationNode(ruleAnalysis, group, multiplicativeCardinality, serializationNodes);
 	}
 
 	/**
@@ -90,10 +95,12 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		return serializationNodes;
 	}
 
+	/**
+	 * Return a conjunction with alternatives choices for the nodeIndexes permutation of all possible nodesSizes permutations.
+	 */
 	private @NonNull RequiredSlotsConjunction permute(int @NonNull [] nodesIndexes, int @NonNull [] nodesSizes) {
 		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerAlternatives2choice = null;
 		RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
-	//	boolean hasAlternatives = false;
 		for (int nodesIndex = 0; nodesIndex < nodesIndexes.length; nodesIndex++) {
 			SerializationNode serializationNode = serializationNodes.get(nodesIndex);
 		//	if (serializationNode instanceof AlternativesSerializationNode) {
@@ -101,18 +108,18 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		//	}
 			RequiredSlots requiredSlots = serializationNode.getRequiredSlots();
 			if (!requiredSlots.isNull()) {
-				int subSize = nodesSizes[nodesIndex];
+			//	int subSize = nodesSizes[nodesIndex];
 				int subIndex = nodesIndexes[nodesIndex];
 				RequiredSlotsConjunction innerConjunction = requiredSlots.getConjunction(subIndex);
-				if (subSize > 1) {
+			//	if (subSize > 0) {
 					Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> innerAlternatives2choice = innerConjunction.getAlternativesChoices();
 					if (innerAlternatives2choice != null) {
 						if (outerAlternatives2choice == null) {
 							outerAlternatives2choice = new HashMap<>();
 						}
-						outerAlternatives2choice.putAll(outerAlternatives2choice);
+						outerAlternatives2choice.putAll(innerAlternatives2choice);
 					}
-				}
+			//	}
 			//	for (@NonNull SimpleRequiredSlot innerSlot : innerConjunction.getConjunction()) {
 			//		outerConjunction.accumulate(innerSlot, cardinality);
 			//	}
@@ -124,7 +131,6 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		if (outerAlternatives2choice != null) {
 			outerConjunction.setAlternatives(outerAlternatives2choice);
 		}
-	//	assert hasAlternatives == (alternatives2choice != null);
 		return outerConjunction;
 	}
 

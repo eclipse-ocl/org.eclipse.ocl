@@ -32,10 +32,17 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public class PreSerializer
 {
-	protected final @NonNull XtextParserRuleAnalysis parserRuleAnalysis;
+	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull RequiredSlotsConjunction requiredSlotsConjunction;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	protected final @Nullable SerializationNode parentSerializedNode;
+
+	/**
+	 * The chosen alternative for each Alternative AbstractElement in this permutation of a ParserRule.
+	 * - null is the nothing choice of an optional alternative
+	 * - an alternative element is a chosen alternative
+	 * - the alternative is the sequence of all alternative elements for a many cardinality.
+	 */
 	private final @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice;
 	private final @NonNull Map<@NonNull SerializationNode, @Nullable SerializationNode> node2parent;
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
@@ -44,8 +51,8 @@ public class PreSerializer
 	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions = null;
 
-	public PreSerializer(@NonNull XtextParserRuleAnalysis parserRuleAnalysis, @NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull SerializationNode rootSerializationNode) {
-		this.parserRuleAnalysis = parserRuleAnalysis;
+	public PreSerializer(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull SerializationNode rootSerializationNode) {
+		this.ruleAnalysis = ruleAnalysis;
 		this.requiredSlotsConjunction = requiredSlotsConjunction;
 		this.rootSerializationNode = rootSerializationNode;
 		this.parentSerializedNode = null;
@@ -58,7 +65,7 @@ public class PreSerializer
 	}
 
 	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode, @NonNull List<@NonNull SerializationNode> serializationNodes) {
-		this.parserRuleAnalysis = preSerializer.parserRuleAnalysis;
+		this.ruleAnalysis = preSerializer.ruleAnalysis;
 		this.requiredSlotsConjunction = preSerializer.requiredSlotsConjunction;
 		this.rootSerializationNode = preSerializer.rootSerializationNode;
 		this.parentSerializedNode = parentSerializedNode;
@@ -179,7 +186,7 @@ public class PreSerializer
 	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
 		addChildNode(sequenceSerializationNode);
 		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
-		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.getRuleAnalysis(), sequenceSerializationNode.group, nestedSerializedNodes);
+		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.getRuleAnalysis(), sequenceSerializationNode.group, sequenceSerializationNode.getMultiplicativeCardinality(), nestedSerializedNodes);
 		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
 		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
 		return nestedPreSerializer;
@@ -204,6 +211,9 @@ public class PreSerializer
 	}
 
 	public void preSerialize() {
+		if ("OCLinEcore::AttributeCS".equals(ruleAnalysis.getName())) {
+			getClass();	// XXX debugging
+		}
 		//
 		//	Traverse the chosen serialization tree path to trigger addAssignedNode/addSerializedNode call-backs to determine the
 		//	cardinality variables and expressions to be solved to characterize the serialization.
@@ -276,7 +286,7 @@ public class PreSerializer
 	@Override
 	public @NonNull String toString() {
 		@NonNull StringBuilder s = new StringBuilder();
-		s.append(parserRuleAnalysis.getRuleName());
+		s.append(ruleAnalysis.getRuleName());
 		toString(s, 0);
 		return String.valueOf(s);
 	}

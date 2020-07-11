@@ -21,6 +21,11 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 //		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
 		s.append(XtextGrammarUtil.getName(eFeatureScope));

@@ -16,7 +16,12 @@ import org.eclipse.xtext.Wildcard;
 public class WildcardSerializationNode extends SimpleSerializationNode
 {
 	public WildcardSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Wildcard wildcard) {
-		super(ruleAnalysis, MultiplicativeCardinality.toEnum(wildcard.getCardinality()));
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(wildcard));
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

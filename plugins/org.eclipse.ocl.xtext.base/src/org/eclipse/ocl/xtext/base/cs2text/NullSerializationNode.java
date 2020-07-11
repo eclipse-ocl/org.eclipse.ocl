@@ -23,6 +23,11 @@ public class NullSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean isNull() {
 		return true;
 	}

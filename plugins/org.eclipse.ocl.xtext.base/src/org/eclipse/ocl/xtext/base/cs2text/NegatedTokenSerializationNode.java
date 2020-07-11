@@ -18,8 +18,13 @@ public class NegatedTokenSerializationNode extends AbstractSerializationNode
 	protected final @NonNull SerializationNode serializationNode;
 
 	public NegatedTokenSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull NegatedToken negatedToken, @NonNull SerializationNode serializationNode) {
-		super(ruleAnalysis, MultiplicativeCardinality.toEnum(negatedToken.getCardinality()));
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(negatedToken));
 		this.serializationNode = serializationNode;
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -22,10 +22,15 @@ public class CharacterRangeSerializationNode extends SimpleSerializationNode
 
 
 	public CharacterRangeSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CharacterRange characterRange) {
-		super(ruleAnalysis, MultiplicativeCardinality.toEnum(characterRange.getCardinality()));
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(characterRange));
 	//	this.characterRange = characterRange;
 		this.left = XtextGrammarUtil.getValue(XtextGrammarUtil.getLeft(characterRange));
 		this.right = XtextGrammarUtil.getValue(XtextGrammarUtil.getRight(characterRange));
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -13,12 +13,11 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.xtext.CompoundElement;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {
-	public CompositeSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
-		super(ruleAnalysis, MultiplicativeCardinality.toEnum(compoundElement.getCardinality()));
+	public CompositeSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, /*@NonNull CompoundElement compoundElement,*/ @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, multiplicativeCardinality);
 //		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
 	}

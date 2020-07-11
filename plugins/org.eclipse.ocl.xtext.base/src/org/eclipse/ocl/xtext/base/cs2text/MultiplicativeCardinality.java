@@ -11,7 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.xtext.AbstractElement;
 
 /**
  * MultiplicativeCardinality enacodes the alternative multiplicities in an Xtext grammar as an enumeration value.
@@ -23,24 +23,25 @@ public enum MultiplicativeCardinality
 	ZERO_OR_MORE("*", 3),
 	ONE_OR_MORE("+", 2);
 
-	public static @NonNull MultiplicativeCardinality toEnum(@Nullable String grammarCardinality) {
-		if ("*".equals(grammarCardinality)) {
+	public static @NonNull MultiplicativeCardinality toEnum(@NonNull AbstractElement abstractElement) {
+		String cardinality = abstractElement.getCardinality();
+		if ("*".equals(cardinality)) {
 			return ZERO_OR_MORE;
 		}
-		else if ("+".equals(grammarCardinality)) {
+		else if ("+".equals(cardinality)) {
 			return ONE_OR_MORE;
 		}
-		else if ("?".equals(grammarCardinality)) {
+		else if ("?".equals(cardinality)) {
 			return ZERO_OR_ONE;
 		}
-		else if ("1".equals(grammarCardinality)) {
+		else if ("1".equals(cardinality)) {
 			return ONE;
 		}
-		else if (grammarCardinality == null) {
+		else if (cardinality == null) {
 			return ONE;
 		}
 		else {
-			throw new UnsupportedOperationException("Grammar cardinality '" + grammarCardinality + "'");
+			throw new UnsupportedOperationException("Grammar cardinality '" + cardinality + "'");
 		}
 	}
 

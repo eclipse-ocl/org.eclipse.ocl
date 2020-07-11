@@ -15,11 +15,18 @@ import org.eclipse.xtext.RuleCall;
 
 public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 {
+	protected final @NonNull RuleCall ruleCall;
 	protected final @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull RuleCall ruleCall,@NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
-		super(ruleAnalysis, MultiplicativeCardinality.toEnum(ruleCall.getCardinality()));
+	public UnassignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull RuleCall ruleCall, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
+		super(ruleAnalysis, multiplicativeCardinality);
+		this.ruleCall = ruleCall;
 		this.calledRuleAnalysis = calledRuleAnalysis;
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return new UnassignedRuleCallSerializationNode(ruleAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
 	}
 
 	@Override

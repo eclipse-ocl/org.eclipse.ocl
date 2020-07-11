@@ -16,11 +16,18 @@ import org.eclipse.xtext.util.Strings;
 
 public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 {
+	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
 
-	public UnassignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Keyword keyword) {
-		super(ruleAnalysis, MultiplicativeCardinality.toEnum(keyword.getCardinality()));
+	public UnassignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Keyword keyword, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, multiplicativeCardinality);
+		this.keyword = keyword;
 		this.value = XtextGrammarUtil.getValue(keyword);
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return new UnassignedKeywordSerializationNode(ruleAnalysis, keyword, multiplicativeCardinality);
 	}
 
 	@Override

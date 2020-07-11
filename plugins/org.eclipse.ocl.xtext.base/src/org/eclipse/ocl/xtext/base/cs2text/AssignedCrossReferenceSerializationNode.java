@@ -48,6 +48,11 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	}
 
 	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return new AssignedCrossReferenceSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, crossReference);
+	}
+
+	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		EObject eGet = (EObject)serializer.consumeNext(eStructuralFeature);
 		///	final String lexerRule = linkingHelper.getRuleNameFrom();

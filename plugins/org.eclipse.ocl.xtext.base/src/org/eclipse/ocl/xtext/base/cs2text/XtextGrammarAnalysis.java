@@ -110,7 +110,7 @@ public class XtextGrammarAnalysis
 		// Perform the intra rule analysis to determine the locally produced EClassifiers and local base rules.
 		//
 		for (@NonNull XtextParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
-			parserRuleAnalysis.intraAnalyze();
+			parserRuleAnalysis.analyze();
 		}
 		this.eClassifier2ruleAnalyses = analyzeProductions(rule2ruleAnalysis);
 		//
@@ -514,6 +514,9 @@ public class XtextGrammarAnalysis
 			assert serializationRules != null;
 			s.append("\n  ");;
 			s.append(eClass.getName());
+			if ("PackageCS".equals(eClass.getName())) {
+				getClass(); // XXX debugging
+			}
 			s.append(" <=>");;
 			for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules) {
 				s.append(" ");;

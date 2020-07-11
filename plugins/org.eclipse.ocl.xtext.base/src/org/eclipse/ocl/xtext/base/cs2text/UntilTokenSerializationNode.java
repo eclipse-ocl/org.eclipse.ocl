@@ -20,8 +20,13 @@ public class UntilTokenSerializationNode extends SimpleSerializationNode
 	protected final @NonNull String value;
 
 	public UntilTokenSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull UntilToken untilToken) {
-		super(ruleAnalysis, MultiplicativeCardinality.toEnum(untilToken.getCardinality()));
+		super(ruleAnalysis, MultiplicativeCardinality.toEnum(untilToken));
 		this.value = XtextGrammarUtil.getValue((Keyword)XtextGrammarUtil.getTerminal(untilToken));
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

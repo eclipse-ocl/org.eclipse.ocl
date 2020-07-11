@@ -38,6 +38,7 @@ public abstract class AbstractSerializationNode implements SerializationNode
 		return multiplicativeCardinality;
 	}
 
+	@Override
 	public @NonNull XtextParserRuleAnalysis getRuleAnalysis() {
 		return ruleAnalysis;
 	}

@@ -35,6 +35,11 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return new AssignedRuleCallSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, calledRuleAnalysis);
+	}
+
+	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		Object eGet = serializer.consumeNext(eStructuralFeature);
 		if (eStructuralFeature instanceof EReference) {

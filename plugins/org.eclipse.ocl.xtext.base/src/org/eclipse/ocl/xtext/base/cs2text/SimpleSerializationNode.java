@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class SimpleSerializationNode extends AbstractSerializationNode
 {
-	public SimpleSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	protected SimpleSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(ruleAnalysis, multiplicativeCardinality);
 	}
 

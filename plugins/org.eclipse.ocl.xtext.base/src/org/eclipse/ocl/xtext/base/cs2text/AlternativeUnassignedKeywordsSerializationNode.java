@@ -14,20 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
-public class AlternativeKeywordsSerializationNode extends AbstractSerializationNode
+public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSerializationNode
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public AlternativeUnassignedKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis,
+			@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
 		super(ruleAnalysis, multiplicativeCardinality);
+		if (values != null) {
+			for (@NonNull String value : values) {
+				this.values.add(value);
+			}
+		}
 	}
 
 	public void addKeyword(@NonNull Keyword keyword) {
 		assert keyword.getCardinality() == null;
 		values.add(XtextGrammarUtil.getValue(keyword));
+	}
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return new AlternativeUnassignedKeywordsSerializationNode(ruleAnalysis, multiplicativeCardinality, values);
 	}
 
 	@Override
