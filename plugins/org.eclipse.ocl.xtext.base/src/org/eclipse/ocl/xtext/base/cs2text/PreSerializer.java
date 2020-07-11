@@ -92,7 +92,7 @@ public class PreSerializer
 			assert node2variable.containsKey(serializationNode);		// XXX debugging
 			CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
 			if (cardinalityVariable != null) {
-				variables.add(cardinalityVariable);
+				variables.add(0, cardinalityVariable);
 			}
 		}
 		cardinalityExpression.addMultiplicityProduct(variables);
@@ -267,6 +267,13 @@ public class PreSerializer
 				}
 			}
 		} while (expressions.size() < oldSize);
+		//
+		//	assign run-time search solution to remaining expressions.
+		//
+		for (@NonNull CardinalityExpression expression : expressions) {
+			expression.solveAtRuntime(this);
+		}
+
 		//
 		// Assign solutions to gratuitous grammar terms.
 		// XXX need to encode residue for run-time resolution

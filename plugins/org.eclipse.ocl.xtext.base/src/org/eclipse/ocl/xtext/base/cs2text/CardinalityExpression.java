@@ -31,6 +31,7 @@ public class CardinalityExpression implements Nameable
 {
 	public static interface Solution
 	{
+		boolean isRuntime();
 		@NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size);
 	}
 
@@ -63,6 +64,11 @@ public class CardinalityExpression implements Nameable
 		@Override
 		public int hashCode() {
 			return eStructuralFeature.hashCode() + 3 * subtrahend + 7 * (divisor-1);
+		}
+
+		@Override
+		public boolean isRuntime() {
+			return false;
 		}
 
 		@Override
@@ -125,6 +131,11 @@ public class CardinalityExpression implements Nameable
 		}
 
 		@Override
+		public boolean isRuntime() {
+			return false;
+		}
+
+		@Override
 		public @NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
 			Integer size = eFeature2size.get(eStructuralFeature);
 			int intSize = size != null ? size.intValue() : 0;
@@ -138,6 +149,64 @@ public class CardinalityExpression implements Nameable
 			s.append(eStructuralFeature.getName());
 			s.append("|>");
 			s.append(subtrahend);
+			return String.valueOf(s);
+		}
+	}
+
+	private static class RuntimeSolution implements Solution
+	{
+		protected final @NonNull CardinalityExpression cardinalityExpression;
+		protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
+
+		public RuntimeSolution(@NonNull CardinalityExpression cardinalityExpression, @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables) {
+			this.cardinalityExpression = cardinalityExpression;
+			this.unresolvedVariables = unresolvedVariables;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+			if (!(obj instanceof RuntimeSolution)) {
+				return false;
+			}
+			RuntimeSolution that = (RuntimeSolution) obj;
+			return (this.cardinalityExpression ==  that.cardinalityExpression) && this.unresolvedVariables.equals(that.unresolvedVariables);
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = cardinalityExpression.hashCode();
+			for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
+				hashCode += 3 + unresolvedVariable.hashCode();
+			}
+			return hashCode;
+		}
+
+		@Override
+		public boolean isRuntime() {
+			return true;
+		}
+
+		@Override
+		public @NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			boolean isFirst = true;
+			for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
+				if (!isFirst) {
+					s.append(",");
+				}
+				s.append(unresolvedVariable);
+				isFirst = false;
+			}
+			s.append(" in ");
+			s.append(cardinalityExpression);
 			return String.valueOf(s);
 		}
 	}
@@ -222,6 +291,22 @@ public class CardinalityExpression implements Nameable
 			sum += product;
 		}
 		return sum;
+	}
+
+	public void solveAtRuntime(@NonNull PreSerializer preSerializer) {
+		List<@NonNull CardinalityVariable> unresolvedVariables = new ArrayList<>();
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			for (@NonNull CardinalityVariable variable : products) {
+				Object solution = preSerializer.getSolution(variable);
+				if (((solution == null) || ((solution instanceof Solution) && ((Solution)solution).isRuntime())) && !unresolvedVariables.contains(variable)) {
+					unresolvedVariables.add(variable);
+				}
+			}
+		}
+		Solution runtimeSolution = new RuntimeSolution(this, unresolvedVariables);
+		for (@NonNull CardinalityVariable variable : unresolvedVariables) {
+			preSerializer.addSolution(variable, runtimeSolution);
+		}
 	}
 
 	public void solveForBooleanCommonFactors(@NonNull PreSerializer preSerializer) {
