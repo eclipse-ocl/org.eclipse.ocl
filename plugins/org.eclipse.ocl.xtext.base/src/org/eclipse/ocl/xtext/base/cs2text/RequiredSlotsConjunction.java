@@ -106,9 +106,9 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	}
 
 	public Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element,
-			@NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2size) {
+			@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
 		PreSerializer preSerializer = getPreSerializer();
-		return preSerializer.computeActualCardinalities(element, eFeature2size);
+		return preSerializer.computeActualCardinalities(element, eFeature2contentAnalysis);
 	}
 
 	public @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> getAlternativesChoices() {
@@ -192,8 +192,12 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return eFeature2multiplicativeCardinality.keySet();
 	}
 
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
+		return eFeature2multiplicativeCardinality.get(eStructuralFeature);
+	}
+
 	public @NonNull String getName() {
-		return "FIXME";		// XXX
+		return ruleAnalysis.getName();
 	}
 
 	public @NonNull PreSerializer getPreSerializer() {
@@ -228,6 +232,11 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		this.alternatives2choice = alternatives2choice;
 	}
 
+	public void toRuleString(@NonNull StringBuilder s) {
+		assert preSerializer != null;
+		preSerializer.toRuleString(s);
+	}
+
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
@@ -247,7 +256,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 			isFirst = false;
 		}
 		if (preSerializer != null) {
-			preSerializer.toString(s, depth+1);
+			preSerializer.toString(s, depth > 0 ? depth+1 : -1);
 		}
 	}
 }

@@ -13,9 +13,12 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -74,6 +77,11 @@ public class XtextGrammarAnalysis
 	 */
 	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> eClass2serializationRules = null;
 
+	/**
+	 * The values of enumerated features
+	 */
+	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull String>> eAttribute2enumerations = null;
+
 	protected final @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 	protected final @NonNull IValueConverterService valueConverterService;
 	protected final @NonNull LinkingHelper linkingHelper;
@@ -86,6 +94,18 @@ public class XtextGrammarAnalysis
 		this.valueConverterService = valueConverterService;
 		assert linkingHelper != null;
 		this.linkingHelper = linkingHelper;
+	}
+
+	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull String value) {
+		Map<@NonNull EAttribute, @NonNull Set<@NonNull String>> eAttribute2enumerations2 = eAttribute2enumerations;
+		if (eAttribute2enumerations2 == null) {
+			eAttribute2enumerations = eAttribute2enumerations2 = new HashMap<>();
+		}
+		Set<@NonNull String> enumerations = eAttribute2enumerations2.get(value);
+		if (enumerations == null) {
+			enumerations = new HashSet<>();
+		}
+		enumerations.add(value);
 	}
 
 	/**
@@ -419,6 +439,10 @@ public class XtextGrammarAnalysis
 
 	public @NonNull IValueConverterService getValueConverterService() {
 		return valueConverterService;
+	}
+
+	public @Nullable Iterable<@NonNull String> getEnumerations(@NonNull EAttribute eAttribute) {
+		return (eAttribute2enumerations != null) ? eAttribute2enumerations.get(eAttribute) : null;
 	}
 
 	@Override

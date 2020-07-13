@@ -32,6 +32,11 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
+	protected @NonNull String getValue() {
+		return value;
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");

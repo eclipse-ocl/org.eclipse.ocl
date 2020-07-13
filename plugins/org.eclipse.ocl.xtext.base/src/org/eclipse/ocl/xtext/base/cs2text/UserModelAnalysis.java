@@ -91,13 +91,18 @@ public class UserModelAnalysis
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		Serializer serializer = userElementAnalysis.createSerializer();
+		Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis = userElementAnalysis.getContentAnalysis();
+		Serializer serializer = userElementAnalysis.createSerializer(eFeature2contentAnalysis);
 		if (serializer != null) {
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			userElementAnalysis.createSerializer();		// XXX debugging
-			serializationBuilder.append("«incompatible '" + element.eClass().getName() + "'»");
+			userElementAnalysis.createSerializer(eFeature2contentAnalysis);		// XXX debugging
+			StringBuilder s = new StringBuilder();
+			s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
+			userElementAnalysis.diagnose(s, eFeature2contentAnalysis);
+			s.append("»\n\n");
+			serializationBuilder.append(s.toString());
 		}
 	}
 

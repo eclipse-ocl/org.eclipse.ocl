@@ -70,12 +70,12 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 		return Iterables.size(getSerializationRules()) > 0;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getName());
 		s.append(" <=>");
-/*		Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses2 = productionRuleAnalysis2containingAssignmentAnalyses;
+/ *		Map<@NonNull XtextParserRuleAnalysis, @NonNull List<@NonNull XtextAssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses2 = productionRuleAnalysis2containingAssignmentAnalyses;
 		if (productionRuleAnalysis2containingAssignmentAnalyses2 != null) {
 			List<@NonNull XtextParserRuleAnalysis> productionRuleAnalyses = new ArrayList<>(productionRuleAnalysis2containingAssignmentAnalyses2.keySet());
 			Collections.sort(productionRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
@@ -111,7 +111,7 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 				s.append(" : ");
 				s.append(productionRuleAnalysis.getName());
 			}
-		} */
+		} * /
 		return s.toString();
-	}
+	} */
 }
