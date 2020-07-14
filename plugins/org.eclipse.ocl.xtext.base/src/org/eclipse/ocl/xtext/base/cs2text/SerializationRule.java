@@ -28,7 +28,7 @@ public class SerializationRule implements RequiredSlots
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull AssignedSerializationNode> eFeature2assignedSerializationNode = new HashMap<>();
-	private @Nullable List<@NonNull SimpleRequiredSlot> conjunction = null;
+	private @Nullable List<@NonNull AssignedSerializationNode> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
 	private @Nullable EClass producedEClass = null;
@@ -38,8 +38,8 @@ public class SerializationRule implements RequiredSlots
 	}
 
 	public void accumulate(@NonNull SerializationRule innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		for (@NonNull SimpleRequiredSlot simpleRequiredSlot : innerConjunction.getConjunction()) {
-			accumulate(simpleRequiredSlot.getSerializationNode(), simpleRequiredSlot.getMultiplicativeCardinality(), multiplicativeCardinality);
+		for (@NonNull AssignedSerializationNode assignedSerializationNode : innerConjunction.getConjunction()) {
+			accumulate(assignedSerializationNode, assignedSerializationNode.getMultiplicativeCardinality(), multiplicativeCardinality);
 		}
 	}
 
@@ -86,8 +86,8 @@ public class SerializationRule implements RequiredSlots
 		return alternatives2choice;
 	}
 
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
-		List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
+	public @NonNull Iterable<@NonNull AssignedSerializationNode> getConjunction() {
+		List<@NonNull AssignedSerializationNode> conjunction = this.conjunction;
 		if (conjunction == null) {
 			this.conjunction = conjunction = new ArrayList<>();
 			List<@NonNull EStructuralFeature> features = new ArrayList<>(eFeature2multiplicativeCardinality.keySet());
@@ -97,7 +97,7 @@ public class SerializationRule implements RequiredSlots
 				assert serializationNode != null;
 				MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
 				assert multiplicativeCardinality != null;
-				conjunction.add(new SimpleRequiredSlot(serializationNode, multiplicativeCardinality));
+				conjunction.add(serializationNode);
 			}
 		}
 		return conjunction;
@@ -196,7 +196,7 @@ public class SerializationRule implements RequiredSlots
 		//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
 		//	if (conjunction != null) {
 		boolean isFirst = true;
-		for (@NonNull SimpleRequiredSlot requiredSlot : getConjunction()) {	// XXX lazy
+		for (@NonNull AssignedSerializationNode requiredSlot : getConjunction()) {	// XXX lazy
 			if (!isFirst) {
 				s.append(" & ");
 			}
