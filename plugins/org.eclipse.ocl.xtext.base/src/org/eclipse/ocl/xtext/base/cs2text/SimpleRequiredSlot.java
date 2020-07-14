@@ -16,29 +16,26 @@ import java.util.List;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
-public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Iterable<@NonNull RequiredSlots>
+public class SimpleRequiredSlot implements RequiredSlots //implements Iterable<@NonNull RequiredSlots>
 {
+	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 //	protected final @NonNull AssignedSerializationNode serializationNode;
-//	protected final @NonNull EClass debugEFeatureScope;
 	protected final @NonNull XtextAssignmentAnalysis assignmentAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public SimpleRequiredSlot(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis);
-	//	this.debugEFeatureScope = debugEFeatureScope;
+	public SimpleRequiredSlot(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		this.ruleAnalysis = assignmentAnalysis.getSourceRuleAnalysis();
 		this.assignmentAnalysis = assignmentAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
-	//	EClassifier eClassifierScope = XtextGrammarUtil.getEClassifierScope(assignmentAnalysis.getEClass());
-	//	assert debugEFeatureScope == eClassifierScope;
-		//	assert multiplicativeCardinality == assignmentAnalysis.getMultiplicativeCardinality();
 	}
 
 	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis() {
 		return assignmentAnalysis;
 	}
 
+//	@Override
 	@Override
-	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
+	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
 		return Collections.singletonList(this);
 	}
 
@@ -58,6 +55,19 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return Collections.singletonList(requiredSlotsConjunction);
 	}
 
+	@Override
+	public boolean isNull() {
+		return false;
+	}
+
+	@Override
+	public final @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 0);
+		return String.valueOf(s);
+	}
+
+//	@Override
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);

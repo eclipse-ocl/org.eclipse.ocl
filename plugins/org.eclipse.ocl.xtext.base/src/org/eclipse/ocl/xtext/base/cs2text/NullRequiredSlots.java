@@ -17,10 +17,12 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * The NullRequiredSlots INSTANCE is used when no slots are required.
  */
-public class NullRequiredSlots extends AbstractRequiredSlots
+public class NullRequiredSlots implements RequiredSlots
 {
+	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
+
 	public NullRequiredSlots(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
-		super(ruleAnalysis);
+		this.ruleAnalysis = ruleAnalysis;
 	}
 
 	@Override

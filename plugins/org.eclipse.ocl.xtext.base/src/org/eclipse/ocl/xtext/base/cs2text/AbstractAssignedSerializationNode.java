@@ -19,14 +19,14 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 {
 	protected final @NonNull XtextAssignmentAnalysis assignmentAnalysis;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
-	protected final @NonNull RequiredSlots requiredSlots;
+	protected final @NonNull SimpleRequiredSlot requiredSlots;
 
 	protected AbstractAssignedSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(assignmentAnalysis.getSourceRuleAnalysis(), multiplicativeCardinality);
 		this.assignmentAnalysis = assignmentAnalysis;
 		this.eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
-		this.requiredSlots = new SimpleRequiredSlot(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
+		this.requiredSlots = new SimpleRequiredSlot(assignmentAnalysis, multiplicativeCardinality);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @NonNull RequiredSlots getRequiredSlots() {
+	public @NonNull SimpleRequiredSlot getRequiredSlots() {
 		return requiredSlots;
 	}
 

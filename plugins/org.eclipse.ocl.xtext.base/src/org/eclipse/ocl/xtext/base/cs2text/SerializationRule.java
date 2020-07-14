@@ -23,8 +23,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-public class SerializationRule extends AbstractRequiredSlots
+public class SerializationRule implements RequiredSlots
 {
+	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 //	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull XtextAssignmentAnalysis> eFeature2assignmentAnalysis = new HashMap<>();
@@ -34,7 +35,7 @@ public class SerializationRule extends AbstractRequiredSlots
 	private @Nullable EClass producedEClass = null;
 
 	public SerializationRule(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
-		super(ruleAnalysis);
+		this.ruleAnalysis = ruleAnalysis;
 	}
 
 	public void accumulate(@NonNull SerializationRule innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
@@ -110,7 +111,7 @@ public class SerializationRule extends AbstractRequiredSlots
 				assert assignmentAnalysis != null;
 				MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
 				assert multiplicativeCardinality != null;
-				conjunction.add(new SimpleRequiredSlot(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality));
+				conjunction.add(new SimpleRequiredSlot(assignmentAnalysis, multiplicativeCardinality));
 			}
 		}
 		return conjunction;
@@ -196,6 +197,11 @@ public class SerializationRule extends AbstractRequiredSlots
 		return getConjunction();
 	}
 
+	@Override
+	public boolean isNull() {
+		return false;
+	}
+
 /*	public void preSerialize(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		assert ruleAnalysis == this.ruleAnalysis;
 		assert rootSerializationNode == ruleAnalysis.getRootSerializationNode();
@@ -212,6 +218,13 @@ public class SerializationRule extends AbstractRequiredSlots
 	public void toRuleString(@NonNull StringBuilder s) {
 		assert preSerializer != null;
 		preSerializer.toRuleString(s);
+	}
+
+	@Override
+	public final @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 0);
+		return String.valueOf(s);
 	}
 
 	@Override

@@ -15,13 +15,14 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
-public class RequiredSlotsDisjunction extends AbstractRequiredSlots
+public class RequiredSlotsDisjunction implements RequiredSlots
 {
+	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull CompositeSerializationNode serializationNode;
 	private @NonNull List<@NonNull SerializationRule> serializationRules;
 
 	protected RequiredSlotsDisjunction(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CompositeSerializationNode serializationNode, @NonNull List<@NonNull SerializationRule> serializationRules) {
-		super(ruleAnalysis);
+		this.ruleAnalysis = ruleAnalysis;
 		this.serializationNode = serializationNode;
 		this.serializationRules = serializationRules;
 	//	for (@NonNull RequiredSlotsConjunction conjunction : conjunctions) {
@@ -46,6 +47,18 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 	@Override
 	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
 		return serializationRules;
+	}
+
+	@Override
+	public boolean isNull() {
+		return false;
+	}
+
+	@Override
+	public final @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 0);
+		return String.valueOf(s);
 	}
 
 	@Override

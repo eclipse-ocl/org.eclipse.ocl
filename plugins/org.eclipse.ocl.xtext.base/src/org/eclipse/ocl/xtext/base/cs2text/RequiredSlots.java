@@ -25,7 +25,7 @@ public interface RequiredSlots
 	/**
 	 * Return the terms of a conjunction, or iterable of this for a unit conjunction/disjunction, or an ISE for a real disjunction..
 	 */
-	@NonNull Iterable<@NonNull RequiredSlots> getConjunction();
+	@NonNull Iterable<? extends @NonNull RequiredSlots> getConjunction();
 
 	/**
 	 * Return the conjunctions of the disjunction, or iterable of this for a unit conjunction/disjunction.
@@ -35,7 +35,6 @@ public interface RequiredSlots
 	/**
 	 * Return true if this the null RequiredSlots denoting nothing required.
 	 */
-
 	boolean isNull();
 
 	void toString(@NonNull StringBuilder s, int i);
