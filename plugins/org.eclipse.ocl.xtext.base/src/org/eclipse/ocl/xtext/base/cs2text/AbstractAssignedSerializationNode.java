@@ -26,7 +26,12 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 		super(assignmentAnalysis.getSourceRuleAnalysis(), multiplicativeCardinality);
 		this.assignmentAnalysis = assignmentAnalysis;
 		this.eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
-		this.requiredSlots = new SimpleRequiredSlot(assignmentAnalysis, multiplicativeCardinality);
+		this.requiredSlots = new SimpleRequiredSlot(this, multiplicativeCardinality);
+	}
+
+	@Override
+	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis() {
+		return assignmentAnalysis;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
+	@NonNull XtextAssignmentAnalysis getAssignmentAnalysis();
 	@NonNull EClass getEFeatureScope();
 	@NonNull EStructuralFeature getEStructuralFeature();
 }

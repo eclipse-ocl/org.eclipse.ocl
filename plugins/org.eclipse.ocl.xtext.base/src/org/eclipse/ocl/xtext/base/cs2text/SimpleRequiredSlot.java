@@ -18,14 +18,15 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public class SimpleRequiredSlot implements RequiredSlots //implements Iterable<@NonNull RequiredSlots>
 {
-	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
-//	protected final @NonNull AssignedSerializationNode serializationNode;
+	protected final @NonNull AssignedSerializationNode serializationNode;
 	protected final @NonNull XtextAssignmentAnalysis assignmentAnalysis;
+	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public SimpleRequiredSlot(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public SimpleRequiredSlot(@NonNull AssignedSerializationNode serializationNode, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		this.serializationNode = serializationNode;
+		this.assignmentAnalysis = serializationNode.getAssignmentAnalysis();
 		this.ruleAnalysis = assignmentAnalysis.getSourceRuleAnalysis();
-		this.assignmentAnalysis = assignmentAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
@@ -33,7 +34,6 @@ public class SimpleRequiredSlot implements RequiredSlots //implements Iterable<@
 		return assignmentAnalysis;
 	}
 
-//	@Override
 	@Override
 	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
 		return Collections.singletonList(this);
@@ -47,10 +47,14 @@ public class SimpleRequiredSlot implements RequiredSlots //implements Iterable<@
 		return multiplicativeCardinality;
 	}
 
+	public @NonNull AssignedSerializationNode getSerializationNode() {
+		return serializationNode;
+	}
+
 	@Override
 	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {		// XXX eliminate me
 		SerializationRule requiredSlotsConjunction = new SerializationRule(ruleAnalysis);
-		requiredSlotsConjunction.accumulate(assignmentAnalysis, multiplicativeCardinality, MultiplicativeCardinality.ONE);
+		requiredSlotsConjunction.accumulate(serializationNode, multiplicativeCardinality, MultiplicativeCardinality.ONE);
 		requiredSlotsConjunction.getConjunction();		// XXX eager
 		return Collections.singletonList(requiredSlotsConjunction);
 	}

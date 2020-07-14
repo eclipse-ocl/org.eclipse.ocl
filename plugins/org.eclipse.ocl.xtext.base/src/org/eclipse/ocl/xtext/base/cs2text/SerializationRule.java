@@ -26,9 +26,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class SerializationRule implements RequiredSlots
 {
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
-//	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
-	private @NonNull Map<@NonNull EStructuralFeature, @NonNull XtextAssignmentAnalysis> eFeature2assignmentAnalysis = new HashMap<>();
+	private @NonNull Map<@NonNull EStructuralFeature, @NonNull AssignedSerializationNode> eFeature2assignedSerializationNode = new HashMap<>();
 	private @Nullable List<@NonNull SimpleRequiredSlot> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
@@ -45,7 +44,7 @@ public class SerializationRule implements RequiredSlots
 			}
 			else {
 				SimpleRequiredSlot simpleRequiredSlot = (SimpleRequiredSlot)requiredSlots;
-				accumulate(simpleRequiredSlot.getAssignmentAnalysis(), simpleRequiredSlot.getMultiplicativeCardinality(), multiplicativeCardinality);
+				accumulate(simpleRequiredSlot.getSerializationNode(), simpleRequiredSlot.getMultiplicativeCardinality(), multiplicativeCardinality);
 			}
 		}
 		/*	Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
@@ -57,8 +56,9 @@ public class SerializationRule implements RequiredSlots
 		//	getConjunction();		// XXX eager
 	}
 
-	public void accumulate(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality innerMultiplicativeCardinality, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
+	public void accumulate(@NonNull AssignedSerializationNode serializationNode, @NonNull MultiplicativeCardinality innerMultiplicativeCardinality, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
 //		assert innerMultiplicativeCardinality == assignmentAnalysis.getMultiplicativeCardinality();
+		XtextAssignmentAnalysis assignmentAnalysis = serializationNode.getAssignmentAnalysis();
 		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 		if ("ownedProperties".equals(eStructuralFeature.getName())) {
 			getClass();	// XXX
@@ -86,7 +86,7 @@ public class SerializationRule implements RequiredSlots
 				? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
 				: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
 		eFeature2multiplicativeCardinality.put(eStructuralFeature, newMultiplicativeCardinality);
-		eFeature2assignmentAnalysis.put(eStructuralFeature, assignmentAnalysis);
+		eFeature2assignedSerializationNode.put(eStructuralFeature, serializationNode);
 	}
 
 	public Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element,
@@ -107,11 +107,11 @@ public class SerializationRule implements RequiredSlots
 			List<@NonNull EStructuralFeature> features = new ArrayList<>(eFeature2multiplicativeCardinality.keySet());
 			Collections.sort(features, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 			for (@NonNull EStructuralFeature eStructuralFeature : features) {
-				XtextAssignmentAnalysis assignmentAnalysis = eFeature2assignmentAnalysis.get(eStructuralFeature);
-				assert assignmentAnalysis != null;
+				AssignedSerializationNode serializationNode = eFeature2assignedSerializationNode.get(eStructuralFeature);
+				assert serializationNode != null;
 				MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
 				assert multiplicativeCardinality != null;
-				conjunction.add(new SimpleRequiredSlot(assignmentAnalysis, multiplicativeCardinality));
+				conjunction.add(new SimpleRequiredSlot(serializationNode, multiplicativeCardinality));
 			}
 		}
 		return conjunction;
