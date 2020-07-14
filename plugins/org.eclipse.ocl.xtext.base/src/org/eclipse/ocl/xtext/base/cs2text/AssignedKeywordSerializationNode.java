@@ -32,7 +32,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
-	protected @NonNull String getValue() {
+	protected @NonNull String getValueOrValues() {
 		return value;
 	}
 

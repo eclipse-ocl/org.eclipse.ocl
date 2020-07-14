@@ -16,32 +16,30 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
 public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssignedSerializationNode
 {
+	protected final @NonNull List<@NonNull Keyword> keywords = new ArrayList<>();
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
 	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature,
-			@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
+			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> values) {
 		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
-		if (values != null) {
-			for (@NonNull String value : values) {
-				this.values.add(value);
-			}
+		for (@NonNull Keyword keyword : keywords) {
+			this.values.add(XtextGrammarUtil.getValue(keyword));
 		}
-	}
-
-	public void addKeyword(@NonNull Keyword keyword) {
-		assert keyword.getCardinality() == null;
-		values.add(XtextGrammarUtil.getValue(keyword));
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, values);
+		return new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, keywords);
+	}
+
+	@Override
+	protected @NonNull Iterable<@NonNull String> getValueOrValues() {
+		return values;
 	}
 
 	@Override

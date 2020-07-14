@@ -45,13 +45,14 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 		return requiredSlots;
 	}
 
-	protected @Nullable String getValue() {
+	protected @Nullable Object getValueOrValues() {
 		return null;
 	}
 
 	@Override
 	public void preSerialize(@NonNull PreSerializer preSerializer) {
 		super.preSerialize(preSerializer);
-		preSerializer.addAssignedNode(this, getValue());
+		Object valueOrValues = getValueOrValues();
+		preSerializer.addAssignedNode(this, valueOrValues);
 	}
 }

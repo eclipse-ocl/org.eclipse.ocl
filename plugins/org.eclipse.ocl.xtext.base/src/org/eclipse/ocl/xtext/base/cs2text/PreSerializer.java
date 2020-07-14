@@ -85,7 +85,7 @@ public class PreSerializer
 		this.serializationNodes = serializationNodes;
 	}
 
-	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @Nullable String value) {
+	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @Nullable Object valueOrValues) {
 		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 		CardinalityExpression cardinalityExpression = feature2expression.get(eStructuralFeature);
 		if (cardinalityExpression == null) {
@@ -103,8 +103,8 @@ public class PreSerializer
 				variables.add(0, cardinalityVariable);
 			}
 		}
-		if (value != null) {
-			ValueCardinalityExpression valueCardinalityExpression = cardinalityExpression.getValueCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), value);
+		if (valueOrValues != null) {
+			ValueCardinalityExpression valueCardinalityExpression = cardinalityExpression.getValueCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), valueOrValues);
 			valueCardinalityExpression.addMultiplicityProduct(variables);
 		}
 		else {
@@ -130,6 +130,16 @@ public class PreSerializer
 		assert old2 == null;
 		SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
 		assert old3 == null;
+	/*	MultiplicativeCardinality subMultiplicativeCardinality = multiplicativeCardinality.mayBeMany() ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ZERO_OR_ONE;
+		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
+			for (@NonNull String value : ((AlternativeAssignedKeywordsSerializationNode)serializationNode).getValueOrValues()) {
+				String name2 = String.format("C%02d", variable2node.size());
+				assert name2 != null;
+				CardinalityVariable cardinalitySubVariable = new CardinalityVariable(name2, subMultiplicativeCardinality);
+				SerializationNode old4 = variable2node.put(cardinalitySubVariable, serializationNode);
+				assert old4 == null;
+			}
+		} */
 	}
 
 	public boolean addSolution(@NonNull CardinalityVariable variable, @NonNull Object solution) {

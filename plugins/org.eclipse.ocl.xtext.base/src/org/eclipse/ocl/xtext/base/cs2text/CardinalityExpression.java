@@ -419,7 +419,8 @@ public class CardinalityExpression implements Nameable
 		return null;
 	}
 
-	public @NonNull ValueCardinalityExpression getValueCardinalityExpression(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull String value) {
+	public @NonNull ValueCardinalityExpression getValueCardinalityExpression(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Object valueOrValues) {
+		String value = String.valueOf(valueOrValues);		// XXX wip fudge
 		Map<@NonNull String, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression2 = value2valueCardinalityExpression;
 		if (value2valueCardinalityExpression2 == null) {
 			value2valueCardinalityExpression = value2valueCardinalityExpression2 = new HashMap<>();
