@@ -21,13 +21,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class SerializationRule implements RequiredSlots
 {
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
-	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
-	private @NonNull Map<@NonNull EStructuralFeature, @NonNull AssignedSerializationNode> eFeature2assignedSerializationNode = new HashMap<>();
+	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
+	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
 	private @Nullable List<@NonNull AssignedSerializationNode> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
@@ -73,7 +72,7 @@ public class SerializationRule implements RequiredSlots
 				? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
 				: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
 		eFeature2multiplicativeCardinality.put(eStructuralFeature, newMultiplicativeCardinality);
-		eFeature2assignedSerializationNode.put(eStructuralFeature, serializationNode);
+		assignedSerializationNodes.add(serializationNode);
 	}
 
 	public Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element,
@@ -87,20 +86,7 @@ public class SerializationRule implements RequiredSlots
 	}
 
 	public @NonNull Iterable<@NonNull AssignedSerializationNode> getConjunction() {
-		List<@NonNull AssignedSerializationNode> conjunction = this.conjunction;
-		if (conjunction == null) {
-			this.conjunction = conjunction = new ArrayList<>();
-			List<@NonNull EStructuralFeature> features = new ArrayList<>(eFeature2multiplicativeCardinality.keySet());
-			Collections.sort(features, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-			for (@NonNull EStructuralFeature eStructuralFeature : features) {
-				AssignedSerializationNode serializationNode = eFeature2assignedSerializationNode.get(eStructuralFeature);
-				assert serializationNode != null;
-				MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
-				assert multiplicativeCardinality != null;
-				conjunction.add(serializationNode);
-			}
-		}
-		return conjunction;
+		return assignedSerializationNodes;
 	}
 
 	public @NonNull EClass getProducedEClass() {
