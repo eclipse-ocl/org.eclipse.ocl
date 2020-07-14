@@ -28,16 +28,12 @@ import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
-import org.eclipse.xtext.CharacterRange;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Group;
 import org.eclipse.xtext.Keyword;
-import org.eclipse.xtext.NegatedToken;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TypeRef;
-import org.eclipse.xtext.UntilToken;
-import org.eclipse.xtext.Wildcard;
 import org.eclipse.xtext.util.XtextSwitch;
 
 /**
@@ -179,22 +175,11 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				return getNullSerializationNode();
 			}
 			else if (terminal instanceof CrossReference) {
-			//	EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
-			//	RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal((CrossReference)terminal);
-			//	AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
-			//	XtextAbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
 				return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, multiplicativeCardinality, (CrossReference)terminal);
 			}
 			else {
 				throw new UnsupportedOperationException("Unsupported Assignment terminal '" + terminal.eClass().getName() + "'");
 			}
-		//	return new XtextAbstractContent(eStructuralFeature);
-		}
-
-		@Override
-		public @NonNull SerializationNode caseCharacterRange(CharacterRange characterRange) {
-			assert characterRange != null;
-			return new CharacterRangeSerializationNode(ruleAnalysis, characterRange);
 		}
 
 	/*	@Override
@@ -222,12 +207,6 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		}
 
 		@Override
-		public @NonNull SerializationNode caseNegatedToken(NegatedToken negatedToken) {
-			assert negatedToken != null;
-			return new NegatedTokenSerializationNode(ruleAnalysis, negatedToken, doSwitch(negatedToken.getTerminal()));
-		}
-
-		@Override
 		public @NonNull SerializationNode caseRuleCall(RuleCall ruleCall) {
 			assert ruleCall != null;
 			assert !(ruleCall.eContainer() instanceof Assignment);
@@ -240,19 +219,6 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		public @NonNull SerializationNode caseTypeRef(TypeRef object) {
 			return nullSerializationNode;
 		} */
-
-		@Override
-		public @NonNull SerializationNode caseUntilToken(UntilToken untilToken) {
-			assert untilToken != null;
-			return new UntilTokenSerializationNode(ruleAnalysis, untilToken);
-		}
-
-		@Override
-		public @NonNull SerializationNode caseWildcard(Wildcard wildcard) {
-			assert wildcard != null;
-			return new WildcardSerializationNode(ruleAnalysis, wildcard);
-		}
-
 
 		@Override
 		public @NonNull SerializationNode defaultCase(EObject object) {
