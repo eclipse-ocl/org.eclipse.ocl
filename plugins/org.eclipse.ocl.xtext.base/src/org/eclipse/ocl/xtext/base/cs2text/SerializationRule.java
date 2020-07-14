@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-public class RequiredSlotsConjunction extends AbstractRequiredSlots
+public class SerializationRule extends AbstractRequiredSlots
 {
 //	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
@@ -32,7 +32,7 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 	private @Nullable PreSerializer preSerializer = null;
 	private @Nullable EClass producedEClass = null;
 
-	public RequiredSlotsConjunction(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
+	public SerializationRule(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
 		super(ruleAnalysis);
 	}
 
@@ -46,10 +46,10 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		assert !hadKey || (oldChoice == choice);
 	} */
 
-	public void accumulate(@NonNull RequiredSlotsConjunction innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public void accumulate(@NonNull SerializationRule innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		for (@NonNull RequiredSlots requiredSlots : innerConjunction.getConjunction()) {
-			if (requiredSlots instanceof RequiredSlotsConjunction) {
-				accumulate((RequiredSlotsConjunction)requiredSlots, multiplicativeCardinality);
+			if (requiredSlots instanceof SerializationRule) {
+				accumulate((SerializationRule)requiredSlots, multiplicativeCardinality);
 			}
 			else {
 				accumulate((SimpleRequiredSlot)requiredSlots, multiplicativeCardinality);
@@ -132,26 +132,10 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return conjunction;
 	}
 
-	@Override
-	public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
-		assert conjunctionIndex == 0;
-		return this;
-	}
-
-	@Override
-	public int getConjunctionCount() {
-		return 1;
-	}
-
 	//	@Override
 	//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
 	//		return getConjunction();
 	//	}
-
-	@Override
-	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
-		return Collections.singletonList(this);
-	}
 
 	public @NonNull EClass getProducedEClass() {
 		EClass producedEClass2 = producedEClass;
@@ -214,6 +198,16 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return preSerializer.getSerializedNodes();
 	}
 
+	//	@Override
+	//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
+	//		return getConjunction();
+	//	}
+
+	@Override
+	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
+		return Collections.singletonList(this);
+	}
+
 	public @NonNull Iterable<@NonNull RequiredSlots> getTerms() {
 		return getConjunction();
 	}
@@ -245,11 +239,11 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 			if (!isFirst) {
 				s.append(" & ");
 			}
-			if (requiredSlot instanceof RequiredSlotsConjunction) {
+			if (requiredSlot instanceof SerializationRule) {
 				s.append("{");
 			}
 			requiredSlot.toString(s, depth);
-			if (requiredSlot instanceof RequiredSlotsConjunction) {
+			if (requiredSlot instanceof SerializationRule) {
 				s.append("}");
 			}
 			isFirst = false;

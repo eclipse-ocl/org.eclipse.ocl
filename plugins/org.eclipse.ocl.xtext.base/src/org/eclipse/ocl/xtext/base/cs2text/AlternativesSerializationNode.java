@@ -49,18 +49,17 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	public @NonNull RequiredSlots getRequiredSlots() {
 		RequiredSlots requiredSlots = this.requiredSlots;
 		if (requiredSlots == null) {
-			RequiredSlotsConjunction emptyConjunction = null;
-			List<@NonNull RequiredSlotsConjunction> outerDisjunction = new ArrayList<>();
+			SerializationRule emptyConjunction = null;
+			List<@NonNull SerializationRule> outerDisjunction = new ArrayList<>();
 		//	String cardinality2 = cardinality;
 			if (multiplicativeCardinality.mayBeMany()) {
 				if (multiplicativeCardinality.mayBeZero()) {	// (A|B)* => A* | B*
 					Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerChoices = new HashMap<>();
-					RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
+					SerializationRule outerConjunction = new SerializationRule(ruleAnalysis);
 					for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
 						RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
 						if (!innerRequiredSlots.isNull()) {
-							for (int i = 0; i < innerRequiredSlots.getConjunctionCount(); i++) {
-								RequiredSlotsConjunction innerConjunction = innerRequiredSlots.getConjunction(i);
+							for (@NonNull SerializationRule innerConjunction : innerRequiredSlots.getSerializationRules()) {
 								outerConjunction.accumulate(innerConjunction, MultiplicativeCardinality.ZERO_OR_MORE);
 								Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> innerChoices = innerConjunction.getAlternativesChoices();
 								if (innerChoices != null) {
@@ -78,14 +77,12 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 					for (@NonNull SerializationNode alternativeSerializationNode1 : alternativeSerializationNodes) {
 						RequiredSlots innerRequiredSlots1 = alternativeSerializationNode1.getRequiredSlots();
 						if (!innerRequiredSlots1.isNull()) {
-							RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
-							for (int i = 0; i < innerRequiredSlots1.getConjunctionCount(); i++) {
-							//	RequiredSlotsConjunction innerConjunction1 = innerRequiredSlots1.getConjunction(i);
+							SerializationRule outerConjunction = new SerializationRule(ruleAnalysis);
+							for (@NonNull SerializationRule innerConjunction1 : outerConjunction.getSerializationRules()) {
 								for (@NonNull SerializationNode alternativeSerializationNode2 : alternativeSerializationNodes) {
 									RequiredSlots innerRequiredSlots2 = alternativeSerializationNode2.getRequiredSlots();
 									if (!innerRequiredSlots2.isNull()) {
-										for (int j = 0; j < innerRequiredSlots2.getConjunctionCount(); j++) {
-											RequiredSlotsConjunction innerConjunction2 = innerRequiredSlots2.getConjunction(j);
+										for (@NonNull SerializationRule innerConjunction2 : innerRequiredSlots2.getSerializationRules()) {
 											outerConjunction.accumulate(innerConjunction2, alternativeSerializationNode1 == alternativeSerializationNode2 ? MultiplicativeCardinality.ONE_OR_MORE : MultiplicativeCardinality.ZERO_OR_MORE);
 										}
 									}
@@ -102,7 +99,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 			}
 			else {
 				if (multiplicativeCardinality.mayBeZero()) {	// (A|B)? => A|B|epsilon
-					emptyConjunction = new RequiredSlotsConjunction(ruleAnalysis);
+					emptyConjunction = new SerializationRule(ruleAnalysis);
 				//	emptyConjunction.accumulate(this, null);
 					Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = new HashMap<>();
 					alternatives2choice.put(this, null);
@@ -114,7 +111,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 					RequiredSlots innerRequiredSlots = alternativeSerializationNode.getRequiredSlots();
 					if (innerRequiredSlots.isNull()) {
 						if (emptyConjunction == null) {
-							emptyConjunction = new RequiredSlotsConjunction(ruleAnalysis);
+							emptyConjunction = new SerializationRule(ruleAnalysis);
 						//	emptyConjunction.accumulate(this, null);
 							Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = new HashMap<>();
 							alternatives2choice.put(this, null);
@@ -124,10 +121,8 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 					}
 					else {
 						Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerChoices = new HashMap<>();
-						RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
-						for (int i = 0; i < innerRequiredSlots.getConjunctionCount(); i++) {
-						//	RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction();
-							RequiredSlotsConjunction innerConjunction = innerRequiredSlots.getConjunction(i);
+						SerializationRule outerConjunction = new SerializationRule(ruleAnalysis);
+						for (@NonNull SerializationRule innerConjunction : innerRequiredSlots.getSerializationRules()) {
 							outerConjunction.accumulate(innerConjunction, MultiplicativeCardinality.ONE);
 							outerConjunction.getConjunction();		// XXX eager
 							Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> innerChoices = innerConjunction.getAlternativesChoices();

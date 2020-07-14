@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -27,18 +29,7 @@ public class NullRequiredSlots extends AbstractRequiredSlots
 	}
 
 	@Override
-	public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
-		assert conjunctionIndex == 0;
-		return ruleAnalysis.getNullConjunction();
-	}
-
-	@Override
-	public int getConjunctionCount() {
-		return 0;
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
+	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
 		return EMPTY_DISJUNCTION_TERMS;
 	}
 

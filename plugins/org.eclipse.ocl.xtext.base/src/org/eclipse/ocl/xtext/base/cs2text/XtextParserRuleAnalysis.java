@@ -358,7 +358,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull XtextAssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable SerializationNode serializationNode = null;
 	private @Nullable NullRequiredSlots nullRequiredSlots = null;
-	private @Nullable RequiredSlotsConjunction nullConjunction = null;
+	private @Nullable SerializationRule nullConjunction = null;
 
 	public XtextParserRuleAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule) {
 		super(grammarAnalysis, parserRule);
@@ -419,9 +419,9 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return eFeature2assignmentAnalyses;
 	}
 
-	public @NonNull RequiredSlotsConjunction getNullConjunction() {
+	public @NonNull SerializationRule getNullConjunction() {
 		if (nullConjunction == null) {
-			nullConjunction = new RequiredSlotsConjunction(this);
+			nullConjunction = new SerializationRule(this);
 		}
 		assert nullConjunction != null;
 		return nullConjunction;
@@ -517,10 +517,8 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		SerializationNode serializationNode2 = serializationNode;
 		assert serializationNode2 != null;
 		RequiredSlots requiredSlots = serializationNode2.getRequiredSlots();
-		int conjunctionCount = requiredSlots.getConjunctionCount();
-		for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
-			RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
-			conjunction.getPreSerializer();		// XXX redundant/lazy
+		for (@NonNull SerializationRule serializationRule : requiredSlots.getSerializationRules()) {
+			serializationRule.getPreSerializer();		// XXX redundant/lazy
 		}
 	}
 

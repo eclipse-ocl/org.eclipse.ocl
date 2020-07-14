@@ -41,7 +41,7 @@ public class PreSerializer
 	public static final @NonNull Integer ZERO = Integer.valueOf(0);
 
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
-	protected final @NonNull RequiredSlotsConjunction requiredSlotsConjunction;
+	protected final @NonNull SerializationRule requiredSlotsConjunction;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	protected final @Nullable SerializationNode parentSerializedNode;
 
@@ -59,7 +59,7 @@ public class PreSerializer
 	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions = null;
 
-	public PreSerializer(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull SerializationNode rootSerializationNode) {
+	public PreSerializer(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule requiredSlotsConjunction, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.requiredSlotsConjunction = requiredSlotsConjunction;
 		this.rootSerializationNode = rootSerializationNode;

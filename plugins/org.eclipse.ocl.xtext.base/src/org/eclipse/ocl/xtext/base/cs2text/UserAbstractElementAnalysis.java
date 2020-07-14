@@ -42,7 +42,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 	protected final @NonNull XtextGrammarAnalysis grammarAnalysis;
 	protected final @NonNull EObject element;
 	private final @NonNull String name;
-	private @Nullable Iterable<@NonNull RequiredSlotsConjunction> serializationRules = null;
+	private @Nullable Iterable<@NonNull SerializationRule> serializationRules = null;
 
 	public UserAbstractElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		this.modelAnalysis = modelAnalysis;
@@ -52,8 +52,8 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 	}
 
 	public @Nullable Serializer createSerializer(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-		Iterable<@NonNull RequiredSlotsConjunction> serializationRules = getSerializationRules();
-		for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules) {
+		Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = serializationRule.computeActualCardinalities(element, eFeature2contentAnalysis);
 			if (variable2value != null) {
 				return new Serializer(serializationRule, modelAnalysis, element, variable2value);
@@ -108,13 +108,13 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 	}
 
 	public void diagnose(@NonNull StringBuilder s, @NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-		Iterable<@NonNull RequiredSlotsConjunction> serializationRules2 = serializationRules;
+		Iterable<@NonNull SerializationRule> serializationRules2 = serializationRules;
 		if (serializationRules2 == null) {
 			s.append(" - No serialization rules.");
 			return;
 		}
 		char c = 'A';
-		for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules2) {
+		for (@NonNull SerializationRule serializationRule : serializationRules2) {
 			s.append("\n  [");
 			s.append("" + c++);
 			s.append("] ");
@@ -124,7 +124,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		c = 'A';
 		s.append(String.format("%-20.20s%9s", "feature", "actual"));
 		Set<@NonNull EStructuralFeature> allFeatures = new HashSet<>();
-		for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules2) {
+		for (@NonNull SerializationRule serializationRule : serializationRules2) {
 			s.append(" [");
 			s.append("" + c++);
 			s.append("]");
@@ -138,7 +138,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 			s.append("\n");
 			int size = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, null);
 			s.append(String.format("%-20.20s%8d", eStructuralFeature.getName(), size));
-			for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules2) {
+			for (@NonNull SerializationRule serializationRule : serializationRules2) {
 				MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature);
 				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 			}
@@ -172,7 +172,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		return name;
 	}
 
-	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getSerializationRules() {
+	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
 		EClass eClass = UserModelAnalysis.eClass(element);
 		if ("TopLevelCS".equals(eClass.getName())) {
 			getClass(); // XXX
@@ -191,10 +191,10 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		StringBuilder s = new StringBuilder();
 		s.append(getName());
 		s.append(" <=>");
-		Iterable<@NonNull RequiredSlotsConjunction> serializationRules2 = getSerializationRules();
+		Iterable<@NonNull SerializationRule> serializationRules2 = getSerializationRules();
 		if (serializationRules2 != null) {
 			boolean isMany = Iterables.size(serializationRules2) > 1;
-			for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules2) {
+			for (@NonNull SerializationRule serializationRule : serializationRules2) {
 				if (isMany) {
 					s.append("\n\t\t");
 				}

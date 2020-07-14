@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -35,25 +36,6 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return Collections.singletonList(this);
 	}
 
-	@Override
-	public @NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex) {
-		assert conjunctionIndex == 0;
-		RequiredSlotsConjunction requiredSlotsConjunction = new RequiredSlotsConjunction(ruleAnalysis);
-		requiredSlotsConjunction.accumulate(this, MultiplicativeCardinality.ONE);
-		requiredSlotsConjunction.getConjunction();		// XXX eager
-		return requiredSlotsConjunction;
-	}
-
-	@Override
-	public int getConjunctionCount() {
-		return 1;
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
-		throw new UnsupportedOperationException();
-	}
-
 	public @NonNull EClass getEFeatureScope() {
 		return eFeatureScope;
 	}
@@ -64,6 +46,14 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
 		return multiplicativeCardinality;
+	}
+
+	@Override
+	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {		// XXX eliminate me
+		SerializationRule requiredSlotsConjunction = new SerializationRule(ruleAnalysis);
+		requiredSlotsConjunction.accumulate(this, MultiplicativeCardinality.ONE);
+		requiredSlotsConjunction.getConjunction();		// XXX eager
+		return Collections.singletonList(requiredSlotsConjunction);
 	}
 
 	@Override

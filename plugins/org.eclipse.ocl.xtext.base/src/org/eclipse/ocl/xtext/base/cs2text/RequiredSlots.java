@@ -27,17 +27,10 @@ public interface RequiredSlots
 	 */
 	@NonNull Iterable<@NonNull RequiredSlots> getConjunction();
 
-	@NonNull RequiredSlotsConjunction getConjunction(int conjunctionIndex);
-
-	/**
-	 * Return the number of disjunct alternative conjunctions
-	 */
-	int getConjunctionCount();
-
 	/**
 	 * Return the conjunctions of the disjunction, or iterable of this for a unit conjunction/disjunction.
 	 */
-	@NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction();
+	@NonNull List<@NonNull SerializationRule> getSerializationRules();
 
 	/**
 	 * Return true if this the null RequiredSlots denoting nothing required.
@@ -47,7 +40,6 @@ public interface RequiredSlots
 
 	void toString(@NonNull StringBuilder s, int i);
 
-//	static final @NonNull RequiredSlotsConjunction EMPTY_CONJUNCTION = new RequiredSlotsConjunction();
 	static final @NonNull List<@NonNull RequiredSlots> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
-	static final @NonNull List<@NonNull RequiredSlotsConjunction> EMPTY_DISJUNCTION_TERMS = Collections.emptyList();
+	static final @NonNull List<@NonNull SerializationRule> EMPTY_DISJUNCTION_TERMS = Collections.emptyList();
 }

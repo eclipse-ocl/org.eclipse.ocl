@@ -75,7 +75,7 @@ public class XtextGrammarAnalysis
 	/**
 	 * The prioritized serialization rules for each EClass.
 	 */
-	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> eClass2serializationRules = null;
+	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = null;
 
 	/**
 	 * The values of enumerated features
@@ -313,9 +313,9 @@ public class XtextGrammarAnalysis
 		}
 		return false;
 	} */
-	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> analyzeSerializations(
+	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> analyzeSerializations(
 			@NonNull Map<@NonNull EClassifier, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses) {
-		Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> eClass2serializationRules = new HashMap<>();
+		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = new HashMap<>();
 		List<@NonNull EClassifier> eClasses = new ArrayList<>(eClassifier2ruleAnalyses.keySet());
 		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);		// XXX debug aid
 		for (@NonNull EClassifier eClassifier : eClasses) {
@@ -326,13 +326,12 @@ public class XtextGrammarAnalysis
 				}
 				List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eRuleClass);
 				assert ruleAnalyses != null;
-				List<@NonNull RequiredSlotsConjunction> serializationRules = new ArrayList<>();
+				List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
 				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
 					SerializationNode rootSerializationNode = ((XtextParserRuleAnalysis)ruleAnalysis).getRootSerializationNode();
 				//	assert rootSerializationNode != null;
 					RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
-					for (int i = 0; i < requiredSlots.getConjunctionCount(); i++) {
-						RequiredSlotsConjunction serializationRule = requiredSlots.getConjunction(i);
+					for (@NonNull SerializationRule serializationRule : requiredSlots.getSerializationRules()) {
 						EClass eActionClass = serializationRule.getProducedEClass();
 						if (eActionClass == eRuleClass) {
 							serializationRules.add(serializationRule);
@@ -415,7 +414,7 @@ public class XtextGrammarAnalysis
 		return linkingHelper;
 	}
 
-	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getSerializationRules(@NonNull EClass eClass) {
+	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules(@NonNull EClass eClass) {
 		if ("PathElementWithURICS".equals(eClass.getName())) {
 			getClass(); // XXX
 		}
@@ -494,9 +493,7 @@ public class XtextGrammarAnalysis
 					RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
 					if (!requiredSlots.isNull()) {
 
-						int conjunctionCount = requiredSlots.getConjunctionCount();
-						for (int conjunctionIndex = 0; conjunctionIndex < conjunctionCount; conjunctionIndex++) {
-							RequiredSlotsConjunction conjunction = requiredSlots.getConjunction(conjunctionIndex);
+						for (@NonNull SerializationRule conjunction : requiredSlots.getSerializationRules()) {
 							conjunction.getPreSerializer();		// XXX redundant/lazy
 							s.append("\n");
 							StringUtil.appendIndentation(s, 2, "\t");
@@ -529,12 +526,12 @@ public class XtextGrammarAnalysis
 			}
 		} */
 		s.append("\n\nUser EClass <=> Prioritized serialization rule(s)");
-		Map<@NonNull EClass, @NonNull List<@NonNull RequiredSlotsConjunction>> eClass2serializationRules2 = eClass2serializationRules;
+		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules2 = eClass2serializationRules;
 		assert eClass2serializationRules2 != null;
 		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2serializationRules2.keySet());
 		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		for (@NonNull EClass eClass : eClasses) {
-			Iterable<@NonNull RequiredSlotsConjunction> serializationRules = eClass2serializationRules2.get(eClass);
+			Iterable<@NonNull SerializationRule> serializationRules = eClass2serializationRules2.get(eClass);
 			assert serializationRules != null;
 			s.append("\n  ");;
 			s.append(eClass.getName());
@@ -542,7 +539,7 @@ public class XtextGrammarAnalysis
 				getClass(); // XXX debugging
 			}
 			s.append(" <=>");;
-			for (@NonNull RequiredSlotsConjunction serializationRule : serializationRules) {
+			for (@NonNull SerializationRule serializationRule : serializationRules) {
 				s.append(" ");;
 			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
 				s.append("\n");

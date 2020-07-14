@@ -22,7 +22,7 @@ public abstract class CompositeSerializationNode extends AbstractSerializationNo
 	//	assert serializationNodes.size() > 1;
 	}
 
-	protected @NonNull RequiredSlots createRequiredSlots(@NonNull List<@NonNull RequiredSlotsConjunction> outerDisjunctions) {
+	protected @NonNull RequiredSlots createRequiredSlots(@NonNull List<@NonNull SerializationRule> outerDisjunctions) {
 		//
 		//	No alternatives => a Conjunction
 		//

@@ -28,14 +28,14 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public class Serializer
 {
-	protected final @NonNull RequiredSlotsConjunction requiredSlotsConjunction;
+	protected final @NonNull SerializationRule requiredSlotsConjunction;
 	protected final @NonNull PreSerializer preSerializer;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject element;
 	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	public Serializer(@NonNull RequiredSlotsConjunction requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis,
+	public Serializer(@NonNull SerializationRule requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis,
 			@NonNull EObject element, @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
 		this.requiredSlotsConjunction = requiredSlotsConjunction;
 		this.preSerializer = requiredSlotsConjunction.getPreSerializer();

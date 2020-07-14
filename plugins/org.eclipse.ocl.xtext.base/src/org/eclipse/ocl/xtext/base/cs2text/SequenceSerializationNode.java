@@ -56,7 +56,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 				SerializationNode serializationNode = serializationNodes.get(nodesIndex);
 				RequiredSlots innerRequiredSlots = serializationNode.getRequiredSlots();
 				if (!innerRequiredSlots.isNull()) {
-					int innerSize = innerRequiredSlots.getConjunctionCount();
+					int innerSize = innerRequiredSlots.getSerializationRules().size();
 					assert innerSize != 0;
 					outerSize *= innerSize;
 					nodesSizes[nodesIndex] = innerSize;
@@ -73,7 +73,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 				//
 				//	Assign the permutations of all inner disjunctions.
 				//
-				List<@NonNull RequiredSlotsConjunction> outerDisjunctions = new ArrayList<>(outerSize);
+				List<@NonNull SerializationRule> outerDisjunctions = new ArrayList<>(outerSize);
 				for (int outerIndex = 0; outerIndex < outerSize; outerIndex++) {
 					outerDisjunctions.add(permute(nodesIndexes, nodesSizes));
 					for (int nodesIndex = 0; nodesIndex < nodesSize; nodesIndex++) {
@@ -98,9 +98,9 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	/**
 	 * Return a conjunction with alternatives choices for the nodeIndexes permutation of all possible nodesSizes permutations.
 	 */
-	private @NonNull RequiredSlotsConjunction permute(int @NonNull [] nodesIndexes, int @NonNull [] nodesSizes) {
+	private @NonNull SerializationRule permute(int @NonNull [] nodesIndexes, int @NonNull [] nodesSizes) {
 		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerAlternatives2choice = null;
-		RequiredSlotsConjunction outerConjunction = new RequiredSlotsConjunction(ruleAnalysis);
+		SerializationRule outerConjunction = new SerializationRule(ruleAnalysis);
 		for (int nodesIndex = 0; nodesIndex < nodesIndexes.length; nodesIndex++) {
 			SerializationNode serializationNode = serializationNodes.get(nodesIndex);
 		//	if (serializationNode instanceof AlternativesSerializationNode) {
@@ -110,7 +110,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			if (!requiredSlots.isNull()) {
 			//	int subSize = nodesSizes[nodesIndex];
 				int subIndex = nodesIndexes[nodesIndex];
-				RequiredSlotsConjunction innerConjunction = requiredSlots.getConjunction(subIndex);
+				SerializationRule innerConjunction = requiredSlots.getSerializationRules().get(subIndex);
 			//	if (subSize > 0) {
 					Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> innerAlternatives2choice = innerConjunction.getAlternativesChoices();
 					if (innerAlternatives2choice != null) {
