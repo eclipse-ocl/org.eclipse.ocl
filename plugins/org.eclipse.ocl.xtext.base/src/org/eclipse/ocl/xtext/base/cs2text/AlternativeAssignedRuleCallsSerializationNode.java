@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
@@ -21,9 +20,9 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 {
 	protected final @NonNull List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses;
 
-	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis,
+	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
+		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
 		this.ruleAnalyses = eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
 	}
 
@@ -33,12 +32,12 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeAssignedRuleCallsSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
+		return new AlternativeAssignedRuleCallsSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		if (ruleAnalyses.size() > 1) {
 			s.append("{");

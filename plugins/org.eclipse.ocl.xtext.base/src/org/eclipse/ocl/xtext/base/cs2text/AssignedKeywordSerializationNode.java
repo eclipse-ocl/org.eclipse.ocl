@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
 
@@ -19,15 +18,15 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
 
-	public AssignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
-		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
+	public AssignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
+		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
 		this.keyword = keyword;
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedKeywordSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, keyword);
+		return new AssignedKeywordSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality, keyword);
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("\"");
 		s.append(value);

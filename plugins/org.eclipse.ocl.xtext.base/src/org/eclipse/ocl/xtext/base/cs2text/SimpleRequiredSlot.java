@@ -13,22 +13,24 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
 public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Iterable<@NonNull RequiredSlots>
 {
 //	protected final @NonNull AssignedSerializationNode serializationNode;
-	protected final @NonNull EClass debugEFeatureScope;
+//	protected final @NonNull EClass debugEFeatureScope;
 	protected final @NonNull XtextAssignmentAnalysis assignmentAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public SimpleRequiredSlot(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass debugEFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public SimpleRequiredSlot(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(ruleAnalysis);
-		this.debugEFeatureScope = debugEFeatureScope;
+	//	this.debugEFeatureScope = debugEFeatureScope;
 		this.assignmentAnalysis = assignmentAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
+	//	EClassifier eClassifierScope = XtextGrammarUtil.getEClassifierScope(assignmentAnalysis.getEClass());
+	//	assert debugEFeatureScope == eClassifierScope;
+		//	assert multiplicativeCardinality == assignmentAnalysis.getMultiplicativeCardinality();
 	}
 
 	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis() {
@@ -58,7 +60,7 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, debugEFeatureScope, assignmentAnalysis.getEStructuralFeature());
+		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append("[");
 		s.append(multiplicativeCardinality);
 		s.append("]");

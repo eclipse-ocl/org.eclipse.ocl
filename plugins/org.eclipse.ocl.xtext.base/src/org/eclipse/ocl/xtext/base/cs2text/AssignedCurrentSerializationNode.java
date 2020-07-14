@@ -10,13 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
-	public AssignedCurrentSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
+	public AssignedCurrentSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
 	}
 
 	@Override
@@ -27,7 +26,7 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 //		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
-		s.append(XtextGrammarUtil.getName(eFeatureScope));
+		s.append(XtextGrammarUtil.getName(assignmentAnalysis.getEClass()));
 		s.append("::");
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");

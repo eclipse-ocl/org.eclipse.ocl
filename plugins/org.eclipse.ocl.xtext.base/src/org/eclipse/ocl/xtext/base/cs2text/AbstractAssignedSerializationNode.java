@@ -17,24 +17,21 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
 {
-	protected final @NonNull EClass eFeatureScope;
-
 	protected final @NonNull XtextAssignmentAnalysis assignmentAnalysis;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final @NonNull RequiredSlots requiredSlots;
 
-	protected AbstractAssignedSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis,
+	protected AbstractAssignedSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(ruleAnalysis, multiplicativeCardinality);
-		this.eFeatureScope = eFeatureScope;
 		this.assignmentAnalysis = assignmentAnalysis;
 		this.eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
-		this.requiredSlots = new SimpleRequiredSlot(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
+		this.requiredSlots = new SimpleRequiredSlot(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
 	}
 
 	@Override
 	public @NonNull EClass getEFeatureScope() {
-		return eFeatureScope;
+		return assignmentAnalysis.getEClass();
 	}
 
 	@Override

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -33,8 +32,8 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 //	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
-	public AssignedCrossReferenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
-		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
+	public AssignedCrossReferenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
+		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
 		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
 		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
@@ -48,7 +47,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedCrossReferenceSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, crossReference);
+		return new AssignedCrossReferenceSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality, crossReference);
 	}
 
 	@Override
@@ -86,7 +85,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(ruleAnalysis.getRuleName());
 		appendCardinality(s, depth);

@@ -57,6 +57,7 @@ public class SerializationRule extends AbstractRequiredSlots
 	}
 
 	public void accumulate(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality innerMultiplicativeCardinality, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
+//		assert innerMultiplicativeCardinality == assignmentAnalysis.getMultiplicativeCardinality();
 		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 		if ("ownedProperties".equals(eStructuralFeature.getName())) {
 			getClass();	// XXX
@@ -109,8 +110,7 @@ public class SerializationRule extends AbstractRequiredSlots
 				assert assignmentAnalysis != null;
 				MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
 				assert multiplicativeCardinality != null;
-				EClass eFeatureScope = XtextGrammarUtil.getEContainingClass(eStructuralFeature);		// XXX do we need scope ??
-				conjunction.add(new SimpleRequiredSlot(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality));
+				conjunction.add(new SimpleRequiredSlot(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality));
 			}
 		}
 		return conjunction;

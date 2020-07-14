@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -25,8 +24,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 //	@Inject
 	private @NonNull LinkingHelper linkingHelper;
 
-	public AssignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
-		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
+	public AssignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
+		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
 		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		this.valueConverterService = grammarAnalysis.getValueConverterService();
@@ -35,7 +34,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedRuleCallSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
+		return new AssignedRuleCallSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
 	}
 
 	@Override
@@ -69,7 +68,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(calledRuleAnalysis.getRuleName());
 		appendCardinality(s, depth);

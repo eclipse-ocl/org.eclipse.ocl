@@ -122,12 +122,20 @@ public class XtextAssignmentAnalysis implements Nameable
 		} */
 	}
 
+	public @NonNull EClass getEClass() {
+		return (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
+	}
+
 	public @NonNull EClass getEContainingClass() {
 		return XtextGrammarUtil.getEContainingClass(eFeature);
 	}
 
 	public @NonNull EStructuralFeature getEStructuralFeature() {
 		return eFeature;
+	}
+
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+		return MultiplicativeCardinality.toEnum(assignment);
 	}
 
 	@Override
