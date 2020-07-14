@@ -20,15 +20,19 @@ import org.eclipse.jdt.annotation.NonNull;
 public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Iterable<@NonNull RequiredSlots>
 {
 //	protected final @NonNull AssignedSerializationNode serializationNode;
-	protected final @NonNull EClass eFeatureScope;
-	protected final @NonNull EStructuralFeature eStructuralFeature;
+	protected final @NonNull EClass debugEFeatureScope;
+	protected final @NonNull XtextAssignmentAnalysis assignmentAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public SimpleRequiredSlot(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public SimpleRequiredSlot(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass debugEFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(ruleAnalysis);
-		this.eFeatureScope = eFeatureScope;
-		this.eStructuralFeature = eStructuralFeature;
+		this.debugEFeatureScope = debugEFeatureScope;
+		this.assignmentAnalysis = assignmentAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
+	}
+
+	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis() {
+		return assignmentAnalysis;
 	}
 
 	@Override
@@ -36,12 +40,8 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return Collections.singletonList(this);
 	}
 
-	public @NonNull EClass getEFeatureScope() {
-		return eFeatureScope;
-	}
-
 	public @NonNull EStructuralFeature getEStructuralFeature() {
-		return eStructuralFeature;
+		return assignmentAnalysis.getEStructuralFeature();
 	}
 
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
@@ -51,14 +51,14 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 	@Override
 	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {		// XXX eliminate me
 		SerializationRule requiredSlotsConjunction = new SerializationRule(ruleAnalysis);
-		requiredSlotsConjunction.accumulate(this, MultiplicativeCardinality.ONE);
+		requiredSlotsConjunction.accumulate(assignmentAnalysis, multiplicativeCardinality, MultiplicativeCardinality.ONE);
 		requiredSlotsConjunction.getConjunction();		// XXX eager
 		return Collections.singletonList(requiredSlotsConjunction);
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
+		XtextGrammarUtil.appendEStructuralFeatureName(s, debugEFeatureScope, assignmentAnalysis.getEStructuralFeature());
 		s.append("[");
 		s.append(multiplicativeCardinality);
 		s.append("]");

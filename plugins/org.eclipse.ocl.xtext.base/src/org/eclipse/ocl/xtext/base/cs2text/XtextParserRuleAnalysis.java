@@ -75,9 +75,8 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			String feature = action.getFeature();
 			if (feature != null) {
 				XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(action);
-				EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 				EClass eFeatureScope = (EClass) XtextGrammarUtil.getEClassifierScope(action);
-				return new AssignedCurrentSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, MultiplicativeCardinality.toEnum(action));
+				return new AssignedCurrentSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, MultiplicativeCardinality.toEnum(action));
 
 			}
 			return getNullSerializationNode();
@@ -110,12 +109,13 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				for (Map.Entry<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> entry : eFeature2keywords.entrySet()) {
 					EStructuralFeature eFeature = entry.getKey();
 					List<@NonNull Keyword> keywords = entry.getValue();
+					XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis((Assignment)keywords.get(0).eContainer());
 					if (keywords.size() == 1) {
 						Keyword keyword = keywords.get(0);
-						serializationNodes.add(new AssignedKeywordSerializationNode(ruleAnalysis, eContainingClass, eFeature, multiplicativeCardinality, keyword));
+						serializationNodes.add(new AssignedKeywordSerializationNode(ruleAnalysis, eContainingClass, assignmentAnalysis, multiplicativeCardinality, keyword));
 					}
 					else {
-						serializationNodes.add(new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eContainingClass, eFeature, multiplicativeCardinality, keywords));
+						serializationNodes.add(new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eContainingClass, assignmentAnalysis, multiplicativeCardinality, keywords));
 					}
 				}
 			}
@@ -131,16 +131,15 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		public @NonNull SerializationNode caseAssignment(Assignment assignment) {
 			assert assignment != null;
 			XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
-			EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(assignment);
 			EClass eFeatureScope = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
 			AbstractElement terminal = XtextGrammarUtil.getTerminal(assignment);
 			if (terminal instanceof RuleCall) {
 				XtextAbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)terminal));
-				return new AssignedRuleCallSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, ruleAnalysis2);
+				return new AssignedRuleCallSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, ruleAnalysis2);
 			}
 			else if (terminal instanceof Keyword) {
-				return new AssignedKeywordSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (Keyword)terminal);
+				return new AssignedKeywordSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, (Keyword)terminal);
 			}
 			else if (terminal instanceof Alternatives) {
 				Alternatives alternatives = (Alternatives)terminal;
@@ -187,7 +186,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			//	RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal((CrossReference)terminal);
 			//	AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
 			//	XtextAbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
-				return new AssignedCrossReferenceSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, (CrossReference)terminal);
+				return new AssignedCrossReferenceSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, (CrossReference)terminal);
 			}
 			else {
 				throw new UnsupportedOperationException("Unsupported Assignment terminal '" + terminal.eClass().getName() + "'");

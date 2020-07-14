@@ -11,13 +11,12 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
-	public AssignedCurrentSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AssignedCurrentSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
 	}
 
 	@Override

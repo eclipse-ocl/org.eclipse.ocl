@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
@@ -22,9 +21,9 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 {
 	protected final @NonNull List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses;
 
-	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature,
+	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
 		this.ruleAnalyses = eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
 	}
 
@@ -34,7 +33,7 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeAssignedRuleCallsSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+		return new AlternativeAssignedRuleCallsSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
 	}
 
 	@Override

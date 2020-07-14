@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
@@ -34,8 +33,8 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 //	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
-	public AssignedCrossReferenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
-		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AssignedCrossReferenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
+		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
 		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
 		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
@@ -49,7 +48,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedCrossReferenceSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, crossReference);
+		return new AssignedCrossReferenceSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, crossReference);
 	}
 
 	@Override

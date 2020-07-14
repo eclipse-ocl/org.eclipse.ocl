@@ -27,6 +27,7 @@ public class SerializationRule extends AbstractRequiredSlots
 {
 //	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
+	private @NonNull Map<@NonNull EStructuralFeature, @NonNull XtextAssignmentAnalysis> eFeature2assignmentAnalysis = new HashMap<>();
 	private @Nullable List<@NonNull RequiredSlots> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
@@ -36,23 +37,14 @@ public class SerializationRule extends AbstractRequiredSlots
 		super(ruleAnalysis);
 	}
 
-	/*	public void accumulate(@NonNull AlternativesSerializationNode alternatives, @Nullable SerializationNode choice) {
-		Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice2 = alternatives2choice;
-		if (alternatives2choice2 == null) {
-			alternatives2choice2 = alternatives2choice = new HashMap<>();
-		}
-		boolean hadKey = alternatives2choice2.containsKey(alternatives);
-		SerializationNode oldChoice = alternatives2choice2.put(alternatives, choice);
-		assert !hadKey || (oldChoice == choice);
-	} */
-
 	public void accumulate(@NonNull SerializationRule innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		for (@NonNull RequiredSlots requiredSlots : innerConjunction.getConjunction()) {
 			if (requiredSlots instanceof SerializationRule) {
 				accumulate((SerializationRule)requiredSlots, multiplicativeCardinality);
 			}
 			else {
-				accumulate((SimpleRequiredSlot)requiredSlots, multiplicativeCardinality);
+				SimpleRequiredSlot simpleRequiredSlot = (SimpleRequiredSlot)requiredSlots;
+				accumulate(simpleRequiredSlot.getAssignmentAnalysis(), simpleRequiredSlot.getMultiplicativeCardinality(), multiplicativeCardinality);
 			}
 		}
 		/*	Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
@@ -64,17 +56,17 @@ public class SerializationRule extends AbstractRequiredSlots
 		//	getConjunction();		// XXX eager
 	}
 
-	public void accumulate(@NonNull SimpleRequiredSlot requiredSlot, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		EStructuralFeature eStructuralFeature = requiredSlot.getEStructuralFeature();
+	public void accumulate(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality innerMultiplicativeCardinality, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
+		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 		if ("ownedProperties".equals(eStructuralFeature.getName())) {
 			getClass();	// XXX
 		}
-		boolean newMayBeMany = requiredSlot.getMultiplicativeCardinality().mayBeMany();
-		boolean newMayBeZero = requiredSlot.getMultiplicativeCardinality().mayBeZero();
-		if (multiplicativeCardinality.mayBeZero()) {
+		boolean newMayBeMany = innerMultiplicativeCardinality.mayBeMany();
+		boolean newMayBeZero = innerMultiplicativeCardinality.mayBeZero();
+		if (outerMultiplicativeCardinality.mayBeZero()) {
 			newMayBeZero = true;
 		}
-		if (multiplicativeCardinality.mayBeMany()) {
+		if (outerMultiplicativeCardinality.mayBeMany()) {
 			newMayBeMany = true;
 		}
 		MultiplicativeCardinality oldMultiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
@@ -88,21 +80,11 @@ public class SerializationRule extends AbstractRequiredSlots
 				newMayBeMany = true;
 			}
 		}
-
-
-	//	int quantum = 1;		// XXX
-	//	Integer oldQuantum = eFeature2quantum.get(eStructuralFeature);
-	//	int newQuantum = oldQuantum != null ? oldQuantum.intValue() : 0;
-	//	newQuantum += quantum;
-		//	assert newQuantum == 1;
-	//	eFeature2quantum.put(eStructuralFeature, newQuantum);
-
-
-
 		MultiplicativeCardinality newMultiplicativeCardinality = newMayBeMany
 				? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
-					: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
+				: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
 		eFeature2multiplicativeCardinality.put(eStructuralFeature, newMultiplicativeCardinality);
+		eFeature2assignmentAnalysis.put(eStructuralFeature, assignmentAnalysis);
 	}
 
 	public Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element,
@@ -123,10 +105,12 @@ public class SerializationRule extends AbstractRequiredSlots
 			List<@NonNull EStructuralFeature> features = new ArrayList<>(eFeature2multiplicativeCardinality.keySet());
 			Collections.sort(features, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 			for (@NonNull EStructuralFeature eStructuralFeature : features) {
+				XtextAssignmentAnalysis assignmentAnalysis = eFeature2assignmentAnalysis.get(eStructuralFeature);
+				assert assignmentAnalysis != null;
 				MultiplicativeCardinality multiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
 				assert multiplicativeCardinality != null;
 				EClass eFeatureScope = XtextGrammarUtil.getEContainingClass(eStructuralFeature);		// XXX do we need scope ??
-				conjunction.add(new SimpleRequiredSlot(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality));
+				conjunction.add(new SimpleRequiredSlot(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality));
 			}
 		}
 		return conjunction;

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
@@ -24,9 +23,9 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	protected final @NonNull List<@NonNull Keyword> keywords = new ArrayList<>();
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature,
+	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> values) {
-		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
 		for (@NonNull Keyword keyword : keywords) {
 			this.values.add(XtextGrammarUtil.getValue(keyword));
 		}
@@ -34,7 +33,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, keywords);
+		return new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, keywords);
 	}
 
 	@Override

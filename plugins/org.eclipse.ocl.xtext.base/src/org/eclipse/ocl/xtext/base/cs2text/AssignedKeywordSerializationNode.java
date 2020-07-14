@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
 
@@ -20,15 +19,15 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
 
-	public AssignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
-		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AssignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
+		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
 		this.keyword = keyword;
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedKeywordSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, keyword);
+		return new AssignedKeywordSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, keyword);
 	}
 
 	@Override

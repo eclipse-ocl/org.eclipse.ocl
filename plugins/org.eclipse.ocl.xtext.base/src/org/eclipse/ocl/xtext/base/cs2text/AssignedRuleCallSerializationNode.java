@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.linking.impl.LinkingHelper;
@@ -26,8 +25,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 //	@Inject
 	private @NonNull LinkingHelper linkingHelper;
 
-	public AssignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
-		super(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality);
+	public AssignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull EClass eFeatureScope, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
+		super(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
 		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		this.valueConverterService = grammarAnalysis.getValueConverterService();
@@ -36,7 +35,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedRuleCallSerializationNode(ruleAnalysis, eFeatureScope, eStructuralFeature, multiplicativeCardinality, calledRuleAnalysis);
+		return new AssignedRuleCallSerializationNode(ruleAnalysis, eFeatureScope, assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
 	}
 
 	@Override
