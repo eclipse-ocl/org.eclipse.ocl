@@ -62,11 +62,6 @@ public class SimpleRequiredSlot extends AbstractRequiredSlots //implements Itera
 		return eStructuralFeature;
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
-		return Collections.singletonList(eStructuralFeature);
-	}
-
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
 		return multiplicativeCardinality;
 	}

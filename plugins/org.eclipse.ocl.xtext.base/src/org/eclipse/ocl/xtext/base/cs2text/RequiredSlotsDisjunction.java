@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
@@ -57,11 +56,6 @@ public class RequiredSlotsDisjunction extends AbstractRequiredSlots
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getDisjunction() {
 		return conjunctions;
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
-		throw new IllegalStateException();
 	}
 
 	@Override

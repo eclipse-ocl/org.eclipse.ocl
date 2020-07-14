@@ -187,7 +187,6 @@ public class RequiredSlotsConjunction extends AbstractRequiredSlots
 		return producedEClass;
 	}
 
-	@Override
 	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
 		return eFeature2multiplicativeCardinality.keySet();
 	}
