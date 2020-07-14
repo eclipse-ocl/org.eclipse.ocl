@@ -20,14 +20,14 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class NullRequiredSlots implements RequiredSlots
 {
-	static final @NonNull List<@NonNull RequiredSlots> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
+	static final @NonNull List<@NonNull SimpleRequiredSlot> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
 	static final @NonNull List<@NonNull SerializationRule> EMPTY_DISJUNCTION_TERMS = Collections.emptyList();
 	static final @NonNull NullRequiredSlots INSTANCE = new NullRequiredSlots();
 
 	private NullRequiredSlots() {}
 
 	@Override
-	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
+	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
 		return EMPTY_CONJUNCTION_TERMS;
 	}
 

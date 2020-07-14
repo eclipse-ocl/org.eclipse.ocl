@@ -29,7 +29,7 @@ public class SerializationRule implements RequiredSlots
 //	private @NonNull Map<@NonNull EStructuralFeature, @NonNull Integer> eFeature2quantum = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
 	private @NonNull Map<@NonNull EStructuralFeature, @NonNull XtextAssignmentAnalysis> eFeature2assignmentAnalysis = new HashMap<>();
-	private @Nullable List<@NonNull RequiredSlots> conjunction = null;
+	private @Nullable List<@NonNull SimpleRequiredSlot> conjunction = null;
 	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
 	private @Nullable EClass producedEClass = null;
@@ -100,8 +100,8 @@ public class SerializationRule implements RequiredSlots
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
-		List<@NonNull RequiredSlots> conjunction = this.conjunction;
+	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
+		List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
 		if (conjunction == null) {
 			this.conjunction = conjunction = new ArrayList<>();
 			List<@NonNull EStructuralFeature> features = new ArrayList<>(eFeature2multiplicativeCardinality.keySet());
@@ -116,11 +116,6 @@ public class SerializationRule implements RequiredSlots
 		}
 		return conjunction;
 	}
-
-	//	@Override
-	//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
-	//		return getConjunction();
-	//	}
 
 	public @NonNull EClass getProducedEClass() {
 		EClass producedEClass2 = producedEClass;
@@ -183,32 +178,15 @@ public class SerializationRule implements RequiredSlots
 		return preSerializer.getSerializedNodes();
 	}
 
-	//	@Override
-	//	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunctionTerms(int conjunctionIndex) {
-	//		return getConjunction();
-	//	}
-
 	@Override
 	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
 		return Collections.singletonList(this);
-	}
-
-	public @NonNull Iterable<@NonNull RequiredSlots> getTerms() {
-		return getConjunction();
 	}
 
 	@Override
 	public boolean isNull() {
 		return false;
 	}
-
-/*	public void preSerialize(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
-		assert ruleAnalysis == this.ruleAnalysis;
-		assert rootSerializationNode == ruleAnalysis.getRootSerializationNode();
-		PreSerializer preSerializer2 = new PreSerializer(ruleAnalysis, this, rootSerializationNode);
-		this.preSerializer = preSerializer2;
-		preSerializer2.preSerialize();
-	} */
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
 		assert this.alternatives2choice == null;
@@ -232,17 +210,11 @@ public class SerializationRule implements RequiredSlots
 		//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
 		//	if (conjunction != null) {
 		boolean isFirst = true;
-		for (@NonNull RequiredSlots requiredSlot : getConjunction()) {	// XXX lazy
+		for (@NonNull SimpleRequiredSlot requiredSlot : getConjunction()) {	// XXX lazy
 			if (!isFirst) {
 				s.append(" & ");
 			}
-			if (requiredSlot instanceof SerializationRule) {
-				s.append("{");
-			}
 			requiredSlot.toString(s, depth);
-			if (requiredSlot instanceof SerializationRule) {
-				s.append("}");
-			}
 			isFirst = false;
 		}
 		if (preSerializer != null) {
