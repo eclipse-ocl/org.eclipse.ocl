@@ -44,7 +44,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 
 	@Override
 	public @NonNull RequiredSlots getRequiredSlots() {
-		return ruleAnalysis.getNullRequiredSlots();
+		return NullRequiredSlots.INSTANCE;
 	}
 
 	@Override

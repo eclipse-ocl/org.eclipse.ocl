@@ -27,7 +27,7 @@ public abstract class CompositeSerializationNode extends AbstractSerializationNo
 		//	No alternatives => a Conjunction
 		//
 		switch (outerDisjunctions.size()) {
-			case 0: return ruleAnalysis.getNullRequiredSlots();
+			case 0: return NullRequiredSlots.INSTANCE;
 			case 1: return outerDisjunctions.get(0);
 			default: return new RequiredSlotsDisjunction(ruleAnalysis, this, outerDisjunctions);
 		}

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -19,11 +20,11 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class NullRequiredSlots implements RequiredSlots
 {
-	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
+	static final @NonNull List<@NonNull RequiredSlots> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
+	static final @NonNull List<@NonNull SerializationRule> EMPTY_DISJUNCTION_TERMS = Collections.emptyList();
+	static final @NonNull NullRequiredSlots INSTANCE = new NullRequiredSlots();
 
-	public NullRequiredSlots(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
-		this.ruleAnalysis = ruleAnalysis;
-	}
+	private NullRequiredSlots() {}
 
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
@@ -38,6 +39,13 @@ public class NullRequiredSlots implements RequiredSlots
 	@Override
 	public boolean isNull() {
 		return true;
+	}
+
+	@Override
+	public final @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 0);
+		return String.valueOf(s);
 	}
 
 	@Override

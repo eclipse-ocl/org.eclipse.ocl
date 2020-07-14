@@ -38,7 +38,7 @@ public class RequiredSlotsDisjunction implements RequiredSlots
 	@Override
 	public @NonNull Iterable<@NonNull RequiredSlots> getConjunction() {
 		switch (serializationRules.size()) {
-			case 0: return EMPTY_CONJUNCTION_TERMS;
+		//	case 0: return EMPTY_CONJUNCTION_TERMS;
 			case 1: return serializationRules.get(0).getConjunction();
 			default: throw new IllegalStateException();
 		}

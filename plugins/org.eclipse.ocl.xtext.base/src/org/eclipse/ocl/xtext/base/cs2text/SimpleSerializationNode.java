@@ -20,7 +20,7 @@ public abstract class SimpleSerializationNode extends AbstractSerializationNode
 
 	@Override
 	public @NonNull RequiredSlots getRequiredSlots() {
-		return ruleAnalysis.getNullRequiredSlots();
+		return NullRequiredSlots.INSTANCE;
 	}
 
 	@Override

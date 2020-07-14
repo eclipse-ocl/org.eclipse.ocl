@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -38,7 +37,4 @@ public interface RequiredSlots
 	boolean isNull();
 
 	void toString(@NonNull StringBuilder s, int i);
-
-	static final @NonNull List<@NonNull RequiredSlots> EMPTY_CONJUNCTION_TERMS = Collections.emptyList();
-	static final @NonNull List<@NonNull SerializationRule> EMPTY_DISJUNCTION_TERMS = Collections.emptyList();
 }

@@ -319,7 +319,6 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull XtextAssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable SerializationNode serializationNode = null;
-	private @Nullable NullRequiredSlots nullRequiredSlots = null;
 	private @Nullable SerializationRule nullConjunction = null;
 
 	public XtextParserRuleAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule) {
@@ -388,15 +387,6 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		assert nullConjunction != null;
 		return nullConjunction;
 	}
-
-	public @NonNull NullRequiredSlots getNullRequiredSlots() {
-		if (nullRequiredSlots == null) {
-			nullRequiredSlots = new NullRequiredSlots(this);
-		}
-		assert nullRequiredSlots != null;
-		return nullRequiredSlots;
-	}
-
 
 	public @NonNull ParserRule getParserRule() {
 		return (ParserRule) abstractRule;
