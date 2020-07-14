@@ -25,23 +25,10 @@ public class RequiredSlotsDisjunction implements RequiredSlots
 		this.ruleAnalysis = ruleAnalysis;
 		this.serializationNode = serializationNode;
 		this.serializationRules = serializationRules;
-	//	for (@NonNull RequiredSlotsConjunction conjunction : conjunctions) {
-	//		assert conjunction.getAlternativesChoices() != null;
-	//	}
 	}
 
 	public void addRequiredSlotConjunction(@NonNull SerializationRule requiredSlotConjunction) {
 		serializationRules.add(requiredSlotConjunction);
-	//	assert requiredSlotConjunction.getAlternativesChoices() != null;
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
-		switch (serializationRules.size()) {
-		//	case 0: return EMPTY_CONJUNCTION_TERMS;
-			case 1: return serializationRules.get(0).getConjunction();
-			default: throw new IllegalStateException();
-		}
 	}
 
 	@Override

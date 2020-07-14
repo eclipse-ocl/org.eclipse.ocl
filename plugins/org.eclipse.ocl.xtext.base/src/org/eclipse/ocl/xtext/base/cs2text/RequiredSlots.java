@@ -24,7 +24,7 @@ public interface RequiredSlots
 	/**
 	 * Return the terms of a conjunction, or iterable of this for a unit conjunction/disjunction, or an ISE for a real disjunction..
 	 */
-	@NonNull Iterable<? extends @NonNull SimpleRequiredSlot> getConjunction();
+//	@NonNull Iterable<? extends @NonNull SimpleRequiredSlot> getConjunction();
 
 	/**
 	 * Return the conjunctions of the disjunction, or iterable of this for a unit conjunction/disjunction.

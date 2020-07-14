@@ -34,11 +34,6 @@ public class SimpleRequiredSlot implements RequiredSlots //implements Iterable<@
 		return assignmentAnalysis;
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
-		return Collections.singletonList(this);
-	}
-
 	public @NonNull EStructuralFeature getEStructuralFeature() {
 		return assignmentAnalysis.getEStructuralFeature();
 	}

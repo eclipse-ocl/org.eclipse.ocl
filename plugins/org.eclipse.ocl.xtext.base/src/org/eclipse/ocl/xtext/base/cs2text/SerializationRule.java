@@ -38,22 +38,9 @@ public class SerializationRule implements RequiredSlots
 	}
 
 	public void accumulate(@NonNull SerializationRule innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		for (@NonNull RequiredSlots requiredSlots : innerConjunction.getConjunction()) {
-			if (requiredSlots instanceof SerializationRule) {
-				accumulate((SerializationRule)requiredSlots, multiplicativeCardinality);
-			}
-			else {
-				SimpleRequiredSlot simpleRequiredSlot = (SimpleRequiredSlot)requiredSlots;
-				accumulate(simpleRequiredSlot.getSerializationNode(), simpleRequiredSlot.getMultiplicativeCardinality(), multiplicativeCardinality);
-			}
+		for (@NonNull SimpleRequiredSlot simpleRequiredSlot : innerConjunction.getConjunction()) {
+			accumulate(simpleRequiredSlot.getSerializationNode(), simpleRequiredSlot.getMultiplicativeCardinality(), multiplicativeCardinality);
 		}
-		/*	Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternativesChoices = innerConjunction.getAlternativesChoices();
-		if (alternativesChoices != null) {
-			for (Entry<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> entry : alternativesChoices.entrySet()) {
-				accumulate(entry.getKey(), entry.getValue());
-			}
-		} */
-		//	getConjunction();		// XXX eager
 	}
 
 	public void accumulate(@NonNull AssignedSerializationNode serializationNode, @NonNull MultiplicativeCardinality innerMultiplicativeCardinality, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
@@ -99,7 +86,6 @@ public class SerializationRule implements RequiredSlots
 		return alternatives2choice;
 	}
 
-	@Override
 	public @NonNull Iterable<@NonNull SimpleRequiredSlot> getConjunction() {
 		List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
 		if (conjunction == null) {
