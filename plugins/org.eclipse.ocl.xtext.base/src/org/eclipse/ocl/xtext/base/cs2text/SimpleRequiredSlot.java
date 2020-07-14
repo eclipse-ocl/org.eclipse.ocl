@@ -13,42 +13,21 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
-public class SimpleRequiredSlot implements RequiredSlots //implements Iterable<@NonNull RequiredSlots>
+public class SimpleRequiredSlot implements RequiredSlots
 {
 	protected final @NonNull AssignedSerializationNode serializationNode;
-	protected final @NonNull XtextAssignmentAnalysis assignmentAnalysis;
-	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
 	public SimpleRequiredSlot(@NonNull AssignedSerializationNode serializationNode, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.serializationNode = serializationNode;
-		this.assignmentAnalysis = serializationNode.getAssignmentAnalysis();
-		this.ruleAnalysis = assignmentAnalysis.getSourceRuleAnalysis();
 		this.multiplicativeCardinality = multiplicativeCardinality;
-	}
-
-	public @NonNull XtextAssignmentAnalysis getAssignmentAnalysis() {
-		return assignmentAnalysis;
-	}
-
-	public @NonNull EStructuralFeature getEStructuralFeature() {
-		return assignmentAnalysis.getEStructuralFeature();
-	}
-
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return multiplicativeCardinality;
-	}
-
-	public @NonNull AssignedSerializationNode getSerializationNode() {
-		return serializationNode;
 	}
 
 	@Override
 	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {		// XXX eliminate me
-		SerializationRule requiredSlotsConjunction = new SerializationRule(ruleAnalysis);
+		SerializationRule requiredSlotsConjunction = new SerializationRule(serializationNode.getAssignmentAnalysis().getSourceRuleAnalysis());
 		requiredSlotsConjunction.accumulate(serializationNode, multiplicativeCardinality, MultiplicativeCardinality.ONE);
 		requiredSlotsConjunction.getConjunction();		// XXX eager
 		return Collections.singletonList(requiredSlotsConjunction);
@@ -69,7 +48,7 @@ public class SimpleRequiredSlot implements RequiredSlots //implements Iterable<@
 //	@Override
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
+		XtextGrammarUtil.appendEStructuralFeatureName(s, serializationNode.getAssignmentAnalysis());
 		s.append("[");
 		s.append(multiplicativeCardinality);
 		s.append("]");
