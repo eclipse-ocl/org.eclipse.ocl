@@ -18,15 +18,15 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
 
-	public AssignedKeywordSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
-		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
+	public AssignedKeywordSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
+		super(assignmentAnalysis, multiplicativeCardinality);
 		this.keyword = keyword;
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedKeywordSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality, keyword);
+		return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keyword);
 	}
 
 	@Override

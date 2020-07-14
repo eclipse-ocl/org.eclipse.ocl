@@ -20,9 +20,9 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 {
 	protected final @NonNull List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses;
 
-	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis,
+	public AlternativeAssignedRuleCallsSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
+		super(assignmentAnalysis, multiplicativeCardinality);
 		this.ruleAnalyses = eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
 	}
 
@@ -32,7 +32,7 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeAssignedRuleCallsSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
+		return new AlternativeAssignedRuleCallsSerializationNode(assignmentAnalysis, multiplicativeCardinality);
 	}
 
 	@Override

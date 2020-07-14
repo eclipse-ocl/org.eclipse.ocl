@@ -32,8 +32,8 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 //	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
-	public AssignedCrossReferenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
-		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
+	public AssignedCrossReferenceSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
+		super(assignmentAnalysis, multiplicativeCardinality);
 		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
 		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
@@ -47,7 +47,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedCrossReferenceSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality, crossReference);
+		return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, multiplicativeCardinality, crossReference);
 	}
 
 	@Override

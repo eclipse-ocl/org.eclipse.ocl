@@ -24,8 +24,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 //	@Inject
 	private @NonNull LinkingHelper linkingHelper;
 
-	public AssignedRuleCallSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
-		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
+	public AssignedRuleCallSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull XtextAbstractRuleAnalysis calledRuleAnalysis) {
+		super(assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
 		XtextGrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		this.valueConverterService = grammarAnalysis.getValueConverterService();
@@ -34,7 +34,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AssignedRuleCallSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
+		return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
 	}
 
 	@Override

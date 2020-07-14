@@ -22,9 +22,9 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	protected final @NonNull List<@NonNull Keyword> keywords = new ArrayList<>();
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis,@NonNull XtextAssignmentAnalysis assignmentAnalysis,
+	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> values) {
-		super(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality);
+		super(assignmentAnalysis, multiplicativeCardinality);
 		for (@NonNull Keyword keyword : keywords) {
 			this.values.add(XtextGrammarUtil.getValue(keyword));
 		}
@@ -32,7 +32,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, assignmentAnalysis, multiplicativeCardinality, keywords);
+		return new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords);
 	}
 
 	@Override
