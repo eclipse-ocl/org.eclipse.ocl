@@ -43,11 +43,6 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public @NonNull RequiredSlots getRequiredSlots() {
-		return NullRequiredSlots.INSTANCE;
-	}
-
-	@Override
 	public void preSerialize(@NonNull PreSerializer preSerializer) {
 		preSerializer.addSerializedNode(this);
 	}

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
@@ -20,16 +18,5 @@ public abstract class CompositeSerializationNode extends AbstractSerializationNo
 		super(ruleAnalysis, multiplicativeCardinality);
 //		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
-	}
-
-	protected @NonNull RequiredSlots createRequiredSlots(@NonNull List<@NonNull SerializationRule> outerDisjunctions) {
-		//
-		//	No alternatives => a Conjunction
-		//
-		switch (outerDisjunctions.size()) {
-			case 0: return NullRequiredSlots.INSTANCE;
-			case 1: return outerDisjunctions.get(0);
-			default: return new RequiredSlotsDisjunction(ruleAnalysis, this, outerDisjunctions);
-		}
 	}
 }

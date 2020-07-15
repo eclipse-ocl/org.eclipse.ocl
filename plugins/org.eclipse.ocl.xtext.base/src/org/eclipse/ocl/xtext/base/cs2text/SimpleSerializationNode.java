@@ -19,11 +19,6 @@ public abstract class SimpleSerializationNode extends AbstractSerializationNode
 	}
 
 	@Override
-	public @NonNull RequiredSlots getRequiredSlots() {
-		return NullRequiredSlots.INSTANCE;
-	}
-
-	@Override
 	public void preSerialize(@NonNull PreSerializer preSerializer) {
 		preSerializer.addSerializedNode(this);
 	}

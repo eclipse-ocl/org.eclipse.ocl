@@ -490,7 +490,7 @@ public class XtextGrammarAnalysis
 					s.append("\n");
 					StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
 					rootSerializationNode.toString(s, 2);
-					RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
+					/* RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
 					if (!requiredSlots.isNull()) {
 
 						for (@NonNull SerializationRule conjunction : requiredSlots.getSerializationRules()) {
@@ -500,11 +500,11 @@ public class XtextGrammarAnalysis
 							s.append("|& ");
 							conjunction.toString(s, 2);
 						}
-					/*	s.append("\n");
+					/ *	s.append("\n");
 						StringUtil.appendIndentation(s, 2, "\t");
 						s.append("|& ");
-						requiredSlots.toString(s, 2); */
-					}
+						requiredSlots.toString(s, 2); * /
+					} */
 				}
 			}
 		}

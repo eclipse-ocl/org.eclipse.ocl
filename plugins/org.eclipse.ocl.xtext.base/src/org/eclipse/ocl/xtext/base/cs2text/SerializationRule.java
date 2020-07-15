@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-public class SerializationRule implements RequiredSlots
+public class SerializationRule
 {
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
@@ -159,14 +159,8 @@ public class SerializationRule implements RequiredSlots
 		return preSerializer.getSerializedNodes();
 	}
 
-	@Override
 	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
 		return Collections.singletonList(this);
-	}
-
-	@Override
-	public boolean isNull() {
-		return false;
 	}
 
 	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
@@ -186,7 +180,6 @@ public class SerializationRule implements RequiredSlots
 		return String.valueOf(s);
 	}
 
-	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
 		//	if (conjunction != null) {

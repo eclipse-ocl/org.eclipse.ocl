@@ -18,10 +18,6 @@ public interface SerializationNode extends SerializationElement
 	 * Ceate a shallow copy of this node with a changed multiplicativeCardinality.
 	 */
 	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
-	/**
-	 * Return the required slots in disjunctive normal form.
-	 */
-	@NonNull RequiredSlots getRequiredSlots();
 	@NonNull XtextParserRuleAnalysis getRuleAnalysis();
 	void preSerialize(@NonNull PreSerializer preSerialize);
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
