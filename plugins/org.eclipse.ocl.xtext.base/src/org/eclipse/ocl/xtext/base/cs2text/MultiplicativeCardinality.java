@@ -45,6 +45,17 @@ public enum MultiplicativeCardinality
 		}
 	}
 
+	public static @NonNull MultiplicativeCardinality max(@NonNull MultiplicativeCardinality multiplicativeCardinality1, @NonNull MultiplicativeCardinality multiplicativeCardinality2) {
+		int newState = multiplicativeCardinality1.state & multiplicativeCardinality2.state;
+		switch (newState) {
+			case 0: return ONE;
+			case 1: return ZERO_OR_ONE;
+			case 2: return ONE_OR_MORE;
+			case 3: return ZERO_OR_MORE;
+			default: throw new IllegalStateException();
+		}
+	}
+
 	private final @NonNull String name;
 	private final int state;
 
@@ -54,7 +65,19 @@ public enum MultiplicativeCardinality
 	}
 
 	boolean isOne() {
-		return (state & 3) == 0;
+		return (state & 3) == ONE.state;
+	}
+
+	boolean isOneOrMore() {
+		return (state & 3) == ONE_OR_MORE.state;
+	}
+
+	boolean isZeroOrMore() {
+		return (state & 3) == ZERO_OR_MORE.state;
+	}
+
+	boolean isZeroOrOne() {
+		return (state & 3) == ZERO_OR_ONE.state;
 	}
 
 	public boolean mayBeMany() {

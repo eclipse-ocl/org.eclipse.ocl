@@ -41,7 +41,7 @@ import org.eclipse.xtext.util.XtextSwitch;
  */
 public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 {
-	public static class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationNode>
+	public static class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 	{
 		/**
 		 * The analyzed rule
@@ -60,13 +60,13 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		}
 
-		public @NonNull SerializationNode analyze() {
+		public @NonNull SerializationElement analyze() {
 			AbstractElement rootElement = ruleAnalysis.getRule().getAlternatives();
 			return doSwitch(rootElement);
 		}
 
 		@Override
-		public @NonNull SerializationNode caseAction(Action action) {
+		public @NonNull SerializationElement caseAction(Action action) {
 			assert action != null;
 			String feature = action.getFeature();
 			if (feature != null) {
@@ -74,19 +74,18 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				return new AssignedCurrentSerializationNode(assignmentAnalysis, MultiplicativeCardinality.toEnum(action));
 
 			}
-			return getNullSerializationNode();
+			return NullSerializationNode.INSTANCE;
 		}
 
 		@Override
-		public @NonNull SerializationNode caseAlternatives(Alternatives alternatives) {
+		public @NonNull SerializationElement caseAlternatives(Alternatives alternatives) {
 			assert alternatives != null;
 			AlternativeUnassignedKeywordsSerializationNode alternativeUnassignedKeywordsSerializationNode = doAlternativeUnassignedKeywords(alternatives);
 			if (alternativeUnassignedKeywordsSerializationNode != null) {
 				return alternativeUnassignedKeywordsSerializationNode;
 			}
-			Map<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> eFeature2keywords = doAlternativeAssignedKeywords(alternatives);
 			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives);
-			List<@NonNull SerializationNode> serializationNodes = new ArrayList<>();
+			List<@NonNull SerializationElement> alternativeSerializationElements = doAlternativeAssignedKeywords(alternatives, multiplicativeCardinality);
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(alternatives)) {
 				boolean doSwitchNeeded = true;
 				if ((element instanceof Assignment) && (element.getCardinality() == null)) {
@@ -96,33 +95,53 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 					}
 				}
 				if (doSwitchNeeded) {
-					serializationNodes.add(doSwitch(element));
+					alternativeSerializationElements.add(doSwitch(element));
 				}
 			}
-			if (eFeature2keywords != null) {
-				for (Map.Entry<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> entry : eFeature2keywords.entrySet()) {
-					EStructuralFeature eFeature = entry.getKey();
-					List<@NonNull Keyword> keywords = entry.getValue();
-					XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis((Assignment)keywords.get(0).eContainer());
-					if (keywords.size() == 1) {
-						Keyword keyword = keywords.get(0);
-						serializationNodes.add(new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keyword));
-					}
-					else {
-						serializationNodes.add(new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords));
-					}
+			if (multiplicativeCardinality.isZeroOrMore()) {	// (A|B)* => A* | B*
+				Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerChoices = new HashMap<>();
+				SerializationElement conjunction = new ListOfSerializationNode();
+				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
+					conjunction = conjunction.add(alternativeSerializationElement.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE).freezeSequences(ruleAnalysis, alternatives));
 				}
+				return conjunction;
 			}
-			if (serializationNodes.size() == 1) {
-				return serializationNodes.get(0);
+			else if (multiplicativeCardinality.isOneOrMore()) { 											// (A|B)+ => A+B* | A*B+
+				SerializationElement disjunction = new ListOfListOfSerializationNode();
+				for (@NonNull SerializationElement alternativeSerializationElement1 : alternativeSerializationElements) {
+					SerializationElement conjunction = new ListOfSerializationNode();
+					conjunction.add(alternativeSerializationElement1);
+					for (@NonNull SerializationElement alternativeSerializationElement2 : alternativeSerializationElements) {
+						if (alternativeSerializationElement1 != alternativeSerializationElement2) {
+							conjunction = conjunction.add(alternativeSerializationElement2.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE));
+						}
+					}
+					disjunction = disjunction.add(conjunction.freezeSequences(ruleAnalysis, alternatives));
+				}
+				return disjunction;
 			}
-			else {
-				return new AlternativesSerializationNode(ruleAnalysis, alternatives, multiplicativeCardinality, serializationNodes);
+			else if (multiplicativeCardinality.isZeroOrOne()) {	// (A|B)? => A|B|epsilon
+				SerializationElement disjunction = new ListOfListOfSerializationNode();
+				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
+					SerializationElement conjunction = new ListOfSerializationNode();
+					conjunction = conjunction.add(alternativeSerializationElement);
+					disjunction = disjunction.add(conjunction.freezeSequences(ruleAnalysis, alternatives));
+				}
+				return disjunction.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE);
+			}
+			else { // multiplicativeCardinality.isOne()
+				SerializationElement disjunction = new ListOfListOfSerializationNode();
+				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
+					SerializationElement conjunction = new ListOfSerializationNode();
+					conjunction = conjunction.add(alternativeSerializationElement);
+					disjunction = disjunction.add(conjunction.freezeSequences(ruleAnalysis, alternatives));
+				}
+				return disjunction.setMultiplicativeCardinality(MultiplicativeCardinality.ONE);
 			}
 		}
 
 		@Override
-		public @NonNull SerializationNode caseAssignment(Assignment assignment) {
+		public @NonNull SerializationElement caseAssignment(Assignment assignment) {
 			assert assignment != null;
 			XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(assignment);
@@ -172,7 +191,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 					return content;
 				} */
 			//	return contents;
-				return getNullSerializationNode();
+				return NullSerializationNode.INSTANCE;
 			}
 			else if (terminal instanceof CrossReference) {
 				return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, multiplicativeCardinality, (CrossReference)terminal);
@@ -188,26 +207,24 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		} */
 
 		@Override
-		public @NonNull SerializationNode caseGroup(Group group) {
+		public @NonNull SerializationElement caseGroup(Group group) {
 			assert group != null;
-			List<@NonNull SerializationNode> serializationNodes = new ArrayList<>();
+			SerializationElement serializationResult = new ListOfSerializationNode();
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(group)) {		// XXX optimize the no alternatives case
-				SerializationNode serializationNode = doSwitch(element);
-				if (!serializationNode.isNull()) {
-					serializationNodes.add(serializationNode);
-				}
+				SerializationElement serializationElement = doSwitch(element);
+				serializationResult = serializationResult.add(serializationElement);
 			}
-			return new SequenceSerializationNode(ruleAnalysis, group, MultiplicativeCardinality.toEnum(group), serializationNodes);
+			return serializationResult.freezeSequences(ruleAnalysis, group);
 		}
 
 		@Override
-		public @NonNull SerializationNode caseKeyword(Keyword keyword) {
+		public @NonNull SerializationElement caseKeyword(Keyword keyword) {
 			assert keyword != null;
 			return new UnassignedKeywordSerializationNode(ruleAnalysis, keyword, MultiplicativeCardinality.toEnum(keyword));
 		}
 
 		@Override
-		public @NonNull SerializationNode caseRuleCall(RuleCall ruleCall) {
+		public @NonNull SerializationElement caseRuleCall(RuleCall ruleCall) {
 			assert ruleCall != null;
 			assert !(ruleCall.eContainer() instanceof Assignment);
 			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(ruleCall);
@@ -225,7 +242,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			throw new UnsupportedOperationException("Unsupported '" + object.eClass().getName() + "' in ParserRuleSwitch");
 		}
 
-		private @Nullable Map<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> doAlternativeAssignedKeywords(@NonNull Alternatives alternatives) {
+		private @NonNull List<@NonNull SerializationElement> doAlternativeAssignedKeywords(@NonNull Alternatives alternatives, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 			Map<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> eFeature2keywords = null;
 			Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
 			for (@NonNull AbstractElement element : elements) {
@@ -247,45 +264,23 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 					}
 				}
 			}
-			return eFeature2keywords;
-		/*	assert uniqueEFeature != null;
-			EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(elements.iterator().next());
-			List<@NonNull AssignedKeywordSerializationNode> alternativeNodes = new ArrayList<>();
-			for (@NonNull AbstractElement element : elements) {
-				AbstractElement terminal = XtextGrammarUtil.getTerminal(((Assignment)element));
-				MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(element);
-				AssignedKeywordSerializationNode assignedKeywordSerializationNode = new AssignedKeywordSerializationNode(ruleAnalysis, eContainingClass, uniqueEFeature, multiplicativeCardinality, (Keyword)terminal);
-				alternativeNodes.add(assignedKeywordSerializationNode);
-			}
-			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives);
-		//	EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(elements.iterator().next());
-			AlternativeAssignedKeywordsSerializationNode alternativeAssignedKeywordsSerializationNode = new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eContainingClass, uniqueEFeature, multiplicativeCardinality, alternativeNodes);
-		/ *	for (@NonNull AbstractElement element : elements) {
-				Assignment assignment = (Assignment)element;
-				Keyword keyword = (Keyword)assignment.getTerminal();
-				Assignment assignment = (Assignment)element;
-				XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
-				EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
-				AbstractElement terminal = assignment.getTerminal();
-				if (terminal instanceof Keyword) {
-					Keyword keyword = (Keyword)terminal;
-					if (eFeature2keywordsSerializationNode == null) {
-						eFeature2keywordsSerializationNode = new HashMap<>();
+			List<@NonNull SerializationElement> alternativeSerializationElements = new ArrayList<>();
+			if (eFeature2keywords != null) {
+				for (Map.Entry<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> entry : eFeature2keywords.entrySet()) {
+					EStructuralFeature eFeature = entry.getKey();
+					List<@NonNull Keyword> keywords = entry.getValue();
+					XtextAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis((Assignment)keywords.get(0).eContainer());
+					if (keywords.size() == 1) {
+						Keyword keyword = keywords.get(0);
+						alternativeSerializationElements.add(new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keyword));
 					}
-					AlternativeAssignedKeywordsSerializationNode serializationNode = eFeature2keywordsSerializationNode.get(eFeature);
-					if (serializationNode == null) {
-						EClass eContainingClass = (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
-						serializationNode = new AlternativeAssignedKeywordsSerializationNode(ruleAnalysis, eContainingClass, eFeature, multiplicativeCardinality);
-						eFeature2keywordsSerializationNode.put(eFeature, serializationNode);
-						serializationNodes.add(serializationNode);
+					else {
+						alternativeSerializationElements.add(new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords));
 					}
-					serializationNode.addKeyword(keyword);
-					doSwitchNeeded = false;
 				}
-			} * /
-			return alternativeAssignedKeywordsSerializationNode; */
+			}
+			return alternativeSerializationElements;
 		}
-
 
 		private @Nullable AlternativeUnassignedKeywordsSerializationNode doAlternativeUnassignedKeywords(@NonNull Alternatives alternatives) {
 			Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
@@ -303,23 +298,19 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		}
 
 		@Override
-		public @NonNull SerializationNode doSwitch(EObject eObject) {
+		public @NonNull SerializationElement doSwitch(EObject eObject) {
 			int classifierID = eObject.eClass().getClassifierID();
 			return ClassUtil.nonNullState(doSwitch(classifierID, eObject));
 		}
 
-		private @NonNull SerializationNode getNullSerializationNode() {
-			NullSerializationNode nullSerializationNode2 = nullSerializationNode;
-			if (nullSerializationNode2 == null) {
-				this.nullSerializationNode = nullSerializationNode2 = new NullSerializationNode(ruleAnalysis);
-			}
-			return nullSerializationNode2;
+		@Override
+		public @NonNull String toString() {
+			return ruleAnalysis.toString();
 		}
 	}
 
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull XtextAssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
-	private @Nullable SerializationNode serializationNode = null;
-	private @Nullable SerializationRule nullConjunction = null;
+	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
 
 	public XtextParserRuleAnalysis(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule) {
 		super(grammarAnalysis, parserRule);
@@ -369,23 +360,24 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				}
 			}
 		}
-		this.serializationNode = new ParserRuleSwitch(this).analyze();
+		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
+		SerializationElement serializationResult = new ParserRuleSwitch(this).analyze();
+		if (serializationResult.isListOfList()) {
+			for (@NonNull List<@NonNull SerializationNode> list : serializationResult.asListOfList().getLists()) {
+				SerializationRule serializationRule = new SerializationRule(this);
+				serializationRules.add(serializationRule);
+				serializationRule.accumulate(list, serializationResult.getMultiplicativeCardinality());
+			}
+		}
+		this.serializationRules = serializationRules;
 	}
 
-	public @Nullable SerializationNode basicGetContents() {
-		return serializationNode;
-	}
+//	public @Nullable SerializationNode basicGetContents() {
+//		return serializationNode;
+//	}
 
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull XtextAssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
-	}
-
-	public @NonNull SerializationRule getNullConjunction() {
-		if (nullConjunction == null) {
-			nullConjunction = new SerializationRule(this);
-		}
-		assert nullConjunction != null;
-		return nullConjunction;
 	}
 
 	public @NonNull ParserRule getParserRule() {
@@ -396,9 +388,14 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		return (EClass) XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(abstractRule));
 	}
 
-	public @NonNull SerializationNode getRootSerializationNode() {
-		assert serializationNode != null;
-		return serializationNode;
+//	public @NonNull SerializationNode getRootSerializationNode() {
+//		assert serializationNode != null;
+//		return serializationNode;
+//	}
+
+	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
+		assert serializationRules != null;
+		return serializationRules;
 	}
 
 	/**
@@ -466,11 +463,9 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		if ("Base::MultiplicityCS".equals(name)) {
 			getClass();		// XXX
 		}
-		SerializationNode serializationNode2 = serializationNode;
-		assert serializationNode2 != null;
-		RequiredSlots requiredSlots = serializationNode2.getRequiredSlots();
-		for (@NonNull SerializationRule serializationRule : requiredSlots.getSerializationRules()) {
-			serializationRule.getPreSerializer();		// XXX redundant/lazy
+		assert serializationRules != null;
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		//	serializationRule.getPreSerializer();		// XXX redundant/lazy
 		}
 	}
 

@@ -328,10 +328,10 @@ public class XtextGrammarAnalysis
 				assert ruleAnalyses != null;
 				List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
 				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-					SerializationNode rootSerializationNode = ((XtextParserRuleAnalysis)ruleAnalysis).getRootSerializationNode();
+				//	SerializationNode rootSerializationNode = ((XtextParserRuleAnalysis)ruleAnalysis).getRootSerializationNode();
 				//	assert rootSerializationNode != null;
-					RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
-					for (@NonNull SerializationRule serializationRule : requiredSlots.getSerializationRules()) {
+				//	RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
+					for (@NonNull SerializationRule serializationRule : ((XtextParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
 						EClass eActionClass = serializationRule.getProducedEClass();
 						if (eActionClass == eRuleClass) {
 							serializationRules.add(serializationRule);
@@ -485,7 +485,7 @@ public class XtextGrammarAnalysis
 				if ("Base::NextPathElementCS".equals(parserRuleAnalysis.getName())) {
 					getClass();		// XXX
 				}
-				SerializationNode rootSerializationNode = parserRuleAnalysis.basicGetContents();
+				SerializationNode rootSerializationNode = null; // XXX parserRuleAnalysis.basicGetContents();
 				if (rootSerializationNode != null) {
 					s.append("\n");
 					StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");

@@ -300,7 +300,7 @@ public class PreSerializer
 	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
 		addChildNode(sequenceSerializationNode);
 		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
-		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.getRuleAnalysis(), sequenceSerializationNode.group, sequenceSerializationNode.getMultiplicativeCardinality(), nestedSerializedNodes);
+		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.getRuleAnalysis(), sequenceSerializationNode.compoundElement, sequenceSerializationNode.getMultiplicativeCardinality(), nestedSerializedNodes);
 		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
 		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
 		return nestedPreSerializer;

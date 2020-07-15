@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.jdt.annotation.NonNull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public abstract class AbstractSerializationNode implements SerializationNode
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.CompoundElement;
+
+public abstract class AbstractSerializationNode extends AbstractSerializationElement implements SerializationNode
 {
 	/**
 	 * The overall (multi-)grammar analysis.
@@ -20,9 +26,34 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public AbstractSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	protected AbstractSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
+	}
+
+	@Override
+	public @NonNull SerializationElement add(@NonNull SerializationElement additionalSerializationElement) {
+		if (additionalSerializationElement.isNull()) {
+			return this;
+		}
+		else if (additionalSerializationElement.isNode()) {
+			List<@NonNull SerializationNode> newList = new ArrayList<>();
+			newList.add(this);
+			newList.add(additionalSerializationElement.asNode());
+			return new ListOfSerializationNode(newList, MultiplicativeCardinality.ONE);
+		}
+		else if (additionalSerializationElement.isList()) {
+			throw new IllegalStateException();			// Additional list should not be a future SequenceSerializationNode
+		}
+		else if (additionalSerializationElement.isListOfList()) {
+			for (@NonNull List<@NonNull SerializationNode> additionalList : additionalSerializationElement.asListOfList().getLists()) {
+				additionalList.add(0, this);
+			}
+			return additionalSerializationElement;
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	protected void appendCardinality(@NonNull StringBuilder s, int depth) {
@@ -31,6 +62,21 @@ public abstract class AbstractSerializationNode implements SerializationNode
 			s.append(multiplicativeCardinality);
 			s.append("]");
 		}
+	}
+
+	@Override
+	public @NonNull SerializationNode asNode() {
+		return this;
+	}
+
+	@Override
+	public @NonNull SerializationNode freezeAlternatives(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives) {
+		return this;
+	}
+
+	@Override
+	public @NonNull SerializationElement freezeSequences(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
+		return new SequenceSerializationNode(ruleAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), Collections.singletonList(this));
 	}
 
 	@Override
@@ -44,19 +90,15 @@ public abstract class AbstractSerializationNode implements SerializationNode
 	}
 
 	@Override
-	public boolean isNull() {
-		return false;
+	public boolean isNode() {
+		return true;
 	}
 
 	@Override
-	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializationBuilder.append("«Unsupported serialize '" + getClass().getSimpleName() + "'»");
-	}
-
-	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 0);
-		return s.toString();
+	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality.isZeroOrMore()) {
+			return this;
+		}
+		return clone(multiplicativeCardinality);
 	}
 }

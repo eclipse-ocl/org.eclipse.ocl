@@ -11,20 +11,42 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.CompoundElement;
 
 /**
  * A NullSerializationNode is used to indicate nothing to serialize avoiding the need for a genuinely
  * null value that confuses the XtextSwitch.
  */
-public class NullSerializationNode extends SimpleSerializationNode
+public class NullSerializationNode extends AbstractSerializationElement
 {
-	public NullSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
-		super(ruleAnalysis, MultiplicativeCardinality.ZERO_OR_MORE);
+	public static final @NonNull NullSerializationNode INSTANCE = new NullSerializationNode();
+
+	private NullSerializationNode() {}
+
+//	@Override
+//	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+//		throw new UnsupportedOperationException();
+//	}
+
+	@Override
+	public @NonNull SerializationElement add(@NonNull SerializationElement additionalSerializationElement) {
+		return additionalSerializationElement;
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		throw new UnsupportedOperationException();
+	public @NonNull SerializationNode freezeAlternatives(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives) {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public @NonNull SerializationElement freezeSequences(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
+		return this;
+	}
+
+	@Override
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+		return MultiplicativeCardinality.ZERO_OR_MORE;
 	}
 
 	@Override
@@ -33,8 +55,12 @@ public class NullSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
+	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return this;
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("«null»");
-		appendCardinality(s, depth);
 	}
 }

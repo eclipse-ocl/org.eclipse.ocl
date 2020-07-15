@@ -42,6 +42,14 @@ public class SerializationRule implements RequiredSlots
 		}
 	}
 
+	public void accumulate(@NonNull List<@NonNull SerializationNode> list, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		for (@NonNull SerializationNode assignedSerializationNode : list) {
+			if (assignedSerializationNode instanceof AssignedSerializationNode) {		// XXX bad cast
+				accumulate((AssignedSerializationNode) assignedSerializationNode, assignedSerializationNode.getMultiplicativeCardinality(), multiplicativeCardinality);
+			}
+		}
+	}
+
 	public void accumulate(@NonNull AssignedSerializationNode serializationNode, @NonNull MultiplicativeCardinality innerMultiplicativeCardinality, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
 //		assert innerMultiplicativeCardinality == assignmentAnalysis.getMultiplicativeCardinality();
 		XtextAssignmentAnalysis assignmentAnalysis = serializationNode.getAssignmentAnalysis();
@@ -137,9 +145,10 @@ public class SerializationRule implements RequiredSlots
 
 	public @NonNull PreSerializer getPreSerializer() {
 		if (preSerializer == null) {
-			PreSerializer preSerializer2 = new PreSerializer(ruleAnalysis, this, ruleAnalysis.getRootSerializationNode());
-			this.preSerializer = preSerializer2;
-			preSerializer2.preSerialize();
+	//		for (@NonNull SerializationRule serializationRule : ruleAnalysis.getSerializationRules()) {
+	//		PreSerializer preSerializer2 = new PreSerializer(ruleAnalysis, this, ruleAnalysis.getRootSerializationNode());
+	//		this.preSerializer = preSerializer2;
+	//		preSerializer2.preSerialize();
 		}
 		assert preSerializer != null;
 		return preSerializer;

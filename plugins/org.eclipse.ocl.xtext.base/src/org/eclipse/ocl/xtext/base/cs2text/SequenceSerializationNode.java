@@ -18,23 +18,23 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.xtext.Group;
+import org.eclipse.xtext.CompoundElement;
 
 public class SequenceSerializationNode extends CompositeSerializationNode
 {
-	protected final @NonNull Group group;
+	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable RequiredSlots requiredSlots = null;
 
-	public SequenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull Group group, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+	public SequenceSerializationNode(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
 		super(ruleAnalysis, multiplicativeCardinality);
-		this.group = group;
+		this.compoundElement = compoundElement;
 		this.serializationNodes = groupSerializationNodes;
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new SequenceSerializationNode(ruleAnalysis, group, multiplicativeCardinality, serializationNodes);
+		return new SequenceSerializationNode(ruleAnalysis, compoundElement, multiplicativeCardinality, serializationNodes);
 	}
 
 	/**
@@ -173,23 +173,14 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		if (depth >= 0) {
-			s.append("\t");
-		}
 		s.append("{");
-	//	boolean isFirst = true;
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-		//	if (!isFirst) {
-				s.append(depth >= 0 ? "\n" : " ");
-		//	}
+			s.append("\n");
 			StringUtil.appendIndentation(s, depth, "\t");
-			if (depth >= 0) {
-				s.append("+ ");
-			}
-			serializationNode.toString(s, depth >= 0 ? depth+1 : depth);
-		//	isFirst = false;
+			s.append("+ ");
+			serializationNode.toString(s, depth+1);
 		}
-		s.append(depth >= 0 ? "\n" : " ");
+		s.append("\n");
 		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
 		appendCardinality(s, depth);
