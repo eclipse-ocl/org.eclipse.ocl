@@ -102,39 +102,39 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 				Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> outerChoices = new HashMap<>();
 				SerializationElement conjunction = new ListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
-					conjunction = conjunction.add(alternativeSerializationElement.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE).freezeSequences(ruleAnalysis, alternatives));
+					conjunction = conjunction.addConcatenation(alternativeSerializationElement.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE).freezeSequences(ruleAnalysis, alternatives));
 				}
 				return conjunction;
 			}
 			else if (multiplicativeCardinality.isOneOrMore()) { 											// (A|B)+ => A+B* | A*B+
-				SerializationElement disjunction = new ListOfListOfSerializationNode();
+				ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement1 : alternativeSerializationElements) {
 					SerializationElement conjunction = new ListOfSerializationNode();
-					conjunction.add(alternativeSerializationElement1);
+					conjunction.addConcatenation(alternativeSerializationElement1);
 					for (@NonNull SerializationElement alternativeSerializationElement2 : alternativeSerializationElements) {
 						if (alternativeSerializationElement1 != alternativeSerializationElement2) {
-							conjunction = conjunction.add(alternativeSerializationElement2.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE));
+							conjunction = conjunction.addConcatenation(alternativeSerializationElement2.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE));
 						}
 					}
-					disjunction = disjunction.add(conjunction.freezeSequences(ruleAnalysis, alternatives));
+					disjunction = disjunction.addConjunction(conjunction.freezeSequences(ruleAnalysis, alternatives));
 				}
 				return disjunction;
 			}
 			else if (multiplicativeCardinality.isZeroOrOne()) {	// (A|B)? => A|B|epsilon
-				SerializationElement disjunction = new ListOfListOfSerializationNode();
+				ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
 					SerializationElement conjunction = new ListOfSerializationNode();
-					conjunction = conjunction.add(alternativeSerializationElement);
-					disjunction = disjunction.add(conjunction.freezeSequences(ruleAnalysis, alternatives));
+					conjunction = conjunction.addConcatenation(alternativeSerializationElement);
+					disjunction = disjunction.addConjunction(conjunction.freezeSequences(ruleAnalysis, alternatives));
 				}
 				return disjunction.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE);
 			}
 			else { // multiplicativeCardinality.isOne()
-				SerializationElement disjunction = new ListOfListOfSerializationNode();
+				ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
 					SerializationElement conjunction = new ListOfSerializationNode();
-					conjunction = conjunction.add(alternativeSerializationElement);
-					disjunction = disjunction.add(conjunction.freezeSequences(ruleAnalysis, alternatives));
+					conjunction = conjunction.addConcatenation(alternativeSerializationElement);
+					disjunction = disjunction.addConjunction(conjunction.freezeSequences(ruleAnalysis, alternatives));
 				}
 				return disjunction.setMultiplicativeCardinality(MultiplicativeCardinality.ONE);
 			}
@@ -212,7 +212,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 			SerializationElement serializationResult = new ListOfSerializationNode();
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(group)) {		// XXX optimize the no alternatives case
 				SerializationElement serializationElement = doSwitch(element);
-				serializationResult = serializationResult.add(serializationElement);
+				serializationResult = serializationResult.addConcatenation(serializationElement);
 			}
 			return serializationResult.freezeSequences(ruleAnalysis, group);
 		}
@@ -340,7 +340,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
 	protected void analyze() {
-		if ("Base::MultiplicityCS".equals(getName())) {
+		if ("OCLinEcore::TopLevelCS".equals(getName())) {
 			getClass(); // XXX debugging
 		}
 		addProducedTypeRef(XtextGrammarUtil.getType(abstractRule));
@@ -363,11 +363,24 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
 		SerializationElement serializationResult = new ParserRuleSwitch(this).analyze();
 		if (serializationResult.isListOfList()) {
-			for (@NonNull List<@NonNull SerializationNode> list : serializationResult.asListOfList().getLists()) {
-				SerializationRule serializationRule = new SerializationRule(this);
+			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationResult.asListOfList().getLists()) {
+				assert serializationNodes.size() == 1;
+				SerializationRule serializationRule = new SerializationRule(this, serializationNodes.get(0));
 				serializationRules.add(serializationRule);
-				serializationRule.accumulate(list, serializationResult.getMultiplicativeCardinality());
 			}
+		}
+		else if (serializationResult.isList()) {
+			List<@NonNull SerializationNode> serializationNodes = serializationResult.asList().getNodes();
+			assert serializationNodes.size() == 1;
+			SerializationRule serializationRule = new SerializationRule(this, serializationNodes.get(0));
+			serializationRules.add(serializationRule);
+		}
+		else if (serializationResult.isNode()) {
+			SerializationRule serializationRule = new SerializationRule(this, serializationResult.asNode());
+			serializationRules.add(serializationRule);
+		}
+		else {
+			getClass();
 		}
 		this.serializationRules = serializationRules;
 	}
@@ -465,7 +478,7 @@ public class XtextParserRuleAnalysis extends XtextAbstractRuleAnalysis
 		}
 		assert serializationRules != null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-		//	serializationRule.getPreSerializer();		// XXX redundant/lazy
+			serializationRule.getPreSerializer();
 		}
 	}
 

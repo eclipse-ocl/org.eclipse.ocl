@@ -37,7 +37,7 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement add(@NonNull SerializationElement additionalSerializationElement) {
+	public @NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement) {
 		if (additionalSerializationElement.isNull()) {
 			return this;
 		}
@@ -102,12 +102,10 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("{");
 		for (@NonNull SerializationNode serializationNode : listOfNodes) {
-			s.append("\n");
 			StringUtil.appendIndentation(s, depth, "\t");
 			s.append("+ ");
 			serializationNode.toString(s, depth+1);
 		}
-		s.append("\n");
 		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
 	//	appendCardinality(s, depth);

@@ -40,21 +40,18 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
+	/**
+	 * Permute additionalSerializationElement as concatenations of each prevailing conjunction.
+	 */
 	@Override
-	public @NonNull SerializationElement add(@NonNull SerializationElement additionalSerializationElement) {
+	public @NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement) {
 		if (additionalSerializationElement.isNull()) {
-			multiplicativeCardinality = MultiplicativeCardinality.max(multiplicativeCardinality, MultiplicativeCardinality.ZERO_OR_ONE);
 			return this;
 		}
 		else if (additionalSerializationElement.isNode()) {
 			SerializationNode additionalSerializationNode = additionalSerializationElement.asNode();
-			if (listOfListOfNodes.size() > 0) {
-				for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-					listOfNodes.add(additionalSerializationNode);
-				}
-			}
-			else {
-				listOfListOfNodes.add(Lists.newArrayList(additionalSerializationNode));
+			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+				listOfNodes.add(additionalSerializationNode);
 			}
 			return this;
 		}
@@ -77,6 +74,32 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 				listOfListOfNodes.addAll(additionalListOfListOfNodes);
 			}
 			return new ListOfListOfSerializationNode(newListOfList, MultiplicativeCardinality.ONE);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	/**
+	 * Add additionalSerializationElement as one or more additional conjunctions leaving the prevailing conjunctions unchnaged.
+	 */
+	public @NonNull ListOfListOfSerializationNode addConjunction(@NonNull SerializationElement additionalSerializationElement) {
+		if (additionalSerializationElement.isNull()) {
+			multiplicativeCardinality = MultiplicativeCardinality.max(multiplicativeCardinality, MultiplicativeCardinality.ZERO_OR_ONE);
+			return this;
+		}
+		else if (additionalSerializationElement.isNode()) {
+			listOfListOfNodes.add(Lists.newArrayList(additionalSerializationElement.asNode()));
+			return this;
+		}
+		else if (additionalSerializationElement.isList()) {
+			throw new IllegalStateException();			// Additional list should not be a future SequenceSerializationNode
+		}
+		else if (additionalSerializationElement.isListOfList()) {
+			List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
+			List<@NonNull List<@NonNull SerializationNode>> additionalListOfListOfNodes = additionalSerializationElement.asListOfList().getLists();
+			listOfListOfNodes.addAll(additionalListOfListOfNodes);
+			return this;
 		}
 		else {
 			throw new UnsupportedOperationException();
@@ -133,21 +156,17 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("{");
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-			s.append("\n");
 			StringUtil.appendIndentation(s, depth, "\t");
 			s.append("| ");
 			s.append("{");
 			for (@NonNull SerializationNode serializationNode : listOfNodes) {
-				s.append("\n");
 				StringUtil.appendIndentation(s, depth+1, "\t");
 				s.append("+ ");
 				serializationNode.toString(s, depth+2);
 			}
-			s.append("\n");
 			StringUtil.appendIndentation(s, depth+1, "\t");
 			s.append("}");
 		}
-		s.append("\n");
 		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
 	//	appendCardinality(s, depth);

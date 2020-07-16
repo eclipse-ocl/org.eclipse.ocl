@@ -656,7 +656,6 @@ public class CardinalityExpression implements Nameable
 			List<@NonNull String> sortedValues = new ArrayList<>(value2valueCardinalityExpression2.keySet());
 			Collections.sort(sortedValues);
 			for (@NonNull String sortedValue : sortedValues) {
-				s.append("\n");
 				StringUtil.appendIndentation(s, depth+1, "\t");
 				ValueCardinalityExpression valueCardinalityExpression = value2valueCardinalityExpression2.get(sortedValue);
 				assert valueCardinalityExpression != null;

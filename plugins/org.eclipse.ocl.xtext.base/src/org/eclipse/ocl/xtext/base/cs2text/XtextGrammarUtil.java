@@ -54,10 +54,10 @@ public class XtextGrammarUtil
 	} */
 
 	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
-		if (eFeatureScope != getEContainingClass(eStructuralFeature)) {
-			s.append(XtextGrammarUtil.getName(eFeatureScope));
-			s.append("::");
-		}
+	//	if (eFeatureScope != getEContainingClass(eStructuralFeature)) {
+	//		s.append(XtextGrammarUtil.getName(eFeatureScope));
+	//		s.append("::");
+	//	}
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 	}
 

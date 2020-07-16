@@ -321,8 +321,8 @@ public class XtextGrammarAnalysis
 		for (@NonNull EClassifier eClassifier : eClasses) {
 			if (eClassifier instanceof EClass) {
 				EClass eRuleClass = (EClass)eClassifier;
-				if ("PathElementWithURICS".equals(eRuleClass.getName())) {
-					getClass();
+				if ("TopLevelCS".equals(eRuleClass.getName())) {
+					getClass();			// XXX debugging
 				}
 				List<@NonNull XtextAbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eRuleClass);
 				assert ruleAnalyses != null;
@@ -485,27 +485,23 @@ public class XtextGrammarAnalysis
 				if ("Base::NextPathElementCS".equals(parserRuleAnalysis.getName())) {
 					getClass();		// XXX
 				}
-				SerializationNode rootSerializationNode = null; // XXX parserRuleAnalysis.basicGetContents();
-				if (rootSerializationNode != null) {
-					s.append("\n");
-					StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
-					rootSerializationNode.toString(s, 2);
-					/* RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
-					if (!requiredSlots.isNull()) {
-
-						for (@NonNull SerializationRule conjunction : requiredSlots.getSerializationRules()) {
-							conjunction.getPreSerializer();		// XXX redundant/lazy
-							s.append("\n");
-							StringUtil.appendIndentation(s, 2, "\t");
-							s.append("|& ");
-							conjunction.toString(s, 2);
+				for (@NonNull SerializationRule serializationRule : parserRuleAnalysis.getSerializationRules()) {
+		//		SerializationNode rootSerializationNode = parserRuleAnalysis.getR();
+		//		if (rootSerializationNode != null) {
+				//	s.append("\n");
+				//	StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
+				//	rootSerializationNode.toString(s, 2);
+					serializationRule.getPreSerializer();		// XXX redundant/lazy
+							StringUtil.appendIndentation(s, 1, "\t");
+							s.append("|&\t");
+							serializationRule.toString(s, 2);
 						}
-					/ *	s.append("\n");
+					/*	s.append("\n");
 						StringUtil.appendIndentation(s, 2, "\t");
 						s.append("|& ");
 						requiredSlots.toString(s, 2); * /
 					} */
-				}
+		//		}
 			}
 		}
 /*		s.append("\n\nUser EClass <=> Active Xtext production rule(s)");
@@ -542,7 +538,6 @@ public class XtextGrammarAnalysis
 			for (@NonNull SerializationRule serializationRule : serializationRules) {
 				s.append(" ");;
 			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
-				s.append("\n");
 				StringUtil.appendIndentation(s, 1, "\t");
 				s.append("|& ");
 				serializationRule.toString(s, 1);

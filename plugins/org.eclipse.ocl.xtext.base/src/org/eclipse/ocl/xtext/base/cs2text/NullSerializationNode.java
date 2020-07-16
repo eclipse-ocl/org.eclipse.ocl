@@ -30,7 +30,7 @@ public class NullSerializationNode extends AbstractSerializationElement
 //	}
 
 	@Override
-	public @NonNull SerializationElement add(@NonNull SerializationElement additionalSerializationElement) {
+	public @NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement) {
 		return additionalSerializationElement;
 	}
 

@@ -25,15 +25,17 @@ import org.eclipse.jdt.annotation.Nullable;
 public class SerializationRule
 {
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull SerializationNode rootSerializationNode;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
 	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
-	private @Nullable List<@NonNull AssignedSerializationNode> conjunction = null;
-	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
+//	private @Nullable List<@NonNull AssignedSerializationNode> conjunction = null;
+//	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
 	private @Nullable PreSerializer preSerializer = null;
 	private @Nullable EClass producedEClass = null;
 
-	public SerializationRule(@NonNull XtextParserRuleAnalysis ruleAnalysis) {
+	public SerializationRule(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
+		this.rootSerializationNode = rootSerializationNode;
 	}
 
 	public void accumulate(@NonNull SerializationRule innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
@@ -89,9 +91,9 @@ public class SerializationRule
 		return preSerializer.computeActualCardinalities(element, eFeature2contentAnalysis);
 	}
 
-	public @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> getAlternativesChoices() {
-		return alternatives2choice;
-	}
+//	public @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> getAlternativesChoices() {
+//		return alternatives2choice;
+//	}
 
 	public @NonNull Iterable<@NonNull AssignedSerializationNode> getConjunction() {
 		return assignedSerializationNodes;
@@ -145,10 +147,9 @@ public class SerializationRule
 
 	public @NonNull PreSerializer getPreSerializer() {
 		if (preSerializer == null) {
-	//		for (@NonNull SerializationRule serializationRule : ruleAnalysis.getSerializationRules()) {
-	//		PreSerializer preSerializer2 = new PreSerializer(ruleAnalysis, this, ruleAnalysis.getRootSerializationNode());
-	//		this.preSerializer = preSerializer2;
-	//		preSerializer2.preSerialize();
+			PreSerializer preSerializer2 = new PreSerializer(ruleAnalysis, this, rootSerializationNode);
+			this.preSerializer = preSerializer2;
+			preSerializer2.preSerialize();
 		}
 		assert preSerializer != null;
 		return preSerializer;
@@ -163,10 +164,10 @@ public class SerializationRule
 		return Collections.singletonList(this);
 	}
 
-	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
-		assert this.alternatives2choice == null;
-		this.alternatives2choice = alternatives2choice;
-	}
+//	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
+//		assert this.alternatives2choice == null;
+//		this.alternatives2choice = alternatives2choice;
+//	}
 
 	public void toRuleString(@NonNull StringBuilder s) {
 		assert preSerializer != null;
@@ -192,7 +193,7 @@ public class SerializationRule
 			isFirst = false;
 		}
 		if (preSerializer != null) {
-			preSerializer.toString(s, depth > 0 ? depth+1 : -1);
+			preSerializer.toString(s, depth);
 		}
 	}
 }

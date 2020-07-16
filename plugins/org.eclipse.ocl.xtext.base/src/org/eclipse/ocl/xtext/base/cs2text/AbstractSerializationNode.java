@@ -32,7 +32,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationElement add(@NonNull SerializationElement additionalSerializationElement) {
+	public @NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement) {
 		if (additionalSerializationElement.isNull()) {
 			return this;
 		}

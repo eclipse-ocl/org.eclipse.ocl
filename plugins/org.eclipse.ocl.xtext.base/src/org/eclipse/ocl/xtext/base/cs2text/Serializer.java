@@ -98,11 +98,16 @@ public class Serializer
 	 * Serialize a serializationNode to the serializationBuilder.
 	 */
 	protected void serializeNode(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializationNode) {
-		CardinalityVariable variable = preSerializer.getVariable(serializationNode);
-		Integer value = variable2value.get(variable);
-		assert value != null;
-		for (int i = 0; i < value.intValue(); i++) {
+		if (serializationNode.getMultiplicativeCardinality().isOne()) {
 			serializationNode.serialize(this, serializationBuilder);
+		}
+		else {
+			CardinalityVariable variable = preSerializer.getVariable(serializationNode);
+			Integer value = variable2value.get(variable);
+			assert value != null;
+			for (int i = 0; i < value.intValue(); i++) {
+				serializationNode.serialize(this, serializationBuilder);
+			}
 		}
 	}
 

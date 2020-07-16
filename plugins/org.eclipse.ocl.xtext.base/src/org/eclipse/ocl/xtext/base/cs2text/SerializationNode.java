@@ -21,4 +21,5 @@ public interface SerializationNode extends SerializationElement
 	@NonNull XtextParserRuleAnalysis getRuleAnalysis();
 	void preSerialize(@NonNull PreSerializer preSerialize);
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
+//	@NonNull String toRuleString(@NonNull StringBuilder s);
 }

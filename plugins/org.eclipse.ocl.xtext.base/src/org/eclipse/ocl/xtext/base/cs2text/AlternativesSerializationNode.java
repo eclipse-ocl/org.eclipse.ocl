@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -44,7 +43,8 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 
 	@Override
 	public void preSerialize(@NonNull PreSerializer preSerializer) {
-		SerializationNode chosenNode = preSerializer.getChosenNode(this);
+		throw new IllegalStateException();
+/*		SerializationNode chosenNode = preSerializer.getChosenNode(this);
 		if (chosenNode == this) {
 			List<@NonNull SerializationNode> multiAlternativeSerializationNodes = new ArrayList<>(alternativeSerializationNodes.size());
 			for (@NonNull SerializationNode alternativeNode : alternativeSerializationNodes) {
@@ -61,7 +61,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 		}
 		else if (chosenNode != null) {
 			chosenNode.preSerialize(preSerializer);
-		}
+		} */
 	}
 
 //	@Override
@@ -72,21 +72,14 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		if (depth >= 0) {
-			s.append("\t");
-		}
 		s.append("{");
 	//	boolean isFirst = true;
 		for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
-		//	if (!isFirst) {
-				s.append(depth >= 0 ? "\n" : " ");
-		//	}
 			StringUtil.appendIndentation(s, depth, "\t");
 			s.append("| ");
 			alternativeSerializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		//	isFirst = false;
 		}
-		s.append(depth >= 0 ? "\n" : " ");
 		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
 		appendCardinality(s, depth);

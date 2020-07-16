@@ -25,6 +25,7 @@ public class CardinalityVariable implements Nameable
 	public CardinalityVariable(@NonNull String name, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.name = name;
 		this.multiplicativeCardinality = multiplicativeCardinality;
+		assert !multiplicativeCardinality.isOne();
 	}
 
 	public boolean isOne() {

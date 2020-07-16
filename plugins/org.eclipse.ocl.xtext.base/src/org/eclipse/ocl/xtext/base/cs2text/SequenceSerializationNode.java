@@ -77,12 +77,10 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("{");
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			s.append("\n");
 			StringUtil.appendIndentation(s, depth, "\t");
-			s.append("+ ");
-			serializationNode.toString(s, depth+1);
+			s.append(depth >= 0 ? "+\t" : " ");
+			serializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		}
-		s.append("\n");
 		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
 		appendCardinality(s, depth);

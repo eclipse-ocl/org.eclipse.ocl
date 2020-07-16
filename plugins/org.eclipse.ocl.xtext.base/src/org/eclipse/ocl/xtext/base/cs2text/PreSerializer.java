@@ -41,7 +41,7 @@ public class PreSerializer
 	public static final @NonNull Integer ZERO = Integer.valueOf(0);
 
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
-	protected final @NonNull SerializationRule requiredSlotsConjunction;
+	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	protected final @Nullable SerializationNode parentSerializedNode;
 
@@ -51,7 +51,7 @@ public class PreSerializer
 	 * - an alternative element is a chosen alternative
 	 * - the alternative is the sequence of all alternative elements for a many cardinality.
 	 */
-	private final @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice;
+//	private final @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice;
 	private final @NonNull Map<@NonNull SerializationNode, @Nullable SerializationNode> node2parent;
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
@@ -59,12 +59,12 @@ public class PreSerializer
 	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions = null;
 
-	public PreSerializer(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule requiredSlotsConjunction, @NonNull SerializationNode rootSerializationNode) {
+	public PreSerializer(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule serializationRule, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
-		this.requiredSlotsConjunction = requiredSlotsConjunction;
+		this.serializationRule = serializationRule;
 		this.rootSerializationNode = rootSerializationNode;
 		this.parentSerializedNode = null;
-		this.alternatives2choice = requiredSlotsConjunction.getAlternativesChoices();
+//		this.alternatives2choice = requiredSlotsConjunction.getAlternativesChoices();
 		this.node2parent = new HashMap<>();
 		this.node2variable = new HashMap<>();
 		this.variable2node = new HashMap<>();
@@ -74,10 +74,10 @@ public class PreSerializer
 
 	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode, @NonNull List<@NonNull SerializationNode> serializationNodes) {
 		this.ruleAnalysis = preSerializer.ruleAnalysis;
-		this.requiredSlotsConjunction = preSerializer.requiredSlotsConjunction;
+		this.serializationRule = preSerializer.serializationRule;
 		this.rootSerializationNode = preSerializer.rootSerializationNode;
 		this.parentSerializedNode = parentSerializedNode;
-		this.alternatives2choice = preSerializer.alternatives2choice;
+//		this.alternatives2choice = preSerializer.alternatives2choice;
 		this.node2parent = preSerializer.node2parent;
 		this.node2variable = preSerializer.node2variable;
 		this.variable2node = preSerializer.variable2node;
@@ -97,7 +97,7 @@ public class PreSerializer
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>();
 		for (SerializationNode serializationNode = assignedSerializationNode; serializationNode != null; serializationNode = node2parent.get(serializationNode)) {
 			assert node2parent.containsKey(serializationNode);		// XXX debugging
-			assert node2variable.containsKey(serializationNode);		// XXX debugging
+		//	assert node2variable.containsKey(serializationNode);		// XXX debugging
 			CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
 			if (cardinalityVariable != null) {
 				variables.add(0, cardinalityVariable);
@@ -125,11 +125,13 @@ public class PreSerializer
 		MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 		String name = String.format("C%02d", variable2node.size());
 		assert name != null;
-		CardinalityVariable cardinalityVariable = new CardinalityVariable(name, multiplicativeCardinality);
-		CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
-		assert old2 == null;
-		SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
-		assert old3 == null;
+		if (!multiplicativeCardinality.isOne()) {
+			CardinalityVariable cardinalityVariable = new CardinalityVariable(name, multiplicativeCardinality);
+			CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
+			assert old2 == null;
+			SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
+			assert old3 == null;
+		}
 	/*	MultiplicativeCardinality subMultiplicativeCardinality = multiplicativeCardinality.mayBeMany() ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ZERO_OR_ONE;
 		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			for (@NonNull String value : ((AlternativeAssignedKeywordsSerializationNode)serializationNode).getValueOrValues()) {
@@ -306,10 +308,10 @@ public class PreSerializer
 		return nestedPreSerializer;
 	}
 
-	public @Nullable SerializationNode getChosenNode(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
-		assert alternatives2choice != null;
-		return alternatives2choice.get(alternativesSerializationNode);
-	}
+//	public @Nullable SerializationNode getChosenNode(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
+//		assert alternatives2choice != null;
+//		return alternatives2choice.get(alternativesSerializationNode);
+//	}
 
 	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
 		return serializationNodes;
@@ -460,37 +462,33 @@ public class PreSerializer
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("\n");
-		StringUtil.appendIndentation(s, depth+1, "\t");
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializationNode.toString(s, depth+2);
+			serializationNode.toString(s, depth);
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2node.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityVariable variable : variables) {
 			SerializationNode serializationNode = variable2node.get(variable);
 			assert serializationNode != null;
-		//	if (entry.getValue() != null) {
-				s.append("\n");
-				StringUtil.appendIndentation(s, depth, "\t");
-				s.append(variable);
-				s.append(": ");
-				serializationNode.toString(s, -1);
-		//	}
+			StringUtil.appendIndentation(s, depth, "\t");
+			s.append("- ");
+			s.append(variable);
+			s.append(": ");
+			serializationNode.toString(s, -1);
 		}
 		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
 		Collections.sort(expressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityExpression expression : expressions) {
-			s.append("\n");
 			StringUtil.appendIndentation(s, depth, "\t");
+			s.append("- ");
 			expression.toString(s, depth);
 		}
 		Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions2 = variable2solutions;
 		if (variable2solutions2 != null) {
 			for (@NonNull CardinalityVariable variable : variables) {	// XXX
 				Object solutions = variable2solutions2.get(variable);
-				s.append("\n");
 				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("- ");
 				s.append(variable);
 				s.append(" = ");
 				if (solutions instanceof List) {

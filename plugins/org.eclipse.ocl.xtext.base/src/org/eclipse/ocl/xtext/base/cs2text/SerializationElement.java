@@ -27,7 +27,7 @@ import org.eclipse.xtext.CompoundElement;
  */
 public interface SerializationElement
 {
-	@NonNull SerializationElement add(@NonNull SerializationElement additionalSerializationElement);
+	@NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement);
 	@NonNull ListOfSerializationNode asList();
 	@NonNull ListOfListOfSerializationNode asListOfList();
 	@NonNull SerializationNode asNode();
