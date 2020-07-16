@@ -25,7 +25,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.CardinalityExpression.RuntimeSolution;
 import org.eclipse.ocl.xtext.base.cs2text.CardinalityExpression.ValueCardinalityExpression;
 
 import com.google.common.collect.Iterables;
@@ -44,27 +43,18 @@ public class PreSerializer
 	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	protected final @Nullable SerializationNode parentSerializedNode;
-
-	/**
-	 * The chosen alternative for each Alternative AbstractElement in this permutation of a ParserRule.
-	 * - null is the nothing choice of an optional alternative
-	 * - an alternative element is a chosen alternative
-	 * - the alternative is the sequence of all alternative elements for a many cardinality.
-	 */
-//	private final @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice;
 	private final @NonNull Map<@NonNull SerializationNode, @Nullable SerializationNode> node2parent;
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
 	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
-	private @Nullable Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions = null;
+	private @Nullable Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = null;
 
 	public PreSerializer(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule serializationRule, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.serializationRule = serializationRule;
 		this.rootSerializationNode = rootSerializationNode;
 		this.parentSerializedNode = null;
-//		this.alternatives2choice = requiredSlotsConjunction.getAlternativesChoices();
 		this.node2parent = new HashMap<>();
 		this.node2variable = new HashMap<>();
 		this.variable2node = new HashMap<>();
@@ -77,7 +67,6 @@ public class PreSerializer
 		this.serializationRule = preSerializer.serializationRule;
 		this.rootSerializationNode = preSerializer.rootSerializationNode;
 		this.parentSerializedNode = parentSerializedNode;
-//		this.alternatives2choice = preSerializer.alternatives2choice;
 		this.node2parent = preSerializer.node2parent;
 		this.node2variable = preSerializer.node2variable;
 		this.variable2node = preSerializer.variable2node;
@@ -144,11 +133,19 @@ public class PreSerializer
 		} */
 	}
 
-	public boolean addSolution(@NonNull CardinalityVariable variable, @NonNull Object solution) {
-		Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions2 = variable2solutions;
-		assert variable2solutions2 != null;
-		Object oldSolutions = variable2solutions2.get(variable);
-		if (oldSolutions instanceof List<?>) {
+	public void addSolution(@NonNull CardinalityVariable variable, @NonNull CardinalitySolution solution) {
+		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
+		assert variable2solution2 != null;
+		CardinalitySolution oldSolution = variable2solution2.get(variable);
+		CardinalitySolution netSolution;
+		if (oldSolution == null) {
+			netSolution = solution;
+		}
+		else {
+			netSolution = oldSolution.addSolution(solution);
+		}
+		variable2solution2.put(variable, netSolution);
+	/*	if (oldSolutions instanceof List<?>) {
 			@SuppressWarnings("unchecked")
 			List<Object> castOldSolutions = (List<Object>)oldSolutions;
 			if (castOldSolutions.contains(solution)) {
@@ -158,35 +155,30 @@ public class PreSerializer
 			return true;
 		}
 		else if (oldSolutions == null) {
-			variable2solutions2.put(variable, solution);
+			variable2solution2.put(variable, solution);
 			return true;
 		}
 		else if (!oldSolutions.equals(solution)) {
 			List<Object> newSolutions = new ArrayList<>();
 			newSolutions.add(oldSolutions);
 			newSolutions.add(solution);
-			variable2solutions2.put(variable, newSolutions);
+			variable2solution2.put(variable, newSolutions);
 			return true;
 		}
 		else {
 			return false;
-		}
+		} */
 	}
 
 	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-		Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions2 = variable2solutions;
-		assert variable2solutions2 != null;
+		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
+		assert variable2solution2 != null;
 		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
-		for (@NonNull CardinalityVariable cardinalityVariable : variable2solutions2.keySet()) {
-			Object solution = variable2solutions2.get(cardinalityVariable);
-			Integer integerSolution;
-			if (solution instanceof Integer) {
-				integerSolution = ((Integer)solution).intValue();
-			}
-			else if (solution instanceof CardinalityExpression.Solution) {
-				integerSolution = ((CardinalityExpression.Solution)solution).solve(eFeature2contentAnalysis);
-			}
-			else {
+		for (@NonNull CardinalityVariable cardinalityVariable : variable2solution2.keySet()) {
+			CardinalitySolution solution = variable2solution2.get(cardinalityVariable);
+			assert solution != null;
+			Integer integerSolution = solution.getIntegerSolution(eFeature2contentAnalysis);
+			if (integerSolution == null) {
 				throw new UnsupportedOperationException();
 			}
 			variable2value.put(cardinalityVariable, integerSolution);
@@ -308,18 +300,13 @@ public class PreSerializer
 		return nestedPreSerializer;
 	}
 
-//	public @Nullable SerializationNode getChosenNode(@NonNull AlternativesSerializationNode alternativesSerializationNode) {
-//		assert alternatives2choice != null;
-//		return alternatives2choice.get(alternativesSerializationNode);
-//	}
-
 	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
 		return serializationNodes;
 	}
 
-	public @Nullable Object getSolution(@NonNull CardinalityVariable variable) {
-		assert variable2solutions != null;
-		return variable2solutions.get(variable);
+	public @Nullable CardinalitySolution getSolution(@NonNull CardinalityVariable variable) {
+		assert variable2solution != null;
+		return variable2solution.get(variable);
 	}
 
 	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
@@ -338,9 +325,9 @@ public class PreSerializer
 		//
 		//	Prepare to restructure the variables/expressions as solutions.
 		//
-		Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions2 = variable2solutions;
-		assert variable2solutions2 == null;
-		variable2solutions = variable2solutions2 = new HashMap<>();
+		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
+		assert variable2solution2 == null;
+		variable2solution = variable2solution2 = new HashMap<>();
 		List<@NonNull CardinalityExpression> residualExpressions = new ArrayList<>();
 		for (@NonNull CardinalityExpression expression : feature2expression.values()) {
 			Iterable<@NonNull ValueCardinalityExpression> valueCardinalityExpressions = expression.getValueCardinalityExpressions();
@@ -361,7 +348,7 @@ public class PreSerializer
 		//
 		for (@NonNull CardinalityVariable variable : variables) {
 			if (variable.isOne()) {
-				variable2solutions2.put(variable, Integer.valueOf(1));
+				variable2solution2.put(variable, new IntegerCardinalitySolution(1));
 			}
 		}
 		int oldSize;
@@ -414,7 +401,7 @@ public class PreSerializer
 						// ok
 					}
 					else {
-						RuntimeSolution runtimeSolution = new RuntimeSolution(unsolvedVariableGroup, unresolvedExpressions);
+						RuntimeCardinalitySolution runtimeSolution = new RuntimeCardinalitySolution(unsolvedVariableGroup, unresolvedExpressions);
 						for (@NonNull CardinalityVariable unresolvedVariable : unsolvedVariableGroup) {
 							addSolution(unresolvedVariable, runtimeSolution);
 						}
@@ -424,7 +411,7 @@ public class PreSerializer
 					//
 					//	assign run-time search solution to remaining expressions.
 					//
-					RuntimeSolution runtimeSolution = new RuntimeSolution(unsolvedVariableGroup, unresolvedExpressions);
+					RuntimeCardinalitySolution runtimeSolution = new RuntimeCardinalitySolution(unsolvedVariableGroup, unresolvedExpressions);
 					for (@NonNull CardinalityVariable unresolvedVariable : unsolvedVariableGroup) {
 						addSolution(unresolvedVariable, runtimeSolution);
 					}
@@ -436,12 +423,12 @@ public class PreSerializer
 		// XXX need to encode residue for run-time resolution
 		//
 		for (@NonNull CardinalityVariable variable : variables) {
-			if (!variable2solutions2.containsKey(variable)) {
+			if (!variable2solution2.containsKey(variable)) {
 				if (residualExpressions.isEmpty()) {
-					variable2solutions2.put(variable, variable.mayBeNone() ? 0 : 1);
+					variable2solution2.put(variable, new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
 				}
 				else {
-					variable2solutions2.put(variable, "?");
+					variable2solution2.put(variable, new UnsupportedCardinalitySolution());
 				}
 			}
 		}
@@ -483,27 +470,15 @@ public class PreSerializer
 			s.append("- ");
 			expression.toString(s, depth);
 		}
-		Map<@NonNull CardinalityVariable, @NonNull Object> variable2solutions2 = variable2solutions;
-		if (variable2solutions2 != null) {
+		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
+		if (variable2solution2 != null) {
 			for (@NonNull CardinalityVariable variable : variables) {	// XXX
-				Object solutions = variable2solutions2.get(variable);
+				CardinalitySolution solution = variable2solution2.get(variable);
 				StringUtil.appendIndentation(s, depth, "\t");
 				s.append("- ");
 				s.append(variable);
 				s.append(" = ");
-				if (solutions instanceof List) {
-					boolean isFirst = true;
-					for (Object solution : (List<?>)solutions) {
-						if (!isFirst) {
-							s.append(", ");
-						}
-						s.append(solution);
-						isFirst = false;
-					}
-				}
-				else {
-					s.append(solutions);
-				}
+				s.append(solution);
 			}
 		}
 	}

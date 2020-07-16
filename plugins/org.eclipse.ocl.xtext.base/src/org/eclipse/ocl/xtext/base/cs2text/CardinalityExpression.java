@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
@@ -34,224 +33,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public class CardinalityExpression implements Nameable
 {
-	public static interface Solution
-	{
-		boolean isRuntime();
-		@NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis);
-	}
-
-	private static class AdjustedFeatureSolution implements Solution
-	{
-		protected final @NonNull EStructuralFeature eStructuralFeature;
-		protected final @Nullable String value;
-		protected final int subtrahend;
-		protected final int divisor;
-
-		public AdjustedFeatureSolution(@NonNull EStructuralFeature eStructuralFeature, @Nullable String value, int subtrahend, int divisor) {
-			this.eStructuralFeature = eStructuralFeature;
-			this.value = value;
-			this.subtrahend = subtrahend;
-			this.divisor = divisor;
-			assert subtrahend >= 0;
-			assert divisor >= 1;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj == this) {
-				return true;
-			}
-			if (!(obj instanceof AdjustedFeatureSolution)) {
-				return false;
-			}
-			AdjustedFeatureSolution that = (AdjustedFeatureSolution) obj;
-			if (this.eStructuralFeature != that.eStructuralFeature) return false;
-			if (this.subtrahend != that.subtrahend) return false;
-			if (this.divisor != that.divisor) return false;
-			if (!ClassUtil.safeEquals(this.value, that.value)) return false;
-			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			return eStructuralFeature.hashCode() + 3 * subtrahend + 7 * (divisor-1) + (value != null ? value.hashCode() * 7 : 0);
-		}
-
-		@Override
-		public boolean isRuntime() {
-			return false;
-		}
-
-		@Override
-		public @NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-			int intSize = getSize(eFeature2contentAnalysis, eStructuralFeature, value);
-			return (intSize - subtrahend) / divisor;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			if (((subtrahend != 0)) && (divisor != 1)) {
-				s.append("(");
-			}
-			s.append("|");
-			s.append(eStructuralFeature.getName());
-			if (value != null) {
-				s.append(".\"");
-				s.append(value);
-				s.append("\"");
-			}
-			s.append("|");
-			if (subtrahend != 0) {
-				s.append(" - ");
-				s.append(subtrahend);
-			}
-			if (((subtrahend != 0)) && (divisor != 1)) {
-				s.append(")");
-			}
-			if (divisor != 1) {
-				s.append(" / ");
-				s.append(divisor);
-			}
-			return String.valueOf(s);
-		}
-	}
-
-	private static class BooleanCommonFactorSolution implements Solution
-	{
-		protected final @NonNull EStructuralFeature eStructuralFeature;
-		protected final @Nullable String value;
-		protected final int subtrahend;
-
-		public BooleanCommonFactorSolution(@NonNull EStructuralFeature eStructuralFeature, @Nullable String value, int subtrahend) {
-			this.eStructuralFeature = eStructuralFeature;
-			this.value = value;
-			this.subtrahend = subtrahend;
-			assert subtrahend >= 0;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj == this) {
-				return true;
-			}
-			if (!(obj instanceof BooleanCommonFactorSolution)) {
-				return false;
-			}
-			BooleanCommonFactorSolution that = (BooleanCommonFactorSolution) obj;
-			if (this.eStructuralFeature != that.eStructuralFeature) return false;
-			if (this.subtrahend != that.subtrahend) return false;
-			if (!ClassUtil.safeEquals(this.value, that.value)) return false;
-			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			return eStructuralFeature.hashCode() + 3 * subtrahend + (value != null ? value.hashCode() * 7 : 0);
-		}
-
-		@Override
-		public boolean isRuntime() {
-			return false;
-		}
-
-		@Override
-		public @NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-			int intSize = getSize(eFeature2contentAnalysis, eStructuralFeature, value);
-			return (intSize - subtrahend) > 0 ? 1 : 0;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			s.append("|");
-			s.append(eStructuralFeature.getName());
-			if (value != null) {
-				s.append(".\"");
-				s.append(value);
-				s.append("\"");
-			}
-			s.append("|>");
-			s.append(subtrahend);
-			return String.valueOf(s);
-		}
-	}
-
-	public static class RuntimeSolution implements Solution
-	{
-	//	protected final @NonNull CardinalityExpression cardinalityExpression;
-	//	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
-		protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
-		protected final @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions;
-
-	//	public RuntimeSolution(@NonNull CardinalityExpression cardinalityExpression, @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables) {
-	//		this.cardinalityExpression = cardinalityExpression;
-	//		this.unresolvedVariables = unresolvedVariables;
-	//	}
-
-		public RuntimeSolution(@NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
-			this.unresolvedVariables = unresolvedVariables;
-			this.unresolvedExpressions = unresolvedExpressions;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj == this) {
-				return true;
-			}
-			if (!(obj instanceof RuntimeSolution)) {
-				return false;
-			}
-			RuntimeSolution that = (RuntimeSolution) obj;
-			return this.unresolvedVariables.equals(that.unresolvedVariables) && this.unresolvedExpressions.equals(that.unresolvedExpressions);
-		}
-
-		@Override
-		public int hashCode() {
-			int hashCode = 0;
-			for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
-				hashCode += 3 + unresolvedVariable.hashCode();
-			}
-			for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
-				hashCode += 5 + unresolvedExpression.hashCode();
-			}
-			return hashCode;
-		}
-
-		@Override
-		public boolean isRuntime() {
-			return true;
-		}
-
-		@Override
-		public @NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = new StringBuilder();
-			boolean isFirst = true;
-			for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
-				if (!isFirst) {
-					s.append(",");
-				}
-				s.append(unresolvedVariable);
-				isFirst = false;
-			}
-			s.append(" in ");
-			isFirst = true;
-			for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
-				if (!isFirst) {
-					s.append(",");
-				}
-				s.append(unresolvedExpression);
-				isFirst = false;
-			}
-			return String.valueOf(s);
-		}
-	}
-
 	public static class ValueCardinalityExpression extends CardinalityExpression
 	{
 		protected final @NonNull String value;
@@ -378,7 +159,7 @@ public class CardinalityExpression implements Nameable
 		if (solution instanceof Integer) {
 			return ((Integer)solution).intValue();
 		}
-		if (solution instanceof BooleanCommonFactorSolution) {
+		if (solution instanceof BooleanCommonFactorCardinalitySolution) {
 			return 1;
 		}
 		if (solution instanceof Iterable) {
@@ -386,7 +167,7 @@ public class CardinalityExpression implements Nameable
 				if (solutionElement instanceof Integer) {
 					return ((Integer)solutionElement).intValue();
 				}
-				if (solutionElement instanceof BooleanCommonFactorSolution) {
+				if (solutionElement instanceof BooleanCommonFactorCardinalitySolution) {
 					return 1;
 				}
 			}
@@ -404,7 +185,7 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
 				Object solution = preSerializer.getSolution(variable);
-				if ((solution == null) || ((solution instanceof Solution) && ((Solution)solution).isRuntime())) {
+				if ((solution == null) || ((solution instanceof CardinalitySolution) && ((CardinalitySolution)solution).isRuntime())) {
 					if (unsolvedVariables == null) {
 						unsolvedVariables = new ArrayList<>();
 					}
@@ -504,7 +285,7 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
 			if (!cardinalityVariable.mayBeMany()) {
 				assert cardinalityVariable.mayBeNone();
-				preSerializer.addSolution(cardinalityVariable, new BooleanCommonFactorSolution(eStructuralFeature, getValue(), sum));
+				preSerializer.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getValue(), sum));
 			}
 		}
 		return true;
@@ -544,7 +325,8 @@ public class CardinalityExpression implements Nameable
 		if (sumVariable == null) {
 			return true;
 		}
-		return preSerializer.addSolution(sumVariable, new AdjustedFeatureSolution(eStructuralFeature, getValue(), sum, factor));
+		preSerializer.addSolution(sumVariable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, getValue(), sum, factor));
+		return true;
 	}
 
 	public boolean solveForNoVariables(PreSerializer preSerializer) {
@@ -581,10 +363,10 @@ public class CardinalityExpression implements Nameable
 			for (@NonNull CardinalityVariable variable : products) {
 				if (preSerializer.getSolution(variable) == null) {
 					if (variable == manyVariable) {
-						preSerializer.addSolution(variable, new AdjustedFeatureSolution(eStructuralFeature, null, sum, 1));
+						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, null, sum, 1));
 					}
 					else {
-						preSerializer.addSolution(variable, new BooleanCommonFactorSolution(eStructuralFeature, null, 0));
+						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, null, 0));
 					}
 				}
 			}
@@ -618,13 +400,13 @@ public class CardinalityExpression implements Nameable
 			for (@NonNull CardinalityVariable variable : products) {
 				if (preSerializer.getSolution(variable) == null) {
 					if (products != manyProducts) {
-						preSerializer.addSolution(variable, Integer.valueOf(0));
+						preSerializer.addSolution(variable, new IntegerCardinalitySolution(0));
 					}
 					else if (variable == manyVariable) {
-						preSerializer.addSolution(variable, new AdjustedFeatureSolution(eStructuralFeature, null, 0, 1));
+						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, null, 0, 1));
 					}
 					else {
-						preSerializer.addSolution(variable, new BooleanCommonFactorSolution(eStructuralFeature, null, 0));
+						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, null, 0));
 					}
 				}
 			}
