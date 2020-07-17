@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +30,8 @@ public class SerializationRule
 {
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
+
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eFeature2enumerationValue2multiplicativeCardinality = new HashMap<>();
-//	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
 	private @Nullable PreSerializer preSerializer = null;
 	private @Nullable EClass producedEClass = null;
 
@@ -155,14 +154,19 @@ public class SerializationRule
 		return preSerializer;
 	}
 
+	public @NonNull SerializationNode getRootSerializationNode() {
+		return rootSerializationNode;
+	}
+
 	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
+// XXX		assert serializedNodes.size() == 1;
 		PreSerializer preSerializer = getPreSerializer();
 		return preSerializer.getSerializedNodes();
 	}
 
-	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
-		return Collections.singletonList(this);
-	}
+//	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
+//		return Collections.singletonList(this);
+//	}
 
 	public void toRuleString(@NonNull StringBuilder s) {
 		assert preSerializer != null;

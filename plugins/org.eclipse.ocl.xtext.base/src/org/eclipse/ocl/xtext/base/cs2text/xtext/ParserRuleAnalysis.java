@@ -37,7 +37,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.NullSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationElement;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedRuleCallSerializationNode;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -93,9 +92,13 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		@Override
 		public @NonNull SerializationElement caseAlternatives(Alternatives alternatives) {
 			assert alternatives != null;
-			AlternativeUnassignedKeywordsSerializationNode alternativeUnassignedKeywordsSerializationNode = doAlternativeUnassignedKeywords(alternatives);
+			SerializationElement alternativeUnassignedKeywordsSerializationNode = doAlternativeUnassignedKeywords(alternatives);
 			if (alternativeUnassignedKeywordsSerializationNode != null) {
 				return alternativeUnassignedKeywordsSerializationNode;
+			}
+			SerializationElement alternativeUnassignedRuleCallsSerializationNode = doAlternativeUnassignedRuleCalls(alternatives);
+			if (alternativeUnassignedRuleCallsSerializationNode != null) {
+				return alternativeUnassignedRuleCallsSerializationNode;
 			}
 			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives);
 			List<@NonNull SerializationElement> alternativeSerializationElements = doAlternativeAssignedKeywords(alternatives, multiplicativeCardinality);
@@ -239,9 +242,20 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		public @NonNull SerializationElement caseRuleCall(RuleCall ruleCall) {
 			assert ruleCall != null;
 			assert !(ruleCall.eContainer() instanceof Assignment);
-			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(ruleCall);
+			AbstractRule abstractRule = XtextGrammarUtil.getRule(ruleCall);
+			AbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(abstractRule);
+			if (!(calledRuleAnalysis instanceof ParserRuleAnalysis)) {
+				return NullSerializationNode.INSTANCE;
+			}
+			ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
+			for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)calledRuleAnalysis).getSerializationRules()) {
+				disjunction.addConjunction(serializationRule.getRootSerializationNode());
+				// XXX multipllicity
+			}
+			return disjunction;
+		/*	MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(ruleCall);
 			AbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule(ruleCall));
-			return new UnassignedRuleCallSerializationNode(ruleAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
+			return new UnassignedRuleCallSerializationNode(ruleAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis); */
 		}
 
 /*		@Override
@@ -306,6 +320,31 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 				alternativeUnassignedKeywordsSerializationNode.addKeyword((Keyword)element);
 			}
 			return alternativeUnassignedKeywordsSerializationNode;
+		}
+
+		private @Nullable SerializationElement doAlternativeUnassignedRuleCalls(@NonNull Alternatives alternatives) {
+			Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
+			List<@NonNull ParserRuleAnalysis> calledRuleAnalyses = new ArrayList<>();
+			for (@NonNull AbstractElement element : elements) {
+				if (!(element instanceof RuleCall)) {
+					return null;
+				}
+				RuleCall ruleCall = (RuleCall)element;
+				AbstractRule abstractRule = XtextGrammarUtil.getRule(ruleCall);
+				AbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(abstractRule);
+				if (!(calledRuleAnalysis instanceof ParserRuleAnalysis)) {
+					return null;
+				}
+				calledRuleAnalyses.add((ParserRuleAnalysis) calledRuleAnalysis);
+			}
+			ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
+			for (@NonNull ParserRuleAnalysis calledRuleAnalysis : calledRuleAnalyses) {
+				for (@NonNull SerializationRule serializationRule : calledRuleAnalysis.getSerializationRules()) {
+					disjunction.addConjunction(serializationRule.getRootSerializationNode());
+					// XXX multipllicity
+				}
+			}
+			return disjunction;
 		}
 
 		@Override
@@ -418,6 +457,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 //	}
 
 	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
+		if (serializationRules == null) {
+			analyze();
+		}
 		assert serializationRules != null;
 		return serializationRules;
 	}
