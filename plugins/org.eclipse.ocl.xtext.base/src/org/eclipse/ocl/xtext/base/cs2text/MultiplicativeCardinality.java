@@ -64,19 +64,19 @@ public enum MultiplicativeCardinality
 		this.state = state;
 	}
 
-	boolean isOne() {
+	public boolean isOne() {
 		return (state & 3) == ONE.state;
 	}
 
-	boolean isOneOrMore() {
+	public boolean isOneOrMore() {
 		return (state & 3) == ONE_OR_MORE.state;
 	}
 
-	boolean isZeroOrMore() {
+	public boolean isZeroOrMore() {
 		return (state & 3) == ZERO_OR_MORE.state;
 	}
 
-	boolean isZeroOrOne() {
+	public boolean isZeroOrOne() {
 		return (state & 3) == ZERO_OR_ONE.state;
 	}
 

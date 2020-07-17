@@ -25,6 +25,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.AdjustedFeatureCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.BooleanCommonFactorCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 /**
  * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
@@ -34,21 +41,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public class CardinalityExpression implements Nameable
 {
-	public static class ValueCardinalityExpression extends CardinalityExpression
-	{
-		protected final @NonNull EnumerationValue enumerationValue;
-
-		public ValueCardinalityExpression(@NonNull CardinalityExpression cardinalityExpression, @NonNull EnumerationValue enumerationValue) {
-			super(cardinalityExpression.getName() + ".\"" + enumerationValue.getName() + "\"", cardinalityExpression.eStructuralFeature);
-			this.enumerationValue = enumerationValue;
-		}
-
-		@Override
-		protected @NonNull EnumerationValue getEnumerationValue() {
-			return enumerationValue;
-		}
-	}
-
 	public static int getSize(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis, @NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		Object object = eFeature2contentAnalysis.get(eStructuralFeature);
 		if (object == null) {
@@ -58,7 +50,8 @@ public class CardinalityExpression implements Nameable
 			return ((Integer)object).intValue();
 		}
 	//	assert value != null;
-		Map<@Nullable String, @NonNull Integer> contentAnalysis = (Map<@Nullable String, @NonNull Integer>)object;
+		@SuppressWarnings("unchecked")
+		Map<@NonNull EnumerationValue, @NonNull Integer> contentAnalysis = (Map<@NonNull EnumerationValue, @NonNull Integer>)object;
 		Integer size = contentAnalysis.get(enumerationValue);
 		int intSize = size != null ? size.intValue() : 0;
 		return intSize;
@@ -66,12 +59,14 @@ public class CardinalityExpression implements Nameable
 
 	protected final @NonNull String name;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
+	protected final @NonNull EnumerationValue enumerationValue;
 	private final @NonNull List<@NonNull List<@NonNull CardinalityVariable>> sumOfProducts = new ArrayList<>();
-	private @Nullable Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> enumerationValue2cardinalityExpression = null;
+	private @Nullable Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression = null;
 
-	public CardinalityExpression(@NonNull String name, @NonNull EStructuralFeature eStructuralFeature) {
+	public CardinalityExpression(@NonNull String name, @NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		this.name = name;
 		this.eStructuralFeature = eStructuralFeature;
+		this.enumerationValue = enumerationValue;
 	}
 
 	public void addMultiplicityProduct(@NonNull List<@NonNull CardinalityVariable> variables) {
@@ -135,7 +130,7 @@ public class CardinalityExpression implements Nameable
 	/**
 	 * Return the variables commn to all products that lack a solution, or null if none.
 	 */
-	private @Nullable Iterable<@NonNull CardinalityVariable> computeUnsolvedCommonFactors(@NonNull PreSerializer preSerializer) {
+	private @Nullable Set<@NonNull CardinalityVariable> computeUnsolvedCommonFactors(@NonNull PreSerializer preSerializer) {
 		Set<@NonNull CardinalityVariable> intersection = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			Object resolution = resolveProduct(preSerializer, products);
@@ -156,17 +151,36 @@ public class CardinalityExpression implements Nameable
 		return (intersection != null) && !intersection.isEmpty() ? intersection : null;
 	}
 
-	protected @NonNull EnumerationValue getEnumerationValue() {
-		return NullEnumerationValue.INSTANCE;
+	public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
+		Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression2 = enumerationValue2cardinalityExpression;
+		if (enumerationValue2cardinalityExpression2 == null) {
+			enumerationValue2cardinalityExpression = enumerationValue2cardinalityExpression2 = new HashMap<>();
+		}
+		CardinalityExpression cardinalityExpression = enumerationValue2cardinalityExpression2.get(enumerationValue);
+		if (cardinalityExpression == null) {
+			grammarAnalysis.addEnumeration((EAttribute)eStructuralFeature, enumerationValue);
+			String subName = name + "." + enumerationValue2cardinalityExpression2.size();
+			cardinalityExpression = new CardinalityExpression(subName, eStructuralFeature, enumerationValue);
+			enumerationValue2cardinalityExpression2.put(enumerationValue, cardinalityExpression);
+		}
+		return cardinalityExpression;
 	}
 
-	public @Nullable Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> getEnumerationValue2cardinalityExpression() {
+	public @Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions() {
+		return enumerationValue2cardinalityExpression != null ? enumerationValue2cardinalityExpression.values() : null;
+	}
+
+	protected @NonNull EnumerationValue getEnumerationValue() {
+		return enumerationValue;
+	}
+
+	public @Nullable Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> getEnumerationValue2cardinalityExpression() {
 		return enumerationValue2cardinalityExpression;
 	}
 
-	private @Nullable Integer getIntegerSolution(@Nullable Object solution) {
-		if (solution instanceof Integer) {
-			return ((Integer)solution).intValue();
+	private @Nullable Integer getIntegerSolution(@Nullable CardinalitySolution solution) {
+		if (solution instanceof IntegerCardinalitySolution) {
+			return ((IntegerCardinalitySolution)solution).getValue();
 		}
 		if (solution instanceof BooleanCommonFactorCardinalitySolution) {
 			return 1;
@@ -193,8 +207,8 @@ public class CardinalityExpression implements Nameable
 		List<@NonNull CardinalityVariable> unsolvedVariables = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				Object solution = preSerializer.getSolution(variable);
-				if ((solution == null) || ((solution instanceof CardinalitySolution) && ((CardinalitySolution)solution).isRuntime())) {
+				CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+				if ((solution == null) || solution.isRuntime()) {
 					if (unsolvedVariables == null) {
 						unsolvedVariables = new ArrayList<>();
 					}
@@ -203,24 +217,6 @@ public class CardinalityExpression implements Nameable
 			}
 		}
 		return unsolvedVariables;
-	}
-
-	public @NonNull ValueCardinalityExpression getValueCardinalityExpression(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
-		Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression2 = enumerationValue2cardinalityExpression;
-		if (value2valueCardinalityExpression2 == null) {
-			enumerationValue2cardinalityExpression = value2valueCardinalityExpression2 = new HashMap<>();
-		}
-		ValueCardinalityExpression valueCardinalityExpression = value2valueCardinalityExpression2.get(enumerationValue);
-		if (valueCardinalityExpression == null) {
-			grammarAnalysis.addEnumeration((EAttribute)eStructuralFeature, enumerationValue);
-			valueCardinalityExpression = new ValueCardinalityExpression(this, enumerationValue);
-			value2valueCardinalityExpression2.put(enumerationValue, valueCardinalityExpression);
-		}
-		return valueCardinalityExpression;
-	}
-
-	public @Nullable Iterable<@NonNull ValueCardinalityExpression> getValueCardinalityExpressions() {
-		return enumerationValue2cardinalityExpression != null ? enumerationValue2cardinalityExpression.values() : null;
 	}
 
 	/**
@@ -234,9 +230,9 @@ public class CardinalityExpression implements Nameable
 		Set<@NonNull CardinalityVariable> productVariables = null;
 		int constantProduct = 1;
 		for (@NonNull CardinalityVariable variable : product) {
-			Object solution = preSerializer.getSolution(variable);
-			if (solution instanceof Integer) {
-				constantProduct *= ((Integer)solution).intValue();
+			CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+			if (solution instanceof IntegerCardinalitySolution) {
+				constantProduct *= ((IntegerCardinalitySolution)solution).getValue();
 			}
 			else {
 				if (productVariables == null) {
@@ -303,7 +299,7 @@ public class CardinalityExpression implements Nameable
 			CardinalityVariable productVariable = null;
 			int product = 1;
 			for (@NonNull CardinalityVariable variable : products) {
-				Object solution = preSerializer.getSolution(variable);
+				CardinalitySolution solution = preSerializer.basicGetSolution(variable);
 				Integer integerSolution = getIntegerSolution(solution);
 				if (integerSolution != null) {
 					product *= integerSolution.intValue();
@@ -336,8 +332,8 @@ public class CardinalityExpression implements Nameable
 	public boolean solveForNoVariables(PreSerializer preSerializer) {
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				Object solution = preSerializer.getSolution(variable);
-				if (!(solution instanceof Integer)) {
+				CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+				if (!(solution instanceof IntegerCardinalitySolution)) {
 					return false;
 				}
 			}
@@ -365,7 +361,7 @@ public class CardinalityExpression implements Nameable
 		}
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				if (preSerializer.getSolution(variable) == null) {
+				if (preSerializer.basicGetSolution(variable) == null) {
 					if (variable == manyVariable) {
 						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, sum, 1));
 					}
@@ -402,7 +398,7 @@ public class CardinalityExpression implements Nameable
 		}
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				if (preSerializer.getSolution(variable) == null) {
+				if (preSerializer.basicGetSolution(variable) == null) {
 					if (products != manyProducts) {
 						preSerializer.addSolution(variable, new IntegerCardinalitySolution(0));
 					}
@@ -437,15 +433,14 @@ public class CardinalityExpression implements Nameable
 		}
 		s.append("| = ");
 		appendSumOfProducts(s);
-		Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> enumerationValue2cardinalityExpression2 = enumerationValue2cardinalityExpression;
+		Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression2 = enumerationValue2cardinalityExpression;
 		if (enumerationValue2cardinalityExpression2 != null) {
-			List<@NonNull EnumerationValue> sortedValues = new ArrayList<>(enumerationValue2cardinalityExpression2.keySet());
-			Collections.sort(sortedValues, NameUtil.NAMEABLE_COMPARATOR);
-			for (@NonNull EnumerationValue enumerationValue2 : sortedValues) {
-				StringUtil.appendIndentation(s, depth+1, "\t");
-				ValueCardinalityExpression valueCardinalityExpression = enumerationValue2cardinalityExpression2.get(enumerationValue2);
-				assert valueCardinalityExpression != null;
-				valueCardinalityExpression.toString(s, depth+1);
+			List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(enumerationValue2cardinalityExpression2.values());
+			Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
+			for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
+				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("- ");
+				cardinalityExpression.toString(s, depth);
 			}
 		}
 	}

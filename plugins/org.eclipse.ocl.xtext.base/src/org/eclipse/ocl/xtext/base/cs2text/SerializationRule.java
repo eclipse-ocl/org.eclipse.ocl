@@ -20,17 +20,23 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class SerializationRule
 {
-	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eFeature2enumerationValue2multiplicativeCardinality = new HashMap<>();
 //	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
 	private @Nullable PreSerializer preSerializer = null;
 	private @Nullable EClass producedEClass = null;
 
-	public SerializationRule(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
+	public SerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.rootSerializationNode = rootSerializationNode;
 		if ("EnumerationCS".equals(ruleAnalysis.getRuleName())) {
@@ -45,7 +51,7 @@ public class SerializationRule
 		if (serializationNode instanceof AssignedSerializationNode) {		// XXX bad cast
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-			XtextAssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
+			AssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
 			EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 			if ("ownedProperties".equals(eStructuralFeature.getName())) {
 				getClass();	// XXX

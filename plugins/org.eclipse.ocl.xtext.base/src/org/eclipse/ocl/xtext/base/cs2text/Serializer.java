@@ -21,6 +21,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 /**
  * A Serializer supports the serialization of a user model element, automatocally creating a hierarchy
@@ -114,7 +117,7 @@ public class Serializer
 	/**
 	 * Serialize a sequence of serializationNodes to the serializationBuilder.
 	 */
-	protected void serializeNodes(@NonNull SerializationBuilder serializationBuilder, @NonNull Iterable<@NonNull SerializationNode> serializationNodes) {
+	public void serializeNodes(@NonNull SerializationBuilder serializationBuilder, @NonNull Iterable<@NonNull SerializationNode> serializationNodes) {
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			serializeNode(serializationBuilder, serializationNode);
 		}

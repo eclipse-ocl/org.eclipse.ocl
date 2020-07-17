@@ -26,7 +26,16 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.CardinalityExpression.ValueCardinalityExpression;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.UnsupportedCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Iterables;
 
@@ -40,7 +49,7 @@ public class PreSerializer
 {
 	public static final @NonNull Integer ZERO = Integer.valueOf(0);
 
-	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	protected final @Nullable SerializationNode parentSerializedNode;
@@ -51,7 +60,7 @@ public class PreSerializer
 	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = null;
 
-	public PreSerializer(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule serializationRule, @NonNull SerializationNode rootSerializationNode) {
+	public PreSerializer(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule serializationRule, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.serializationRule = serializationRule;
 		this.rootSerializationNode = rootSerializationNode;
@@ -81,7 +90,7 @@ public class PreSerializer
 		if (cardinalityExpression == null) {
 			String name = String.format("E%02d", feature2expression.size());
 			assert name != null;;
-			cardinalityExpression = new CardinalityExpression(name, eStructuralFeature);
+			cardinalityExpression = new CardinalityExpression(name, eStructuralFeature, NullEnumerationValue.INSTANCE);
 			feature2expression.put(eStructuralFeature, cardinalityExpression);
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>();
@@ -94,8 +103,8 @@ public class PreSerializer
 			}
 		}
 		if (!enumerationValue.isNull()) {
-			ValueCardinalityExpression valueCardinalityExpression = cardinalityExpression.getValueCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), enumerationValue);
-			valueCardinalityExpression.addMultiplicityProduct(variables);
+			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), enumerationValue);
+			cardinalityExpression2.addMultiplicityProduct(variables);
 		}
 		else {
 			cardinalityExpression.addMultiplicityProduct(variables);
@@ -171,6 +180,11 @@ public class PreSerializer
 		} */
 	}
 
+	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable variable) {
+		assert variable2solution != null;
+		return variable2solution.get(variable);
+	}
+
 	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
 		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
 		assert variable2solution2 != null;
@@ -187,11 +201,11 @@ public class PreSerializer
 		for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
 			CardinalityExpression expression = feature2expression.get(eStructuralFeature);
 			assert expression != null;
-			Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression = expression.getEnumerationValue2cardinalityExpression();
+			Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> value2valueCardinalityExpression = expression.getEnumerationValue2cardinalityExpression();
 			if (value2valueCardinalityExpression != null) {
-				for (Entry<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> entry : value2valueCardinalityExpression.entrySet()) {
+				for (Entry<@NonNull EnumerationValue, @NonNull CardinalityExpression> entry : value2valueCardinalityExpression.entrySet()) {
 					EnumerationValue value = entry.getKey();
-					ValueCardinalityExpression nestedExpression = entry.getValue();
+					CardinalityExpression nestedExpression = entry.getValue();
 					int requiredCount = nestedExpression.solve(variable2value);
 					int actualCount = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, value);
 					if (requiredCount != actualCount) {
@@ -310,7 +324,7 @@ public class PreSerializer
 	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
 		addChildNode(sequenceSerializationNode);
 		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
-		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode.getRuleAnalysis(), sequenceSerializationNode.compoundElement, sequenceSerializationNode.getMultiplicativeCardinality(), nestedSerializedNodes);
+		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode, nestedSerializedNodes);
 		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
 		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
 		return nestedPreSerializer;
@@ -320,17 +334,12 @@ public class PreSerializer
 		return serializationNodes;
 	}
 
-	public @Nullable CardinalitySolution getSolution(@NonNull CardinalityVariable variable) {
-		assert variable2solution != null;
-		return variable2solution.get(variable);
-	}
-
 	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
 		return ClassUtil.nonNullState(node2variable.get(serializationNode));
 	}
 
 	public void preSerialize() {
-		if ("OCLinEcore::AttributeCS".equals(ruleAnalysis.getName())) {
+		if ("OCLinEcore::ReferenceCS".equals(ruleAnalysis.getName())) {
 			getClass();	// XXX debugging
 		}
 		//
@@ -346,10 +355,10 @@ public class PreSerializer
 		variable2solution = variable2solution2 = new HashMap<>();
 		List<@NonNull CardinalityExpression> residualExpressions = new ArrayList<>();
 		for (@NonNull CardinalityExpression expression : feature2expression.values()) {
-			Iterable<@NonNull ValueCardinalityExpression> valueCardinalityExpressions = expression.getValueCardinalityExpressions();
-			if (valueCardinalityExpressions != null) {
-				for (@NonNull CardinalityExpression valueCardinalityExpression : valueCardinalityExpressions) {
-					residualExpressions.add(valueCardinalityExpression);
+			Iterable<@NonNull CardinalityExpression> cardinalityExpressions = expression.getCardinalityExpressions();
+			if (cardinalityExpressions != null) {
+				for (@NonNull CardinalityExpression cardinalityExpression : cardinalityExpressions) {
+					residualExpressions.add(cardinalityExpression);
 				}
 			}
 			else {
@@ -360,12 +369,12 @@ public class PreSerializer
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2node.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		//
-		//	Assign the "1" solution to all one-only cardinality variables.
+		//	Confirm that variables with a "1" solution were skipped.
 		//
 		for (@NonNull CardinalityVariable variable : variables) {
-			if (variable.isOne()) {
-				variable2solution2.put(variable, new IntegerCardinalitySolution(1));
-			}
+			assert !variable.isOne();
+			//	variable2solution2.put(variable, new IntegerCardinalitySolution(1));
+		//	}
 		}
 		int oldSize;
 		//

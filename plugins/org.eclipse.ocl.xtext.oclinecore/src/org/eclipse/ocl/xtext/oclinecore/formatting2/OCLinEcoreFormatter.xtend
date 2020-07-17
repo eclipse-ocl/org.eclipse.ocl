@@ -15,8 +15,7 @@ package org.eclipse.ocl.xtext.oclinecore.formatting2
 import com.google.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder
-import org.eclipse.ocl.xtext.base.cs2text.UserModelAnalysis
-import org.eclipse.ocl.xtext.base.cs2text.XtextGrammarAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis
 import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource
 import org.eclipse.ocl.xtext.basecs.ImportCS
 import org.eclipse.ocl.xtext.basecs.TypedRefCS
@@ -30,6 +29,7 @@ import org.eclipse.xtext.formatting2.regionaccess.IEObjectRegion
 import org.eclipse.xtext.linking.impl.LinkingHelper
 import org.eclipse.jdt.annotation.NonNull
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 
 class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	
@@ -47,7 +47,7 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	def dispatch void format(TopLevelCS topLevelCS, extension IFormattableDocument document) {
 		val IEObjectRegion regionForEObject = topLevelCS.regionForEObject;
 		val EObject grammarElement = regionForEObject.grammarElement;
-		var XtextGrammarAnalysis grammarAnalysis = new XtextGrammarAnalysis(grammarElement.eResource() as AbstractGrammarResource, crossReferenceSerializer, valueConverterService, linkingHelper);
+		var GrammarAnalysis grammarAnalysis = new GrammarAnalysis(grammarElement.eResource() as AbstractGrammarResource, crossReferenceSerializer, valueConverterService, linkingHelper);
 		grammarAnalysis.analyze();
 		var String s1 = grammarAnalysis.toString();
 		System.out.println(s1);
