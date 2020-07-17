@@ -14,18 +14,16 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class BooleanCommonFactorCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
-	protected final @Nullable String value;
+	protected final @NonNull EnumerationValue enumerationValue;
 	protected final int subtrahend;
 
-	public BooleanCommonFactorCardinalitySolution(@NonNull EStructuralFeature eStructuralFeature, @Nullable String value, int subtrahend) {
+	public BooleanCommonFactorCardinalitySolution(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue, int subtrahend) {
 		this.eStructuralFeature = eStructuralFeature;
-		this.value = value;
+		this.enumerationValue = enumerationValue;
 		this.subtrahend = subtrahend;
 		assert subtrahend >= 0;
 	}
@@ -41,28 +39,28 @@ public class BooleanCommonFactorCardinalitySolution extends AbstractCardinalityS
 		BooleanCommonFactorCardinalitySolution that = (BooleanCommonFactorCardinalitySolution) obj;
 		if (this.eStructuralFeature != that.eStructuralFeature) return false;
 		if (this.subtrahend != that.subtrahend) return false;
-		if (!ClassUtil.safeEquals(this.value, that.value)) return false;
+		if (!this.enumerationValue.equals(that.enumerationValue)) return false;
 		return true;
 	}
 
 	@Override
 	public @NonNull Integer getIntegerSolution(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-		int intSize = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, value);
+		int intSize = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, enumerationValue);
 		return (intSize - subtrahend) > 0 ? 1 : 0;
 	}
 
 	@Override
 	public int hashCode() {
-		return eStructuralFeature.hashCode() + 3 * subtrahend + (value != null ? value.hashCode() * 7 : 0);
+		return eStructuralFeature.hashCode() + 3 * subtrahend + enumerationValue.hashCode() * 7;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
 		s.append(eStructuralFeature.getName());
-		if (value != null) {
+		if (!enumerationValue.isNull()) {
 			s.append(".\"");
-			s.append(value);
+			s.append(enumerationValue.getName());
 			s.append("\"");
 		}
 		s.append("|>");

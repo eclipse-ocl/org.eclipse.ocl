@@ -26,44 +26,17 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 
 	protected final @NonNull UserAbstractElementAnalysis containingElementAnalysis;
 
-//	private @Nullable List<@NonNull RequiredSlotsConjunction> productionRuleAnalysis2containingAssignmentAnalyses = null;
-
 	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
 		super(modelAnalysis, element);
 		assert element.eContainer() != null;
 		this.eContainingFeature = UserModelAnalysis.eContainingFeature(element);
 		this.containingElementAnalysis = modelAnalysis.getElementAnalysis(UserModelAnalysis.eContainer(element));
-//		this.productionRuleAnalysis2containingAssignmentAnalyses = analyzeProduction();
 	}
-
-	/**
-	 * Determine the rules able to produce this element and the containing assignments by which it can be contained.
-	 *
-	private @NonNull List<@NonNull RequiredSlotsConjunction> analyzeProduction() {
-		EClass targetEClass = UserModelAnalysis.eClass(element);
-		@SuppressWarnings("unused") String eClassName = targetEClass.getName();
-		if ("MultiplicityStringCS".equals(eClassName)) {
-			getClass();				// XXX
-		}
-		List<@NonNull RequiredSlotsConjunction> ruleAnalysis2assignmentAnalyses = isCompatible(ruleAnalysis2assignmentAnalyses);  // XXX terrible name for a function with side effects
-		return ruleAnalysis2assignmentAnalyses;
-	}*/
 
 	@Override
 	public @NonNull UserAbstractElementAnalysis getContainingElementAnalysis() {
 		return containingElementAnalysis;
 	}
-
-	@Override
-	public @NonNull EStructuralFeature geteContainingFeature() {
-		return eContainingFeature;
-	}
-
-/*	@Override
-	public @NonNull Iterable<@NonNull RequiredSlotsConjunction> getSerializationRules() {
-		assert productionRuleAnalysis2containingAssignmentAnalyses != null;
-		return productionRuleAnalysis2containingAssignmentAnalyses;
-	} */
 
 	@Override
 	protected boolean hasCompatibleContainmentHierarchy() {

@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -32,17 +31,7 @@ public class UserRootElementAnalysis extends UserAbstractElementAnalysis
 	}
 
 	@Override
-	public @Nullable EStructuralFeature geteContainingFeature() {
-		return null;
-	}
-
-	@Override
 	protected boolean hasCompatibleContainmentHierarchy() {
 		return true;
 	}
-
-//	@Override
-//	protected @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible() {
-//		return true;
-//	}
 }

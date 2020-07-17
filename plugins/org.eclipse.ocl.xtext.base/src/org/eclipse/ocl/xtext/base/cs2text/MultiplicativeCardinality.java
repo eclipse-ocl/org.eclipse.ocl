@@ -46,7 +46,7 @@ public enum MultiplicativeCardinality
 	}
 
 	public static @NonNull MultiplicativeCardinality max(@NonNull MultiplicativeCardinality multiplicativeCardinality1, @NonNull MultiplicativeCardinality multiplicativeCardinality2) {
-		int newState = multiplicativeCardinality1.state & multiplicativeCardinality2.state;
+		int newState = multiplicativeCardinality1.state | multiplicativeCardinality2.state;
 		switch (newState) {
 			case 0: return ONE;
 			case 1: return ZERO_OR_ONE;

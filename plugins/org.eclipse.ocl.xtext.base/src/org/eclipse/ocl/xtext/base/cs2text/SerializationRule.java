@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,77 +25,68 @@ public class SerializationRule
 {
 	protected final @NonNull XtextParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
-	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull MultiplicativeCardinality> eFeature2multiplicativeCardinality = new HashMap<>();
-	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
-//	private @Nullable List<@NonNull AssignedSerializationNode> conjunction = null;
-//	private @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice = null;
+	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eFeature2enumerationValue2multiplicativeCardinality = new HashMap<>();
+//	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
 	private @Nullable PreSerializer preSerializer = null;
 	private @Nullable EClass producedEClass = null;
 
 	public SerializationRule(@NonNull XtextParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.rootSerializationNode = rootSerializationNode;
-	}
-
-	public void accumulate(@NonNull SerializationRule innerConjunction, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		for (@NonNull AssignedSerializationNode assignedSerializationNode : innerConjunction.getConjunction()) {
-			accumulate(assignedSerializationNode, assignedSerializationNode.getMultiplicativeCardinality(), multiplicativeCardinality);
-		}
-	}
-
-	public void accumulate(@NonNull List<@NonNull SerializationNode> list, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		for (@NonNull SerializationNode assignedSerializationNode : list) {
-			if (assignedSerializationNode instanceof AssignedSerializationNode) {		// XXX bad cast
-				accumulate((AssignedSerializationNode) assignedSerializationNode, assignedSerializationNode.getMultiplicativeCardinality(), multiplicativeCardinality);
-			}
-		}
-	}
-
-	public void accumulate(@NonNull AssignedSerializationNode serializationNode, @NonNull MultiplicativeCardinality innerMultiplicativeCardinality, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
-//		assert innerMultiplicativeCardinality == assignmentAnalysis.getMultiplicativeCardinality();
-		XtextAssignmentAnalysis assignmentAnalysis = serializationNode.getAssignmentAnalysis();
-		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
-		if ("ownedProperties".equals(eStructuralFeature.getName())) {
+		if ("EnumerationCS".equals(ruleAnalysis.getRuleName())) {
 			getClass();	// XXX
 		}
-		boolean newMayBeMany = innerMultiplicativeCardinality.mayBeMany();
-		boolean newMayBeZero = innerMultiplicativeCardinality.mayBeZero();
-		if (outerMultiplicativeCardinality.mayBeZero()) {
-			newMayBeZero = true;
-		}
-		if (outerMultiplicativeCardinality.mayBeMany()) {
-			newMayBeMany = true;
-		}
-		MultiplicativeCardinality oldMultiplicativeCardinality = eFeature2multiplicativeCardinality.get(eStructuralFeature);
-		if (oldMultiplicativeCardinality != null) {
-			boolean oldMayBeMany = oldMultiplicativeCardinality.mayBeMany();
-			boolean oldMayBeZero = oldMultiplicativeCardinality.mayBeZero();
-			if (!oldMayBeZero) {
-				newMayBeZero = false;
+		accumulate(rootSerializationNode, MultiplicativeCardinality.ONE);
+	}
+
+	private void accumulate(@NonNull SerializationNode serializationNode, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
+		MultiplicativeCardinality innerMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
+		MultiplicativeCardinality netMultiplicativeCardinality = MultiplicativeCardinality.max(innerMultiplicativeCardinality, outerMultiplicativeCardinality);
+		if (serializationNode instanceof AssignedSerializationNode) {		// XXX bad cast
+			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
+			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
+			XtextAssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
+			EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
+			if ("ownedProperties".equals(eStructuralFeature.getName())) {
+				getClass();	// XXX
 			}
-			if (oldMayBeMany) {
-				newMayBeMany = true;
+			MultiplicativeCardinality newMultiplicativeCardinality = netMultiplicativeCardinality;
+			Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eFeature2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
+			if (enumerationValue2multiplicativeCardinality == null) {
+				enumerationValue2multiplicativeCardinality = new HashMap<>();
+				eFeature2enumerationValue2multiplicativeCardinality.put(eStructuralFeature, enumerationValue2multiplicativeCardinality);
+			}
+			MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
+			if (oldMultiplicativeCardinality != null) {
+				boolean newMayBeMany = netMultiplicativeCardinality.mayBeMany();
+				boolean newMayBeZero = netMultiplicativeCardinality.mayBeZero();
+				boolean oldMayBeMany = oldMultiplicativeCardinality.mayBeMany();
+				boolean oldMayBeZero = oldMultiplicativeCardinality.mayBeZero();
+				if (!oldMayBeZero) {
+					newMayBeZero = false;
+				}
+				if (oldMayBeMany) {
+					newMayBeMany = true;
+				}
+				newMultiplicativeCardinality = newMayBeMany
+					? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
+					: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
+			}
+			enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
+//			assignedSerializationNodes.add(assignedSerializationNode);
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			SequenceSerializationNode sequenceSerializationNode = (SequenceSerializationNode)serializationNode;
+			for (@NonNull SerializationNode nestedSerializationNode : sequenceSerializationNode.getSerializationNodes()) {
+				accumulate(nestedSerializationNode, netMultiplicativeCardinality);
 			}
 		}
-		MultiplicativeCardinality newMultiplicativeCardinality = newMayBeMany
-				? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
-				: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
-		eFeature2multiplicativeCardinality.put(eStructuralFeature, newMultiplicativeCardinality);
-		assignedSerializationNodes.add(serializationNode);
 	}
 
 	public Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element,
 			@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
 		PreSerializer preSerializer = getPreSerializer();
 		return preSerializer.computeActualCardinalities(element, eFeature2contentAnalysis);
-	}
-
-//	public @Nullable Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> getAlternativesChoices() {
-//		return alternatives2choice;
-//	}
-
-	public @NonNull Iterable<@NonNull AssignedSerializationNode> getConjunction() {
-		return assignedSerializationNodes;
 	}
 
 	public @NonNull EClass getProducedEClass() {
@@ -134,11 +124,15 @@ public class SerializationRule
 	}
 
 	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
-		return eFeature2multiplicativeCardinality.keySet();
+		return eFeature2enumerationValue2multiplicativeCardinality.keySet();
 	}
 
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
-		return eFeature2multiplicativeCardinality.get(eStructuralFeature);
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
+		Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eFeature2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
+		if (enumerationValue2multiplicativeCardinality == null) {
+			return null;
+		}
+		return enumerationValue2multiplicativeCardinality.get(enumerationValue);
 	}
 
 	public @NonNull String getName() {
@@ -164,11 +158,6 @@ public class SerializationRule
 		return Collections.singletonList(this);
 	}
 
-//	public void setAlternatives(@NonNull Map<@NonNull AlternativesSerializationNode, @Nullable SerializationNode> alternatives2choice) {
-//		assert this.alternatives2choice == null;
-//		this.alternatives2choice = alternatives2choice;
-//	}
-
 	public void toRuleString(@NonNull StringBuilder s) {
 		assert preSerializer != null;
 		preSerializer.toRuleString(s);
@@ -182,16 +171,15 @@ public class SerializationRule
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		//	List<@NonNull SimpleRequiredSlot> conjunction = this.conjunction;
-		//	if (conjunction != null) {
-		boolean isFirst = true;
-		for (@NonNull AssignedSerializationNode requiredSlot : getConjunction()) {	// XXX lazy
+		rootSerializationNode.toString(s, depth);
+	/*	boolean isFirst = true;
+		for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
 			if (!isFirst) {
 				s.append(" & ");
 			}
-			requiredSlot.toString(s, depth);
+			assignedSerializationNode.toString(s, depth);
 			isFirst = false;
-		}
+		} */
 		if (preSerializer != null) {
 			preSerializer.toString(s, depth);
 		}

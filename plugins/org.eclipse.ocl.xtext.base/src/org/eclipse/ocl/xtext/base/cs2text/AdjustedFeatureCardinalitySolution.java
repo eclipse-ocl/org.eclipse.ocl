@@ -14,19 +14,17 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class AdjustedFeatureCardinalitySolution  extends AbstractCardinalitySolution
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
-	protected final @Nullable String value;
+	protected final @NonNull EnumerationValue enumerationValue;
 	protected final int subtrahend;
 	protected final int divisor;
 
-	public AdjustedFeatureCardinalitySolution(@NonNull EStructuralFeature eStructuralFeature, @Nullable String value, int subtrahend, int divisor) {
+	public AdjustedFeatureCardinalitySolution(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue, int subtrahend, int divisor) {
 		this.eStructuralFeature = eStructuralFeature;
-		this.value = value;
+		this.enumerationValue = enumerationValue;
 		this.subtrahend = subtrahend;
 		this.divisor = divisor;
 		assert subtrahend >= 0;
@@ -45,19 +43,19 @@ public class AdjustedFeatureCardinalitySolution  extends AbstractCardinalitySolu
 		if (this.eStructuralFeature != that.eStructuralFeature) return false;
 		if (this.subtrahend != that.subtrahend) return false;
 		if (this.divisor != that.divisor) return false;
-		if (!ClassUtil.safeEquals(this.value, that.value)) return false;
+		if (!this.enumerationValue.equals(that.enumerationValue)) return false;
 		return true;
 	}
 
 	@Override
 	public @NonNull Integer getIntegerSolution(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-		int intSize = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, value);
+		int intSize = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, enumerationValue);
 		return (intSize - subtrahend) / divisor;
 	}
 
 	@Override
 	public int hashCode() {
-		return eStructuralFeature.hashCode() + 3 * subtrahend + 7 * (divisor-1) + (value != null ? value.hashCode() * 7 : 0);
+		return eStructuralFeature.hashCode() + 3 * subtrahend + 7 * (divisor-1) + enumerationValue.hashCode() * 7;
 	}
 
 	@Override
@@ -67,9 +65,9 @@ public class AdjustedFeatureCardinalitySolution  extends AbstractCardinalitySolu
 		}
 		s.append("|");
 		s.append(eStructuralFeature.getName());
-		if (value != null) {
+		if (!enumerationValue.isNull()) {
 			s.append(".\"");
-			s.append(value);
+			s.append(enumerationValue.getName());
 			s.append("\"");
 		}
 		s.append("|");

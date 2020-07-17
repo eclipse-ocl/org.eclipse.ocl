@@ -15,19 +15,16 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.Keyword;
-import org.eclipse.xtext.util.Strings;
 
 public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull List<@NonNull Keyword> keywords = new ArrayList<>();
-	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
+	protected final @NonNull EnumerationValue enumerationValue;
 
 	public AlternativeAssignedKeywordsSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis,
-			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> values) {
+			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> keywords) {
 		super(assignmentAnalysis, multiplicativeCardinality);
-		for (@NonNull Keyword keyword : keywords) {
-			this.values.add(XtextGrammarUtil.getValue(keyword));
-		}
+		this.enumerationValue = ruleAnalysis.getGrammarAnalysis().getEnumerationValue(keywords);
 	}
 
 	@Override
@@ -36,8 +33,8 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	}
 
 	@Override
-	protected @NonNull Iterable<@NonNull String> getValueOrValues() {
-		return values;
+	public @NonNull EnumerationValue getEnumerationValue() {
+		return enumerationValue;
 	}
 
 	@Override
@@ -46,15 +43,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("{");
-		for (@NonNull String value : values) {
-			if (!isFirst) {
-				s.append("|");
-			}
-			s.append("\"");
-			s.append(Strings.convertToJavaString(value));
-			s.append("\"");
-			isFirst = false;
-		}
+		s.append(enumerationValue);
 		s.append("}");
 		appendCardinality(s, depth);
 	}

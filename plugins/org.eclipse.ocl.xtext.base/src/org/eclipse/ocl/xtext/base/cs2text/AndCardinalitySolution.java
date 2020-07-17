@@ -29,6 +29,9 @@ public class AndCardinalitySolution  extends AbstractCardinalitySolution
 	@Override
 	public @NonNull AndCardinalitySolution addSolution(@NonNull CardinalitySolution solution) {
 		if (!solutions.contains(solution)) {
+			if (solutions.size() >= 3) {
+				getClass();			// XXX debugging
+			}
 			solutions.add(solution);
 		}
 		return this;
@@ -55,7 +58,7 @@ public class AndCardinalitySolution  extends AbstractCardinalitySolution
 			if (netIntegerSolution == null) {
 				netIntegerSolution = integerSolution;
 			}
-			else {
+			else if (!netIntegerSolution.equals(integerSolution)) {
 				return null;
 			}
 		}
@@ -82,7 +85,7 @@ public class AndCardinalitySolution  extends AbstractCardinalitySolution
 		boolean isFirst = true;
 		for (@NonNull CardinalitySolution solution : solutions) {
 			if (!isFirst) {
-				s.append(" && ");
+				s.append(" & ");
 			}
 			s.append(solution);
 			isFirst = false;

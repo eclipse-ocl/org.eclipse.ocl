@@ -10,14 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 
-public interface AssignedSerializationNode extends SerializationNode
+/**
+ * An EnumerationValue defines zero/one/many values that enumerate a String EAttribute.
+ */
+public interface EnumerationValue extends Nameable
 {
-	@NonNull XtextAssignmentAnalysis getAssignmentAnalysis();
-	@NonNull EClass getEFeatureScope();
-	@NonNull EStructuralFeature getEStructuralFeature();
-	@NonNull EnumerationValue getEnumerationValue();
+	@Override
+	@NonNull String getName();
+	boolean isElement(@NonNull String string);
+	boolean isNull();
 }

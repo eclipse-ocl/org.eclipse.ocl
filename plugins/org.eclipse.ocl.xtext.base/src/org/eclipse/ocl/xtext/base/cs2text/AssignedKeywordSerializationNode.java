@@ -16,12 +16,12 @@ import org.eclipse.xtext.Keyword;
 public class AssignedKeywordSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull Keyword keyword;
-	protected final @NonNull String value;
+	protected final @NonNull EnumerationValue enumerationValue;
 
 	public AssignedKeywordSerializationNode(@NonNull XtextAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.keyword = keyword;
-		this.value = XtextGrammarUtil.getValue(keyword);
+		this.enumerationValue = ruleAnalysis.getGrammarAnalysis().getEnumerationValue(keyword);
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
-	protected @NonNull String getValueOrValues() {
-		return value;
+	public @NonNull EnumerationValue getEnumerationValue() {
+		return enumerationValue;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("\"");
-		s.append(value);
+		s.append(enumerationValue.getName());
 		s.append("\"");
 		appendCardinality(s, depth);
 	}

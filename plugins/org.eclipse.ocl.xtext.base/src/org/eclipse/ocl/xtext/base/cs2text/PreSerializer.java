@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -74,7 +75,7 @@ public class PreSerializer
 		this.serializationNodes = serializationNodes;
 	}
 
-	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @Nullable Object valueOrValues) {
+	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull EnumerationValue enumerationValue) {
 		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 		CardinalityExpression cardinalityExpression = feature2expression.get(eStructuralFeature);
 		if (cardinalityExpression == null) {
@@ -92,8 +93,8 @@ public class PreSerializer
 				variables.add(0, cardinalityVariable);
 			}
 		}
-		if (valueOrValues != null) {
-			ValueCardinalityExpression valueCardinalityExpression = cardinalityExpression.getValueCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), valueOrValues);
+		if (!enumerationValue.isNull()) {
+			ValueCardinalityExpression valueCardinalityExpression = cardinalityExpression.getValueCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), enumerationValue);
 			valueCardinalityExpression.addMultiplicityProduct(variables);
 		}
 		else {
@@ -186,10 +187,25 @@ public class PreSerializer
 		for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
 			CardinalityExpression expression = feature2expression.get(eStructuralFeature);
 			assert expression != null;
-			int requiredCount = expression.solve(variable2value);
-			int actualCount = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, expression.getValue());
-			if (requiredCount != actualCount) {
-				return null;
+			Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression = expression.getEnumerationValue2cardinalityExpression();
+			if (value2valueCardinalityExpression != null) {
+				for (Entry<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> entry : value2valueCardinalityExpression.entrySet()) {
+					EnumerationValue value = entry.getKey();
+					ValueCardinalityExpression nestedExpression = entry.getValue();
+					int requiredCount = nestedExpression.solve(variable2value);
+					int actualCount = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, value);
+					if (requiredCount != actualCount) {
+						return null;
+					}
+				}
+			}
+			else {
+				assert expression.getEnumerationValue().isNull();
+				int requiredCount = expression.solve(variable2value);
+				int actualCount = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, NullEnumerationValue.INSTANCE);
+				if (requiredCount != actualCount) {
+					return null;
+				}
 			}
 		}
 		for (@NonNull EStructuralFeature eStructuralFeature : eFeature2contentAnalysis.keySet()) {
@@ -314,7 +330,7 @@ public class PreSerializer
 	}
 
 	public void preSerialize() {
-		if ("OCLinEcore::ReferenceCS".equals(ruleAnalysis.getName())) {
+		if ("OCLinEcore::AttributeCS".equals(ruleAnalysis.getName())) {
 			getClass();	// XXX debugging
 		}
 		//

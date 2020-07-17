@@ -10,14 +10,41 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
-public interface AssignedSerializationNode extends SerializationNode
+public class NullEnumerationValue extends AbstractEnumerationValue
 {
-	@NonNull XtextAssignmentAnalysis getAssignmentAnalysis();
-	@NonNull EClass getEFeatureScope();
-	@NonNull EStructuralFeature getEStructuralFeature();
-	@NonNull EnumerationValue getEnumerationValue();
+	public static final @NonNull NullEnumerationValue INSTANCE = new NullEnumerationValue();
+
+	private NullEnumerationValue() {}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj == this;
+	}
+
+	@Override
+	public @NonNull String getName() {
+		return "null";
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
+
+	@Override
+	public boolean isElement(@NonNull String string) {
+		return false;
+	}
+
+	@Override
+	public boolean isNull() {
+		return true;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return "null";
+	}
 }

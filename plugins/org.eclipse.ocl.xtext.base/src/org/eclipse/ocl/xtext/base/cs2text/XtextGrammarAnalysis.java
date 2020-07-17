@@ -35,6 +35,7 @@ import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
@@ -80,7 +81,10 @@ public class XtextGrammarAnalysis
 	/**
 	 * The values of enumerated features
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull String>> eAttribute2enumerations = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = null;
+
+	private  final @NonNull Map<@NonNull String, @NonNull SingleEnumerationValue> value2enumerationValue = new HashMap<>();
+	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
 
 	protected final @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 	protected final @NonNull IValueConverterService valueConverterService;
@@ -96,16 +100,17 @@ public class XtextGrammarAnalysis
 		this.linkingHelper = linkingHelper;
 	}
 
-	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull String value) {
-		Map<@NonNull EAttribute, @NonNull Set<@NonNull String>> eAttribute2enumerations2 = eAttribute2enumerations;
-		if (eAttribute2enumerations2 == null) {
-			eAttribute2enumerations = eAttribute2enumerations2 = new HashMap<>();
+	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
+		if (eAttribute2enumerationValues2 == null) {
+			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
 		}
-		Set<@NonNull String> enumerations = eAttribute2enumerations2.get(value);
-		if (enumerations == null) {
-			enumerations = new HashSet<>();
+		Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues2.get(eAttribute);
+		if (enumerationValues == null) {
+			enumerationValues = new HashSet<>();
+			eAttribute2enumerationValues2.put(eAttribute, enumerationValues);
 		}
-		enumerations.add(value);
+		enumerationValues.add(enumerationValue);
 	}
 
 	/**
@@ -267,52 +272,7 @@ public class XtextGrammarAnalysis
 	 * Recursively the container of this element has a similarly compatoble assignement.
 	 */
 	//protected abstract @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible();
-/*	@Override
-	protected @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible() {
-		List<@NonNull RequiredSlotsConjunction> ruleAnalysis2assignmentAnalyses = new ArrayList<>();
-		Iterable<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalysisCandidates = grammarAnalysis.getAssignmentAnalyses(eContainingFeature);
-		for (@NonNull XtextAssignmentAnalysis containingAssignmentAnalysisCandidate : containingAssignmentAnalysisCandidates) {
-			List<@NonNull XtextParserRuleAnalysis> compatibleTargetRuleAnalysisCandidates = null;
-			EClass targetEClass = UserModelAnalysis.eClass(element);
-			Iterable<@NonNull RequiredSlotsConjunction> targetRuleAnalysisCandidates = grammarAnalysis.getProducingRuleAnalyses(targetEClass);
-			for (@NonNull RequiredSlotsConjunction targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
-			//	if (targetRuleAnalysisCandidate instanceof XtextParserRuleAnalysis) {
-					if (containingAssignmentAnalysisCandidate.targetIsAssignableFrom(targetRuleAnalysisCandidate)) {					// If target rule compatible
-						boolean isOkSource = false;
-						Iterable<@NonNull XtextParserRuleAnalysis> containerProductionRules = containingElementAnalysis.getSerializationRules();
-						for (@NonNull XtextAbstractRuleAnalysis sourceRuleAnalysisCandidate : containerProductionRules) {
-							if (containingAssignmentAnalysisCandidate.sourceIsAssignableFrom(sourceRuleAnalysisCandidate)) {			// If source rule compatible
-								if (containingElementAnalysis.isCompatible(null)) {													// If transitively compatible
-									isOkSource = true;
-									break;
-								}
-							}
-						}
-						if (isOkSource) {
-							if (compatibleTargetRuleAnalysisCandidates == null) {
-								compatibleTargetRuleAnalysisCandidates = new ArrayList<>(4);
-							}
-							compatibleTargetRuleAnalysisCandidates.add((XtextParserRuleAnalysis)targetRuleAnalysisCandidate);
-						}
-					}
-			//	}
-			}
-			if (compatibleTargetRuleAnalysisCandidates != null) {
-				for (@NonNull XtextParserRuleAnalysis compatibleTargetRuleAnalysisCandidate : compatibleTargetRuleAnalysisCandidates) {
-					if (ruleAnalysis2assignmentAnalyses == null) {
-						return true;
-					}
-					List<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalyses = ruleAnalysis2assignmentAnalyses.get(compatibleTargetRuleAnalysisCandidate);
-					if (containingAssignmentAnalyses == null) {
-						containingAssignmentAnalyses = new ArrayList<>();
-						ruleAnalysis2assignmentAnalyses.put(compatibleTargetRuleAnalysisCandidate, containingAssignmentAnalyses);
-					}
-					containingAssignmentAnalyses.add(containingAssignmentAnalysisCandidate);
-				}
-			}
-		}
-		return false;
-	} */
+
 	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> analyzeSerializations(
 			@NonNull Map<@NonNull EClassifier, @NonNull List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses) {
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = new HashMap<>();
@@ -328,9 +288,6 @@ public class XtextGrammarAnalysis
 				assert ruleAnalyses != null;
 				List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
 				for (@NonNull XtextAbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				//	SerializationNode rootSerializationNode = ((XtextParserRuleAnalysis)ruleAnalysis).getRootSerializationNode();
-				//	assert rootSerializationNode != null;
-				//	RequiredSlots requiredSlots = rootSerializationNode.getRequiredSlots();
 					for (@NonNull SerializationRule serializationRule : ((XtextParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
 						EClass eActionClass = serializationRule.getProducedEClass();
 						if (eActionClass == eRuleClass) {
@@ -410,16 +367,36 @@ public class XtextGrammarAnalysis
 		return crossReferenceSerializer;
 	}
 
-	public @NonNull LinkingHelper getLinkingHelper() {
-		return linkingHelper;
+	public @NonNull EnumerationValue getEnumerationValue(@NonNull Keyword keyword) {
+		String value = XtextGrammarUtil.getValue(keyword);
+		SingleEnumerationValue enumerationValue = value2enumerationValue.get(value);
+		if (enumerationValue == null) {
+			enumerationValue = new SingleEnumerationValue(value);
+			value2enumerationValue.put(value, enumerationValue);
+		}
+		return enumerationValue;
 	}
 
-	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules(@NonNull EClass eClass) {
-		if ("PathElementWithURICS".equals(eClass.getName())) {
-			getClass(); // XXX
+	public @NonNull EnumerationValue getEnumerationValue(@NonNull Iterable<@NonNull Keyword> keywords) {
+		List<@NonNull String> values = new ArrayList<>();
+		for (@NonNull Keyword keyword : keywords) {
+			values.add(XtextGrammarUtil.getValue(keyword));
 		}
-		assert eClass2serializationRules != null;
-		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass));
+		Collections.sort(values);
+		MultipleEnumerationValue enumerationValue = values2enumerationValue.get(values);
+		if (enumerationValue == null) {
+			enumerationValue = new MultipleEnumerationValue(values);
+			values2enumerationValue.put(values, enumerationValue);
+		}
+		return enumerationValue;
+	}
+
+//	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+//		return (eAttribute2enumerationValues != null) ? eAttribute2enumerationValues.get(eAttribute) : null;
+//	}
+
+	public @NonNull LinkingHelper getLinkingHelper() {
+		return linkingHelper;
 	}
 
 	public @NonNull XtextAbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractElement abstractElement) {
@@ -436,12 +413,16 @@ public class XtextGrammarAnalysis
 		return ClassUtil.nonNullState(rule2ruleAnalysis.get(abstractRule));
 	}
 
-	public @NonNull IValueConverterService getValueConverterService() {
-		return valueConverterService;
+	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules(@NonNull EClass eClass) {
+		if ("PathElementWithURICS".equals(eClass.getName())) {
+			getClass(); // XXX
+		}
+		assert eClass2serializationRules != null;
+		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass));
 	}
 
-	public @Nullable Iterable<@NonNull String> getEnumerations(@NonNull EAttribute eAttribute) {
-		return (eAttribute2enumerations != null) ? eAttribute2enumerations.get(eAttribute) : null;
+	public @NonNull IValueConverterService getValueConverterService() {
+		return valueConverterService;
 	}
 
 	@Override

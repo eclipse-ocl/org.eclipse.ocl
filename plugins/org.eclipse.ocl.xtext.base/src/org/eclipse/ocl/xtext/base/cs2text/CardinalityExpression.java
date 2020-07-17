@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 
@@ -35,20 +36,20 @@ public class CardinalityExpression implements Nameable
 {
 	public static class ValueCardinalityExpression extends CardinalityExpression
 	{
-		protected final @NonNull String value;
+		protected final @NonNull EnumerationValue enumerationValue;
 
-		public ValueCardinalityExpression(@NonNull CardinalityExpression cardinalityExpression, @NonNull String value) {
-			super(cardinalityExpression.getName() + ".\"" + value + "\"", cardinalityExpression.eStructuralFeature);
-			this.value = value;
+		public ValueCardinalityExpression(@NonNull CardinalityExpression cardinalityExpression, @NonNull EnumerationValue enumerationValue) {
+			super(cardinalityExpression.getName() + ".\"" + enumerationValue.getName() + "\"", cardinalityExpression.eStructuralFeature);
+			this.enumerationValue = enumerationValue;
 		}
 
 		@Override
-		protected @NonNull String getValue() {
-			return value;
+		protected @NonNull EnumerationValue getEnumerationValue() {
+			return enumerationValue;
 		}
 	}
 
-	public static int getSize(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis, @NonNull EStructuralFeature eStructuralFeature, @Nullable String value) {
+	public static int getSize(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis, @NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		Object object = eFeature2contentAnalysis.get(eStructuralFeature);
 		if (object == null) {
 			return 0;
@@ -56,9 +57,9 @@ public class CardinalityExpression implements Nameable
 		if (object instanceof Integer) {
 			return ((Integer)object).intValue();
 		}
-		assert value != null;
-		Map<@NonNull String, @NonNull Integer> contentAnalysis = (Map<@NonNull String, @NonNull Integer>)object;
-		Integer size = contentAnalysis.get(value);
+	//	assert value != null;
+		Map<@Nullable String, @NonNull Integer> contentAnalysis = (Map<@Nullable String, @NonNull Integer>)object;
+		Integer size = contentAnalysis.get(enumerationValue);
 		int intSize = size != null ? size.intValue() : 0;
 		return intSize;
 	}
@@ -66,7 +67,7 @@ public class CardinalityExpression implements Nameable
 	protected final @NonNull String name;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	private final @NonNull List<@NonNull List<@NonNull CardinalityVariable>> sumOfProducts = new ArrayList<>();
-	private @Nullable Map<@NonNull String, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression = null;
+	private @Nullable Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> enumerationValue2cardinalityExpression = null;
 
 	public CardinalityExpression(@NonNull String name, @NonNull EStructuralFeature eStructuralFeature) {
 		this.name = name;
@@ -155,6 +156,14 @@ public class CardinalityExpression implements Nameable
 		return (intersection != null) && !intersection.isEmpty() ? intersection : null;
 	}
 
+	protected @NonNull EnumerationValue getEnumerationValue() {
+		return NullEnumerationValue.INSTANCE;
+	}
+
+	public @Nullable Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> getEnumerationValue2cardinalityExpression() {
+		return enumerationValue2cardinalityExpression;
+	}
+
 	private @Nullable Integer getIntegerSolution(@Nullable Object solution) {
 		if (solution instanceof Integer) {
 			return ((Integer)solution).intValue();
@@ -196,27 +205,22 @@ public class CardinalityExpression implements Nameable
 		return unsolvedVariables;
 	}
 
-	protected @Nullable String getValue() {
-		return null;
-	}
-
-	public @NonNull ValueCardinalityExpression getValueCardinalityExpression(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull Object valueOrValues) {
-		String value = String.valueOf(valueOrValues);		// XXX wip fudge
-		Map<@NonNull String, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression2 = value2valueCardinalityExpression;
+	public @NonNull ValueCardinalityExpression getValueCardinalityExpression(@NonNull XtextGrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
+		Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression2 = enumerationValue2cardinalityExpression;
 		if (value2valueCardinalityExpression2 == null) {
-			value2valueCardinalityExpression = value2valueCardinalityExpression2 = new HashMap<>();
+			enumerationValue2cardinalityExpression = value2valueCardinalityExpression2 = new HashMap<>();
 		}
-		ValueCardinalityExpression valueCardinalityExpression = value2valueCardinalityExpression2.get(value);
+		ValueCardinalityExpression valueCardinalityExpression = value2valueCardinalityExpression2.get(enumerationValue);
 		if (valueCardinalityExpression == null) {
-			grammarAnalysis.addEnumeration((EAttribute)eStructuralFeature, value);
-			valueCardinalityExpression = new ValueCardinalityExpression(this, value);
-			value2valueCardinalityExpression2.put(value, valueCardinalityExpression);
+			grammarAnalysis.addEnumeration((EAttribute)eStructuralFeature, enumerationValue);
+			valueCardinalityExpression = new ValueCardinalityExpression(this, enumerationValue);
+			value2valueCardinalityExpression2.put(enumerationValue, valueCardinalityExpression);
 		}
 		return valueCardinalityExpression;
 	}
 
 	public @Nullable Iterable<@NonNull ValueCardinalityExpression> getValueCardinalityExpressions() {
-		return value2valueCardinalityExpression != null ? value2valueCardinalityExpression.values() : null;
+		return enumerationValue2cardinalityExpression != null ? enumerationValue2cardinalityExpression.values() : null;
 	}
 
 	/**
@@ -285,7 +289,7 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
 			if (!cardinalityVariable.mayBeMany()) {
 				assert cardinalityVariable.mayBeNone();
-				preSerializer.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getValue(), sum));
+				preSerializer.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum));
 			}
 		}
 		return true;
@@ -325,7 +329,7 @@ public class CardinalityExpression implements Nameable
 		if (sumVariable == null) {
 			return true;
 		}
-		preSerializer.addSolution(sumVariable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, getValue(), sum, factor));
+		preSerializer.addSolution(sumVariable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum, factor));
 		return true;
 	}
 
@@ -363,10 +367,10 @@ public class CardinalityExpression implements Nameable
 			for (@NonNull CardinalityVariable variable : products) {
 				if (preSerializer.getSolution(variable) == null) {
 					if (variable == manyVariable) {
-						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, null, sum, 1));
+						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, sum, 1));
 					}
 					else {
-						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, null, 0));
+						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
 					}
 				}
 			}
@@ -403,10 +407,10 @@ public class CardinalityExpression implements Nameable
 						preSerializer.addSolution(variable, new IntegerCardinalitySolution(0));
 					}
 					else if (variable == manyVariable) {
-						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, null, 0, 1));
+						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0, 1));
 					}
 					else {
-						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, null, 0));
+						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
 					}
 				}
 			}
@@ -422,24 +426,24 @@ public class CardinalityExpression implements Nameable
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		String value = getValue();
+		EnumerationValue enumerationValue1 = getEnumerationValue();
 		s.append(name);
 		s.append(": |");
 		s.append(eStructuralFeature.getName());
-		if (value != null) {
+		if (!enumerationValue1.isNull()) {
 			s.append(".\"");
-			s.append(value);
+			s.append(enumerationValue1.getName());
 			s.append("\"");
 		}
 		s.append("| = ");
 		appendSumOfProducts(s);
-		Map<@NonNull String, @NonNull ValueCardinalityExpression> value2valueCardinalityExpression2 = value2valueCardinalityExpression;
-		if (value2valueCardinalityExpression2 != null) {
-			List<@NonNull String> sortedValues = new ArrayList<>(value2valueCardinalityExpression2.keySet());
-			Collections.sort(sortedValues);
-			for (@NonNull String sortedValue : sortedValues) {
+		Map<@NonNull EnumerationValue, @NonNull ValueCardinalityExpression> enumerationValue2cardinalityExpression2 = enumerationValue2cardinalityExpression;
+		if (enumerationValue2cardinalityExpression2 != null) {
+			List<@NonNull EnumerationValue> sortedValues = new ArrayList<>(enumerationValue2cardinalityExpression2.keySet());
+			Collections.sort(sortedValues, NameUtil.NAMEABLE_COMPARATOR);
+			for (@NonNull EnumerationValue enumerationValue2 : sortedValues) {
 				StringUtil.appendIndentation(s, depth+1, "\t");
-				ValueCardinalityExpression valueCardinalityExpression = value2valueCardinalityExpression2.get(sortedValue);
+				ValueCardinalityExpression valueCardinalityExpression = enumerationValue2cardinalityExpression2.get(enumerationValue2);
 				assert valueCardinalityExpression != null;
 				valueCardinalityExpression.toString(s, depth+1);
 			}

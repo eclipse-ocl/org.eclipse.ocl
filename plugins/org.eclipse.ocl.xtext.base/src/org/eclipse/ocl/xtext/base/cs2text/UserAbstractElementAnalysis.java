@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * An UserAbstractElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -62,51 +63,6 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		return null;
 	}
 
-	protected Map<@NonNull EStructuralFeature, @NonNull Object> getContentAnalysis() {
-		Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis = new HashMap<>();
-		EClass eClass = element.eClass();
-		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
-			assert eFeature != null;
-			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile() && (!(eFeature instanceof EReference) || !((EReference)eFeature).isContainer())) {
-				Object contentAnalysis = null;
-				Object object = element.eGet(eFeature);
-				if (eFeature.isMany()) {
-					List<?> elements = (List<?>)object;
-					int size = elements.size();
-					if ((size > 0) && (eFeature instanceof EAttribute) && (grammarAnalysis.getEnumerations((EAttribute)eFeature) != null)) {
-						Map<@Nullable String, @NonNull Integer> value2count = new HashMap<>();
-						for (Object element : elements) {
-							String string = String.valueOf(element);
-							Integer count = value2count.get(string);
-							value2count.put(string, (count == null ? 1 : count.intValue()) + 1);
-						}
-						value2count.put(null, size);
-						contentAnalysis = value2count;
-					}
-					else {
-						contentAnalysis = size;
-					}
-				}
-				else if (element.eIsSet(eFeature)) {
-					String string = String.valueOf(object);
-					if ((eFeature instanceof EAttribute) && (grammarAnalysis.getEnumerations((EAttribute)eFeature) != null)) {
-						Map<@NonNull String, @NonNull Integer> value2count = new HashMap<>();
-						value2count.put(string, 1);
-						contentAnalysis = value2count;
-					}
-					else {
-						contentAnalysis = 1;
-					}
-				}
-				else {
-					contentAnalysis = 0;
-				}
-				eFeature2contentAnalysis.put(eFeature, contentAnalysis);
-			}
-		}
-		return eFeature2contentAnalysis;
-	}
-
 	public void diagnose(@NonNull StringBuilder s, @NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
 		Iterable<@NonNull SerializationRule> serializationRules2 = serializationRules;
 		if (serializationRules2 == null) {
@@ -122,32 +78,38 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		}
 		s.append("\n");
 		c = 'A';
-		s.append(String.format("%-20.20s%9s", "feature", "actual"));
-		Set<@NonNull EStructuralFeature> allFeatures = new HashSet<>();
-		for (@NonNull SerializationRule serializationRule : serializationRules2) {
+		s.append(String.format("%-30.30s%9s", "feature", "actual"));
+	//	Set<@NonNull EStructuralFeature> allFeatures = new HashSet<>();
+		for (@SuppressWarnings("unused") @NonNull SerializationRule serializationRule : serializationRules2) {
 			s.append(" [");
 			s.append("" + c++);
 			s.append("]");
-			for (@NonNull EStructuralFeature eStructuralFeature : serializationRule.getEStructuralFeatures()) {
-				allFeatures.add(eStructuralFeature);
-			}
+	//		for (@NonNull EStructuralFeature eStructuralFeature : serializationRule.getEStructuralFeatures()) {
+	//			allFeatures.add(eStructuralFeature);
+	//		}
 		}
-		List<@NonNull EStructuralFeature> sortedFeatures = new ArrayList<>(allFeatures);
+		List<@NonNull EStructuralFeature> sortedFeatures = new ArrayList<>(eFeature2contentAnalysis.keySet());
 		Collections.sort(sortedFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		for (@NonNull EStructuralFeature eStructuralFeature : sortedFeatures) {
 			s.append("\n");
-			int size = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, null);
-			s.append(String.format("%-20.20s%8d", eStructuralFeature.getName(), size));
+			int size = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, NullEnumerationValue.INSTANCE);
+			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
 			for (@NonNull SerializationRule serializationRule : serializationRules2) {
-				MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature);
+				MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature, NullEnumerationValue.INSTANCE);
 				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 			}
 			if (eStructuralFeature instanceof EAttribute) {
-				Iterable<@NonNull String> enumerations = grammarAnalysis.getEnumerations((EAttribute)eStructuralFeature);
-				if (enumerations != null) {
-					for (@NonNull String enumeration : enumerations) {
-						int size2 = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, enumeration);
-						s.append(String.format("\n  %-18.18s%8d", "\"" + enumeration + "\"", size2));
+				Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues((EAttribute)eStructuralFeature);
+				if (enumerationValues != null) {
+					List<@NonNull EnumerationValue> sortedEnumerationValues = Lists.newArrayList(enumerationValues);
+					Collections.sort(sortedEnumerationValues, NameUtil.NAMEABLE_COMPARATOR);
+					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
+						int size2 = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, enumerationValue);
+						s.append(String.format("\n  %-28.28s%8d", "\"" + enumerationValue.getName() + "\"", size2));
+						for (@NonNull SerializationRule serializationRule : serializationRules2) {
+							MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature, enumerationValue);
+							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
+						}
 					}
 				}
 			}
@@ -157,10 +119,99 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 
 	public abstract @Nullable UserAbstractElementAnalysis getContainingElementAnalysis();
 
-	public abstract @Nullable EStructuralFeature geteContainingFeature();
+	protected Map<@NonNull EStructuralFeature, @NonNull Object> getContentAnalysis() {
+		Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis = new HashMap<>();
+		EClass eClass = element.eClass();
+		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
+			assert eFeature != null;
+			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile() && (!(eFeature instanceof EReference) || !((EReference)eFeature).isContainer())) {
+				Object contentAnalysis = null;
+				Object object = element.eGet(eFeature);
+				Iterable<@NonNull EnumerationValue> enumerationValues = eFeature instanceof EAttribute ? getEnumerationValues((EAttribute)eFeature) : null;
+				if (eFeature.isMany()) {
+					List<?> elements = (List<?>)object;
+					int size = elements.size();
+					if ((size > 0) && (eFeature instanceof EAttribute) && (enumerationValues != null)) {
+						Map<@NonNull EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
+						int others = 0;
+						for (Object element : elements) {
+							String string = String.valueOf(element);
+							boolean gotOne = false;
+							for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
+								if (enumerationValue.isElement(string)) {
+									Integer count = enumerationValue2count.get(enumerationValue);
+									enumerationValue2count.put(enumerationValue, (count == null ? 0 : count.intValue()) + 1);
+									gotOne = true;
+								}
+							}
+							if (!gotOne) {
+								others++;
+							}
+						}
+						enumerationValue2count.put(NullEnumerationValue.INSTANCE, others);
+						contentAnalysis = enumerationValue2count;
+					}
+					else {
+						contentAnalysis = size;
+					}
+				}
+				else if (element.eIsSet(eFeature)) {
+					String string = String.valueOf(object);
+					if ((eFeature instanceof EAttribute) && (enumerationValues != null)) {
+						Map<@NonNull EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
+						for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
+							if (enumerationValue.isElement(string)) {
+								Integer count = enumerationValue2count.get(enumerationValue);
+								enumerationValue2count.put(enumerationValue, (count == null ? 0 : count.intValue()) + 1);
+							}
+						}
+					//	Map<@NonNull EnumerationValue, @NonNull Integer> value2count = new HashMap<>();
+					//	value2count.put(string, 1);
+						contentAnalysis = enumerationValue2count;
+					}
+					else {
+						contentAnalysis = 1;
+					}
+				}
+				else {
+					contentAnalysis = 0;
+				}
+				eFeature2contentAnalysis.put(eFeature, contentAnalysis);
+			}
+		}
+		return eFeature2contentAnalysis;
+	}
 
 	public @NonNull EObject getElement() {
 		return element;
+	}
+
+	protected @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+		Set<@NonNull EnumerationValue> enumerationValues = new HashSet<>();
+		assert serializationRules != null;
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
+			for (@NonNull SerializationNode serializationNode : serializationRule.getSerializedNodes()) {
+				getEnumerationValues(eAttribute, serializationNode, enumerationValues);
+			}
+		}
+		return enumerationValues.isEmpty() ? null : enumerationValues;
+	}
+
+	private void getEnumerationValues(@NonNull EAttribute eAttribute, @NonNull SerializationNode serializationNode, @NonNull Set<@NonNull EnumerationValue> enumerationValues) {
+		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
+			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
+			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eAttribute) {
+				EnumerationValue enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
+				if (!enumerationValue.isNull()) {
+					enumerationValues.add(enumerationValue);
+				}
+			}
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				getEnumerationValues(eAttribute, nestedSerializationNode, enumerationValues);
+			}
+		}
 	}
 
 	public @NonNull XtextGrammarAnalysis getGrammarAnalysis() {

@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
 {
@@ -42,14 +41,15 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 		return eStructuralFeature;
 	}
 
-	protected @Nullable Object getValueOrValues() {
-		return null;
+	@Override
+	public @NonNull EnumerationValue getEnumerationValue() {
+		return NullEnumerationValue.INSTANCE;
 	}
 
 	@Override
 	public void preSerialize(@NonNull PreSerializer preSerializer) {
 		super.preSerialize(preSerializer);
-		Object valueOrValues = getValueOrValues();
-		preSerializer.addAssignedNode(this, valueOrValues);
+		EnumerationValue enumerationValue = getEnumerationValue();
+		preSerializer.addAssignedNode(this, enumerationValue);
 	}
 }
