@@ -12,7 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -33,8 +33,8 @@ public interface SerializationElement
 	@NonNull ListOfSerializationNode asList();
 	@NonNull ListOfListOfSerializationNode asListOfList();
 	@NonNull SerializationNode asNode();
-	@NonNull SerializationNode freezeAlternatives(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives);
-	@NonNull SerializationElement freezeSequences(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement);
+	@NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives);
+	@NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement);
 	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
 	boolean isList();
 	boolean isListOfList();

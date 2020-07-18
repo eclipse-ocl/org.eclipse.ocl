@@ -135,6 +135,10 @@ public class AssignmentAnalysis implements Nameable
 		return eFeature;
 	}
 
+	public @NonNull GrammarAnalysis getGrammarAnalysis() {
+		return sourceRuleAnalysis.getGrammarAnalysis();
+	}
+
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
 		return MultiplicativeCardinality.toEnum(assignment);
 	}

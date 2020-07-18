@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -18,6 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
@@ -26,21 +29,60 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
 
-	public SequenceSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(ruleAnalysis, multiplicativeCardinality);
+	public SequenceSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+		super(grammarAnalysis, multiplicativeCardinality);
 		this.compoundElement = compoundElement;
 		this.serializationNodes = groupSerializationNodes;
+		assert !groupSerializationNodes.isEmpty();
+		assert multiplicativeCardinality.isOne() || noAssignedCurrent(this);
+	//	assert noUnassignedParserRuleCall(this);
+		assert groupSerializationNodes.size() == new HashSet<>(groupSerializationNodes).size();
+	}
+
+	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {
+		if (serializationNode instanceof AssignedCurrentSerializationNode) {
+			return false;
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				if (!noAssignedCurrent(nestedSerializationNode)) {
+					return false;
+				}
+			}
+		}
+		else if (serializationNode.isList() || serializationNode.isListOfList() || serializationNode.isNull() || (serializationNode instanceof AlternativesSerializationNode)) {
+			throw new UnsupportedOperationException();
+		}
+		return true;
+	}
+
+	private boolean noUnassignedParserRuleCall(@NonNull SerializationNode serializationNode) {
+		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
+			return !(((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis() instanceof ParserRuleAnalysis);
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				if (!noUnassignedParserRuleCall(nestedSerializationNode)) {
+					return false;
+				}
+			}
+		}
+		else if (serializationNode.isList() || serializationNode.isListOfList() || serializationNode.isNull() || (serializationNode instanceof AlternativesSerializationNode)) {
+			throw new UnsupportedOperationException();
+		}
+		return true;
 	}
 
 	public SequenceSerializationNode(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(sequenceSerializationNode.ruleAnalysis, sequenceSerializationNode.multiplicativeCardinality);
+		super(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.multiplicativeCardinality);
 		this.compoundElement = sequenceSerializationNode.compoundElement;
 		this.serializationNodes = groupSerializationNodes;
+	//	assert !groupSerializationNodes.isEmpty();
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new SequenceSerializationNode(ruleAnalysis, compoundElement, multiplicativeCardinality, serializationNodes);
+		return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, serializationNodes);
 	}
 
 	public @NonNull List<@NonNull SerializationNode> getSerializationNodes() {
@@ -48,11 +90,13 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer) {
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 //		super.preSerialize(preSerializer);
-		PreSerializer nestedPreSerializer = preSerializer.createNestedPreSerializer(this);
+		PreSerializer nestedPreSerializer = preSerializer.createNestedPreSerializer(this, parentStack);
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializationNode.preSerialize(nestedPreSerializer);
+			parentStack.push(this);
+			serializationNode.preSerialize(nestedPreSerializer, parentStack);
+			parentStack.pop();
 		}
 	/*	List<@NonNull SerializationNode> nestedSerializedNodes = nestedPreSerializer.getSerializedNodes();
 		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(grammarAnalysis, group, nestedSerializedNodes)
@@ -76,12 +120,18 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		preSerializer.addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list */
 	}
 
+/*	@Override
+	public void resolveAssignedCurrentSerializationNodes(@NonNull Stack<@NonNull SequenceSerializationNode> parentStack) {
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			parentStack.push(this);
+			serializationNode.resolveAssignedCurrentSerializationNodes(parentStack);
+			parentStack.pop();
+		}
+	} */
+
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		serializer.serializeNodes(serializationBuilder, serializationNodes);
-	//	for (@NonNull SerializationNode serializationNode : serializationNodes) {
-	//		serializationNode.serialize(serializationBuilder);
-	//	}
 	}
 
 	@Override

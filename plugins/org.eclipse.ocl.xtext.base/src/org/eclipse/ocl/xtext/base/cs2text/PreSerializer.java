@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Stack;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -53,7 +54,7 @@ public class PreSerializer
 	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	protected final @Nullable SerializationNode parentSerializedNode;
-	private final @NonNull Map<@NonNull SerializationNode, @Nullable SerializationNode> node2parent;
+//	private final @NonNull Map<@NonNull SerializationNode, @Nullable SerializationNode> node2parent;
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
@@ -65,7 +66,7 @@ public class PreSerializer
 		this.serializationRule = serializationRule;
 		this.rootSerializationNode = rootSerializationNode;
 		this.parentSerializedNode = null;
-		this.node2parent = new HashMap<>();
+//		this.node2parent = new HashMap<>();
 		this.node2variable = new HashMap<>();
 		this.variable2node = new HashMap<>();
 		this.feature2expression = new HashMap<>();
@@ -77,14 +78,14 @@ public class PreSerializer
 		this.serializationRule = preSerializer.serializationRule;
 		this.rootSerializationNode = preSerializer.rootSerializationNode;
 		this.parentSerializedNode = parentSerializedNode;
-		this.node2parent = preSerializer.node2parent;
+//		this.node2parent = preSerializer.node2parent;
 		this.node2variable = preSerializer.node2variable;
 		this.variable2node = preSerializer.variable2node;
 		this.feature2expression = preSerializer.feature2expression;
 		this.serializationNodes = serializationNodes;
 	}
 
-	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull EnumerationValue enumerationValue) {
+	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull EnumerationValue enumerationValue, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 		CardinalityExpression cardinalityExpression = feature2expression.get(eStructuralFeature);
 		if (cardinalityExpression == null) {
@@ -94,13 +95,17 @@ public class PreSerializer
 			feature2expression.put(eStructuralFeature, cardinalityExpression);
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>();
-		for (SerializationNode serializationNode = assignedSerializationNode; serializationNode != null; serializationNode = node2parent.get(serializationNode)) {
-			assert node2parent.containsKey(serializationNode);		// XXX debugging
+		for (SerializationNode serializationNode : parentStack) {
+		//	assert node2parent.containsKey(serializationNode);		// XXX debugging
 		//	assert node2variable.containsKey(serializationNode);		// XXX debugging
 			CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
 			if (cardinalityVariable != null) {
-				variables.add(0, cardinalityVariable);
+				variables.add(cardinalityVariable);
 			}
+		}
+		CardinalityVariable cardinalityVariable = node2variable.get(assignedSerializationNode);
+		if (cardinalityVariable != null) {
+			variables.add(cardinalityVariable);
 		}
 		if (!enumerationValue.isNull()) {
 			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), enumerationValue);
@@ -111,16 +116,16 @@ public class PreSerializer
 		}
 	}
 
-	private void addChildNode(@NonNull SerializationNode serializationNode) {
-		assert serializationNode != parentSerializedNode;
-		assert !node2parent.containsKey(serializationNode);
-		SerializationNode old = node2parent.put(serializationNode, parentSerializedNode);
-		assert old == null;
-	}
+//	private void addChildNode(@NonNull SerializationNode serializationNode) {
+//		assert serializationNode != parentSerializedNode;
+//		assert !node2parent.containsKey(serializationNode);
+//		SerializationNode old = node2parent.put(serializationNode, parentSerializedNode);
+//		assert old == null;
+//	}
 
-	public void addSerializedNode(@NonNull SerializationNode serializationNode) {
+	public void addSerializedNode(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		serializationNodes.add(serializationNode);
-		addChildNode(serializationNode);
+	//	addChildNode(serializationNode);
 		MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 		String name = String.format("C%02d", variable2node.size());
 		assert name != null;
@@ -321,12 +326,14 @@ public class PreSerializer
 		return variable2expressions;
 	}
 
-	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode) {
-		addChildNode(sequenceSerializationNode);
+	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+	//	addChildNode(sequenceSerializationNode);
 		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
 		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode, nestedSerializedNodes);
 		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
-		addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list
+		parentStack.push(nestedSequenceSerializationNode);
+		addSerializedNode(nestedSequenceSerializationNode, parentStack);			// XXX parent counted list
+		parentStack.pop();
 		return nestedPreSerializer;
 	}
 
@@ -346,7 +353,7 @@ public class PreSerializer
 		//	Traverse the chosen serialization tree path to trigger addAssignedNode/addSerializedNode call-backs to determine the
 		//	cardinality variables and expressions to be solved to characterize the serialization.
 		//
-		rootSerializationNode.preSerialize(this);
+		rootSerializationNode.preSerialize(this, new Stack<@NonNull SerializationNode>());
 		//
 		//	Prepare to restructure the variables/expressions as solutions.
 		//

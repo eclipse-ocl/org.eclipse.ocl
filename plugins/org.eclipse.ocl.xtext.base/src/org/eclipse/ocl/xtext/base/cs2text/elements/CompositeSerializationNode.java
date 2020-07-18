@@ -12,12 +12,12 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {
-	public CompositeSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis, /*@NonNull CompoundElement compoundElement,*/ @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, multiplicativeCardinality);
+	public CompositeSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, /*@NonNull CompoundElement compoundElement,*/ @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(grammarAnalysis, multiplicativeCardinality);
 //		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
 	}

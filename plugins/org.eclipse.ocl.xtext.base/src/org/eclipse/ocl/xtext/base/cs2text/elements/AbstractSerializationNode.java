@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -25,11 +25,11 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	/**
 	 * The overall (multi-)grammar analysis.
 	 */
-	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull GrammarAnalysis grammarAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	protected AbstractSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		this.ruleAnalysis = ruleAnalysis;
+	protected AbstractSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		this.grammarAnalysis = grammarAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
@@ -72,13 +72,14 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
 		return this;
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
-		return new SequenceSerializationNode(ruleAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), Collections.singletonList(this));
+	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) { // XXX is this needed ?
+	//	return new SequenceSerializationNode(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), Collections.singletonList(this));
+		return createFrozenSequence(grammarAnalysis, compoundElement, Collections.singletonList(this));
 	}
 
 	@Override
@@ -87,14 +88,12 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
-		return ruleAnalysis;
-	}
-
-	@Override
 	public boolean isNode() {
 		return true;
 	}
+
+//	@Override
+//	public void resolveAssignedCurrentSerializationNodes(@NonNull Stack<@NonNull SequenceSerializationNode> parentStack) {}
 
 	@Override
 	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {

@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -19,8 +20,8 @@ import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
@@ -28,9 +29,9 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeUnassignedKeywordsSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis,
+	public AlternativeUnassignedKeywordsSerializationNode(@NonNull GrammarAnalysis grammarAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
-		super(ruleAnalysis, multiplicativeCardinality);
+		super(grammarAnalysis, multiplicativeCardinality);
 		if (values != null) {
 			for (@NonNull String value : values) {
 				this.values.add(value);
@@ -45,12 +46,12 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeUnassignedKeywordsSerializationNode(ruleAnalysis, multiplicativeCardinality, values);
+		return new AlternativeUnassignedKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality, values);
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer) {
-		preSerializer.addSerializedNode(this);
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		preSerializer.addSerializedNode(this, parentStack);
 	}
 
 	@Override

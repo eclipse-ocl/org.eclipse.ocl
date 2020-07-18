@@ -10,13 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.Stack;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
@@ -25,15 +27,15 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
 
-	public UnassignedKeywordSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull Keyword keyword, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, multiplicativeCardinality);
+	public UnassignedKeywordSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Keyword keyword, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(grammarAnalysis, multiplicativeCardinality);
 		this.keyword = keyword;
 		this.value = XtextGrammarUtil.getValue(keyword);
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new UnassignedKeywordSerializationNode(ruleAnalysis, keyword, multiplicativeCardinality);
+		return new UnassignedKeywordSerializationNode(grammarAnalysis, keyword, multiplicativeCardinality);
 	}
 
 	@Override
@@ -42,9 +44,9 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer) {
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		if (!multiplicativeCardinality.mayBeZero()) {
-			super.preSerialize(preSerializer);
+			super.preSerialize(preSerializer, parentStack);
 		}
 	}
 

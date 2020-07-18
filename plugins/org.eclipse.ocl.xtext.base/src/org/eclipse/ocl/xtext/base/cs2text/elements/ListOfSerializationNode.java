@@ -16,7 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -71,13 +71,18 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
-		return new SequenceSerializationNode(ruleAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), listOfNodes);
+	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
+		if (listOfNodes.isEmpty()) {
+			return NullSerializationNode.INSTANCE;
+		}
+		else {
+			return createFrozenSequence(grammarAnalysis, compoundElement, listOfNodes);
+		}
 	}
 
 	@Override
@@ -103,12 +108,14 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("{");
-		for (@NonNull SerializationNode serializationNode : listOfNodes) {
+		if (listOfNodes.size() > 0) {
+			for (@NonNull SerializationNode serializationNode : listOfNodes) {
+				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("+\t");
+				serializationNode.toString(s, depth+1);
+			}
 			StringUtil.appendIndentation(s, depth, "\t");
-			s.append("+ ");
-			serializationNode.toString(s, depth+1);
 		}
-		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
 	//	appendCardinality(s, depth);
 	}

@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.Stack;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.RuleCall;
 
 public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
@@ -22,15 +24,19 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	protected final @NonNull RuleCall ruleCall;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedRuleCallSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull RuleCall ruleCall, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
-		super(ruleAnalysis, multiplicativeCardinality);
+	public UnassignedRuleCallSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull RuleCall ruleCall, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
+		super(grammarAnalysis, multiplicativeCardinality);
 		this.ruleCall = ruleCall;
 		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new UnassignedRuleCallSerializationNode(ruleAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
+		return new UnassignedRuleCallSerializationNode(grammarAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
+	}
+
+	public @NonNull AbstractRuleAnalysis getCalledRuleAnalysis() {
+		return calledRuleAnalysis;
 	}
 
 	@Override
@@ -39,9 +45,9 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer) {
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		if (!multiplicativeCardinality.mayBeZero()) {
-			super.preSerialize(preSerializer);
+			super.preSerialize(preSerializer, parentStack);
 		}
 	}
 

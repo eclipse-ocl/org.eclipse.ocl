@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.Stack;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -26,7 +28,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 
 	protected AbstractAssignedSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(assignmentAnalysis.getSourceRuleAnalysis(), multiplicativeCardinality);
+		super(assignmentAnalysis.getGrammarAnalysis(), multiplicativeCardinality);
 		this.assignmentAnalysis = assignmentAnalysis;
 		this.eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 	}
@@ -52,9 +54,9 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer) {
-		super.preSerialize(preSerializer);
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		super.preSerialize(preSerializer, parentStack);
 		EnumerationValue enumerationValue = getEnumerationValue();
-		preSerializer.addAssignedNode(this, enumerationValue);
+		preSerializer.addAssignedNode(this, enumerationValue, parentStack);
 	}
 }

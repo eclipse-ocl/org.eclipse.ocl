@@ -12,21 +12,17 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.ParserRule;
 
 /**
- * An XtextTerminalRuleAnalysis provides the extended analysis of an Xtext TerminalRule
+ * An DataTypeRuleAnalysis provides the extended analysis of a ParserRule for a DataType
  */
-public class TerminalRuleAnalysis extends AbstractRuleAnalysis
+public class DataTypeRuleAnalysis extends AbstractRuleAnalysis
 {
 	protected final @NonNull EDataType eDataType;
 
-	public TerminalRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull TerminalRule terminalRule) {
-		super(grammarAnalysis, terminalRule);
-		this.eDataType = (EDataType)XtextGrammarUtil.getClassifier(terminalRule.getType());
-	}
-
-	public @NonNull TerminalRule getTerminalRule() {
-		return (TerminalRule)abstractRule;
+	public DataTypeRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EDataType eDataType) {
+		super(grammarAnalysis, parserRule);
+		this.eDataType = eDataType;
 	}
 }

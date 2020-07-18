@@ -18,7 +18,6 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
@@ -43,7 +42,6 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		super(assignmentAnalysis, multiplicativeCardinality);
 		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
-		GrammarAnalysis grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		this.calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
 		this.crossReference = crossReference;
 		this.crossReferenceSerializer = grammarAnalysis.getCrossReferenceSerializer();
@@ -94,7 +92,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append(ruleAnalysis.getRuleName());
+		s.append(calledRuleAnalysis.getRuleName());
 		appendCardinality(s, depth);
 	}
 }

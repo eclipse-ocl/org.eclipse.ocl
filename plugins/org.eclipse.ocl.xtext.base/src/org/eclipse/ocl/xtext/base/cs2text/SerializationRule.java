@@ -181,7 +181,7 @@ public class SerializationRule
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		rootSerializationNode.toString(s, depth);
+	//	rootSerializationNode.toString(s, depth);
 	/*	boolean isFirst = true;
 		for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
 			if (!isFirst) {
@@ -192,6 +192,9 @@ public class SerializationRule
 		} */
 		if (preSerializer != null) {
 			preSerializer.toString(s, depth);
+		}
+		else {
+			rootSerializationNode.toString(s, depth);
 		}
 	}
 }

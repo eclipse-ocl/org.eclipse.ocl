@@ -17,7 +17,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -40,6 +40,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	public ListOfListOfSerializationNode(@NonNull List<@NonNull List<@NonNull SerializationNode>> listOfListOfNodes, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.listOfListOfNodes = listOfListOfNodes;
 		this.multiplicativeCardinality = multiplicativeCardinality;
+		assert listOfListOfNodes.size() < 20;
 	}
 
 	/**
@@ -83,11 +84,12 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	/**
-	 * Add additionalSerializationElement as one or more additional conjunctions leaving the prevailing conjunctions unchnaged.
+	 * Add additionalSerializationElement as one or more additional conjunctions leaving the prevailing conjunctions unchanged.
 	 */
 	public @NonNull ListOfListOfSerializationNode addConjunction(@NonNull SerializationElement additionalSerializationElement) {
 		if (additionalSerializationElement.isNull()) {
-			multiplicativeCardinality = MultiplicativeCardinality.max(multiplicativeCardinality, MultiplicativeCardinality.ZERO_OR_ONE);
+		//	multiplicativeCardinality = MultiplicativeCardinality.max(multiplicativeCardinality, MultiplicativeCardinality.ZERO_OR_ONE);
+			listOfListOfNodes.add(new ArrayList<>());
 			return this;
 		}
 		else if (additionalSerializationElement.isNode()) {
@@ -113,21 +115,32 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
 		List<@NonNull SerializationNode> newList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
 			assert listOfNodes.size() == 1;
 			newList.add(listOfNodes.get(0));
 		}
-		return new AlternativesSerializationNode(ruleAnalysis, alternatives, MultiplicativeCardinality.toEnum(alternatives), newList);
+		return new AlternativesSerializationNode(grammarAnalysis, alternatives, MultiplicativeCardinality.toEnum(alternatives), newList);
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
+	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
 		List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-			SequenceSerializationNode sequenceSerializationNode = new SequenceSerializationNode(ruleAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), listOfNodes);
-			newListOfList.add(Collections.singletonList(sequenceSerializationNode));
+			SerializationElement frozenSequence = createFrozenSequence(grammarAnalysis, compoundElement, listOfNodes);
+			if (frozenSequence.isListOfList()) {
+				newListOfList.addAll(frozenSequence.asListOfList().getLists());
+			}
+			else if (frozenSequence.isList()) {
+				newListOfList.add(frozenSequence.asList().getNodes());
+			}
+			else if (frozenSequence.isNode()) {
+				newListOfList.add(Collections.singletonList(frozenSequence.asNode()));
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
 		}
 		listOfListOfNodes = newListOfList;
 		return this;
@@ -156,20 +169,22 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("{");
-		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-			StringUtil.appendIndentation(s, depth, "\t");
-			s.append("| ");
-			s.append("{");
-			for (@NonNull SerializationNode serializationNode : listOfNodes) {
-				StringUtil.appendIndentation(s, depth+1, "\t");
-				s.append("+ ");
-				serializationNode.toString(s, depth+2);
+		if (listOfListOfNodes.size() > 0) {
+			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+				StringUtil.appendIndentation(s, depth, "\t");
+				s.append("|\t{");
+				if (listOfNodes.size() > 0) {
+					for (@NonNull SerializationNode serializationNode : listOfNodes) {
+						StringUtil.appendIndentation(s, depth+1, "\t");
+						s.append("+\t");
+						serializationNode.toString(s, depth+2);
+					}
+					StringUtil.appendIndentation(s, depth+1, "\t");
+				}
+				s.append("}");
 			}
-			StringUtil.appendIndentation(s, depth+1, "\t");
-			s.append("}");
+			StringUtil.appendIndentation(s, depth, "\t");
 		}
-		StringUtil.appendIndentation(s, depth, "\t");
 		s.append("}");
-	//	appendCardinality(s, depth);
 	}
 }

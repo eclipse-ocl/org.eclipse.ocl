@@ -12,7 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -26,23 +26,18 @@ public class NullSerializationNode extends AbstractSerializationElement
 
 	private NullSerializationNode() {}
 
-//	@Override
-//	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-//		throw new UnsupportedOperationException();
-//	}
-
 	@Override
 	public @NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement) {
 		return additionalSerializationElement;
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull CompoundElement compoundElement) {
+	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
 		return this;
 	}
 

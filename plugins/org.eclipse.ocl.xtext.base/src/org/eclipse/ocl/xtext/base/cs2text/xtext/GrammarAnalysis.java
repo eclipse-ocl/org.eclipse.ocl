@@ -21,6 +21,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -340,10 +341,16 @@ public class GrammarAnalysis
 			}
 			AbstractRuleAnalysis ruleAnalysis;
 			if (activeRule instanceof ParserRule) {
-				ruleAnalysis = new ParserRuleAnalysis(this, (ParserRule)activeRule); //, activeRuleCalls);
+				EClassifier eClassifier = XtextGrammarUtil.getClassifier(activeRule.getType());
+				if (eClassifier instanceof EClass) {
+					ruleAnalysis = new ParserRuleAnalysis(this, (ParserRule)activeRule, (EClass)eClassifier);
+				}
+				else {
+					ruleAnalysis = new DataTypeRuleAnalysis(this, (ParserRule)activeRule, (EDataType)eClassifier);
+				}
 			}
 			else if (activeRule instanceof TerminalRule) {
-				ruleAnalysis = new TerminalRuleAnalysis(this, (TerminalRule)activeRule); //, activeRuleCalls);
+				ruleAnalysis = new TerminalRuleAnalysis(this, (TerminalRule)activeRule);
 			}
 			else {
 				throw new UnsupportedOperationException();
@@ -467,7 +474,7 @@ public class GrammarAnalysis
 					isFirstFeature = false;
 				}
 				//
-				if ("Base::NextPathElementCS".equals(parserRuleAnalysis.getName())) {
+				if ("Base::TypeRefCS".equals(parserRuleAnalysis.getName())) {
 					getClass();		// XXX
 				}
 				for (@NonNull SerializationRule serializationRule : parserRuleAnalysis.getSerializationRules()) {
@@ -524,8 +531,8 @@ public class GrammarAnalysis
 				s.append(" ");;
 			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
 				StringUtil.appendIndentation(s, 1, "\t");
-				s.append("|& ");
-				serializationRule.toString(s, 1);
+				s.append("|&\t");
+				serializationRule.toString(s, 2);
 			}
 		}
 		return s.toString();

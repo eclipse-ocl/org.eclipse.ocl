@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.Stack;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public interface SerializationNode extends SerializationElement
 {
@@ -23,8 +24,7 @@ public interface SerializationNode extends SerializationElement
 	 * Ceate a shallow copy of this node with a changed multiplicativeCardinality.
 	 */
 	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
-	@NonNull ParserRuleAnalysis getRuleAnalysis();
-	void preSerialize(@NonNull PreSerializer preSerialize);
+	void preSerialize(@NonNull PreSerializer preSerialize, @NonNull Stack<@NonNull SerializationNode> parentStack);
+//	void resolveAssignedCurrentSerializationNodes(@NonNull Stack<@NonNull SequenceSerializationNode> parentStack);
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
-//	@NonNull String toRuleString(@NonNull StringBuilder s);
 }

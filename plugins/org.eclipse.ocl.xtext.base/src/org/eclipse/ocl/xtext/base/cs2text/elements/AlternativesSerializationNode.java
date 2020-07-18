@@ -11,13 +11,14 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 
 public class AlternativesSerializationNode extends CompositeSerializationNode
@@ -25,15 +26,15 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	protected final @NonNull Alternatives alternatives;
 	protected final @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes;
 
-	public AlternativesSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull Alternatives alternatives, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
-		super(ruleAnalysis, multiplicativeCardinality);
+	public AlternativesSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
+		super(grammarAnalysis, multiplicativeCardinality);
 		this.alternatives = alternatives;
 		this.alternativeSerializationNodes = alternativeSerializationNodes;
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativesSerializationNode(ruleAnalysis, alternatives, multiplicativeCardinality, alternativeSerializationNodes);
+		return new AlternativesSerializationNode(grammarAnalysis, alternatives, multiplicativeCardinality, alternativeSerializationNodes);
 	}
 
 	/**
@@ -45,7 +46,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer) {
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		throw new IllegalStateException();
 /*		SerializationNode chosenNode = preSerializer.getChosenNode(this);
 		if (chosenNode == this) {

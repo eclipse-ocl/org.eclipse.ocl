@@ -10,19 +10,21 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.Stack;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 public abstract class SimpleSerializationNode extends AbstractSerializationNode
 {
-	protected SimpleSerializationNode(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(ruleAnalysis, multiplicativeCardinality);
+	protected SimpleSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(grammarAnalysis, multiplicativeCardinality);
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer) {
-		preSerializer.addSerializedNode(this);
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		preSerializer.addSerializedNode(this, parentStack);
 	}
 }
