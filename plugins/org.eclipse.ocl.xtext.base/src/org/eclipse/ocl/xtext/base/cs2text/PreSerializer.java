@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
@@ -52,37 +51,18 @@ public class PreSerializer
 
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationRule serializationRule;
-	protected final @NonNull SerializationNode rootSerializationNode;
-	protected final @Nullable SerializationNode parentSerializedNode;
-//	private final @NonNull Map<@NonNull SerializationNode, @Nullable SerializationNode> node2parent;
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
-	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
+//	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = null;
 
 	public PreSerializer(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule serializationRule, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.serializationRule = serializationRule;
-		this.rootSerializationNode = rootSerializationNode;
-		this.parentSerializedNode = null;
-//		this.node2parent = new HashMap<>();
 		this.node2variable = new HashMap<>();
 		this.variable2node = new HashMap<>();
 		this.feature2expression = new HashMap<>();
-		this.serializationNodes = new ArrayList<>();
-	}
-
-	private PreSerializer(@NonNull PreSerializer preSerializer, @NonNull SequenceSerializationNode parentSerializedNode, @NonNull List<@NonNull SerializationNode> serializationNodes) {
-		this.ruleAnalysis = preSerializer.ruleAnalysis;
-		this.serializationRule = preSerializer.serializationRule;
-		this.rootSerializationNode = preSerializer.rootSerializationNode;
-		this.parentSerializedNode = parentSerializedNode;
-//		this.node2parent = preSerializer.node2parent;
-		this.node2variable = preSerializer.node2variable;
-		this.variable2node = preSerializer.variable2node;
-		this.feature2expression = preSerializer.feature2expression;
-		this.serializationNodes = serializationNodes;
 	}
 
 	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull EnumerationValue enumerationValue, @NonNull Stack<@NonNull SerializationNode> parentStack) {
@@ -96,8 +76,6 @@ public class PreSerializer
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>();
 		for (SerializationNode serializationNode : parentStack) {
-		//	assert node2parent.containsKey(serializationNode);		// XXX debugging
-		//	assert node2variable.containsKey(serializationNode);		// XXX debugging
 			CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
 			if (cardinalityVariable != null) {
 				variables.add(cardinalityVariable);
@@ -116,16 +94,7 @@ public class PreSerializer
 		}
 	}
 
-//	private void addChildNode(@NonNull SerializationNode serializationNode) {
-//		assert serializationNode != parentSerializedNode;
-//		assert !node2parent.containsKey(serializationNode);
-//		SerializationNode old = node2parent.put(serializationNode, parentSerializedNode);
-//		assert old == null;
-//	}
-
 	public void addSerializedNode(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		serializationNodes.add(serializationNode);
-	//	addChildNode(serializationNode);
 		MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 		String name = String.format("C%02d", variable2node.size());
 		assert name != null;
@@ -326,34 +295,19 @@ public class PreSerializer
 		return variable2expressions;
 	}
 
-	public @NonNull PreSerializer createNestedPreSerializer(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-	//	addChildNode(sequenceSerializationNode);
-		List<@NonNull SerializationNode> nestedSerializedNodes = new ArrayList<>(); //nestedPreSerializer.getSerializedNodes();
-		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(sequenceSerializationNode, nestedSerializedNodes);
-		PreSerializer nestedPreSerializer = new PreSerializer(this, nestedSequenceSerializationNode, nestedSerializedNodes);
-		parentStack.push(nestedSequenceSerializationNode);
-		addSerializedNode(nestedSequenceSerializationNode, parentStack);			// XXX parent counted list
-		parentStack.pop();
-		return nestedPreSerializer;
-	}
-
-	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
-		return serializationNodes;
-	}
-
 	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
 		return ClassUtil.nonNullState(node2variable.get(serializationNode));
 	}
 
 	public void preSerialize() {
-		if ("OCLinEcore::ReferenceCS".equals(ruleAnalysis.getName())) {
+		if ("OCLinEcore::TopLevelCS".equals(ruleAnalysis.getName())) {
 			getClass();	// XXX debugging
 		}
 		//
 		//	Traverse the chosen serialization tree path to trigger addAssignedNode/addSerializedNode call-backs to determine the
 		//	cardinality variables and expressions to be solved to characterize the serialization.
 		//
-		rootSerializationNode.preSerialize(this, new Stack<@NonNull SerializationNode>());
+		serializationRule.getRootSerializationNode().preSerialize(this, new Stack<@NonNull SerializationNode>());
 		//
 		//	Prepare to restructure the variables/expressions as solutions.
 		//
@@ -466,12 +420,6 @@ public class PreSerializer
 		}
 	}
 
-	public void toRuleString(@NonNull StringBuilder s) {
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializationNode.toString(s, -1);
-		}
-	}
-
 	@Override
 	public @NonNull String toString() {
 		@NonNull StringBuilder s = new StringBuilder();
@@ -481,9 +429,7 @@ public class PreSerializer
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializationNode.toString(s, depth);
-		}
+		serializationRule.getRootSerializationNode().toString(s, depth);
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2node.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityVariable variable : variables) {

@@ -31,17 +31,17 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
  */
 public class Serializer
 {
-	protected final @NonNull SerializationRule requiredSlotsConjunction;
+	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull PreSerializer preSerializer;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject element;
 	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	public Serializer(@NonNull SerializationRule requiredSlotsConjunction, @NonNull UserModelAnalysis modelAnalysis,
+	public Serializer(@NonNull SerializationRule serializationRule, @NonNull UserModelAnalysis modelAnalysis,
 			@NonNull EObject element, @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
-		this.requiredSlotsConjunction = requiredSlotsConjunction;
-		this.preSerializer = requiredSlotsConjunction.getPreSerializer();
+		this.serializationRule = serializationRule;
+		this.preSerializer = serializationRule.getPreSerializer();
 		this.modelAnalysis = modelAnalysis;
 		this.element = element;
 		this.variable2value = variable2value;
@@ -86,7 +86,7 @@ public class Serializer
 	 * Serialize this serializer's configured element to the serializationBuilder.
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
-		List<@NonNull SerializationNode> serializationNodes = requiredSlotsConjunction.getSerializedNodes();
+		List<@NonNull SerializationNode> serializationNodes = Collections.singletonList(serializationRule.getRootSerializationNode());
 		serializeNodes(serializationBuilder, serializationNodes);
 	}
 

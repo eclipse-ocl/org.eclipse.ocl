@@ -201,7 +201,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		Set<@NonNull EnumerationValue> enumerationValues = new HashSet<>();
 		assert serializationRules != null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			for (@NonNull SerializationNode serializationNode : serializationRule.getSerializedNodes()) {
+			for (@NonNull SerializationNode serializationNode : Collections.singletonList(serializationRule.getRootSerializationNode())) {
 				getEnumerationValues(eAttribute, serializationNode, enumerationValues);
 			}
 		}

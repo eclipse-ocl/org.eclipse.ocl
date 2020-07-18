@@ -231,12 +231,6 @@ ExpCS returns ExpCS:
 	(PrefixedPrimaryExpCS ({InfixExpCS.ownedLeft=current} name=BinaryOperatorName ownedRight=ExpCS)?)
 | 	PrefixedLetExpCS;
 
-//
-zz:
-	PrefixedPrimaryExpCS
-|   {InfixExpCS} ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS
-|	PrefixedLetExpCS
-;
 /* A prefixed let expression elaborates a let expression with zero or more unary prefix operators. */
 PrefixedLetExpCS returns ExpCS:
 	({PrefixExpCS} name=UnaryOperatorName ownedRight=PrefixedLetExpCS)

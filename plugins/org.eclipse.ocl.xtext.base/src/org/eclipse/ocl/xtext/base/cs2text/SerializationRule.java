@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,7 @@ public class SerializationRule
 	public @NonNull EClass getProducedEClass() {
 		EClass producedEClass2 = producedEClass;
 		if (producedEClass2  == null) {
-			producedEClass2 = getProducedEClass(getSerializedNodes());
+			producedEClass2 = getProducedEClass(Collections.singletonList(rootSerializationNode));
 			if (producedEClass2 == null) {
 				producedEClass2 = ruleAnalysis.getReturnedEClass();
 			}
@@ -106,9 +107,9 @@ public class SerializationRule
 		return producedEClass2;
 	}
 
-	private @Nullable EClass getProducedEClass(@NonNull List<@NonNull SerializationNode> serializedNodes) {
+	private @Nullable EClass getProducedEClass(@NonNull List<@NonNull SerializationNode> serializationNodes) {
 		EClass producedEClass = null;
-		for (@NonNull SerializationNode serializationNode : serializedNodes) {
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			EClass nestedEClass = null;
 			if (serializationNode instanceof AssignedSerializationNode) {
 				nestedEClass = ((AssignedSerializationNode)serializationNode).getEFeatureScope();
@@ -158,20 +159,27 @@ public class SerializationRule
 		return rootSerializationNode;
 	}
 
-	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
+//	public @NonNull List<@NonNull SerializationNode> getSerializedNodes() {
 // XXX		assert serializedNodes.size() == 1;
-		PreSerializer preSerializer = getPreSerializer();
-		return preSerializer.getSerializedNodes();
-	}
+//		PreSerializer preSerializer = getPreSerializer();
+//		return preSerializer.getSerializedNodes();
+//	}
 
 //	public @NonNull List<@NonNull SerializationRule> getSerializationRules() {
 //		return Collections.singletonList(this);
 //	}
 
+//	public void toRuleString(@NonNull StringBuilder s) {
+//		assert preSerializer != null;
+//		preSerializer.toRuleString(s);
+//	}
+
 	public void toRuleString(@NonNull StringBuilder s) {
-		assert preSerializer != null;
-		preSerializer.toRuleString(s);
+	//	for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			rootSerializationNode.toString(s, -1);
+	//	}
 	}
+//	List<@NonNull SerializationNode> serializationNodes = Collections.singletonList(serializationRule.getRootSerializationNode());
 
 	@Override
 	public final @NonNull String toString() {

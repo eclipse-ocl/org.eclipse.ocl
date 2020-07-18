@@ -13,9 +13,11 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
@@ -92,8 +94,10 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		return true;
 	}
 
-//	@Override
-//	public void resolveAssignedCurrentSerializationNodes(@NonNull Stack<@NonNull SequenceSerializationNode> parentStack) {}
+	@Override
+	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		preSerializer.addSerializedNode(this, parentStack);
+	}
 
 	@Override
 	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
