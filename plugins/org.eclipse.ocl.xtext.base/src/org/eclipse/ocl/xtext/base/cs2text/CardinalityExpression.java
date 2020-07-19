@@ -31,6 +31,8 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.AdjustedFeatureCardinalitySo
 import org.eclipse.ocl.xtext.base.cs2text.solutions.BooleanCommonFactorCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 import com.google.common.collect.Iterables;
@@ -43,20 +45,20 @@ import com.google.common.collect.Iterables;
  */
 public class CardinalityExpression implements Nameable
 {
-	public static int getSize(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis, @NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
-		Object object = eFeature2contentAnalysis.get(eStructuralFeature);
-		if (object == null) {
+	public static int getSize(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
+		UserSlotAnalysis slotAnalysis = slotsAnalysis.basicGetSlotAnalysis(eStructuralFeature);
+		if (slotAnalysis == null) {
 			return 0;
 		}
-		if (object instanceof Integer) {
-			return ((Integer)object).intValue();
+		if (slotAnalysis.isCounted()) {
+			return slotAnalysis.asCounted();
 		}
-	//	assert value != null;
-		@SuppressWarnings("unchecked")
-		Map<@NonNull EnumerationValue, @NonNull Integer> contentAnalysis = (Map<@NonNull EnumerationValue, @NonNull Integer>)object;
-		Integer size = contentAnalysis.get(enumerationValue);
-		int intSize = size != null ? size.intValue() : 0;
-		return intSize;
+		else if (slotAnalysis.isEnumerated()) {
+			return slotAnalysis.asEnumerated(enumerationValue);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	protected final @NonNull String name;

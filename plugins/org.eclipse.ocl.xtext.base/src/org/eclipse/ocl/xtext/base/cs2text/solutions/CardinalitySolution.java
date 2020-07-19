@@ -10,16 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 public interface CardinalitySolution
 {
 	@NonNull CardinalitySolution addSolution(@NonNull CardinalitySolution solution);
-	@Nullable Integer getIntegerSolution(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis);
+	@Nullable Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis);
 	boolean isRuntime();
 //	@NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis);
 	void toString(@NonNull StringBuilder s, int depth);

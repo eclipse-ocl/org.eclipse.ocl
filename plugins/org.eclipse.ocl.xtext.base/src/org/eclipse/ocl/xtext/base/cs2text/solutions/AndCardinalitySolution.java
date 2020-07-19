@@ -12,11 +12,10 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 public class AndCardinalitySolution  extends AbstractCardinalitySolution
 {
@@ -51,10 +50,10 @@ public class AndCardinalitySolution  extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @Nullable Integer getIntegerSolution(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
+	public @Nullable Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		Integer netIntegerSolution = null;
 		for (@NonNull CardinalitySolution solution : solutions) {
-			Integer integerSolution = solution.getIntegerSolution(eFeature2contentAnalysis);
+			Integer integerSolution = solution.getIntegerSolution(slotsAnalysis);
 			if (netIntegerSolution == null) {
 				netIntegerSolution = integerSolution;
 			}

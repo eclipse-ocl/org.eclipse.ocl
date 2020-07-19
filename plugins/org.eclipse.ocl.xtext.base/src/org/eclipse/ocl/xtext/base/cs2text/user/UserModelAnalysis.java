@@ -96,19 +96,28 @@ public class UserModelAnalysis
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		if ("MultiplicityBoundsCS".equals(element.eClass().getName())) {
+		if ("AttributeCS".equals(element.eClass().getName())) {
 			getClass();	// XXX
 		}
-		Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis = userElementAnalysis.getContentAnalysis();
-		Serializer serializer = userElementAnalysis.createSerializer(eFeature2contentAnalysis);
+		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();
+		Serializer serializer = userElementAnalysis.createSerializer(slotsAnalysis);
+		if (serializer == null) {
+		//	StringBuilder s = new StringBuilder();
+		//	s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
+		//	slotsAnalysis.diagnose(s);
+		//	s.append("»\n\n");
+		//	serializationBuilder.append(s.toString());
+			slotsAnalysis.setIncludeImplicitDefaults(true);
+			serializer = userElementAnalysis.createSerializer(slotsAnalysis);
+		}
 		if (serializer != null) {
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			userElementAnalysis.createSerializer(eFeature2contentAnalysis);		// XXX debugging
+			userElementAnalysis.createSerializer(slotsAnalysis);		// XXX debugging
 			StringBuilder s = new StringBuilder();
 			s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
-			userElementAnalysis.diagnose(s, eFeature2contentAnalysis);
+			slotsAnalysis.diagnose(s);
 			s.append("»\n\n");
 			serializationBuilder.append(s.toString());
 		}

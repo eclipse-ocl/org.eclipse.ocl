@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 public class AdjustedFeatureCardinalitySolution  extends AbstractCardinalitySolution
 {
@@ -50,8 +49,8 @@ public class AdjustedFeatureCardinalitySolution  extends AbstractCardinalitySolu
 	}
 
 	@Override
-	public @NonNull Integer getIntegerSolution(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
-		int intSize = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, enumerationValue);
+	public @NonNull Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
+		int intSize = CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, enumerationValue);
 		return (intSize - subtrahend) / divisor;
 	}
 

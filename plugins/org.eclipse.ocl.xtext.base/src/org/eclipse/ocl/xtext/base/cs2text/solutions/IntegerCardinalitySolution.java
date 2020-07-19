@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -37,7 +35,7 @@ public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @NonNull Integer getIntegerSolution(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
+	public @NonNull Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		return value;
 	}
 

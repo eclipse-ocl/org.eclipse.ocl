@@ -20,7 +20,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -35,6 +34,8 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.UnsupportedCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Iterables;
@@ -47,14 +48,13 @@ import com.google.common.collect.Iterables;
  */
 public class PreSerializer
 {
-	public static final @NonNull Integer ZERO = Integer.valueOf(0);
+//	public static final @NonNull Integer ZERO = Integer.valueOf(0);
 
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationRule serializationRule;
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
-//	private final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = null;
 
 	public PreSerializer(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationRule serializationRule, @NonNull SerializationNode rootSerializationNode) {
@@ -159,14 +159,14 @@ public class PreSerializer
 		return variable2solution.get(variable);
 	}
 
-	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull EObject element, @NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis) {
+	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
 		assert variable2solution2 != null;
 		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
 		for (@NonNull CardinalityVariable cardinalityVariable : variable2solution2.keySet()) {
 			CardinalitySolution solution = variable2solution2.get(cardinalityVariable);
 			assert solution != null;
-			Integer integerSolution = solution.getIntegerSolution(eFeature2contentAnalysis);
+			Integer integerSolution = solution.getIntegerSolution(slotsAnalysis);
 			if (integerSolution == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -181,7 +181,7 @@ public class PreSerializer
 					EnumerationValue value = entry.getKey();
 					CardinalityExpression nestedExpression = entry.getValue();
 					int requiredCount = nestedExpression.solve(variable2value);
-					int actualCount = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, value);
+					int actualCount = CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, value);
 					if (requiredCount != actualCount) {
 						return null;
 					}
@@ -190,17 +190,16 @@ public class PreSerializer
 			else {
 				assert expression.getEnumerationValue().isNull();
 				int requiredCount = expression.solve(variable2value);
-				int actualCount = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, NullEnumerationValue.INSTANCE);
+				int actualCount = CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, NullEnumerationValue.INSTANCE);
 				if (requiredCount != actualCount) {
 					return null;
 				}
 			}
 		}
-		for (@NonNull EStructuralFeature eStructuralFeature : eFeature2contentAnalysis.keySet()) {
+		for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
 			if (!feature2expression.containsKey(eStructuralFeature)) {
-				Object object = eFeature2contentAnalysis.get(eStructuralFeature);
-				assert object != null;
-				if (!object.equals(ZERO)) {
+				UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
+				if (!object.isCounted() || (object.asCounted() != 0)) {
 					return null;
 				}
 			}
@@ -340,7 +339,7 @@ public class PreSerializer
 		int oldSize;
 		//
 		//	Eliminate expressions that involve no unresolved variables.
-		//	assign 0/1 solutions for all optional cardinalitoes that are common factors to all other products.
+		//	assign 0/1 solutions for all optional cardinalities that are common factors to all other products.
 		//		e.g. |F| = C01 + C01 * C02 can be solved as C02 = !F| -1 if C01 is optional.
 		//
 		do {
