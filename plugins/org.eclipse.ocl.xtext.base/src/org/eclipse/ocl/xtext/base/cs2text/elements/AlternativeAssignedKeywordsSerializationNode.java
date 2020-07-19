@@ -15,6 +15,8 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -39,6 +41,12 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	@Override
 	public @NonNull EnumerationValue getEnumerationValue() {
 		return enumerationValue;
+	}
+
+	@Override
+	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		Object object = serializer.getElement().eGet(eStructuralFeature);
+		serializationBuilder.append(String.valueOf(object));
 	}
 
 	@Override
