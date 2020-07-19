@@ -33,6 +33,8 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
+import com.google.common.collect.Iterables;
+
 /**
  * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
  *
@@ -231,8 +233,9 @@ public class CardinalityExpression implements Nameable
 		int constantProduct = 1;
 		for (@NonNull CardinalityVariable variable : product) {
 			CardinalitySolution solution = preSerializer.basicGetSolution(variable);
-			if (solution instanceof IntegerCardinalitySolution) {
-				constantProduct *= ((IntegerCardinalitySolution)solution).getValue();
+			Integer integer = getIntegerSolution(solution);
+			if (integer != null) {
+				constantProduct *= integer;
 			}
 			else {
 				if (productVariables == null) {
@@ -347,27 +350,36 @@ public class CardinalityExpression implements Nameable
 			return false;
 		}
 		int sum = 0;
-		CardinalityVariable manyVariable = null;
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			Object resolution = resolveProduct(preSerializer, products);
-			if (resolution instanceof Integer) {
-				sum += ((Integer)resolution).intValue();
-			}
-			for (@NonNull CardinalityVariable variable : products) {
-				if ((manyVariable == null) && variable.mayBeMany()) {
-					manyVariable = variable;
+		CardinalityVariable productVariable = null;
+		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
+			int constantProduct = 1;
+			for (@NonNull CardinalityVariable variable : product) {
+				if (!Iterables.contains(intersection, variable)) {
+					CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+					Integer integer = getIntegerSolution(solution);
+					if (integer != null) {
+						constantProduct *= integer;
+					}
+					else if (productVariable != null) {
+						return false;
+					}
+					else {
+						productVariable = variable;
+					}
 				}
+			}
+			if ((productVariable == null) || !product.contains(productVariable)) {
+				sum += constantProduct;
 			}
 		}
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				if (preSerializer.basicGetSolution(variable) == null) {
-					if (variable == manyVariable) {
-						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, sum, 1));
-					}
-					else {
-						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
-					}
+				if (variable == productVariable) {
+					preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, sum, 1));
+				}
+				else {
+					assert Iterables.contains(intersection, variable);
+					preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
 				}
 			}
 		}

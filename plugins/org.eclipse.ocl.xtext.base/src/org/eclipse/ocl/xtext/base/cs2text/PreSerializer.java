@@ -300,7 +300,7 @@ public class PreSerializer
 	}
 
 	public void preSerialize() {
-		if ("OCLinEcore::TopLevelCS".equals(ruleAnalysis.getName())) {
+		if ("OCLinEcore::ReferenceCS".equals(ruleAnalysis.getName())) {
 			getClass();	// XXX debugging
 		}
 		//
