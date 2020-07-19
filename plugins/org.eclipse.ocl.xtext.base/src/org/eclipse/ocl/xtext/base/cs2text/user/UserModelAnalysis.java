@@ -66,7 +66,8 @@ public class UserModelAnalysis
 	 */
 	public void analyze(@NonNull EObject model) {
 		assert model.eContainer() == null;
-		element2elementAnalysis.put(model, new UserRootElementAnalysis(this, model));
+		UserRootElementAnalysis rootElementAnalysis = new UserRootElementAnalysis(this, model);
+		element2elementAnalysis.put(model, rootElementAnalysis);
 		List<@NonNull UserElementAnalysis> unresolvedModelObjects = new ArrayList<>();
 		for (@NonNull EObject eObject : new TreeIterable(model, false)) {
 			UserElementAnalysis elementAnalysis = new UserElementAnalysis(this, eObject);
@@ -75,6 +76,7 @@ public class UserModelAnalysis
 				unresolvedModelObjects.add(elementAnalysis);
 			}
 		}
+		rootElementAnalysis.getSerializationRules();		// Avoid lazy serializationRules being omiited by a toString().
 	}
 
 	/**

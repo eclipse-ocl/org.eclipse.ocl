@@ -47,8 +47,9 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		Object eGet = serializer.consumeNext(eStructuralFeature);
 		if (eStructuralFeature instanceof EReference) {
 			assert ((EReference)eStructuralFeature).isContainment();
-			assert eGet != null;
-			serializer.serializeElement(serializationBuilder, (EObject)eGet);
+			if (eGet != null) {
+				serializer.serializeElement(serializationBuilder, (EObject)eGet);
+			}
 		}
 		else {
 //			serializationBuilder.append("«attribute-call»");

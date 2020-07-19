@@ -42,7 +42,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		assert serializer.getElement().eIsSet(eStructuralFeature);
+		assert !eStructuralFeature.isUnsettable() || serializer.getElement().eIsSet(eStructuralFeature);
 		serializationBuilder.append(enumerationValue.getName());
 	}
 

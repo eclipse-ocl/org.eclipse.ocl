@@ -119,7 +119,7 @@ public class GrammarAnalysis
 	}
 
 	/**
-	 * Perform the analysis to determine and populate thae Assignment and Rile analyses.
+	 * Perform the analysis to determine and populate thae Assignment and Rule analyses.
 	 */
 	public void analyze() {
 		Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls = new HashMap<>();
@@ -283,27 +283,19 @@ public class GrammarAnalysis
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = new HashMap<>();
 		List<@NonNull EClassifier> eClasses = new ArrayList<>(eClassifier2ruleAnalyses.keySet());
 		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);		// XXX debug aid
-		for (@NonNull EClassifier eClassifier : eClasses) {
-			if (eClassifier instanceof EClass) {
-				EClass eRuleClass = (EClass)eClassifier;
-				if ("TopLevelCS".equals(eRuleClass.getName())) {
-					getClass();			// XXX debugging
-				}
-				List<@NonNull AbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eRuleClass);
-				assert ruleAnalyses != null;
-				List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
-				for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+		for (@NonNull List<@NonNull AbstractRuleAnalysis> ruleAnalyses : eClassifier2ruleAnalyses.values()) {
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+				if (ruleAnalysis instanceof ParserRuleAnalysis) {
 					for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
-						EClass eActionClass = serializationRule.getProducedEClass();
-						if (eActionClass == eRuleClass) {
-							serializationRules.add(serializationRule);
+						EClass eClass = serializationRule.getProducedEClass();
+						List<@NonNull SerializationRule> serializationRules = eClass2serializationRules.get(eClass);
+						if (serializationRules == null) {
+							serializationRules = new ArrayList<>();
+							eClass2serializationRules.put(eClass, serializationRules);
 						}
-						else {
-							getClass();		// XXX debugging
-						}
+						serializationRules.add(serializationRule);
 					}
 				}
-				eClass2serializationRules.put(eRuleClass, serializationRules);
 			}
 		}
 		return eClass2serializationRules;
@@ -485,7 +477,9 @@ public class GrammarAnalysis
 				//	rootSerializationNode.toString(s, 2);
 					serializationRule.getPreSerializer();		// XXX redundant/lazy
 							StringUtil.appendIndentation(s, 1, "\t");
-							s.append("|&\t");
+							s.append("|& ");
+							s.append(serializationRule.getProducedEClass().getName());
+							s.append(" ");
 							serializationRule.toString(s, 2);
 						}
 					/*	s.append("\n");

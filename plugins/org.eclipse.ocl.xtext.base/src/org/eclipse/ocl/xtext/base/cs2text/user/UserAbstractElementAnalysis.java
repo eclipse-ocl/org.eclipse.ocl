@@ -33,6 +33,7 @@ import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -116,7 +117,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 					Collections.sort(sortedEnumerationValues, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
 						int size2 = CardinalityExpression.getSize(eFeature2contentAnalysis, eStructuralFeature, enumerationValue);
-						s.append(String.format("\n%-30.30s%8d", "\"" + enumerationValue.getName() + "\"", size2));
+						s.append(String.format("\n %-29.29s%8d", "\"" + enumerationValue.getName() + "\"", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules2) {
 							MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature, enumerationValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
@@ -135,6 +136,9 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		EClass eClass = element.eClass();
 		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
 			assert eFeature != null;
+			if ("isOptional".equals(eFeature.getName())) {
+				getClass();			// XXX debugging
+			}
 			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile() && (!(eFeature instanceof EReference) || !((EReference)eFeature).isContainer())) {
 				Object contentAnalysis = null;
 				Object object = element.eGet(eFeature);
@@ -166,9 +170,18 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 						contentAnalysis = size;
 					}
 				}
-				else if (element.eIsSet(eFeature)) {
-					String string = String.valueOf(object);
-					if ((eFeature instanceof EAttribute) && (enumerationValues != null)) {
+				else if (!eFeature.isUnsettable() || element.eIsSet(eFeature)) {
+					if (eFeature instanceof EReference) {
+						contentAnalysis = object != null ? 1 : 0;
+					}
+					else if (eFeature.getEType().getInstanceClass() == boolean.class) {
+						contentAnalysis = object == Boolean.TRUE ? 1 : 0;
+					}
+					else if (enumerationValues == null) {
+						contentAnalysis = 1;
+					}
+					else {
+						String string = String.valueOf(object);
 						Map<@NonNull EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
 						for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
 							if (enumerationValue.isElement(string)) {
@@ -176,12 +189,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 								enumerationValue2count.put(enumerationValue, (count == null ? 0 : count.intValue()) + 1);
 							}
 						}
-					//	Map<@NonNull EnumerationValue, @NonNull Integer> value2count = new HashMap<>();
-					//	value2count.put(string, 1);
 						contentAnalysis = enumerationValue2count;
-					}
-					else {
-						contentAnalysis = 1;
 					}
 				}
 				else {
@@ -201,9 +209,9 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		Set<@NonNull EnumerationValue> enumerationValues = new HashSet<>();
 		assert serializationRules != null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			for (@NonNull SerializationNode serializationNode : Collections.singletonList(serializationRule.getRootSerializationNode())) {
-				getEnumerationValues(eAttribute, serializationNode, enumerationValues);
-			}
+		//	for (@NonNull SerializationNode serializationNode : Collections.singletonList(serializationRule.getRootSerializationNode())) {
+				getEnumerationValues(eAttribute, serializationRule.getRootSerializationNode(), enumerationValues);
+		//	}
 		}
 		return enumerationValues.isEmpty() ? null : enumerationValues;
 	}
@@ -213,6 +221,15 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
 			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eAttribute) {
 				EnumerationValue enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
+				if (!enumerationValue.isNull()) {
+					enumerationValues.add(enumerationValue);
+				}
+			}
+		}
+		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
+			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
+			if (assignedKeywordSerializationNode.getEStructuralFeature() == eAttribute) {
+				EnumerationValue enumerationValue = assignedKeywordSerializationNode.getEnumerationValue();
 				if (!enumerationValue.isNull()) {
 					enumerationValues.add(enumerationValue);
 				}
