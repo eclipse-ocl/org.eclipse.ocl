@@ -17,6 +17,7 @@ import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
@@ -52,9 +53,8 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializationBuilder.appendSoftSpace();
-		serializationBuilder.append(value);
-		serializationBuilder.appendSoftSpace();
+		Idiom idiom = serializer.getKeywordIdiom(this, value);
+		idiom.serialize(value, serializationBuilder);
 	}
 
 	@Override

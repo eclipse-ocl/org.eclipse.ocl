@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -145,5 +146,33 @@ public class Serializer
 			}
 		}
 		return  s.toString();
+	}
+
+	public @NonNull Idiom getKeywordIdiom(@NonNull SerializationNode serializationNode, @NonNull String value) {
+		if ("}".equals(value)) {
+			return Idiom.CLOSE_BRACE;
+		}
+		else if ("]".equals(value)) {
+			return Idiom.CLOSE_SQUARE;
+		}
+		else if (",".equals(value)) {
+			return Idiom.COMMA;
+		}
+		else if ("::".equals(value)) {
+			return Idiom.DOUBLE_COLON;
+		}
+		else if ("..".equals(value)) {
+			return Idiom.DOT_DOT;
+		}
+		else if ("{".equals(value)) {
+			return Idiom.OPEN_BRACE;
+		}
+		else if ("[".equals(value)) {
+			return Idiom.OPEN_SQUARE;
+		}
+		else if (";".equals(value)) {
+			return Idiom.SEMI_COLON;
+		}
+		return Idiom.DEFAULT;
 	}
 }

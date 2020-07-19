@@ -24,16 +24,19 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class SerializationBuilder
 {
-	private static final @NonNull String SOFT_SPACE = new String("« »");
+	public static final @NonNull String SOFT_SPACE = new String("« »");
+	public static final @NonNull String PUSH = new String("«+»");
+	public static final @NonNull String POP = new String("«-»");
 
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
+	private int indentDepth = 0;
 
 	public SerializationBuilder() {}
 
 	public void append(@NonNull String string) {
-	//	if (string.contains("null")) {
-	//		getClass(); // XXX debugging
-	//	}
+		if ((string == null) || string.contains("null")) {
+			getClass(); // XXX debugging
+		}
 		strings.add(string);
 	}
 
@@ -47,36 +50,47 @@ public class SerializationBuilder
 		for (@NonNull String nextString : strings) {
 		//	int nextLength = nextString.length();
 		//	char nextCh = nextLength <= 0 ? ' ' : nextString.charAt(0);
-			switch (prevCh) {
-			/*	case -1: {
-					if (ch == SOFT_SPACE) {}
-					else {
-						s.append(ch);
+			if (nextString == PUSH) {
+				indentDepth++;
+			}
+			else if (nextString == POP) {
+				indentDepth--;
+			}
+			else {
+				switch (prevCh) {
+				/*	case -1: {
+						if (ch == SOFT_SPACE) {}
+						else {
+							s.append(ch);
+						}
+						break;
+					} */
+					case ' ': {
+						if (nextString == SOFT_SPACE) {}
+						else {
+							s.append(nextString);
+						}
+						break;
 					}
-					break;
-				} */
-				case ' ': {
-					if (nextString == SOFT_SPACE) {}
-					else {
-						s.append(nextString);
+					case '\n': {
+						if (nextString == SOFT_SPACE) {}
+						else {
+							for (int i = 0; i < indentDepth; i++) {
+								s.append("    ");
+							}
+							s.append(nextString);
+						}
+						break;
 					}
-					break;
-				}
-				case '\n': {
-					if (nextString == SOFT_SPACE) {}
-					else {
-						s.append(nextString);
+					default: {
+						if (nextString == SOFT_SPACE) {
+							s.append(' ');
+						}
+						else {
+							s.append(nextString);
+						}
+						break;
 					}
-					break;
-				}
-				default: {
-					if (nextString == SOFT_SPACE) {
-						s.append(' ');
-					}
-					else {
-						s.append(nextString);
-					}
-					break;
 				}
 			}
 			int length = s.length();
