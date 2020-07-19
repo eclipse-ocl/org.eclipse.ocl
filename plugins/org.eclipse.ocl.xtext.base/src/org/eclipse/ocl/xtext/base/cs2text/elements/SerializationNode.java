@@ -25,6 +25,5 @@ public interface SerializationNode extends SerializationElement
 	 */
 	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
 	void preSerialize(@NonNull PreSerializer preSerialize, @NonNull Stack<@NonNull SerializationNode> parentStack);
-//	void resolveAssignedCurrentSerializationNodes(@NonNull Stack<@NonNull SequenceSerializationNode> parentStack);
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 }

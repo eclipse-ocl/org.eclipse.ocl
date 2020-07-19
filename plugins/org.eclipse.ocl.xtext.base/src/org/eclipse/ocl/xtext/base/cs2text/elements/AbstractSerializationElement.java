@@ -16,10 +16,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
 public abstract class AbstractSerializationElement implements SerializationElement
@@ -72,7 +74,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 		}
 	}
 
-	protected @NonNull SerializationElement createFrozenSequence(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull List<@NonNull SerializationNode> listOfNodes) {
+	protected @NonNull SerializationElement createFrozenSequence(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> listOfNodes) {
 		//
 		//	Rewrite ... X ... {Y.y=current} ... as {Y} ... y=X ... ...
 		//
@@ -82,28 +84,58 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 			UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = unassignedRuleContext.getElement();
 			AssignedCurrentSerializationNode assignedCurrentSerializationNode = assignedCurrentContext.getElement();
 			AssignmentAnalysis assignmentAnalysis = assignedCurrentSerializationNode.getAssignmentAnalysis();
-			MultiplicativeCardinality multiplicativeCardinality = assignedCurrentSerializationNode.getMultiplicativeCardinality();
-			assert multiplicativeCardinality.isOne();
+			MultiplicativeCardinality multiplicativeCardinality2 = assignedCurrentSerializationNode.getMultiplicativeCardinality();
+			assert multiplicativeCardinality2.isOne();
 			AbstractRuleAnalysis calledRuleAnalysis = unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
-			AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
+			AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality2, calledRuleAnalysis);
 			unassignedRuleContext.replace(assignedRuleCallSerializationNode);
 			assignedCurrentContext.remove();
 		}
 		//
 		//	Rewrite {... {Y.y=current} ...}? as epsilon | {... {Y.y=current} ...}
 		//
-		MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(compoundElement);
 		if (multiplicativeCardinality.isOne() || noAssignedCurrent(listOfNodes)) {
-			SequenceSerializationNode sequenceSerializationNode = new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
-			return sequenceSerializationNode;
+			return createFlattenedSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
 		}
 		else {
-			SequenceSerializationNode sequenceSerializationNode = new SequenceSerializationNode(grammarAnalysis, compoundElement, MultiplicativeCardinality.ONE, listOfNodes);
+			SerializationElement sequenceSerializationNode = createFlattenedSequence(grammarAnalysis, compoundElement, MultiplicativeCardinality.ONE, listOfNodes);
 			ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
-			disjunction.addConjunction(NullSerializationNode.INSTANCE);
-			disjunction.addConjunction(sequenceSerializationNode);
+			disjunction = disjunction.addConjunction(NullSerializationNode.INSTANCE);
+			disjunction = disjunction.addConjunction(sequenceSerializationNode);
 			return disjunction;
 		}
+	}
+
+	protected @NonNull SerializationElement createFlattenedSequence(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> listOfNodes) {
+		//
+		//	Recursively flatten nested ParserRuleCalls
+		//
+		int index = 0;
+		for (@NonNull SerializationNode serializationNode : listOfNodes) {
+			if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
+				AbstractRuleAnalysis calledRuleAnalysis = ((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis();
+				if (calledRuleAnalysis instanceof ParserRuleAnalysis) {
+					ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
+					ParserRuleAnalysis calledParserRuleAnalysis = (ParserRuleAnalysis) calledRuleAnalysis;
+					for (@NonNull SerializationRule serializationRule : calledParserRuleAnalysis.getSerializationRules()) {
+						SerializationElement flattened = new ListOfSerializationNode();
+						for (int i = 0; i < index; i++) {
+							flattened = flattened.addConcatenation(listOfNodes.get(i));
+						}
+						flattened = flattened.addConcatenation(serializationRule.getRootSerializationNode());
+						for (int i = index+1; i < listOfNodes.size(); i++) {
+							flattened = flattened.addConcatenation(listOfNodes.get(i));
+						}
+						disjunction = disjunction.addConjunction(flattened.freezeSequences(grammarAnalysis, compoundElement));
+					//	SerializationElement flattenedSequence = createFlattenedSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, cflattenedonjunction.getNodes());
+					//	disjunction = disjunction.addConjunction(flattenedSequence);
+					}
+					return disjunction; //.freezeSequences(grammarAnalysis, compoundElement);
+				}
+			}
+			index++;
+		}
+		return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
 	}
 
 	private @Nullable FindContext<@NonNull UnassignedRuleCallSerializationNode> findUnassignedRule(@NonNull List<@NonNull SerializationNode> serializationNodes) {

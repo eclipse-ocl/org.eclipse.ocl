@@ -128,7 +128,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
 		List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-			SerializationElement frozenSequence = createFrozenSequence(grammarAnalysis, compoundElement, listOfNodes);
+			SerializationElement frozenSequence = createFrozenSequence(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), listOfNodes);
 			if (frozenSequence.isListOfList()) {
 				newListOfList.addAll(frozenSequence.asListOfList().getLists());
 			}

@@ -35,7 +35,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		this.serializationNodes = groupSerializationNodes;
 		assert !groupSerializationNodes.isEmpty();
 		assert multiplicativeCardinality.isOne() || noAssignedCurrent(this);
-	//	assert noUnassignedParserRuleCall(this);
+		assert noUnassignedParserRuleCall(this);
 		assert groupSerializationNodes.size() == new HashSet<>(groupSerializationNodes).size();
 	}
 
@@ -98,36 +98,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			serializationNode.preSerialize(nestedPreSerializer, parentStack);
 			parentStack.pop();
 		}
-	/*	List<@NonNull SerializationNode> nestedSerializedNodes = nestedPreSerializer.getSerializedNodes();
-		SequenceSerializationNode nestedSequenceSerializationNode = new SequenceSerializationNode(grammarAnalysis, group, nestedSerializedNodes)
-		{
-			@Override
-			public void toString(@NonNull StringBuilder s, int depth) {
-			//	StringUtil.appendIndentation(s, depth, "\t");
-				s.append("{");
-			//	boolean isFirst = true;
-				for (@NonNull SerializationNode serializationNode : serializationNodes) {
-				//	if (!isFirst) {
-						s.append(" ");
-				//	}
-					serializationNode.toString(s, depth+1);
-				//	isFirst = false;
-				}
-				s.append(" }");
-				appendCardinality(s);
-			}
-		};
-		preSerializer.addSerializedNode(nestedSequenceSerializationNode);			// XXX parent counted list */
 	}
-
-/*	@Override
-	public void resolveAssignedCurrentSerializationNodes(@NonNull Stack<@NonNull SequenceSerializationNode> parentStack) {
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			parentStack.push(this);
-			serializationNode.resolveAssignedCurrentSerializationNodes(parentStack);
-			parentStack.pop();
-		}
-	} */
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {

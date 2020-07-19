@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
@@ -22,21 +20,21 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssignedSerializationNode
 {
-	protected final @NonNull List<org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis> ruleAnalyses;
+	protected final @NonNull List<@NonNull AbstractRuleAnalysis> ruleAnalyses;
 
 	public AlternativeAssignedRuleCallsSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
-			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull AbstractRuleAnalysis> ruleAnalyses) {
 		super(assignmentAnalysis, multiplicativeCardinality);
-		this.ruleAnalyses = eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
+		this.ruleAnalyses = ruleAnalyses; //eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
 	}
 
-	public void addRuleAnalysis(@NonNull AbstractRuleAnalysis ruleAnalysis) {
-		ruleAnalyses.add(ruleAnalysis);
-	}
+//	public void addRuleAnalysis(@NonNull AbstractRuleAnalysis ruleAnalysis) {
+//		ruleAnalyses.add(ruleAnalysis);
+//	}
 
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeAssignedRuleCallsSerializationNode(assignmentAnalysis, multiplicativeCardinality);
+		return new AlternativeAssignedRuleCallsSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses);
 	}
 
 	@Override

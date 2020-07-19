@@ -81,7 +81,7 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 			return NullSerializationNode.INSTANCE;
 		}
 		else {
-			return createFrozenSequence(grammarAnalysis, compoundElement, listOfNodes);
+			return createFrozenSequence(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), listOfNodes);
 		}
 	}
 

@@ -81,7 +81,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	@Override
 	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) { // XXX is this needed ?
 	//	return new SequenceSerializationNode(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), Collections.singletonList(this));
-		return createFrozenSequence(grammarAnalysis, compoundElement, Collections.singletonList(this));
+		return createFrozenSequence(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), Collections.singletonList(this));
 	}
 
 	@Override
