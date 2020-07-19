@@ -31,9 +31,9 @@ public class SerializationBuilder
 	public SerializationBuilder() {}
 
 	public void append(@NonNull String string) {
-		if (string.contains("null")) {
-			getClass(); // XXX debugging
-		}
+	//	if (string.contains("null")) {
+	//		getClass(); // XXX debugging
+	//	}
 		strings.add(string);
 	}
 

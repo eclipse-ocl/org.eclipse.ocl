@@ -74,7 +74,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 				}
 			}
 			else {
-				listOfListOfNodes.addAll(additionalListOfListOfNodes);
+				newListOfList.addAll(additionalListOfListOfNodes);
 			}
 			return new ListOfListOfSerializationNode(newListOfList, MultiplicativeCardinality.ONE);
 		}

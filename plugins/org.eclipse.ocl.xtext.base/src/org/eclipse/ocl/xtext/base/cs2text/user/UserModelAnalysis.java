@@ -96,7 +96,7 @@ public class UserModelAnalysis
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
 		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		if ("ReferenceCS".equals(element.eClass().getName())) {
+		if ("MultiplicityBoundsCS".equals(element.eClass().getName())) {
 			getClass();	// XXX
 		}
 		Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis = userElementAnalysis.getContentAnalysis();

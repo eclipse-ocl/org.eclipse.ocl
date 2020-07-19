@@ -457,7 +457,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
 	protected void analyze() {
-		if ("Base::MultiplicityStringCS".equals(getName())) {
+		if ("Base::MultiplicityCS".equals(getName())) {
 			getClass(); // XXX debugging
 		}
 		addProducedTypeRef(XtextGrammarUtil.getType(abstractRule));

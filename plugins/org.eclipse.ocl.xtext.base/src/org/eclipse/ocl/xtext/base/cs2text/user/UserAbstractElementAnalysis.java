@@ -136,7 +136,7 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		EClass eClass = element.eClass();
 		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
 			assert eFeature != null;
-			if ("instanceClassName".equals(eFeature.getName())) {
+			if ("lowerBound".equals(eFeature.getName())) {
 				getClass();			// XXX debugging
 			}
 			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile() && (!(eFeature instanceof EReference) || !((EReference)eFeature).isContainer())) {
@@ -172,16 +172,16 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 				}
 				else if (!eFeature.isUnsettable() || element.eIsSet(eFeature)) {
 					boolean eIsSet = element.eIsSet(eFeature);
-					/*if (eFeature instanceof EReference) {
+					if (eFeature instanceof EReference) {
 						assert object != null == eIsSet;
 						contentAnalysis = object != null ? 1 : 0;
 					}
-					else if (eFeature.getEType().getInstanceClass() == boolean.class) {
+					else /*if (eFeature.getEType().getInstanceClass() == boolean.class) {
 						assert (object == Boolean.TRUE) == eIsSet;
 						contentAnalysis = object == Boolean.TRUE ? 1 : 0;
 					}
 					else*/ if (enumerationValues == null) {
-						contentAnalysis = eIsSet ? 1 : 0;
+						contentAnalysis = eIsSet || !eFeature.isUnsettable() ? 1 : 0;
 					}
 					else {
 						String string = String.valueOf(object);
