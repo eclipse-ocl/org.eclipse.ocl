@@ -45,7 +45,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		Object object = serializer.getElement().eGet(eStructuralFeature);
+		Object object = serializer.consumeNext(eStructuralFeature);
 		serializationBuilder.append(String.valueOf(object));
 	}
 

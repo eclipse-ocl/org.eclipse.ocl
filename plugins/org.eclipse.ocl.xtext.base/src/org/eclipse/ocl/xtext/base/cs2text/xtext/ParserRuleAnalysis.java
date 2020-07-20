@@ -259,7 +259,13 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		@Override
 		public @NonNull SerializationElement caseKeyword(Keyword keyword) {
 			assert keyword != null;
-			return new UnassignedKeywordSerializationNode(grammarAnalysis, keyword, MultiplicativeCardinality.toEnum(keyword));
+			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(keyword);
+			if (multiplicativeCardinality.mayBeZero()) {
+				return NullSerializationNode.INSTANCE;	// Skip gratuitous output
+			}
+			else {
+				return new UnassignedKeywordSerializationNode(grammarAnalysis, keyword, multiplicativeCardinality);
+			}
 		}
 
 		@Override

@@ -98,7 +98,7 @@ public class PreSerializer
 		MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 		String name = String.format("C%02d", variable2node.size());
 		assert name != null;
-		if (!multiplicativeCardinality.isOne()) {
+		if (!multiplicativeCardinality.isConstant()) {
 			CardinalityVariable cardinalityVariable = new CardinalityVariable(name, multiplicativeCardinality);
 			CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 			assert old2 == null;

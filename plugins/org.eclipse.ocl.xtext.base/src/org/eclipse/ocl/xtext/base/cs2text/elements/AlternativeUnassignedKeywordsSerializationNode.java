@@ -56,9 +56,9 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializationBuilder.appendSoftSpace();
+		serializationBuilder.append(SerializationBuilder.SOFT_SPACE);
 		serializationBuilder.append(values.get(0));
-		serializationBuilder.appendSoftSpace();
+		serializationBuilder.append(SerializationBuilder.SOFT_SPACE);
 	}
 
 	@Override

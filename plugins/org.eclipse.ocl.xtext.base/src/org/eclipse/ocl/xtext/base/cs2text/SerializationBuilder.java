@@ -34,14 +34,10 @@ public class SerializationBuilder
 	public SerializationBuilder() {}
 
 	public void append(@NonNull String string) {
-		if ((string == null) || string.contains("null")) {
-			getClass(); // XXX debugging
-		}
+//		if ((string == null) || string.contains("ordered")) {
+//			getClass(); // XXX debugging
+//		}
 		strings.add(string);
-	}
-
-	public void appendSoftSpace() {
-		strings.add(SOFT_SPACE);
 	}
 
 	public @NonNull String toRenderedString() {
