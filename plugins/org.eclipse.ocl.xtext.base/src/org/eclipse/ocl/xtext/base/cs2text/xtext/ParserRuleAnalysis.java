@@ -449,13 +449,15 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 
 		@Override
 		public int compare(@NonNull SerializationRule rule1, @NonNull SerializationRule rule2) {
-			int size1 = getSize(rule1);
-			int size2 = getSize(rule2);
+			BasicSerializationRule basicRule1 = rule1.getBasicSerializationRule();
+			BasicSerializationRule basicRule2 = rule2.getBasicSerializationRule();
+			int size1 = getSize(basicRule1);
+			int size2 = getSize(basicRule2);
 			if (size1 != size2) {
 				return size1 - size2;
 			}
-			String string1 = rule1.toString();
-			String string2 = rule2.toString();
+			String string1 = basicRule1.toString();
+			String string2 = basicRule2.toString();
 			return string1.compareTo(string2);
 		}
 
@@ -538,7 +540,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
 				ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis) ((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis();
 				for (@NonNull SerializationRule calledSerializationRule : calledRuleAnalysis.getSerializationRules()) {
-					SerializationRule delegateSerializationRule = new DelegateSerializationRule(this, (BasicSerializationRule) calledSerializationRule);	// XXX transitove
+					SerializationRule delegateSerializationRule = new DelegateSerializationRule(this, calledSerializationRule.getBasicSerializationRule());
 					serializationRules.add(delegateSerializationRule);
 				}
 			}

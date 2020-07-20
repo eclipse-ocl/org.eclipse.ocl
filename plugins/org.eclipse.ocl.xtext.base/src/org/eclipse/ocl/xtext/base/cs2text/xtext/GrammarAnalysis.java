@@ -445,7 +445,10 @@ public class GrammarAnalysis
 				//	serializationRule.getPreSerializer();		// XXX redundant/lazy
 							StringUtil.appendIndentation(s, 1, "\t");
 							s.append("|& ");
-							s.append(serializationRule.getProducedEClass().getName());
+							EClass producedEClass = serializationRule.getProducedEClass();
+							s.append(producedEClass.getEPackage().getName());
+							s.append("::");
+							s.append(producedEClass.getName());
 							s.append(" ");
 							serializationRule.toString(s, 2);
 						}
