@@ -101,7 +101,7 @@ public class UserModelAnalysis
 		}
 		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();
 		Serializer serializer = userElementAnalysis.createSerializer(slotsAnalysis);
-		if (serializer == null) {
+	/*	if (serializer == null) {
 		//	StringBuilder s = new StringBuilder();
 		//	s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
 		//	slotsAnalysis.diagnose(s);
@@ -109,7 +109,7 @@ public class UserModelAnalysis
 		//	serializationBuilder.append(s.toString());
 			slotsAnalysis.setIncludeImplicitDefaults(true);
 			serializer = userElementAnalysis.createSerializer(slotsAnalysis);
-		}
+		} */
 		if (serializer != null) {
 			serializer.serialize(serializationBuilder);
 		}

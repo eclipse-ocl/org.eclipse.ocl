@@ -90,13 +90,13 @@ public class CardinalityExpression implements Nameable
 					if (!isFirst2) {
 						s.append(" * ");
 					}
-					if (variable.isOne()) {
-						s.append("1");
-					}
-					else {
-						s.append(variable);
+					assert !variable.isOne();
+				//		s.append("1");
+				//	}
+				//	else {
+				//		s.append(variable);
 						gotOne = true;
-					}
+				//	}
 					isFirst2 = false;
 				}
 			}
@@ -221,6 +221,10 @@ public class CardinalityExpression implements Nameable
 			}
 		}
 		return unsolvedVariables;
+	}
+
+	public boolean isOne() {
+		return (sumOfProducts.size() == 1) && (sumOfProducts.get(0).size() == 0);
 	}
 
 	/**

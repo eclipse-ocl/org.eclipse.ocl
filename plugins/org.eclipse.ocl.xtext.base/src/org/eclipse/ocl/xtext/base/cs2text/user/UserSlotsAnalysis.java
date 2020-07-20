@@ -54,10 +54,8 @@ public class UserSlotsAnalysis
 	{
 		// Empty, default-less slot
 		public static final int ZERO = 0;
-		// Explicitly non-default slot
-		public static final int ONE_EXPLICIT = 1;
-		// Implicitly / default slot
-		public static final int ONE_IMPLICIT = -1;
+		// Explicitly or implicitly non-default slot
+		public static final int ONE = 1;
 
 		protected final int count;
 
@@ -67,8 +65,7 @@ public class UserSlotsAnalysis
 
 		@Override
 		public int asCounted() {
-	//		assert count >= 0;
-			return count >= 0 ? count : includeImplicitDefaults ? -count : 0;
+			return count >= 0 ? count : 0;
 		}
 
 		@Override
@@ -147,13 +144,13 @@ public class UserSlotsAnalysis
 	protected final @NonNull EObject eObject;
 	protected final @Nullable Iterable<@NonNull SerializationRule> serializationRules;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis;
-	private boolean includeImplicitDefaults = false;
 
 	public UserSlotsAnalysis(@Nullable Iterable<@NonNull SerializationRule> serializationRules, @NonNull EObject eObject) {
 		this.eObject = eObject;
 		this.serializationRules = serializationRules;
 		Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis = new HashMap<>();
-		EClass eClass = eObject.eClass();
+		if (serializationRules != null) {
+			EClass eClass = eObject.eClass();
 		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
 			assert eFeature != null;
 			if ("lowerBound".equals(eFeature.getName())) {
@@ -194,7 +191,7 @@ public class UserSlotsAnalysis
 					boolean eIsSet = eObject.eIsSet(eFeature);
 					if (eFeature instanceof EReference) {
 						assert object != null == eIsSet;
-						slotAnalysis = valueOf(object != null ? CountedSlotAnalysis.ONE_EXPLICIT : CountedSlotAnalysis.ZERO);
+						slotAnalysis = valueOf(object != null ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
 					}
 					else /*if (eFeature.getEType().getInstanceClass() == boolean.class) {
 						assert (object == Boolean.TRUE) == eIsSet;
@@ -205,10 +202,26 @@ public class UserSlotsAnalysis
 					//	for (@NonNull SerializationRule serializationRule : serializationRules) {
 					//
 					//	}
+						int count;
+						if (eIsSet) {
+							count = CountedSlotAnalysis.ONE;
+						}
+						else {
+							boolean allRulesNeedDefault = true;
+							for (@NonNull SerializationRule serializationRule : serializationRules) {
+								if (!serializationRule.getBasicSerializationRule().getPreSerializer().needsDefault(eFeature)) {
+									allRulesNeedDefault = false;
+									break;
+								}
+							}
+							count = allRulesNeedDefault ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO;
+						}
+						slotAnalysis = valueOf(count);
+
 
 
 					//	slotAnalysis = eIsSet ? CountedSlotAnalysis.ONE_MUST : eFeature.isUnsettable() ? CountedSlotAnalysis.ZERO : CountedSlotAnalysis.ONE_MAY;
-						slotAnalysis = valueOf(eIsSet ? CountedSlotAnalysis.ONE_EXPLICIT : eFeature.isUnsettable() ? CountedSlotAnalysis.ZERO : CountedSlotAnalysis.ONE_IMPLICIT);
+					//	slotAnalysis = valueOf(eIsSet ? CountedSlotAnalysis.ONE_EXPLICIT : eFeature.isUnsettable() ? CountedSlotAnalysis.ZERO : CountedSlotAnalysis.ONE_IMPLICIT);
 					}
 					else {
 						String string = String.valueOf(object);
@@ -227,6 +240,7 @@ public class UserSlotsAnalysis
 				}
 				eStructuralFeature2slotAnalysis.put(eFeature, slotAnalysis);
 			}
+		}
 		}
 		this.eStructuralFeature2slotAnalysis = eStructuralFeature2slotAnalysis;
 	}
@@ -340,10 +354,6 @@ public class UserSlotsAnalysis
 		return ClassUtil.nonNullState(eStructuralFeature2slotAnalysis.get(eStructuralFeature));
 	}
 
-	public void setIncludeImplicitDefaults(boolean includeImplicitDefaults) {
-		this.includeImplicitDefaults = includeImplicitDefaults;
-	}
-
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
@@ -362,15 +372,13 @@ public class UserSlotsAnalysis
 		return s.toString();
 	}
 
-	private final @NonNull CountedSlotAnalysis ONE_IMPLICIT = new CountedSlotAnalysis(CountedSlotAnalysis.ONE_IMPLICIT);
 	private final @NonNull CountedSlotAnalysis ZERO = new CountedSlotAnalysis(CountedSlotAnalysis.ZERO);
-	private final @NonNull CountedSlotAnalysis ONE_EXPLICIT = new CountedSlotAnalysis(CountedSlotAnalysis.ONE_EXPLICIT);
+	private final @NonNull CountedSlotAnalysis ONE = new CountedSlotAnalysis(CountedSlotAnalysis.ONE);
 
 	public @NonNull CountedSlotAnalysis valueOf(int value) {
 		switch (value) {
-			case CountedSlotAnalysis.ONE_IMPLICIT: return ONE_IMPLICIT;
 			case CountedSlotAnalysis.ZERO: return ZERO;
-			case CountedSlotAnalysis.ONE_EXPLICIT: return ONE_EXPLICIT;
+			case CountedSlotAnalysis.ONE: return ONE;
 			default: return new CountedSlotAnalysis(value);
 		}
 	}

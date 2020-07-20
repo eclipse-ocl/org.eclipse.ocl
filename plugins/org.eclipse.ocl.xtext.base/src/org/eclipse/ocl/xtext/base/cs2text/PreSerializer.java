@@ -298,6 +298,14 @@ public class PreSerializer
 		return ClassUtil.nonNullState(node2variable.get(serializationNode));
 	}
 
+	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
+		CardinalityExpression expression = feature2expression.get(eStructuralFeature);
+		if (expression == null) {
+			return false;
+		}
+		return expression.isOne();
+	}
+
 	public void preSerialize() {
 		if ("OCLinEcore::ReferenceCS".equals(ruleAnalysis.getName())) {
 			getClass();	// XXX debugging
