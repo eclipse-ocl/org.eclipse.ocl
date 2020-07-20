@@ -74,11 +74,6 @@ public class GrammarAnalysis
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = null;
 
 	/**
-	 * The possible producing rule analyses for each EClassifier. This analysis excludes overrides.
-	 */
-	private @Nullable Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = null;
-
-	/**
 	 * The prioritized serialization rules for each EClass.
 	 */
 	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = null;
@@ -142,7 +137,6 @@ public class GrammarAnalysis
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
 			parserRuleAnalysis.analyze();
 		}
-		this.eClassifier2ruleAnalyses = analyzeProductions(rule2ruleAnalysis);
 		//
 		// Perform the inter rule analysis to determine the base rule closure.
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
@@ -151,8 +145,7 @@ public class GrammarAnalysis
 			}
 			parserRuleAnalysis.preSerialize();
 		}
-		assert eClassifier2ruleAnalyses != null;
-		this.eClass2serializationRules = analyzeSerializations(eClassifier2ruleAnalyses);
+		this.eClass2serializationRules = analyzeSerializations(parserRuleAnalyses);
 	}
 
 	/**
@@ -213,28 +206,6 @@ public class GrammarAnalysis
 	}
 
 	/**
-	 *	Identify the production rule(s) for each EClassifier.
-	 */
-	protected @NonNull Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> analyzeProductions(
-			@NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis) {
-		Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = new HashMap<>();
-		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
-			if ("EssentialOCL::URIFirstPathElementCS".equals(abstractRuleAnalysis.getName())) {
-				getClass(); // XXX
-			}
-			for (@NonNull EClassifier eClassifier : abstractRuleAnalysis.getEClassifiers()) {
-				List<@NonNull AbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eClassifier);
-				if (ruleAnalyses == null) {
-					ruleAnalyses = new ArrayList<>();
-					eClassifier2ruleAnalyses.put(eClassifier, ruleAnalyses);
-				}
-				ruleAnalyses.add(abstractRuleAnalysis);
-			}
-		}
-		return eClassifier2ruleAnalyses;
-	}
-
-	/**
 	 *	Return the rules for each rule name and populate the rule2ruleCalls from each rule.
 	 */
 	protected @NonNull Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> analyzeRuleNames(
@@ -279,22 +250,18 @@ public class GrammarAnalysis
 	//protected abstract @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible();
 
 	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> analyzeSerializations(
-			@NonNull Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses) {
+			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = new HashMap<>();
-		List<@NonNull EClassifier> eClasses = new ArrayList<>(eClassifier2ruleAnalyses.keySet());
-		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);		// XXX debug aid
-		for (@NonNull List<@NonNull AbstractRuleAnalysis> ruleAnalyses : eClassifier2ruleAnalyses.values()) {
-			for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
-						EClass eClass = serializationRule.getProducedEClass();
-						List<@NonNull SerializationRule> serializationRules = eClass2serializationRules.get(eClass);
-						if (serializationRules == null) {
-							serializationRules = new ArrayList<>();
-							eClass2serializationRules.put(eClass, serializationRules);
-						}
-						serializationRules.add(serializationRule);
+		for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+			if (ruleAnalysis instanceof ParserRuleAnalysis) {
+				for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
+					EClass eClass = serializationRule.getProducedEClass();
+					List<@NonNull SerializationRule> serializationRules = eClass2serializationRules.get(eClass);
+					if (serializationRules == null) {
+						serializationRules = new ArrayList<>();
+						eClass2serializationRules.put(eClass, serializationRules);
 					}
+					serializationRules.add(serializationRule);
 				}
 			}
 		}

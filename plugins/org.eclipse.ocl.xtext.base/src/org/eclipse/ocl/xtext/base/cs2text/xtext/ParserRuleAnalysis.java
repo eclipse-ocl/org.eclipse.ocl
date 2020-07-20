@@ -11,12 +11,13 @@
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -35,6 +36,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerialization
 import org.eclipse.ocl.xtext.base.cs2text.elements.ListOfListOfSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.ListOfSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.NullSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationElement;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
@@ -49,7 +51,6 @@ import org.eclipse.xtext.Group;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.TypeRef;
 import org.eclipse.xtext.util.XtextSwitch;
 
 /**
@@ -57,7 +58,13 @@ import org.eclipse.xtext.util.XtextSwitch;
  */
 public class ParserRuleAnalysis extends AbstractRuleAnalysis
 {
-	public static class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
+	/**
+	 * The ParserRuleSwitch supports the recursive transfprmation of a ParserRule AbstractElement to its
+	 * disjoint normal form comprisising an outer disjunction of conjunctions of terms with cardinatlities.
+	 * Some alternatives such as an an enumeration of keywords are aggregated as an inner alternative tio avoid
+	 * the permutatioon of alternatives getting out of hand. Parser rule calls are flattened.
+	 */
+	protected static class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 	{
 		/**
 		 * The analyzed rule
@@ -77,7 +84,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		public @NonNull SerializationElement analyze() {
 			AbstractElement rootElement = ruleAnalysis.getRule().getAlternatives();
 			int classifierID = rootElement.eClass().getClassifierID();
-			SerializationElement serializationNode = doSwitch(classifierID, rootElement);
+			@SuppressWarnings("null") SerializationElement serializationNode = doSwitch(classifierID, rootElement);
 			return serializationNode;
 		}
 
@@ -179,7 +186,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			}
 			else if (terminal instanceof Alternatives) {
 				Alternatives alternatives = (Alternatives)terminal;
-				List<@NonNull SerializationNode> contents = new ArrayList<>();
 				SerializationNode assignedAlternativeKeywords = doAssignedAlternativeKeywords(assignment, alternatives, multiplicativeCardinality);
 				if (assignedAlternativeKeywords != null) {
 					return assignedAlternativeKeywords;
@@ -244,7 +250,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			SerializationElement serializationResult = new ListOfSerializationNode();
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(group)) {		// XXX optimize the no alternatives case
 				int classifierID = element.eClass().getClassifierID();
-				SerializationElement serializationElement = doSwitch(classifierID, element);
+				@SuppressWarnings("null") SerializationElement serializationElement = doSwitch(classifierID, element);
 				serializationResult = serializationResult.addConcatenation(serializationElement);
 			}
 			return serializationResult.freezeSequences(grammarAnalysis, group);
@@ -424,6 +430,50 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		}
 	}
 
+	/**
+	 * SerializationRuleComparator provides a stable comparison that may be used in a sort to
+	 * prioritize simpler rules first. This avoids gratuittous punctuation around optional
+	 * sequences of elements.
+	 */
+	protected static final class SerializationRuleComparator implements Comparator<@NonNull SerializationRule>
+	{
+		private Map<@NonNull SerializationRule, @NonNull Integer> rule2size = new HashMap<>();
+
+		@Override
+		public int compare(@NonNull SerializationRule rule1, @NonNull SerializationRule rule2) {
+			int size1 = getSize(rule1);
+			int size2 = getSize(rule2);
+			if (size1 != size2) {
+				return size1 - size2;
+			}
+			String string1 = rule1.toString();
+			String string2 = rule2.toString();
+			return string1.compareTo(string2);
+		}
+
+		private int getSize(@NonNull SerializationRule serializationRule) {
+			Integer size = rule2size.get(serializationRule);
+			if (size == null) {
+				size = getSize(serializationRule.getRootSerializationNode());
+				rule2size.put(serializationRule, size);
+			}
+			return size;
+		}
+
+		private int getSize(@NonNull SerializationNode parentSerializationNode) {
+			int size = 0;
+			if (parentSerializationNode instanceof SequenceSerializationNode) {
+				for (@NonNull SerializationNode childSerializationNode : ((SequenceSerializationNode)parentSerializationNode).getSerializationNodes()) {
+					size += 2 * getSize(childSerializationNode);		// 2 penalizes nesting
+				}
+			}
+			else {
+				size++;
+			}
+			return size;
+		}
+	}
+
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
@@ -443,16 +493,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		assignmentAnalyses.add(assignmentAnalysis);
 	}
 
-	protected void addProducedTypeRef(@NonNull TypeRef type) {
-		EClassifier eClassifier = XtextGrammarUtil.getClassifier(type);
-		if (!this.eClassifiers.contains(eClassifier)) {
-		//	if ("AttributeCS".equals(eClassifier.getName())) {
-		//		getClass();
-		//	}
-			this.eClassifiers.add(eClassifier);
-		}
-	}
-
 	/**
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
@@ -460,17 +500,10 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		if ("Base::MultiplicityCS".equals(getName())) {
 			getClass(); // XXX debugging
 		}
-		addProducedTypeRef(XtextGrammarUtil.getType(abstractRule));
 		for (EObject eObject : new TreeIterable(abstractRule, false)) {
-			if (eObject instanceof Action) {
-				Action action = (Action)eObject;
-			//	if (isFirstResultType(action)) {
-					addProducedTypeRef(XtextGrammarUtil.getType(action));
-			//	}
-			}
-			else if (eObject instanceof RuleCall) {
+			if (eObject instanceof RuleCall) {
 				RuleCall ruleCall = (RuleCall)eObject;
-				if (isFirstResultType(ruleCall)) {
+				if (isFirstResultType(ruleCall)) {		// Re-use hierarchical switch flattenning
 					AbstractRule derivedRule = XtextGrammarUtil.getRule(ruleCall);
 					AbstractRuleAnalysis derivedRuleAnalysis = grammarAnalysis.getRuleAnalysis(derivedRule);
 					derivedRuleAnalysis.addBaseRuleAnalysis(this);
@@ -496,15 +529,14 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			SerializationRule serializationRule = new SerializationRule(this, serializationResult.asNode());
 			serializationRules.add(serializationRule);
 		}
-		else {
-			getClass();
+		else {		// isNull()
+			throw new IllegalStateException();
+		}
+		if (serializationRules.size() > 1) {
+			Collections.sort(serializationRules, new SerializationRuleComparator());
 		}
 		this.serializationRules = serializationRules;
 	}
-
-//	public @Nullable SerializationNode basicGetContents() {
-//		return serializationNode;
-//	}
 
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
@@ -517,11 +549,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	public @NonNull EClass getReturnedEClass() {
 		return eClass;
 	}
-
-//	public @NonNull SerializationNode getRootSerializationNode() {
-//		assert serializationNode != null;
-//		return serializationNode;
-//	}
 
 	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
 		if (serializationRules == null) {
@@ -601,9 +628,4 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			serializationRule.getPreSerializer();
 		}
 	}
-
-//	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
-//		assert serializationNode != null;
-//		serializationNode.serialize(serializationBuilder, element);
-//	}
 }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -41,11 +40,6 @@ public class AbstractRuleAnalysis implements Nameable
 	 * The semi-qualified name of this rule (final part of grammar name and rule name).
 	 */
 	protected final @NonNull String name;
-
-	/**
-	 * The EClassifiers that this rule may produce.
-	 */
-	protected final @NonNull List<@NonNull EClassifier> eClassifiers = new ArrayList<>();
 
 	/**
 	 * RuleAnalyses that this RuleAnalysis may be directly used as an alternative for.
@@ -114,10 +108,6 @@ public class AbstractRuleAnalysis implements Nameable
 		return baseRuleAnalysesClosure;
 	}
 
-	public @NonNull List<@NonNull EClassifier> getEClassifiers() {
-		return eClassifiers;
-	}
-
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
 	}
@@ -174,7 +164,7 @@ public class AbstractRuleAnalysis implements Nameable
 			s.append(baseRuleAnalyses.getName());
 			isFirst1 = false;
 		}
-		s.append(" <=> ");
+/*		s.append(" <=> ");
 		boolean isFirst2 = true;
 		for (@NonNull EClassifier eClassifier : eClassifiers) {
 			if (!isFirst2) {
@@ -182,7 +172,7 @@ public class AbstractRuleAnalysis implements Nameable
 			}
 			s.append(eClassifier.getName());
 			isFirst2 = false;
-		}
+		} */
 		return s.toString();
 	}
 }
