@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
@@ -22,7 +23,9 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
+import org.eclipse.xtext.ParserRule;
 
 public abstract class AbstractSerializationElement implements SerializationElement
 {
@@ -78,18 +81,20 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 		//
 		//	Rewrite ... X ... {Y.y=current} ... as {Y} ... y=X ... ...
 		//
-		FindContext<@NonNull UnassignedRuleCallSerializationNode> unassignedRuleContext = findUnassignedRule(listOfNodes);
 		FindContext<@NonNull AssignedCurrentSerializationNode> assignedCurrentContext = findAssignedCurrent(listOfNodes);
-		if ((unassignedRuleContext != null) && (assignedCurrentContext != null)) {
-			UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = unassignedRuleContext.getElement();
-			AssignedCurrentSerializationNode assignedCurrentSerializationNode = assignedCurrentContext.getElement();
-			AssignmentAnalysis assignmentAnalysis = assignedCurrentSerializationNode.getAssignmentAnalysis();
-			MultiplicativeCardinality multiplicativeCardinality2 = assignedCurrentSerializationNode.getMultiplicativeCardinality();
-			assert multiplicativeCardinality2.isOne();
-			AbstractRuleAnalysis calledRuleAnalysis = unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
-			AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality2, calledRuleAnalysis);
-			unassignedRuleContext.replace(assignedRuleCallSerializationNode);
-			assignedCurrentContext.remove();
+		if (assignedCurrentContext != null) {
+			FindContext<@NonNull UnassignedRuleCallSerializationNode> unassignedRuleContext = findUnassignedRule(listOfNodes);
+			if (unassignedRuleContext != null) {
+				UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = unassignedRuleContext.getElement();
+				AssignedCurrentSerializationNode assignedCurrentSerializationNode = assignedCurrentContext.getElement();
+				AssignmentAnalysis assignmentAnalysis = assignedCurrentSerializationNode.getAssignmentAnalysis();
+				MultiplicativeCardinality multiplicativeCardinality2 = assignedCurrentSerializationNode.getMultiplicativeCardinality();
+				assert multiplicativeCardinality2.isOne();
+				AbstractRuleAnalysis calledRuleAnalysis = unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
+				AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality2, calledRuleAnalysis);
+				unassignedRuleContext.replace(assignedRuleCallSerializationNode);
+				assignedCurrentContext.remove();
+			}
 		}
 		//
 		//	Rewrite {... {Y.y=current} ...}? as epsilon | {... {Y.y=current} ...}
@@ -113,22 +118,30 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 		int index = 0;
 		for (@NonNull SerializationNode serializationNode : listOfNodes) {
 			if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
+				EObject searchElement = compoundElement;
+				for (; searchElement instanceof Alternatives; searchElement = searchElement.eContainer()) {}
+				boolean isDelegator = searchElement instanceof ParserRule;
 				AbstractRuleAnalysis calledRuleAnalysis = ((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis();
 				if (calledRuleAnalysis instanceof ParserRuleAnalysis) {
 					ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 					ParserRuleAnalysis calledParserRuleAnalysis = (ParserRuleAnalysis) calledRuleAnalysis;
-					for (@NonNull SerializationRule serializationRule : calledParserRuleAnalysis.getSerializationRules()) {
-						SerializationElement flattened = new ListOfSerializationNode();
-						for (int i = 0; i < index; i++) {
-							flattened = flattened.addConcatenation(listOfNodes.get(i));
+					if (isDelegator) {
+						disjunction = disjunction.addConjunction(serializationNode);
+					}
+					else {
+						for (@NonNull SerializationRule serializationRule : calledParserRuleAnalysis.getSerializationRules()) {
+							SerializationElement flattened = new ListOfSerializationNode();
+							for (int i = 0; i < index; i++) {
+								flattened = flattened.addConcatenation(listOfNodes.get(i));
+							}
+							flattened = flattened.addConcatenation(serializationRule.getRootSerializationNode());
+							for (int i = index+1; i < listOfNodes.size(); i++) {
+								flattened = flattened.addConcatenation(listOfNodes.get(i));
+							}
+							disjunction = disjunction.addConjunction(flattened.freezeSequences(grammarAnalysis, compoundElement));
+						//	SerializationElement flattenedSequence = createFlattenedSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, cflattenedonjunction.getNodes());
+						//	disjunction = disjunction.addConjunction(flattenedSequence);
 						}
-						flattened = flattened.addConcatenation(serializationRule.getRootSerializationNode());
-						for (int i = index+1; i < listOfNodes.size(); i++) {
-							flattened = flattened.addConcatenation(listOfNodes.get(i));
-						}
-						disjunction = disjunction.addConjunction(flattened.freezeSequences(grammarAnalysis, compoundElement));
-					//	SerializationElement flattenedSequence = createFlattenedSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, cflattenedonjunction.getNodes());
-					//	disjunction = disjunction.addConjunction(flattenedSequence);
 					}
 					return disjunction; //.freezeSequences(grammarAnalysis, compoundElement);
 				}

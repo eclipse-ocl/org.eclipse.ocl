@@ -24,6 +24,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.DelegateSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
@@ -521,19 +523,29 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		if (serializationResult.isListOfList()) {
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationResult.asListOfList().getLists()) {
 				assert serializationNodes.size() == 1;
-				SerializationRule serializationRule = new SerializationRule(this, serializationNodes.get(0));
+				SerializationRule serializationRule = new BasicSerializationRule(this, serializationNodes.get(0));
 				serializationRules.add(serializationRule);
 			}
 		}
 		else if (serializationResult.isList()) {
 			List<@NonNull SerializationNode> serializationNodes = serializationResult.asList().getNodes();
 			assert serializationNodes.size() == 1;
-			SerializationRule serializationRule = new SerializationRule(this, serializationNodes.get(0));
+			SerializationRule serializationRule = new BasicSerializationRule(this, serializationNodes.get(0));
 			serializationRules.add(serializationRule);
 		}
 		else if (serializationResult.isNode()) {
-			SerializationRule serializationRule = new SerializationRule(this, serializationResult.asNode());
-			serializationRules.add(serializationRule);
+			SerializationNode serializationNode = serializationResult.asNode();
+			if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
+				ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis) ((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis();
+				for (@NonNull SerializationRule calledSerializationRule : calledRuleAnalysis.getSerializationRules()) {
+					SerializationRule delegateSerializationRule = new DelegateSerializationRule(this, (BasicSerializationRule) calledSerializationRule);	// XXX transitove
+					serializationRules.add(delegateSerializationRule);
+				}
+			}
+			else {
+				SerializationRule serializationRule = new BasicSerializationRule(this, serializationNode);
+				serializationRules.add(serializationRule);
+			}
 		}
 		else {		// isNull()
 			throw new IllegalStateException();
@@ -631,7 +643,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		}
 		assert serializationRules != null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			serializationRule.getPreSerializer();
+			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
+			basicSerializationRule.preSerialize();
 		}
 	}
 }

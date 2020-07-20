@@ -442,7 +442,7 @@ public class GrammarAnalysis
 				//	s.append("\n");
 				//	StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
 				//	rootSerializationNode.toString(s, 2);
-					serializationRule.getPreSerializer();		// XXX redundant/lazy
+				//	serializationRule.getPreSerializer();		// XXX redundant/lazy
 							StringUtil.appendIndentation(s, 1, "\t");
 							s.append("|& ");
 							s.append(serializationRule.getProducedEClass().getName());

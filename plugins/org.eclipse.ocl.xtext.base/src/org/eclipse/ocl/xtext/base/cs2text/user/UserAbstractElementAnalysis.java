@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
@@ -48,9 +49,10 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 	public @Nullable Serializer createSerializer(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = serializationRule.computeActualCardinalities(slotsAnalysis);
+			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
+			Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = basicSerializationRule.computeActualCardinalities(slotsAnalysis);
 			if (variable2value != null) {
-				return new Serializer(serializationRule, modelAnalysis, eObject, variable2value);
+				return new Serializer(basicSerializationRule, modelAnalysis, eObject, variable2value);
 			}
 		}
 		return null;

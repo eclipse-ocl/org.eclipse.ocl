@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationRule;
@@ -266,7 +267,8 @@ public class UserSlotsAnalysis
 			int size = CardinalityExpression.getSize(this, eStructuralFeature, NullEnumerationValue.INSTANCE);
 			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
 			for (@NonNull SerializationRule serializationRule : serializationRules2) {
-				MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature, NullEnumerationValue.INSTANCE);
+				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
+				MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eStructuralFeature, NullEnumerationValue.INSTANCE);
 				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 			}
 			if (eStructuralFeature instanceof EAttribute) {
@@ -278,7 +280,8 @@ public class UserSlotsAnalysis
 						int size2 = CardinalityExpression.getSize(this, eStructuralFeature, enumerationValue);
 						s.append(String.format("\n %-29.29s%8d", "\"" + enumerationValue.getName() + "\"", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules2) {
-							MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature, enumerationValue);
+							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
+							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eStructuralFeature, enumerationValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 						}
 					}
@@ -344,19 +347,17 @@ public class UserSlotsAnalysis
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		if (eStructuralFeature2slotAnalysis != null) {
-			List<@NonNull EStructuralFeature> keys  = new ArrayList<>(eStructuralFeature2slotAnalysis.keySet());
-			Collections.sort(keys, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-			boolean isFirst = true;
-			for (@NonNull EStructuralFeature key : keys) {
-				if (!isFirst) {
-					s.append(", ");
-				}
-				s.append(key.getName());
-				s.append("=");
-				s.append(eStructuralFeature2slotAnalysis.get(key));
-				isFirst = false;
+		List<@NonNull EStructuralFeature> keys  = new ArrayList<>(eStructuralFeature2slotAnalysis.keySet());
+		Collections.sort(keys, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		boolean isFirst = true;
+		for (@NonNull EStructuralFeature key : keys) {
+			if (!isFirst) {
+				s.append(", ");
 			}
+			s.append(key.getName());
+			s.append("=");
+			s.append(eStructuralFeature2slotAnalysis.get(key));
+			isFirst = false;
 		}
 		return s.toString();
 	}
