@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 
 public class SubIdiom
 {
@@ -26,6 +27,8 @@ public class SubIdiom
 	public static @NonNull SubIdiom OPEN_BRACE = new SubIdiom(new KeywordLocator("{"), StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.PUSH, StringSegment.NEW_LINE);
 	public static @NonNull SubIdiom OPEN_SQUARE = new SubIdiom(new KeywordLocator("["), ValueSegment.INSTANCE);
 	public static @NonNull SubIdiom SEMI_COLON = new SubIdiom(new KeywordLocator(";"), ValueSegment.INSTANCE, StringSegment.NEW_LINE);
+
+	public static @NonNull SubIdiom PackagesCS_ownedClasses = new SubIdiom(new AssignmentLocator(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES), StringSegment.NEW_LINE, ValueSegment.INSTANCE, StringSegment.NEW_LINE);
 
 	protected final @NonNull Locator locator;
 	protected final @NonNull Segment @NonNull [] segments;

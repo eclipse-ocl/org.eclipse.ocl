@@ -25,7 +25,9 @@ public class Idiom
 	public static final @NonNull Idiom SEMI_COLON = new Idiom(SubIdiom.SEMI_COLON);
 	public static final @NonNull Idiom SQUARES = new Idiom(SubIdiom.OPEN_SQUARE, SubIdiom.CLOSE_SQUARE);
 
-	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON, DEFAULT };
+	public static final @NonNull Idiom INTER_CLASSSES = new Idiom(SubIdiom.PackagesCS_ownedClasses, SubIdiom.PackagesCS_ownedClasses);
+
+	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { DEFAULT, BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON, DEFAULT};//, INTER_CLASSSES };
 
 	protected final @NonNull SubIdiom @NonNull [] subIdioms;
 
