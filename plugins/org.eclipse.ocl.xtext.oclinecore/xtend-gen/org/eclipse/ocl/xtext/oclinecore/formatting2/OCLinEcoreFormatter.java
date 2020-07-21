@@ -71,7 +71,7 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
     modelAnalysis.analyze(topLevelCS);
     String s2 = modelAnalysis.toString();
     System.out.println(s2);
-    SerializationBuilder serializationBuilder = new SerializationBuilder();
+    SerializationBuilder serializationBuilder = new SerializationBuilder("\n", "    ");
     modelAnalysis.serialize(serializationBuilder, topLevelCS);
     String s3 = serializationBuilder.toRenderedString();
     System.out.println(s3);

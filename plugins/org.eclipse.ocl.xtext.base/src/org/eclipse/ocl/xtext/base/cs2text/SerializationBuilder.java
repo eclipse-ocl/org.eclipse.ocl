@@ -37,10 +37,15 @@ public class SerializationBuilder
 	private static final int FULL_NEW_LINE_PREVCH = -2;
 	private static final int NO_SPACE_PREVCH = -3;
 
+	protected final @NonNull String newLineString;
+	protected final @NonNull String indentString;
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
 	private int indentDepth = 0;
 
-	public SerializationBuilder() {}
+	public SerializationBuilder(@NonNull String newLineString, @NonNull String indentString) {
+		this.newLineString = newLineString;
+		this.indentString = indentString;
+	}
 
 	public void append(@NonNull String string) {
 //		if ((string == null) || string.contains("ordered")) {
@@ -49,8 +54,14 @@ public class SerializationBuilder
 		strings.add(string);
 	}
 
+	protected void appendIndents(StringBuilder s, int indentDepth) {
+		for (int i = 0; i < indentDepth; i++) {
+			s.append(indentString);
+		}
+	}
+
 	protected void appendNewLine(@NonNull StringBuilder s) {
-		s.append("\n");		// FIXME use system new-line
+		s.append(newLineString);
 	}
 
 	protected int appendString(@NonNull StringBuilder s, @NonNull String string) {
@@ -133,9 +144,7 @@ public class SerializationBuilder
 							prevCh = FULL_NEW_LINE_PREVCH;
 						}
 						else {
-							for (int i = 0; i < indentDepth; i++) {
-								s.append("    ");
-							}
+							appendIndents(s, indentDepth);
 							prevCh = appendString(s, nextString);
 						}
 						break;
@@ -153,9 +162,7 @@ public class SerializationBuilder
 							prevCh = FULL_NEW_LINE_PREVCH;
 						}
 						else {
-							for (int i = 0; i < indentDepth; i++) {
-								s.append("    ");
-							}
+							appendIndents(s, indentDepth);
 							prevCh = appendString(s, nextString);
 						}
 						break;

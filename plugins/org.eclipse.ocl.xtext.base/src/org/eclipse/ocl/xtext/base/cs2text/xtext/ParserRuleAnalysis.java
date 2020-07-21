@@ -488,7 +488,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
 
-	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule,@NonNull EClass eClass) {
+	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
 		this.eClass = eClass;
 	}

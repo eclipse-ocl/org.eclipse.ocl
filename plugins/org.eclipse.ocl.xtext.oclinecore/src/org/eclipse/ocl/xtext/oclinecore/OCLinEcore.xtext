@@ -88,6 +88,7 @@ PreconditionConstraintCS returns OCLinEcoreConstraintCS:
 	stereotype='precondition' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS? ';'
 ;
 
+/** a comment */
 AnnotationCS returns base::AnnotationCS:
 	{base::AnnotationCS} 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)?
 	('(' ownedDetails+=DetailCS (',' ownedDetails+=DetailCS)* ')')?
