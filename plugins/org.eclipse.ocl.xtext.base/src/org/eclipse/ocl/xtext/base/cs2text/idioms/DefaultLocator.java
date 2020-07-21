@@ -11,16 +11,24 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 
 public class DefaultLocator implements Locator
 {
 	public DefaultLocator() {}
 
 	@Override
-	public boolean matches(@NonNull SerializationNode serializationNode) {
-		return serializationNode instanceof AssignedKeywordSerializationNode;
+	public boolean matches(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+		if (serializationNode instanceof AssignedKeywordSerializationNode) {
+			return true;
+		}
+		else if (serializationNode instanceof UnassignedKeywordSerializationNode) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

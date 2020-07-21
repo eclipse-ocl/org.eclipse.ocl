@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 public class Idiom
@@ -24,7 +25,7 @@ public class Idiom
 	public static final @NonNull Idiom SEMI_COLON = new Idiom(SubIdiom.SEMI_COLON);
 	public static final @NonNull Idiom SQUARES = new Idiom(SubIdiom.OPEN_SQUARE, SubIdiom.CLOSE_SQUARE);
 
-	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { DEFAULT, BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON };
+	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON, DEFAULT };
 
 	protected final @NonNull SubIdiom @NonNull [] subIdioms;
 
@@ -41,8 +42,8 @@ public class Idiom
 		return subIdioms;
 	}
 
-	public @Nullable IdiomMatch firstMatch(@NonNull SerializationNode serializationNode) {
-		if (!subIdioms[0].matches(serializationNode)) {
+	public @Nullable IdiomMatch firstMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+		if (!subIdioms[0].matches(serializationNode, serializationRule)) {
 			return null;
 		}
 		return new IdiomMatch(this, serializationNode);

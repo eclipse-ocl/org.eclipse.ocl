@@ -157,10 +157,10 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			IdiomMatch idiomMatch = idiomMatches[idiomIndex];
 			if (idiomMatch == null) {
 				Idiom idiom = idioms[idiomIndex];
-				idiomMatches[idiomIndex] = idiom.firstMatch(outerSerializationNode);
+				idiomMatches[idiomIndex] = idiom.firstMatch(outerSerializationNode, this);
 			}
 			else {
-				idiomMatch.nextMatch(outerSerializationNode);
+				idiomMatch.nextMatch(outerSerializationNode, this);
 			}
 		}
 		if (outerSerializationNode instanceof SequenceSerializationNode) {

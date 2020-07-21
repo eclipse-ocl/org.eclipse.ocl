@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
@@ -25,7 +26,7 @@ public class KeywordLocator implements Locator
 	}
 
 	@Override
-	public boolean matches(@NonNull SerializationNode serializationNode) {
+	public boolean matches(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
 		if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			return string.equals(((AssignedKeywordSerializationNode)serializationNode).getValue());
 		}

@@ -15,6 +15,7 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 /**
@@ -70,15 +71,15 @@ public class IdiomMatch
 		return true;
 	}
 
-	public void nextMatch(@NonNull SerializationNode serializationNode) {
-		if ((subMatch != null) && !subMatch.isMatched()) {											// Pass down to active sub-match
+	public void nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+		if ((subMatch != null) && !subMatch.isMatched()) {															// Pass down to active sub-match
 			assert subMatch != null;
-			subMatch.nextMatch(serializationNode);
+			subMatch.nextMatch(serializationNode, serializationRule);
 		}
-		else if (idiom.getSubidiom(0).matches(serializationNode)) {									// Look to nest a new sub-match
+		else if (idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
 			subMatch = new IdiomMatch(idiom, serializationNode);
 		}
-		else if (!isMatched() && idiom.getSubidiom(subIdiomIndex).matches(serializationNode)) {		// Continue current match
+		else if (!isMatched() && idiom.getSubidiom(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
 			matchNodes[subIdiomIndex++] = serializationNode;
 		}
 		return;
