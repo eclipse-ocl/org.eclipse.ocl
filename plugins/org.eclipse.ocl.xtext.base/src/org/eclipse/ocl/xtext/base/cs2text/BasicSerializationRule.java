@@ -20,6 +20,9 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -28,6 +31,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 {
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eFeature2enumerationValue2multiplicativeCardinality = new HashMap<>();
 	private @Nullable PreSerializer preSerializer = null;
+	private @Nullable Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = null;
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		super(ruleAnalysis, rootSerializationNode);
@@ -118,6 +122,52 @@ public class BasicSerializationRule extends AbstractSerializationRule
 
 	public void preSerialize() {
 		getPreSerializer();
+	}
+
+	public @NonNull SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
+		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
+		if (serializationNode2subIdiom2 == null) {
+			serializationNode2subIdiom = serializationNode2subIdiom2 = getSerializationNode2subIdioms(Idiom.IDIOMS);
+		}
+		SubIdiom subIdiom = serializationNode2subIdiom2.get(serializationNode);
+		return subIdiom != null ? subIdiom : SubIdiom.DEFAULT;
+	}
+
+	private @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms(@NonNull Idiom @NonNull [] idioms) {
+		//
+		//	Locate the matches for each idiom.
+		//
+		@Nullable IdiomMatch @NonNull [] idiomMatches = new @Nullable IdiomMatch[idioms.length];
+		getIdiomMatches(rootSerializationNode, idioms, idiomMatches);
+		//
+		//	Install the subdioms for each first full idom match.
+		//
+		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = new HashMap<>();
+		for (@Nullable IdiomMatch idiomMatch : idiomMatches) {
+			if ((idiomMatch != null) && idiomMatch.isMatched()) {
+				idiomMatch.installIn(serializationNode2subIdiom);
+			}
+		}
+		return serializationNode2subIdiom;
+	}
+
+	private void getIdiomMatches(@NonNull SerializationNode outerSerializationNode, @NonNull Idiom @NonNull [] idioms,
+			@Nullable IdiomMatch @NonNull [] idiomMatches) {
+		for (int idiomIndex = 0; idiomIndex < idioms.length; idiomIndex++) {
+			IdiomMatch idiomMatch = idiomMatches[idiomIndex];
+			if (idiomMatch == null) {
+				Idiom idiom = idioms[idiomIndex];
+				idiomMatches[idiomIndex] = idiom.firstMatch(outerSerializationNode);
+			}
+			else {
+				idiomMatch.nextMatch(outerSerializationNode);
+			}
+		}
+		if (outerSerializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode innerSerializationNode : ((SequenceSerializationNode)outerSerializationNode).getSerializationNodes()) {
+				getIdiomMatches(innerSerializationNode, idioms, idiomMatches);
+			}
+		}
 	}
 
 	@Override

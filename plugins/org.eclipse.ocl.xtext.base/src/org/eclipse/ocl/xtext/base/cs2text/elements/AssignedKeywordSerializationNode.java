@@ -40,6 +40,10 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 		return enumerationValue;
 	}
 
+	public @NonNull String getValue() {
+		return enumerationValue.getName();
+	}
+
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		assert !eStructuralFeature.isUnsettable() || serializer.getElement().eIsSet(eStructuralFeature);
@@ -52,7 +56,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("\"");
-		s.append(enumerationValue.getName());
+		s.append(getValue());
 		s.append("\"");
 		appendCardinality(s, depth);
 	}

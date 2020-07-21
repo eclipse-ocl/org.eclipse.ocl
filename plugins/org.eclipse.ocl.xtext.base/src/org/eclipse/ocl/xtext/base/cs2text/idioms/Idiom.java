@@ -12,45 +12,53 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 public class Idiom
 {
-	public static @NonNull Idiom CLOSE_BRACE = new Idiom(new @NonNull String[]{SerializationBuilder.POP,SerializationBuilder.SOFT_SPACE}, new @NonNull String[]{"\n"});
-	public static @NonNull Idiom CLOSE_SQUARE = new Idiom((String[])null, (String[])null);
-	public static @NonNull Idiom COMMA = new Idiom(null, SerializationBuilder.SOFT_SPACE);
-	public static @NonNull Idiom DEFAULT = new Idiom(SerializationBuilder.SOFT_SPACE, SerializationBuilder.SOFT_SPACE);
-	public static @NonNull Idiom DOUBLE_COLON = new Idiom((String[])null, (String[])null);
-	public static @NonNull Idiom DOT_DOT = new Idiom((String[])null, (String[])null);
-	public static @NonNull Idiom OPEN_BRACE = new Idiom(new @NonNull String[]{SerializationBuilder.SOFT_SPACE}, new @NonNull String[]{SerializationBuilder.PUSH,"\n"});
-	public static @NonNull Idiom OPEN_SQUARE = new Idiom((String[])null, (String[])null);
-	public static @NonNull Idiom SEMI_COLON = new Idiom(null, "\n");
+	public static final @NonNull Idiom BRACES = new Idiom(SubIdiom.OPEN_BRACE, SubIdiom.CLOSE_BRACE);
+	public static final @NonNull Idiom COMMA = new Idiom(SubIdiom.COMMA);
+	public static final @NonNull Idiom DEFAULT = new Idiom(SubIdiom.DEFAULT);
+	public static final @NonNull Idiom DOUBLE_COLON = new Idiom(SubIdiom.DOUBLE_COLON);
+	public static final @NonNull Idiom DOT_DOT = new Idiom(SubIdiom.DOT_DOT);
+	public static final @NonNull Idiom SEMI_COLON = new Idiom(SubIdiom.SEMI_COLON);
+	public static final @NonNull Idiom SQUARES = new Idiom(SubIdiom.OPEN_SQUARE, SubIdiom.CLOSE_SQUARE);
 
-	protected final @NonNull String @Nullable [] prefixes;
-	protected final @NonNull String @Nullable [] suffixes;
+	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { DEFAULT, BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON };
 
-	public Idiom(@Nullable String prefix, @Nullable String suffix) {
-		this.prefixes = prefix != null ? new @NonNull String[] {prefix} : null;
-		this.suffixes = suffix != null ? new @NonNull String[] {suffix} : null;
+	protected final @NonNull SubIdiom @NonNull [] subIdioms;
+
+	public Idiom(@NonNull SubIdiom @NonNull ... subIdioms) {
+		this.subIdioms = subIdioms;
+		assert subIdioms.length >= 1;
 	}
 
-	public Idiom(@NonNull String @Nullable [] prefixes, @NonNull String @Nullable [] suffixes) {
-		this.prefixes = prefixes;
-		this.suffixes = suffixes;
+	public @NonNull SubIdiom getSubidiom(int subIdiomIndex) {
+		return subIdioms[subIdiomIndex];
 	}
 
-	public void serialize(@NonNull String value, @NonNull SerializationBuilder serializationBuilder) {
-		if (prefixes != null) {
-			for (@NonNull String prefix : prefixes) {
-				serializationBuilder.append(prefix);
-			}
+	public @NonNull SubIdiom @NonNull [] getSubIdioms() {
+		return subIdioms;
+	}
+
+	public @Nullable IdiomMatch firstMatch(@NonNull SerializationNode serializationNode) {
+		if (!subIdioms[0].matches(serializationNode)) {
+			return null;
 		}
-		serializationBuilder.append(value);
-		if (suffixes != null) {
-			for (@NonNull String suffix : suffixes) {
-				serializationBuilder.append(suffix);
-			}
-		}
+		return new IdiomMatch(this, serializationNode);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		boolean isFirst = true;
+		for (@NonNull SubIdiom subIdiom: subIdioms) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			s.append(subIdiom.toString());
+			isFirst = false;
+		}
+		return s.toString();
+	}
 }
