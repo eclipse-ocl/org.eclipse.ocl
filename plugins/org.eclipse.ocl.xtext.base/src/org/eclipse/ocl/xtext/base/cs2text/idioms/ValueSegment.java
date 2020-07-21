@@ -12,16 +12,18 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 public class ValueSegment implements Segment
 {
 	public static final @NonNull ValueSegment INSTANCE = new ValueSegment();
 
-	public ValueSegment() {}
+	private ValueSegment() {}
 
 	@Override
-	public void serialize(@NonNull String value, @NonNull SerializationBuilder serializationBuilder) {
-		serializationBuilder.append(value);
+	public void serialize(@NonNull SerializationNode serializationNode, @NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		serializationNode.serialize(serializer, serializationBuilder);
 	}
 
 	@Override

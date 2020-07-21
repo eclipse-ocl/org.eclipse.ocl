@@ -12,8 +12,10 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 public interface Segment
 {
-	public void serialize(@NonNull String value, @NonNull SerializationBuilder serializationBuilder);
+	public void serialize(@NonNull SerializationNode serializationNode, @NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 }

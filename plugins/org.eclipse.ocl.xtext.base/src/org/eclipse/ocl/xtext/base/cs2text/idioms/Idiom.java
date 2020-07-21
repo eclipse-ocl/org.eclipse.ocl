@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
@@ -17,6 +19,45 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 public class Idiom
 {
+	public static class DebugIdiom extends Idiom
+	{
+		public DebugIdiom(@NonNull SubIdiom @NonNull... subIdioms) {
+			super(subIdioms);
+		}
+
+		@Override
+		protected @NonNull IdiomMatch createIdiomMatch(@NonNull SerializationNode serializationNode) {
+			return new IdiomMatch(this, serializationNode) {
+
+				@Override
+				public boolean installIn(@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom) {
+					return super.installIn(serializationNode2subIdiom);
+				}
+
+				@Override
+				public boolean isMatched() {
+					return super.isMatched();
+				}
+
+				@Override
+				public void nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+					super.nextMatch(serializationNode, serializationRule);
+				}
+
+			};
+		}
+
+		@Override
+		public @Nullable IdiomMatch firstMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+			IdiomMatch firstMatch = super.firstMatch(serializationNode, serializationRule);
+			if (firstMatch != null) {
+				getClass(); 		// XXX debugging
+			}
+			return firstMatch;
+		}
+
+	}
+
 	public static final @NonNull Idiom BRACES = new Idiom(SubIdiom.OPEN_BRACE, SubIdiom.CLOSE_BRACE);
 	public static final @NonNull Idiom COMMA = new Idiom(SubIdiom.COMMA);
 	public static final @NonNull Idiom DEFAULT = new Idiom(SubIdiom.DEFAULT);
@@ -25,15 +66,19 @@ public class Idiom
 	public static final @NonNull Idiom SEMI_COLON = new Idiom(SubIdiom.SEMI_COLON);
 	public static final @NonNull Idiom SQUARES = new Idiom(SubIdiom.OPEN_SQUARE, SubIdiom.CLOSE_SQUARE);
 
-	public static final @NonNull Idiom INTER_CLASSSES = new Idiom(SubIdiom.PackagesCS_ownedClasses, SubIdiom.PackagesCS_ownedClasses);
+	public static final @NonNull Idiom INTER_CLASSSES = new DebugIdiom(SubIdiom.PackagesCS_ownedClasses, SubIdiom.PackagesCS_ownedClasses);
 
-	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { DEFAULT, BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON, DEFAULT};//, INTER_CLASSSES };
+	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON, INTER_CLASSSES, DEFAULT};
 
 	protected final @NonNull SubIdiom @NonNull [] subIdioms;
 
 	public Idiom(@NonNull SubIdiom @NonNull ... subIdioms) {
 		this.subIdioms = subIdioms;
 		assert subIdioms.length >= 1;
+	}
+
+	protected @NonNull IdiomMatch createIdiomMatch(@NonNull SerializationNode serializationNode) {
+		return new IdiomMatch(this, serializationNode);
 	}
 
 	public @NonNull SubIdiom getSubidiom(int subIdiomIndex) {
@@ -48,7 +93,9 @@ public class Idiom
 		if (!subIdioms[0].matches(serializationNode, serializationRule)) {
 			return null;
 		}
-		return new IdiomMatch(this, serializationNode);
+		IdiomMatch idiomMatch = createIdiomMatch(serializationNode);
+	//	idiomMatch.nextMatch(serializationNode, serializationRule);		// Opportunity for X ... X formatting
+		return idiomMatch;
 	}
 
 	@Override

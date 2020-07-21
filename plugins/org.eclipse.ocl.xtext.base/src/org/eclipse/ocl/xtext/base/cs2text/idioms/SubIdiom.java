@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 
@@ -42,9 +43,9 @@ public class SubIdiom
 		return locator.matches(serializationNode, serializationRule);
 	}
 
-	public void serialize(@NonNull String value, @NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull SerializationNode serializationNode, @NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (@NonNull Segment segment : segments) {
-			segment.serialize(value, serializationBuilder);
+			segment.serialize(serializationNode, serializer, serializationBuilder);
 		}
 	}
 

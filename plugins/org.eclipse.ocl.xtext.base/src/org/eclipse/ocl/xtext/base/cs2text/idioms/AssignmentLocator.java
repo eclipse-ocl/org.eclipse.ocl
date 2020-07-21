@@ -28,7 +28,7 @@ public class AssignmentLocator implements Locator
 	@Override
 	public boolean matches(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
 		if (serializationNode instanceof AssignedSerializationNode) {
-			return eStructuralFeature.equals(((AssignedSerializationNode)serializationNode).getEStructuralFeature());
+			return eStructuralFeature == ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
 		}
 		return false;
 	}
