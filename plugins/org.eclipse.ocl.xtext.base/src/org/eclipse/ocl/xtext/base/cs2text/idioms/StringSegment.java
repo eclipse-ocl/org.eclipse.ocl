@@ -18,15 +18,20 @@ import org.eclipse.xtext.util.Strings;
 
 public class StringSegment implements Segment
 {
-	public static final @NonNull StringSegment NEW_LINE = new StringSegment("\n");
-	public static final @NonNull StringSegment POP = new StringSegment(SerializationBuilder.POP);
-	public static final @NonNull StringSegment PUSH = new StringSegment(SerializationBuilder.PUSH);
-	public static final @NonNull StringSegment SOFT_SPACE = new StringSegment(SerializationBuilder.SOFT_SPACE);
+	public static final @NonNull StringSegment HALF_NEW_LINE = new StringSegment(SerializationBuilder.HALF_NEW_LINE, true);
+	public static final @NonNull StringSegment NEW_LINE = new StringSegment(SerializationBuilder.NEW_LINE, true);
+	public static final @NonNull StringSegment NO_SPACE = new StringSegment(SerializationBuilder.NO_SPACE, true);
+	public static final @NonNull StringSegment POP = new StringSegment(SerializationBuilder.POP, true);
+	public static final @NonNull StringSegment PUSH = new StringSegment(SerializationBuilder.PUSH, true);
+	public static final @NonNull StringSegment SOFT_NEW_LINE = new StringSegment(SerializationBuilder.SOFT_NEW_LINE, true);
+	public static final @NonNull StringSegment SOFT_SPACE = new StringSegment(SerializationBuilder.SOFT_SPACE, true);
 
 	protected final @NonNull String string;
+	protected final boolean isPrintable;
 
-	public StringSegment(@NonNull String string) {
+	public StringSegment(@NonNull String string, boolean isPrintable) {
 		this.string = string;
+		this.isPrintable = isPrintable;
 	}
 
 	@Override
@@ -36,6 +41,6 @@ public class StringSegment implements Segment
 
 	@Override
 	public String toString() {
-		return Strings.convertToJavaString(string);
+		return isPrintable ? string : Strings.convertToJavaString(string);
 	}
 }

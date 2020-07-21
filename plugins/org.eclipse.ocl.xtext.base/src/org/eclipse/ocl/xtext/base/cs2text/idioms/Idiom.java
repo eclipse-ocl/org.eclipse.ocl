@@ -35,13 +35,8 @@ public class Idiom
 				}
 
 				@Override
-				public boolean isMatched() {
-					return super.isMatched();
-				}
-
-				@Override
-				public void nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
-					super.nextMatch(serializationNode, serializationRule);
+				public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+					return super.nextMatch(serializationNode, serializationRule);
 				}
 
 			};
@@ -66,7 +61,7 @@ public class Idiom
 	public static final @NonNull Idiom SEMI_COLON = new Idiom(SubIdiom.SEMI_COLON);
 	public static final @NonNull Idiom SQUARES = new Idiom(SubIdiom.OPEN_SQUARE, SubIdiom.CLOSE_SQUARE);
 
-	public static final @NonNull Idiom INTER_CLASSSES = new DebugIdiom(SubIdiom.PackagesCS_ownedClasses, SubIdiom.PackagesCS_ownedClasses);
+	public static final @NonNull Idiom INTER_CLASSSES = new DebugIdiom(SubIdiom.PackagesCS_ownedClasses);//, SubIdiom.PackagesCS_ownedClasses);
 
 	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { BRACES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON, INTER_CLASSSES, DEFAULT};
 
@@ -101,6 +96,7 @@ public class Idiom
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
+		s.append("{");
 		boolean isFirst = true;
 		for (@NonNull SubIdiom subIdiom: subIdioms) {
 			if (!isFirst) {
@@ -109,6 +105,7 @@ public class Idiom
 			s.append(subIdiom.toString());
 			isFirst = false;
 		}
+		s.append("}");
 		return s.toString();
 	}
 }

@@ -25,7 +25,8 @@ import org.eclipse.xtext.linking.impl.LinkingHelper;
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
-//	@Inject
+
+	//	@Inject
 	private @NonNull IValueConverterService valueConverterService;
 //	@Inject
 	private @NonNull LinkingHelper linkingHelper;
@@ -40,6 +41,10 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
+	}
+
+	public @NonNull AbstractRuleAnalysis getCalledRuleAnalysis() {
+		return calledRuleAnalysis;
 	}
 
 	@Override

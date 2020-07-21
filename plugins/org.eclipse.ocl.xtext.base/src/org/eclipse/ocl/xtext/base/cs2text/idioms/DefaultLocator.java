@@ -12,17 +12,32 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class DefaultLocator implements Locator
 {
-	public DefaultLocator() {}
+	public static final @NonNull DefaultLocator INSTANCE = new DefaultLocator();
+
+	private DefaultLocator() {}
 
 	@Override
 	public boolean matches(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
-		if (serializationNode instanceof AssignedKeywordSerializationNode) {
+		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
+			return true;
+		}
+		else if (serializationNode instanceof AssignedCrossReferenceSerializationNode) {
+			return true;
+		}
+		else if (serializationNode instanceof AssignedRuleCallSerializationNode) {
+			return !(((AssignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis() instanceof ParserRuleAnalysis);
+		}
+		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			return true;
 		}
 		else if (serializationNode instanceof UnassignedKeywordSerializationNode) {

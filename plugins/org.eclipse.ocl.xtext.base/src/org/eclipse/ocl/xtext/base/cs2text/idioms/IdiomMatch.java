@@ -29,7 +29,8 @@ public class IdiomMatch
 	protected final @NonNull Idiom idiom;
 	private int subIdiomIndex = 0;
 	private final @NonNull SerializationNode @NonNull [] matchNodes;
-	private @Nullable IdiomMatch subMatch = null;
+	private @Nullable IdiomMatch nestedMatch = null;
+	private @Nullable IdiomMatch additionalMatch = null;
 
 	public IdiomMatch(@NonNull Idiom idiom, @NonNull SerializationNode serializationNode) {
 		this.idiom = idiom;
@@ -42,17 +43,20 @@ public class IdiomMatch
 	}
 
 	public boolean installIn(@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom) {
-		if (isMatched()) {
+		if (additionalMatch != null) {
+			additionalMatch.installIn(serializationNode2subIdiom);
+		}
+		if (isMatchedLocal()) {
 			for (@NonNull SerializationNode serializationNode : matchNodes) {
 				if (serializationNode2subIdiom.get(serializationNode) != null) {
 					return false;
 				}
 			}
 		}
-		if ((subMatch != null) && !subMatch.installIn(serializationNode2subIdiom)) {
+		if ((nestedMatch != null) && !nestedMatch.installIn(serializationNode2subIdiom)) {
 			return false;
 		}
-		if (isMatched()) {
+		if (isMatchedLocal()) {
 			for (int i = 0; i < matchNodes.length; i++) {
 				SerializationNode serializationNode = matchNodes[i];
 				serializationNode2subIdiom.put(serializationNode, idiom.getSubidiom(i));
@@ -61,28 +65,61 @@ public class IdiomMatch
 		return true;
 	}
 
-	public boolean isMatched() {
+/*	public boolean isMatched() {
 		if (subIdiomIndex < matchNodes.length) {
 			return false;
 		}
-		if (subMatch != null) {
-			assert subMatch.isMatched();
+		if (nestedMatch != null) {
+			assert nestedMatch.isMatched();
+		}
+		if (additionalMatch != null) {
+			return additionalMatch.isMatched();
+		}
+		return true;
+	} */
+
+	private boolean isMatchedLocal() {
+		if (subIdiomIndex < matchNodes.length) {
+			return false;
 		}
 		return true;
 	}
 
-	public void nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
-		if ((subMatch != null) && !subMatch.isMatched()) {															// Pass down to active sub-match
-			assert subMatch != null;
-			subMatch.nextMatch(serializationNode, serializationRule);
+	public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+		if (isMatchedLocal()) {
+			if (additionalMatch != null) {
+				additionalMatch.nextMatch(serializationNode, serializationRule);
+			}
+			else if (idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to chain a new sub-match
+				additionalMatch = new IdiomMatch(idiom, serializationNode);
+			}
+			return true;		// Handled by additional match
 		}
-		else if (idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
-			subMatch = new IdiomMatch(idiom, serializationNode);
+		if (nestedMatch != null) {															// Pass down to active sub-match
+			if (nestedMatch.nextMatch(serializationNode, serializationRule)) {
+				return true;
+			}
 		}
-		else if (!isMatched() && idiom.getSubidiom(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
+		if (idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
+			nestedMatch = new IdiomMatch(idiom, serializationNode);
+			return true;
+		}
+		else if (idiom.getSubidiom(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
 			matchNodes[subIdiomIndex++] = serializationNode;
+			return true;
 		}
-		return;
+		else {
+			return false;
+		}
+//			assert nestedMatch != null;
+//		}
+//		else if ((idiom.getSubIdioms().length > 1) &&  idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
+//			nestedMatch = new IdiomMatch(idiom, serializationNode);
+//		}
+//		else if (!isMatchedLocal() && idiom.getSubidiom(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
+//			matchNodes[subIdiomIndex++] = serializationNode;
+//		}
+//		return true;
 	}
 
 	@Override
@@ -100,8 +137,11 @@ public class IdiomMatch
 			StringUtil.appendIndentation(s, depth, "\t");
 			s.append(matchNodes[i]);
 		}
-		if (subMatch != null) {
-			subMatch.toString(s, depth+1);
+		if (nestedMatch != null) {
+			nestedMatch.toString(s, depth+1);
+		}
+		if (additionalMatch != null) {
+			additionalMatch.toString(s, depth);
 		}
 	}
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * SerializationBuilder builds the intermediate serialization as an interleaving of concrete strings and virtual
@@ -24,9 +25,17 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class SerializationBuilder
 {
-	public static final @NonNull String SOFT_SPACE = new String("« »");
+	public static final @NonNull String HALF_NEW_LINE = new String("«½\\n»");
+	public static final @NonNull String NEW_LINE = new String("«\\n»");
+	public static final @NonNull String NO_SPACE = new String("«! »");
+	public static final @NonNull String SOFT_NEW_LINE = new String("«?\\n »");
+	public static final @NonNull String SOFT_SPACE = new String("«? »");
 	public static final @NonNull String PUSH = new String("«+»");
 	public static final @NonNull String POP = new String("«-»");
+
+	private static final int HALF_NEW_LINE_PREVCH = -1;
+	private static final int FULL_NEW_LINE_PREVCH = -2;
+	private static final int NO_SPACE_PREVCH = -3;
 
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
 	private int indentDepth = 0;
@@ -40,12 +49,22 @@ public class SerializationBuilder
 		strings.add(string);
 	}
 
+	protected void appendNewLine(@NonNull StringBuilder s) {
+		s.append("\n");		// FIXME use system new-line
+	}
+
+	protected int appendString(@NonNull StringBuilder s, @NonNull String string) {
+		s.append(string);		// FIXME use system new-line
+		return s.charAt(s.length()-1);
+	}
+
 	public @NonNull String toRenderedString() {
 		StringBuilder s = new StringBuilder();
-		char prevCh = ' ';
-		for (@NonNull String nextString : strings) {
-		//	int nextLength = nextString.length();
-		//	char nextCh = nextLength <= 0 ? ' ' : nextString.charAt(0);
+		int prevCh = FULL_NEW_LINE_PREVCH;
+		final int indexMax = strings.size();
+		for (int index = 0; index < indexMax; ) {
+			@NonNull String nextString = strings.get(index++);
+			@Nullable String nextNextString = index < indexMax ? strings.get(index) : null;
 			if (nextString == PUSH) {
 				indentDepth++;
 			}
@@ -62,36 +81,108 @@ public class SerializationBuilder
 						break;
 					} */
 					case ' ': {
-						if (nextString == SOFT_SPACE) {}
+						if (nextString == NO_SPACE) {
+							prevCh = NO_SPACE_PREVCH;
+						}
+						else if (nextString == SOFT_SPACE) {}
+						else if (nextString == SOFT_NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
+						}
+						else if (nextString == HALF_NEW_LINE) {
+							prevCh = HALF_NEW_LINE_PREVCH;
+						}
+						else if (nextString == NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
+						}
 						else {
-							s.append(nextString);
+							prevCh = appendString(s, nextString);
 						}
 						break;
 					}
-					case '\n': {
-						if (nextString == SOFT_SPACE) {}
+					case NO_SPACE_PREVCH: {
+						if (nextString == NO_SPACE) {}
+						else if (nextString == SOFT_SPACE) {}
+						else if (nextString == SOFT_NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
+						}
+						else if (nextString == HALF_NEW_LINE) {
+							prevCh = HALF_NEW_LINE_PREVCH;
+						}
+						else if (nextString == NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
+						}
+						else {
+							prevCh = appendString(s, nextString);
+						}
+						break;
+					}
+					case FULL_NEW_LINE_PREVCH: {	// FIXME system new line chars
+						if (nextString == NO_SPACE) {}
+						else if (nextString == SOFT_SPACE) {}
+						else if (nextString == SOFT_NEW_LINE) {}
+						else if (nextString == HALF_NEW_LINE) {
+						//	appendNewLine(s);
+							prevCh = HALF_NEW_LINE_PREVCH;
+						}
+						else if (nextString == NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
+						}
 						else {
 							for (int i = 0; i < indentDepth; i++) {
 								s.append("    ");
 							}
-							s.append(nextString);
+							prevCh = appendString(s, nextString);
+						}
+						break;
+					}
+					case HALF_NEW_LINE_PREVCH: {	// FIXME system new line chars
+						if (nextString == NO_SPACE) {}
+						else if (nextString == SOFT_SPACE) {}
+						else if (nextString == SOFT_NEW_LINE) {}
+						else if (nextString == HALF_NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
+						}
+						else if (nextString == NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
+						}
+						else {
+							for (int i = 0; i < indentDepth; i++) {
+								s.append("    ");
+							}
+							prevCh = appendString(s, nextString);
 						}
 						break;
 					}
 					default: {
-						if (nextString == SOFT_SPACE) {
-							s.append(' ');
+						if (nextString == NO_SPACE) {
+							prevCh = NO_SPACE_PREVCH;
+						}
+						else if (nextString == SOFT_SPACE) {
+							if (nextNextString != NO_SPACE) {
+								prevCh = appendString(s, " ");
+							}
+						}
+						else if (nextString == HALF_NEW_LINE) {
+							prevCh = HALF_NEW_LINE_PREVCH;
+						}
+						else if (nextString == SOFT_NEW_LINE) {}
+						else if (nextString == NEW_LINE) {
+							appendNewLine(s);
+							prevCh = FULL_NEW_LINE_PREVCH;
 						}
 						else {
-							s.append(nextString);
+							prevCh = appendString(s, nextString);
 						}
 						break;
 					}
 				}
-			}
-			int length = s.length();
-			if (length > 0) {
-				prevCh = s.charAt(length-1);
 			}
 		}
 		return String.valueOf(s);

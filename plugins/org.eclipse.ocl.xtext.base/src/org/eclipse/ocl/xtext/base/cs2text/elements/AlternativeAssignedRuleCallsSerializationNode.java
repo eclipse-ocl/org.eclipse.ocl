@@ -28,10 +28,6 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 		this.ruleAnalyses = ruleAnalyses; //eStructuralFeature.isUnique() ? new UniqueList<>() : new ArrayList<>();
 	}
 
-//	public void addRuleAnalysis(@NonNull AbstractRuleAnalysis ruleAnalysis) {
-//		ruleAnalyses.add(ruleAnalysis);
-//	}
-
 	@Override
 	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		return new AlternativeAssignedRuleCallsSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses);

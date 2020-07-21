@@ -130,7 +130,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			serializationNode2subIdiom = serializationNode2subIdiom2 = getSerializationNode2subIdioms(Idiom.IDIOMS);
 		}
 		SubIdiom subIdiom = serializationNode2subIdiom2.get(serializationNode);
-		return subIdiom != null ? subIdiom : SubIdiom.DEFAULT;
+		return subIdiom != null ? subIdiom : SubIdiom.VALUE;
 	}
 
 	private @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms(@NonNull Idiom @NonNull [] idioms) {
@@ -144,7 +144,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		//
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = new HashMap<>();
 		for (@Nullable IdiomMatch idiomMatch : idiomMatches) {
-			if ((idiomMatch != null) && idiomMatch.isMatched()) {
+			if (idiomMatch != null) {
 				idiomMatch.installIn(serializationNode2subIdiom);
 			}
 		}
