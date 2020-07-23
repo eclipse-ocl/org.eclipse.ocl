@@ -42,6 +42,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ClassCS/ownedConstraints"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BaseCS.ecore#//ClassCS/owningPackage"/>
     </genClasses>
+    <genClasses ecoreClass="BaseCS.ecore#//CommentCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//CommentCS/value"/>
+    </genClasses>
     <genClasses ecoreClass="BaseCS.ecore#//ConstraintCS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ConstraintCS/ownedMessageSpecification"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseCS.ecore#//ConstraintCS/ownedSpecification"/>

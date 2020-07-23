@@ -24,6 +24,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningPackage" eType="#//PackageCS"
         eOpposite="#//PackageCS/ownedClasses"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CommentCS" eSuperTypes="#//AnnotationElementCS">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstraintCS" eSuperTypes="#//NamedElementCS">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedMessageSpecification"
         eType="#//SpecificationCS" containment="true"/>

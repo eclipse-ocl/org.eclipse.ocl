@@ -26,6 +26,7 @@ import "platform:/resource/org.eclipse.ocl.xtext.completeocl/model/CompleteOCLCS
  * bullet[context declarations for independent declarations]
  */
 CompleteOCLDocumentCS returns CompleteOCLDocumentCS:
+	ownedAnnotations+=CommentCS?
 	ownedImports+=ImportCS*
 	(ownedPackages+=PackageDeclarationCS | ownedContexts+=ContextDeclCS)*;
 
@@ -37,9 +38,9 @@ CompleteOCLNavigationOperatorName:
 	'^' | '^^';
 
 ClassifierContextDeclCS returns ClassifierContextDeclCS:
-	'context' (ownedSignature=TemplateSignatureCS)? (selfName=UnrestrictedName)?
+	ownedAnnotations+=CommentCS? 'context' (ownedSignature=TemplateSignatureCS)? (selfName=UnrestrictedName)?
 	ownedPathName=PathNameCS	
-	(('inv' ownedInvariants+=ConstraintCS)
+	( ownedInvariants+=InvConstraintCS
 	| ownedDefinitions+=DefCS
 	)+;
 	
@@ -52,8 +53,12 @@ ClassifierContextDeclCS returns ClassifierContextDeclCS:
  * additionally have a name which may be followed by a parenthesized expression defining an OCL
  * expression to be evaluated to provide an error message.
  */
-ConstraintCS returns base::ConstraintCS:
-	(name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
+InvConstraintCS returns base::ConstraintCS:
+	ownedAnnotations+=CommentCS? 'inv' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
+PostConstraintCS returns base::ConstraintCS:
+	ownedAnnotations+=CommentCS? 'post' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
+PreConstraintCS returns base::ConstraintCS:
+	ownedAnnotations+=CommentCS? 'pre' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS;
 
 /*
  * A Context declaration can be a Classifier, Operation of Property Context declaration.
@@ -80,7 +85,7 @@ DefCS returns DefCS:
  * For compatibility with invariants the definition may have a name that is never used.
  */
 DefOperationCS returns DefOperationCS:
-	(isStatic?='static')? 'def' UnrestrictedName? ':' (ownedSignature=TemplateSignatureCS)?
+	ownedAnnotations+=CommentCS? (isStatic?='static')? 'def' UnrestrictedName? ':' (ownedSignature=TemplateSignatureCS)?
 		name=UnrestrictedName '(' (ownedParameters+=DefParameterCS (',' ownedParameters+=DefParameterCS)*)? ')' ':' (ownedType=TypeExpCS)?
 		 '=' ownedSpecification=SpecificationCS;
 
@@ -98,11 +103,11 @@ DefParameterCS returns base::ParameterCS:
  * For compatibility with invariants the definition may have a name that is never used.
  */
 DefPropertyCS returns DefPropertyCS:
-	(isStatic?='static')? 'def' UnrestrictedName? ':' name=UnrestrictedName ':' ownedType=TypeExpCS
+	ownedAnnotations+=CommentCS? (isStatic?='static')? 'def' UnrestrictedName? ':' name=UnrestrictedName ':' ownedType=TypeExpCS
 		'=' ownedSpecification=SpecificationCS;
 
 ImportCS returns base::ImportCS:
-	('import' | 'include' | 'library') (name=Identifier ':')? ownedPathName=URIPathNameCS (isAll?='::*')?;
+	ownedAnnotations+=CommentCS? ('import' | 'include' | 'library') (name=Identifier ':')? ownedPathName=URIPathNameCS (isAll?='::*')?;
 
 /*
  * An operation context declaration complements an existing operation with additional details.
@@ -121,15 +126,12 @@ ImportCS returns base::ImportCS:
  * For compatibility with invariants the body expression may have a name that is never used.
  */
 OperationContextDeclCS returns OperationContextDeclCS:
-	'context' (ownedSignature=TemplateSignatureCS)? ownedPathName=PathNameCS
+	ownedAnnotations+=CommentCS? 'context' (ownedSignature=TemplateSignatureCS)? ownedPathName=PathNameCS
 	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')' ':' (ownedType=TypeExpCS)?
-	(('pre' ownedPreconditions+=ConstraintCS)
-	| ('post' ownedPostconditions+=ConstraintCS)
-	| ('body' UnrestrictedName? ':' ownedBodies+=SpecificationCS)
-	)*;
+	(ownedPreconditions+=PreConstraintCS | ownedPostconditions+=PostConstraintCS | ownedBodies+=BodySpecificationCS)*;
 
 PackageDeclarationCS returns PackageDeclarationCS:
-	'package' ownedPathName=PathNameCS ('inv' ownedInvariants+=ConstraintCS)* (ownedContexts+=ContextDeclCS)* 'endpackage';
+	ownedAnnotations+=CommentCS? 'package' ownedPathName=PathNameCS ownedInvariants+=InvConstraintCS* ownedContexts+=ContextDeclCS* 'endpackage';
 
 ParameterCS returns base::ParameterCS:
 	(name=UnrestrictedName ':')? ownedType=TypeExpCS;
@@ -158,13 +160,17 @@ ParameterCS returns base::ParameterCS:
  * NB. RoyalAndLoyal gratuitously names its derived values.
  */
 PropertyContextDeclCS returns PropertyContextDeclCS:
-	'context' ownedPathName=PathNameCS ':' ownedType=TypeExpCS
-	(('derive' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
-	| ('init' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS)
-	)*;
+	ownedAnnotations+=CommentCS? 'context' ownedPathName=PathNameCS ':' ownedType=TypeExpCS
+	(ownedDefaultExpressions+=DeriveSpecificationCS | ownedDefaultExpressions+=InitSpecificationCS)*;
 
 SpecificationCS returns essentialocl::ExpSpecificationCS:
 	ownedExpression=ExpCS | exprString=UNQUOTED_STRING;
+BodySpecificationCS returns essentialocl::ExpSpecificationCS:
+	ownedAnnotations+=CommentCS? 'body' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
+DeriveSpecificationCS returns essentialocl::ExpSpecificationCS:
+	ownedAnnotations+=CommentCS? 'derive' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
+InitSpecificationCS returns essentialocl::ExpSpecificationCS:
+	ownedAnnotations+=CommentCS? 'init' UnrestrictedName? ':' (ownedExpression=ExpCS | exprString=UNQUOTED_STRING);
 
 //---------------------------------------------------------------------------------
 //	Base overrides

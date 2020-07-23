@@ -19,7 +19,7 @@ import "platform:/resource/org.eclipse.ocl.xtext.oclinecore/model/OCLinEcoreCS.e
 //generate oclinEcore2 "http://www.eclipse.org/ocl/examples/xtext/oclinecore/OCLinEcore"
 
 TopLevelCS :
-	{TopLevelCS} ('module' UnrestrictedName)?
+	{TopLevelCS} (ownedAnnotations+=CommentCS? 'module' UnrestrictedName)?
 	(ownedImports+=ImportCS)*
 	(ownedPackages+=PackageCS)*
 ;
@@ -104,7 +104,7 @@ AnnotationElementCS returns base::AnnotationElementCS:
 ;
 
 AttributeCS returns base::AttributeCS:
-	((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
+	ownedAnnotations+=CommentCS? ((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
 	'attribute' name=UnrestrictedName
 	(':' ownedType=TypedMultiplicityRefCS)?
 	('=' default=SINGLE_QUOTED_STRING)?
@@ -130,7 +130,7 @@ ClassCS returns base::ClassCS:
 ;
 
 DataTypeCS returns base::DataTypeCS:
-	isPrimitive ?= 'primitive'? 'datatype' name=UnrestrictedName
+	ownedAnnotations+=CommentCS? isPrimitive ?= 'primitive'? 'datatype' name=UnrestrictedName
 	(ownedSignature=TemplateSignatureCS)?
 	(':' instanceClassName=SINGLE_QUOTED_STRING)?
 	('{' (isSerializable?='serializable' | '!serializable')? '}')?
@@ -145,13 +145,13 @@ DetailCS returns base::DetailCS:
 ;
 
 DocumentationCS returns base::DocumentationCS:
-	{base::DocumentationCS} 'documentation' value=SINGLE_QUOTED_STRING?
+	{base::DocumentationCS} ownedAnnotations+=CommentCS? 'documentation' value=SINGLE_QUOTED_STRING?
 	('(' ownedDetails+=DetailCS (',' ownedDetails+=DetailCS)* ')')?
 	 ';'
 ;
 
 EnumerationCS returns base::EnumerationCS:
-	'enum' name=UnrestrictedName
+	ownedAnnotations+=CommentCS? 'enum' name=UnrestrictedName
 	(ownedSignature=TemplateSignatureCS)?
 	(':' instanceClassName=SINGLE_QUOTED_STRING)?
 	('{' (isSerializable?='serializable' | '!serializable')? '}')?
@@ -163,14 +163,14 @@ EnumerationCS returns base::EnumerationCS:
 ;
 
 EnumerationLiteralCS returns base::EnumerationLiteralCS:
-	(('literal' name=UnrestrictedName) | name=EnumerationLiteralName) (':' literal=SINGLE_QUOTED_STRING)? ('=' value=SIGNED)?
+	ownedAnnotations+=CommentCS? (('literal' name=UnrestrictedName) | name=EnumerationLiteralName) (':' literal=SINGLE_QUOTED_STRING)? ('=' value=SIGNED)?
 	(('{' ownedAnnotations+=AnnotationElementCS* '}')
 	|';'
 	)
 ;
 
 ImportCS returns base::ImportCS:
-	('import' | 'library') (name=UnrestrictedName ':')? ownedPathName=URIPathNameCS (isAll?='::*')? ';'
+	ownedAnnotations+=CommentCS? ('import' | 'library') (name=UnrestrictedName ':')? ownedPathName=URIPathNameCS (isAll?='::*')? ';'
 ;
 
 ModelElementCS returns base::ModelElementCS:
@@ -182,7 +182,7 @@ ModelElementRefCS returns base::ModelElementRefCS:
 ;
 
 OperationCS returns base::OperationCS:
-	((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
+	ownedAnnotations+=CommentCS? ((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
 	'operation' (ownedSignature=TemplateSignatureCS)? name=UnrestrictedName
 	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')'
 	(':' ownedType=TypedMultiplicityRefCS)?
@@ -202,7 +202,7 @@ OperationCS returns base::OperationCS:
 ;
 
 PackageCS returns base::PackageCS:
-	'package' name=UnrestrictedName
+	ownedAnnotations+=CommentCS? 'package' name=UnrestrictedName
 	(':' nsPrefix=UnrestrictedName)? ('=' nsURI=URI)?
 	(('{'
 		(ownedAnnotations+=AnnotationElementCS | ownedPackages+=PackageCS | ownedClasses+=ClassCS)*
@@ -231,7 +231,7 @@ ImplicitOppositeCS returns base::ImplicitOppositeCS:
 ;
 
 ReferenceCS returns base::ReferenceCS:
-	((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
+	ownedAnnotations+=CommentCS? ((qualifiers+='static' (qualifiers+='definition')?) | (qualifiers+='definition' (qualifiers+='static')?))?
 	'property' name=UnrestrictedName
 	('#' referredOpposite=[pivot::Property|UnrestrictedName])?
 	(':' ownedType=TypedMultiplicityRefCS)?
@@ -262,7 +262,7 @@ SpecificationCS returns essentialocl::ExpSpecificationCS:
 ;
 
 StructuredClassCS returns base::StructuredClassCS:
-	isAbstract?='abstract'?
+	ownedAnnotations+=CommentCS? isAbstract?='abstract'?
 	'class' name=UnrestrictedName
 	(ownedSignature=TemplateSignatureCS)?
 	('extends' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?

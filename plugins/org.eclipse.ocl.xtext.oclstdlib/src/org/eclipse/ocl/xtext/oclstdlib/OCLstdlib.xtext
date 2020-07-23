@@ -19,6 +19,7 @@ import "platform:/resource/org.eclipse.ocl.xtext.oclstdlib/model/OCLstdlibCS.eco
 //generate OCLstdlib "http://www.eclipse.org/ocl/examples/xtext/oclstdlib/OCLstdlibCST"
 
 Library returns LibRootPackageCS:
+	ownedAnnotations+=CommentCS? 
 	(ownedImports+=ImportCS ';')*
 	(ownedPackages+=LibPackageCS)*
 ;
@@ -82,7 +83,7 @@ AccumulatorCS returns base::ParameterCS:
 ;
 
 AnnotationCS returns base::AnnotationCS:
-	'annotation' name=(Identifier|SINGLE_QUOTED_STRING)
+	ownedAnnotations+=CommentCS? 'annotation' name=(Identifier|SINGLE_QUOTED_STRING)
 	('(' ownedDetails+=DetailCS (',' ownedDetails+=DetailCS)* ')')?
 	(('{' ownedAnnotations+=AnnotationElementCS '}')
 	|';'
@@ -94,7 +95,7 @@ AnnotationElementCS returns base::AnnotationElementCS:
 ;
 
 LibClassCS returns LibClassCS:
-	(isAbstract?='abstract')? 'type' name=AnyName
+	ownedAnnotations+=CommentCS? (isAbstract?='abstract')? 'type' name=AnyName
 	(ownedSignature=TemplateSignatureCS)?
 	(':' metaclassName=[MetaclassNameCS|AnyName])?
 	('conformsTo' ownedSuperTypes+=TypedRefCS (',' ownedSuperTypes+=TypedRefCS)*)?
@@ -119,14 +120,14 @@ DocumentationCS returns base::DocumentationCS:
 ;
 
 ImportCS returns base::ImportCS:
-	'import' (name=Identifier ':')? ownedPathName=URIPathNameCS (isAll?='::*')?;
+	ownedAnnotations+=CommentCS? 'import' (name=Identifier ':')? ownedPathName=URIPathNameCS (isAll?='::*')?;
 
 InvCS returns LibConstraintCS:
-	stereotype='inv' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS ';'
+	ownedAnnotations+=CommentCS? stereotype='inv' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS ';'
 ;
 
 LibCoercionCS returns LibCoercionCS:
-	'coercion' name=Name '(' ')' ':' ownedType=TypedMultiplicityRefCS
+	ownedAnnotations+=CommentCS? 'coercion' name=Name '(' ')' ':' ownedType=TypedMultiplicityRefCS
 	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
 	(('{' (ownedAnnotations+=AnnotationElementCS
 	     | ownedPreconditions+=PostCS
@@ -136,7 +137,7 @@ LibCoercionCS returns LibCoercionCS:
 ;
 
 LibIterationCS returns LibIterationCS:
-	'iteration' name=Name
+	ownedAnnotations+=CommentCS? 'iteration' name=Name
 	(ownedSignature=TemplateSignatureCS)?
 	'(' ownedIterators+=IteratorCS (',' ownedIterators+=IteratorCS)*
 	(';' ownedAccumulators+=AccumulatorCS (',' ownedAccumulators+=AccumulatorCS)*)?
@@ -172,7 +173,7 @@ OperationCS returns base::OperationCS:
 ;
 
 LibOperationCS returns LibOperationCS:
-	(isStatic?='static')? 'operation' name=Name
+	ownedAnnotations+=CommentCS? (isStatic?='static')? 'operation' name=Name
 	(ownedSignature=TemplateSignatureCS)?
 	'(' (ownedParameters+=ParameterCS (',' ownedParameters+=ParameterCS)*)? ')'
 	':' ownedType=TypedMultiplicityRefCS
@@ -193,7 +194,7 @@ LibOppositeCS returns LibOppositeCS:
 ;
 
 LibPackageCS returns LibPackageCS:
-    'library' name=Name
+    ownedAnnotations+=CommentCS? 'library' name=Name
 	(':' nsPrefix=Identifier '=' nsURI=URI)?
 	'{' (ownedPackages+=PackageCS
 		| ('precedence' (ownedPrecedences+=PrecedenceCS)+ ';')
@@ -203,7 +204,7 @@ LibPackageCS returns LibPackageCS:
 ;
 
 PackageCS returns base::PackageCS:
-	'package' name=Name
+	ownedAnnotations+=CommentCS? 'package' name=Name
 	(':' nsPrefix=Identifier '=' nsURI=URI)?
 	'{'
 		(ownedPackages+=PackageCS
@@ -217,7 +218,7 @@ ParameterCS returns base::ParameterCS:
 ;
 
 LibPropertyCS returns LibPropertyCS:
-	(isStatic?='static')? 'property' name=Name
+	ownedAnnotations+=CommentCS? (isStatic?='static')? 'property' name=Name
 	':' ownedType=TypedMultiplicityRefCS
 	ownedOpposite=LibOppositeCS?
 	('=>' implementation=[JavaClassCS|SINGLE_QUOTED_STRING])?
@@ -227,11 +228,11 @@ LibPropertyCS returns LibPropertyCS:
 ;
 
 PostCS returns LibConstraintCS:
-	stereotype='post' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS ';'
+	ownedAnnotations+=CommentCS? stereotype='post' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS ';'
 ;
 
 PreCS returns LibConstraintCS:
-	stereotype='pre' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS ';'
+	ownedAnnotations+=CommentCS? stereotype='pre' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS ';'
 ;
 
 PrecedenceCS returns PrecedenceCS:
