@@ -11,31 +11,40 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
-public class CommentSegment implements Segment
+public class BaseCommentSegment implements Segment
 {
-	protected final @NonNull EStructuralFeature eStructuralFeature;
-
-	public CommentSegment(@NonNull EStructuralFeature eStructuralFeature) {
-		this.eStructuralFeature = eStructuralFeature;
-	}
-
 	@Override
 	public void serialize(@NonNull SerializationNode serializationNode, @NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		EObject eObject = serializer.getElement();
-		Object eGet = eObject.eGet(eStructuralFeature);
-		if (eGet != null) {
-			serializationBuilder.append(String.valueOf(eGet));
+		if (eObject instanceof Pivotable) {
+			Element asElement = ((Pivotable)eObject).getPivot();
+			if (asElement != null) {
+				for (Comment asComment: asElement.getOwnedComments()) {
+					serializationBuilder.append(SerializationBuilder.HALF_NEW_LINE);
+					serializationBuilder.append("/**");
+					serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
+					serializationBuilder.append(" * ");
+					serializationBuilder.append(SerializationBuilder.NEW_LINE);
+					serializationBuilder.append(String.valueOf(asComment.getBody()));
+					serializationBuilder.append(SerializationBuilder.POP);
+					serializationBuilder.append(SerializationBuilder.NEW_LINE);
+					serializationBuilder.append(" */");
+					serializationBuilder.append(SerializationBuilder.NEW_LINE);
+				}
+			}
 		}
 	}
 
 	@Override
 	public String toString() {
-		return eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName();
+		return getClass().getSimpleName();
 	}
 }

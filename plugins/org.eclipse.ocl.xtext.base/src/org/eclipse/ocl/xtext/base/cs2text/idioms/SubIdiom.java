@@ -20,7 +20,7 @@ import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 
 public class SubIdiom
 {
-	public static @NonNull CommentSegment COMMENT = new CommentSegment(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+	public static @NonNull CustomSegment COMMENT = new CustomSegment(BaseCommentSegment.class);
 
 	public static @NonNull SubIdiom CLOSE_BRACE = new SubIdiom(new KeywordLocator("}"), StringSegment.POP, StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.NEW_LINE);
 	public static @NonNull SubIdiom CLOSE_SQUARE = new SubIdiom(new KeywordLocator("]"), StringSegment.NO_SPACE, ValueSegment.INSTANCE);
@@ -33,7 +33,7 @@ public class SubIdiom
 	public static @NonNull SubIdiom SEMI_COLON = new SubIdiom(new KeywordLocator(";"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NEW_LINE);
 	public static @NonNull SubIdiom VALUE = new SubIdiom(null, ValueSegment.INSTANCE);
 
-	public static @NonNull SubIdiom COMMENTED_PACKAGE = new SubIdiom(new KeywordLocator("enum"), COMMENT, ValueSegment.INSTANCE);
+	public static @NonNull SubIdiom COMMENTED_PACKAGE = new SubIdiom(new KeywordLocator("enum"), new CustomSegment(BaseCommentSegment.class), ValueSegment.INSTANCE);
 
 
 	public static @NonNull SubIdiom PackagesCS_ownedClasses = new SubIdiom(new AssignmentLocator(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES), StringSegment.HALF_NEW_LINE, ValueSegment.INSTANCE, StringSegment.HALF_NEW_LINE);

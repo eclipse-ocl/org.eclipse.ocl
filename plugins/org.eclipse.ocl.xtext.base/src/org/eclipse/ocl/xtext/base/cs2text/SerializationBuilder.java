@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -31,6 +32,7 @@ public class SerializationBuilder
 	public static final @NonNull String SOFT_NEW_LINE = new String("«?\\n »");
 	public static final @NonNull String SOFT_SPACE = new String("«? »");
 	public static final @NonNull String PUSH = new String("«+»");
+	public static final @NonNull String PUSH_NEXT = new String("«+?»");
 	public static final @NonNull String POP = new String("«-»");
 
 	private static final int HALF_NEW_LINE_PREVCH = -1;
@@ -40,7 +42,7 @@ public class SerializationBuilder
 	protected final @NonNull String newLineString;
 	protected final @NonNull String indentString;
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
-	private int indentDepth = 0;
+	private @NonNull Stack<@NonNull String> indents = new Stack<>();
 
 	public SerializationBuilder(@NonNull String newLineString, @NonNull String indentString) {
 		this.newLineString = newLineString;
@@ -48,15 +50,12 @@ public class SerializationBuilder
 	}
 
 	public void append(@NonNull String string) {
-//		if ((string == null) || string.contains("ordered")) {
-//			getClass(); // XXX debugging
-//		}
 		strings.add(string);
 	}
 
-	protected void appendIndents(StringBuilder s, int indentDepth) {
-		for (int i = 0; i < indentDepth; i++) {
-			s.append(indentString);
+	protected void appendIndents(StringBuilder s) {
+		for (int i = 0; i < indents.size(); i++) {
+			s.append(indents.get(i));
 		}
 	}
 
@@ -65,7 +64,7 @@ public class SerializationBuilder
 	}
 
 	protected int appendString(@NonNull StringBuilder s, @NonNull String string) {
-		s.append(string);		// FIXME use system new-line
+		s.append(string);
 		return s.charAt(s.length()-1);
 	}
 
@@ -77,20 +76,18 @@ public class SerializationBuilder
 			@NonNull String nextString = strings.get(index++);
 			@Nullable String nextNextString = index < indexMax ? strings.get(index) : null;
 			if (nextString == PUSH) {
-				indentDepth++;
+				indents.push(indentString);
+			}
+			else if (nextString == PUSH_NEXT) {
+				if (index < indexMax) {
+					indents.push(strings.get(index++));
+				}
 			}
 			else if (nextString == POP) {
-				indentDepth--;
+				indents.pop();
 			}
 			else {
 				switch (prevCh) {
-				/*	case -1: {
-						if (ch == SOFT_SPACE) {}
-						else {
-							s.append(ch);
-						}
-						break;
-					} */
 					case ' ': {
 						if (nextString == NO_SPACE) {
 							prevCh = NO_SPACE_PREVCH;
@@ -144,7 +141,7 @@ public class SerializationBuilder
 							prevCh = FULL_NEW_LINE_PREVCH;
 						}
 						else {
-							appendIndents(s, indentDepth);
+							appendIndents(s);
 							prevCh = appendString(s, nextString);
 						}
 						break;
@@ -162,7 +159,7 @@ public class SerializationBuilder
 							prevCh = FULL_NEW_LINE_PREVCH;
 						}
 						else {
-							appendIndents(s, indentDepth);
+							appendIndents(s);
 							prevCh = appendString(s, nextString);
 						}
 						break;
