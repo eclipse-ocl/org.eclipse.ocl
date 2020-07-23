@@ -45,6 +45,7 @@ public interface BaseCSVisitor<R>
 	R visitAnnotationElementCS(org.eclipse.ocl.xtext.basecs.@NonNull AnnotationElementCS object);
 	R visitAttributeCS(org.eclipse.ocl.xtext.basecs.@NonNull AttributeCS object);
 	R visitClassCS(org.eclipse.ocl.xtext.basecs.@NonNull ClassCS object);
+	R visitCommentCS(org.eclipse.ocl.xtext.basecs.@NonNull CommentCS object);
 	R visitConstraintCS(org.eclipse.ocl.xtext.basecs.@NonNull ConstraintCS object);
 	R visitContextLessElementCS(org.eclipse.ocl.xtext.basecs.@NonNull ContextLessElementCS object);
 	R visitDataTypeCS(org.eclipse.ocl.xtext.basecs.@NonNull DataTypeCS object);

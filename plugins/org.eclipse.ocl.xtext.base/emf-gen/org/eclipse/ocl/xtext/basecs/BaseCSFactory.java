@@ -50,6 +50,15 @@ public interface BaseCSFactory extends EFactory {
 	@NonNull AttributeCS createAttributeCS();
 
 	/**
+	 * Returns a new object of class '<em>Comment CS</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Comment CS</em>'.
+	 * @generated
+	 */
+	@NonNull CommentCS createCommentCS();
+
+	/**
 	 * Returns a new object of class '<em>Constraint CS</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

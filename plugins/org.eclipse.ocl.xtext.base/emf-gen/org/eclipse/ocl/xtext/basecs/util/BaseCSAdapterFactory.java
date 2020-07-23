@@ -99,6 +99,11 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 				return createClassCSAdapter();
 			}
 			@Override
+			public Adapter caseCommentCS(CommentCS object)
+			{
+				return createCommentCSAdapter();
+			}
+			@Override
 			public Adapter caseConstraintCS(ConstraintCS object)
 			{
 				return createConstraintCSAdapter();
@@ -423,6 +428,21 @@ public class BaseCSAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createClassCSAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.basecs.CommentCS <em>Comment CS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.basecs.CommentCS
+	 * @generated
+	 */
+	public Adapter createCommentCSAdapter()
 	{
 		return null;
 	}

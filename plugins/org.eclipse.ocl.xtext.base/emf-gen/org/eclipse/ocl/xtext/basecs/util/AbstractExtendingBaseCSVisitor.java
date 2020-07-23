@@ -58,6 +58,11 @@ public abstract class AbstractExtendingBaseCSVisitor<R, C>
 	}
 
 	@Override
+	public R visitCommentCS(org.eclipse.ocl.xtext.basecs.@NonNull CommentCS object) {
+		return visitAnnotationElementCS(object);
+	}
+
+	@Override
 	public R visitConstraintCS(org.eclipse.ocl.xtext.basecs.@NonNull ConstraintCS object) {
 		return visitNamedElementCS(object);
 	}

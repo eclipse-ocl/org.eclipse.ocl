@@ -75,6 +75,11 @@ public abstract class AbstractDelegatingBaseCSVisitor<R, C, @NonNull D extends B
 	}
 
 	@Override
+	public R visitCommentCS(org.eclipse.ocl.xtext.basecs.@NonNull CommentCS object) {
+		return delegate.visitCommentCS(object);
+	}
+
+	@Override
 	public R visitConstraintCS(org.eclipse.ocl.xtext.basecs.@NonNull ConstraintCS object) {
 		return delegate.visitConstraintCS(object);
 	}

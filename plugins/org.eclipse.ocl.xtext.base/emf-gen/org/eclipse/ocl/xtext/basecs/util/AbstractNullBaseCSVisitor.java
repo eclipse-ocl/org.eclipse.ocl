@@ -58,6 +58,11 @@ public abstract class AbstractNullBaseCSVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCommentCS(org.eclipse.ocl.xtext.basecs.@NonNull CommentCS object) {
+		return null;
+	}
+
+	@Override
 	public R visitConstraintCS(org.eclipse.ocl.xtext.basecs.@NonNull ConstraintCS object) {
 		return null;
 	}
