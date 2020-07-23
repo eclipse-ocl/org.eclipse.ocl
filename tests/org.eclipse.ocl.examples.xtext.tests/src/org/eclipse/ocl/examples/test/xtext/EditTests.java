@@ -580,12 +580,12 @@ public class EditTests extends XtextTestCase
 						"}\n";
 		String testDocument_commented =
 				"package p1 : p2 = 'p3' {\n" +
-						"    /* a comment */\n" +
+						"    /** a comment */\n" +
 						"    class C : 'java.lang.Object';\n" +
 						"}\n";
 		String testDocument_recommented =
 				"package p1 : p2 = 'p3' {\n" +
-						"    /*\n" +
+						"    /**\n" +
 						"	  *	yet \n" +
 						"	  *	another \n" +
 						"	  *	comment\n" +
@@ -618,27 +618,27 @@ public class EditTests extends XtextTestCase
 		//	Change "class" to "/* a comment */class".
 		//
 		{
-			replace(xtextResource, "class", "/* a comment */class");
+			replace(xtextResource, "class", "/** a comment */class");
 			assertNoResourceErrors("Adding comment", xtextResource);
 			URI ecoreURI2 = getTestFileURI("test2.ecore");
 			Resource ecoreResource2 = as2ecore(ocl, asResource, ecoreURI2, SUPPRESS_VALIDATION);
 			TestUtil.assertSameModel(ecoreResource_commented, ecoreResource2);
 		}
 		//
-		//	Change "/* a comment */" to "/* yet\n* another\n * comment */".
+		//	Change "/** a comment */" to "/** yet\n* another\n * comment */".
 		//
 		{
-			replace(xtextResource, "/* a comment */", "/* yet\n* another\n * comment */");
+			replace(xtextResource, "/** a comment */", "/** yet\n* another\n * comment */");
 			assertNoResourceErrors("Changing comment", xtextResource);
 			URI ecoreURI3 = getTestFileURI("test3.ecore");
 			Resource ecoreResource3 = as2ecore(ocl, asResource, ecoreURI3, NO_MESSAGES);
 			TestUtil.assertSameModel(ecoreResource_recommented, ecoreResource3);
 		}
 		//
-		//	Change "/* yet\n* another\n * comment */" back to nothing.
+		//	Change "/** yet\n* another\n * comment */" back to nothing.
 		//
 		{
-			replace(xtextResource, "/* yet\n* another\n * comment */", "");
+			replace(xtextResource, "/** yet\n* another\n * comment */", "");
 			assertNoResourceErrors("Removing comment", xtextResource);
 			URI ecoreURI4 = getTestFileURI("test4.ecore");
 			Resource ecoreResource4 = as2ecore(ocl, asResource, ecoreURI4, NO_MESSAGES);
