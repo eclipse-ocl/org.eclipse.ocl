@@ -10,7 +10,5 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.serializer;
 
-import org.eclipse.ocl.xtext.essentialocl.serializer.AbstractEssentialOCLSemanticSequencer;
-
 public class EssentialOCLSemanticSequencer extends AbstractEssentialOCLSemanticSequencer {
 }

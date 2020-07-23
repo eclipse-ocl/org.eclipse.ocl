@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.oclinecore;
 
 import org.antlr.runtime.TokenSource;
 import org.eclipse.ocl.xtext.base.services.RetokenizingTokenSource;
-import org.eclipse.ocl.xtext.oclinecore.AbstractOCLinEcoreRuntimeModule;
 import org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreParser;
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreValueConverterService;
 import org.eclipse.ocl.xtext.oclinecore.utilities.OCLinEcoreCSResource;

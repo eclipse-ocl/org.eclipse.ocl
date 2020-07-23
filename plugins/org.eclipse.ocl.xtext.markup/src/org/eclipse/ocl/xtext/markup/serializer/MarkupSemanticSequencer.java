@@ -10,7 +10,5 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.markup.serializer;
 
-import org.eclipse.ocl.xtext.markup.serializer.AbstractMarkupSemanticSequencer;
-
 public class MarkupSemanticSequencer extends AbstractMarkupSemanticSequencer {
 }

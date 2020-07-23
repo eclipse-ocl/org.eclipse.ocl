@@ -9,8 +9,6 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.validation;
-
-import org.eclipse.ocl.xtext.completeocl.validation.AbstractCompleteOCLJavaValidator;
  
 
 public class CompleteOCLJavaValidator extends AbstractCompleteOCLJavaValidator {

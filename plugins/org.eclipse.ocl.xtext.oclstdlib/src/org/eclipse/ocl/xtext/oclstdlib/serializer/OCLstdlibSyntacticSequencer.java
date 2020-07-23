@@ -10,7 +10,5 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.serializer;
 
-import org.eclipse.ocl.xtext.oclstdlib.serializer.AbstractOCLstdlibSyntacticSequencer;
-
 public class OCLstdlibSyntacticSequencer extends AbstractOCLstdlibSyntacticSequencer {
 }

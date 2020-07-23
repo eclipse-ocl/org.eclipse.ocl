@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
-import org.eclipse.ocl.xtext.oclstdlib.validation.AbstractOCLstdlibJavaValidator;
 import org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage;
  
 

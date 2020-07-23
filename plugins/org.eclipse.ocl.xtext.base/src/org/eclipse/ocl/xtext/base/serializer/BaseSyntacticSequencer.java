@@ -13,7 +13,5 @@
  */
 package org.eclipse.ocl.xtext.base.serializer;
 
-import org.eclipse.ocl.xtext.base.serializer.AbstractBaseSyntacticSequencer;
-
 public class BaseSyntacticSequencer extends AbstractBaseSyntacticSequencer {
 }

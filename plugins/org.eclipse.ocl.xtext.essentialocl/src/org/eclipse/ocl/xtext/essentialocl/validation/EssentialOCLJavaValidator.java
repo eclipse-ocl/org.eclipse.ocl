@@ -9,8 +9,6 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.essentialocl.validation;
-
-import org.eclipse.ocl.xtext.essentialocl.validation.AbstractEssentialOCLJavaValidator;
  
 
 public class EssentialOCLJavaValidator extends AbstractEssentialOCLJavaValidator {

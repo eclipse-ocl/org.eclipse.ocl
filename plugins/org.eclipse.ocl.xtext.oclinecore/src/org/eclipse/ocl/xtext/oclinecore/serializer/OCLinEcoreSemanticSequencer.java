@@ -10,7 +10,5 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.serializer;
 
-import org.eclipse.ocl.xtext.oclinecore.serializer.AbstractOCLinEcoreSemanticSequencer;
-
 public class OCLinEcoreSemanticSequencer extends AbstractOCLinEcoreSemanticSequencer {
 }

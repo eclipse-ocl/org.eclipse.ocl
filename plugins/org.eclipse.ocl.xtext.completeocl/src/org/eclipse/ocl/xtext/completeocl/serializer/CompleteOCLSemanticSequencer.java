@@ -10,7 +10,5 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.serializer;
 
-import org.eclipse.ocl.xtext.completeocl.serializer.AbstractCompleteOCLSemanticSequencer;
-
 public class CompleteOCLSemanticSequencer extends AbstractCompleteOCLSemanticSequencer {
 }

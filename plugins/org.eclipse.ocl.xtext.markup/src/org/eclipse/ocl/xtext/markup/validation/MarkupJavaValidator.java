@@ -9,8 +9,6 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.markup.validation;
-
-import org.eclipse.ocl.xtext.markup.validation.AbstractMarkupJavaValidator;
  
 public class MarkupJavaValidator extends AbstractMarkupJavaValidator {
 

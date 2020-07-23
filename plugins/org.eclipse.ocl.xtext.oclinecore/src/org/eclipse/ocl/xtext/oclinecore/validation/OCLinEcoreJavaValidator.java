@@ -9,8 +9,6 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.validation;
-
-import org.eclipse.ocl.xtext.oclinecore.validation.AbstractOCLinEcoreJavaValidator;
  
 
 public class OCLinEcoreJavaValidator extends AbstractOCLinEcoreJavaValidator {

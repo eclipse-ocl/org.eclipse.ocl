@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.markup.ui;
 
-import org.eclipse.ocl.xtext.markup.ui.AbstractMarkupUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
