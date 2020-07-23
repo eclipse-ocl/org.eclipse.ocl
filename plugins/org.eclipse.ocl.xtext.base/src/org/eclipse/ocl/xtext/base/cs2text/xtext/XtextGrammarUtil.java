@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.xtext.AbstractElement;
@@ -160,6 +161,10 @@ public class XtextGrammarUtil
 
 	public static @NonNull String getName(@NonNull ENamedElement eNamedElement) {
 		return ClassUtil.nonNullState(eNamedElement.getName());
+	}
+
+	public static @NonNull Resource getResource(@NonNull EObject eObject) {
+		return ClassUtil.nonNullState(eObject.eResource());
 	}
 
 	public static @NonNull Keyword getRight(@NonNull CharacterRange characterRange) {

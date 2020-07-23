@@ -22,8 +22,6 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.linking.impl.LinkingHelper;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 
@@ -31,11 +29,6 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 {
 	protected final @NonNull CrossReference crossReference;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
-//	@Inject
-	private IValueConverterService valueConverterService;
-//	@Inject
-	private LinkingHelper linkingHelper;
-//	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
 	public AssignedCrossReferenceSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
@@ -45,8 +38,6 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		this.calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
 		this.crossReference = crossReference;
 		this.crossReferenceSerializer = grammarAnalysis.getCrossReferenceSerializer();
-		this.valueConverterService = grammarAnalysis.getValueConverterService();
-		this.linkingHelper = grammarAnalysis.getLinkingHelper();
 		assert !((EReference)eStructuralFeature).isContainment();
 	}
 

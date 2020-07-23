@@ -35,28 +35,34 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
-import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.linking.impl.LinkingHelper;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
+import org.eclipse.xtext.service.GrammarProvider;
+
+import com.google.inject.Inject;
 
 /**
  * An XtextGrammarAnalysis provides the extended analysis of an Xtext (multi-)grammar.
  */
 public class GrammarAnalysis
 {
-	/**
-	 * The (multi-)grammar model.
-	 */
-	protected final @NonNull AbstractGrammarResource grammarResource;
+	@Inject
+	private IValueConverterService valueConverterService;
+
+	@Inject
+	private ICrossReferenceSerializer crossReferenceSerializer;
+
+	@Inject
+	private GrammarProvider grammarProvider;
 
 	/**
 	 * The rule analysis for each rule.
@@ -85,20 +91,6 @@ public class GrammarAnalysis
 
 	private  final @NonNull Map<@NonNull String, @NonNull SingleEnumerationValue> value2enumerationValue = new HashMap<>();
 	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
-
-	protected final @NonNull ICrossReferenceSerializer crossReferenceSerializer;
-	protected final @NonNull IValueConverterService valueConverterService;
-	protected final @NonNull LinkingHelper linkingHelper;
-
-	public GrammarAnalysis(@NonNull AbstractGrammarResource grammarResource, @NonNull ICrossReferenceSerializer crossReferenceSerializer, IValueConverterService valueConverterService, LinkingHelper linkingHelper) {
-		this.grammarResource = grammarResource;
-		assert crossReferenceSerializer != null;
-		this.crossReferenceSerializer = crossReferenceSerializer;
-		assert valueConverterService != null;
-		this.valueConverterService = valueConverterService;
-		assert linkingHelper != null;
-		this.linkingHelper = linkingHelper;
-	}
 
 	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
@@ -210,8 +202,9 @@ public class GrammarAnalysis
 	 */
 	protected @NonNull Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> analyzeRuleNames(
 			@NonNull Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls) {
+		Grammar grammar = grammarProvider.getGrammar(this);
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = new HashMap<>();
-		for (@NonNull EObject eObject : new TreeIterable(grammarResource)) {
+		for (@NonNull EObject eObject : new TreeIterable(XtextGrammarUtil.getResource(grammar))) {
 			if (eObject instanceof AbstractRule) {
 				AbstractRule abstractRule = (AbstractRule)eObject;
 				String ruleName = XtextGrammarUtil.getName(abstractRule);
@@ -359,14 +352,6 @@ public class GrammarAnalysis
 			values2enumerationValue.put(values, enumerationValue);
 		}
 		return enumerationValue;
-	}
-
-//	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-//		return (eAttribute2enumerationValues != null) ? eAttribute2enumerationValues.get(eAttribute) : null;
-//	}
-
-	public @NonNull LinkingHelper getLinkingHelper() {
-		return linkingHelper;
 	}
 
 	public @NonNull AbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractElement abstractElement) {

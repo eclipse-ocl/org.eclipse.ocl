@@ -28,6 +28,7 @@ import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 import com.google.common.collect.Iterables;
+import com.google.inject.Inject;
 
 /**
  * The UserModelAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -35,6 +36,12 @@ import com.google.common.collect.Iterables;
  */
 public class UserModelAnalysis
 {
+	/**
+	 * The overall (multi-)grammar analysis.
+	 */
+	@Inject
+	private GrammarAnalysis grammarAnalysis;
+
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eClass());
 	}
@@ -48,18 +55,9 @@ public class UserModelAnalysis
 	}
 
 	/**
-	 * The overall (multi-)grammar analysis.
-	 */
-	protected final @NonNull GrammarAnalysis grammarAnalysis;
-
-	/**
 	 * The analysis of each user model element.
 	 */
 	private final @NonNull Map<@NonNull EObject, @NonNull UserAbstractElementAnalysis> element2elementAnalysis = new HashMap<>();
-
-	public UserModelAnalysis(@NonNull GrammarAnalysis grammarAnalysis) {
-		this.grammarAnalysis = grammarAnalysis;
-	}
 
 	/**
 	 * Perform analysis of each user model element.

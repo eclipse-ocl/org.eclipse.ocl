@@ -13,9 +13,19 @@
  */
 package org.eclipse.ocl.xtext.base;
 
+import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class BaseRuntimeModule extends org.eclipse.ocl.xtext.base.AbstractBaseRuntimeModule {
+public class BaseRuntimeModule extends org.eclipse.ocl.xtext.base.AbstractBaseRuntimeModule
+{
+	public Class<? extends GrammarAnalysis> bindGrammarAnalysis() {
+		return GrammarAnalysis.class;
+	}
 
+	public Class<? extends UserModelAnalysis> bindUserModelAnalysis() {
+		return UserModelAnalysis.class;
+	}
 }
