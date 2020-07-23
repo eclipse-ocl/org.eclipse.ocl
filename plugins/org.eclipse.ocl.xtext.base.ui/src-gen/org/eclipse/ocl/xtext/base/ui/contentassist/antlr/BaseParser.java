@@ -66,6 +66,7 @@ public class BaseParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypedTypeRefCSAccess().getGroup_1(), "rule__TypedTypeRefCS__Group_1__0");
 					put(grammarAccess.getWildcardTypeRefCSAccess().getGroup(), "rule__WildcardTypeRefCS__Group__0");
 					put(grammarAccess.getWildcardTypeRefCSAccess().getGroup_2(), "rule__WildcardTypeRefCS__Group_2__0");
+					put(grammarAccess.getCommentCSAccess().getValueAssignment(), "rule__CommentCS__ValueAssignment");
 					put(grammarAccess.getMultiplicityBoundsCSAccess().getLowerBoundAssignment_0(), "rule__MultiplicityBoundsCS__LowerBoundAssignment_0");
 					put(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundAssignment_1_1(), "rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1");
 					put(grammarAccess.getMultiplicityCSAccess().getIsNullFreeAssignment_2_1(), "rule__MultiplicityCS__IsNullFreeAssignment_2_1");
@@ -96,7 +97,7 @@ public class BaseParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			org.eclipse.ocl.xtext.base.ui.contentassist.antlr.internal.InternalBaseParser typedParser = (org.eclipse.ocl.xtext.base.ui.contentassist.antlr.internal.InternalBaseParser) parser;
-			typedParser.entryRuleMultiplicityBoundsCS();
+			typedParser.entryRuleCommentCS();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);

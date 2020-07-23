@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.CommentCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityBoundsCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityStringCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
@@ -48,6 +49,9 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == BaseCSPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case BaseCSPackage.COMMENT_CS:
+				sequence_CommentCS(context, (CommentCS) semanticObject);
+				return;
 			case BaseCSPackage.MULTIPLICITY_BOUNDS_CS:
 				if (rule == grammarAccess.getMultiplicityBoundsCSRule()) {
 					sequence_MultiplicityBoundsCS(context, (MultiplicityBoundsCS) semanticObject);
@@ -103,6 +107,24 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+
+	/**
+	 * Contexts:
+	 *     CommentCS returns CommentCS
+	 *
+	 * Constraint:
+	 *     value=ML_DOCUMENTATION
+	 */
+	protected void sequence_CommentCS(ISerializationContext context, CommentCS semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, BaseCSPackage.Literals.COMMENT_CS__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, BaseCSPackage.Literals.COMMENT_CS__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCommentCSAccess().getValueML_DOCUMENTATIONTerminalRuleCall_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+
 
 	/**
 	 * Contexts:

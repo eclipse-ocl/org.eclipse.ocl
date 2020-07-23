@@ -4674,6 +4674,8 @@ ruleSelfExpCS returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleMultiplicityBoundsCS
 entryRuleMultiplicityBoundsCS returns [EObject current=null]
 	:
@@ -5646,6 +5648,8 @@ RULE_ESCAPED_ID : '_' RULE_SINGLE_QUOTED_STRING;
 RULE_INT : ('0'..'9')+;
 
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
+
+RULE_ML_DOCUMENTATION : '/%#$*->%#$*/';
 
 RULE_SL_COMMENT : '--' ~(('\n'|'\r'))* ('\r'? '\n')?;
 

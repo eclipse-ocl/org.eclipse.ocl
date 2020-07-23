@@ -64,6 +64,34 @@ import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 
 
 
+// Entry rule entryRuleCommentCS
+entryRuleCommentCS
+:
+{ before(grammarAccess.getCommentCSRule()); }
+	 ruleCommentCS
+{ after(grammarAccess.getCommentCSRule()); }
+	 EOF
+;
+
+// Rule CommentCS
+ruleCommentCS
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getCommentCSAccess().getValueAssignment()); }
+(rule__CommentCS__ValueAssignment)
+{ after(grammarAccess.getCommentCSAccess().getValueAssignment()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Entry rule entryRuleMultiplicityBoundsCS
 entryRuleMultiplicityBoundsCS
 :
@@ -1822,6 +1850,21 @@ finally {
 
 
 
+rule__CommentCS__ValueAssignment
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getCommentCSAccess().getValueML_DOCUMENTATIONTerminalRuleCall_0()); }
+	RULE_ML_DOCUMENTATION{ after(grammarAccess.getCommentCSAccess().getValueML_DOCUMENTATIONTerminalRuleCall_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__MultiplicityBoundsCS__LowerBoundAssignment_0
     @init {
 		int stackSize = keepStackSize();
@@ -2129,6 +2172,8 @@ RULE_ESCAPED_ID : '_' RULE_SINGLE_QUOTED_STRING;
 RULE_INT : ('0'..'9')+;
 
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
+
+RULE_ML_DOCUMENTATION : '/%#$*->%#$*/';
 
 RULE_SL_COMMENT : '--' ~(('\n'|'\r'))* ('\r'? '\n')?;
 

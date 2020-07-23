@@ -32,13 +32,13 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utilities.CompatibilityAbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_SIMPLE_ID", "RULE_ESCAPED_ID", "RULE_INT", "RULE_SINGLE_QUOTED_STRING", "RULE_ESCAPED_CHARACTER", "RULE_LETTER_CHARACTER", "RULE_DOUBLE_QUOTED_STRING", "RULE_ML_SINGLE_QUOTED_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'-'", "'not'", "'not2'", "'*'", "'/'", "'+'", "'>'", "'<'", "'>='", "'<='", "'='", "'<>'", "'and'", "'and2'", "'implies'", "'implies2'", "'or'", "'or2'", "'xor'", "'xor2'", "'.'", "'->'", "'?.'", "'?->'", "'Map'", "'Tuple'", "'Boolean'", "'Integer'", "'Real'", "'String'", "'UnlimitedNatural'", "'OclAny'", "'OclInvalid'", "'OclVoid'", "'Set'", "'Bag'", "'Sequence'", "'Collection'", "'OrderedSet'", "'('", "')'", "','", "':'", "'{'", "'}'", "'..'", "'++'", "'Lambda'", "'<-'", "'true'", "'false'", "'invalid'", "'null'", "'@'", "'pre'", "'['", "']'", "'in'", "'|'", "';'", "'if'", "'then'", "'else'", "'endif'", "'elseif'", "'let'", "'self'", "'|?'", "'|1'", "'?'", "'::'", "'extends'", "'&&'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_SIMPLE_ID", "RULE_ESCAPED_ID", "RULE_INT", "RULE_SINGLE_QUOTED_STRING", "RULE_ESCAPED_CHARACTER", "RULE_LETTER_CHARACTER", "RULE_DOUBLE_QUOTED_STRING", "RULE_ML_SINGLE_QUOTED_STRING", "RULE_ML_COMMENT", "RULE_ML_DOCUMENTATION", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'-'", "'not'", "'not2'", "'*'", "'/'", "'+'", "'>'", "'<'", "'>='", "'<='", "'='", "'<>'", "'and'", "'and2'", "'implies'", "'implies2'", "'or'", "'or2'", "'xor'", "'xor2'", "'.'", "'->'", "'?.'", "'?->'", "'Map'", "'Tuple'", "'Boolean'", "'Integer'", "'Real'", "'String'", "'UnlimitedNatural'", "'OclAny'", "'OclInvalid'", "'OclVoid'", "'Set'", "'Bag'", "'Sequence'", "'Collection'", "'OrderedSet'", "'('", "')'", "','", "':'", "'{'", "'}'", "'..'", "'++'", "'Lambda'", "'<-'", "'true'", "'false'", "'invalid'", "'null'", "'@'", "'pre'", "'['", "']'", "'in'", "'|'", "';'", "'if'", "'then'", "'else'", "'endif'", "'elseif'", "'let'", "'self'", "'|?'", "'|1'", "'?'", "'::'", "'extends'", "'&&'"
     };
     public static final int T__50=50;
+    public static final int RULE_ML_DOCUMENTATION=13;
     public static final int RULE_LETTER_CHARACTER=9;
     public static final int T__19=19;
     public static final int T__59=59;
-    public static final int T__16=16;
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int T__55=55;
@@ -76,7 +76,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     public static final int T__70=70;
     public static final int T__71=71;
     public static final int T__72=72;
-    public static final int RULE_SL_COMMENT=13;
+    public static final int RULE_SL_COMMENT=14;
     public static final int T__37=37;
     public static final int T__38=38;
     public static final int T__39=39;
@@ -100,8 +100,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     public static final int T__82=82;
     public static final int RULE_SIMPLE_ID=4;
     public static final int T__83=83;
-    public static final int RULE_WS=14;
-    public static final int RULE_ANY_OTHER=15;
+    public static final int RULE_WS=15;
+    public static final int RULE_ANY_OTHER=16;
     public static final int RULE_SINGLE_QUOTED_STRING=7;
     public static final int T__48=48;
     public static final int T__49=49;
@@ -109,6 +109,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     public static final int T__44=44;
     public static final int T__88=88;
     public static final int T__45=45;
+    public static final int T__89=89;
     public static final int T__46=46;
     public static final int T__47=47;
     public static final int RULE_ESCAPED_ID=5;
@@ -328,17 +329,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:134:1: (kw= '-' | kw= 'not' | kw= 'not2' )
             int alt1=3;
             switch ( input.LA(1) ) {
-            case 16:
+            case 17:
                 {
                 alt1=1;
                 }
                 break;
-            case 17:
+            case 18:
                 {
                 alt1=2;
                 }
                 break;
-            case 18:
+            case 19:
                 {
                 alt1=3;
                 }
@@ -355,7 +356,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 1 :
                     // InternalEssentialOCL.g:135:2: kw= '-'
                     {
-                    kw=(Token)match(input,16,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -368,7 +369,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 2 :
                     // InternalEssentialOCL.g:142:2: kw= 'not'
                     {
-                    kw=(Token)match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -381,7 +382,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 3 :
                     // InternalEssentialOCL.g:149:2: kw= 'not2'
                     {
-                    kw=(Token)match(input,18,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -469,92 +470,92 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:175:1: (kw= '*' | kw= '/' | kw= '+' | kw= '-' | kw= '>' | kw= '<' | kw= '>=' | kw= '<=' | kw= '=' | kw= '<>' | kw= 'and' | kw= 'and2' | kw= 'implies' | kw= 'implies2' | kw= 'or' | kw= 'or2' | kw= 'xor' | kw= 'xor2' )
             int alt2=18;
             switch ( input.LA(1) ) {
-            case 19:
+            case 20:
                 {
                 alt2=1;
                 }
                 break;
-            case 20:
+            case 21:
                 {
                 alt2=2;
                 }
                 break;
-            case 21:
+            case 22:
                 {
                 alt2=3;
                 }
                 break;
-            case 16:
+            case 17:
                 {
                 alt2=4;
                 }
                 break;
-            case 22:
+            case 23:
                 {
                 alt2=5;
                 }
                 break;
-            case 23:
+            case 24:
                 {
                 alt2=6;
                 }
                 break;
-            case 24:
+            case 25:
                 {
                 alt2=7;
                 }
                 break;
-            case 25:
+            case 26:
                 {
                 alt2=8;
                 }
                 break;
-            case 26:
+            case 27:
                 {
                 alt2=9;
                 }
                 break;
-            case 27:
+            case 28:
                 {
                 alt2=10;
                 }
                 break;
-            case 28:
+            case 29:
                 {
                 alt2=11;
                 }
                 break;
-            case 29:
+            case 30:
                 {
                 alt2=12;
                 }
                 break;
-            case 30:
+            case 31:
                 {
                 alt2=13;
                 }
                 break;
-            case 31:
+            case 32:
                 {
                 alt2=14;
                 }
                 break;
-            case 32:
+            case 33:
                 {
                 alt2=15;
                 }
                 break;
-            case 33:
+            case 34:
                 {
                 alt2=16;
                 }
                 break;
-            case 34:
+            case 35:
                 {
                 alt2=17;
                 }
                 break;
-            case 35:
+            case 36:
                 {
                 alt2=18;
                 }
@@ -571,7 +572,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 1 :
                     // InternalEssentialOCL.g:176:2: kw= '*'
                     {
-                    kw=(Token)match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -584,7 +585,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 2 :
                     // InternalEssentialOCL.g:183:2: kw= '/'
                     {
-                    kw=(Token)match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -597,7 +598,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 3 :
                     // InternalEssentialOCL.g:190:2: kw= '+'
                     {
-                    kw=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -610,7 +611,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 4 :
                     // InternalEssentialOCL.g:197:2: kw= '-'
                     {
-                    kw=(Token)match(input,16,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,17,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -623,7 +624,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 5 :
                     // InternalEssentialOCL.g:204:2: kw= '>'
                     {
-                    kw=(Token)match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,23,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -636,7 +637,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 6 :
                     // InternalEssentialOCL.g:211:2: kw= '<'
                     {
-                    kw=(Token)match(input,23,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -649,7 +650,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 7 :
                     // InternalEssentialOCL.g:218:2: kw= '>='
                     {
-                    kw=(Token)match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -662,7 +663,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 8 :
                     // InternalEssentialOCL.g:225:2: kw= '<='
                     {
-                    kw=(Token)match(input,25,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -675,7 +676,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 9 :
                     // InternalEssentialOCL.g:232:2: kw= '='
                     {
-                    kw=(Token)match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -688,7 +689,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 10 :
                     // InternalEssentialOCL.g:239:2: kw= '<>'
                     {
-                    kw=(Token)match(input,27,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -701,7 +702,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 11 :
                     // InternalEssentialOCL.g:246:2: kw= 'and'
                     {
-                    kw=(Token)match(input,28,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -714,7 +715,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 12 :
                     // InternalEssentialOCL.g:253:2: kw= 'and2'
                     {
-                    kw=(Token)match(input,29,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -727,7 +728,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 13 :
                     // InternalEssentialOCL.g:260:2: kw= 'implies'
                     {
-                    kw=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -740,7 +741,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 14 :
                     // InternalEssentialOCL.g:267:2: kw= 'implies2'
                     {
-                    kw=(Token)match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -753,7 +754,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 15 :
                     // InternalEssentialOCL.g:274:2: kw= 'or'
                     {
-                    kw=(Token)match(input,32,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -766,7 +767,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 16 :
                     // InternalEssentialOCL.g:281:2: kw= 'or2'
                     {
-                    kw=(Token)match(input,33,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -779,7 +780,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 17 :
                     // InternalEssentialOCL.g:288:2: kw= 'xor'
                     {
-                    kw=(Token)match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -792,7 +793,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 18 :
                     // InternalEssentialOCL.g:295:2: kw= 'xor2'
                     {
-                    kw=(Token)match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -880,22 +881,22 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:321:1: (kw= '.' | kw= '->' | kw= '?.' | kw= '?->' )
             int alt3=4;
             switch ( input.LA(1) ) {
-            case 36:
+            case 37:
                 {
                 alt3=1;
                 }
                 break;
-            case 37:
+            case 38:
                 {
                 alt3=2;
                 }
                 break;
-            case 38:
+            case 39:
                 {
                 alt3=3;
                 }
                 break;
-            case 39:
+            case 40:
                 {
                 alt3=4;
                 }
@@ -912,7 +913,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 1 :
                     // InternalEssentialOCL.g:322:2: kw= '.'
                     {
-                    kw=(Token)match(input,36,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,37,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -925,7 +926,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 2 :
                     // InternalEssentialOCL.g:329:2: kw= '->'
                     {
-                    kw=(Token)match(input,37,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -938,7 +939,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 3 :
                     // InternalEssentialOCL.g:336:2: kw= '?.'
                     {
-                    kw=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -951,7 +952,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 4 :
                     // InternalEssentialOCL.g:343:2: kw= '?->'
                     {
-                    kw=(Token)match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -1043,10 +1044,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt4=2;
             int LA4_0 = input.LA(1);
 
-            if ( (LA4_0==16||(LA4_0>=19 && LA4_0<=35)) ) {
+            if ( (LA4_0==17||(LA4_0>=20 && LA4_0<=36)) ) {
                 alt4=1;
             }
-            else if ( ((LA4_0>=36 && LA4_0<=39)) ) {
+            else if ( ((LA4_0>=37 && LA4_0<=40)) ) {
                 alt4=2;
             }
             else {
@@ -1664,16 +1665,15 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 alt5=1;
                 }
                 break;
-            case 50:
             case 51:
             case 52:
             case 53:
             case 54:
+            case 55:
                 {
                 alt5=2;
                 }
                 break;
-            case 42:
             case 43:
             case 44:
             case 45:
@@ -1681,16 +1681,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             case 47:
             case 48:
             case 49:
+            case 50:
                 {
                 alt5=3;
                 }
                 break;
-            case 40:
+            case 41:
                 {
                 alt5=4;
                 }
                 break;
-            case 41:
+            case 42:
                 {
                 alt5=5;
                 }
@@ -1785,7 +1786,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 4 :
                     // InternalEssentialOCL.g:610:2: kw= 'Map'
                     {
-                    kw=(Token)match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -1798,7 +1799,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 5 :
                     // InternalEssentialOCL.g:617:2: kw= 'Tuple'
                     {
-                    kw=(Token)match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2184,42 +2185,42 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:746:1: (kw= 'Boolean' | kw= 'Integer' | kw= 'Real' | kw= 'String' | kw= 'UnlimitedNatural' | kw= 'OclAny' | kw= 'OclInvalid' | kw= 'OclVoid' )
             int alt7=8;
             switch ( input.LA(1) ) {
-            case 42:
+            case 43:
                 {
                 alt7=1;
                 }
                 break;
-            case 43:
+            case 44:
                 {
                 alt7=2;
                 }
                 break;
-            case 44:
+            case 45:
                 {
                 alt7=3;
                 }
                 break;
-            case 45:
+            case 46:
                 {
                 alt7=4;
                 }
                 break;
-            case 46:
+            case 47:
                 {
                 alt7=5;
                 }
                 break;
-            case 47:
+            case 48:
                 {
                 alt7=6;
                 }
                 break;
-            case 48:
+            case 49:
                 {
                 alt7=7;
                 }
                 break;
-            case 49:
+            case 50:
                 {
                 alt7=8;
                 }
@@ -2236,7 +2237,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 1 :
                     // InternalEssentialOCL.g:747:2: kw= 'Boolean'
                     {
-                    kw=(Token)match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2249,7 +2250,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 2 :
                     // InternalEssentialOCL.g:754:2: kw= 'Integer'
                     {
-                    kw=(Token)match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2262,7 +2263,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 3 :
                     // InternalEssentialOCL.g:761:2: kw= 'Real'
                     {
-                    kw=(Token)match(input,44,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2275,7 +2276,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 4 :
                     // InternalEssentialOCL.g:768:2: kw= 'String'
                     {
-                    kw=(Token)match(input,45,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2288,7 +2289,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 5 :
                     // InternalEssentialOCL.g:775:2: kw= 'UnlimitedNatural'
                     {
-                    kw=(Token)match(input,46,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2301,7 +2302,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 6 :
                     // InternalEssentialOCL.g:782:2: kw= 'OclAny'
                     {
-                    kw=(Token)match(input,47,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2314,7 +2315,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 7 :
                     // InternalEssentialOCL.g:789:2: kw= 'OclInvalid'
                     {
-                    kw=(Token)match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,49,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2327,7 +2328,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 8 :
                     // InternalEssentialOCL.g:796:2: kw= 'OclVoid'
                     {
-                    kw=(Token)match(input,49,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2523,27 +2524,27 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:861:1: (kw= 'Set' | kw= 'Bag' | kw= 'Sequence' | kw= 'Collection' | kw= 'OrderedSet' )
             int alt8=5;
             switch ( input.LA(1) ) {
-            case 50:
+            case 51:
                 {
                 alt8=1;
                 }
                 break;
-            case 51:
+            case 52:
                 {
                 alt8=2;
                 }
                 break;
-            case 52:
+            case 53:
                 {
                 alt8=3;
                 }
                 break;
-            case 53:
+            case 54:
                 {
                 alt8=4;
                 }
                 break;
-            case 54:
+            case 55:
                 {
                 alt8=5;
                 }
@@ -2560,7 +2561,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 1 :
                     // InternalEssentialOCL.g:862:2: kw= 'Set'
                     {
-                    kw=(Token)match(input,50,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2573,7 +2574,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 2 :
                     // InternalEssentialOCL.g:869:2: kw= 'Bag'
                     {
-                    kw=(Token)match(input,51,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2586,7 +2587,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 3 :
                     // InternalEssentialOCL.g:876:2: kw= 'Sequence'
                     {
-                    kw=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2599,7 +2600,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 4 :
                     // InternalEssentialOCL.g:883:2: kw= 'Collection'
                     {
-                    kw=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2612,7 +2613,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 case 5 :
                     // InternalEssentialOCL.g:890:2: kw= 'OrderedSet'
                     {
-                    kw=(Token)match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,55,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -2746,14 +2747,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( (LA10_0==55) ) {
+            if ( (LA10_0==56) ) {
                 alt10=1;
             }
             switch (alt10) {
                 case 1 :
                     // InternalEssentialOCL.g:934:4: otherlv_1= '(' ( (lv_ownedType_2_0= ruleTypeExpWithoutMultiplicityCS ) ) ( (lv_ownedCollectionMultiplicity_3_0= ruleMultiplicityCS ) )? otherlv_4= ')'
                     {
-                    otherlv_1=(Token)match(input,55,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,56,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getCollectionTypeCSAccess().getLeftParenthesisKeyword_1_0());
@@ -2798,7 +2799,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
-                    if ( (LA9_0==71) ) {
+                    if ( (LA9_0==72) ) {
                         alt9=1;
                     }
                     switch (alt9) {
@@ -2840,7 +2841,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_4=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getCollectionTypeCSAccess().getRightParenthesisKeyword_1_3());
@@ -2943,7 +2944,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:1000:1: (lv_name_0_0= 'Map' )
             // InternalEssentialOCL.g:1001:3: lv_name_0_0= 'Map'
             {
-            lv_name_0_0=(Token)match(input,40,FollowSets000.FOLLOW_3); if (state.failed) return current;
+            lv_name_0_0=(Token)match(input,41,FollowSets000.FOLLOW_3); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       newLeafNode(lv_name_0_0, grammarAccess.getMapTypeCSAccess().getNameMapKeyword_0_0());
@@ -2967,14 +2968,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( (LA11_0==55) ) {
+            if ( (LA11_0==56) ) {
                 alt11=1;
             }
             switch (alt11) {
                 case 1 :
                     // InternalEssentialOCL.g:1014:4: otherlv_1= '(' ( (lv_ownedKeyType_2_0= ruleTypeExpCS ) ) otherlv_3= ',' ( (lv_ownedValueType_4_0= ruleTypeExpCS ) ) otherlv_5= ')'
                     {
-                    otherlv_1=(Token)match(input,55,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,56,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getMapTypeCSAccess().getLeftParenthesisKeyword_1_0());
@@ -3015,7 +3016,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getMapTypeCSAccess().getCommaKeyword_1_2());
@@ -3056,7 +3057,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_5=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getMapTypeCSAccess().getRightParenthesisKeyword_1_4());
@@ -3159,7 +3160,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:1084:1: (lv_name_0_0= 'Tuple' )
             // InternalEssentialOCL.g:1085:3: lv_name_0_0= 'Tuple'
             {
-            lv_name_0_0=(Token)match(input,41,FollowSets000.FOLLOW_3); if (state.failed) return current;
+            lv_name_0_0=(Token)match(input,42,FollowSets000.FOLLOW_3); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       newLeafNode(lv_name_0_0, grammarAccess.getTupleTypeCSAccess().getNameTupleKeyword_0_0());
@@ -3183,14 +3184,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt14=2;
             int LA14_0 = input.LA(1);
 
-            if ( (LA14_0==55) ) {
+            if ( (LA14_0==56) ) {
                 alt14=1;
             }
             switch (alt14) {
                 case 1 :
                     // InternalEssentialOCL.g:1098:4: otherlv_1= '(' ( ( (lv_ownedParts_2_0= ruleTuplePartCS ) ) (otherlv_3= ',' ( (lv_ownedParts_4_0= ruleTuplePartCS ) ) )* )? otherlv_5= ')'
                     {
-                    otherlv_1=(Token)match(input,55,FollowSets000.FOLLOW_8); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,56,FollowSets000.FOLLOW_8); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getTupleTypeCSAccess().getLeftParenthesisKeyword_1_0());
@@ -3248,7 +3249,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                                 int alt12=2;
                                 int LA12_0 = input.LA(1);
 
-                                if ( (LA12_0==57) ) {
+                                if ( (LA12_0==58) ) {
                                     alt12=1;
                                 }
 
@@ -3257,7 +3258,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             	case 1 :
                             	    // InternalEssentialOCL.g:1120:4: otherlv_3= ',' ( (lv_ownedParts_4_0= ruleTuplePartCS ) )
                             	    {
-                            	    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                            	    otherlv_3=(Token)match(input,58,FollowSets000.FOLLOW_10); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	          	newLeafNode(otherlv_3, grammarAccess.getTupleTypeCSAccess().getCommaKeyword_1_1_1_0());
@@ -3313,7 +3314,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_5=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getTupleTypeCSAccess().getRightParenthesisKeyword_1_2());
@@ -3442,7 +3443,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getTuplePartCSAccess().getColonKeyword_1());
@@ -3604,7 +3605,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_13); if (state.failed) return current;
+            otherlv_1=(Token)match(input,60,FollowSets000.FOLLOW_13); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getCollectionLiteralExpCSAccess().getLeftCurlyBracketKeyword_1());
@@ -3614,7 +3615,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( ((LA16_0>=RULE_SIMPLE_ID && LA16_0<=RULE_SINGLE_QUOTED_STRING)||(LA16_0>=16 && LA16_0<=19)||(LA16_0>=40 && LA16_0<=55)||LA16_0==58||LA16_0==63||(LA16_0>=65 && LA16_0<=68)||LA16_0==76||(LA16_0>=81 && LA16_0<=82)) ) {
+            if ( ((LA16_0>=RULE_SIMPLE_ID && LA16_0<=RULE_SINGLE_QUOTED_STRING)||(LA16_0>=17 && LA16_0<=20)||(LA16_0>=41 && LA16_0<=56)||LA16_0==59||LA16_0==64||(LA16_0>=66 && LA16_0<=69)||LA16_0==77||(LA16_0>=82 && LA16_0<=83)) ) {
                 alt16=1;
             }
             switch (alt16) {
@@ -3662,7 +3663,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         int alt15=2;
                         int LA15_0 = input.LA(1);
 
-                        if ( (LA15_0==57) ) {
+                        if ( (LA15_0==58) ) {
                             alt15=1;
                         }
 
@@ -3671,7 +3672,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     	case 1 :
                     	    // InternalEssentialOCL.g:1268:4: otherlv_3= ',' ( (lv_ownedParts_4_0= ruleCollectionLiteralPartCS ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_15); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,58,FollowSets000.FOLLOW_15); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	          	newLeafNode(otherlv_3, grammarAccess.getCollectionLiteralExpCSAccess().getCommaKeyword_2_1_0());
@@ -3727,7 +3728,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_5=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_5=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getCollectionLiteralExpCSAccess().getRightCurlyBracketKeyword_3());
@@ -3819,11 +3820,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             switch ( input.LA(1) ) {
             case RULE_INT:
             case RULE_SINGLE_QUOTED_STRING:
-            case 16:
             case 17:
             case 18:
             case 19:
-            case 40:
+            case 20:
             case 41:
             case 42:
             case 43:
@@ -3839,14 +3839,15 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             case 53:
             case 54:
             case 55:
-            case 63:
-            case 65:
+            case 56:
+            case 64:
             case 66:
             case 67:
             case 68:
-            case 76:
-            case 81:
+            case 69:
+            case 77:
             case 82:
+            case 83:
                 {
                 alt18=1;
                 }
@@ -3855,10 +3856,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 {
                 int LA18_2 = input.LA(2);
 
-                if ( (LA18_2==EOF||LA18_2==16||(LA18_2>=19 && LA18_2<=39)||LA18_2==55||LA18_2==57||(LA18_2>=59 && LA18_2<=61)||LA18_2==69||LA18_2==71||LA18_2==86) ) {
+                if ( (LA18_2==EOF||LA18_2==17||(LA18_2>=20 && LA18_2<=40)||LA18_2==56||LA18_2==58||(LA18_2>=60 && LA18_2<=62)||LA18_2==70||LA18_2==72||LA18_2==87) ) {
                     alt18=1;
                 }
-                else if ( (LA18_2==58) ) {
+                else if ( (LA18_2==59) ) {
                     alt18=2;
                 }
                 else {
@@ -3874,10 +3875,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 {
                 int LA18_3 = input.LA(2);
 
-                if ( (LA18_3==EOF||LA18_3==16||(LA18_3>=19 && LA18_3<=39)||LA18_3==55||LA18_3==57||(LA18_3>=59 && LA18_3<=61)||LA18_3==69||LA18_3==71||LA18_3==86) ) {
+                if ( (LA18_3==EOF||LA18_3==17||(LA18_3>=20 && LA18_3<=40)||LA18_3==56||LA18_3==58||(LA18_3>=60 && LA18_3<=62)||LA18_3==70||LA18_3==72||LA18_3==87) ) {
                     alt18=1;
                 }
-                else if ( (LA18_3==58) ) {
+                else if ( (LA18_3==59) ) {
                     alt18=2;
                 }
                 else {
@@ -3889,7 +3890,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 }
                 }
                 break;
-            case 58:
+            case 59:
                 {
                 alt18=2;
                 }
@@ -3948,14 +3949,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt17=2;
                     int LA17_0 = input.LA(1);
 
-                    if ( (LA17_0==61) ) {
+                    if ( (LA17_0==62) ) {
                         alt17=1;
                     }
                     switch (alt17) {
                         case 1 :
                             // InternalEssentialOCL.g:1333:4: otherlv_1= '..' ( (lv_ownedLastExpression_2_0= ruleExpCS ) )
                             {
-                            otherlv_1=(Token)match(input,61,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                            otherlv_1=(Token)match(input,62,FollowSets000.FOLLOW_17); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_1, grammarAccess.getCollectionLiteralPartCSAccess().getFullStopFullStopKeyword_0_1_0());
@@ -4173,7 +4174,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_13); if (state.failed) return current;
+            otherlv_1=(Token)match(input,60,FollowSets000.FOLLOW_13); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getCollectionPatternCSAccess().getLeftCurlyBracketKeyword_1());
@@ -4183,7 +4184,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt20=2;
             int LA20_0 = input.LA(1);
 
-            if ( ((LA20_0>=RULE_SIMPLE_ID && LA20_0<=RULE_ESCAPED_ID)||LA20_0==58) ) {
+            if ( ((LA20_0>=RULE_SIMPLE_ID && LA20_0<=RULE_ESCAPED_ID)||LA20_0==59) ) {
                 alt20=1;
             }
             switch (alt20) {
@@ -4231,7 +4232,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         int alt19=2;
                         int LA19_0 = input.LA(1);
 
-                        if ( (LA19_0==57) ) {
+                        if ( (LA19_0==58) ) {
                             alt19=1;
                         }
 
@@ -4240,7 +4241,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     	case 1 :
                     	    // InternalEssentialOCL.g:1435:4: otherlv_3= ',' ( (lv_ownedParts_4_0= rulePatternExpCS ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_15); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,58,FollowSets000.FOLLOW_15); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	          	newLeafNode(otherlv_3, grammarAccess.getCollectionPatternCSAccess().getCommaKeyword_2_1_0());
@@ -4293,7 +4294,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     // InternalEssentialOCL.g:1457:4: (otherlv_5= '++' ( (lv_restVariableName_6_0= ruleIdentifier ) ) )
                     // InternalEssentialOCL.g:1457:6: otherlv_5= '++' ( (lv_restVariableName_6_0= ruleIdentifier ) )
                     {
-                    otherlv_5=(Token)match(input,62,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,63,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getCollectionPatternCSAccess().getPlusSignPlusSignKeyword_2_2_0());
@@ -4343,7 +4344,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_7=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_7=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_7, grammarAccess.getCollectionPatternCSAccess().getRightCurlyBracketKeyword_3());
@@ -4493,7 +4494,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_1=(Token)match(input,26,FollowSets000.FOLLOW_15); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,27,FollowSets000.FOLLOW_15); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getShadowPartCSAccess().getEqualsSignKeyword_0_1());
@@ -4510,11 +4511,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     switch ( input.LA(1) ) {
                     case RULE_INT:
                     case RULE_SINGLE_QUOTED_STRING:
-                    case 16:
                     case 17:
                     case 18:
                     case 19:
-                    case 40:
+                    case 20:
                     case 41:
                     case 42:
                     case 43:
@@ -4530,14 +4530,15 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     case 53:
                     case 54:
                     case 55:
-                    case 63:
-                    case 65:
+                    case 56:
+                    case 64:
                     case 66:
                     case 67:
                     case 68:
-                    case 76:
-                    case 81:
+                    case 69:
+                    case 77:
                     case 82:
+                    case 83:
                         {
                         alt21=1;
                         }
@@ -4546,10 +4547,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         {
                         int LA21_2 = input.LA(2);
 
-                        if ( (LA21_2==58) ) {
+                        if ( (LA21_2==59) ) {
                             alt21=2;
                         }
-                        else if ( (LA21_2==EOF||LA21_2==16||(LA21_2>=19 && LA21_2<=39)||LA21_2==55||LA21_2==57||(LA21_2>=59 && LA21_2<=60)||LA21_2==69||LA21_2==71||LA21_2==86) ) {
+                        else if ( (LA21_2==EOF||LA21_2==17||(LA21_2>=20 && LA21_2<=40)||LA21_2==56||LA21_2==58||(LA21_2>=60 && LA21_2<=61)||LA21_2==70||LA21_2==72||LA21_2==87) ) {
                             alt21=1;
                         }
                         else {
@@ -4565,10 +4566,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         {
                         int LA21_3 = input.LA(2);
 
-                        if ( (LA21_3==EOF||LA21_3==16||(LA21_3>=19 && LA21_3<=39)||LA21_3==55||LA21_3==57||(LA21_3>=59 && LA21_3<=60)||LA21_3==69||LA21_3==71||LA21_3==86) ) {
+                        if ( (LA21_3==EOF||LA21_3==17||(LA21_3>=20 && LA21_3<=40)||LA21_3==56||LA21_3==58||(LA21_3>=60 && LA21_3<=61)||LA21_3==70||LA21_3==72||LA21_3==87) ) {
                             alt21=1;
                         }
-                        else if ( (LA21_3==58) ) {
+                        else if ( (LA21_3==59) ) {
                             alt21=2;
                         }
                         else {
@@ -4580,7 +4581,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         }
                         }
                         break;
-                    case 58:
+                    case 59:
                         {
                         alt21=2;
                         }
@@ -4836,7 +4837,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getPatternExpCSAccess().getColonKeyword_1());
@@ -4959,13 +4960,13 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:1663:1: (otherlv_0= 'Lambda' otherlv_1= '{' ( (lv_ownedExpressionCS_2_0= ruleExpCS ) ) otherlv_3= '}' )
             // InternalEssentialOCL.g:1663:3: otherlv_0= 'Lambda' otherlv_1= '{' ( (lv_ownedExpressionCS_2_0= ruleExpCS ) ) otherlv_3= '}'
             {
-            otherlv_0=(Token)match(input,63,FollowSets000.FOLLOW_12); if (state.failed) return current;
+            otherlv_0=(Token)match(input,64,FollowSets000.FOLLOW_12); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getLambdaLiteralExpCSAccess().getLambdaKeyword_0());
 
             }
-            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_1=(Token)match(input,60,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getLambdaLiteralExpCSAccess().getLeftCurlyBracketKeyword_1());
@@ -5006,7 +5007,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_3=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_3=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getLambdaLiteralExpCSAccess().getRightCurlyBracketKeyword_3());
@@ -5133,7 +5134,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_21); if (state.failed) return current;
+            otherlv_1=(Token)match(input,60,FollowSets000.FOLLOW_21); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getMapLiteralExpCSAccess().getLeftCurlyBracketKeyword_1());
@@ -5143,7 +5144,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt25=2;
             int LA25_0 = input.LA(1);
 
-            if ( ((LA25_0>=RULE_SIMPLE_ID && LA25_0<=RULE_SINGLE_QUOTED_STRING)||(LA25_0>=16 && LA25_0<=19)||(LA25_0>=40 && LA25_0<=55)||LA25_0==63||(LA25_0>=65 && LA25_0<=68)||LA25_0==76||(LA25_0>=81 && LA25_0<=82)) ) {
+            if ( ((LA25_0>=RULE_SIMPLE_ID && LA25_0<=RULE_SINGLE_QUOTED_STRING)||(LA25_0>=17 && LA25_0<=20)||(LA25_0>=41 && LA25_0<=56)||LA25_0==64||(LA25_0>=66 && LA25_0<=69)||LA25_0==77||(LA25_0>=82 && LA25_0<=83)) ) {
                 alt25=1;
             }
             switch (alt25) {
@@ -5191,7 +5192,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         int alt24=2;
                         int LA24_0 = input.LA(1);
 
-                        if ( (LA24_0==57) ) {
+                        if ( (LA24_0==58) ) {
                             alt24=1;
                         }
 
@@ -5200,7 +5201,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     	case 1 :
                     	    // InternalEssentialOCL.g:1754:4: otherlv_3= ',' ( (lv_ownedParts_4_0= ruleMapLiteralPartCS ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,58,FollowSets000.FOLLOW_17); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	          	newLeafNode(otherlv_3, grammarAccess.getMapLiteralExpCSAccess().getCommaKeyword_2_1_0());
@@ -5256,7 +5257,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_5=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_5=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getMapLiteralExpCSAccess().getRightCurlyBracketKeyword_3());
@@ -5379,7 +5380,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,64,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_1=(Token)match(input,65,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getMapLiteralPartCSAccess().getLessThanSignHyphenMinusKeyword_1());
@@ -5519,23 +5520,23 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 alt26=2;
                 }
                 break;
-            case 65:
             case 66:
+            case 67:
                 {
                 alt26=3;
                 }
                 break;
-            case 19:
+            case 20:
                 {
                 alt26=4;
                 }
                 break;
-            case 67:
+            case 68:
                 {
                 alt26=5;
                 }
                 break;
-            case 68:
+            case 69:
                 {
                 alt26=6;
                 }
@@ -5796,13 +5797,13 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:1960:1: (otherlv_0= 'Tuple' otherlv_1= '{' ( (lv_ownedParts_2_0= ruleTupleLiteralPartCS ) ) (otherlv_3= ',' ( (lv_ownedParts_4_0= ruleTupleLiteralPartCS ) ) )* otherlv_5= '}' )
             // InternalEssentialOCL.g:1960:3: otherlv_0= 'Tuple' otherlv_1= '{' ( (lv_ownedParts_2_0= ruleTupleLiteralPartCS ) ) (otherlv_3= ',' ( (lv_ownedParts_4_0= ruleTupleLiteralPartCS ) ) )* otherlv_5= '}'
             {
-            otherlv_0=(Token)match(input,41,FollowSets000.FOLLOW_12); if (state.failed) return current;
+            otherlv_0=(Token)match(input,42,FollowSets000.FOLLOW_12); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getTupleLiteralExpCSAccess().getTupleKeyword_0());
 
             }
-            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_10); if (state.failed) return current;
+            otherlv_1=(Token)match(input,60,FollowSets000.FOLLOW_10); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getTupleLiteralExpCSAccess().getLeftCurlyBracketKeyword_1());
@@ -5849,7 +5850,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 int alt27=2;
                 int LA27_0 = input.LA(1);
 
-                if ( (LA27_0==57) ) {
+                if ( (LA27_0==58) ) {
                     alt27=1;
                 }
 
@@ -5858,7 +5859,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             	case 1 :
             	    // InternalEssentialOCL.g:1986:4: otherlv_3= ',' ( (lv_ownedParts_4_0= ruleTupleLiteralPartCS ) )
             	    {
-            	    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_10); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,58,FollowSets000.FOLLOW_10); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_3, grammarAccess.getTupleLiteralExpCSAccess().getCommaKeyword_3_0());
@@ -5908,7 +5909,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 }
             } while (true);
 
-            otherlv_5=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_5=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getTupleLiteralExpCSAccess().getRightCurlyBracketKeyword_4());
@@ -6038,14 +6039,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt28=2;
             int LA28_0 = input.LA(1);
 
-            if ( (LA28_0==58) ) {
+            if ( (LA28_0==59) ) {
                 alt28=1;
             }
             switch (alt28) {
                 case 1 :
                     // InternalEssentialOCL.g:2051:4: otherlv_1= ':' ( (lv_ownedType_2_0= ruleTypeExpCS ) )
                     {
-                    otherlv_1=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getTupleLiteralPartCSAccess().getColonKeyword_1_0());
@@ -6092,7 +6093,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_3=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getTupleLiteralPartCSAccess().getEqualsSignKeyword_2());
@@ -6453,10 +6454,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt30=2;
             int LA30_0 = input.LA(1);
 
-            if ( (LA30_0==65) ) {
+            if ( (LA30_0==66) ) {
                 alt30=1;
             }
-            else if ( (LA30_0==66) ) {
+            else if ( (LA30_0==67) ) {
                 alt30=2;
             }
             else {
@@ -6476,7 +6477,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     // InternalEssentialOCL.g:2195:1: (lv_symbol_0_0= 'true' )
                     // InternalEssentialOCL.g:2196:3: lv_symbol_0_0= 'true'
                     {
-                    lv_symbol_0_0=(Token)match(input,65,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    lv_symbol_0_0=(Token)match(input,66,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_symbol_0_0, grammarAccess.getBooleanLiteralExpCSAccess().getSymbolTrueKeyword_0_0());
@@ -6508,7 +6509,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     // InternalEssentialOCL.g:2211:1: (lv_symbol_1_0= 'false' )
                     // InternalEssentialOCL.g:2212:3: lv_symbol_1_0= 'false'
                     {
-                    lv_symbol_1_0=(Token)match(input,66,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    lv_symbol_1_0=(Token)match(input,67,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_symbol_1_0, grammarAccess.getBooleanLiteralExpCSAccess().getSymbolFalseKeyword_1_0());
@@ -6627,7 +6628,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getUnlimitedNaturalLiteralExpCSAccess().getAsteriskKeyword_1());
@@ -6729,7 +6730,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,67,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,68,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getInvalidLiteralExpCSAccess().getInvalidKeyword_1());
@@ -6831,7 +6832,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,68,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,69,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getNullLiteralExpCSAccess().getNullKeyword_1());
@@ -6922,7 +6923,6 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:2348:1: (this_PrimitiveTypeCS_0= rulePrimitiveTypeCS | this_CollectionTypeCS_1= ruleCollectionTypeCS | this_MapTypeCS_2= ruleMapTypeCS | this_TupleTypeCS_3= ruleTupleTypeCS )
             int alt31=4;
             switch ( input.LA(1) ) {
-            case 42:
             case 43:
             case 44:
             case 45:
@@ -6930,25 +6930,26 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             case 47:
             case 48:
             case 49:
+            case 50:
                 {
                 alt31=1;
                 }
                 break;
-            case 50:
             case 51:
             case 52:
             case 53:
             case 54:
+            case 55:
                 {
                 alt31=2;
                 }
                 break;
-            case 40:
+            case 41:
                 {
                 alt31=3;
                 }
                 break;
-            case 41:
+            case 42:
                 {
                 alt31=4;
                 }
@@ -7176,7 +7177,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt32=2;
             int LA32_0 = input.LA(1);
 
-            if ( (LA32_0==71) ) {
+            if ( (LA32_0==72) ) {
                 alt32=1;
             }
             switch (alt32) {
@@ -7450,7 +7451,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt34=2;
             int LA34_0 = input.LA(1);
 
-            if ( (LA34_0==59) ) {
+            if ( (LA34_0==60) ) {
                 alt34=1;
             }
             switch (alt34) {
@@ -7496,14 +7497,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt33=2;
                     int LA33_0 = input.LA(1);
 
-                    if ( (LA33_0==59) ) {
+                    if ( (LA33_0==60) ) {
                         alt33=1;
                     }
                     switch (alt33) {
                         case 1 :
                             // InternalEssentialOCL.g:2546:4: otherlv_2= '{' ( (lv_ownedPatternGuard_3_0= ruleExpCS ) ) otherlv_4= '}'
                             {
-                            otherlv_2=(Token)match(input,59,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                            otherlv_2=(Token)match(input,60,FollowSets000.FOLLOW_17); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_2, grammarAccess.getTypeNameExpCSAccess().getLeftCurlyBracketKeyword_1_1_0());
@@ -7544,7 +7545,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                             }
 
-                            otherlv_4=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_4, grammarAccess.getTypeNameExpCSAccess().getRightCurlyBracketKeyword_1_1_2());
@@ -7833,7 +7834,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt36=2;
             int LA36_0 = input.LA(1);
 
-            if ( (LA36_0==71) ) {
+            if ( (LA36_0==72) ) {
                 alt36=1;
             }
             switch (alt36) {
@@ -7992,7 +7993,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt37=2;
                     int LA37_0 = input.LA(1);
 
-                    if ( (LA37_0==16||(LA37_0>=19 && LA37_0<=39)) ) {
+                    if ( (LA37_0==17||(LA37_0>=20 && LA37_0<=40)) ) {
                         alt37=1;
                     }
                     switch (alt37) {
@@ -8210,10 +8211,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt39=2;
             int LA39_0 = input.LA(1);
 
-            if ( ((LA39_0>=16 && LA39_0<=18)) ) {
+            if ( ((LA39_0>=17 && LA39_0<=19)) ) {
                 alt39=1;
             }
-            else if ( (LA39_0==81) ) {
+            else if ( (LA39_0==82) ) {
                 alt39=2;
             }
             else {
@@ -8435,10 +8436,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt40=2;
             int LA40_0 = input.LA(1);
 
-            if ( ((LA40_0>=16 && LA40_0<=18)) ) {
+            if ( ((LA40_0>=17 && LA40_0<=19)) ) {
                 alt40=1;
             }
-            else if ( ((LA40_0>=RULE_SIMPLE_ID && LA40_0<=RULE_SINGLE_QUOTED_STRING)||LA40_0==19||(LA40_0>=40 && LA40_0<=55)||LA40_0==63||(LA40_0>=65 && LA40_0<=68)||LA40_0==76||LA40_0==82) ) {
+            else if ( ((LA40_0>=RULE_SIMPLE_ID && LA40_0<=RULE_SINGLE_QUOTED_STRING)||LA40_0==20||(LA40_0>=41 && LA40_0<=56)||LA40_0==64||(LA40_0>=66 && LA40_0<=69)||LA40_0==77||LA40_0==83) ) {
                 alt40=2;
             }
             else {
@@ -9072,7 +9073,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 int alt42=2;
                 int LA42_0 = input.LA(1);
 
-                if ( (LA42_0==71) ) {
+                if ( (LA42_0==72) ) {
                     alt42=1;
                 }
 
@@ -9123,7 +9124,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt43=2;
             int LA43_0 = input.LA(1);
 
-            if ( (LA43_0==55) ) {
+            if ( (LA43_0==56) ) {
                 alt43=1;
             }
             switch (alt43) {
@@ -9169,7 +9170,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt44=2;
             int LA44_0 = input.LA(1);
 
-            if ( (LA44_0==59) ) {
+            if ( (LA44_0==60) ) {
                 alt44=1;
             }
             switch (alt44) {
@@ -9215,7 +9216,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt45=2;
             int LA45_0 = input.LA(1);
 
-            if ( (LA45_0==69) ) {
+            if ( (LA45_0==70) ) {
                 alt45=1;
             }
             switch (alt45) {
@@ -9228,7 +9229,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     // InternalEssentialOCL.g:3175:1: (lv_isPre_4_0= '@' )
                     // InternalEssentialOCL.g:3176:3: lv_isPre_4_0= '@'
                     {
-                    lv_isPre_4_0=(Token)match(input,69,FollowSets000.FOLLOW_32); if (state.failed) return current;
+                    lv_isPre_4_0=(Token)match(input,70,FollowSets000.FOLLOW_32); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_isPre_4_0, grammarAccess.getNameExpCSAccess().getIsPreCommercialAtKeyword_4_0_0());
@@ -9248,7 +9249,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_5=(Token)match(input,70,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,71,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getNameExpCSAccess().getPreKeyword_4_1());
@@ -9362,7 +9363,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_33); if (state.failed) return current;
+            otherlv_1=(Token)match(input,60,FollowSets000.FOLLOW_33); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getCurlyBracketedClauseCSAccess().getLeftCurlyBracketKeyword_1());
@@ -9420,7 +9421,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         int alt46=2;
                         int LA46_0 = input.LA(1);
 
-                        if ( (LA46_0==57) ) {
+                        if ( (LA46_0==58) ) {
                             alt46=1;
                         }
 
@@ -9429,7 +9430,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     	case 1 :
                     	    // InternalEssentialOCL.g:3245:4: otherlv_3= ',' ( (lv_ownedParts_4_0= ruleShadowPartCS ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_34); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,58,FollowSets000.FOLLOW_34); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	          	newLeafNode(otherlv_3, grammarAccess.getCurlyBracketedClauseCSAccess().getCommaKeyword_2_1_0());
@@ -9485,7 +9486,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_5=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_5=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getCurlyBracketedClauseCSAccess().getRightCurlyBracketKeyword_3());
@@ -9596,7 +9597,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,55,FollowSets000.FOLLOW_35); if (state.failed) return current;
+            otherlv_1=(Token)match(input,56,FollowSets000.FOLLOW_35); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getRoundBracketedClauseCSAccess().getLeftParenthesisKeyword_1());
@@ -9606,7 +9607,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt50=2;
             int LA50_0 = input.LA(1);
 
-            if ( ((LA50_0>=RULE_SIMPLE_ID && LA50_0<=RULE_SINGLE_QUOTED_STRING)||(LA50_0>=16 && LA50_0<=19)||(LA50_0>=40 && LA50_0<=55)||LA50_0==58||LA50_0==63||(LA50_0>=65 && LA50_0<=68)||LA50_0==76||(LA50_0>=81 && LA50_0<=82)) ) {
+            if ( ((LA50_0>=RULE_SIMPLE_ID && LA50_0<=RULE_SINGLE_QUOTED_STRING)||(LA50_0>=17 && LA50_0<=20)||(LA50_0>=41 && LA50_0<=56)||LA50_0==59||LA50_0==64||(LA50_0>=66 && LA50_0<=69)||LA50_0==77||(LA50_0>=82 && LA50_0<=83)) ) {
                 alt50=1;
             }
             switch (alt50) {
@@ -9654,7 +9655,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                         int alt49=2;
                         int LA49_0 = input.LA(1);
 
-                        if ( (LA49_0==57||(LA49_0>=74 && LA49_0<=75)) ) {
+                        if ( (LA49_0==58||(LA49_0>=75 && LA49_0<=76)) ) {
                             alt49=1;
                         }
 
@@ -9669,17 +9670,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     	    // InternalEssentialOCL.g:3325:1: (lv_ownedArguments_3_1= ruleNavigatingCommaArgCS | lv_ownedArguments_3_2= ruleNavigatingSemiArgCS | lv_ownedArguments_3_3= ruleNavigatingBarArgCS )
                     	    int alt48=3;
                     	    switch ( input.LA(1) ) {
-                    	    case 57:
+                    	    case 58:
                     	        {
                     	        alt48=1;
                     	        }
                     	        break;
-                    	    case 75:
+                    	    case 76:
                     	        {
                     	        alt48=2;
                     	        }
                     	        break;
-                    	    case 74:
+                    	    case 75:
                     	        {
                     	        alt48=3;
                     	        }
@@ -9801,7 +9802,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_4=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_4=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getRoundBracketedClauseCSAccess().getRightParenthesisKeyword_3());
@@ -9891,7 +9892,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:3399:1: (otherlv_0= '[' ( (lv_ownedTerms_1_0= ruleExpCS ) ) (otherlv_2= ',' ( (lv_ownedTerms_3_0= ruleExpCS ) ) )* otherlv_4= ']' )
             // InternalEssentialOCL.g:3399:3: otherlv_0= '[' ( (lv_ownedTerms_1_0= ruleExpCS ) ) (otherlv_2= ',' ( (lv_ownedTerms_3_0= ruleExpCS ) ) )* otherlv_4= ']'
             {
-            otherlv_0=(Token)match(input,71,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_0=(Token)match(input,72,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getSquareBracketedClauseCSAccess().getLeftSquareBracketKeyword_0());
@@ -9938,7 +9939,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 int alt51=2;
                 int LA51_0 = input.LA(1);
 
-                if ( (LA51_0==57) ) {
+                if ( (LA51_0==58) ) {
                     alt51=1;
                 }
 
@@ -9947,7 +9948,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             	case 1 :
             	    // InternalEssentialOCL.g:3421:4: otherlv_2= ',' ( (lv_ownedTerms_3_0= ruleExpCS ) )
             	    {
-            	    otherlv_2=(Token)match(input,57,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,58,FollowSets000.FOLLOW_17); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getSquareBracketedClauseCSAccess().getCommaKeyword_2_0());
@@ -9997,7 +9998,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,72,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_4=(Token)match(input,73,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getSquareBracketedClauseCSAccess().getRightSquareBracketKeyword_3());
@@ -10110,10 +10111,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt58=2;
             int LA58_0 = input.LA(1);
 
-            if ( ((LA58_0>=RULE_SIMPLE_ID && LA58_0<=RULE_SINGLE_QUOTED_STRING)||(LA58_0>=16 && LA58_0<=19)||(LA58_0>=40 && LA58_0<=55)||LA58_0==63||(LA58_0>=65 && LA58_0<=68)||LA58_0==76||(LA58_0>=81 && LA58_0<=82)) ) {
+            if ( ((LA58_0>=RULE_SIMPLE_ID && LA58_0<=RULE_SINGLE_QUOTED_STRING)||(LA58_0>=17 && LA58_0<=20)||(LA58_0>=41 && LA58_0<=56)||LA58_0==64||(LA58_0>=66 && LA58_0<=69)||LA58_0==77||(LA58_0>=82 && LA58_0<=83)) ) {
                 alt58=1;
             }
-            else if ( (LA58_0==58) ) {
+            else if ( (LA58_0==59) ) {
                 alt58=2;
             }
             else {
@@ -10175,7 +10176,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             // InternalEssentialOCL.g:3486:3: (otherlv_1= '<-' ( (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS ) ) (otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) ) )? )
                             // InternalEssentialOCL.g:3486:5: otherlv_1= '<-' ( (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS ) ) (otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) ) )?
                             {
-                            otherlv_1=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                            otherlv_1=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_1, grammarAccess.getNavigatingArgCSAccess().getLessThanSignHyphenMinusKeyword_0_1_0_0());
@@ -10220,14 +10221,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             int alt52=2;
                             int LA52_0 = input.LA(1);
 
-                            if ( (LA52_0==26) ) {
+                            if ( (LA52_0==27) ) {
                                 alt52=1;
                             }
                             switch (alt52) {
                                 case 1 :
                                     // InternalEssentialOCL.g:3508:4: otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) )
                                     {
-                                    otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                                    otherlv_3=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                           	newLeafNode(otherlv_3, grammarAccess.getNavigatingArgCSAccess().getEqualsSignKeyword_0_1_0_2_0());
@@ -10286,7 +10287,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             // InternalEssentialOCL.g:3531:6: (otherlv_5= ':' ( (lv_ownedType_6_0= ruleTypeExpCS ) ) (otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) ) )? (otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) ) )? )
                             // InternalEssentialOCL.g:3531:8: otherlv_5= ':' ( (lv_ownedType_6_0= ruleTypeExpCS ) ) (otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) ) )? (otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) ) )?
                             {
-                            otherlv_5=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                            otherlv_5=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_5, grammarAccess.getNavigatingArgCSAccess().getColonKeyword_0_1_1_0());
@@ -10331,14 +10332,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             int alt53=2;
                             int LA53_0 = input.LA(1);
 
-                            if ( (LA53_0==64) ) {
+                            if ( (LA53_0==65) ) {
                                 alt53=1;
                             }
                             switch (alt53) {
                                 case 1 :
                                     // InternalEssentialOCL.g:3553:4: otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) )
                                     {
-                                    otherlv_7=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                                    otherlv_7=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                           	newLeafNode(otherlv_7, grammarAccess.getNavigatingArgCSAccess().getLessThanSignHyphenMinusKeyword_0_1_1_2_0());
@@ -10389,14 +10390,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             int alt54=2;
                             int LA54_0 = input.LA(1);
 
-                            if ( (LA54_0==26) ) {
+                            if ( (LA54_0==27) ) {
                                 alt54=1;
                             }
                             switch (alt54) {
                                 case 1 :
                                     // InternalEssentialOCL.g:3575:6: otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) )
                                     {
-                                    otherlv_9=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                                    otherlv_9=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                           	newLeafNode(otherlv_9, grammarAccess.getNavigatingArgCSAccess().getEqualsSignKeyword_0_1_1_3_0());
@@ -10459,14 +10460,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             int alt55=2;
                             int LA55_0 = input.LA(1);
 
-                            if ( (LA55_0==58) ) {
+                            if ( (LA55_0==59) ) {
                                 alt55=1;
                             }
                             switch (alt55) {
                                 case 1 :
                                     // InternalEssentialOCL.g:3598:9: otherlv_11= ':' ( (lv_ownedType_12_0= ruleTypeExpCS ) )
                                     {
-                                    otherlv_11=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                                    otherlv_11=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                           	newLeafNode(otherlv_11, grammarAccess.getNavigatingArgCSAccess().getColonKeyword_0_1_2_0_0());
@@ -10517,14 +10518,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                             int alt56=2;
                             int LA56_0 = input.LA(1);
 
-                            if ( (LA56_0==64) ) {
+                            if ( (LA56_0==65) ) {
                                 alt56=1;
                             }
                             switch (alt56) {
                                 case 1 :
                                     // InternalEssentialOCL.g:3620:6: otherlv_13= '<-' ( (lv_ownedCoIterator_14_0= ruleCoIteratorVariableCS ) )
                                     {
-                                    otherlv_13=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                                    otherlv_13=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                           	newLeafNode(otherlv_13, grammarAccess.getNavigatingArgCSAccess().getLessThanSignHyphenMinusKeyword_0_1_2_1_0());
@@ -10571,7 +10572,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                             }
 
-                            otherlv_15=(Token)match(input,73,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                            otherlv_15=(Token)match(input,74,FollowSets000.FOLLOW_17); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_15, grammarAccess.getNavigatingArgCSAccess().getInKeyword_0_1_2_2());
@@ -10633,7 +10634,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     // InternalEssentialOCL.g:3665:6: (otherlv_17= ':' ( (lv_ownedType_18_0= ruleTypeExpCS ) ) )
                     // InternalEssentialOCL.g:3665:8: otherlv_17= ':' ( (lv_ownedType_18_0= ruleTypeExpCS ) )
                     {
-                    otherlv_17=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_17=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_17, grammarAccess.getNavigatingArgCSAccess().getColonKeyword_1_0());
@@ -10772,7 +10773,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:3709:1: (lv_prefix_0_0= '|' )
             // InternalEssentialOCL.g:3710:3: lv_prefix_0_0= '|'
             {
-            lv_prefix_0_0=(Token)match(input,74,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            lv_prefix_0_0=(Token)match(input,75,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       newLeafNode(lv_prefix_0_0, grammarAccess.getNavigatingBarArgCSAccess().getPrefixVerticalLineKeyword_0_0());
@@ -10831,14 +10832,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt60=2;
             int LA60_0 = input.LA(1);
 
-            if ( (LA60_0==58) ) {
+            if ( (LA60_0==59) ) {
                 alt60=1;
             }
             switch (alt60) {
                 case 1 :
                     // InternalEssentialOCL.g:3741:4: otherlv_2= ':' ( (lv_ownedType_3_0= ruleTypeExpCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )?
                     {
-                    otherlv_2=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getNavigatingBarArgCSAccess().getColonKeyword_2_0());
@@ -10883,14 +10884,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt59=2;
                     int LA59_0 = input.LA(1);
 
-                    if ( (LA59_0==26) ) {
+                    if ( (LA59_0==27) ) {
                         alt59=1;
                     }
                     switch (alt59) {
                         case 1 :
                             // InternalEssentialOCL.g:3763:4: otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) )
                             {
-                            otherlv_4=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_4, grammarAccess.getNavigatingBarArgCSAccess().getEqualsSignKeyword_2_2_0());
@@ -11053,7 +11054,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:3807:1: (lv_prefix_0_0= ',' )
             // InternalEssentialOCL.g:3808:3: lv_prefix_0_0= ','
             {
-            lv_prefix_0_0=(Token)match(input,57,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            lv_prefix_0_0=(Token)match(input,58,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       newLeafNode(lv_prefix_0_0, grammarAccess.getNavigatingCommaArgCSAccess().getPrefixCommaKeyword_0_0());
@@ -11118,7 +11119,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     // InternalEssentialOCL.g:3839:3: (otherlv_2= '<-' ( (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )? )
                     // InternalEssentialOCL.g:3839:5: otherlv_2= '<-' ( (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )?
                     {
-                    otherlv_2=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getNavigatingCommaArgCSAccess().getLessThanSignHyphenMinusKeyword_2_0_0());
@@ -11163,14 +11164,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt61=2;
                     int LA61_0 = input.LA(1);
 
-                    if ( (LA61_0==26) ) {
+                    if ( (LA61_0==27) ) {
                         alt61=1;
                     }
                     switch (alt61) {
                         case 1 :
                             // InternalEssentialOCL.g:3861:4: otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) )
                             {
-                            otherlv_4=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_4, grammarAccess.getNavigatingCommaArgCSAccess().getEqualsSignKeyword_2_0_2_0());
@@ -11229,7 +11230,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     // InternalEssentialOCL.g:3884:6: (otherlv_6= ':' ( (lv_ownedType_7_0= ruleTypeExpCS ) ) (otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) ) )? (otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) ) )? )
                     // InternalEssentialOCL.g:3884:8: otherlv_6= ':' ( (lv_ownedType_7_0= ruleTypeExpCS ) ) (otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) ) )? (otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) ) )?
                     {
-                    otherlv_6=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_6, grammarAccess.getNavigatingCommaArgCSAccess().getColonKeyword_2_1_0());
@@ -11274,14 +11275,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt62=2;
                     int LA62_0 = input.LA(1);
 
-                    if ( (LA62_0==64) ) {
+                    if ( (LA62_0==65) ) {
                         alt62=1;
                     }
                     switch (alt62) {
                         case 1 :
                             // InternalEssentialOCL.g:3906:4: otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) )
                             {
-                            otherlv_8=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                            otherlv_8=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_8, grammarAccess.getNavigatingCommaArgCSAccess().getLessThanSignHyphenMinusKeyword_2_1_2_0());
@@ -11332,14 +11333,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt63=2;
                     int LA63_0 = input.LA(1);
 
-                    if ( (LA63_0==26) ) {
+                    if ( (LA63_0==27) ) {
                         alt63=1;
                     }
                     switch (alt63) {
                         case 1 :
                             // InternalEssentialOCL.g:3928:6: otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) )
                             {
-                            otherlv_10=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                            otherlv_10=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_10, grammarAccess.getNavigatingCommaArgCSAccess().getEqualsSignKeyword_2_1_3_0());
@@ -11402,14 +11403,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt64=2;
                     int LA64_0 = input.LA(1);
 
-                    if ( (LA64_0==58) ) {
+                    if ( (LA64_0==59) ) {
                         alt64=1;
                     }
                     switch (alt64) {
                         case 1 :
                             // InternalEssentialOCL.g:3951:9: otherlv_12= ':' ( (lv_ownedType_13_0= ruleTypeExpCS ) )
                             {
-                            otherlv_12=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                            otherlv_12=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_12, grammarAccess.getNavigatingCommaArgCSAccess().getColonKeyword_2_2_0_0());
@@ -11460,14 +11461,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt65=2;
                     int LA65_0 = input.LA(1);
 
-                    if ( (LA65_0==64) ) {
+                    if ( (LA65_0==65) ) {
                         alt65=1;
                     }
                     switch (alt65) {
                         case 1 :
                             // InternalEssentialOCL.g:3973:6: otherlv_14= '<-' ( (lv_ownedCoIterator_15_0= ruleCoIteratorVariableCS ) )
                             {
-                            otherlv_14=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                            otherlv_14=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_14, grammarAccess.getNavigatingCommaArgCSAccess().getLessThanSignHyphenMinusKeyword_2_2_1_0());
@@ -11514,7 +11515,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_16=(Token)match(input,73,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                    otherlv_16=(Token)match(input,74,FollowSets000.FOLLOW_17); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_16, grammarAccess.getNavigatingCommaArgCSAccess().getInKeyword_2_2_2());
@@ -11656,7 +11657,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:4039:1: (lv_prefix_0_0= ';' )
             // InternalEssentialOCL.g:4040:3: lv_prefix_0_0= ';'
             {
-            lv_prefix_0_0=(Token)match(input,75,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            lv_prefix_0_0=(Token)match(input,76,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       newLeafNode(lv_prefix_0_0, grammarAccess.getNavigatingSemiArgCSAccess().getPrefixSemicolonKeyword_0_0());
@@ -11715,14 +11716,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt68=2;
             int LA68_0 = input.LA(1);
 
-            if ( (LA68_0==58) ) {
+            if ( (LA68_0==59) ) {
                 alt68=1;
             }
             switch (alt68) {
                 case 1 :
                     // InternalEssentialOCL.g:4071:4: otherlv_2= ':' ( (lv_ownedType_3_0= ruleTypeExpCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )?
                     {
-                    otherlv_2=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getNavigatingSemiArgCSAccess().getColonKeyword_2_0());
@@ -11767,14 +11768,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     int alt67=2;
                     int LA67_0 = input.LA(1);
 
-                    if ( (LA67_0==26) ) {
+                    if ( (LA67_0==27) ) {
                         alt67=1;
                     }
                     switch (alt67) {
                         case 1 :
                             // InternalEssentialOCL.g:4093:4: otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) )
                             {
-                            otherlv_4=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_4, grammarAccess.getNavigatingSemiArgCSAccess().getEqualsSignKeyword_2_2_0());
@@ -12042,14 +12043,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt69=2;
             int LA69_0 = input.LA(1);
 
-            if ( (LA69_0==58) ) {
+            if ( (LA69_0==59) ) {
                 alt69=1;
             }
             switch (alt69) {
                 case 1 :
                     // InternalEssentialOCL.g:4187:4: otherlv_1= ':' ( (lv_ownedType_2_0= ruleTypeExpCS ) )
                     {
-                    otherlv_1=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getCoIteratorVariableCSAccess().getColonKeyword_1_0());
@@ -12187,7 +12188,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:4230:1: (otherlv_0= 'if' ( ( (lv_ownedCondition_1_1= ruleExpCS | lv_ownedCondition_1_2= rulePatternExpCS ) ) ) otherlv_2= 'then' ( (lv_ownedThenExpression_3_0= ruleExpCS ) ) ( (lv_ownedIfThenExpressions_4_0= ruleElseIfThenExpCS ) )* otherlv_5= 'else' ( (lv_ownedElseExpression_6_0= ruleExpCS ) ) otherlv_7= 'endif' )
             // InternalEssentialOCL.g:4230:3: otherlv_0= 'if' ( ( (lv_ownedCondition_1_1= ruleExpCS | lv_ownedCondition_1_2= rulePatternExpCS ) ) ) otherlv_2= 'then' ( (lv_ownedThenExpression_3_0= ruleExpCS ) ) ( (lv_ownedIfThenExpressions_4_0= ruleElseIfThenExpCS ) )* otherlv_5= 'else' ( (lv_ownedElseExpression_6_0= ruleExpCS ) ) otherlv_7= 'endif'
             {
-            otherlv_0=(Token)match(input,76,FollowSets000.FOLLOW_15); if (state.failed) return current;
+            otherlv_0=(Token)match(input,77,FollowSets000.FOLLOW_15); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getIfExpCSAccess().getIfKeyword_0());
@@ -12204,11 +12205,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             switch ( input.LA(1) ) {
             case RULE_INT:
             case RULE_SINGLE_QUOTED_STRING:
-            case 16:
             case 17:
             case 18:
             case 19:
-            case 40:
+            case 20:
             case 41:
             case 42:
             case 43:
@@ -12224,14 +12224,15 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             case 53:
             case 54:
             case 55:
-            case 63:
-            case 65:
+            case 56:
+            case 64:
             case 66:
             case 67:
             case 68:
-            case 76:
-            case 81:
+            case 69:
+            case 77:
             case 82:
+            case 83:
                 {
                 alt70=1;
                 }
@@ -12240,10 +12241,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 {
                 int LA70_2 = input.LA(2);
 
-                if ( (LA70_2==16||(LA70_2>=19 && LA70_2<=39)||LA70_2==55||LA70_2==59||LA70_2==69||LA70_2==71||LA70_2==77||LA70_2==86) ) {
+                if ( (LA70_2==17||(LA70_2>=20 && LA70_2<=40)||LA70_2==56||LA70_2==60||LA70_2==70||LA70_2==72||LA70_2==78||LA70_2==87) ) {
                     alt70=1;
                 }
-                else if ( (LA70_2==58) ) {
+                else if ( (LA70_2==59) ) {
                     alt70=2;
                 }
                 else {
@@ -12259,10 +12260,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 {
                 int LA70_3 = input.LA(2);
 
-                if ( (LA70_3==58) ) {
+                if ( (LA70_3==59) ) {
                     alt70=2;
                 }
-                else if ( (LA70_3==16||(LA70_3>=19 && LA70_3<=39)||LA70_3==55||LA70_3==59||LA70_3==69||LA70_3==71||LA70_3==77||LA70_3==86) ) {
+                else if ( (LA70_3==17||(LA70_3>=20 && LA70_3<=40)||LA70_3==56||LA70_3==60||LA70_3==70||LA70_3==72||LA70_3==78||LA70_3==87) ) {
                     alt70=1;
                 }
                 else {
@@ -12274,7 +12275,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 }
                 }
                 break;
-            case 58:
+            case 59:
                 {
                 alt70=2;
                 }
@@ -12355,7 +12356,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_2=(Token)match(input,77,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_2=(Token)match(input,78,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getIfExpCSAccess().getThenKeyword_2());
@@ -12402,7 +12403,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 int alt71=2;
                 int LA71_0 = input.LA(1);
 
-                if ( (LA71_0==80) ) {
+                if ( (LA71_0==81) ) {
                     alt71=1;
                 }
 
@@ -12449,7 +12450,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 }
             } while (true);
 
-            otherlv_5=(Token)match(input,78,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_5=(Token)match(input,79,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getIfExpCSAccess().getElseKeyword_5());
@@ -12490,7 +12491,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_7=(Token)match(input,79,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_7=(Token)match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_7, grammarAccess.getIfExpCSAccess().getEndifKeyword_7());
@@ -12579,7 +12580,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:4357:1: (otherlv_0= 'elseif' ( (lv_ownedCondition_1_0= ruleExpCS ) ) otherlv_2= 'then' ( (lv_ownedThenExpression_3_0= ruleExpCS ) ) )
             // InternalEssentialOCL.g:4357:3: otherlv_0= 'elseif' ( (lv_ownedCondition_1_0= ruleExpCS ) ) otherlv_2= 'then' ( (lv_ownedThenExpression_3_0= ruleExpCS ) )
             {
-            otherlv_0=(Token)match(input,80,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_0=(Token)match(input,81,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getElseIfThenExpCSAccess().getElseifKeyword_0());
@@ -12620,7 +12621,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_2=(Token)match(input,77,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_2=(Token)match(input,78,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getElseIfThenExpCSAccess().getThenKeyword_2());
@@ -12747,7 +12748,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:4422:1: (otherlv_0= 'let' ( (lv_ownedVariables_1_0= ruleLetVariableCS ) ) (otherlv_2= ',' ( (lv_ownedVariables_3_0= ruleLetVariableCS ) ) )* otherlv_4= 'in' ( (lv_ownedInExpression_5_0= ruleExpCS ) ) )
             // InternalEssentialOCL.g:4422:3: otherlv_0= 'let' ( (lv_ownedVariables_1_0= ruleLetVariableCS ) ) (otherlv_2= ',' ( (lv_ownedVariables_3_0= ruleLetVariableCS ) ) )* otherlv_4= 'in' ( (lv_ownedInExpression_5_0= ruleExpCS ) )
             {
-            otherlv_0=(Token)match(input,81,FollowSets000.FOLLOW_10); if (state.failed) return current;
+            otherlv_0=(Token)match(input,82,FollowSets000.FOLLOW_10); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getLetExpCSAccess().getLetKeyword_0());
@@ -12794,7 +12795,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 int alt72=2;
                 int LA72_0 = input.LA(1);
 
-                if ( (LA72_0==57) ) {
+                if ( (LA72_0==58) ) {
                     alt72=1;
                 }
 
@@ -12803,7 +12804,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             	case 1 :
             	    // InternalEssentialOCL.g:4444:4: otherlv_2= ',' ( (lv_ownedVariables_3_0= ruleLetVariableCS ) )
             	    {
-            	    otherlv_2=(Token)match(input,57,FollowSets000.FOLLOW_10); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,58,FollowSets000.FOLLOW_10); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_2, grammarAccess.getLetExpCSAccess().getCommaKeyword_2_0());
@@ -12853,7 +12854,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,73,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_4=(Token)match(input,74,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getLetExpCSAccess().getInKeyword_3());
@@ -13020,7 +13021,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt73=2;
             int LA73_0 = input.LA(1);
 
-            if ( (LA73_0==55) ) {
+            if ( (LA73_0==56) ) {
                 alt73=1;
             }
             switch (alt73) {
@@ -13066,14 +13067,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             int alt74=2;
             int LA74_0 = input.LA(1);
 
-            if ( (LA74_0==58) ) {
+            if ( (LA74_0==59) ) {
                 alt74=1;
             }
             switch (alt74) {
                 case 1 :
                     // InternalEssentialOCL.g:4545:5: otherlv_2= ':' ( (lv_ownedType_3_0= ruleTypeExpCS ) )
                     {
-                    otherlv_2=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getLetVariableCSAccess().getColonKeyword_2_0());
@@ -13120,7 +13121,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_4=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_4=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getLetVariableCSAccess().getEqualsSignKeyword_3());
@@ -13242,7 +13243,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             // InternalEssentialOCL.g:4610:1: (otherlv_0= '(' ( (lv_ownedExpression_1_0= ruleExpCS ) ) otherlv_2= ')' )
             // InternalEssentialOCL.g:4610:3: otherlv_0= '(' ( (lv_ownedExpression_1_0= ruleExpCS ) ) otherlv_2= ')'
             {
-            otherlv_0=(Token)match(input,55,FollowSets000.FOLLOW_17); if (state.failed) return current;
+            otherlv_0=(Token)match(input,56,FollowSets000.FOLLOW_17); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getNestedExpCSAccess().getLeftParenthesisKeyword_0());
@@ -13283,7 +13284,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_2=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_2=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_2, grammarAccess.getNestedExpCSAccess().getRightParenthesisKeyword_2());
@@ -13385,7 +13386,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,82,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_1=(Token)match(input,83,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getSelfExpCSAccess().getSelfKeyword_1());
@@ -13414,7 +13415,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleMultiplicityBoundsCS"
-    // InternalEssentialOCL.g:4678:1: entryRuleMultiplicityBoundsCS returns [EObject current=null] : iv_ruleMultiplicityBoundsCS= ruleMultiplicityBoundsCS EOF ;
+    // InternalEssentialOCL.g:4680:1: entryRuleMultiplicityBoundsCS returns [EObject current=null] : iv_ruleMultiplicityBoundsCS= ruleMultiplicityBoundsCS EOF ;
     public final EObject entryRuleMultiplicityBoundsCS() throws RecognitionException {
         EObject current = null;
 
@@ -13422,8 +13423,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:4679:2: (iv_ruleMultiplicityBoundsCS= ruleMultiplicityBoundsCS EOF )
-            // InternalEssentialOCL.g:4680:2: iv_ruleMultiplicityBoundsCS= ruleMultiplicityBoundsCS EOF
+            // InternalEssentialOCL.g:4681:2: (iv_ruleMultiplicityBoundsCS= ruleMultiplicityBoundsCS EOF )
+            // InternalEssentialOCL.g:4682:2: iv_ruleMultiplicityBoundsCS= ruleMultiplicityBoundsCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMultiplicityBoundsCSRule());
@@ -13454,7 +13455,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleMultiplicityBoundsCS"
-    // InternalEssentialOCL.g:4687:1: ruleMultiplicityBoundsCS returns [EObject current=null] : ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? ) ;
+    // InternalEssentialOCL.g:4689:1: ruleMultiplicityBoundsCS returns [EObject current=null] : ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? ) ;
     public final EObject ruleMultiplicityBoundsCS() throws RecognitionException {
         EObject current = null;
 
@@ -13467,17 +13468,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:4690:28: ( ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? ) )
-            // InternalEssentialOCL.g:4691:1: ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? )
+            // InternalEssentialOCL.g:4692:28: ( ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? ) )
+            // InternalEssentialOCL.g:4693:1: ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? )
             {
-            // InternalEssentialOCL.g:4691:1: ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? )
-            // InternalEssentialOCL.g:4691:2: ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )?
+            // InternalEssentialOCL.g:4693:1: ( ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )? )
+            // InternalEssentialOCL.g:4693:2: ( (lv_lowerBound_0_0= ruleLOWER ) ) (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )?
             {
-            // InternalEssentialOCL.g:4691:2: ( (lv_lowerBound_0_0= ruleLOWER ) )
-            // InternalEssentialOCL.g:4692:1: (lv_lowerBound_0_0= ruleLOWER )
+            // InternalEssentialOCL.g:4693:2: ( (lv_lowerBound_0_0= ruleLOWER ) )
+            // InternalEssentialOCL.g:4694:1: (lv_lowerBound_0_0= ruleLOWER )
             {
-            // InternalEssentialOCL.g:4692:1: (lv_lowerBound_0_0= ruleLOWER )
-            // InternalEssentialOCL.g:4693:3: lv_lowerBound_0_0= ruleLOWER
+            // InternalEssentialOCL.g:4694:1: (lv_lowerBound_0_0= ruleLOWER )
+            // InternalEssentialOCL.g:4695:3: lv_lowerBound_0_0= ruleLOWER
             {
             if ( state.backtracking==0 ) {
 
@@ -13508,28 +13509,28 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            // InternalEssentialOCL.g:4709:2: (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )?
+            // InternalEssentialOCL.g:4711:2: (otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) ) )?
             int alt75=2;
             int LA75_0 = input.LA(1);
 
-            if ( (LA75_0==61) ) {
+            if ( (LA75_0==62) ) {
                 alt75=1;
             }
             switch (alt75) {
                 case 1 :
-                    // InternalEssentialOCL.g:4709:4: otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) )
+                    // InternalEssentialOCL.g:4711:4: otherlv_1= '..' ( (lv_upperBound_2_0= ruleUPPER ) )
                     {
-                    otherlv_1=(Token)match(input,61,FollowSets000.FOLLOW_49); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,62,FollowSets000.FOLLOW_49); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getMultiplicityBoundsCSAccess().getFullStopFullStopKeyword_1_0());
 
                     }
-                    // InternalEssentialOCL.g:4713:1: ( (lv_upperBound_2_0= ruleUPPER ) )
-                    // InternalEssentialOCL.g:4714:1: (lv_upperBound_2_0= ruleUPPER )
+                    // InternalEssentialOCL.g:4715:1: ( (lv_upperBound_2_0= ruleUPPER ) )
+                    // InternalEssentialOCL.g:4716:1: (lv_upperBound_2_0= ruleUPPER )
                     {
-                    // InternalEssentialOCL.g:4714:1: (lv_upperBound_2_0= ruleUPPER )
-                    // InternalEssentialOCL.g:4715:3: lv_upperBound_2_0= ruleUPPER
+                    // InternalEssentialOCL.g:4716:1: (lv_upperBound_2_0= ruleUPPER )
+                    // InternalEssentialOCL.g:4717:3: lv_upperBound_2_0= ruleUPPER
                     {
                     if ( state.backtracking==0 ) {
 
@@ -13589,7 +13590,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleMultiplicityCS"
-    // InternalEssentialOCL.g:4739:1: entryRuleMultiplicityCS returns [EObject current=null] : iv_ruleMultiplicityCS= ruleMultiplicityCS EOF ;
+    // InternalEssentialOCL.g:4741:1: entryRuleMultiplicityCS returns [EObject current=null] : iv_ruleMultiplicityCS= ruleMultiplicityCS EOF ;
     public final EObject entryRuleMultiplicityCS() throws RecognitionException {
         EObject current = null;
 
@@ -13597,8 +13598,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:4740:2: (iv_ruleMultiplicityCS= ruleMultiplicityCS EOF )
-            // InternalEssentialOCL.g:4741:2: iv_ruleMultiplicityCS= ruleMultiplicityCS EOF
+            // InternalEssentialOCL.g:4742:2: (iv_ruleMultiplicityCS= ruleMultiplicityCS EOF )
+            // InternalEssentialOCL.g:4743:2: iv_ruleMultiplicityCS= ruleMultiplicityCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMultiplicityCSRule());
@@ -13629,7 +13630,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleMultiplicityCS"
-    // InternalEssentialOCL.g:4748:1: ruleMultiplicityCS returns [EObject current=null] : (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' ) ;
+    // InternalEssentialOCL.g:4750:1: ruleMultiplicityCS returns [EObject current=null] : (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' ) ;
     public final EObject ruleMultiplicityCS() throws RecognitionException {
         EObject current = null;
 
@@ -13645,26 +13646,26 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:4751:28: ( (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' ) )
-            // InternalEssentialOCL.g:4752:1: (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' )
+            // InternalEssentialOCL.g:4753:28: ( (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' ) )
+            // InternalEssentialOCL.g:4754:1: (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' )
             {
-            // InternalEssentialOCL.g:4752:1: (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' )
-            // InternalEssentialOCL.g:4752:3: otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']'
+            // InternalEssentialOCL.g:4754:1: (otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']' )
+            // InternalEssentialOCL.g:4754:3: otherlv_0= '[' (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS ) (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )? otherlv_5= ']'
             {
-            otherlv_0=(Token)match(input,71,FollowSets000.FOLLOW_50); if (state.failed) return current;
+            otherlv_0=(Token)match(input,72,FollowSets000.FOLLOW_50); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getMultiplicityCSAccess().getLeftSquareBracketKeyword_0());
 
             }
-            // InternalEssentialOCL.g:4756:1: (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS )
+            // InternalEssentialOCL.g:4758:1: (this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS | this_MultiplicityStringCS_2= ruleMultiplicityStringCS )
             int alt76=2;
             int LA76_0 = input.LA(1);
 
             if ( (LA76_0==RULE_INT) ) {
                 alt76=1;
             }
-            else if ( (LA76_0==19||LA76_0==21||LA76_0==85) ) {
+            else if ( (LA76_0==20||LA76_0==22||LA76_0==86) ) {
                 alt76=2;
             }
             else {
@@ -13676,7 +13677,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             }
             switch (alt76) {
                 case 1 :
-                    // InternalEssentialOCL.g:4757:2: this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS
+                    // InternalEssentialOCL.g:4759:2: this_MultiplicityBoundsCS_1= ruleMultiplicityBoundsCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -13703,7 +13704,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     }
                     break;
                 case 2 :
-                    // InternalEssentialOCL.g:4770:2: this_MultiplicityStringCS_2= ruleMultiplicityStringCS
+                    // InternalEssentialOCL.g:4772:2: this_MultiplicityStringCS_2= ruleMultiplicityStringCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -13732,21 +13733,21 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            // InternalEssentialOCL.g:4781:2: (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )?
+            // InternalEssentialOCL.g:4783:2: (otherlv_3= '|?' | ( (lv_isNullFree_4_0= '|1' ) ) )?
             int alt77=3;
             int LA77_0 = input.LA(1);
 
-            if ( (LA77_0==83) ) {
+            if ( (LA77_0==84) ) {
                 alt77=1;
             }
-            else if ( (LA77_0==84) ) {
+            else if ( (LA77_0==85) ) {
                 alt77=2;
             }
             switch (alt77) {
                 case 1 :
-                    // InternalEssentialOCL.g:4781:4: otherlv_3= '|?'
+                    // InternalEssentialOCL.g:4783:4: otherlv_3= '|?'
                     {
-                    otherlv_3=(Token)match(input,83,FollowSets000.FOLLOW_52); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,84,FollowSets000.FOLLOW_52); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
@@ -13756,15 +13757,15 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     }
                     break;
                 case 2 :
-                    // InternalEssentialOCL.g:4786:6: ( (lv_isNullFree_4_0= '|1' ) )
+                    // InternalEssentialOCL.g:4788:6: ( (lv_isNullFree_4_0= '|1' ) )
                     {
-                    // InternalEssentialOCL.g:4786:6: ( (lv_isNullFree_4_0= '|1' ) )
-                    // InternalEssentialOCL.g:4787:1: (lv_isNullFree_4_0= '|1' )
+                    // InternalEssentialOCL.g:4788:6: ( (lv_isNullFree_4_0= '|1' ) )
+                    // InternalEssentialOCL.g:4789:1: (lv_isNullFree_4_0= '|1' )
                     {
-                    // InternalEssentialOCL.g:4787:1: (lv_isNullFree_4_0= '|1' )
-                    // InternalEssentialOCL.g:4788:3: lv_isNullFree_4_0= '|1'
+                    // InternalEssentialOCL.g:4789:1: (lv_isNullFree_4_0= '|1' )
+                    // InternalEssentialOCL.g:4790:3: lv_isNullFree_4_0= '|1'
                     {
-                    lv_isNullFree_4_0=(Token)match(input,84,FollowSets000.FOLLOW_52); if (state.failed) return current;
+                    lv_isNullFree_4_0=(Token)match(input,85,FollowSets000.FOLLOW_52); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_isNullFree_4_0, grammarAccess.getMultiplicityCSAccess().getIsNullFree1Keyword_2_1_0());
@@ -13790,7 +13791,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_5=(Token)match(input,72,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            otherlv_5=(Token)match(input,73,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getMultiplicityCSAccess().getRightSquareBracketKeyword_3());
@@ -13819,7 +13820,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleMultiplicityStringCS"
-    // InternalEssentialOCL.g:4813:1: entryRuleMultiplicityStringCS returns [EObject current=null] : iv_ruleMultiplicityStringCS= ruleMultiplicityStringCS EOF ;
+    // InternalEssentialOCL.g:4815:1: entryRuleMultiplicityStringCS returns [EObject current=null] : iv_ruleMultiplicityStringCS= ruleMultiplicityStringCS EOF ;
     public final EObject entryRuleMultiplicityStringCS() throws RecognitionException {
         EObject current = null;
 
@@ -13827,8 +13828,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:4814:2: (iv_ruleMultiplicityStringCS= ruleMultiplicityStringCS EOF )
-            // InternalEssentialOCL.g:4815:2: iv_ruleMultiplicityStringCS= ruleMultiplicityStringCS EOF
+            // InternalEssentialOCL.g:4816:2: (iv_ruleMultiplicityStringCS= ruleMultiplicityStringCS EOF )
+            // InternalEssentialOCL.g:4817:2: iv_ruleMultiplicityStringCS= ruleMultiplicityStringCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMultiplicityStringCSRule());
@@ -13859,7 +13860,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleMultiplicityStringCS"
-    // InternalEssentialOCL.g:4822:1: ruleMultiplicityStringCS returns [EObject current=null] : ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) ) ;
+    // InternalEssentialOCL.g:4824:1: ruleMultiplicityStringCS returns [EObject current=null] : ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) ) ;
     public final EObject ruleMultiplicityStringCS() throws RecognitionException {
         EObject current = null;
 
@@ -13870,29 +13871,29 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:4825:28: ( ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) ) )
-            // InternalEssentialOCL.g:4826:1: ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) )
+            // InternalEssentialOCL.g:4827:28: ( ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) ) )
+            // InternalEssentialOCL.g:4828:1: ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) )
             {
-            // InternalEssentialOCL.g:4826:1: ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) )
-            // InternalEssentialOCL.g:4827:1: ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) )
+            // InternalEssentialOCL.g:4828:1: ( ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) ) )
+            // InternalEssentialOCL.g:4829:1: ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) )
             {
-            // InternalEssentialOCL.g:4827:1: ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) )
-            // InternalEssentialOCL.g:4828:1: (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' )
+            // InternalEssentialOCL.g:4829:1: ( (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' ) )
+            // InternalEssentialOCL.g:4830:1: (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' )
             {
-            // InternalEssentialOCL.g:4828:1: (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' )
+            // InternalEssentialOCL.g:4830:1: (lv_stringBounds_0_1= '*' | lv_stringBounds_0_2= '+' | lv_stringBounds_0_3= '?' )
             int alt78=3;
             switch ( input.LA(1) ) {
-            case 19:
+            case 20:
                 {
                 alt78=1;
                 }
                 break;
-            case 21:
+            case 22:
                 {
                 alt78=2;
                 }
                 break;
-            case 85:
+            case 86:
                 {
                 alt78=3;
                 }
@@ -13907,9 +13908,9 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             switch (alt78) {
                 case 1 :
-                    // InternalEssentialOCL.g:4829:3: lv_stringBounds_0_1= '*'
+                    // InternalEssentialOCL.g:4831:3: lv_stringBounds_0_1= '*'
                     {
-                    lv_stringBounds_0_1=(Token)match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    lv_stringBounds_0_1=(Token)match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_stringBounds_0_1, grammarAccess.getMultiplicityStringCSAccess().getStringBoundsAsteriskKeyword_0_0());
@@ -13927,9 +13928,9 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     }
                     break;
                 case 2 :
-                    // InternalEssentialOCL.g:4841:8: lv_stringBounds_0_2= '+'
+                    // InternalEssentialOCL.g:4843:8: lv_stringBounds_0_2= '+'
                     {
-                    lv_stringBounds_0_2=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    lv_stringBounds_0_2=(Token)match(input,22,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_stringBounds_0_2, grammarAccess.getMultiplicityStringCSAccess().getStringBoundsPlusSignKeyword_0_1());
@@ -13947,9 +13948,9 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     }
                     break;
                 case 3 :
-                    // InternalEssentialOCL.g:4853:8: lv_stringBounds_0_3= '?'
+                    // InternalEssentialOCL.g:4855:8: lv_stringBounds_0_3= '?'
                     {
-                    lv_stringBounds_0_3=(Token)match(input,85,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    lv_stringBounds_0_3=(Token)match(input,86,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               newLeafNode(lv_stringBounds_0_3, grammarAccess.getMultiplicityStringCSAccess().getStringBoundsQuestionMarkKeyword_0_2());
@@ -13995,7 +13996,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRulePathNameCS"
-    // InternalEssentialOCL.g:4876:1: entryRulePathNameCS returns [EObject current=null] : iv_rulePathNameCS= rulePathNameCS EOF ;
+    // InternalEssentialOCL.g:4878:1: entryRulePathNameCS returns [EObject current=null] : iv_rulePathNameCS= rulePathNameCS EOF ;
     public final EObject entryRulePathNameCS() throws RecognitionException {
         EObject current = null;
 
@@ -14003,8 +14004,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:4877:2: (iv_rulePathNameCS= rulePathNameCS EOF )
-            // InternalEssentialOCL.g:4878:2: iv_rulePathNameCS= rulePathNameCS EOF
+            // InternalEssentialOCL.g:4879:2: (iv_rulePathNameCS= rulePathNameCS EOF )
+            // InternalEssentialOCL.g:4880:2: iv_rulePathNameCS= rulePathNameCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPathNameCSRule());
@@ -14035,7 +14036,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "rulePathNameCS"
-    // InternalEssentialOCL.g:4885:1: rulePathNameCS returns [EObject current=null] : ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* ) ;
+    // InternalEssentialOCL.g:4887:1: rulePathNameCS returns [EObject current=null] : ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* ) ;
     public final EObject rulePathNameCS() throws RecognitionException {
         EObject current = null;
 
@@ -14048,17 +14049,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:4888:28: ( ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* ) )
-            // InternalEssentialOCL.g:4889:1: ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* )
+            // InternalEssentialOCL.g:4890:28: ( ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* ) )
+            // InternalEssentialOCL.g:4891:1: ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* )
             {
-            // InternalEssentialOCL.g:4889:1: ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* )
-            // InternalEssentialOCL.g:4889:2: ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )*
+            // InternalEssentialOCL.g:4891:1: ( ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )* )
+            // InternalEssentialOCL.g:4891:2: ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) ) (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )*
             {
-            // InternalEssentialOCL.g:4889:2: ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) )
-            // InternalEssentialOCL.g:4890:1: (lv_ownedPathElements_0_0= ruleFirstPathElementCS )
+            // InternalEssentialOCL.g:4891:2: ( (lv_ownedPathElements_0_0= ruleFirstPathElementCS ) )
+            // InternalEssentialOCL.g:4892:1: (lv_ownedPathElements_0_0= ruleFirstPathElementCS )
             {
-            // InternalEssentialOCL.g:4890:1: (lv_ownedPathElements_0_0= ruleFirstPathElementCS )
-            // InternalEssentialOCL.g:4891:3: lv_ownedPathElements_0_0= ruleFirstPathElementCS
+            // InternalEssentialOCL.g:4892:1: (lv_ownedPathElements_0_0= ruleFirstPathElementCS )
+            // InternalEssentialOCL.g:4893:3: lv_ownedPathElements_0_0= ruleFirstPathElementCS
             {
             if ( state.backtracking==0 ) {
 
@@ -14089,32 +14090,32 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            // InternalEssentialOCL.g:4907:2: (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )*
+            // InternalEssentialOCL.g:4909:2: (otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) ) )*
             loop79:
             do {
                 int alt79=2;
                 int LA79_0 = input.LA(1);
 
-                if ( (LA79_0==86) ) {
+                if ( (LA79_0==87) ) {
                     alt79=1;
                 }
 
 
                 switch (alt79) {
             	case 1 :
-            	    // InternalEssentialOCL.g:4907:4: otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) )
+            	    // InternalEssentialOCL.g:4909:4: otherlv_1= '::' ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) )
             	    {
-            	    otherlv_1=(Token)match(input,86,FollowSets000.FOLLOW_4); if (state.failed) return current;
+            	    otherlv_1=(Token)match(input,87,FollowSets000.FOLLOW_4); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_1, grammarAccess.getPathNameCSAccess().getColonColonKeyword_1_0());
 
             	    }
-            	    // InternalEssentialOCL.g:4911:1: ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) )
-            	    // InternalEssentialOCL.g:4912:1: (lv_ownedPathElements_2_0= ruleNextPathElementCS )
+            	    // InternalEssentialOCL.g:4913:1: ( (lv_ownedPathElements_2_0= ruleNextPathElementCS ) )
+            	    // InternalEssentialOCL.g:4914:1: (lv_ownedPathElements_2_0= ruleNextPathElementCS )
             	    {
-            	    // InternalEssentialOCL.g:4912:1: (lv_ownedPathElements_2_0= ruleNextPathElementCS )
-            	    // InternalEssentialOCL.g:4913:3: lv_ownedPathElements_2_0= ruleNextPathElementCS
+            	    // InternalEssentialOCL.g:4914:1: (lv_ownedPathElements_2_0= ruleNextPathElementCS )
+            	    // InternalEssentialOCL.g:4915:3: lv_ownedPathElements_2_0= ruleNextPathElementCS
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -14177,7 +14178,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleFirstPathElementCS"
-    // InternalEssentialOCL.g:4937:1: entryRuleFirstPathElementCS returns [EObject current=null] : iv_ruleFirstPathElementCS= ruleFirstPathElementCS EOF ;
+    // InternalEssentialOCL.g:4939:1: entryRuleFirstPathElementCS returns [EObject current=null] : iv_ruleFirstPathElementCS= ruleFirstPathElementCS EOF ;
     public final EObject entryRuleFirstPathElementCS() throws RecognitionException {
         EObject current = null;
 
@@ -14185,8 +14186,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:4938:2: (iv_ruleFirstPathElementCS= ruleFirstPathElementCS EOF )
-            // InternalEssentialOCL.g:4939:2: iv_ruleFirstPathElementCS= ruleFirstPathElementCS EOF
+            // InternalEssentialOCL.g:4940:2: (iv_ruleFirstPathElementCS= ruleFirstPathElementCS EOF )
+            // InternalEssentialOCL.g:4941:2: iv_ruleFirstPathElementCS= ruleFirstPathElementCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFirstPathElementCSRule());
@@ -14217,21 +14218,21 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleFirstPathElementCS"
-    // InternalEssentialOCL.g:4946:1: ruleFirstPathElementCS returns [EObject current=null] : ( ( ruleUnrestrictedName ) ) ;
+    // InternalEssentialOCL.g:4948:1: ruleFirstPathElementCS returns [EObject current=null] : ( ( ruleUnrestrictedName ) ) ;
     public final EObject ruleFirstPathElementCS() throws RecognitionException {
         EObject current = null;
 
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:4949:28: ( ( ( ruleUnrestrictedName ) ) )
-            // InternalEssentialOCL.g:4950:1: ( ( ruleUnrestrictedName ) )
+            // InternalEssentialOCL.g:4951:28: ( ( ( ruleUnrestrictedName ) ) )
+            // InternalEssentialOCL.g:4952:1: ( ( ruleUnrestrictedName ) )
             {
-            // InternalEssentialOCL.g:4950:1: ( ( ruleUnrestrictedName ) )
-            // InternalEssentialOCL.g:4951:1: ( ruleUnrestrictedName )
+            // InternalEssentialOCL.g:4952:1: ( ( ruleUnrestrictedName ) )
+            // InternalEssentialOCL.g:4953:1: ( ruleUnrestrictedName )
             {
-            // InternalEssentialOCL.g:4951:1: ( ruleUnrestrictedName )
-            // InternalEssentialOCL.g:4952:3: ruleUnrestrictedName
+            // InternalEssentialOCL.g:4953:1: ( ruleUnrestrictedName )
+            // InternalEssentialOCL.g:4954:3: ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
 
@@ -14286,7 +14287,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleNextPathElementCS"
-    // InternalEssentialOCL.g:4976:1: entryRuleNextPathElementCS returns [EObject current=null] : iv_ruleNextPathElementCS= ruleNextPathElementCS EOF ;
+    // InternalEssentialOCL.g:4978:1: entryRuleNextPathElementCS returns [EObject current=null] : iv_ruleNextPathElementCS= ruleNextPathElementCS EOF ;
     public final EObject entryRuleNextPathElementCS() throws RecognitionException {
         EObject current = null;
 
@@ -14294,8 +14295,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:4977:2: (iv_ruleNextPathElementCS= ruleNextPathElementCS EOF )
-            // InternalEssentialOCL.g:4978:2: iv_ruleNextPathElementCS= ruleNextPathElementCS EOF
+            // InternalEssentialOCL.g:4979:2: (iv_ruleNextPathElementCS= ruleNextPathElementCS EOF )
+            // InternalEssentialOCL.g:4980:2: iv_ruleNextPathElementCS= ruleNextPathElementCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNextPathElementCSRule());
@@ -14326,21 +14327,21 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleNextPathElementCS"
-    // InternalEssentialOCL.g:4985:1: ruleNextPathElementCS returns [EObject current=null] : ( ( ruleUnreservedName ) ) ;
+    // InternalEssentialOCL.g:4987:1: ruleNextPathElementCS returns [EObject current=null] : ( ( ruleUnreservedName ) ) ;
     public final EObject ruleNextPathElementCS() throws RecognitionException {
         EObject current = null;
 
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:4988:28: ( ( ( ruleUnreservedName ) ) )
-            // InternalEssentialOCL.g:4989:1: ( ( ruleUnreservedName ) )
+            // InternalEssentialOCL.g:4990:28: ( ( ( ruleUnreservedName ) ) )
+            // InternalEssentialOCL.g:4991:1: ( ( ruleUnreservedName ) )
             {
-            // InternalEssentialOCL.g:4989:1: ( ( ruleUnreservedName ) )
-            // InternalEssentialOCL.g:4990:1: ( ruleUnreservedName )
+            // InternalEssentialOCL.g:4991:1: ( ( ruleUnreservedName ) )
+            // InternalEssentialOCL.g:4992:1: ( ruleUnreservedName )
             {
-            // InternalEssentialOCL.g:4990:1: ( ruleUnreservedName )
-            // InternalEssentialOCL.g:4991:3: ruleUnreservedName
+            // InternalEssentialOCL.g:4992:1: ( ruleUnreservedName )
+            // InternalEssentialOCL.g:4993:3: ruleUnreservedName
             {
             if ( state.backtracking==0 ) {
 
@@ -14395,7 +14396,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleTemplateBindingCS"
-    // InternalEssentialOCL.g:5015:1: entryRuleTemplateBindingCS returns [EObject current=null] : iv_ruleTemplateBindingCS= ruleTemplateBindingCS EOF ;
+    // InternalEssentialOCL.g:5017:1: entryRuleTemplateBindingCS returns [EObject current=null] : iv_ruleTemplateBindingCS= ruleTemplateBindingCS EOF ;
     public final EObject entryRuleTemplateBindingCS() throws RecognitionException {
         EObject current = null;
 
@@ -14403,8 +14404,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5016:2: (iv_ruleTemplateBindingCS= ruleTemplateBindingCS EOF )
-            // InternalEssentialOCL.g:5017:2: iv_ruleTemplateBindingCS= ruleTemplateBindingCS EOF
+            // InternalEssentialOCL.g:5018:2: (iv_ruleTemplateBindingCS= ruleTemplateBindingCS EOF )
+            // InternalEssentialOCL.g:5019:2: iv_ruleTemplateBindingCS= ruleTemplateBindingCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTemplateBindingCSRule());
@@ -14435,7 +14436,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleTemplateBindingCS"
-    // InternalEssentialOCL.g:5024:1: ruleTemplateBindingCS returns [EObject current=null] : ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? ) ;
+    // InternalEssentialOCL.g:5026:1: ruleTemplateBindingCS returns [EObject current=null] : ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? ) ;
     public final EObject ruleTemplateBindingCS() throws RecognitionException {
         EObject current = null;
 
@@ -14450,17 +14451,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5027:28: ( ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? ) )
-            // InternalEssentialOCL.g:5028:1: ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? )
+            // InternalEssentialOCL.g:5029:28: ( ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? ) )
+            // InternalEssentialOCL.g:5030:1: ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? )
             {
-            // InternalEssentialOCL.g:5028:1: ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? )
-            // InternalEssentialOCL.g:5028:2: ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )?
+            // InternalEssentialOCL.g:5030:1: ( ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )? )
+            // InternalEssentialOCL.g:5030:2: ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) ) (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )* ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )?
             {
-            // InternalEssentialOCL.g:5028:2: ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) )
-            // InternalEssentialOCL.g:5029:1: (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS )
+            // InternalEssentialOCL.g:5030:2: ( (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS ) )
+            // InternalEssentialOCL.g:5031:1: (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS )
             {
-            // InternalEssentialOCL.g:5029:1: (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS )
-            // InternalEssentialOCL.g:5030:3: lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS
+            // InternalEssentialOCL.g:5031:1: (lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS )
+            // InternalEssentialOCL.g:5032:3: lv_ownedSubstitutions_0_0= ruleTemplateParameterSubstitutionCS
             {
             if ( state.backtracking==0 ) {
 
@@ -14491,32 +14492,32 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            // InternalEssentialOCL.g:5046:2: (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )*
+            // InternalEssentialOCL.g:5048:2: (otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) ) )*
             loop80:
             do {
                 int alt80=2;
                 int LA80_0 = input.LA(1);
 
-                if ( (LA80_0==57) ) {
+                if ( (LA80_0==58) ) {
                     alt80=1;
                 }
 
 
                 switch (alt80) {
             	case 1 :
-            	    // InternalEssentialOCL.g:5046:4: otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) )
+            	    // InternalEssentialOCL.g:5048:4: otherlv_1= ',' ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) )
             	    {
-            	    otherlv_1=(Token)match(input,57,FollowSets000.FOLLOW_55); if (state.failed) return current;
+            	    otherlv_1=(Token)match(input,58,FollowSets000.FOLLOW_55); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	          	newLeafNode(otherlv_1, grammarAccess.getTemplateBindingCSAccess().getCommaKeyword_1_0());
 
             	    }
-            	    // InternalEssentialOCL.g:5050:1: ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) )
-            	    // InternalEssentialOCL.g:5051:1: (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS )
+            	    // InternalEssentialOCL.g:5052:1: ( (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS ) )
+            	    // InternalEssentialOCL.g:5053:1: (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS )
             	    {
-            	    // InternalEssentialOCL.g:5051:1: (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS )
-            	    // InternalEssentialOCL.g:5052:3: lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS
+            	    // InternalEssentialOCL.g:5053:1: (lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS )
+            	    // InternalEssentialOCL.g:5054:3: lv_ownedSubstitutions_2_0= ruleTemplateParameterSubstitutionCS
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -14556,19 +14557,19 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                 }
             } while (true);
 
-            // InternalEssentialOCL.g:5068:4: ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )?
+            // InternalEssentialOCL.g:5070:4: ( (lv_ownedMultiplicity_3_0= ruleMultiplicityCS ) )?
             int alt81=2;
             int LA81_0 = input.LA(1);
 
-            if ( (LA81_0==71) ) {
+            if ( (LA81_0==72) ) {
                 alt81=1;
             }
             switch (alt81) {
                 case 1 :
-                    // InternalEssentialOCL.g:5069:1: (lv_ownedMultiplicity_3_0= ruleMultiplicityCS )
+                    // InternalEssentialOCL.g:5071:1: (lv_ownedMultiplicity_3_0= ruleMultiplicityCS )
                     {
-                    // InternalEssentialOCL.g:5069:1: (lv_ownedMultiplicity_3_0= ruleMultiplicityCS )
-                    // InternalEssentialOCL.g:5070:3: lv_ownedMultiplicity_3_0= ruleMultiplicityCS
+                    // InternalEssentialOCL.g:5071:1: (lv_ownedMultiplicity_3_0= ruleMultiplicityCS )
+                    // InternalEssentialOCL.g:5072:3: lv_ownedMultiplicity_3_0= ruleMultiplicityCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -14625,7 +14626,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleTemplateParameterSubstitutionCS"
-    // InternalEssentialOCL.g:5094:1: entryRuleTemplateParameterSubstitutionCS returns [EObject current=null] : iv_ruleTemplateParameterSubstitutionCS= ruleTemplateParameterSubstitutionCS EOF ;
+    // InternalEssentialOCL.g:5096:1: entryRuleTemplateParameterSubstitutionCS returns [EObject current=null] : iv_ruleTemplateParameterSubstitutionCS= ruleTemplateParameterSubstitutionCS EOF ;
     public final EObject entryRuleTemplateParameterSubstitutionCS() throws RecognitionException {
         EObject current = null;
 
@@ -14633,8 +14634,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5095:2: (iv_ruleTemplateParameterSubstitutionCS= ruleTemplateParameterSubstitutionCS EOF )
-            // InternalEssentialOCL.g:5096:2: iv_ruleTemplateParameterSubstitutionCS= ruleTemplateParameterSubstitutionCS EOF
+            // InternalEssentialOCL.g:5097:2: (iv_ruleTemplateParameterSubstitutionCS= ruleTemplateParameterSubstitutionCS EOF )
+            // InternalEssentialOCL.g:5098:2: iv_ruleTemplateParameterSubstitutionCS= ruleTemplateParameterSubstitutionCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTemplateParameterSubstitutionCSRule());
@@ -14665,7 +14666,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleTemplateParameterSubstitutionCS"
-    // InternalEssentialOCL.g:5103:1: ruleTemplateParameterSubstitutionCS returns [EObject current=null] : ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) ) ;
+    // InternalEssentialOCL.g:5105:1: ruleTemplateParameterSubstitutionCS returns [EObject current=null] : ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) ) ;
     public final EObject ruleTemplateParameterSubstitutionCS() throws RecognitionException {
         EObject current = null;
 
@@ -14675,14 +14676,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5106:28: ( ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) ) )
-            // InternalEssentialOCL.g:5107:1: ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) )
+            // InternalEssentialOCL.g:5108:28: ( ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) ) )
+            // InternalEssentialOCL.g:5109:1: ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) )
             {
-            // InternalEssentialOCL.g:5107:1: ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) )
-            // InternalEssentialOCL.g:5108:1: (lv_ownedActualParameter_0_0= ruleTypeRefCS )
+            // InternalEssentialOCL.g:5109:1: ( (lv_ownedActualParameter_0_0= ruleTypeRefCS ) )
+            // InternalEssentialOCL.g:5110:1: (lv_ownedActualParameter_0_0= ruleTypeRefCS )
             {
-            // InternalEssentialOCL.g:5108:1: (lv_ownedActualParameter_0_0= ruleTypeRefCS )
-            // InternalEssentialOCL.g:5109:3: lv_ownedActualParameter_0_0= ruleTypeRefCS
+            // InternalEssentialOCL.g:5110:1: (lv_ownedActualParameter_0_0= ruleTypeRefCS )
+            // InternalEssentialOCL.g:5111:3: lv_ownedActualParameter_0_0= ruleTypeRefCS
             {
             if ( state.backtracking==0 ) {
 
@@ -14733,7 +14734,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleTypeParameterCS"
-    // InternalEssentialOCL.g:5135:1: entryRuleTypeParameterCS returns [EObject current=null] : iv_ruleTypeParameterCS= ruleTypeParameterCS EOF ;
+    // InternalEssentialOCL.g:5137:1: entryRuleTypeParameterCS returns [EObject current=null] : iv_ruleTypeParameterCS= ruleTypeParameterCS EOF ;
     public final EObject entryRuleTypeParameterCS() throws RecognitionException {
         EObject current = null;
 
@@ -14741,8 +14742,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5136:2: (iv_ruleTypeParameterCS= ruleTypeParameterCS EOF )
-            // InternalEssentialOCL.g:5137:2: iv_ruleTypeParameterCS= ruleTypeParameterCS EOF
+            // InternalEssentialOCL.g:5138:2: (iv_ruleTypeParameterCS= ruleTypeParameterCS EOF )
+            // InternalEssentialOCL.g:5139:2: iv_ruleTypeParameterCS= ruleTypeParameterCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTypeParameterCSRule());
@@ -14773,7 +14774,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleTypeParameterCS"
-    // InternalEssentialOCL.g:5144:1: ruleTypeParameterCS returns [EObject current=null] : ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? ) ;
+    // InternalEssentialOCL.g:5146:1: ruleTypeParameterCS returns [EObject current=null] : ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? ) ;
     public final EObject ruleTypeParameterCS() throws RecognitionException {
         EObject current = null;
 
@@ -14789,17 +14790,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5147:28: ( ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? ) )
-            // InternalEssentialOCL.g:5148:1: ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? )
+            // InternalEssentialOCL.g:5149:28: ( ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? ) )
+            // InternalEssentialOCL.g:5150:1: ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? )
             {
-            // InternalEssentialOCL.g:5148:1: ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? )
-            // InternalEssentialOCL.g:5148:2: ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )?
+            // InternalEssentialOCL.g:5150:1: ( ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )? )
+            // InternalEssentialOCL.g:5150:2: ( (lv_name_0_0= ruleUnrestrictedName ) ) (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )?
             {
-            // InternalEssentialOCL.g:5148:2: ( (lv_name_0_0= ruleUnrestrictedName ) )
-            // InternalEssentialOCL.g:5149:1: (lv_name_0_0= ruleUnrestrictedName )
+            // InternalEssentialOCL.g:5150:2: ( (lv_name_0_0= ruleUnrestrictedName ) )
+            // InternalEssentialOCL.g:5151:1: (lv_name_0_0= ruleUnrestrictedName )
             {
-            // InternalEssentialOCL.g:5149:1: (lv_name_0_0= ruleUnrestrictedName )
-            // InternalEssentialOCL.g:5150:3: lv_name_0_0= ruleUnrestrictedName
+            // InternalEssentialOCL.g:5151:1: (lv_name_0_0= ruleUnrestrictedName )
+            // InternalEssentialOCL.g:5152:3: lv_name_0_0= ruleUnrestrictedName
             {
             if ( state.backtracking==0 ) {
 
@@ -14830,28 +14831,28 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            // InternalEssentialOCL.g:5166:2: (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )?
+            // InternalEssentialOCL.g:5168:2: (otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )* )?
             int alt83=2;
             int LA83_0 = input.LA(1);
 
-            if ( (LA83_0==87) ) {
+            if ( (LA83_0==88) ) {
                 alt83=1;
             }
             switch (alt83) {
                 case 1 :
-                    // InternalEssentialOCL.g:5166:4: otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )*
+                    // InternalEssentialOCL.g:5168:4: otherlv_1= 'extends' ( (lv_ownedExtends_2_0= ruleTypedRefCS ) ) (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )*
                     {
-                    otherlv_1=(Token)match(input,87,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,88,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getTypeParameterCSAccess().getExtendsKeyword_1_0());
 
                     }
-                    // InternalEssentialOCL.g:5170:1: ( (lv_ownedExtends_2_0= ruleTypedRefCS ) )
-                    // InternalEssentialOCL.g:5171:1: (lv_ownedExtends_2_0= ruleTypedRefCS )
+                    // InternalEssentialOCL.g:5172:1: ( (lv_ownedExtends_2_0= ruleTypedRefCS ) )
+                    // InternalEssentialOCL.g:5173:1: (lv_ownedExtends_2_0= ruleTypedRefCS )
                     {
-                    // InternalEssentialOCL.g:5171:1: (lv_ownedExtends_2_0= ruleTypedRefCS )
-                    // InternalEssentialOCL.g:5172:3: lv_ownedExtends_2_0= ruleTypedRefCS
+                    // InternalEssentialOCL.g:5173:1: (lv_ownedExtends_2_0= ruleTypedRefCS )
+                    // InternalEssentialOCL.g:5174:3: lv_ownedExtends_2_0= ruleTypedRefCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -14882,32 +14883,32 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    // InternalEssentialOCL.g:5188:2: (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )*
+                    // InternalEssentialOCL.g:5190:2: (otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) ) )*
                     loop82:
                     do {
                         int alt82=2;
                         int LA82_0 = input.LA(1);
 
-                        if ( (LA82_0==88) ) {
+                        if ( (LA82_0==89) ) {
                             alt82=1;
                         }
 
 
                         switch (alt82) {
                     	case 1 :
-                    	    // InternalEssentialOCL.g:5188:4: otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) )
+                    	    // InternalEssentialOCL.g:5190:4: otherlv_3= '&&' ( (lv_ownedExtends_4_0= ruleTypedRefCS ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,88,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,89,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	          	newLeafNode(otherlv_3, grammarAccess.getTypeParameterCSAccess().getAmpersandAmpersandKeyword_1_2_0());
 
                     	    }
-                    	    // InternalEssentialOCL.g:5192:1: ( (lv_ownedExtends_4_0= ruleTypedRefCS ) )
-                    	    // InternalEssentialOCL.g:5193:1: (lv_ownedExtends_4_0= ruleTypedRefCS )
+                    	    // InternalEssentialOCL.g:5194:1: ( (lv_ownedExtends_4_0= ruleTypedRefCS ) )
+                    	    // InternalEssentialOCL.g:5195:1: (lv_ownedExtends_4_0= ruleTypedRefCS )
                     	    {
-                    	    // InternalEssentialOCL.g:5193:1: (lv_ownedExtends_4_0= ruleTypedRefCS )
-                    	    // InternalEssentialOCL.g:5194:3: lv_ownedExtends_4_0= ruleTypedRefCS
+                    	    // InternalEssentialOCL.g:5195:1: (lv_ownedExtends_4_0= ruleTypedRefCS )
+                    	    // InternalEssentialOCL.g:5196:3: lv_ownedExtends_4_0= ruleTypedRefCS
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -14976,7 +14977,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleTypeRefCS"
-    // InternalEssentialOCL.g:5218:1: entryRuleTypeRefCS returns [EObject current=null] : iv_ruleTypeRefCS= ruleTypeRefCS EOF ;
+    // InternalEssentialOCL.g:5220:1: entryRuleTypeRefCS returns [EObject current=null] : iv_ruleTypeRefCS= ruleTypeRefCS EOF ;
     public final EObject entryRuleTypeRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -14984,8 +14985,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5219:2: (iv_ruleTypeRefCS= ruleTypeRefCS EOF )
-            // InternalEssentialOCL.g:5220:2: iv_ruleTypeRefCS= ruleTypeRefCS EOF
+            // InternalEssentialOCL.g:5221:2: (iv_ruleTypeRefCS= ruleTypeRefCS EOF )
+            // InternalEssentialOCL.g:5222:2: iv_ruleTypeRefCS= ruleTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTypeRefCSRule());
@@ -15016,7 +15017,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleTypeRefCS"
-    // InternalEssentialOCL.g:5227:1: ruleTypeRefCS returns [EObject current=null] : (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS ) ;
+    // InternalEssentialOCL.g:5229:1: ruleTypeRefCS returns [EObject current=null] : (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS ) ;
     public final EObject ruleTypeRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -15028,17 +15029,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5230:28: ( (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS ) )
-            // InternalEssentialOCL.g:5231:1: (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS )
+            // InternalEssentialOCL.g:5232:28: ( (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS ) )
+            // InternalEssentialOCL.g:5233:1: (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS )
             {
-            // InternalEssentialOCL.g:5231:1: (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS )
+            // InternalEssentialOCL.g:5233:1: (this_TypedRefCS_0= ruleTypedRefCS | this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS )
             int alt84=2;
             int LA84_0 = input.LA(1);
 
             if ( ((LA84_0>=RULE_SIMPLE_ID && LA84_0<=RULE_ESCAPED_ID)) ) {
                 alt84=1;
             }
-            else if ( (LA84_0==85) ) {
+            else if ( (LA84_0==86) ) {
                 alt84=2;
             }
             else {
@@ -15050,7 +15051,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             }
             switch (alt84) {
                 case 1 :
-                    // InternalEssentialOCL.g:5232:2: this_TypedRefCS_0= ruleTypedRefCS
+                    // InternalEssentialOCL.g:5234:2: this_TypedRefCS_0= ruleTypedRefCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -15077,7 +15078,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     }
                     break;
                 case 2 :
-                    // InternalEssentialOCL.g:5245:2: this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS
+                    // InternalEssentialOCL.g:5247:2: this_WildcardTypeRefCS_1= ruleWildcardTypeRefCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -15126,7 +15127,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleTypedRefCS"
-    // InternalEssentialOCL.g:5264:1: entryRuleTypedRefCS returns [EObject current=null] : iv_ruleTypedRefCS= ruleTypedRefCS EOF ;
+    // InternalEssentialOCL.g:5266:1: entryRuleTypedRefCS returns [EObject current=null] : iv_ruleTypedRefCS= ruleTypedRefCS EOF ;
     public final EObject entryRuleTypedRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -15134,8 +15135,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5265:2: (iv_ruleTypedRefCS= ruleTypedRefCS EOF )
-            // InternalEssentialOCL.g:5266:2: iv_ruleTypedRefCS= ruleTypedRefCS EOF
+            // InternalEssentialOCL.g:5267:2: (iv_ruleTypedRefCS= ruleTypedRefCS EOF )
+            // InternalEssentialOCL.g:5268:2: iv_ruleTypedRefCS= ruleTypedRefCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTypedRefCSRule());
@@ -15166,7 +15167,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleTypedRefCS"
-    // InternalEssentialOCL.g:5273:1: ruleTypedRefCS returns [EObject current=null] : this_TypedTypeRefCS_0= ruleTypedTypeRefCS ;
+    // InternalEssentialOCL.g:5275:1: ruleTypedRefCS returns [EObject current=null] : this_TypedTypeRefCS_0= ruleTypedTypeRefCS ;
     public final EObject ruleTypedRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -15176,8 +15177,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5276:28: (this_TypedTypeRefCS_0= ruleTypedTypeRefCS )
-            // InternalEssentialOCL.g:5278:2: this_TypedTypeRefCS_0= ruleTypedTypeRefCS
+            // InternalEssentialOCL.g:5278:28: (this_TypedTypeRefCS_0= ruleTypedTypeRefCS )
+            // InternalEssentialOCL.g:5280:2: this_TypedTypeRefCS_0= ruleTypedTypeRefCS
             {
             if ( state.backtracking==0 ) {
 
@@ -15220,7 +15221,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleTypedTypeRefCS"
-    // InternalEssentialOCL.g:5297:1: entryRuleTypedTypeRefCS returns [EObject current=null] : iv_ruleTypedTypeRefCS= ruleTypedTypeRefCS EOF ;
+    // InternalEssentialOCL.g:5299:1: entryRuleTypedTypeRefCS returns [EObject current=null] : iv_ruleTypedTypeRefCS= ruleTypedTypeRefCS EOF ;
     public final EObject entryRuleTypedTypeRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -15228,8 +15229,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5298:2: (iv_ruleTypedTypeRefCS= ruleTypedTypeRefCS EOF )
-            // InternalEssentialOCL.g:5299:2: iv_ruleTypedTypeRefCS= ruleTypedTypeRefCS EOF
+            // InternalEssentialOCL.g:5300:2: (iv_ruleTypedTypeRefCS= ruleTypedTypeRefCS EOF )
+            // InternalEssentialOCL.g:5301:2: iv_ruleTypedTypeRefCS= ruleTypedTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTypedTypeRefCSRule());
@@ -15260,7 +15261,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleTypedTypeRefCS"
-    // InternalEssentialOCL.g:5306:1: ruleTypedTypeRefCS returns [EObject current=null] : ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? ) ;
+    // InternalEssentialOCL.g:5308:1: ruleTypedTypeRefCS returns [EObject current=null] : ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? ) ;
     public final EObject ruleTypedTypeRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -15274,17 +15275,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5309:28: ( ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? ) )
-            // InternalEssentialOCL.g:5310:1: ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? )
+            // InternalEssentialOCL.g:5311:28: ( ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? ) )
+            // InternalEssentialOCL.g:5312:1: ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? )
             {
-            // InternalEssentialOCL.g:5310:1: ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? )
-            // InternalEssentialOCL.g:5310:2: ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )?
+            // InternalEssentialOCL.g:5312:1: ( ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )? )
+            // InternalEssentialOCL.g:5312:2: ( (lv_ownedPathName_0_0= rulePathNameCS ) ) (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )?
             {
-            // InternalEssentialOCL.g:5310:2: ( (lv_ownedPathName_0_0= rulePathNameCS ) )
-            // InternalEssentialOCL.g:5311:1: (lv_ownedPathName_0_0= rulePathNameCS )
+            // InternalEssentialOCL.g:5312:2: ( (lv_ownedPathName_0_0= rulePathNameCS ) )
+            // InternalEssentialOCL.g:5313:1: (lv_ownedPathName_0_0= rulePathNameCS )
             {
-            // InternalEssentialOCL.g:5311:1: (lv_ownedPathName_0_0= rulePathNameCS )
-            // InternalEssentialOCL.g:5312:3: lv_ownedPathName_0_0= rulePathNameCS
+            // InternalEssentialOCL.g:5313:1: (lv_ownedPathName_0_0= rulePathNameCS )
+            // InternalEssentialOCL.g:5314:3: lv_ownedPathName_0_0= rulePathNameCS
             {
             if ( state.backtracking==0 ) {
 
@@ -15315,28 +15316,28 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            // InternalEssentialOCL.g:5328:2: (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )?
+            // InternalEssentialOCL.g:5330:2: (otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')' )?
             int alt85=2;
             int LA85_0 = input.LA(1);
 
-            if ( (LA85_0==55) ) {
+            if ( (LA85_0==56) ) {
                 alt85=1;
             }
             switch (alt85) {
                 case 1 :
-                    // InternalEssentialOCL.g:5328:4: otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')'
+                    // InternalEssentialOCL.g:5330:4: otherlv_1= '(' ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) ) otherlv_3= ')'
                     {
-                    otherlv_1=(Token)match(input,55,FollowSets000.FOLLOW_55); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,56,FollowSets000.FOLLOW_55); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getTypedTypeRefCSAccess().getLeftParenthesisKeyword_1_0());
 
                     }
-                    // InternalEssentialOCL.g:5332:1: ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) )
-                    // InternalEssentialOCL.g:5333:1: (lv_ownedBinding_2_0= ruleTemplateBindingCS )
+                    // InternalEssentialOCL.g:5334:1: ( (lv_ownedBinding_2_0= ruleTemplateBindingCS ) )
+                    // InternalEssentialOCL.g:5335:1: (lv_ownedBinding_2_0= ruleTemplateBindingCS )
                     {
-                    // InternalEssentialOCL.g:5333:1: (lv_ownedBinding_2_0= ruleTemplateBindingCS )
-                    // InternalEssentialOCL.g:5334:3: lv_ownedBinding_2_0= ruleTemplateBindingCS
+                    // InternalEssentialOCL.g:5335:1: (lv_ownedBinding_2_0= ruleTemplateBindingCS )
+                    // InternalEssentialOCL.g:5336:3: lv_ownedBinding_2_0= ruleTemplateBindingCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -15367,7 +15368,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
                     }
 
-                    otherlv_3=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getTypedTypeRefCSAccess().getRightParenthesisKeyword_1_2());
@@ -15402,7 +15403,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleWildcardTypeRefCS"
-    // InternalEssentialOCL.g:5362:1: entryRuleWildcardTypeRefCS returns [EObject current=null] : iv_ruleWildcardTypeRefCS= ruleWildcardTypeRefCS EOF ;
+    // InternalEssentialOCL.g:5364:1: entryRuleWildcardTypeRefCS returns [EObject current=null] : iv_ruleWildcardTypeRefCS= ruleWildcardTypeRefCS EOF ;
     public final EObject entryRuleWildcardTypeRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -15410,8 +15411,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5363:2: (iv_ruleWildcardTypeRefCS= ruleWildcardTypeRefCS EOF )
-            // InternalEssentialOCL.g:5364:2: iv_ruleWildcardTypeRefCS= ruleWildcardTypeRefCS EOF
+            // InternalEssentialOCL.g:5365:2: (iv_ruleWildcardTypeRefCS= ruleWildcardTypeRefCS EOF )
+            // InternalEssentialOCL.g:5366:2: iv_ruleWildcardTypeRefCS= ruleWildcardTypeRefCS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWildcardTypeRefCSRule());
@@ -15442,7 +15443,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleWildcardTypeRefCS"
-    // InternalEssentialOCL.g:5371:1: ruleWildcardTypeRefCS returns [EObject current=null] : ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? ) ;
+    // InternalEssentialOCL.g:5373:1: ruleWildcardTypeRefCS returns [EObject current=null] : ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? ) ;
     public final EObject ruleWildcardTypeRefCS() throws RecognitionException {
         EObject current = null;
 
@@ -15454,14 +15455,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5374:28: ( ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? ) )
-            // InternalEssentialOCL.g:5375:1: ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? )
+            // InternalEssentialOCL.g:5376:28: ( ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? ) )
+            // InternalEssentialOCL.g:5377:1: ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? )
             {
-            // InternalEssentialOCL.g:5375:1: ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? )
-            // InternalEssentialOCL.g:5375:2: () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )?
+            // InternalEssentialOCL.g:5377:1: ( () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )? )
+            // InternalEssentialOCL.g:5377:2: () otherlv_1= '?' (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )?
             {
-            // InternalEssentialOCL.g:5375:2: ()
-            // InternalEssentialOCL.g:5376:2:
+            // InternalEssentialOCL.g:5377:2: ()
+            // InternalEssentialOCL.g:5378:2:
             {
             if ( state.backtracking==0 ) {
 
@@ -15478,34 +15479,34 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
             }
 
-            otherlv_1=(Token)match(input,85,FollowSets000.FOLLOW_56); if (state.failed) return current;
+            otherlv_1=(Token)match(input,86,FollowSets000.FOLLOW_56); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getWildcardTypeRefCSAccess().getQuestionMarkKeyword_1());
 
             }
-            // InternalEssentialOCL.g:5388:1: (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )?
+            // InternalEssentialOCL.g:5390:1: (otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) ) )?
             int alt86=2;
             int LA86_0 = input.LA(1);
 
-            if ( (LA86_0==87) ) {
+            if ( (LA86_0==88) ) {
                 alt86=1;
             }
             switch (alt86) {
                 case 1 :
-                    // InternalEssentialOCL.g:5388:3: otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) )
+                    // InternalEssentialOCL.g:5390:3: otherlv_2= 'extends' ( (lv_ownedExtends_3_0= ruleTypedRefCS ) )
                     {
-                    otherlv_2=(Token)match(input,87,FollowSets000.FOLLOW_10); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,88,FollowSets000.FOLLOW_10); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getWildcardTypeRefCSAccess().getExtendsKeyword_2_0());
 
                     }
-                    // InternalEssentialOCL.g:5392:1: ( (lv_ownedExtends_3_0= ruleTypedRefCS ) )
-                    // InternalEssentialOCL.g:5393:1: (lv_ownedExtends_3_0= ruleTypedRefCS )
+                    // InternalEssentialOCL.g:5394:1: ( (lv_ownedExtends_3_0= ruleTypedRefCS ) )
+                    // InternalEssentialOCL.g:5395:1: (lv_ownedExtends_3_0= ruleTypedRefCS )
                     {
-                    // InternalEssentialOCL.g:5393:1: (lv_ownedExtends_3_0= ruleTypedRefCS )
-                    // InternalEssentialOCL.g:5394:3: lv_ownedExtends_3_0= ruleTypedRefCS
+                    // InternalEssentialOCL.g:5395:1: (lv_ownedExtends_3_0= ruleTypedRefCS )
+                    // InternalEssentialOCL.g:5396:3: lv_ownedExtends_3_0= ruleTypedRefCS
                     {
                     if ( state.backtracking==0 ) {
 
@@ -15565,7 +15566,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleID"
-    // InternalEssentialOCL.g:5418:1: entryRuleID returns [String current=null] : iv_ruleID= ruleID EOF ;
+    // InternalEssentialOCL.g:5420:1: entryRuleID returns [String current=null] : iv_ruleID= ruleID EOF ;
     public final String entryRuleID() throws RecognitionException {
         String current = null;
 
@@ -15573,8 +15574,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5419:2: (iv_ruleID= ruleID EOF )
-            // InternalEssentialOCL.g:5420:2: iv_ruleID= ruleID EOF
+            // InternalEssentialOCL.g:5421:2: (iv_ruleID= ruleID EOF )
+            // InternalEssentialOCL.g:5422:2: iv_ruleID= ruleID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIDRule());
@@ -15605,7 +15606,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleID"
-    // InternalEssentialOCL.g:5427:1: ruleID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID ) ;
+    // InternalEssentialOCL.g:5429:1: ruleID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID ) ;
     public final AntlrDatatypeRuleToken ruleID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15615,10 +15616,10 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5430:28: ( (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID ) )
-            // InternalEssentialOCL.g:5431:1: (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID )
+            // InternalEssentialOCL.g:5432:28: ( (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID ) )
+            // InternalEssentialOCL.g:5433:1: (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID )
             {
-            // InternalEssentialOCL.g:5431:1: (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID )
+            // InternalEssentialOCL.g:5433:1: (this_SIMPLE_ID_0= RULE_SIMPLE_ID | this_ESCAPED_ID_1= RULE_ESCAPED_ID )
             int alt87=2;
             int LA87_0 = input.LA(1);
 
@@ -15637,7 +15638,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             }
             switch (alt87) {
                 case 1 :
-                    // InternalEssentialOCL.g:5431:6: this_SIMPLE_ID_0= RULE_SIMPLE_ID
+                    // InternalEssentialOCL.g:5433:6: this_SIMPLE_ID_0= RULE_SIMPLE_ID
                     {
                     this_SIMPLE_ID_0=(Token)match(input,RULE_SIMPLE_ID,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15654,7 +15655,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     }
                     break;
                 case 2 :
-                    // InternalEssentialOCL.g:5439:10: this_ESCAPED_ID_1= RULE_ESCAPED_ID
+                    // InternalEssentialOCL.g:5441:10: this_ESCAPED_ID_1= RULE_ESCAPED_ID
                     {
                     this_ESCAPED_ID_1=(Token)match(input,RULE_ESCAPED_ID,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -15693,7 +15694,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleIdentifier"
-    // InternalEssentialOCL.g:5454:1: entryRuleIdentifier returns [String current=null] : iv_ruleIdentifier= ruleIdentifier EOF ;
+    // InternalEssentialOCL.g:5456:1: entryRuleIdentifier returns [String current=null] : iv_ruleIdentifier= ruleIdentifier EOF ;
     public final String entryRuleIdentifier() throws RecognitionException {
         String current = null;
 
@@ -15701,8 +15702,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5455:2: (iv_ruleIdentifier= ruleIdentifier EOF )
-            // InternalEssentialOCL.g:5456:2: iv_ruleIdentifier= ruleIdentifier EOF
+            // InternalEssentialOCL.g:5457:2: (iv_ruleIdentifier= ruleIdentifier EOF )
+            // InternalEssentialOCL.g:5458:2: iv_ruleIdentifier= ruleIdentifier EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIdentifierRule());
@@ -15733,7 +15734,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleIdentifier"
-    // InternalEssentialOCL.g:5463:1: ruleIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_ID_0= ruleID ;
+    // InternalEssentialOCL.g:5465:1: ruleIdentifier returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_ID_0= ruleID ;
     public final AntlrDatatypeRuleToken ruleIdentifier() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15743,8 +15744,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5466:28: (this_ID_0= ruleID )
-            // InternalEssentialOCL.g:5468:5: this_ID_0= ruleID
+            // InternalEssentialOCL.g:5468:28: (this_ID_0= ruleID )
+            // InternalEssentialOCL.g:5470:5: this_ID_0= ruleID
             {
             if ( state.backtracking==0 ) {
 
@@ -15786,7 +15787,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleLOWER"
-    // InternalEssentialOCL.g:5486:1: entryRuleLOWER returns [String current=null] : iv_ruleLOWER= ruleLOWER EOF ;
+    // InternalEssentialOCL.g:5488:1: entryRuleLOWER returns [String current=null] : iv_ruleLOWER= ruleLOWER EOF ;
     public final String entryRuleLOWER() throws RecognitionException {
         String current = null;
 
@@ -15794,8 +15795,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5487:2: (iv_ruleLOWER= ruleLOWER EOF )
-            // InternalEssentialOCL.g:5488:2: iv_ruleLOWER= ruleLOWER EOF
+            // InternalEssentialOCL.g:5489:2: (iv_ruleLOWER= ruleLOWER EOF )
+            // InternalEssentialOCL.g:5490:2: iv_ruleLOWER= ruleLOWER EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLOWERRule());
@@ -15826,7 +15827,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleLOWER"
-    // InternalEssentialOCL.g:5495:1: ruleLOWER returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_INT_0= RULE_INT ;
+    // InternalEssentialOCL.g:5497:1: ruleLOWER returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_INT_0= RULE_INT ;
     public final AntlrDatatypeRuleToken ruleLOWER() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15835,8 +15836,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5498:28: (this_INT_0= RULE_INT )
-            // InternalEssentialOCL.g:5499:5: this_INT_0= RULE_INT
+            // InternalEssentialOCL.g:5500:28: (this_INT_0= RULE_INT )
+            // InternalEssentialOCL.g:5501:5: this_INT_0= RULE_INT
             {
             this_INT_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -15869,7 +15870,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleNUMBER_LITERAL"
-    // InternalEssentialOCL.g:5514:1: entryRuleNUMBER_LITERAL returns [String current=null] : iv_ruleNUMBER_LITERAL= ruleNUMBER_LITERAL EOF ;
+    // InternalEssentialOCL.g:5516:1: entryRuleNUMBER_LITERAL returns [String current=null] : iv_ruleNUMBER_LITERAL= ruleNUMBER_LITERAL EOF ;
     public final String entryRuleNUMBER_LITERAL() throws RecognitionException {
         String current = null;
 
@@ -15877,8 +15878,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5515:2: (iv_ruleNUMBER_LITERAL= ruleNUMBER_LITERAL EOF )
-            // InternalEssentialOCL.g:5516:2: iv_ruleNUMBER_LITERAL= ruleNUMBER_LITERAL EOF
+            // InternalEssentialOCL.g:5517:2: (iv_ruleNUMBER_LITERAL= ruleNUMBER_LITERAL EOF )
+            // InternalEssentialOCL.g:5518:2: iv_ruleNUMBER_LITERAL= ruleNUMBER_LITERAL EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNUMBER_LITERALRule());
@@ -15909,7 +15910,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleNUMBER_LITERAL"
-    // InternalEssentialOCL.g:5523:1: ruleNUMBER_LITERAL returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_INT_0= RULE_INT ;
+    // InternalEssentialOCL.g:5525:1: ruleNUMBER_LITERAL returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_INT_0= RULE_INT ;
     public final AntlrDatatypeRuleToken ruleNUMBER_LITERAL() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -15918,8 +15919,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5526:28: (this_INT_0= RULE_INT )
-            // InternalEssentialOCL.g:5527:5: this_INT_0= RULE_INT
+            // InternalEssentialOCL.g:5528:28: (this_INT_0= RULE_INT )
+            // InternalEssentialOCL.g:5529:5: this_INT_0= RULE_INT
             {
             this_INT_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -15952,7 +15953,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleStringLiteral"
-    // InternalEssentialOCL.g:5542:1: entryRuleStringLiteral returns [String current=null] : iv_ruleStringLiteral= ruleStringLiteral EOF ;
+    // InternalEssentialOCL.g:5544:1: entryRuleStringLiteral returns [String current=null] : iv_ruleStringLiteral= ruleStringLiteral EOF ;
     public final String entryRuleStringLiteral() throws RecognitionException {
         String current = null;
 
@@ -15960,8 +15961,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5543:2: (iv_ruleStringLiteral= ruleStringLiteral EOF )
-            // InternalEssentialOCL.g:5544:2: iv_ruleStringLiteral= ruleStringLiteral EOF
+            // InternalEssentialOCL.g:5545:2: (iv_ruleStringLiteral= ruleStringLiteral EOF )
+            // InternalEssentialOCL.g:5546:2: iv_ruleStringLiteral= ruleStringLiteral EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringLiteralRule());
@@ -15992,7 +15993,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleStringLiteral"
-    // InternalEssentialOCL.g:5551:1: ruleStringLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING ;
+    // InternalEssentialOCL.g:5553:1: ruleStringLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING ;
     public final AntlrDatatypeRuleToken ruleStringLiteral() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -16001,8 +16002,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5554:28: (this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING )
-            // InternalEssentialOCL.g:5555:5: this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING
+            // InternalEssentialOCL.g:5556:28: (this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING )
+            // InternalEssentialOCL.g:5557:5: this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING
             {
             this_SINGLE_QUOTED_STRING_0=(Token)match(input,RULE_SINGLE_QUOTED_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16035,7 +16036,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleUPPER"
-    // InternalEssentialOCL.g:5570:1: entryRuleUPPER returns [String current=null] : iv_ruleUPPER= ruleUPPER EOF ;
+    // InternalEssentialOCL.g:5572:1: entryRuleUPPER returns [String current=null] : iv_ruleUPPER= ruleUPPER EOF ;
     public final String entryRuleUPPER() throws RecognitionException {
         String current = null;
 
@@ -16043,8 +16044,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5571:2: (iv_ruleUPPER= ruleUPPER EOF )
-            // InternalEssentialOCL.g:5572:2: iv_ruleUPPER= ruleUPPER EOF
+            // InternalEssentialOCL.g:5573:2: (iv_ruleUPPER= ruleUPPER EOF )
+            // InternalEssentialOCL.g:5574:2: iv_ruleUPPER= ruleUPPER EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getUPPERRule());
@@ -16075,7 +16076,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleUPPER"
-    // InternalEssentialOCL.g:5579:1: ruleUPPER returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_INT_0= RULE_INT | kw= '*' ) ;
+    // InternalEssentialOCL.g:5581:1: ruleUPPER returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_INT_0= RULE_INT | kw= '*' ) ;
     public final AntlrDatatypeRuleToken ruleUPPER() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -16085,17 +16086,17 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5582:28: ( (this_INT_0= RULE_INT | kw= '*' ) )
-            // InternalEssentialOCL.g:5583:1: (this_INT_0= RULE_INT | kw= '*' )
+            // InternalEssentialOCL.g:5584:28: ( (this_INT_0= RULE_INT | kw= '*' ) )
+            // InternalEssentialOCL.g:5585:1: (this_INT_0= RULE_INT | kw= '*' )
             {
-            // InternalEssentialOCL.g:5583:1: (this_INT_0= RULE_INT | kw= '*' )
+            // InternalEssentialOCL.g:5585:1: (this_INT_0= RULE_INT | kw= '*' )
             int alt88=2;
             int LA88_0 = input.LA(1);
 
             if ( (LA88_0==RULE_INT) ) {
                 alt88=1;
             }
-            else if ( (LA88_0==19) ) {
+            else if ( (LA88_0==20) ) {
                 alt88=2;
             }
             else {
@@ -16107,7 +16108,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
             }
             switch (alt88) {
                 case 1 :
-                    // InternalEssentialOCL.g:5583:6: this_INT_0= RULE_INT
+                    // InternalEssentialOCL.g:5585:6: this_INT_0= RULE_INT
                     {
                     this_INT_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -16124,9 +16125,9 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
                     }
                     break;
                 case 2 :
-                    // InternalEssentialOCL.g:5592:2: kw= '*'
+                    // InternalEssentialOCL.g:5594:2: kw= '*'
                     {
-                    kw=(Token)match(input,19,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    kw=(Token)match(input,20,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -16159,7 +16160,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "entryRuleURI"
-    // InternalEssentialOCL.g:5605:1: entryRuleURI returns [String current=null] : iv_ruleURI= ruleURI EOF ;
+    // InternalEssentialOCL.g:5607:1: entryRuleURI returns [String current=null] : iv_ruleURI= ruleURI EOF ;
     public final String entryRuleURI() throws RecognitionException {
         String current = null;
 
@@ -16167,8 +16168,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
         try {
-            // InternalEssentialOCL.g:5606:2: (iv_ruleURI= ruleURI EOF )
-            // InternalEssentialOCL.g:5607:2: iv_ruleURI= ruleURI EOF
+            // InternalEssentialOCL.g:5608:2: (iv_ruleURI= ruleURI EOF )
+            // InternalEssentialOCL.g:5609:2: iv_ruleURI= ruleURI EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getURIRule());
@@ -16199,7 +16200,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
 
     // $ANTLR start "ruleURI"
-    // InternalEssentialOCL.g:5614:1: ruleURI returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING ;
+    // InternalEssentialOCL.g:5616:1: ruleURI returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING ;
     public final AntlrDatatypeRuleToken ruleURI() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -16208,8 +16209,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
          enterRule();
 
         try {
-            // InternalEssentialOCL.g:5617:28: (this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING )
-            // InternalEssentialOCL.g:5618:5: this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING
+            // InternalEssentialOCL.g:5619:28: (this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING )
+            // InternalEssentialOCL.g:5620:5: this_SINGLE_QUOTED_STRING_0= RULE_SINGLE_QUOTED_STRING
             {
             this_SINGLE_QUOTED_STRING_0=(Token)match(input,RULE_SINGLE_QUOTED_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -16292,7 +16293,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt99=2;
         int LA99_0 = input.LA(1);
 
-        if ( (LA99_0==16||(LA99_0>=19 && LA99_0<=39)) ) {
+        if ( (LA99_0==17||(LA99_0>=20 && LA99_0<=40)) ) {
             alt99=1;
         }
         switch (alt99) {
@@ -16475,7 +16476,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         // InternalEssentialOCL.g:3486:3: (otherlv_1= '<-' ( (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS ) ) (otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) ) )? )
         // InternalEssentialOCL.g:3486:5: otherlv_1= '<-' ( (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS ) ) (otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) ) )?
         {
-        otherlv_1=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return ;
+        otherlv_1=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return ;
         // InternalEssentialOCL.g:3490:1: ( (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS ) )
         // InternalEssentialOCL.g:3491:1: (lv_ownedCoIterator_2_0= ruleCoIteratorVariableCS )
         {
@@ -16502,14 +16503,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt104=2;
         int LA104_0 = input.LA(1);
 
-        if ( (LA104_0==26) ) {
+        if ( (LA104_0==27) ) {
             alt104=1;
         }
         switch (alt104) {
             case 1 :
                 // InternalEssentialOCL.g:3508:4: otherlv_3= '=' ( (lv_ownedInitExpression_4_0= ruleExpCS ) )
                 {
-                otherlv_3=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return ;
+                otherlv_3=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return ;
                 // InternalEssentialOCL.g:3512:1: ( (lv_ownedInitExpression_4_0= ruleExpCS ) )
                 // InternalEssentialOCL.g:3513:1: (lv_ownedInitExpression_4_0= ruleExpCS )
                 {
@@ -16564,7 +16565,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         // InternalEssentialOCL.g:3531:6: (otherlv_5= ':' ( (lv_ownedType_6_0= ruleTypeExpCS ) ) (otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) ) )? (otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) ) )? )
         // InternalEssentialOCL.g:3531:8: otherlv_5= ':' ( (lv_ownedType_6_0= ruleTypeExpCS ) ) (otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) ) )? (otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) ) )?
         {
-        otherlv_5=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return ;
+        otherlv_5=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return ;
         // InternalEssentialOCL.g:3535:1: ( (lv_ownedType_6_0= ruleTypeExpCS ) )
         // InternalEssentialOCL.g:3536:1: (lv_ownedType_6_0= ruleTypeExpCS )
         {
@@ -16591,14 +16592,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt105=2;
         int LA105_0 = input.LA(1);
 
-        if ( (LA105_0==64) ) {
+        if ( (LA105_0==65) ) {
             alt105=1;
         }
         switch (alt105) {
             case 1 :
                 // InternalEssentialOCL.g:3553:4: otherlv_7= '<-' ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) )
                 {
-                otherlv_7=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return ;
+                otherlv_7=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return ;
                 // InternalEssentialOCL.g:3557:1: ( (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS ) )
                 // InternalEssentialOCL.g:3558:1: (lv_ownedCoIterator_8_0= ruleCoIteratorVariableCS )
                 {
@@ -16631,14 +16632,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt106=2;
         int LA106_0 = input.LA(1);
 
-        if ( (LA106_0==26) ) {
+        if ( (LA106_0==27) ) {
             alt106=1;
         }
         switch (alt106) {
             case 1 :
                 // InternalEssentialOCL.g:3575:6: otherlv_9= '=' ( (lv_ownedInitExpression_10_0= ruleExpCS ) )
                 {
-                otherlv_9=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return ;
+                otherlv_9=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return ;
                 // InternalEssentialOCL.g:3579:1: ( (lv_ownedInitExpression_10_0= ruleExpCS ) )
                 // InternalEssentialOCL.g:3580:1: (lv_ownedInitExpression_10_0= ruleExpCS )
                 {
@@ -16697,14 +16698,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt107=2;
         int LA107_0 = input.LA(1);
 
-        if ( (LA107_0==58) ) {
+        if ( (LA107_0==59) ) {
             alt107=1;
         }
         switch (alt107) {
             case 1 :
                 // InternalEssentialOCL.g:3598:9: otherlv_11= ':' ( (lv_ownedType_12_0= ruleTypeExpCS ) )
                 {
-                otherlv_11=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return ;
+                otherlv_11=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return ;
                 // InternalEssentialOCL.g:3602:1: ( (lv_ownedType_12_0= ruleTypeExpCS ) )
                 // InternalEssentialOCL.g:3603:1: (lv_ownedType_12_0= ruleTypeExpCS )
                 {
@@ -16737,14 +16738,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt108=2;
         int LA108_0 = input.LA(1);
 
-        if ( (LA108_0==64) ) {
+        if ( (LA108_0==65) ) {
             alt108=1;
         }
         switch (alt108) {
             case 1 :
                 // InternalEssentialOCL.g:3620:6: otherlv_13= '<-' ( (lv_ownedCoIterator_14_0= ruleCoIteratorVariableCS ) )
                 {
-                otherlv_13=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return ;
+                otherlv_13=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return ;
                 // InternalEssentialOCL.g:3624:1: ( (lv_ownedCoIterator_14_0= ruleCoIteratorVariableCS ) )
                 // InternalEssentialOCL.g:3625:1: (lv_ownedCoIterator_14_0= ruleCoIteratorVariableCS )
                 {
@@ -16773,7 +16774,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
         }
 
-        otherlv_15=(Token)match(input,73,FollowSets000.FOLLOW_17); if (state.failed) return ;
+        otherlv_15=(Token)match(input,74,FollowSets000.FOLLOW_17); if (state.failed) return ;
         // InternalEssentialOCL.g:3646:1: ( (lv_ownedInitExpression_16_0= ruleExpCS ) )
         // InternalEssentialOCL.g:3647:1: (lv_ownedInitExpression_16_0= ruleExpCS )
         {
@@ -16819,7 +16820,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         // InternalEssentialOCL.g:3839:3: (otherlv_2= '<-' ( (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )? )
         // InternalEssentialOCL.g:3839:5: otherlv_2= '<-' ( (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS ) ) (otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) ) )?
         {
-        otherlv_2=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return ;
+        otherlv_2=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return ;
         // InternalEssentialOCL.g:3843:1: ( (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS ) )
         // InternalEssentialOCL.g:3844:1: (lv_ownedCoIterator_3_0= ruleCoIteratorVariableCS )
         {
@@ -16846,14 +16847,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt116=2;
         int LA116_0 = input.LA(1);
 
-        if ( (LA116_0==26) ) {
+        if ( (LA116_0==27) ) {
             alt116=1;
         }
         switch (alt116) {
             case 1 :
                 // InternalEssentialOCL.g:3861:4: otherlv_4= '=' ( (lv_ownedInitExpression_5_0= ruleExpCS ) )
                 {
-                otherlv_4=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return ;
+                otherlv_4=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return ;
                 // InternalEssentialOCL.g:3865:1: ( (lv_ownedInitExpression_5_0= ruleExpCS ) )
                 // InternalEssentialOCL.g:3866:1: (lv_ownedInitExpression_5_0= ruleExpCS )
                 {
@@ -16908,7 +16909,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         // InternalEssentialOCL.g:3884:6: (otherlv_6= ':' ( (lv_ownedType_7_0= ruleTypeExpCS ) ) (otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) ) )? (otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) ) )? )
         // InternalEssentialOCL.g:3884:8: otherlv_6= ':' ( (lv_ownedType_7_0= ruleTypeExpCS ) ) (otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) ) )? (otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) ) )?
         {
-        otherlv_6=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return ;
+        otherlv_6=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return ;
         // InternalEssentialOCL.g:3888:1: ( (lv_ownedType_7_0= ruleTypeExpCS ) )
         // InternalEssentialOCL.g:3889:1: (lv_ownedType_7_0= ruleTypeExpCS )
         {
@@ -16935,14 +16936,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt117=2;
         int LA117_0 = input.LA(1);
 
-        if ( (LA117_0==64) ) {
+        if ( (LA117_0==65) ) {
             alt117=1;
         }
         switch (alt117) {
             case 1 :
                 // InternalEssentialOCL.g:3906:4: otherlv_8= '<-' ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) )
                 {
-                otherlv_8=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return ;
+                otherlv_8=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return ;
                 // InternalEssentialOCL.g:3910:1: ( (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS ) )
                 // InternalEssentialOCL.g:3911:1: (lv_ownedCoIterator_9_0= ruleCoIteratorVariableCS )
                 {
@@ -16975,14 +16976,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt118=2;
         int LA118_0 = input.LA(1);
 
-        if ( (LA118_0==26) ) {
+        if ( (LA118_0==27) ) {
             alt118=1;
         }
         switch (alt118) {
             case 1 :
                 // InternalEssentialOCL.g:3928:6: otherlv_10= '=' ( (lv_ownedInitExpression_11_0= ruleExpCS ) )
                 {
-                otherlv_10=(Token)match(input,26,FollowSets000.FOLLOW_17); if (state.failed) return ;
+                otherlv_10=(Token)match(input,27,FollowSets000.FOLLOW_17); if (state.failed) return ;
                 // InternalEssentialOCL.g:3932:1: ( (lv_ownedInitExpression_11_0= ruleExpCS ) )
                 // InternalEssentialOCL.g:3933:1: (lv_ownedInitExpression_11_0= ruleExpCS )
                 {
@@ -17041,14 +17042,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt119=2;
         int LA119_0 = input.LA(1);
 
-        if ( (LA119_0==58) ) {
+        if ( (LA119_0==59) ) {
             alt119=1;
         }
         switch (alt119) {
             case 1 :
                 // InternalEssentialOCL.g:3951:9: otherlv_12= ':' ( (lv_ownedType_13_0= ruleTypeExpCS ) )
                 {
-                otherlv_12=(Token)match(input,58,FollowSets000.FOLLOW_4); if (state.failed) return ;
+                otherlv_12=(Token)match(input,59,FollowSets000.FOLLOW_4); if (state.failed) return ;
                 // InternalEssentialOCL.g:3955:1: ( (lv_ownedType_13_0= ruleTypeExpCS ) )
                 // InternalEssentialOCL.g:3956:1: (lv_ownedType_13_0= ruleTypeExpCS )
                 {
@@ -17081,14 +17082,14 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
         int alt120=2;
         int LA120_0 = input.LA(1);
 
-        if ( (LA120_0==64) ) {
+        if ( (LA120_0==65) ) {
             alt120=1;
         }
         switch (alt120) {
             case 1 :
                 // InternalEssentialOCL.g:3973:6: otherlv_14= '<-' ( (lv_ownedCoIterator_15_0= ruleCoIteratorVariableCS ) )
                 {
-                otherlv_14=(Token)match(input,64,FollowSets000.FOLLOW_10); if (state.failed) return ;
+                otherlv_14=(Token)match(input,65,FollowSets000.FOLLOW_10); if (state.failed) return ;
                 // InternalEssentialOCL.g:3977:1: ( (lv_ownedCoIterator_15_0= ruleCoIteratorVariableCS ) )
                 // InternalEssentialOCL.g:3978:1: (lv_ownedCoIterator_15_0= ruleCoIteratorVariableCS )
                 {
@@ -17117,7 +17118,7 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
 
         }
 
-        otherlv_16=(Token)match(input,73,FollowSets000.FOLLOW_17); if (state.failed) return ;
+        otherlv_16=(Token)match(input,74,FollowSets000.FOLLOW_17); if (state.failed) return ;
         // InternalEssentialOCL.g:3999:1: ( (lv_ownedInitExpression_17_0= ruleExpCS ) )
         // InternalEssentialOCL.g:4000:1: (lv_ownedInitExpression_17_0= ruleExpCS )
         {
@@ -17327,11 +17328,11 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     protected DFA66 dfa66 = new DFA66(this);
     static final String dfa_1s = "\23\uffff";
     static final String dfa_2s = "\1\4\12\uffff\5\0\3\uffff";
-    static final String dfa_3s = "\1\66\12\uffff\5\0\3\uffff";
+    static final String dfa_3s = "\1\67\12\uffff\5\0\3\uffff";
     static final String dfa_4s = "\1\uffff\1\1\1\uffff\1\2\16\uffff\1\3";
     static final String dfa_5s = "\13\uffff\1\0\1\1\1\2\1\3\1\4\3\uffff}>";
     static final String[] dfa_6s = {
-            "\2\1\42\uffff\12\3\1\13\1\14\1\15\1\16\1\17",
+            "\2\1\43\uffff\12\3\1\13\1\14\1\15\1\16\1\17",
             "",
             "",
             "",
@@ -17464,11 +17465,11 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     }
     static final String dfa_7s = "\41\uffff";
     static final String dfa_8s = "\1\4\3\0\35\uffff";
-    static final String dfa_9s = "\1\122\3\0\35\uffff";
+    static final String dfa_9s = "\1\123\3\0\35\uffff";
     static final String dfa_10s = "\4\uffff\1\1\33\uffff\1\2";
     static final String dfa_11s = "\1\uffff\1\0\1\1\1\2\35\uffff}>";
     static final String[] dfa_12s = {
-            "\4\4\10\uffff\1\1\1\2\1\3\1\4\24\uffff\20\4\7\uffff\1\4\1\uffff\4\4\7\uffff\1\4\4\uffff\1\40\1\4",
+            "\4\4\11\uffff\1\1\1\2\1\3\1\4\24\uffff\20\4\7\uffff\1\4\1\uffff\4\4\7\uffff\1\4\4\uffff\1\40\1\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -17585,11 +17586,11 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     }
     static final String dfa_13s = "\40\uffff";
     static final String dfa_14s = "\1\4\12\uffff\7\0\16\uffff";
-    static final String dfa_15s = "\1\122\12\uffff\7\0\16\uffff";
+    static final String dfa_15s = "\1\123\12\uffff\7\0\16\uffff";
     static final String dfa_16s = "\1\uffff\1\1\1\2\1\3\1\4\15\uffff\1\10\1\11\7\uffff\1\12\1\uffff\1\5\1\6\1\7";
     static final String dfa_17s = "\13\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\16\uffff}>";
     static final String[] dfa_18s = {
-            "\2\33\2\4\13\uffff\1\4\24\uffff\1\14\1\13\10\23\1\15\1\16\1\17\1\20\1\21\1\1\7\uffff\1\22\1\uffff\4\4\7\uffff\1\2\5\uffff\1\3",
+            "\2\33\2\4\14\uffff\1\4\24\uffff\1\14\1\13\10\23\1\15\1\16\1\17\1\20\1\21\1\1\7\uffff\1\22\1\uffff\4\4\7\uffff\1\2\5\uffff\1\3",
             "",
             "",
             "",
@@ -17765,8 +17766,8 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     }
     static final String dfa_19s = "\13\uffff";
     static final String dfa_20s = "\1\4\12\uffff";
-    static final String dfa_21s = "\1\70\2\0\10\uffff";
-    static final String dfa_22s = "\1\113\2\0\10\uffff";
+    static final String dfa_21s = "\1\71\2\0\10\uffff";
+    static final String dfa_22s = "\1\114\2\0\10\uffff";
     static final String dfa_23s = "\3\uffff\1\3\1\4\4\uffff\1\1\1\2";
     static final String dfa_24s = "\1\uffff\1\0\1\1\10\uffff}>";
     static final String[] dfa_25s = {
@@ -17914,61 +17915,61 @@ public class InternalEssentialOCLParser extends org.eclipse.ocl.xtext.base.utili
     private static class FollowSets000 {
         public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0080000000000002L});
-        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x007FFF0000000030L});
-        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0100000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0100000000000000L});
-        public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0200000000000000L});
-        public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0100000000000030L});
-        public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0300000000000000L});
+        public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0100000000000002L});
+        public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x00FFFE0000000030L});
+        public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0200000000000000L,0x0000000000000100L});
+        public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0200000000000000L});
+        public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0400000000000000L});
+        public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0200000000000030L});
+        public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0600000000000000L});
         public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000000030L});
-        public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0400000000000000L});
-        public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0800000000000000L});
-        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x94FFFF00000F00F0L,0x000000000006101EL});
-        public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x1200000000000000L});
-        public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x84FFFF00000F00F0L,0x000000000006101EL});
-        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x2000000000000002L});
-        public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x80FFFF00000F00F0L,0x000000000006101EL});
-        public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x4200000000000000L});
-        public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x1000000000000000L});
-        public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000004000000L});
-        public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x90FFFF00000F00F0L,0x000000000006101EL});
-        public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-        public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0400000004000000L});
+        public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0800000000000000L});
+        public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x1000000000000000L});
+        public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x29FFFE00001E00F0L,0x00000000000C203DL});
+        public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x2400000000000000L});
+        public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x09FFFE00001E00F0L,0x00000000000C203DL});
+        public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x4000000000000002L});
+        public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x01FFFE00001E00F0L,0x00000000000C203DL});
+        public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x8400000000000000L});
+        public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x2000000000000000L});
+        public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000008000000L});
+        public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x21FFFE00001E00F0L,0x00000000000C203DL});
+        public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+        public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0800000008000000L});
         public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000000082L});
-        public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
-        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0800000000000002L});
-        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x000000FFFFF90002L});
-        public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x80FFFF00000F00F0L,0x000000000004101EL});
-        public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0880000000000002L,0x00000000000000A0L});
-        public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0800000000000002L,0x0000000000000020L});
-        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
-        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x10000000000000B0L});
+        public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000100L});
+        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x1000000000000002L});
+        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x000001FFFFF20002L});
+        public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x01FFFE00001E00F0L,0x000000000008203DL});
+        public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x1100000000000002L,0x0000000000000140L});
+        public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x1000000000000002L,0x0000000000000040L});
+        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000040L});
+        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x20000000000000B0L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x00000000000000B0L});
-        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x85FFFF00000F00F0L,0x000000000006101EL});
-        public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0300000000000000L,0x0000000000000C00L});
-        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0200000000000000L,0x0000000000000100L});
-        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0400000000000002L,0x0000000000000201L});
-        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000004000002L});
-        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000004000002L,0x0000000000000001L});
-        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000201L});
-        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
-        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0400000000000002L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
-        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000000L,0x0000000000014000L});
-        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
-        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0200000000000000L,0x0000000000000200L});
-        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0480000004000000L});
-        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000080040L});
-        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000000280040L,0x0000000000200000L});
-        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000000000L,0x0000000000180100L});
-        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000002L,0x0000000000400000L});
-        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0200000000000002L,0x0000000000000080L});
-        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000030L,0x0000000000200000L});
-        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000000000000002L,0x0000000000800000L});
-        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
+        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0BFFFE00001E00F0L,0x00000000000C203DL});
+        public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0600000000000000L,0x0000000000001800L});
+        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0400000000000000L,0x0000000000000200L});
+        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0800000000000002L,0x0000000000000402L});
+        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000008000002L});
+        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000008000002L,0x0000000000000002L});
+        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000402L});
+        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0800000000000002L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000000L,0x0000000000028000L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0400000000000000L,0x0000000000000400L});
+        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0900000008000000L});
+        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000100040L});
+        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000000500040L,0x0000000000400000L});
+        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000000000L,0x0000000000300200L});
+        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000002L,0x0000000000800000L});
+        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0400000000000002L,0x0000000000000100L});
+        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000030L,0x0000000000400000L});
+        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
+        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000000000002L,0x0000000002000000L});
     }
 
 

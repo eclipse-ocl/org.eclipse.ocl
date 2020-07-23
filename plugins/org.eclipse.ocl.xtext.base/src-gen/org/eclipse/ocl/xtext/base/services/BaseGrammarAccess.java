@@ -24,6 +24,22 @@ import org.eclipse.xtext.service.AbstractElementFinder.*;
 public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 
 
+	public class CommentCSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.CommentCS");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueML_DOCUMENTATIONTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+
+		//CommentCS:
+		//	value=ML_DOCUMENTATION;
+		@Override public ParserRule getRule() { return rule; }
+
+		//value=ML_DOCUMENTATION
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//ML_DOCUMENTATION
+		public RuleCall getValueML_DOCUMENTATIONTerminalRuleCall_0() { return cValueML_DOCUMENTATIONTerminalRuleCall_0; }
+	}
+
 	public class MultiplicityBoundsCSElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.MultiplicityBoundsCS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -614,6 +630,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 
+	private final CommentCSElements pCommentCS;
 	private final MultiplicityBoundsCSElements pMultiplicityBoundsCS;
 	private final MultiplicityCSElements pMultiplicityCS;
 	private final MultiplicityStringCSElements pMultiplicityStringCS;
@@ -646,6 +663,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	private final TerminalRule tESCAPED_ID;
 	private final TerminalRule tINT;
 	private final TerminalRule tML_COMMENT;
+	private final TerminalRule tML_DOCUMENTATION;
 	private final TerminalRule tSL_COMMENT;
 	private final TerminalRule tWS;
 	private final TerminalRule tANY_OTHER;
@@ -655,6 +673,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	@Inject
 	public BaseGrammarAccess(GrammarProvider grammarProvider) {
 		this.grammar = internalFindGrammar(grammarProvider);
+		this.pCommentCS = new CommentCSElements();
 		this.pMultiplicityBoundsCS = new MultiplicityBoundsCSElements();
 		this.pMultiplicityCS = new MultiplicityCSElements();
 		this.pMultiplicityStringCS = new MultiplicityStringCSElements();
@@ -687,6 +706,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		this.tESCAPED_ID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ESCAPED_ID");
 		this.tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.INT");
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ML_COMMENT");
+		this.tML_DOCUMENTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ML_DOCUMENTATION");
 		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.SL_COMMENT");
 		this.tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.WS");
 		this.tANY_OTHER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.base.Base.ANY_OTHER");
@@ -714,6 +734,16 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 
+
+	//CommentCS:
+	//	value=ML_DOCUMENTATION;
+	public CommentCSElements getCommentCSAccess() {
+		return pCommentCS;
+	}
+
+	public ParserRule getCommentCSRule() {
+		return getCommentCSAccess().getRule();
+	}
 
 	//MultiplicityBoundsCS:
 	//	lowerBound=LOWER ('..' upperBound=UPPER)?;
@@ -1006,6 +1036,12 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	//	'/*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
+	}
+
+	//terminal ML_DOCUMENTATION:
+	//	'/%#$*->%#$*/';
+	public TerminalRule getML_DOCUMENTATIONRule() {
+		return tML_DOCUMENTATION;
 	}
 
 	//terminal SL_COMMENT:

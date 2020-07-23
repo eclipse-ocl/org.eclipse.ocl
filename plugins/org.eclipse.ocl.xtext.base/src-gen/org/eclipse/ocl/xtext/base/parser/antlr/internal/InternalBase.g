@@ -57,7 +57,7 @@ import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 
     @Override
     protected String getFirstRuleName() {
-    	return "MultiplicityBoundsCS";
+    	return "CommentCS";
    	}
 
    	@Override
@@ -72,6 +72,45 @@ import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
         appendSkippedTokens();
     }
 }
+
+
+
+
+// Entry rule entryRuleCommentCS
+entryRuleCommentCS returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getCommentCSRule()); }
+	 iv_ruleCommentCS=ruleCommentCS
+	 { $current=$iv_ruleCommentCS.current; }
+	 EOF
+;
+
+// Rule CommentCS
+ruleCommentCS returns [EObject current=null]
+    @init { enterRule();
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_value_0_0=RULE_ML_DOCUMENTATION
+		{
+			newLeafNode(lv_value_0_0, grammarAccess.getCommentCSAccess().getValueML_DOCUMENTATIONTerminalRuleCall_0());
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getCommentCSRule());
+	        }
+       		setWithLastConsumed(
+       			$current,
+       			"value",
+        		lv_value_0_0,
+        		"org.eclipse.ocl.xtext.base.Base.ML_DOCUMENTATION");
+	    }
+
+)
+)
+;
+
 
 
 
@@ -1034,6 +1073,8 @@ RULE_ESCAPED_ID : '_' RULE_SINGLE_QUOTED_STRING;
 RULE_INT : ('0'..'9')+;
 
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
+
+RULE_ML_DOCUMENTATION : '/%#$*->%#$*/';
 
 RULE_SL_COMMENT : '--' ~(('\n'|'\r'))* ('\r'? '\n')?;
 

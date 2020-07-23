@@ -100,51 +100,51 @@ public class OCLinEcoreFormatter extends AbstractEssentialOCLFormatter {
 		}
 		{	// AttributeCS
 			AttributeCSElements a = f.getAttributeCSAccess();
-			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_5_0(), a.getRightCurlyBracketKeyword_5_2());
-			c.setNoSpace().around(a.getCommaKeyword_5_1_1());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_6_1());
-			setBraces(c, a.getLeftCurlyBracketKeyword_6_0_0(), a.getRightCurlyBracketKeyword_6_0_2());
+			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_6_0(), a.getRightCurlyBracketKeyword_6_2());
+			c.setNoSpace().around(a.getCommaKeyword_6_1_1());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_1());
+			setBraces(c, a.getLeftCurlyBracketKeyword_7_0_0(), a.getRightCurlyBracketKeyword_7_0_2());
 			//
-			c.setNoSpace().before(a.getColonKeyword_6_0_1_1_2());
-			c.setSpace(" ").after(a.getColonKeyword_6_0_1_1_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_6_0_1_1_4());
-			c.setIndentation(a.getColonKeyword_6_0_1_1_2(), a.getSemicolonKeyword_6_0_1_1_4());
+			c.setNoSpace().before(a.getColonKeyword_7_0_1_1_2());
+			c.setSpace(" ").after(a.getColonKeyword_7_0_1_1_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_1_4());
+			c.setIndentation(a.getColonKeyword_7_0_1_1_2(), a.getSemicolonKeyword_7_0_1_1_4());
 			//
-			c.setNoSpace().before(a.getColonKeyword_6_0_1_1_2());
-			c.setSpace(" ").after(a.getColonKeyword_6_0_1_1_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_6_0_1_2_4());
-			c.setIndentation(a.getColonKeyword_6_0_1_1_2(), a.getSemicolonKeyword_6_0_1_2_4());
+			c.setNoSpace().before(a.getColonKeyword_7_0_1_1_2());
+			c.setSpace(" ").after(a.getColonKeyword_7_0_1_1_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_2_4());
+			c.setIndentation(a.getColonKeyword_7_0_1_1_2(), a.getSemicolonKeyword_7_0_1_2_4());
 		}
 		{
 			DataTypeCSElements a = f.getDataTypeCSAccess();
-			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_5_0(), a.getRightCurlyBracketKeyword_5_2());
-			setBraces(c, a.getLeftCurlyBracketKeyword_6_0_0(), a.getRightCurlyBracketKeyword_6_0_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_6_1());
+			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_6_0(), a.getRightCurlyBracketKeyword_6_2());
+			setBraces(c, a.getLeftCurlyBracketKeyword_7_0_0(), a.getRightCurlyBracketKeyword_7_0_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_1());
 		}
 		{
 			DocumentationCSElements a = f.getDocumentationCSAccess();
-			c.setNoSpace().around(a.getLeftParenthesisKeyword_3_0());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_4());
-			c.setNoSpace().before(a.getRightParenthesisKeyword_3_3());
-			c.setIndentation(a.getLeftParenthesisKeyword_3_0(), a.getRightParenthesisKeyword_3_3());
+			c.setNoSpace().around(a.getLeftParenthesisKeyword_4_0());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_5());
+			c.setNoSpace().before(a.getRightParenthesisKeyword_4_3());
+			c.setIndentation(a.getLeftParenthesisKeyword_4_0(), a.getRightParenthesisKeyword_4_3());
 		}
 		{
 			EnumerationCSElements a = f.getEnumerationCSAccess();
-			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_4_0(), a.getRightCurlyBracketKeyword_4_2());
+			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_5_0(), a.getRightCurlyBracketKeyword_5_2());
 			//			setBraces(c, a.getLeftCurlyBracketKeyword_4_0(), a.getRightCurlyBracketKeyword_4_2());
-			setBraces(c, a.getLeftCurlyBracketKeyword_5_0_0(), a.getRightCurlyBracketKeyword_5_0_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_5_1());
+			setBraces(c, a.getLeftCurlyBracketKeyword_6_0_0(), a.getRightCurlyBracketKeyword_6_0_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_6_1());
 		}
 		{
 			EnumerationLiteralCSElements a = f.getEnumerationLiteralCSAccess();
 			//			c.setNoSpace().around(a.getColonKeyword_1_0());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_3_1());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_4_1());
 		}
 		{
 			ImportCSElements a = f.getImportCSAccess();
 			c.setLinewrap(1).before(a.getGroup());
-			c.setNoSpace().around(a.getIsAllColonColonAsteriskKeyword_3_0());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_4());
+			c.setNoSpace().around(a.getIsAllColonColonAsteriskKeyword_4_0());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_5());
 		}
 		{
 			InvariantConstraintCSElements a = f.getInvariantConstraintCSAccess();
@@ -163,25 +163,25 @@ public class OCLinEcoreFormatter extends AbstractEssentialOCLFormatter {
 		}
 		{
 			OperationCSElements a = f.getOperationCSAccess();
-			c.setNoSpace().around(a.getLeftParenthesisKeyword_4());
-			c.setNoSpace().before(a.getCommaKeyword_5_1_0());
-			c.setNoSpace().before(a.getRightParenthesisKeyword_6());
-			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_9_0(), a.getRightCurlyBracketKeyword_9_2());
-			c.setNoSpace().around(a.getCommaKeyword_9_1_1());
-			setBraces(c, a.getLeftCurlyBracketKeyword_10_0_0(), a.getRightCurlyBracketKeyword_10_0_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_10_1());
-			c.setIndentation(a.getLeftParenthesisKeyword_4(), a.getRightParenthesisKeyword_6());
+			c.setNoSpace().around(a.getLeftParenthesisKeyword_5());
+			c.setNoSpace().before(a.getCommaKeyword_6_1_0());
+			c.setNoSpace().before(a.getRightParenthesisKeyword_7());
+			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_10_0(), a.getRightCurlyBracketKeyword_10_2());
+			c.setNoSpace().around(a.getCommaKeyword_10_1_1());
+			setBraces(c, a.getLeftCurlyBracketKeyword_11_0_0(), a.getRightCurlyBracketKeyword_11_0_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_11_1());
+			c.setIndentation(a.getLeftParenthesisKeyword_5(), a.getRightParenthesisKeyword_7());
 			//
-			c.setNoSpace().before(a.getColonKeyword_10_0_1_2_2());
-			c.setSpace(" ").after(a.getColonKeyword_10_0_1_2_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_10_0_1_2_4());
-			c.setIndentation(a.getColonKeyword_10_0_1_2_2(), a.getSemicolonKeyword_10_0_1_2_4());
+			c.setNoSpace().before(a.getColonKeyword_11_0_1_2_2());
+			c.setSpace(" ").after(a.getColonKeyword_11_0_1_2_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_11_0_1_2_4());
+			c.setIndentation(a.getColonKeyword_11_0_1_2_2(), a.getSemicolonKeyword_11_0_1_2_4());
 		}
 		{
 			PackageCSElements a = f.getPackageCSAccess();
-			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_4_0_0(), a.getRightCurlyBracketKeyword_4_0_2());
-			setBraces(c, a.getLeftCurlyBracketKeyword_4_0_0(), a.getRightCurlyBracketKeyword_4_0_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_4_1());
+			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_5_0_0(), a.getRightCurlyBracketKeyword_5_0_2());
+			setBraces(c, a.getLeftCurlyBracketKeyword_5_0_0(), a.getRightCurlyBracketKeyword_5_0_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_5_1());
 		}
 		{
 			ParameterCSElements a = f.getParameterCSAccess();
@@ -209,33 +209,33 @@ public class OCLinEcoreFormatter extends AbstractEssentialOCLFormatter {
 		}
 		{
 			ReferenceCSElements a = f.getReferenceCSAccess();
-			c.setNoSpace().around(a.getNumberSignKeyword_3_0());
-			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_6_0(), a.getRightCurlyBracketKeyword_6_2());
-			c.setNoSpace().around(a.getCommaKeyword_6_1_1());
-			setBraces(c, a.getLeftCurlyBracketKeyword_7_0_0(), a.getRightCurlyBracketKeyword_7_0_2());
-			c.setNoSpace().before(a.getCommaKeyword_7_0_1_1_2_0());
+			c.setNoSpace().around(a.getNumberSignKeyword_4_0());
+			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_7_0(), a.getRightCurlyBracketKeyword_7_2());
+			c.setNoSpace().around(a.getCommaKeyword_7_1_1());
+			setBraces(c, a.getLeftCurlyBracketKeyword_8_0_0(), a.getRightCurlyBracketKeyword_8_0_2());
+			c.setNoSpace().before(a.getCommaKeyword_8_0_1_1_2_0());
 			//
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_1_3());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_1());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_8_0_1_1_3());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_8_1());
 			//
-			c.setNoSpace().before(a.getColonKeyword_7_0_1_2_2());
-			c.setSpace(" ").after(a.getColonKeyword_7_0_1_2_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_2_4());
-			c.setIndentation(a.getColonKeyword_7_0_1_2_2(), a.getSemicolonKeyword_7_0_1_2_4());
+			c.setNoSpace().before(a.getColonKeyword_8_0_1_2_2());
+			c.setSpace(" ").after(a.getColonKeyword_8_0_1_2_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_8_0_1_2_4());
+			c.setIndentation(a.getColonKeyword_8_0_1_2_2(), a.getSemicolonKeyword_8_0_1_2_4());
 			//
-			c.setNoSpace().before(a.getColonKeyword_7_0_1_3_2());
-			c.setSpace(" ").after(a.getColonKeyword_7_0_1_3_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_3_4());
-			c.setIndentation(a.getColonKeyword_7_0_1_3_2(), a.getSemicolonKeyword_7_0_1_3_4());
+			c.setNoSpace().before(a.getColonKeyword_8_0_1_3_2());
+			c.setSpace(" ").after(a.getColonKeyword_8_0_1_3_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_8_0_1_3_4());
+			c.setIndentation(a.getColonKeyword_8_0_1_3_2(), a.getSemicolonKeyword_8_0_1_3_4());
 			//
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_0_1_4_1());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_8_0_1_4_1());
 		}
 		{
 			StructuredClassCSElements a = f.getStructuredClassCSAccess();
-			c.setNoSpace().around(a.getCommaKeyword_4_2_0());
-			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_6_0(), a.getRightCurlyBracketKeyword_6_2());
-			setBraces(c, a.getLeftCurlyBracketKeyword_7_0_0(), a.getRightCurlyBracketKeyword_7_0_2());
-			setNoSpaceLineWrap(c, a.getSemicolonKeyword_7_1());
+			c.setNoSpace().around(a.getCommaKeyword_5_2_0());
+			c.setNoSpace().between(a.getLeftCurlyBracketKeyword_7_0(), a.getRightCurlyBracketKeyword_7_2());
+			setBraces(c, a.getLeftCurlyBracketKeyword_8_0_0(), a.getRightCurlyBracketKeyword_8_0_2());
+			setNoSpaceLineWrap(c, a.getSemicolonKeyword_8_1());
 		}
 		{	// AnnotationCS
 			SysMLCSElements a = f.getSysMLCSAccess();

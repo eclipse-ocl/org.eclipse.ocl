@@ -327,6 +327,7 @@ public class EssentialOCLGrammarResource extends AbstractGrammarResource
 		private static final @NonNull TerminalRule TR_INT = createTerminalRule("INT", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_LETTER_CHARACTER = createTerminalRule("LETTER_CHARACTER", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_ML_COMMENT = createTerminalRule("ML_COMMENT", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
+		private static final @NonNull TerminalRule TR_ML_DOCUMENTATION = createTerminalRule("ML_DOCUMENTATION", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_ML_SINGLE_QUOTED_STRING = createTerminalRule("ML_SINGLE_QUOTED_STRING", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_SIMPLE_ID = createTerminalRule("SIMPLE_ID", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull TerminalRule TR_SINGLE_QUOTED_STRING = createTerminalRule("SINGLE_QUOTED_STRING", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
@@ -343,6 +344,7 @@ public class EssentialOCLGrammarResource extends AbstractGrammarResource
 			TR_LETTER_CHARACTER.setFragment(true);
 			TR_LETTER_CHARACTER.setAlternatives(createAlternatives(createCharacterRange(createKeyword("a"), createKeyword("z")), createCharacterRange(createKeyword("A"), createKeyword("Z")), createKeyword("_")));
 			TR_ML_COMMENT.setAlternatives(createGroup(createKeyword("/*"), createUntilToken(createKeyword("*/"))));
+			TR_ML_DOCUMENTATION.setAlternatives(createKeyword("/%#$*->%#$*/"));
 			TR_ML_SINGLE_QUOTED_STRING.setAlternatives(createGroup(createKeyword("/\'"), createUntilToken(createKeyword("\'/"))));
 			TR_SIMPLE_ID.setAlternatives(createGroup(createRuleCall(TR_LETTER_CHARACTER), setCardinality("*", createAlternatives(createRuleCall(TR_LETTER_CHARACTER), createCharacterRange(createKeyword("0"), createKeyword("9"))))));
 			TR_SINGLE_QUOTED_STRING.setAlternatives(createGroup(createKeyword("\'"), setCardinality("*", createAlternatives(createRuleCall(TR_ESCAPED_CHARACTER), createNegatedToken(createAlternatives(createKeyword("\\"), createKeyword("\'"))))), createKeyword("\'")));
@@ -350,6 +352,7 @@ public class EssentialOCLGrammarResource extends AbstractGrammarResource
 			TR_WS.setAlternatives(setCardinality("+", createAlternatives(createKeyword(" "), createKeyword("\t"), createKeyword("\r"), createKeyword("\n"))));
 		}
 
+		private static final @NonNull ParserRule PR_CommentCS = createParserRule("CommentCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.COMMENT_CS));
 		private static final @NonNull ParserRule PR_FirstPathElementCS = createParserRule("FirstPathElementCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_ELEMENT_CS));
 		private static final @NonNull ParserRule PR_ID = createParserRule("ID", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
 		private static final @NonNull ParserRule PR_Identifier = createParserRule("Identifier", createTypeRef(MM_ecore, org.eclipse.emf.ecore.EcorePackage.Literals.ESTRING));
@@ -375,6 +378,7 @@ public class EssentialOCLGrammarResource extends AbstractGrammarResource
 		private static final @NonNull ParserRule PR_WildcardTypeRefCS = createParserRule("WildcardTypeRefCS", createTypeRef(MM, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS));
 
 		private static void initParserRules() {
+			PR_CommentCS.setAlternatives(createAssignment("value", "=", createRuleCall(TR_ML_DOCUMENTATION)));
 			PR_FirstPathElementCS.setAlternatives(createAssignment("referredElement", "=", createCrossReference(createTypeRef(MM_pivot, org.eclipse.ocl.pivot.PivotPackage.Literals.NAMED_ELEMENT), createRuleCall(_EssentialOCL.PR_UnrestrictedName))));
 			PR_ID.setAlternatives(createAlternatives(createRuleCall(TR_SIMPLE_ID), createRuleCall(TR_ESCAPED_ID)));
 			PR_Identifier.setAlternatives(createRuleCall(PR_ID));
@@ -413,6 +417,7 @@ public class EssentialOCLGrammarResource extends AbstractGrammarResource
 			}
 			{
 				List<AbstractRule> rules = grammar.getRules();
+				rules.add(PR_CommentCS);
 				rules.add(PR_MultiplicityBoundsCS);
 				rules.add(PR_MultiplicityCS);
 				rules.add(PR_MultiplicityStringCS);
@@ -445,6 +450,7 @@ public class EssentialOCLGrammarResource extends AbstractGrammarResource
 				rules.add(TR_ESCAPED_ID);
 				rules.add(TR_INT);
 				rules.add(TR_ML_COMMENT);
+				rules.add(TR_ML_DOCUMENTATION);
 				rules.add(TR_SL_COMMENT);
 				rules.add(TR_WS);
 				rules.add(TR_ANY_OTHER);

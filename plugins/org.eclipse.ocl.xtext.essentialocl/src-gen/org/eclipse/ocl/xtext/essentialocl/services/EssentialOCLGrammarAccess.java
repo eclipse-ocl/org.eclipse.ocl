@@ -3862,6 +3862,16 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getSelfExpCSAccess().getRule();
 	}
 
+	//CommentCS:
+	//	value=ML_DOCUMENTATION;
+	public BaseGrammarAccess.CommentCSElements getCommentCSAccess() {
+		return gaBase.getCommentCSAccess();
+	}
+
+	public ParserRule getCommentCSRule() {
+		return getCommentCSAccess().getRule();
+	}
+
 	//MultiplicityBoundsCS:
 	//	lowerBound=LOWER ('..' upperBound=UPPER)?;
 	public BaseGrammarAccess.MultiplicityBoundsCSElements getMultiplicityBoundsCSAccess() {
@@ -4133,6 +4143,12 @@ public class EssentialOCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	'/*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaBase.getML_COMMENTRule();
+	}
+
+	//terminal ML_DOCUMENTATION:
+	//	'/%#$*->%#$*/';
+	public TerminalRule getML_DOCUMENTATIONRule() {
+		return gaBase.getML_DOCUMENTATIONRule();
 	}
 
 	//terminal SL_COMMENT:
