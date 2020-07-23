@@ -404,10 +404,10 @@ abstract type Collection(T) : CollectionType conformsTo OclAny {
 	Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].
 	**/
 	iteration forAll(i : T, j : T | lambda : Lambda T() : Boolean[?]) : Boolean[?] invalidating validating => 'org.eclipse.ocl.pivot.library.iterator.ForAllIteration';
-	/**
-	The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.
-	The result is not flattened. 
-	**/
+--	/**
+--	The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.
+--	The result is not flattened. 
+--	**/
 --	iteration inverseCollectBy(V)(i : T[?] | lambda : Lambda T() : V[?]) : Map(V,Set(T[?])) => 'org.eclipse.ocl.pivot.library.iterator.InverseCollectByIteration';
 	/**
 	Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].

@@ -18,14 +18,14 @@ def: allOwnedElements() : Set(Element) =
 
 --FIXME oclContainer() suspect on DomainElements
 --def: owner : Element = oclContainer()
-	/**
-	 * Elements that must be owned must have an owner.
-	 */
+--	/**
+--	 * Elements that must be owned must have an owner.
+--	 */
 --	inv has_owner:
 --		mustBeOwned() implies owner->notEmpty() 
-	/**
-	 * An element may not directly or indirectly own itself.
-	 */
+--	/**
+--	 * An element may not directly or indirectly own itself.
+--	 */
 --	inv not_own_self:
 --		not allOwnedElements()->includes(self)
 
@@ -304,16 +304,16 @@ context IteratorVariable
 /** Iterator variable has no initializer.*/
 inv HasNoInitializer: ownedInit = null
 
-/** FeatureCallExp
-No additional well-formedness rules. */
+--/** FeatureCallExp
+--No additional well-formedness rules. */
 
-/** NumericLiteralExp
-No additional well-formedness rules. */
+--/** NumericLiteralExp
+--No additional well-formedness rules. */
 
-/** OCLExpression
-No additional well-formedness rules. */
+--/** OCLExpression
+--No additional well-formedness rules. */
 --context MessageExp
-/** If the message is an operation call action, the arguments must conform to the parameters of the operation. */
+--/** If the message is an operation call action, the arguments must conform to the parameters of the operation. */
 --inv: calledOperation->notEmpty() implies
 --argument->forAll (a | a.type.conformsTo
 --(self.calledOperation.operation.ownedParameter->
@@ -321,14 +321,14 @@ No additional well-formedness rules. */
 --->at (argument->indexOf (a)).type))
 
 --context MessageExp
-/** If the message is a send signal action, the arguments must conform to the attributes of the signal. */
+--/** If the message is a send signal action, the arguments must conform to the attributes of the signal. */
 --inv: sentSignal->notEmpty() implies
 --argument->forAll (a | a.type.conformsTo
 --(self.sentSignal.signal.ownedAttribute
 --->at (argument->indexOf (a)).type))
 
 --context MessageExp
-/** If the message is a call operation action, the operation must be an operation of the type of the target expression. */
+--/** If the message is a call operation action, the operation must be an operation of the type of the target expression. */
 --inv: calledOperation->notEmpty() implies
 --target.type.allOperations()->includes(calledOperation.operation)
 
