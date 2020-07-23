@@ -19,19 +19,21 @@ import org.antlr.runtime.TokenSource;
 
 /**
  * RetokenizingTokenSource accomodates backtracking limitations in the ANTRL lexer when used from Xtext.
- * 
+ *
  * The problem is the three overlapping syntaxes
  * INT.INT leading to a Floating Point lteral
  * INT..INT leading to a Collection range
  * INT.ID leading to a numeric navigation
- * 
+ *
  * ANTLR proceeds to INT. but won't backup when the character after the . is bad.
- * 
+ *
  * The code here allows the basic lexer to be ignorant of floating point syntax so that it correctly parses
  * INT.INT as INT DOT INT
  * INT..INT as INT DOTDOT INT
  * INT.INTe+INT as INT DOT INT ID PLUS INT
  * so the code here recognises the floating point literal and reconsttructs. As an additional benefit 'e' and 'E' are not keywords.
+ *
+ * It also converts the hidden ML_COMMENT to the unhidden ML_DOCUMENATION if it has a double star
  */
 public class RetokenizingTokenSource implements TokenSource
 {
@@ -43,7 +45,9 @@ public class RetokenizingTokenSource implements TokenSource
 	private int tID = -1;
 	private int tPLUS = -1;
 	private int tMINUS = -1;
-	
+	private int tML_COMMENT = -1;
+	private int tML_DOCUMENTATION = -1;
+
 	public RetokenizingTokenSource(TokenSource tokenSource, Map<Integer, String> tokenDefMap) {
 		this.tokenSource = tokenSource;
 		this.tokenDefMap = tokenDefMap;
@@ -64,6 +68,12 @@ public class RetokenizingTokenSource implements TokenSource
 			}
 			else if ("'-'".equals(tokenName)) {
 				tMINUS = tokenNumber;
+			}
+			else if ("RULE_ML_COMMENT".equals(tokenName)) {
+				tML_COMMENT = tokenNumber;
+			}
+			else if ("RULE_ML_DOCUMENTATION".equals(tokenName)) {
+				tML_DOCUMENTATION = tokenNumber;
 			}
 		}
 	}
@@ -90,11 +100,25 @@ public class RetokenizingTokenSource implements TokenSource
 		}
 		return true;
 	}
-	
+
 	@Override
 	public Token nextToken() {
 		Token firstToken = peek(0);
 		int firstType = firstToken.getType();
+		//
+		//	Convert documentation comment
+		//
+		if (firstType == tML_COMMENT) {
+			Token token = queue.remove();
+			String text = token.getText();
+			if (text.startsWith("/**")) {
+				token.setType(tML_DOCUMENTATION);
+			}
+			return token;
+		}
+		//
+		//	Anything else other than INT is ok asis
+		//
 		if (firstType != tINT) {
 			return queue.remove();
 		}
@@ -113,14 +137,14 @@ public class RetokenizingTokenSource implements TokenSource
 			nextType = nextToken.getType();
 		}
 		if (nextType == tID) {
-			String text = nextToken.getText();			
+			String text = nextToken.getText();
 			if (text.startsWith("E") || text.startsWith("e")) {
 				if (text.length() == 1) {
 					nextToken = peek(++index);
-					nextType = nextToken.getType();				
+					nextType = nextToken.getType();
 					if ((nextType == tPLUS) || (nextType == tMINUS)) {
 						nextToken = peek(++index);
-						nextType = nextToken.getType();				
+						nextType = nextToken.getType();
 					}
 					if (nextType == tINT) {
 						lastToken = nextToken;
@@ -148,7 +172,7 @@ public class RetokenizingTokenSource implements TokenSource
 
 	/**
 	 * Return the token index positions ahead of the next token.
-	 * 
+	 *
 	 * Returns EOF_TOKEN if no such token or if a hidden token interleaves.
 	 */
 	protected Token peek(int index) {

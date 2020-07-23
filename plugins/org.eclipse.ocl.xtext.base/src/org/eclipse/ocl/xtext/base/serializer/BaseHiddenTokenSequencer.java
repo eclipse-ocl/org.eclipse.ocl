@@ -45,7 +45,7 @@ public class BaseHiddenTokenSequencer extends HiddenTokenSequencer
 						String body = comment.getBody();
 						if (body != null) {
 							String indentedBody = body.replaceAll("\\n", "\n" + commentIndent + " * ");
-							String formattedBody = "/*\n" + commentIndent + " * " + indentedBody + "\n" + commentIndent + " */";
+							String formattedBody = "/**\n" + commentIndent + " * " + indentedBody + "\n" + commentIndent + " */";
 							delegate.acceptComment(ml_COMMENTRule, formattedBody, null);
 						}
 						else {
@@ -73,7 +73,7 @@ public class BaseHiddenTokenSequencer extends HiddenTokenSequencer
 	}
 
 	private static List<String> indents = new ArrayList<String>();
-	
+
 	protected String getCommentIndent(EObject semanticChild) {
 		int i = 0;
 		EObject eObject = semanticChild;

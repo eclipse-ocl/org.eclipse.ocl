@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
@@ -83,6 +82,7 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.basecs.CommentCS;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
 import org.eclipse.ocl.xtext.basecs.ElementRefCS;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
@@ -684,9 +684,29 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public void handleVisitNamedElement(@NonNull NamedElementCS csNamedElement, @NonNull NamedElement pivotElement) {
 		List<Element> pivotAnnotations = pivotElement.getOwnedAnnotations();
-		List<AnnotationElementCS> csAnnotations = csNamedElement.getOwnedAnnotations();
+//		List<AnnotationElementCS> csAnnotations = csNamedElement.getOwnedAnnotations();
+
+
+		List<@NonNull AnnotationElementCS> csAnnotations = null;
+		for (AnnotationElementCS csAnnotationElement : csNamedElement.getOwnedAnnotations()) {
+			if (!(csAnnotationElement instanceof CommentCS)) {
+				if (csAnnotations == null) {
+					csAnnotations = new ArrayList<>();
+				}
+				csAnnotations.add(csAnnotationElement);
+			}
+		}
+		if (csAnnotations != null) {
+			refreshPivotList(org.eclipse.ocl.pivot.Annotation.class, pivotAnnotations, csAnnotations);
+		}
+		else {
+			pivotAnnotations.clear();
+		}
+		return;
+
+
 		//		if ((csAnnotations.size() <= 1) && (pivotAnnotations.size() <= 1)) {
-		refreshPivotList(Annotation.class, pivotAnnotations, csAnnotations);
+	//	refreshPivotList(Annotation.class, pivotAnnotations, csAnnotations);
 		/*		}
 		else {
 			HashSet<String> names = new HashSet<String>();
@@ -889,9 +909,27 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public void refreshComments(Element pivotElement, ElementCS csElement) {
+		if (csElement instanceof ModelElementCS) {
+			List<@NonNull CommentCS> csComments = null;
+			for (AnnotationElementCS csAnnotationElement : ((ModelElementCS)csElement).getOwnedAnnotations()) {
+				if (csAnnotationElement instanceof CommentCS) {
+					if (csComments == null) {
+						csComments = new ArrayList<>();
+					}
+					csComments.add((CommentCS)csAnnotationElement);
+				}
+			}
+			if (csComments != null) {
+				refreshPivotList(org.eclipse.ocl.pivot.Comment.class, pivotElement.getOwnedComments(), csComments);
+			}
+			else {
+				pivotElement.getOwnedComments().clear();
+			}
+			return;
+		}
 		ICompositeNode node = NodeModelUtils.getNode(csElement);
 		if (node != null) {
-			List<ILeafNode> documentationNodes = CS2AS.getDocumentationNodes(node);
+			List<ILeafNode> documentationNodes = CS2AS.getDocumentationNodes(node);	// XXX obsolete
 			List<Comment> ownedComments = pivotElement.getOwnedComments();
 			if (documentationNodes != null) {
 				int i = 0;

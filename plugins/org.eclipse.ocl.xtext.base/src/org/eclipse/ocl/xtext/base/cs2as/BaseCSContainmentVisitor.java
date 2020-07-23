@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Detail;
@@ -55,6 +56,7 @@ import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.AnnotationElementCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.ClassCS;
+import org.eclipse.ocl.xtext.basecs.CommentCS;
 import org.eclipse.ocl.xtext.basecs.ConstraintCS;
 import org.eclipse.ocl.xtext.basecs.DataTypeCS;
 import org.eclipse.ocl.xtext.basecs.DetailCS;
@@ -292,6 +294,36 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	@Override
 	public Continuation<?> visitAnnotationElementCS(@NonNull AnnotationElementCS csElement) {
+		return null;
+	}
+
+	@Override
+	public Continuation<?> visitCommentCS(@NonNull CommentCS csElement) {
+		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.COMMENT;
+		Comment asComment = context.refreshModelElement(Comment.class, eClass, csElement);
+		String value = csElement.getValue();
+		if ("/**/".equals(value)) {
+			Comment comment = PivotFactory.eINSTANCE.createComment();
+			comment.setBody(null);
+		}
+		else {
+			String text = value.replace("\r", "");
+			if (text.startsWith("/*") && text.endsWith("*/")) {
+				StringBuilder s = new StringBuilder();
+				String contentString = text.substring(2, text.length()-2).trim();
+				for (String string : contentString.split("\n")) {
+					String trimmedString = string.trim();
+					if (s.length() > 0) {
+						s.append("\n");
+					}
+					s.append(trimmedString.startsWith("*") ? trimmedString.substring(1).trim() : trimmedString);
+				}
+				asComment.setBody(s.toString());
+			}
+			else {
+				asComment.setBody(text.trim());
+			}
+		}
 		return null;
 	}
 
