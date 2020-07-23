@@ -11,8 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.CardinalityExpression;
-import org.eclipse.ocl.xtext.base.cs2text.CardinalityVariable;
 
 public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 {

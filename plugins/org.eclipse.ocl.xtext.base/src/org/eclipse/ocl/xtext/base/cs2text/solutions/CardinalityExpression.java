@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text;
+package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,12 +25,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.AdjustedFeatureCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.BooleanCommonFactorCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -174,7 +171,7 @@ public class CardinalityExpression implements Nameable
 		return enumerationValue2cardinalityExpression != null ? enumerationValue2cardinalityExpression.values() : null;
 	}
 
-	protected @NonNull EnumerationValue getEnumerationValue() {
+	public @NonNull EnumerationValue getEnumerationValue() {
 		return enumerationValue;
 	}
 

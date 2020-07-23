@@ -40,7 +40,7 @@ public class UserModelAnalysis
 	 * The overall (multi-)grammar analysis.
 	 */
 	@Inject
-	private GrammarAnalysis grammarAnalysis;
+	private @NonNull GrammarAnalysis grammarAnalysis;
 
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eClass());

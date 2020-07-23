@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
@@ -53,7 +52,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		}
 		else {
 			String val = valueConverterService.toString(eGet, calledRuleAnalysis.getRuleName());
-			serializationBuilder.append(val);
+			serializationBuilder.append(String.valueOf(val));
 		}
 	}
 

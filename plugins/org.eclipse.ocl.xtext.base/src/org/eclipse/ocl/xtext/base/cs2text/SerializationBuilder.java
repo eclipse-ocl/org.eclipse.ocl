@@ -44,6 +44,11 @@ public class SerializationBuilder
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
 	private @NonNull Stack<@NonNull String> indents = new Stack<>();
 
+	public SerializationBuilder() {
+		this.newLineString = "\n";
+		this.indentString = "    ";
+	}
+
 	public SerializationBuilder(@NonNull String newLineString, @NonNull String indentString) {
 		this.newLineString = newLineString;
 		this.indentString = indentString;

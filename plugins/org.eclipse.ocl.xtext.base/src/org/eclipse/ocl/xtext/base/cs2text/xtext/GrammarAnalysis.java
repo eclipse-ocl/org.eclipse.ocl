@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
@@ -56,13 +56,13 @@ import com.google.inject.Inject;
 public class GrammarAnalysis
 {
 	@Inject
-	private IValueConverterService valueConverterService;
+	private @NonNull IValueConverterService valueConverterService;
 
 	@Inject
-	private ICrossReferenceSerializer crossReferenceSerializer;
+	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
 	@Inject
-	private GrammarProvider grammarProvider;
+	private @NonNull GrammarProvider grammarProvider;
 
 	/**
 	 * The rule analysis for each rule.

@@ -13,6 +13,7 @@
  */
 package org.eclipse.ocl.xtext.base;
 
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
@@ -23,6 +24,10 @@ public class BaseRuntimeModule extends org.eclipse.ocl.xtext.base.AbstractBaseRu
 {
 	public Class<? extends GrammarAnalysis> bindGrammarAnalysis() {
 		return GrammarAnalysis.class;
+	}
+
+	public Class<? extends SerializationBuilder> bindSerializationBuilder() {
+		return SerializationBuilder.class;
 	}
 
 	public Class<? extends UserModelAnalysis> bindUserModelAnalysis() {

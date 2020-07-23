@@ -28,6 +28,9 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	@Inject
 	private UserModelAnalysis modelAnalysis;
 
+	@Inject
+	private SerializationBuilder serializationBuilder;
+
 	def dispatch void format(TopLevelCS topLevelCS, extension IFormattableDocument document) {
 		var GrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
 		grammarAnalysis.analyze();
@@ -37,7 +40,6 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 		modelAnalysis.analyze(topLevelCS);
 		var String s2 = modelAnalysis.toString();
 		System.out.println(s2);
-		var SerializationBuilder serializationBuilder = new SerializationBuilder("\n", "    ");
 		modelAnalysis.serialize(serializationBuilder, topLevelCS);
 		var String s3 = serializationBuilder.toRenderedString();
 		System.out.println(s3);
