@@ -29,9 +29,4 @@ public class UserRootElementAnalysis extends UserAbstractElementAnalysis
 	public @Nullable UserAbstractElementAnalysis getContainingElementAnalysis() {
 		return null;
 	}
-
-	@Override
-	protected boolean hasCompatibleContainmentHierarchy() {
-		return true;
-	}
 }

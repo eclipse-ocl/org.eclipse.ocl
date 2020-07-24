@@ -89,8 +89,6 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		return new UserSlotsAnalysis(getSerializationRules(), eObject);
 	}
 
-	protected abstract boolean hasCompatibleContainmentHierarchy();
-
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();

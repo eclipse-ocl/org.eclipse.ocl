@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
-import com.google.common.collect.Iterables;
-
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
  * that can produce and assign a user model element that has a container.
@@ -36,11 +34,6 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 	@Override
 	public @NonNull UserAbstractElementAnalysis getContainingElementAnalysis() {
 		return containingElementAnalysis;
-	}
-
-	@Override
-	protected boolean hasCompatibleContainmentHierarchy() {
-		return Iterables.size(getSerializationRules()) > 0;
 	}
 
 /*	@Override
