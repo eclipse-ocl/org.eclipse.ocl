@@ -80,6 +80,11 @@ public class GrammarAnalysis
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = null;
 
 	/**
+	 * The possible producing rule analyses for each EClassifier. This analysis excludes overrides.
+	 */
+	private @Nullable Map<@NonNull EClassifier, List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = null;
+
+	/**
 	 * The prioritized serialization rules for each EClass.
 	 */
 	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = null;
@@ -129,6 +134,7 @@ public class GrammarAnalysis
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
 			parserRuleAnalysis.analyze();
 		}
+		this.eClassifier2ruleAnalyses = analyzeProductions(rule2ruleAnalysis);
 		//
 		// Perform the inter rule analysis to determine the base rule closure.
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
@@ -195,6 +201,25 @@ public class GrammarAnalysis
 			}
 		}
 		return containment2assignmentAnalyses;
+	}
+
+	/**
+	 *	Identify the production rule(s) for each EClassifier.
+	 */
+	protected @NonNull Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> analyzeProductions(
+			@NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis) {
+		Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = new HashMap<>();
+		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
+			for (@NonNull EClassifier eClassifier : abstractRuleAnalysis.getEClassifiers()) {
+				List<@NonNull AbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eClassifier);
+				if (ruleAnalyses == null) {
+					ruleAnalyses = new ArrayList<>();
+					eClassifier2ruleAnalyses.put(eClassifier, ruleAnalyses);
+				}
+				ruleAnalyses.add(abstractRuleAnalysis);
+			}
+		}
+		return eClassifier2ruleAnalyses;
 	}
 
 	/**
@@ -398,6 +423,11 @@ public class GrammarAnalysis
 			values2enumerationValue.put(values, enumerationValue);
 		}
 		return enumerationValue;
+	}
+
+	public @NonNull List<@NonNull AbstractRuleAnalysis> getProducingRuleAnalyses(@NonNull EClassifier eClassifier) {
+		assert eClassifier2ruleAnalyses != null;
+		return ClassUtil.nonNullState(eClassifier2ruleAnalyses.get(eClassifier));
 	}
 
 	public @NonNull AbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractElement abstractElement) {

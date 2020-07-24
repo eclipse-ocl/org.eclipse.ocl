@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -21,7 +22,9 @@ import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Iterables;
 
@@ -73,6 +76,8 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 		return name;
 	}
 
+	public abstract @NonNull Iterable<@NonNull ParserRuleAnalysis> getProductionRules();
+
 	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
 		EClass eClass = UserModelAnalysis.eClass(eObject);
 		if ("TopLevelCS".equals(eClass.getName())) {
@@ -88,6 +93,19 @@ public abstract class UserAbstractElementAnalysis implements Nameable
 	protected @NonNull UserSlotsAnalysis getSlotsAnalysis() {
 		return new UserSlotsAnalysis(getSerializationRules(), eObject);
 	}
+
+	/**
+	 * Return true if the containing feature is compatible with one of its containing assignments.
+	 *
+	 * If non-null each compatible assignment is assign to its corresponding production rulein ruleAnalysis2assignmentAnalyses.
+	 *
+	 * Compatbility requires
+	 *
+	 * The produced rule for this element is assignable to the assignment target's rule.
+	 * The produced rule for the container of this element is assignable to the assignment source's rule.
+	 * Recursively the container of this element has a similarly compatoble assignement.
+	 */
+	protected abstract boolean isCompatible(@Nullable Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> ruleAnalysis2assignmentAnalyses);
 
 	@Override
 	public @NonNull String toString() {
