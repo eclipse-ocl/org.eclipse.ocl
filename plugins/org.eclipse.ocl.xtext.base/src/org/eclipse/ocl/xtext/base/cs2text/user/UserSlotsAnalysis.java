@@ -151,60 +151,66 @@ public class UserSlotsAnalysis
 		Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis = new HashMap<>();
 		if (serializationRules != null) {
 			EClass eClass = eObject.eClass();
-		for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
-			assert eFeature != null;
-			if ("lowerBound".equals(eFeature.getName())) {
-				getClass();			// XXX debugging
-			}
-			if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile() && (!(eFeature instanceof EReference) || !((EReference)eFeature).isContainer())) {
-				UserSlotAnalysis slotAnalysis = null;
-				Object object = eObject.eGet(eFeature);
-				Iterable<@NonNull EnumerationValue> enumerationValues = eFeature instanceof EAttribute ? getEnumerationValues((EAttribute)eFeature) : null;
-				if (eFeature.isMany()) {
-					List<?> elements = (List<?>)object;
-					int size = elements.size();
-					if ((size > 0) && (eFeature instanceof EAttribute) && (enumerationValues != null)) {
-						EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
-						int others = 0;
-						for (Object element : elements) {
-							String string = String.valueOf(element);
-							boolean gotOne = false;
-							for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
-								if (enumerationValue.isElement(string)) {
-									Integer count = enumeratedSlotAnalysis.basicGet(enumerationValue);
-									enumeratedSlotAnalysis.put(enumerationValue, (count == null ? 0 : count.intValue()) + 1);
-									gotOne = true;
-								}
+			for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
+				assert eFeature != null;
+				if ("lowerBound".equals(eFeature.getName())) {
+					getClass();			// XXX debugging
+				}
+				if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile()) {
+					Object object = eObject.eGet(eFeature);
+					UserSlotAnalysis slotAnalysis = null;
+					if (eFeature instanceof EReference) {
+						EReference eReference = (EReference)eFeature;
+						if (!eReference.isContainer()) {
+							if (eFeature.isMany()) {
+								List<?> elements = (List<?>)object;
+								int size = elements.size();
+								slotAnalysis = valueOf(size);
 							}
-							if (!gotOne) {
-								others++;
+							else {
+								slotAnalysis = valueOf(object != null ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
 							}
 						}
-						enumeratedSlotAnalysis.put(NullEnumerationValue.INSTANCE, others);
-						slotAnalysis = enumeratedSlotAnalysis;
 					}
 					else {
-						slotAnalysis = valueOf(size);
-					}
-				}
-				else if (!eFeature.isUnsettable() || eObject.eIsSet(eFeature)) {
-					boolean eIsSet = eObject.eIsSet(eFeature);
-					if (eFeature instanceof EReference) {
-						assert object != null == eIsSet;
-						slotAnalysis = valueOf(object != null ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
-					}
-					else /*if (eFeature.getEType().getInstanceClass() == boolean.class) {
-						assert (object == Boolean.TRUE) == eIsSet;
-						contentAnalysis = object == Boolean.TRUE ? 1 : 0;
-					}
-					else*/ if (enumerationValues == null) {
-					//	boolean
-					//	for (@NonNull SerializationRule serializationRule : serializationRules) {
-					//
-					//	}
-						int count;
-						if (eIsSet) {
-							count = CountedSlotAnalysis.ONE;
+						EAttribute eAttribute = (EAttribute)eFeature;
+						if (eAttribute.isMany()) {
+							Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
+							List<?> elements = (List<?>)object;
+							int size = elements.size();
+							if ((size > 0) && (eFeature instanceof EAttribute) && (enumerationValues != null)) {
+								EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
+								int others = 0;
+								for (Object element : elements) {
+									String string = String.valueOf(element);
+									boolean gotOne = false;
+									for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
+										if (enumerationValue.isElement(string)) {
+											Integer count = enumeratedSlotAnalysis.basicGet(enumerationValue);
+											enumeratedSlotAnalysis.put(enumerationValue, (count == null ? 0 : count.intValue()) + 1);
+											gotOne = true;
+										}
+									}
+									if (!gotOne) {
+										others++;
+									}
+								}
+								enumeratedSlotAnalysis.put(NullEnumerationValue.INSTANCE, others);
+								slotAnalysis = enumeratedSlotAnalysis;
+							}
+							else {
+								slotAnalysis = valueOf(size);
+							}
+						}
+						else if (object instanceof Boolean) {
+							// NB Xtext has no ability to explicitly define a false Boolean.
+							slotAnalysis = valueOf(object == Boolean.TRUE ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
+						}
+						else if (eObject.eIsSet(eAttribute)) {
+							slotAnalysis = valueOf(CountedSlotAnalysis.ONE);
+						}
+						else if (eAttribute.isUnsettable()) {
+							slotAnalysis = valueOf(CountedSlotAnalysis.ZERO);
 						}
 						else {
 							boolean allRulesNeedDefault = true;
@@ -214,33 +220,14 @@ public class UserSlotsAnalysis
 									break;
 								}
 							}
-							count = allRulesNeedDefault ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO;
+							slotAnalysis = valueOf(allRulesNeedDefault ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
 						}
-						slotAnalysis = valueOf(count);
-
-
-
-					//	slotAnalysis = eIsSet ? CountedSlotAnalysis.ONE_MUST : eFeature.isUnsettable() ? CountedSlotAnalysis.ZERO : CountedSlotAnalysis.ONE_MAY;
-					//	slotAnalysis = valueOf(eIsSet ? CountedSlotAnalysis.ONE_EXPLICIT : eFeature.isUnsettable() ? CountedSlotAnalysis.ZERO : CountedSlotAnalysis.ONE_IMPLICIT);
 					}
-					else {
-						String string = String.valueOf(object);
-						EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
-						for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
-							if (enumerationValue.isElement(string)) {
-								Integer count = enumeratedSlotAnalysis.basicGet(enumerationValue);
-								enumeratedSlotAnalysis.put(enumerationValue, (count == null ? 0 : count.intValue()) + 1);
-							}
-						}
-						slotAnalysis = enumeratedSlotAnalysis;
+					if (slotAnalysis != null) {
+						eStructuralFeature2slotAnalysis.put(eFeature, slotAnalysis);
 					}
 				}
-				else {
-					slotAnalysis = valueOf(CountedSlotAnalysis.ZERO);
-				}
-				eStructuralFeature2slotAnalysis.put(eFeature, slotAnalysis);
 			}
-		}
 		}
 		this.eStructuralFeature2slotAnalysis = eStructuralFeature2slotAnalysis;
 	}
