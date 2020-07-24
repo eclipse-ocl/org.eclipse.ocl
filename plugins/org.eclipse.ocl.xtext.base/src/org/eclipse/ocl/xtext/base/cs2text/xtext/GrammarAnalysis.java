@@ -241,6 +241,52 @@ public class GrammarAnalysis
 	 * Recursively the container of this element has a similarly compatoble assignement.
 	 */
 	//protected abstract @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible();
+/*	@Override
+	protected @Nullable List<@NonNull RequiredSlotsConjunction> isCompatible() {
+		List<@NonNull RequiredSlotsConjunction> ruleAnalysis2assignmentAnalyses = new ArrayList<>();
+		Iterable<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalysisCandidates = grammarAnalysis.getAssignmentAnalyses(eContainingFeature);
+		for (@NonNull XtextAssignmentAnalysis containingAssignmentAnalysisCandidate : containingAssignmentAnalysisCandidates) {
+			List<@NonNull XtextParserRuleAnalysis> compatibleTargetRuleAnalysisCandidates = null;
+			EClass targetEClass = UserModelAnalysis.eClass(element);
+			Iterable<@NonNull RequiredSlotsConjunction> targetRuleAnalysisCandidates = grammarAnalysis.getProducingRuleAnalyses(targetEClass);
+			for (@NonNull RequiredSlotsConjunction targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
+			//	if (targetRuleAnalysisCandidate instanceof XtextParserRuleAnalysis) {
+					if (containingAssignmentAnalysisCandidate.targetIsAssignableFrom(targetRuleAnalysisCandidate)) {					// If target rule compatible
+						boolean isOkSource = false;
+						Iterable<@NonNull XtextParserRuleAnalysis> containerProductionRules = containingElementAnalysis.getSerializationRules();
+						for (@NonNull XtextAbstractRuleAnalysis sourceRuleAnalysisCandidate : containerProductionRules) {
+							if (containingAssignmentAnalysisCandidate.sourceIsAssignableFrom(sourceRuleAnalysisCandidate)) {			// If source rule compatible
+								if (containingElementAnalysis.isCompatible(null)) {													// If transitively compatible
+									isOkSource = true;
+									break;
+								}
+							}
+						}
+						if (isOkSource) {
+							if (compatibleTargetRuleAnalysisCandidates == null) {
+								compatibleTargetRuleAnalysisCandidates = new ArrayList<>(4);
+							}
+							compatibleTargetRuleAnalysisCandidates.add((XtextParserRuleAnalysis)targetRuleAnalysisCandidate);
+						}
+					}
+			//	}
+			}
+			if (compatibleTargetRuleAnalysisCandidates != null) {
+				for (@NonNull XtextParserRuleAnalysis compatibleTargetRuleAnalysisCandidate : compatibleTargetRuleAnalysisCandidates) {
+					if (ruleAnalysis2assignmentAnalyses == null) {
+						return true;
+					}
+					List<@NonNull XtextAssignmentAnalysis> containingAssignmentAnalyses = ruleAnalysis2assignmentAnalyses.get(compatibleTargetRuleAnalysisCandidate);
+					if (containingAssignmentAnalyses == null) {
+						containingAssignmentAnalyses = new ArrayList<>();
+						ruleAnalysis2assignmentAnalyses.put(compatibleTargetRuleAnalysisCandidate, containingAssignmentAnalyses);
+					}
+					containingAssignmentAnalyses.add(containingAssignmentAnalysisCandidate);
+				}
+			}
+		}
+		return false;
+	} */
 
 	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> analyzeSerializations(
 			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
