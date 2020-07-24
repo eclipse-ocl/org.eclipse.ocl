@@ -13,24 +13,15 @@
  */
 package org.eclipse.ocl.xtext.base;
 
+import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.xtext.serializer.ISerializer;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class BaseRuntimeModule extends org.eclipse.ocl.xtext.base.AbstractBaseRuntimeModule
 {
-	public Class<? extends GrammarAnalysis> bindGrammarAnalysis() {
-		return GrammarAnalysis.class;
-	}
-
-	public Class<? extends SerializationBuilder> bindSerializationBuilder() {
-		return SerializationBuilder.class;
-	}
-
-	public Class<? extends UserModelAnalysis> bindUserModelAnalysis() {
-		return UserModelAnalysis.class;
-	}
 }

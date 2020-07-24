@@ -54,6 +54,26 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
     System.out.println(s3);
   }
   
+  @Override
+  public void _format(final XtextResource resource, final IFormattableDocument document) {
+    super._format(resource, document);
+  }
+  
+  public void format(final TopLevelCS topLevelCS, @Extension final IFormattableDocument document) {
+    GrammarAnalysis grammarAnalysis = this.modelAnalysis.getGrammarAnalysis();
+    grammarAnalysis.analyze();
+    String s1 = grammarAnalysis.toString();
+    System.out.println(s1);
+    System.out.println("\n");
+    this.modelAnalysis.analyze(topLevelCS);
+    String s2 = this.modelAnalysis.toString();
+    System.out.println(s2);
+    this.modelAnalysis.serialize(this.serializationBuilder, topLevelCS);
+    String s3 = this.serializationBuilder.toRenderedString();
+    System.out.println(s3);
+  }
+  
+  @Override
   public void format(final Object topLevelCS, final IFormattableDocument document) {
     if (topLevelCS instanceof TopLevelCS) {
       _format((TopLevelCS)topLevelCS, document);

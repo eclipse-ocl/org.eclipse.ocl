@@ -20,6 +20,11 @@ import org.eclipse.ocl.xtext.essentialocl.formatting2.EssentialOCLFormatter
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess
 import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import org.eclipse.xtext.formatting2.regionaccess.ITextReplacement
+import org.eclipse.xtext.formatting2.FormatterRequest
+import java.util.List
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.emf.ecore.EObject
 
 class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	
@@ -32,6 +37,24 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	private SerializationBuilder serializationBuilder;
 
 	def dispatch void format(TopLevelCS topLevelCS, extension IFormattableDocument document) {
+		var GrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
+		grammarAnalysis.analyze();
+		var String s1 = grammarAnalysis.toString();
+		System.out.println(s1);
+		System.out.println("\n");
+		modelAnalysis.analyze(topLevelCS);
+		var String s2 = modelAnalysis.toString();
+		System.out.println(s2);
+		modelAnalysis.serialize(serializationBuilder, topLevelCS);
+		var String s3 = serializationBuilder.toRenderedString();
+		System.out.println(s3);
+	}
+
+	override void _format(XtextResource resource, IFormattableDocument document) {
+		super._format(resource, document);
+	}
+
+	def  void format(TopLevelCS topLevelCS, extension IFormattableDocument document) {
 		var GrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
 		grammarAnalysis.analyze();
 		var String s1 = grammarAnalysis.toString();

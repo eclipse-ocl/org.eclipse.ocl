@@ -12,11 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore;
 
-import com.google.inject.Binder;
-import com.google.inject.Provider;
-import com.google.inject.name.Names;
 import java.util.Properties;
+
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
+import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingDiagnosticMessageProvider;
@@ -76,7 +75,6 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.serializer.impl.Serializer;
 import org.eclipse.xtext.serializer.sequencer.IHiddenTokenSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
@@ -86,6 +84,10 @@ import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.IResourceValidator;
+
+import com.google.inject.Binder;
+import com.google.inject.Provider;
+import com.google.inject.name.Names;
 
 /**
  * Manual modifications go to {@link OCLinEcoreRuntimeModule}.
@@ -121,6 +123,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	@Override
 	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
 		return OCLinEcoreSemanticSequencer.class;
 	}
@@ -131,8 +134,9 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	@Override
 	public Class<? extends ISerializer> bindISerializer() {
-		return Serializer.class;
+		return MySerializer.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
@@ -141,6 +145,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	@Override
 	public Class<? extends ITokenToStringConverter> bindITokenToStringConverter() {
 		return AntlrTokenToStringConverter.class;
 	}
@@ -156,6 +161,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
+	@Override
 	public Class<? extends ITokenDefProvider> bindITokenDefProvider() {
 		return AntlrTokenDefProvider.class;
 	}
@@ -179,6 +185,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	@Override
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return OCLinEcoreScopeProvider.class;
 	}
@@ -189,6 +196,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
+	@Override
 	public Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return DefaultGlobalScopeProvider.class;
 	}
@@ -199,6 +207,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	@Override
 	public Class<? extends IContainer.Manager> bindIContainer$Manager() {
 		return StateBasedContainerManager.class;
 	}
@@ -209,6 +218,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
+	@Override
 	public void configureIResourceDescriptions(Binder binder) {
 		binder.bind(IResourceDescriptions.class).to(ResourceSetBasedResourceDescriptions.class);
 	}
@@ -239,6 +249,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	@Override
 	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
 		return BaseFragmentProvider.class;
 	}
@@ -249,6 +260,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	@Override
 	public Class<? extends ILinker> bindILinker() {
 		return CS2ASLinker.class;
 	}
@@ -259,6 +271,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	@Override
 	public Class<? extends ILinkingService> bindILinkingService() {
 		return BaseLinkingService.class;
 	}
@@ -269,6 +282,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	@Override
 	public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
 		return BaseQualifiedNameProvider.class;
 	}
@@ -284,11 +298,13 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	@Override
 	public Class<? extends IValueConverterService> bindIValueConverterService() {
 		return BaseValueConverterService.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	@Override
 	public Class<? extends XtextResource> bindXtextResource() {
 		return EssentialOCLCSResource.class;
 	}
