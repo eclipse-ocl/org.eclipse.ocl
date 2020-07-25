@@ -43,6 +43,7 @@ public class SerializationBuilder
 	protected final @NonNull String indentString;
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
 	private @NonNull Stack<@NonNull String> indents = new Stack<>();
+	private @Nullable List<@NonNull String> errors = null;
 
 	public SerializationBuilder() {
 		this.newLineString = "\n";
@@ -58,6 +59,15 @@ public class SerializationBuilder
 		strings.add(string);
 	}
 
+	public void appendError(@NonNull String string) {
+		List<@NonNull String> errors2 = errors;
+		if (errors2 == null) {
+			errors = errors2 = new ArrayList<>();
+		}
+		errors2.add(string);
+		append(string);
+	}
+
 	protected void appendIndents(StringBuilder s) {
 		for (int i = 0; i < indents.size(); i++) {
 			s.append(indents.get(i));
@@ -71,6 +81,10 @@ public class SerializationBuilder
 	protected int appendString(@NonNull StringBuilder s, @NonNull String string) {
 		s.append(string);
 		return s.charAt(s.length()-1);
+	}
+
+	public boolean hasErrors() {
+		return errors != null;
 	}
 
 	public @NonNull String toRenderedString() {
@@ -206,4 +220,17 @@ public class SerializationBuilder
 		return String.valueOf(s);
 	}
 
+	public void throwErrors() {
+		List<@NonNull String> errors2 = errors;
+		if (errors2 != null) {
+			StringBuilder s = new StringBuilder();
+			for (@NonNull String error : errors2) {
+				if (s.length() > 0) {
+					s.append("\n");
+				}
+				s.append(error);
+			}
+			throw new IllegalStateException(s.toString());		// FIXME A more consistent exception
+		}
+	}
 }

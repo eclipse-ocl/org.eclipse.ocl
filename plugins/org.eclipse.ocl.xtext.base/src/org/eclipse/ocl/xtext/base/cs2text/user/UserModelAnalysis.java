@@ -138,7 +138,7 @@ public class UserModelAnalysis
 			s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
 			slotsAnalysis.diagnose(s);
 			s.append("»\n\n");
-			serializationBuilder.append(s.toString());
+			serializationBuilder.appendError(s.toString());
 		}
 	}
 

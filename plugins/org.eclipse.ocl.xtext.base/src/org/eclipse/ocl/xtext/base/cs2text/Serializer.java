@@ -89,8 +89,7 @@ public class Serializer
 	 * Serialize this serializer's configured element to the serializationBuilder.
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
-		List<@NonNull SerializationNode> serializationNodes = Collections.singletonList(serializationRule.getRootSerializationNode());
-		serializeNodes(serializationBuilder, serializationNodes);
+		serializeNode(serializationBuilder, serializationRule.getRootSerializationNode());
 	}
 
 	/**
@@ -103,7 +102,7 @@ public class Serializer
 	/**
 	 * Serialize a serializationNode to the serializationBuilder.
 	 */
-	protected void serializeNode(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializationNode) {
+	public void serializeNode(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializationNode) {
 		SubIdiom idiom = getSubIdiom(serializationNode);
 		//idiom.serialize(value, serializationBuilder);
 		if (serializationNode.getMultiplicativeCardinality().isOne()) {

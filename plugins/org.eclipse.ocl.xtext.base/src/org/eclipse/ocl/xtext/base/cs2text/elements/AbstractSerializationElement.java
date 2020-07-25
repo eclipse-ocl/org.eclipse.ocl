@@ -220,7 +220,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 
 //	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializationBuilder.append("«Unsupported serialize '" + getClass().getSimpleName() + "'»");
+		serializationBuilder.appendError("«Unsupported serialize '" + getClass().getSimpleName() + "'»");
 	}
 
 	@Override

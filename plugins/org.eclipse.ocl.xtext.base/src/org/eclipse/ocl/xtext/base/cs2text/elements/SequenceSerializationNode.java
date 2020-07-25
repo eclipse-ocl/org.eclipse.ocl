@@ -101,7 +101,9 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializer.serializeNodes(serializationBuilder, serializationNodes);
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			serializer.serializeNode(serializationBuilder, serializationNode);
+		}
 	}
 
 	@Override
