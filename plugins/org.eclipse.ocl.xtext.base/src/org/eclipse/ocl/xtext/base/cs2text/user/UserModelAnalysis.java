@@ -131,7 +131,7 @@ public class UserModelAnalysis
 			if (!isFirst) {
 				s.append("\n");
 			}
-			s.append("\t");
+			s.append("  ");
 			s.append(elementAnalysis);
 			isFirst = false;
 		}

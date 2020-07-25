@@ -441,6 +441,10 @@ public class PreSerializer
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		serializationRule.getRootSerializationNode().toString(s, depth);
+		toSolutionString(s, depth);
+	}
+
+	public void toSolutionString(@NonNull StringBuilder s, int depth) {
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2node.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityVariable variable : variables) {

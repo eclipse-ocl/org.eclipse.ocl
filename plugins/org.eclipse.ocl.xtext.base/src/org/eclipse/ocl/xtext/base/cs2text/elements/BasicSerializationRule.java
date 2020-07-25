@@ -171,6 +171,13 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	}
 
 	@Override
+	public void toSolutionString(@NonNull StringBuilder s, int depth) {
+		if (preSerializer != null) {
+			preSerializer.toSolutionString(s, depth);
+		}
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 	//	rootSerializationNode.toString(s, depth);
 	/*	boolean isFirst = true;

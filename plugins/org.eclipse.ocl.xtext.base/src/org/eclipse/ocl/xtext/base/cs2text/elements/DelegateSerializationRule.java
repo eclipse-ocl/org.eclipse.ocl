@@ -28,6 +28,13 @@ public class DelegateSerializationRule extends AbstractSerializationRule
 	}
 
 	@Override
+	public void toSolutionString(@NonNull StringBuilder s, int depth) {
+	//	if (preSerializer != null) {
+	//		preSerializer.toString(s, 0);
+	//	}
+	}
+
+	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(ruleAnalysis.getName());
 		s.append(" => ");

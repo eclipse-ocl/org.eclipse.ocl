@@ -27,5 +27,6 @@ public interface SerializationRule extends Nameable
 	@NonNull SerializationNode getRootSerializationNode();
 	@NonNull ParserRuleAnalysis getRuleAnalysis();
 	void toRuleString(@NonNull StringBuilder s);
+	void toSolutionString(@NonNull StringBuilder s, int depth);
 	void toString(@NonNull StringBuilder s, int depth);
 }

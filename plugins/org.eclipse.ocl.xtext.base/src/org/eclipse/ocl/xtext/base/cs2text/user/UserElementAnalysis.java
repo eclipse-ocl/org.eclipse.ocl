@@ -156,7 +156,7 @@ public class UserElementAnalysis implements Nameable
 		boolean isMany = Iterables.size(serializationRules2) > 1;
 		for (@NonNull SerializationRule serializationRule : serializationRules2) {
 			if (isMany) {
-				s.append("\n\t\t");
+				s.append("\n    ");
 			}
 			else {
 				s.append(" ");
@@ -164,6 +164,7 @@ public class UserElementAnalysis implements Nameable
 			s.append(serializationRule.getName());
 			s.append(" - ");
 			serializationRule.toRuleString(s);
+			serializationRule.toSolutionString(s, 1);
 		}
 		return s.toString();
 	}
