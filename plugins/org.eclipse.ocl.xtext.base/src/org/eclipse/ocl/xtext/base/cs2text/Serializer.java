@@ -35,7 +35,6 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 public class Serializer
 {
 	protected final @NonNull BasicSerializationRule serializationRule;
-	protected final @NonNull PreSerializer preSerializer;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject element;
 	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value;
@@ -44,7 +43,6 @@ public class Serializer
 	public Serializer(@NonNull BasicSerializationRule serializationRule, @NonNull UserModelAnalysis modelAnalysis,
 			@NonNull EObject element, @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
 		this.serializationRule = serializationRule;
-		this.preSerializer = serializationRule.getPreSerializer();
 		this.modelAnalysis = modelAnalysis;
 		this.element = element;
 		this.variable2value = variable2value;
@@ -109,7 +107,7 @@ public class Serializer
 			idiom.serialize(serializationNode, this, serializationBuilder);
 		}
 		else {
-			CardinalityVariable variable = preSerializer.getVariable(serializationNode);
+			CardinalityVariable variable = serializationRule.getVariable(serializationNode);
 			Integer value = variable2value.get(variable);
 			assert value != null;
 			for (int i = 0; i < value.intValue(); i++) {

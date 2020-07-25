@@ -16,7 +16,6 @@ import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -49,8 +48,8 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		preSerializer.addSerializedNode(this, parentStack);
+	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		serializationRule.addSerializedNode(this, parentStack);
 	}
 
 	@Override

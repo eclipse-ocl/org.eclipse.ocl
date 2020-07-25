@@ -16,7 +16,6 @@ import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -89,12 +88,11 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		super.preSerialize(preSerializer, parentStack);
-		PreSerializer nestedPreSerializer = preSerializer;//.createNestedPreSerializer(this, parentStack);
+	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		super.preSerialize(serializationRule, parentStack);
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			parentStack.push(this);
-			serializationNode.preSerialize(nestedPreSerializer, parentStack);
+			serializationNode.preSerialize(serializationRule, parentStack);
 			parentStack.pop();
 		}
 	}

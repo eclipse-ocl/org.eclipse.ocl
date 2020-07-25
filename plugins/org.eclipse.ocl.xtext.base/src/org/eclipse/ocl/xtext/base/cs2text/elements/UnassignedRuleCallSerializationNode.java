@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.RuleCall;
@@ -44,9 +43,9 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		if (!multiplicativeCardinality.mayBeZero()) {
-			super.preSerialize(preSerializer, parentStack);
+			super.preSerialize(serializationRule, parentStack);
 		}
 	}
 

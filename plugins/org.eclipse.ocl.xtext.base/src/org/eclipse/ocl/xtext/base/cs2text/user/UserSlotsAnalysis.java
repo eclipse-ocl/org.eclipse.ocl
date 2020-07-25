@@ -231,7 +231,7 @@ public class UserSlotsAnalysis
 						else {
 							boolean allRulesNeedDefault = true;
 							for (@NonNull SerializationRule serializationRule : serializationRules) {
-								if (!serializationRule.getBasicSerializationRule().getPreSerializer().needsDefault(eFeature)) {
+								if (!serializationRule.getBasicSerializationRule().needsDefault(eFeature)) {
 									allRulesNeedDefault = false;
 									break;
 								}

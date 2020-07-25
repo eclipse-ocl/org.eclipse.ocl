@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 
@@ -23,6 +22,6 @@ public interface SerializationNode extends SerializationElement
 	 * Ceate a shallow copy of this node with a changed multiplicativeCardinality.
 	 */
 	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
-	void preSerialize(@NonNull PreSerializer preSerialize, @NonNull Stack<@NonNull SerializationNode> parentStack);
+	void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack);
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 }

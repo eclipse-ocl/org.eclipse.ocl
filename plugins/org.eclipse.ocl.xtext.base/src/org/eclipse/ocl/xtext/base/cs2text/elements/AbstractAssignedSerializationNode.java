@@ -15,7 +15,6 @@ import java.util.Stack;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
@@ -53,9 +52,9 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		super.preSerialize(preSerializer, parentStack);
+	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		super.preSerialize(serializationRule, parentStack);
 		EnumerationValue enumerationValue = getEnumerationValue();
-		preSerializer.addAssignedNode(this, enumerationValue, parentStack);
+		serializationRule.addAssignedNode(this, enumerationValue, parentStack);
 	}
 }

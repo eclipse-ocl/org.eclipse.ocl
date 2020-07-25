@@ -16,7 +16,6 @@ import java.util.Stack;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 
@@ -45,7 +44,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull PreSerializer preSerializer, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		throw new IllegalStateException();
 /*		SerializationNode chosenNode = preSerializer.getChosenNode(this);
 		if (chosenNode == this) {

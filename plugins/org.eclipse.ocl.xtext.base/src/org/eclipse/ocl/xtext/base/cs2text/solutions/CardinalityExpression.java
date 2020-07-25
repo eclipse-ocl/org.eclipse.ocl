@@ -25,7 +25,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.PreSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -131,10 +132,10 @@ public class CardinalityExpression implements Nameable
 	/**
 	 * Return the variables commn to all products that lack a solution, or null if none.
 	 */
-	private @Nullable Set<@NonNull CardinalityVariable> computeUnsolvedCommonFactors(@NonNull PreSerializer preSerializer) {
+	private @Nullable Set<@NonNull CardinalityVariable> computeUnsolvedCommonFactors(@NonNull BasicSerializationRule serializationRule) {
 		Set<@NonNull CardinalityVariable> intersection = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			Object resolution = resolveProduct(preSerializer, products);
+			Object resolution = resolveProduct(serializationRule, products);
 			if (resolution instanceof Integer) {
 				//
 			}
@@ -204,11 +205,11 @@ public class CardinalityExpression implements Nameable
 		return name;
 	}
 
-	public @Nullable Iterable<@NonNull CardinalityVariable> getUnsolvedVariables(@NonNull PreSerializer preSerializer) {
+	public @Nullable Iterable<@NonNull CardinalityVariable> getUnsolvedVariables(@NonNull BasicSerializationRule serializationRule) {
 		List<@NonNull CardinalityVariable> unsolvedVariables = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
 				if ((solution == null) || solution.isRuntime()) {
 					if (unsolvedVariables == null) {
 						unsolvedVariables = new ArrayList<>();
@@ -231,11 +232,11 @@ public class CardinalityExpression implements Nameable
 	 * - Set(CardinalityVariable) for a scaled product of non-quadratic variable
 	 * - null for a quadratic variable
 	 */
-	public Object resolveProduct(@NonNull PreSerializer preSerializer, @NonNull List<@NonNull CardinalityVariable> product) {
+	public Object resolveProduct(@NonNull BasicSerializationRule serializationRule, @NonNull List<@NonNull CardinalityVariable> product) {
 		Set<@NonNull CardinalityVariable> productVariables = null;
 		int constantProduct = 1;
 		for (@NonNull CardinalityVariable variable : product) {
-			CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+			CardinalitySolution solution = serializationRule.basicGetSolution(variable);
 			Integer integer = getIntegerSolution(solution);
 			if (integer != null) {
 				constantProduct *= integer;
@@ -269,21 +270,21 @@ public class CardinalityExpression implements Nameable
 		return sum;
 	}
 
-	public void solveAtRuntime(@NonNull PreSerializer preSerializer) {
+	public void solveAtRuntime(@NonNull SerializationRule serializationRule) {
 	//	Solution runtimeSolution = new RuntimeSolution(this, unresolvedVariables);
 	//	for (@NonNull CardinalityVariable variable : unresolvedVariables) {
 	//		preSerializer.addSolution(variable, runtimeSolution);
 	//	}
 	}
 
-	public boolean solveForBooleanCommonFactors(@NonNull PreSerializer preSerializer) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(preSerializer);
+	public boolean solveForBooleanCommonFactors(@NonNull BasicSerializationRule serializationRule) {
+		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(serializationRule);
 		if (intersection == null) {
 			return false;
 		}
 		int sum = 0;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			Object resolution = resolveProduct(preSerializer, products);
+			Object resolution = resolveProduct(serializationRule, products);
 			if (resolution instanceof Integer) {
 				sum += ((Integer)resolution).intValue();
 			}
@@ -291,13 +292,13 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
 			if (!cardinalityVariable.mayBeMany()) {
 				assert cardinalityVariable.mayBeNone();
-				preSerializer.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum));
+				serializationRule.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum));
 			}
 		}
 		return true;
 	}
 
-	public boolean solveForConstants(@NonNull PreSerializer preSerializer) {
+	public boolean solveForConstants(@NonNull BasicSerializationRule serializationRule) {
 		CardinalityVariable sumVariable = null;
 		int sum = 0;
 		int factor = 0;
@@ -305,7 +306,7 @@ public class CardinalityExpression implements Nameable
 			CardinalityVariable productVariable = null;
 			int product = 1;
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
 				Integer integerSolution = getIntegerSolution(solution);
 				if (integerSolution != null) {
 					product *= integerSolution.intValue();
@@ -331,14 +332,14 @@ public class CardinalityExpression implements Nameable
 		if (sumVariable == null) {
 			return true;
 		}
-		preSerializer.addSolution(sumVariable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum, factor));
+		serializationRule.addSolution(sumVariable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum, factor));
 		return true;
 	}
 
-	public boolean solveForNoVariables(PreSerializer preSerializer) {
+	public boolean solveForNoVariables(@NonNull BasicSerializationRule serializationRule) {
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
 				if (!(solution instanceof IntegerCardinalitySolution)) {
 					return false;
 				}
@@ -347,8 +348,8 @@ public class CardinalityExpression implements Nameable
 		return true;
 	}
 
-	public boolean solveForPseudoBooleanFactors(@NonNull PreSerializer preSerializer) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(preSerializer);
+	public boolean solveForPseudoBooleanFactors(@NonNull BasicSerializationRule serializationRule) {
+		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(serializationRule);
 		if (intersection == null) {
 			return false;
 		}
@@ -358,7 +359,7 @@ public class CardinalityExpression implements Nameable
 			int constantProduct = 1;
 			for (@NonNull CardinalityVariable variable : product) {
 				if (!Iterables.contains(intersection, variable)) {
-					CardinalitySolution solution = preSerializer.basicGetSolution(variable);
+					CardinalitySolution solution = serializationRule.basicGetSolution(variable);
 					Integer integer = getIntegerSolution(solution);
 					if (integer != null) {
 						constantProduct *= integer;
@@ -378,19 +379,19 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
 				if (variable == productVariable) {
-					preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, sum, 1));
+					serializationRule.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, sum, 1));
 				}
 				else {
 					assert Iterables.contains(intersection, variable);
-					preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
+					serializationRule.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
 				}
 			}
 		}
 		return true;
 	}
 
-	public boolean solveForRedundantProducts(@NonNull PreSerializer preSerializer) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(preSerializer);
+	public boolean solveForRedundantProducts(@NonNull BasicSerializationRule serializationRule) {
+		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(serializationRule);
 		if (intersection != null) {
 			return false;
 		}
@@ -413,15 +414,15 @@ public class CardinalityExpression implements Nameable
 		}
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				if (preSerializer.basicGetSolution(variable) == null) {
+				if (serializationRule.basicGetSolution(variable) == null) {
 					if (products != manyProducts) {
-						preSerializer.addSolution(variable, new IntegerCardinalitySolution(0));
+						serializationRule.addSolution(variable, new IntegerCardinalitySolution(0));
 					}
 					else if (variable == manyVariable) {
-						preSerializer.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0, 1));
+						serializationRule.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0, 1));
 					}
 					else {
-						preSerializer.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
+						serializationRule.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
 					}
 				}
 			}
