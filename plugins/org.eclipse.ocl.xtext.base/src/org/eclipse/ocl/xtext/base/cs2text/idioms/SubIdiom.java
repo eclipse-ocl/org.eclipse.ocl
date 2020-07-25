@@ -33,7 +33,8 @@ public class SubIdiom
 	public static @NonNull SubIdiom SEMI_COLON = new SubIdiom(new KeywordLocator(";"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NEW_LINE);
 	public static @NonNull SubIdiom VALUE = new SubIdiom(null, ValueSegment.INSTANCE);
 
-	public static @NonNull SubIdiom COMMENTED_PACKAGE = new SubIdiom(new KeywordLocator("enum"), new CustomSegment(BaseCommentSegment.class), ValueSegment.INSTANCE);
+//	public static @NonNull SubIdiom COMMENTED_PACKAGE = new SubIdiom(new KeywordLocator("enum"), new CustomSegment(BaseCommentSegment.class), ValueSegment.INSTANCE);
+	public static @NonNull SubIdiom COMMENTED_RULE = new SubIdiom(new ProducedEClassLocator(BaseCSPackage.Literals.MODEL_ELEMENT_CS), new CustomSegment(BaseCommentSegment.class), ValueSegment.INSTANCE);
 
 
 	public static @NonNull SubIdiom PackagesCS_ownedClasses = new SubIdiom(new AssignmentLocator(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES), StringSegment.HALF_NEW_LINE, ValueSegment.INSTANCE, StringSegment.HALF_NEW_LINE);
