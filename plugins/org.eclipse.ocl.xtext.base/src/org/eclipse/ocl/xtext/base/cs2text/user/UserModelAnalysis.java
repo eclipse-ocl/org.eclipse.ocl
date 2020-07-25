@@ -60,32 +60,19 @@ public class UserModelAnalysis
 	/**
 	 * The analysis of each user model element.
 	 */
-	private final @NonNull Map<@NonNull EObject, @NonNull UserAbstractElementAnalysis> element2elementAnalysis = new HashMap<>();
+	private final @NonNull Map<@NonNull EObject, @NonNull UserElementAnalysis> element2elementAnalysis = new HashMap<>();
 
 	/**
 	 * Perform analysis of each user model element.
 	 */
 	public void analyze(@NonNull EObject model) {
 		assert model.eContainer() == null;
-		UserRootElementAnalysis rootElementAnalysis = new UserRootElementAnalysis(this, model);
-
-
-
+		UserElementAnalysis rootElementAnalysis = new UserElementAnalysis(this, model);
 		analyzeHierarchy(rootElementAnalysis, model);
-
-
-/*		List<@NonNull UserElementAnalysis> unresolvedModelObjects = new ArrayList<>();
-		for (@NonNull EObject eObject : new TreeIterable(model, false)) {
-			UserElementAnalysis elementAnalysis = new UserElementAnalysis(this, eObject);
-			element2elementAnalysis.put(eObject, elementAnalysis);
-			if (Iterables.size(elementAnalysis.getSerializationRules()) > 1) {
-				unresolvedModelObjects.add(elementAnalysis);
-			}
-		} */
 		rootElementAnalysis.getSerializationRules();		// Avoid lazy serializationRules being omiited by a toString().
 	}
 
-	private void analyzeHierarchy(@NonNull UserAbstractElementAnalysis parentAnalysis, @NonNull EObject eParent) {
+	private void analyzeHierarchy(@NonNull UserElementAnalysis parentAnalysis, @NonNull EObject eParent) {
 		element2elementAnalysis.put(eParent, parentAnalysis);
 		for (EObject eChild : eParent.eContents()) {
 			EReference eContainmentFeature = eChild.eContainmentFeature();
@@ -101,7 +88,7 @@ public class UserModelAnalysis
 	/**
 	 * Return the analysis of a user model element.
 	 */
-	public @NonNull UserAbstractElementAnalysis getElementAnalysis(@NonNull EObject element) {
+	public @NonNull UserElementAnalysis getElementAnalysis(@NonNull EObject element) {
 		return ClassUtil.nonNullState(element2elementAnalysis.get(element));
 	}
 
@@ -114,21 +101,12 @@ public class UserModelAnalysis
 	 * to the serializationBuilder.
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
-		UserAbstractElementAnalysis userElementAnalysis = getElementAnalysis(element);
+		UserElementAnalysis userElementAnalysis = getElementAnalysis(element);
 		if ("EnumerationCS".equals(element.eClass().getName())) {
 			getClass();	// XXX
 		}
 		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();
 		Serializer serializer = userElementAnalysis.createSerializer(slotsAnalysis);
-	/*	if (serializer == null) {
-		//	StringBuilder s = new StringBuilder();
-		//	s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
-		//	slotsAnalysis.diagnose(s);
-		//	s.append("»\n\n");
-		//	serializationBuilder.append(s.toString());
-			slotsAnalysis.setIncludeImplicitDefaults(true);
-			serializer = userElementAnalysis.createSerializer(slotsAnalysis);
-		} */
 		if (serializer != null) {
 			serializer.serialize(serializationBuilder);
 		}
@@ -146,10 +124,10 @@ public class UserModelAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("User object <=> Xtext containing assignment(s) : Xtext production rule\n");
-		List<@NonNull UserAbstractElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
+		List<@NonNull UserElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
 		Collections.sort(elementAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 		boolean isFirst = true;
-		for (@NonNull UserAbstractElementAnalysis elementAnalysis : elementAnalyses) {
+		for (@NonNull UserElementAnalysis elementAnalysis : elementAnalyses) {
 			if (!isFirst) {
 				s.append("\n");
 			}
