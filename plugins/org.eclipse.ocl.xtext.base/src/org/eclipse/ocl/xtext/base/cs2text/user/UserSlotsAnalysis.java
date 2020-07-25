@@ -153,7 +153,7 @@ public class UserSlotsAnalysis
 			EClass eClass = eObject.eClass();
 			for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
 				assert eFeature != null;
-				if ("lowerBound".equals(eFeature.getName())) {
+				if ("stereotype".equals(eFeature.getName())) {
 					getClass();			// XXX debugging
 				}
 				if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile()) {
@@ -178,7 +178,7 @@ public class UserSlotsAnalysis
 							Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
 							List<?> elements = (List<?>)object;
 							int size = elements.size();
-							if ((size > 0) && (eFeature instanceof EAttribute) && (enumerationValues != null)) {
+							if ((size > 0) && (enumerationValues != null)) {
 								EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
 								int others = 0;
 								for (Object element : elements) {
@@ -207,7 +207,23 @@ public class UserSlotsAnalysis
 							slotAnalysis = valueOf(object == Boolean.TRUE ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
 						}
 						else if (eObject.eIsSet(eAttribute)) {
-							slotAnalysis = valueOf(CountedSlotAnalysis.ONE);
+							Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
+							if (enumerationValues != null) {
+								EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
+								String string = String.valueOf(object);
+								boolean gotOne = false;
+								for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
+									if (enumerationValue.isElement(string)) {
+										enumeratedSlotAnalysis.put(enumerationValue, 1);
+										gotOne = true;
+									}
+								}
+								enumeratedSlotAnalysis.put(NullEnumerationValue.INSTANCE, gotOne ? 0 : 1);
+								slotAnalysis = enumeratedSlotAnalysis;
+							}
+							else {
+								slotAnalysis = valueOf(CountedSlotAnalysis.ONE);
+							}
 						}
 						else if (eAttribute.isUnsettable()) {
 							slotAnalysis = valueOf(CountedSlotAnalysis.ZERO);
