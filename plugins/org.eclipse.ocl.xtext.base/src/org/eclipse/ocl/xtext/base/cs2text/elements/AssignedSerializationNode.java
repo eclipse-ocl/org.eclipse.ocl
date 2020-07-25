@@ -18,8 +18,8 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
+	@NonNull EClass getAssignedEClass();
 	@NonNull AssignmentAnalysis getAssignmentAnalysis();
-	@NonNull EClass getEFeatureScope();
 	@NonNull EStructuralFeature getEStructuralFeature();
 	@NonNull EnumerationValue getEnumerationValue();
 }

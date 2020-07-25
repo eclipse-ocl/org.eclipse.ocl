@@ -11,16 +11,21 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public interface SerializationRule extends Nameable
 {
+	@Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference);
 	@NonNull BasicSerializationRule getBasicSerializationRule();
 	@Override
 	@NonNull String getName();
 	@NonNull EClass getProducedEClass();
 	@NonNull SerializationNode getRootSerializationNode();
+	@NonNull ParserRuleAnalysis getRuleAnalysis();
 	void toRuleString(@NonNull StringBuilder s);
 	void toString(@NonNull StringBuilder s, int depth);
 }

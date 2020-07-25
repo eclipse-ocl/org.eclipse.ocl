@@ -11,19 +11,16 @@
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -31,79 +28,119 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
  */
 public class UserElementAnalysis extends UserAbstractElementAnalysis
 {
-	protected final @NonNull EStructuralFeature eContainingFeature;
-
 	protected final @NonNull UserAbstractElementAnalysis containingElementAnalysis;
+	protected final @NonNull EReference eContainmentFeature;
+	private @NonNull Iterable<@NonNull SerializationRule> serializationRules;
+//	private @Nullable Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses = null;
+//	private @Nullable Iterable<@NonNull ParserRuleAnalysis> productionRuleAnalyses = null;
 
-	private @Nullable Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> productionRuleAnalysis2containingAssignmentAnalyses = null;
-
-	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject eObject) {
+	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull UserAbstractElementAnalysis containingElementAnalysis,
+			@NonNull EReference eContainmentFeature, @NonNull EObject eObject) {
 		super(modelAnalysis, eObject);
 		assert eObject.eContainer() != null;
-		this.eContainingFeature = UserModelAnalysis.eContainingFeature(eObject);
-		this.containingElementAnalysis = modelAnalysis.getElementAnalysis(UserModelAnalysis.eContainer(eObject));
-		this.productionRuleAnalysis2containingAssignmentAnalyses = analyzeProduction();
+		this.containingElementAnalysis = containingElementAnalysis;
+		this.eContainmentFeature = eContainmentFeature;
+		this.serializationRules = analyzeSerializationRules();
+//		this.productionRuleAnalyses = analyzeProduction();
 	}
 
 	/**
 	 * Determine the rules able to produce this element and the containing assignments by which it can be contained.
 	 */
-	private @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> analyzeProduction() {
-		EClass targetEClass = UserModelAnalysis.eClass(eObject);
-		@SuppressWarnings("unused") String eClassName = targetEClass.getName();
-		if ("MultiplicityStringCS".equals(eClassName)) {
+	private @NonNull Iterable<@NonNull SerializationRule> analyzeSerializationRules() {
+		String eClassName = eClass.getName();
+		if ("ImportCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
-		Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> ruleAnalysis2assignmentAnalyses = new HashMap<>();
-		isCompatible(ruleAnalysis2assignmentAnalyses);
-		return ruleAnalysis2assignmentAnalyses;
+		Set<AbstractRuleAnalysis> targetRuleAnalyses = new HashSet<>();
+		for (@NonNull SerializationRule parentSerializationRule : grammarAnalysis.getSerializationRules(containingElementAnalysis.getEClass())) {
+			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = parentSerializationRule.getAssignedSerializationNodes(eContainmentFeature);
+			if (assignedSerializationNodes != null) {
+				for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+					for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
+						targetRuleAnalyses.add(targetRuleAnalysis);
+					}
+				}
+			}
+		}
+		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
+		for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+			if (targetRuleAnalyses.contains(serializationRule.getRuleAnalysis())) {
+				serializationRules.add(serializationRule);
+			}
+		}
+		return serializationRules;
+	}
+
+	/**
+	 * Determine the rules able to produce this element and the containing assignments by which it can be contained.
+	 *
+	private @NonNull Iterable<@NonNull ParserRuleAnalysis> analyzeProduction() {
+		getSerializationRules();
+		String eClassName = eClass.getName();
+		if ("MultiplicityBoundsCS".equals(eClassName)) {
+			getClass();				// XXX
+		}
+		Set<AbstractRuleAnalysis> targetRuleAnalyses = new HashSet<>();
+		for (@NonNull SerializationRule parentSerializationRule : grammarAnalysis.getSerializationRules(containingElementAnalysis.getEClass())) {
+			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = parentSerializationRule.getAssignedSerializationNodes(eContainmentFeature);
+			if (assignedSerializationNodes != null) {
+				for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+					for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
+						targetRuleAnalyses.add(targetRuleAnalysis);
+					}
+				}
+			}
+		}
+		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
+		for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+			if (targetRuleAnalyses.contains(serializationRule.getRuleAnalysis())) {
+				serializationRules.add(serializationRule);
+			}
+		}
+		Set<@NonNull ParserRuleAnalysis> ruleAnalyses = new HashSet<>();
+		isCompatible(ruleAnalyses);
+		return ruleAnalyses;
 	}
 
 	@Override
-	protected boolean isCompatible(@Nullable Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> ruleAnalysis2assignmentAnalyses) {
-		Iterable<@NonNull AssignmentAnalysis> containingAssignmentAnalysisCandidates = grammarAnalysis.getAssignmentAnalyses(eContainingFeature);
+	protected boolean isCompatible(@Nullable Set<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+		Iterable<@NonNull AssignmentAnalysis> containingAssignmentAnalysisCandidates = grammarAnalysis.getAssignmentAnalyses(eContainmentFeature);
 		for (@NonNull AssignmentAnalysis containingAssignmentAnalysisCandidate : containingAssignmentAnalysisCandidates) {
 			List<@NonNull ParserRuleAnalysis> compatibleTargetRuleAnalysisCandidates = null;
-			EClass targetEClass = UserModelAnalysis.eClass(eObject);
-			Iterable<@NonNull AbstractRuleAnalysis> targetRuleAnalysisCandidates = grammarAnalysis.getProducingRuleAnalyses(targetEClass);
-			for (@NonNull AbstractRuleAnalysis targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
-				if (targetRuleAnalysisCandidate instanceof ParserRuleAnalysis) {
-					if (containingAssignmentAnalysisCandidate.targetIsAssignableFrom(targetRuleAnalysisCandidate)) {					// If target rule compatible
-						boolean isOkSource = false;
-						Iterable<@NonNull ParserRuleAnalysis> containerProductionRules = containingElementAnalysis.getProductionRules();
-						for (@NonNull AbstractRuleAnalysis sourceRuleAnalysisCandidate : containerProductionRules) {
-							if (containingAssignmentAnalysisCandidate.sourceIsAssignableFrom(sourceRuleAnalysisCandidate)) {			// If source rule compatible
-								if (containingElementAnalysis.isCompatible(null)) {													// If transitively compatible
-									isOkSource = true;
-									break;
-								}
+		//	EClass targetEClass = eClass;
+			Iterable<@NonNull ParserRuleAnalysis> targetRuleAnalysisCandidates = grammarAnalysis.getProducingRuleAnalyses(eClass);
+			for (@NonNull ParserRuleAnalysis targetRuleAnalysisCandidate : targetRuleAnalysisCandidates) {
+				if (containingAssignmentAnalysisCandidate.targetIsAssignableFrom(targetRuleAnalysisCandidate)) {					// If target rule compatible
+					boolean isOkSource = false;
+					Iterable<@NonNull ParserRuleAnalysis> containerProductionRules = containingElementAnalysis.getProductionRules();
+					for (@NonNull AbstractRuleAnalysis sourceRuleAnalysisCandidate : containerProductionRules) {
+						if (containingAssignmentAnalysisCandidate.sourceIsAssignableFrom(sourceRuleAnalysisCandidate)) {			// If source rule compatible
+							if (containingElementAnalysis.isCompatible(null)) {													// If transitively compatible
+								isOkSource = true;
+								break;
 							}
 						}
-						if (isOkSource) {
-							if (compatibleTargetRuleAnalysisCandidates == null) {
-								compatibleTargetRuleAnalysisCandidates = new ArrayList<>(4);
-							}
-							compatibleTargetRuleAnalysisCandidates.add((ParserRuleAnalysis)targetRuleAnalysisCandidate);
+					}
+					if (isOkSource) {
+						if (compatibleTargetRuleAnalysisCandidates == null) {
+							compatibleTargetRuleAnalysisCandidates = new ArrayList<>(4);
 						}
+						compatibleTargetRuleAnalysisCandidates.add(targetRuleAnalysisCandidate);
 					}
 				}
 			}
 			if (compatibleTargetRuleAnalysisCandidates != null) {
 				for (@NonNull ParserRuleAnalysis compatibleTargetRuleAnalysisCandidate : compatibleTargetRuleAnalysisCandidates) {
-					if (ruleAnalysis2assignmentAnalyses == null) {
+					if (ruleAnalyses == null) {
 						return true;
 					}
-					List<@NonNull AssignmentAnalysis> containingAssignmentAnalyses = ruleAnalysis2assignmentAnalyses.get(compatibleTargetRuleAnalysisCandidate);
-					if (containingAssignmentAnalyses == null) {
-						containingAssignmentAnalyses = new ArrayList<>();
-						ruleAnalysis2assignmentAnalyses.put(compatibleTargetRuleAnalysisCandidate, containingAssignmentAnalyses);
-					}
-					containingAssignmentAnalyses.add(containingAssignmentAnalysisCandidate);
+					ruleAnalyses.add(compatibleTargetRuleAnalysisCandidate);
 				}
 			}
 		}
 		return false;
-	}
+	} */
 
 	@Override
 	public @NonNull UserAbstractElementAnalysis getContainingElementAnalysis() {
@@ -115,14 +152,19 @@ public class UserElementAnalysis extends UserAbstractElementAnalysis
 //		return eContainingFeature;
 //	}
 
-	public @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> getParserRuleAnalysis2assignmentAnalyses() {
-		return ClassUtil.nonNullState(productionRuleAnalysis2containingAssignmentAnalyses);
-	}
+//	public @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> getParserRuleAnalysis2assignmentAnalyses() {
+//		return ClassUtil.nonNullState(productionRuleAnalysis2containingAssignmentAnalyses);
+//	}
+
+//	@Override
+//	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getProductionRules() {
+//		assert productionRuleAnalyses != null;
+//		return productionRuleAnalyses;
+//	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getProductionRules() {
-		assert productionRuleAnalysis2containingAssignmentAnalyses != null;
-		return productionRuleAnalysis2containingAssignmentAnalyses.keySet();
+	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
+		return serializationRules;
 	}
 
 /*	@Override

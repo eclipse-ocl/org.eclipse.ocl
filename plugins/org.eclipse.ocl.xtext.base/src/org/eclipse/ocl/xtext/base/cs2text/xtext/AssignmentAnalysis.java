@@ -54,7 +54,7 @@ public class AssignmentAnalysis implements Nameable
 	protected final @NonNull EStructuralFeature eFeature;
 
 	/**
-	 * The rules that may produce a result compatible with the target.
+	 * The rules declared to be useable as producers of the target.
 	 */
 	private final @NonNull List<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = new ArrayList<>();
 
@@ -80,7 +80,9 @@ public class AssignmentAnalysis implements Nameable
 
 	private void addTerminal(@NonNull AbstractElement terminal) {
 		if (terminal instanceof RuleCall) {
-			addTerminalRuleCall((RuleCall)terminal);
+			AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
+			AbstractRuleAnalysis terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
+			targetRuleAnalyses.add(terminalRuleAnalysis);
 		}
 		else if (terminal instanceof Alternatives) {
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements((Alternatives)terminal)) {
@@ -92,12 +94,6 @@ public class AssignmentAnalysis implements Nameable
 		else {
 			throw new UnsupportedOperationException();
 		}
-	}
-
-	private void addTerminalRuleCall(@NonNull RuleCall terminal) {
-		AbstractRule terminalRule = XtextGrammarUtil.getRule(terminal);
-		AbstractRuleAnalysis terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
-		targetRuleAnalyses.add(terminalRuleAnalysis);
 	}
 
 	public @NonNull AbstractElement getAssignment() {

@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -180,11 +181,18 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			assignedSerializationNode.toString(s, depth);
 			isFirst = false;
 		} */
-		if (preSerializer != null) {
-			preSerializer.toString(s, depth);
-		}
-		else {
+		s.append(ruleAnalysis.getName());
+		s.append(": ");
+		EClass producedEClass = getProducedEClass();
+		s.append(producedEClass.getEPackage().getName());
+		s.append("::");
+		s.append(producedEClass.getName());
+		s.append(" ");
+	//	if (preSerializer != null) {
+	//		preSerializer.toString(s, depth);
+	//	}
+	//	else {
 			rootSerializationNode.toString(s, depth);
-		}
+	//	}
 	}
 }

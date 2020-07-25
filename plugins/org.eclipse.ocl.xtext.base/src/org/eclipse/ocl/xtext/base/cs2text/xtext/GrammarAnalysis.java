@@ -80,9 +80,9 @@ public class GrammarAnalysis
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = null;
 
 	/**
-	 * The possible producing rule analyses for each EClassifier. This analysis excludes overrides.
+	 * The possible producing rule analyses for each EClass. ??his analysis excludes overrides.
 	 */
-	private @Nullable Map<@NonNull EClassifier, List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = null;
+	private @Nullable Map<@NonNull EClass, List<@NonNull ParserRuleAnalysis>> eClass2ruleAnalyses = null;
 
 	/**
 	 * The prioritized serialization rules for each EClass.
@@ -134,7 +134,6 @@ public class GrammarAnalysis
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
 			parserRuleAnalysis.analyze();
 		}
-		this.eClassifier2ruleAnalyses = analyzeProductions(rule2ruleAnalysis);
 		//
 		// Perform the inter rule analysis to determine the base rule closure.
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
@@ -143,6 +142,7 @@ public class GrammarAnalysis
 			}
 			parserRuleAnalysis.preSerialize();
 		}
+		this.eClass2ruleAnalyses = analyzeProductions(parserRuleAnalyses);
 		this.eClass2serializationRules = analyzeSerializations(parserRuleAnalyses);
 	}
 
@@ -160,16 +160,16 @@ public class GrammarAnalysis
 			for (@NonNull EObject eObject : new TreeIterable(abstractRule, false)) {
 				if (eObject instanceof Assignment) {
 					Assignment assignment = (Assignment)eObject;
-					ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)getRuleAnalysis(assignment);
+					ParserRuleAnalysis parserRuleAnalysis = getRuleAnalysis(assignment);
 					AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(parserRuleAnalysis, assignment);
 					assignment2assignmentAnalysis.put(assignment, assignmentAnalysis);
 					parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
 				}
-				else if (eObject instanceof Action) {
+				else if (eObject instanceof Action) {		// ?? is this still needed / ?? is it redundant wrt AssignedCurrentSerializationNode
 					Action action = (Action)eObject;
 					String feature = action.getFeature();
 					if (feature != null) {
-						ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)getRuleAnalysis(action);
+						ParserRuleAnalysis parserRuleAnalysis = getRuleAnalysis(action);
 						AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(parserRuleAnalysis, action);
 						assignment2assignmentAnalysis.put(action, assignmentAnalysis);
 						parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
@@ -204,11 +204,12 @@ public class GrammarAnalysis
 	}
 
 	/**
-	 *	Identify the production rule(s) for each EClassifier.
+	 *	Identify the production rule(s) for each EClass.
 	 */
-	protected @NonNull Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> analyzeProductions(
-			@NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis) {
-		Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = new HashMap<>();
+	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull ParserRuleAnalysis>> analyzeProductions(
+			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+//			@NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis) {
+/*		Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = new HashMap<>();
 		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
 			for (@NonNull EClassifier eClassifier : abstractRuleAnalysis.getEClassifiers()) {
 				List<@NonNull AbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eClassifier);
@@ -219,7 +220,23 @@ public class GrammarAnalysis
 				ruleAnalyses.add(abstractRuleAnalysis);
 			}
 		}
-		return eClassifier2ruleAnalyses;
+		return eClassifier2ruleAnalyses; */
+		Map<@NonNull EClass, @NonNull List<@NonNull ParserRuleAnalysis>> eClass2parserRules = new HashMap<>();
+		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
+			if ("Base::MultiplicityBoundsCS".equals(ruleAnalysis.getName())) {		// XXX debugging
+				getClass();
+			}
+			for (@NonNull SerializationRule serializationRule : ruleAnalysis.getSerializationRules()) {
+				EClass eClass = serializationRule.getProducedEClass();
+				List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = eClass2parserRules.get(eClass);
+				if (parserRuleAnalyses == null) {
+					parserRuleAnalyses = new ArrayList<>();
+					eClass2parserRules.put(eClass, parserRuleAnalyses);
+				}
+				parserRuleAnalyses.add(ruleAnalysis);
+			}
+		}
+		return eClass2parserRules;
 	}
 
 	/**
@@ -227,7 +244,7 @@ public class GrammarAnalysis
 	 */
 	protected @NonNull Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> analyzeRuleNames(
 			@NonNull Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls) {
-		Grammar grammar = grammarProvider.getGrammar(this);
+		Grammar grammar = ClassUtil.nonNullState(grammarProvider.getGrammar(this));
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = new HashMap<>();
 		for (@NonNull EObject eObject : new TreeIterable(XtextGrammarUtil.getResource(grammar))) {
 			if (eObject instanceof AbstractRule) {
@@ -316,17 +333,15 @@ public class GrammarAnalysis
 	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> analyzeSerializations(
 			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = new HashMap<>();
-		for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			if (ruleAnalysis instanceof ParserRuleAnalysis) {
-				for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
-					EClass eClass = serializationRule.getProducedEClass();
-					List<@NonNull SerializationRule> serializationRules = eClass2serializationRules.get(eClass);
-					if (serializationRules == null) {
-						serializationRules = new ArrayList<>();
-						eClass2serializationRules.put(eClass, serializationRules);
-					}
-					serializationRules.add(serializationRule);
+		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
+			for (@NonNull SerializationRule serializationRule : ruleAnalysis.getSerializationRules()) {
+				EClass eClass = serializationRule.getProducedEClass();
+				List<@NonNull SerializationRule> serializationRules = eClass2serializationRules.get(eClass);
+				if (serializationRules == null) {
+					serializationRules = new ArrayList<>();
+					eClass2serializationRules.put(eClass, serializationRules);
 				}
+				serializationRules.add(serializationRule);
 			}
 		}
 		return eClass2serializationRules;
@@ -425,15 +440,15 @@ public class GrammarAnalysis
 		return enumerationValue;
 	}
 
-	public @NonNull List<@NonNull AbstractRuleAnalysis> getProducingRuleAnalyses(@NonNull EClassifier eClassifier) {
-		assert eClassifier2ruleAnalyses != null;
-		return ClassUtil.nonNullState(eClassifier2ruleAnalyses.get(eClassifier));
+	public @NonNull List<@NonNull ParserRuleAnalysis> getProducingRuleAnalyses(@NonNull EClass eClass) {
+		assert eClass2ruleAnalyses != null;
+		return ClassUtil.nonNullState(eClass2ruleAnalyses.get(eClass));
 	}
 
-	public @NonNull AbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractElement abstractElement) {
+	public @NonNull ParserRuleAnalysis getRuleAnalysis(@NonNull AbstractElement abstractElement) {
 		for (EObject eObject = abstractElement; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof AbstractRule) {
-				return getRuleAnalysis((AbstractRule)eObject);
+				return (ParserRuleAnalysis)getRuleAnalysis((AbstractRule)eObject);
 			}
 		}
 		throw new IllegalStateException();
@@ -467,7 +482,7 @@ public class GrammarAnalysis
 		List<@NonNull AbstractRuleAnalysis> abstractRuleAnalyses = new ArrayList<>(rule2ruleAnalysis.values());
 		Collections.sort(abstractRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : abstractRuleAnalyses) {
-			s.append("\n\t");
+			s.append("\n  ");
 			s.append(abstractRuleAnalysis);
 			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {
 				ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)abstractRuleAnalysis;
@@ -504,14 +519,9 @@ public class GrammarAnalysis
 				//	StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
 				//	rootSerializationNode.toString(s, 2);
 				//	serializationRule.getPreSerializer();		// XXX redundant/lazy
-							StringUtil.appendIndentation(s, 1, "\t");
+							StringUtil.appendIndentation(s, 2, "  ");
 							s.append("|& ");
-							EClass producedEClass = serializationRule.getProducedEClass();
-							s.append(producedEClass.getEPackage().getName());
-							s.append("::");
-							s.append(producedEClass.getName());
-							s.append(" ");
-							serializationRule.toString(s, 2);
+							serializationRule.toString(s, -1);
 						}
 					/*	s.append("\n");
 						StringUtil.appendIndentation(s, 2, "\t");
@@ -547,6 +557,8 @@ public class GrammarAnalysis
 			Iterable<@NonNull SerializationRule> serializationRules = eClass2serializationRules2.get(eClass);
 			assert serializationRules != null;
 			s.append("\n  ");;
+			s.append(eClass.getEPackage(). getName());
+			s.append("::");;
 			s.append(eClass.getName());
 			if ("PackageCS".equals(eClass.getName())) {
 				getClass(); // XXX debugging
@@ -555,9 +567,9 @@ public class GrammarAnalysis
 			for (@NonNull SerializationRule serializationRule : serializationRules) {
 				s.append(" ");;
 			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
-				StringUtil.appendIndentation(s, 1, "\t");
-				s.append("|&\t");
-				serializationRule.toString(s, 2);
+				StringUtil.appendIndentation(s, 2, "  ");
+				s.append("|&  ");
+				serializationRule.toString(s, -1);
 			}
 		}
 		return s.toString();

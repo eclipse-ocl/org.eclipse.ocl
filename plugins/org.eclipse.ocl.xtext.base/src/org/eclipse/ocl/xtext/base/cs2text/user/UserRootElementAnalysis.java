@@ -10,15 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 
 /**
  * A RootUserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -26,13 +21,14 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
  */
 public class UserRootElementAnalysis extends UserAbstractElementAnalysis
 {
-	private @NonNull List<@NonNull ParserRuleAnalysis> productionRuleAnalyses;
+	private @NonNull Iterable<@NonNull SerializationRule> serializationRules;
+//	private @NonNull List<@NonNull ParserRuleAnalysis> productionRuleAnalyses;
 
 	public UserRootElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject eObject) {
 		super(modelAnalysis, eObject);
 		assert eObject.eContainer() == null;
-		EClass targetEClass = UserModelAnalysis.eClass(eObject);
-		this.productionRuleAnalyses = (List<@NonNull ParserRuleAnalysis>)(Object)grammarAnalysis.getProducingRuleAnalyses(targetEClass);
+		this.serializationRules = grammarAnalysis.getSerializationRules(eClass);
+//		this.productionRuleAnalyses = grammarAnalysis.getProducingRuleAnalyses(eClass);
 	}
 
 	@Override
@@ -40,14 +36,19 @@ public class UserRootElementAnalysis extends UserAbstractElementAnalysis
 		return null;
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getProductionRules() {
-		return productionRuleAnalyses;
-	}
+//	@Override
+//	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getProductionRules() {
+//		return productionRuleAnalyses;
+//	}
 
 	@Override
-	protected boolean isCompatible(@Nullable Map<@NonNull ParserRuleAnalysis, @NonNull List<@NonNull AssignmentAnalysis>> ruleAnalysis2assignmentAnalyses) {
-		return true;
+	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
+		return serializationRules;
 	}
+
+//	@Override
+//	protected boolean isCompatible(@Nullable Set<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+//		return true;
+//	}
 
 }

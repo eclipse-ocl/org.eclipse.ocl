@@ -18,16 +18,15 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
-import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
 /**
@@ -50,6 +49,10 @@ public class UserModelAnalysis
 		return ClassUtil.nonNullState(eObject.eContainingFeature());
 	}
 
+	public static @NonNull EReference eContainmentFeature(@NonNull EObject eObject) {
+		return ClassUtil.nonNullState(eObject.eContainmentFeature());
+	}
+
 	public static @NonNull EObject eContainer(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eContainer());
 	}
@@ -65,16 +68,34 @@ public class UserModelAnalysis
 	public void analyze(@NonNull EObject model) {
 		assert model.eContainer() == null;
 		UserRootElementAnalysis rootElementAnalysis = new UserRootElementAnalysis(this, model);
-		element2elementAnalysis.put(model, rootElementAnalysis);
-		List<@NonNull UserElementAnalysis> unresolvedModelObjects = new ArrayList<>();
+
+
+
+		analyzeHierarchy(rootElementAnalysis, model);
+
+
+/*		List<@NonNull UserElementAnalysis> unresolvedModelObjects = new ArrayList<>();
 		for (@NonNull EObject eObject : new TreeIterable(model, false)) {
 			UserElementAnalysis elementAnalysis = new UserElementAnalysis(this, eObject);
 			element2elementAnalysis.put(eObject, elementAnalysis);
 			if (Iterables.size(elementAnalysis.getSerializationRules()) > 1) {
 				unresolvedModelObjects.add(elementAnalysis);
 			}
-		}
+		} */
 		rootElementAnalysis.getSerializationRules();		// Avoid lazy serializationRules being omiited by a toString().
+	}
+
+	private void analyzeHierarchy(@NonNull UserAbstractElementAnalysis parentAnalysis, @NonNull EObject eParent) {
+		element2elementAnalysis.put(eParent, parentAnalysis);
+		for (EObject eChild : eParent.eContents()) {
+			EReference eContainmentFeature = eChild.eContainmentFeature();
+			assert eContainmentFeature.isContainment() && !eContainmentFeature.isDerived() && !eContainmentFeature.isTransient() && !eContainmentFeature.isVolatile();
+			UserElementAnalysis childAnalysis = new UserElementAnalysis(this, parentAnalysis, eContainmentFeature, eChild);
+			analyzeHierarchy(childAnalysis, eChild);
+		//	if (Iterables.size(elementAnalysis.getSerializationRules()) > 1) {
+		//		unresolvedModelObjects.add(elementAnalysis);
+		//	}
+		}
 	}
 
 	/**

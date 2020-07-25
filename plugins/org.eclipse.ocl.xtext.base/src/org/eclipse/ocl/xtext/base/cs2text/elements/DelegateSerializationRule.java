@@ -29,8 +29,8 @@ public class DelegateSerializationRule extends AbstractSerializationRule
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-	//	delegatedSerializationRule.toString(s, depth);
-		s.append("<= ");
-		s.append(delegatedSerializationRule.getName());
+		s.append(ruleAnalysis.getName());
+		s.append(" => ");
+		delegatedSerializationRule.toString(s, depth);
 	}
 }

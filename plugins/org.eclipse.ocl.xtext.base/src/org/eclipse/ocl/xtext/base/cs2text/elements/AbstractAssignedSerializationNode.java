@@ -33,13 +33,13 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @NonNull AssignmentAnalysis getAssignmentAnalysis() {
-		return assignmentAnalysis;
+	public @NonNull EClass getAssignedEClass() {
+		return assignmentAnalysis.getEClass();
 	}
 
 	@Override
-	public @NonNull EClass getEFeatureScope() {
-		return assignmentAnalysis.getEClass();
+	public @NonNull AssignmentAnalysis getAssignmentAnalysis() {
+		return assignmentAnalysis;
 	}
 
 	@Override

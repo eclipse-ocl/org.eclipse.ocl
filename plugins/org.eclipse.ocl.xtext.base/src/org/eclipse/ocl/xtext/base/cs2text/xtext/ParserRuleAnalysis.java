@@ -525,29 +525,19 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		if (serializationResult.isListOfList()) {
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationResult.asListOfList().getLists()) {
 				assert serializationNodes.size() == 1;
-				SerializationRule serializationRule = new BasicSerializationRule(this, serializationNodes.get(0));
-				serializationRules.add(serializationRule);
+				SerializationNode serializationNode = serializationNodes.get(0);
+				createSerializationRules(serializationRules, serializationNode);
 			}
 		}
 		else if (serializationResult.isList()) {
 			List<@NonNull SerializationNode> serializationNodes = serializationResult.asList().getNodes();
 			assert serializationNodes.size() == 1;
-			SerializationRule serializationRule = new BasicSerializationRule(this, serializationNodes.get(0));
-			serializationRules.add(serializationRule);
+			SerializationNode serializationNode = serializationNodes.get(0);
+			createSerializationRules(serializationRules, serializationNode);
 		}
 		else if (serializationResult.isNode()) {
 			SerializationNode serializationNode = serializationResult.asNode();
-			if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
-				ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis) ((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis();
-				for (@NonNull SerializationRule calledSerializationRule : calledRuleAnalysis.getSerializationRules()) {
-					SerializationRule delegateSerializationRule = new DelegateSerializationRule(this, calledSerializationRule.getBasicSerializationRule());
-					serializationRules.add(delegateSerializationRule);
-				}
-			}
-			else {
-				SerializationRule serializationRule = new BasicSerializationRule(this, serializationNode);
-				serializationRules.add(serializationRule);
-			}
+			createSerializationRules(serializationRules, serializationNode);
 		}
 		else {		// isNull()
 			throw new IllegalStateException();
@@ -556,6 +546,21 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			Collections.sort(serializationRules, new SerializationRuleComparator());
 		}
 		this.serializationRules = serializationRules;
+	}
+
+	protected void createSerializationRules(@NonNull List<@NonNull SerializationRule> serializationRules, @NonNull SerializationNode serializationNode) {
+		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
+			ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis) ((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis();
+			for (@NonNull SerializationRule calledSerializationRule : calledRuleAnalysis.getSerializationRules()) {
+				BasicSerializationRule delegateSerializationRule = calledSerializationRule.getBasicSerializationRule();
+				DelegateSerializationRule delegatingSerializationRule = new DelegateSerializationRule(this, delegateSerializationRule);
+				serializationRules.add(delegatingSerializationRule);
+			}
+		}
+		else {
+			SerializationRule serializationRule = new BasicSerializationRule(this, serializationNode);
+			serializationRules.add(serializationRule);
+		}
 	}
 
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
