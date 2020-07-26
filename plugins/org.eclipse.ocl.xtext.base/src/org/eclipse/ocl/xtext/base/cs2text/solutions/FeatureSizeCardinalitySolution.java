@@ -13,7 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 
 /**
  * A FeatureSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
@@ -30,8 +30,8 @@ public class FeatureSizeCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @NonNull Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		return ruleMatch.getSize(eStructuralFeature, enumerationValue);
+	public @NonNull Integer basicGetIntegerSolution(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+		return dynamicRuleMatch.getSize(eStructuralFeature, enumerationValue);
 	}
 
 	@Override

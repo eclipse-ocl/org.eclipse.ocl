@@ -13,7 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 
 public class BooleanCommonFactorCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -44,8 +44,8 @@ public class BooleanCommonFactorCardinalitySolution extends AbstractCardinalityS
 	}
 
 	@Override
-	public @NonNull Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		int intSize = ruleMatch.getSize(eStructuralFeature, enumerationValue);
+	public @NonNull Integer basicGetIntegerSolution(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+		int intSize = dynamicRuleMatch.getSize(eStructuralFeature, enumerationValue);
 		return (intSize - subtrahend) > 0 ? 1 : 0;
 	}
 

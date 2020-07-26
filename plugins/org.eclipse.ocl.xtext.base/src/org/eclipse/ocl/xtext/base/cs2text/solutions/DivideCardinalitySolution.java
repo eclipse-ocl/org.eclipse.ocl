@@ -12,7 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 
 public class DivideCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -25,12 +25,12 @@ public class DivideCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		Integer intRight = right.basicGetIntegerSolution(ruleMatch);
+	public @Nullable Integer basicGetIntegerSolution(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+		Integer intRight = right.basicGetIntegerSolution(dynamicRuleMatch);
 		if ((intRight == null) || (intRight == 0)) {
 			return null;
 		}
-		Integer intLeft = left.basicGetIntegerSolution(ruleMatch);
+		Integer intLeft = left.basicGetIntegerSolution(dynamicRuleMatch);
 		if (intLeft == null) {
 			return null;
 		}

@@ -10,42 +10,37 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 /**
- * A CardinalitySolutionResult specifies a run-time action as pat of the cardinality varoable drtermination.
- * An expression may be assigned to or checked against some variable
+ * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule
+ * with the actual anlysis of the slots of a user model element.
  */
-public class RuleMatch
+public class DynamicRuleMatch
 {
+	protected final @NonNull StaticRuleMatch staticRuleMatch;
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
 	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
 
-	public RuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public DynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch, @NonNull UserSlotsAnalysis slotsAnalysis) {
+		this.staticRuleMatch = staticRuleMatch;
 		this.slotsAnalysis = slotsAnalysis;
 	}
 
-/*	public @NonNull CardinalityVariable getCardinalityVariable() {
-		return cardinalityVariable;
-	}
-
-	public @NonNull CardinalitySolution getCardinalitySolution() {
-		return cardinalitySolution;
-	}
-
-	public boolean isAssigned() {
-		return isAssigned;
-	} */
-
 	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		return variable2value != null ? variable2value.get(cardinalityVariable) : null;
+		return variable2value.get(cardinalityVariable);
 	}
 
 	public int getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
@@ -61,10 +56,15 @@ public class RuleMatch
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		slotsAnalysis.toString(s, depth);
-	//	for ()
-	//	s.append(isAssigned ? "assign " : "check ");
-	//	s.append(cardinalityVariable);
-	//	s.append(" = ");
-	//	s.append(cardinalitySolution);
+		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2value.keySet());
+		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
+		for (@NonNull CardinalityVariable variable : variables) {
+			Integer value = variable2value.get(variable);
+			StringUtil.appendIndentation(s, depth, "  ");
+			s.append("- ");
+			s.append(variable.getName());
+			s.append(" = ");
+			s.append(value);
+		}
 	}
 }

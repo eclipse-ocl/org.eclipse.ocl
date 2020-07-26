@@ -558,7 +558,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		assert serializationRules != null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-			basicSerializationRule.preSerialize();
+			basicSerializationRule.getStaticRuleMatch();
 		}
 	}
 }

@@ -25,10 +25,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 import com.google.common.collect.Iterables;
@@ -110,10 +110,10 @@ public class CardinalityExpression implements Nameable
 	/**
 	 * Return the variables commn to all products that lack a solution, or null if none.
 	 */
-	private @Nullable Set<@NonNull CardinalityVariable> computeUnsolvedCommonFactors(@NonNull BasicSerializationRule serializationRule) {
+	private @Nullable Set<@NonNull CardinalityVariable> computeUnsolvedCommonFactors(@NonNull StaticRuleMatch ruleMatch) {
 		Set<@NonNull CardinalityVariable> intersection = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			Object resolution = resolveProduct(serializationRule, products);
+			Object resolution = resolveProduct(ruleMatch, products);
 			if (resolution instanceof Integer) {
 				//
 			}
@@ -183,11 +183,11 @@ public class CardinalityExpression implements Nameable
 		return name;
 	}
 
-	public @Nullable Iterable<@NonNull CardinalityVariable> getUnsolvedVariables(@NonNull BasicSerializationRule serializationRule) {
+	public @Nullable Iterable<@NonNull CardinalityVariable> getUnsolvedVariables(@NonNull StaticRuleMatch ruleMatch) {
 		List<@NonNull CardinalityVariable> unsolvedVariables = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
+				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 				if ((solution == null) || solution.isRuntime()) {
 					if (unsolvedVariables == null) {
 						unsolvedVariables = new ArrayList<>();
@@ -210,11 +210,11 @@ public class CardinalityExpression implements Nameable
 	 * - Set(CardinalityVariable) for a scaled product of non-quadratic variable
 	 * - null for a quadratic variable
 	 */
-	public Object resolveProduct(@NonNull BasicSerializationRule serializationRule, @NonNull List<@NonNull CardinalityVariable> product) {
+	public Object resolveProduct(@NonNull StaticRuleMatch ruleMatch, @NonNull List<@NonNull CardinalityVariable> product) {
 		Set<@NonNull CardinalityVariable> productVariables = null;
 		int constantProduct = 1;
 		for (@NonNull CardinalityVariable variable : product) {
-			CardinalitySolution solution = serializationRule.basicGetSolution(variable);
+			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 			Integer integer = getIntegerSolution(solution);
 			if (integer != null) {
 				constantProduct *= integer;
@@ -255,14 +255,14 @@ public class CardinalityExpression implements Nameable
 	//	}
 	}
 
-	public boolean solveForBooleanCommonFactors(@NonNull BasicSerializationRule serializationRule) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(serializationRule);
+	public boolean solveForBooleanCommonFactors(@NonNull StaticRuleMatch ruleMatch) {
+		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
 		if (intersection == null) {
 			return false;
 		}
 		int sum = 0;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			Object resolution = resolveProduct(serializationRule, products);
+			Object resolution = resolveProduct(ruleMatch, products);
 			if (resolution instanceof Integer) {
 				sum += ((Integer)resolution).intValue();
 			}
@@ -270,13 +270,13 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
 			if (!cardinalityVariable.mayBeMany()) {
 				assert cardinalityVariable.mayBeNone();
-				serializationRule.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum));
+				ruleMatch.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum));
 			}
 		}
 		return true;
 	}
 
-	public boolean solveForConstants(@NonNull BasicSerializationRule serializationRule) {
+	public boolean solveForConstants(@NonNull StaticRuleMatch ruleMatch) {
 		CardinalityVariable sumVariable = null;
 		int sum = 0;
 		int factor = 0;
@@ -284,7 +284,7 @@ public class CardinalityExpression implements Nameable
 			CardinalityVariable productVariable = null;
 			int product = 1;
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
+				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 				Integer integerSolution = getIntegerSolution(solution);
 				if (integerSolution != null) {
 					product *= integerSolution.intValue();
@@ -317,14 +317,14 @@ public class CardinalityExpression implements Nameable
 		if (factor != 1) {
 			solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(factor));
 		}
-		serializationRule.addSolution(sumVariable, solution);
+		ruleMatch.addSolution(sumVariable, solution);
 		return true;
 	}
 
-	public boolean solveForNoVariables(@NonNull BasicSerializationRule serializationRule) {
+	public boolean solveForNoVariables(@NonNull StaticRuleMatch ruleMatch) {
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
+				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 				if (!(solution instanceof IntegerCardinalitySolution)) {
 					return false;
 				}
@@ -333,8 +333,8 @@ public class CardinalityExpression implements Nameable
 		return true;
 	}
 
-	public boolean solveForPseudoBooleanFactors(@NonNull BasicSerializationRule serializationRule) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(serializationRule);
+	public boolean solveForPseudoBooleanFactors(@NonNull StaticRuleMatch ruleMatch) {
+		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
 		if (intersection == null) {
 			return false;
 		}
@@ -344,7 +344,7 @@ public class CardinalityExpression implements Nameable
 			int constantProduct = 1;
 			for (@NonNull CardinalityVariable variable : product) {
 				if (!Iterables.contains(intersection, variable)) {
-					CardinalitySolution solution = serializationRule.basicGetSolution(variable);
+					CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 					Integer integer = getIntegerSolution(solution);
 					if (integer != null) {
 						constantProduct *= integer;
@@ -368,19 +368,19 @@ public class CardinalityExpression implements Nameable
 					if (sum != 0) {
 						solution = new MinusCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
 					}
-					serializationRule.addSolution(variable, solution);
+					ruleMatch.addSolution(variable, solution);
 				}
 				else {
 					assert Iterables.contains(intersection, variable);
-					serializationRule.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), 0));
+					ruleMatch.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), 0));
 				}
 			}
 		}
 		return true;
 	}
 
-	public boolean solveForRedundantProducts(@NonNull BasicSerializationRule serializationRule) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(serializationRule);
+	public boolean solveForRedundantProducts(@NonNull StaticRuleMatch ruleMatch) {
+		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
 		if (intersection != null) {
 			return false;
 		}
@@ -403,16 +403,16 @@ public class CardinalityExpression implements Nameable
 		}
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				if (serializationRule.basicGetSolution(variable) == null) {
+				if (ruleMatch.basicGetSolution(variable) == null) {
 					if (products != manyProducts) {
-						serializationRule.addSolution(variable, new IntegerCardinalitySolution(0));
+						ruleMatch.addSolution(variable, new IntegerCardinalitySolution(0));
 					}
 					else if (variable == manyVariable) {
 						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-						serializationRule.addSolution(variable, solution);
+						ruleMatch.addSolution(variable, solution);
 					}
 					else {
-						serializationRule.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
+						ruleMatch.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
 					}
 				}
 			}
@@ -420,7 +420,7 @@ public class CardinalityExpression implements Nameable
 		return true;
 	}
 
-	public boolean solveTrivial(@NonNull BasicSerializationRule serializationRule) {
+	public boolean solveTrivial(@NonNull StaticRuleMatch ruleMatch) {
 		CardinalityVariable trivialVariable = null;
 		int scaleFactor = 1;
 		int bias = 0;
@@ -428,7 +428,7 @@ public class CardinalityExpression implements Nameable
 			int product = 1;
 			boolean hasTrivialVariable = false;
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
+				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 				if (solution instanceof IntegerCardinalitySolution) {
 					product *= ((IntegerCardinalitySolution)solution).getValue();
 				}			// FIXME a solved variable can be a trivial divisor
@@ -461,7 +461,7 @@ public class CardinalityExpression implements Nameable
 			if (scaleFactor != 1) {
 				solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(scaleFactor));
 			}
-			serializationRule.addSolution(trivialVariable, solution);
+			ruleMatch.addSolution(trivialVariable, solution);
 		}
 		return true;
 	}
