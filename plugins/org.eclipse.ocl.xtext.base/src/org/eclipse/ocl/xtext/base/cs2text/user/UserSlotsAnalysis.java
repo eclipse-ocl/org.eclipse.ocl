@@ -36,7 +36,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 
 import com.google.common.collect.Lists;
 
@@ -50,7 +49,7 @@ public class UserSlotsAnalysis
 		boolean isEnumerated();
 	}
 
-	public class CountedSlotAnalysis implements UserSlotAnalysis
+	public static class CountedSlotAnalysis implements UserSlotAnalysis
 	{
 		// Empty, default-less slot
 		public static final int ZERO = 0;
@@ -89,7 +88,7 @@ public class UserSlotsAnalysis
 		}
 	}
 
-	public class EnumeratedSlotAnalysis implements UserSlotAnalysis
+	public static class EnumeratedSlotAnalysis implements UserSlotAnalysis
 	{
 		private final @NonNull Map<@NonNull EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
 
@@ -140,6 +139,9 @@ public class UserSlotsAnalysis
 			return s.toString();
 		}
 	}
+
+	private static final @NonNull CountedSlotAnalysis ZERO = new CountedSlotAnalysis(CountedSlotAnalysis.ZERO);
+	private static @NonNull CountedSlotAnalysis ONE = new CountedSlotAnalysis(CountedSlotAnalysis.ONE);
 
 	protected final @NonNull EObject eObject;
 	protected final @Nullable Iterable<@NonNull SerializationRule> serializationRules;
@@ -281,7 +283,7 @@ public class UserSlotsAnalysis
 		Collections.sort(sortedFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		for (@NonNull EStructuralFeature eStructuralFeature : sortedFeatures) {
 			s.append("\n");
-			int size = CardinalityExpression.getSize(this, eStructuralFeature, NullEnumerationValue.INSTANCE);
+			int size = getSize(eStructuralFeature, NullEnumerationValue.INSTANCE);
 			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
 			for (@NonNull SerializationRule serializationRule : serializationRules2) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
@@ -294,7 +296,7 @@ public class UserSlotsAnalysis
 					List<@NonNull EnumerationValue> sortedEnumerationValues = Lists.newArrayList(enumerationValues);
 					Collections.sort(sortedEnumerationValues, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
-						int size2 = CardinalityExpression.getSize(this, eStructuralFeature, enumerationValue);
+						int size2 = getSize(eStructuralFeature, enumerationValue);
 						s.append(String.format("\n %-29.29s%8d", "\"" + enumerationValue.getName() + "\"", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules2) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
@@ -353,6 +355,22 @@ public class UserSlotsAnalysis
 		}
 	}
 
+	public int getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
+		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
+		if (slotAnalysis == null) {
+			return 0;
+		}
+		if (slotAnalysis.isCounted()) {
+			return slotAnalysis.asCounted();
+		}
+		else if (slotAnalysis.isEnumerated()) {
+			return slotAnalysis.asEnumerated(enumerationValue);
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
 	public @NonNull UserSlotAnalysis getSlotAnalysis(@NonNull EStructuralFeature eStructuralFeature) {
 		return ClassUtil.nonNullState(eStructuralFeature2slotAnalysis.get(eStructuralFeature));
 	}
@@ -360,6 +378,11 @@ public class UserSlotsAnalysis
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
+		toString(s, 0);
+		return s.toString();
+	}
+
+	public void toString(@NonNull StringBuilder s, int depth) {
 		List<@NonNull EStructuralFeature> keys  = new ArrayList<>(eStructuralFeature2slotAnalysis.keySet());
 		Collections.sort(keys, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		boolean isFirst = true;
@@ -372,11 +395,7 @@ public class UserSlotsAnalysis
 			s.append(eStructuralFeature2slotAnalysis.get(key));
 			isFirst = false;
 		}
-		return s.toString();
 	}
-
-	private final @NonNull CountedSlotAnalysis ZERO = new CountedSlotAnalysis(CountedSlotAnalysis.ZERO);
-	private final @NonNull CountedSlotAnalysis ONE = new CountedSlotAnalysis(CountedSlotAnalysis.ONE);
 
 	public @NonNull CountedSlotAnalysis valueOf(int value) {
 		switch (value) {

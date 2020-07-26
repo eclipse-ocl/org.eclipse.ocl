@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 /**
  * A FeatureSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
@@ -33,8 +30,8 @@ public class FeatureSizeCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @NonNull Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
-		return CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, enumerationValue);
+	public @NonNull Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
+		return ruleMatch.getSize(eStructuralFeature, enumerationValue);
 	}
 
 	@Override

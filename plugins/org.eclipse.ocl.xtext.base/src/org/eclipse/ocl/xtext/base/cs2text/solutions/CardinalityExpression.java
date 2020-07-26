@@ -29,8 +29,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 import com.google.common.collect.Iterables;
@@ -43,22 +41,6 @@ import com.google.common.collect.Iterables;
  */
 public class CardinalityExpression implements Nameable
 {
-	public static int getSize(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
-		UserSlotAnalysis slotAnalysis = slotsAnalysis.basicGetSlotAnalysis(eStructuralFeature);
-		if (slotAnalysis == null) {
-			return 0;
-		}
-		if (slotAnalysis.isCounted()) {
-			return slotAnalysis.asCounted();
-		}
-		else if (slotAnalysis.isEnumerated()) {
-			return slotAnalysis.asEnumerated(enumerationValue);
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
-	}
-
 	protected final @NonNull String name;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final @NonNull EnumerationValue enumerationValue;

@@ -34,11 +34,12 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolutionResult;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.UnsupportedCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionResult;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
@@ -55,7 +56,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = null;
 	private boolean preSerialized = false;
-	private @NonNull List<@NonNull CardinalitySolutionResult> results = new ArrayList<>();
+	private @NonNull List<org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionResult> results = new ArrayList<>();
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		super(ruleAnalysis, rootSerializationNode);
@@ -193,10 +194,11 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
 		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
+		RuleMatch ruleMatch = new RuleMatch(slotsAnalysis);
 		for (@NonNull CardinalitySolutionResult result : results) {
 			CardinalityVariable cardinalityVariable = result.getCardinalityVariable();
 			CardinalitySolution solution = result.getCardinalitySolution();
-			Integer newIntegerSolution = solution.basicGetIntegerSolution(slotsAnalysis, variable2value);
+			Integer newIntegerSolution = solution.basicGetIntegerSolution(ruleMatch);
 			if (newIntegerSolution == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -225,7 +227,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 					EnumerationValue value = entry.getKey();
 					CardinalityExpression nestedExpression = entry.getValue();
 					int requiredCount = nestedExpression.solve(variable2value);
-					int actualCount = CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, value);
+					int actualCount = slotsAnalysis.getSize(eStructuralFeature, value);
 					if (requiredCount != actualCount) {
 						return null;
 					}
@@ -234,7 +236,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			else {
 				assert expression.getEnumerationValue().isNull();
 				int requiredCount = expression.solve(variable2value);
-				int actualCount = CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, NullEnumerationValue.INSTANCE);
+				int actualCount = slotsAnalysis.getSize(eStructuralFeature, NullEnumerationValue.INSTANCE);
 				if (requiredCount != actualCount) {
 					return null;
 				}

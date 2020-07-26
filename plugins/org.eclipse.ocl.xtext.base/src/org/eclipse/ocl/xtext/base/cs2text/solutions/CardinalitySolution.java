@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 /**
  * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the
@@ -29,7 +27,7 @@ public interface CardinalitySolution
 	 * Return the value of the expression value using the actual characteristoc of the user element slots.
 	 * Returns null if evaluation fails.
 	 */
-	@Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value);
+	@Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch);
 	boolean isRuntime();
 	void toString(@NonNull StringBuilder s, int depth);
 }

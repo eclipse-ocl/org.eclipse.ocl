@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 public class BooleanCommonFactorCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -47,8 +44,8 @@ public class BooleanCommonFactorCardinalitySolution extends AbstractCardinalityS
 	}
 
 	@Override
-	public @NonNull Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
-		int intSize = CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, enumerationValue);
+	public @NonNull Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
+		int intSize = ruleMatch.getSize(eStructuralFeature, enumerationValue);
 		return (intSize - subtrahend) > 0 ? 1 : 0;
 	}
 

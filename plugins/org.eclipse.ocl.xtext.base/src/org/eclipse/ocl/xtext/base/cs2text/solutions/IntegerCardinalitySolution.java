@@ -10,11 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
-
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -38,7 +35,7 @@ public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @NonNull Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
+	public @NonNull Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
 		return value;
 	}
 

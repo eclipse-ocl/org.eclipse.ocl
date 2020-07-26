@@ -8,9 +8,11 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.user;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 /**
  * A CardinalitySolutionResult specifies a run-time action as pat of the cardinality varoable drtermination.
