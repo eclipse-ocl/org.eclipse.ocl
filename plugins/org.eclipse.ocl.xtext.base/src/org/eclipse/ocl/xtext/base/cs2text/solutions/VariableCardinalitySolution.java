@@ -16,27 +16,21 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
-public class MinusCardinalitySolution  extends AbstractCardinalitySolution
+/**
+ * A VariableCardinalitySolution contributes the already computed value of a cardinality variable to an
+ * expression determining the cardinality of a SerializationRule term.
+ */
+public class VariableCardinalitySolution  extends AbstractCardinalitySolution
 {
-	protected final @NonNull CardinalitySolution left;
-	protected final @NonNull CardinalitySolution right;
+	protected final @NonNull CardinalityVariable cardinalityVariable;
 
-	public MinusCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
-		this.left = left;
-		this.right = right;
+	public VariableCardinalitySolution(@NonNull CardinalityVariable cardinalityVariable) {
+		this.cardinalityVariable = cardinalityVariable;
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
-		Integer intLeft = left.basicGetIntegerSolution(slotsAnalysis, variable2value);
-		if (intLeft == null) {
-			return null;
-		}
-		Integer intRight = right.basicGetIntegerSolution(slotsAnalysis, variable2value);
-		if (intRight == null) {
-			return null;
-		}
-		return intLeft - intRight;
+		return variable2value != null ? variable2value.get(cardinalityVariable) : null;
 	}
 
 	@Override
@@ -44,26 +38,21 @@ public class MinusCardinalitySolution  extends AbstractCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof MinusCardinalitySolution)) {
+		if (!(obj instanceof VariableCardinalitySolution)) {
 			return false;
 		}
-		MinusCardinalitySolution that = (MinusCardinalitySolution) obj;
-		if (!this.left.equals(that.left)) return false;
-		if (!this.right.equals(that.right)) return false;
+		VariableCardinalitySolution that = (VariableCardinalitySolution) obj;
+		if (!this.cardinalityVariable.equals(that.cardinalityVariable)) return false;
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return getClass().hashCode() + left.hashCode() + right.hashCode() * 7;
+		return getClass().hashCode() + cardinalityVariable.hashCode();
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("(");
-		left.toString(s, depth);
-		s.append(" - ");
-		right.toString(s, depth);
-		s.append(")");
+		s.append(cardinalityVariable.getName());
 	}
 }

@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -37,10 +38,10 @@ public class AndCardinalitySolution  extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
 		Integer netIntegerSolution = null;
 		for (@NonNull CardinalitySolution solution : solutions) {
-			Integer integerSolution = solution.basicGetIntegerSolution(slotsAnalysis);
+			Integer integerSolution = solution.basicGetIntegerSolution(slotsAnalysis, variable2value);
 			if (netIntegerSolution == null) {
 				netIntegerSolution = integerSolution;
 			}

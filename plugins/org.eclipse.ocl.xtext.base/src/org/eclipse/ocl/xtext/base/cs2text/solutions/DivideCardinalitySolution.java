@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -25,12 +27,12 @@ public class DivideCardinalitySolution  extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
-		Integer intRight = right.basicGetIntegerSolution(slotsAnalysis);
+	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
+		Integer intRight = right.basicGetIntegerSolution(slotsAnalysis, variable2value);
 		if ((intRight == null) || (intRight == 0)) {
 			return null;
 		}
-		Integer intLeft = left.basicGetIntegerSolution(slotsAnalysis);
+		Integer intLeft = left.basicGetIntegerSolution(slotsAnalysis, variable2value);
 		if (intLeft == null) {
 			return null;
 		}

@@ -212,7 +212,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		for (@NonNull CardinalityVariable cardinalityVariable : variable2solution2.keySet()) {
 			CardinalitySolution solution = variable2solution2.get(cardinalityVariable);
 			assert solution != null;
-			Integer integerSolution = solution.basicGetIntegerSolution(slotsAnalysis);
+			Integer integerSolution = solution.basicGetIntegerSolution(slotsAnalysis, variable2value);
 			if (integerSolution == null) {
 				throw new UnsupportedOperationException();
 			}

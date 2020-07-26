@@ -10,11 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
+/**
+ * A FeatureSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
+ * expression determining the cardinality of a SerializationRule term.
+ */
 public class FeatureSizeCardinalitySolution  extends AbstractCardinalitySolution
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
@@ -26,7 +33,7 @@ public class FeatureSizeCardinalitySolution  extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @NonNull Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @NonNull Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
 		return CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, enumerationValue);
 	}
 
@@ -46,7 +53,7 @@ public class FeatureSizeCardinalitySolution  extends AbstractCardinalitySolution
 
 	@Override
 	public int hashCode() {
-		return eStructuralFeature.hashCode() + enumerationValue.hashCode() * 7;
+		return getClass().hashCode() + eStructuralFeature.hashCode() + enumerationValue.hashCode() * 7;
 	}
 
 	@Override
