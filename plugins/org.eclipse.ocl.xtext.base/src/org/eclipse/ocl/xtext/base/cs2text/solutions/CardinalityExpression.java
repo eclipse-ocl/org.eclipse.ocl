@@ -89,12 +89,8 @@ public class CardinalityExpression implements Nameable
 						s.append(" * ");
 					}
 					assert !variable.isOne();
-				//		s.append("1");
-				//	}
-				//	else {
-				//		s.append(variable);
-						gotOne = true;
-				//	}
+					s.append(variable);
+					gotOne = true;
 					isFirst2 = false;
 				}
 			}
@@ -332,7 +328,14 @@ public class CardinalityExpression implements Nameable
 		if (sumVariable == null) {
 			return true;
 		}
-		serializationRule.addSolution(sumVariable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum, factor));
+		CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
+		if (sum != 0) {
+			solution = new MinusCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+		}
+		if (factor != 1) {
+			solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(factor));
+		}
+		serializationRule.addSolution(sumVariable, solution);
 		return true;
 	}
 
@@ -379,11 +382,15 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
 				if (variable == productVariable) {
-					serializationRule.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, sum, 1));
+					CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
+					if (sum != 0) {
+						solution = new MinusCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+					}
+					serializationRule.addSolution(variable, solution);
 				}
 				else {
 					assert Iterables.contains(intersection, variable);
-					serializationRule.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
+					serializationRule.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), 0));
 				}
 			}
 		}
@@ -419,13 +426,60 @@ public class CardinalityExpression implements Nameable
 						serializationRule.addSolution(variable, new IntegerCardinalitySolution(0));
 					}
 					else if (variable == manyVariable) {
-						serializationRule.addSolution(variable, new AdjustedFeatureCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0, 1));
+						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
+						serializationRule.addSolution(variable, solution);
 					}
 					else {
 						serializationRule.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
 					}
 				}
 			}
+		}
+		return true;
+	}
+
+	public boolean solveTrivial(@NonNull BasicSerializationRule serializationRule) {
+		CardinalityVariable trivialVariable = null;
+		int scaleFactor = 1;
+		int bias = 0;
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			int product = 1;
+			boolean hasTrivialVariable = false;
+			for (@NonNull CardinalityVariable variable : products) {
+				CardinalitySolution solution = serializationRule.basicGetSolution(variable);
+				if (solution instanceof IntegerCardinalitySolution) {
+					product *= ((IntegerCardinalitySolution)solution).getValue();
+				}			// FIXME a solved variable can be a trivial divisor
+				else if (trivialVariable == null) {
+					trivialVariable = variable;
+					hasTrivialVariable = true;
+				}
+				else if (variable != trivialVariable) {
+					return false;			// A second variable is not trivial
+				}
+				else if (hasTrivialVariable) {
+					return false;			// A quadratic variable is not trivial
+				}
+				else {
+					hasTrivialVariable = true;
+				}
+			}
+			if (hasTrivialVariable) {
+				scaleFactor *= product;
+			}
+			else {
+				bias += product;
+			}
+		}
+		if (trivialVariable != null) {
+			CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
+			if (bias != 0) {
+				solution = new MinusCardinalitySolution(solution, new IntegerCardinalitySolution(bias));
+			}
+			if (scaleFactor != 1) {
+				solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(scaleFactor));
+			}
+			serializationRule.addSolution(trivialVariable, solution);
 		}
 		return true;
 	}

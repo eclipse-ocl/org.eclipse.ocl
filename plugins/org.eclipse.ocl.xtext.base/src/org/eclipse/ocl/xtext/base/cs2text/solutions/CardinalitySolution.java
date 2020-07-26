@@ -14,11 +14,20 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
+/**
+ * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the
+ * limited capability to compute the cardinalities of SerilaizationRule terms from the actual
+ * feture slot sizes of an actual element to be serialized.
+ */
 public interface CardinalitySolution
 {
 	@NonNull CardinalitySolution addSolution(@NonNull CardinalitySolution solution);
-	@Nullable Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis);
+
+	/**
+	 * Return the value of the expression value using the actual characteristoc of the user element slots.
+	 * Returns null if evaluation fails.
+	 */
+	@Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis);
 	boolean isRuntime();
-//	@NonNull Integer solve(@NonNull Map<@NonNull EStructuralFeature, @NonNull Object> eFeature2contentAnalysis);
 	void toString(@NonNull StringBuilder s, int depth);
 }

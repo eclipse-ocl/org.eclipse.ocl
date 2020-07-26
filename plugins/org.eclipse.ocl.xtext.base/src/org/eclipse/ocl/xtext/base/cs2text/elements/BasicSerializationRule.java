@@ -204,7 +204,6 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		return variable2solution.get(variable);
 	}
 
-//	@Override
 	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		getPreSerializer();
 		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
@@ -213,7 +212,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		for (@NonNull CardinalityVariable cardinalityVariable : variable2solution2.keySet()) {
 			CardinalitySolution solution = variable2solution2.get(cardinalityVariable);
 			assert solution != null;
-			Integer integerSolution = solution.getIntegerSolution(slotsAnalysis);
+			Integer integerSolution = solution.basicGetIntegerSolution(slotsAnalysis);
 			if (integerSolution == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -431,7 +430,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			return;
 		}
 		preSerialized = true;
-		if ("OCLinEcore::ReferenceCS".equals(ruleAnalysis.getName())) {
+		if ("OCLinEcore::InvariantConstraintCS".equals(ruleAnalysis.getName())) {
 			getClass();	// XXX debugging
 		}
 		//
@@ -465,10 +464,20 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		//
 		for (@NonNull CardinalityVariable variable : variables) {
 			assert !variable.isOne();
-			//	variable2solution2.put(variable, new IntegerCardinalitySolution(1));
-		//	}
 		}
 		int oldSize;
+		//
+		//	Eliminate expressions that involve no unresolved variables or which provide alinear solution for a single variable.
+		//
+		do {
+			oldSize = residualExpressions.size();
+			for (int i = oldSize; --i >= 0; ) {
+				CardinalityExpression residualExpression = residualExpressions.get(i);
+				if (residualExpression.solveTrivial(this)) {
+					residualExpressions.remove(i);
+				}
+			}
+		} while (residualExpressions.size() < oldSize);
 		//
 		//	Eliminate expressions that involve no unresolved variables.
 		//	assign 0/1 solutions for all optional cardinalities that are common factors to all other products.
@@ -478,12 +487,12 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			oldSize = residualExpressions.size();
 			for (int i = oldSize; --i >= 0; ) {
 				CardinalityExpression residualExpression = residualExpressions.get(i);
-				if (residualExpression.solveForNoVariables(this)) {
-					residualExpressions.remove(i);
-				}
-				else {
+			//	if (residualExpression.solveForNoVariables(this)) {
+			//		residualExpressions.remove(i);
+			//	}
+			//	else {
 					residualExpression.solveForBooleanCommonFactors(this);
-				}
+			//	}
 			}
 		} while (residualExpressions.size() < oldSize);
 		//

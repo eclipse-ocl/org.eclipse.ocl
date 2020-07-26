@@ -37,6 +37,21 @@ public class AndCardinalitySolution  extends AbstractCardinalitySolution
 	}
 
 	@Override
+	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
+		Integer netIntegerSolution = null;
+		for (@NonNull CardinalitySolution solution : solutions) {
+			Integer integerSolution = solution.basicGetIntegerSolution(slotsAnalysis);
+			if (netIntegerSolution == null) {
+				netIntegerSolution = integerSolution;
+			}
+			else if (!netIntegerSolution.equals(integerSolution)) {
+				return null;
+			}
+		}
+		return netIntegerSolution;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -47,21 +62,6 @@ public class AndCardinalitySolution  extends AbstractCardinalitySolution
 		AndCardinalitySolution that = (AndCardinalitySolution) obj;
 		if (!this.solutions.equals(that.solutions)) return false;
 		return true;
-	}
-
-	@Override
-	public @Nullable Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
-		Integer netIntegerSolution = null;
-		for (@NonNull CardinalitySolution solution : solutions) {
-			Integer integerSolution = solution.getIntegerSolution(slotsAnalysis);
-			if (netIntegerSolution == null) {
-				netIntegerSolution = integerSolution;
-			}
-			else if (!netIntegerSolution.equals(integerSolution)) {
-				return null;
-			}
-		}
-		return netIntegerSolution;
 	}
 
 	@Override

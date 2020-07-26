@@ -44,7 +44,7 @@ public class BooleanCommonFactorCardinalitySolution extends AbstractCardinalityS
 	}
 
 	@Override
-	public @NonNull Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @NonNull Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		int intSize = CardinalityExpression.getSize(slotsAnalysis, eStructuralFeature, enumerationValue);
 		return (intSize - subtrahend) > 0 ? 1 : 0;
 	}

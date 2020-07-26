@@ -28,12 +28,12 @@ public abstract class AbstractCardinalitySolution implements CardinalitySolution
 	}
 
 	@Override
-	public abstract boolean equals(Object obj);
-
-	@Override
-	public @Nullable Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		return null;
 	}
+
+	@Override
+	public abstract boolean equals(Object obj);
 
 	@Override
 	public abstract int hashCode();

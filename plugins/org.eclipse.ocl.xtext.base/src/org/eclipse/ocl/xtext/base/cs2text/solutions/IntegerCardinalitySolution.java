@@ -35,7 +35,7 @@ public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @NonNull Integer getIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @NonNull Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		return value;
 	}
 
