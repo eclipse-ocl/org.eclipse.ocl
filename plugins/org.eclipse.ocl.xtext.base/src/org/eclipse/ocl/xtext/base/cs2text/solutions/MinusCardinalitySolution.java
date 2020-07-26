@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
-public class MinusCardinalitySolution  extends AbstractCardinalitySolution
+public class MinusCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull CardinalitySolution left;
 	protected final @NonNull CardinalitySolution right;

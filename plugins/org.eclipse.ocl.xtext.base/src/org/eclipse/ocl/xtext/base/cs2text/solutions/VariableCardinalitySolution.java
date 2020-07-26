@@ -20,7 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
  * A VariableCardinalitySolution contributes the already computed value of a cardinality variable to an
  * expression determining the cardinality of a SerializationRule term.
  */
-public class VariableCardinalitySolution  extends AbstractCardinalitySolution
+public class VariableCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull CardinalityVariable cardinalityVariable;
 

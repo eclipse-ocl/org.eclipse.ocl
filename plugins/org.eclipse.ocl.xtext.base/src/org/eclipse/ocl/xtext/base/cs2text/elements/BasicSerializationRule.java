@@ -34,6 +34,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolutionResult;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
@@ -54,6 +55,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
 	private @Nullable Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = null;
 	private boolean preSerialized = false;
+	private @NonNull List<@NonNull CardinalitySolutionResult> results = new ArrayList<>();
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		super(ruleAnalysis, rootSerializationNode);
@@ -162,41 +164,20 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		} */
 	}
 
-	public void addSolution(@NonNull CardinalityVariable variable, @NonNull CardinalitySolution solution) {
+	public void addSolution(@NonNull CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
 		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
 		assert variable2solution2 != null;
-		CardinalitySolution oldSolution = variable2solution2.get(variable);
-		CardinalitySolution netSolution;
-		if (oldSolution == null) {
-			netSolution = solution;
-		}
-		else {
-			netSolution = oldSolution.addSolution(solution);
-		}
-		variable2solution2.put(variable, netSolution);
-	/*	if (oldSolutions instanceof List<?>) {
-			@SuppressWarnings("unchecked")
-			List<Object> castOldSolutions = (List<Object>)oldSolutions;
-			if (castOldSolutions.contains(solution)) {
-				return false;
+		boolean isAssigned = true;
+		for (@NonNull CardinalitySolutionResult result : results) {
+			if (result.getCardinalityVariable() == cardinalityVariable) {
+				isAssigned = false;
+				break;
 			}
-			castOldSolutions.add(solution);
-			return true;
 		}
-		else if (oldSolutions == null) {
-			variable2solution2.put(variable, solution);
-			return true;
+		results.add(new CardinalitySolutionResult(cardinalityVariable, cardinalitySolution, isAssigned));
+		if (isAssigned) {
+			variable2solution2.put(cardinalityVariable, cardinalitySolution);
 		}
-		else if (!oldSolutions.equals(solution)) {
-			List<Object> newSolutions = new ArrayList<>();
-			newSolutions.add(oldSolutions);
-			newSolutions.add(solution);
-			variable2solution2.put(variable, newSolutions);
-			return true;
-		}
-		else {
-			return false;
-		} */
 	}
 
 	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable variable) {
@@ -208,16 +189,33 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		getPreSerializer();
 		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
 		assert variable2solution2 != null;
+		//
+		//	Compute the solutions and assign to/check against each CardinalityVariable
+		//
 		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
-		for (@NonNull CardinalityVariable cardinalityVariable : variable2solution2.keySet()) {
-			CardinalitySolution solution = variable2solution2.get(cardinalityVariable);
-			assert solution != null;
-			Integer integerSolution = solution.basicGetIntegerSolution(slotsAnalysis, variable2value);
-			if (integerSolution == null) {
+		for (@NonNull CardinalitySolutionResult result : results) {
+			CardinalityVariable cardinalityVariable = result.getCardinalityVariable();
+			CardinalitySolution solution = result.getCardinalitySolution();
+			Integer newIntegerSolution = solution.basicGetIntegerSolution(slotsAnalysis, variable2value);
+			if (newIntegerSolution == null) {
 				throw new UnsupportedOperationException();
 			}
-			variable2value.put(cardinalityVariable, integerSolution);
+			if (result.isAssigned()) {
+				variable2value.put(cardinalityVariable, newIntegerSolution);
+			}
+			else {
+				Integer oldIntegerSolution = variable2value.get(cardinalityVariable);
+				if (oldIntegerSolution == null) {
+					throw new IllegalStateException();
+				}
+				if (oldIntegerSolution != newIntegerSolution) {
+					return null;
+				}
+			}
 		}
+		//
+		//	Evaluate the expressions to determine the required size of each slot.
+		//
 		for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
 			CardinalityExpression expression = feature2expression.get(eStructuralFeature);
 			assert expression != null;
@@ -242,6 +240,9 @@ public class BasicSerializationRule extends AbstractSerializationRule
 				}
 			}
 		}
+		//
+		//	Check that no 'unused' features are used.
+		//
 		for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
 			if (!feature2expression.containsKey(eStructuralFeature)) {
 				UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
@@ -551,10 +552,10 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		for (@NonNull CardinalityVariable variable : variables) {
 			if (!variable2solution2.containsKey(variable)) {
 				if (residualExpressions.isEmpty()) {
-					variable2solution2.put(variable, new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
+					addSolution(variable, new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
 				}
 				else {
-					variable2solution2.put(variable, new UnsupportedCardinalitySolution());
+					addSolution(variable, new UnsupportedCardinalitySolution());
 				}
 			}
 		}
@@ -568,7 +569,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			for (@NonNull CardinalityVariable variable : variables) {
 				SerializationNode serializationNode = variable2node.get(variable);
 				assert serializationNode != null;
-				StringUtil.appendIndentation(s, depth, "\t");
+				StringUtil.appendIndentation(s, depth, "  ");
 				s.append("- ");
 				s.append(variable);
 				s.append(": ");
@@ -577,7 +578,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
 			Collections.sort(expressions, NameUtil.NAMEABLE_COMPARATOR);
 			for (@NonNull CardinalityExpression expression : expressions) {
-				StringUtil.appendIndentation(s, depth, "\t");
+				StringUtil.appendIndentation(s, depth, "  ");
 				s.append("- ");
 				expression.toString(s, depth);
 			}
@@ -585,12 +586,16 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			if (variable2solution2 != null) {
 				for (@NonNull CardinalityVariable variable : variables) {	// XXX
 					CardinalitySolution solution = variable2solution2.get(variable);
-					StringUtil.appendIndentation(s, depth, "\t");
+					StringUtil.appendIndentation(s, depth, "  ");
 					s.append("- ");
 					s.append(variable);
 					s.append(" = ");
 					s.append(solution);
 				}
+			}
+			for (@NonNull CardinalitySolutionResult result : results) {
+				StringUtil.appendIndentation(s, depth, "  ");
+				result.toString(s, 1);
 			}
 		}
 	}

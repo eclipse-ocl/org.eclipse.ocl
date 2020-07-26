@@ -19,17 +19,6 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 public abstract class AbstractCardinalitySolution implements CardinalitySolution
 {
 	@Override
-	public @NonNull CardinalitySolution addSolution(@NonNull CardinalitySolution solution) {
-		if (solution.equals(this)) {
-			return this;
-		}
-		AndCardinalitySolution andCardinalitySolution = new AndCardinalitySolution();
-		andCardinalitySolution.addSolution(this);
-		andCardinalitySolution.addSolution(solution);
-		return andCardinalitySolution;
-	}
-
-	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
 		return null;
 	}

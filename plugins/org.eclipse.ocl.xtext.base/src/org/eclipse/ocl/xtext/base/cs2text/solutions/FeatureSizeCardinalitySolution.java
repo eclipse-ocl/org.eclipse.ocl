@@ -22,7 +22,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
  * A FeatureSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
  * expression determining the cardinality of a SerializationRule term.
  */
-public class FeatureSizeCardinalitySolution  extends AbstractCardinalitySolution
+public class FeatureSizeCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final @NonNull EnumerationValue enumerationValue;

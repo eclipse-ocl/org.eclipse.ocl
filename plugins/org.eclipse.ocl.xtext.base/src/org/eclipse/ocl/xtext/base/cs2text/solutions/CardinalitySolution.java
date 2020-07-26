@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
  */
 public interface CardinalitySolution
 {
-	@NonNull CardinalitySolution addSolution(@NonNull CardinalitySolution solution);
+//	@NonNull CardinalitySolution addSolution(@NonNull CardinalitySolution solution);
 
 	/**
 	 * Return the value of the expression value using the actual characteristoc of the user element slots.
