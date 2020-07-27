@@ -12,7 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 /**
  * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the
@@ -21,13 +21,12 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
  */
 public interface CardinalitySolution
 {
-//	@NonNull CardinalitySolution addSolution(@NonNull CardinalitySolution solution);
-
 	/**
-	 * Return the value of the expression value using the actual characteristoc of the user element slots.
+	 * Return the value of the expression value using the actual characteristic of the user element slots if available.
 	 * Returns null if evaluation fails.
 	 */
-	@Nullable Integer basicGetIntegerSolution(@NonNull DynamicRuleMatch dynamicRuleMatch);
+	@Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch);
+
 	boolean isRuntime();
 	void toString(@NonNull StringBuilder s, int depth);
 }

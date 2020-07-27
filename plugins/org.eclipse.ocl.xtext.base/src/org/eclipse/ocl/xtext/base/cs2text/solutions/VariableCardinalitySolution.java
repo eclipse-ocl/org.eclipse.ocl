@@ -12,7 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 /**
  * A VariableCardinalitySolution contributes the already computed value of a cardinality variable to an
@@ -27,8 +27,8 @@ public class VariableCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @Nullable Integer basicGetIntegerSolution(@NonNull DynamicRuleMatch dynamicRuleMatch) {
-		return dynamicRuleMatch.basicGetIntegerSolution(cardinalityVariable);
+	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
+		return ruleMatch.basicGetIntegerSolution(cardinalityVariable);
 	}
 
 	@Override

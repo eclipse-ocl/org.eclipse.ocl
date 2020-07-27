@@ -16,11 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
@@ -28,7 +30,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
  * A DynamicRuleMatch accumulates the solutions to the expressions that constrain the cardinalitoes of the terms of
  * a SerializationRule..
  */
-public class StaticRuleMatch
+public class StaticRuleMatch implements RuleMatch
 {
 	protected final @NonNull BasicSerializationRule serializationRule;
 	private @NonNull Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = new HashMap<>();
@@ -52,12 +54,44 @@ public class StaticRuleMatch
 		}
 	}
 
-	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable variable) {
-		return variable2solution.get(variable);
+	@Override
+	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
+		CardinalitySolution solution = variable2solution.get(cardinalityVariable);
+		return solution != null ? solution.basicGetIntegerSolution(this) : null;
+/*		if (solution instanceof IntegerCardinalitySolution) {
+			return ((IntegerCardinalitySolution)solution).getValue();
+		}
+		if (solution instanceof BooleanCommonFactorCardinalitySolution) {
+			return 1;
+		}
+		if (solution instanceof Iterable) {
+			for (Object solutionElement : ((Iterable<?>)solution) ) {
+				if (solutionElement instanceof Integer) {
+					return ((Integer)solutionElement).intValue();
+				}
+				if (solutionElement instanceof BooleanCommonFactorCardinalitySolution) {
+					return 1;
+				}
+			}
+		}
+		return null; */
+	}
+
+	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
+		return variable2solution.get(cardinalityVariable);
 	}
 
 	public @NonNull Iterable<@NonNull CardinalitySolutionResult> getResults() {
 		return results;
+	}
+
+	public @NonNull BasicSerializationRule getSerializationRule() {
+		return serializationRule;
+	}
+
+	@Override
+	public @Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature,@NonNull EnumerationValue enumerationValue) {
+		return null;
 	}
 
 	@Override

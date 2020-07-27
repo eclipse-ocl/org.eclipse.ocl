@@ -19,8 +19,10 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
@@ -28,7 +30,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
  * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule
  * with the actual anlysis of the slots of a user model element.
  */
-public class DynamicRuleMatch
+public class DynamicRuleMatch implements RuleMatch
 {
 	protected final @NonNull StaticRuleMatch staticRuleMatch;
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
@@ -39,11 +41,30 @@ public class DynamicRuleMatch
 		this.slotsAnalysis = slotsAnalysis;
 	}
 
+	public void assign(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer value) {
+		variable2value.put(cardinalityVariable, value);
+	}
+
+	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
 		return variable2value.get(cardinalityVariable);
 	}
 
-	public int getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
+	public boolean check(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer value) {
+		Integer integer = variable2value.get(cardinalityVariable);
+		return value.equals(integer);
+	}
+
+	public @NonNull Integer getIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
+		return ClassUtil.nonNullState(variable2value.get(cardinalityVariable));
+	}
+
+	public @NonNull BasicSerializationRule getSerializationRule() {
+		return staticRuleMatch.getSerializationRule();
+	}
+
+	@Override
+	public @NonNull Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		return slotsAnalysis.getSize(eStructuralFeature, enumerationValue);
 	}
 

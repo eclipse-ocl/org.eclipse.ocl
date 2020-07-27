@@ -164,14 +164,13 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		} */
 	}
 
-	public @Nullable Map<@NonNull CardinalityVariable, @NonNull Integer> computeActualCardinalities(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @Nullable DynamicRuleMatch computeActualCardinalities(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		StaticRuleMatch staticRuleMatch = getStaticRuleMatch();
 	//	Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
 	//	assert variable2solution2 != null;
 		//
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
-		Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
 		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(staticRuleMatch, slotsAnalysis);
 		for (@NonNull CardinalitySolutionResult result : staticRuleMatch.getResults()) {
 			CardinalityVariable cardinalityVariable = result.getCardinalityVariable();
@@ -181,16 +180,10 @@ public class BasicSerializationRule extends AbstractSerializationRule
 				throw new UnsupportedOperationException();
 			}
 			if (result.isAssigned()) {
-				variable2value.put(cardinalityVariable, newIntegerSolution);
+				dynamicRuleMatch.assign(cardinalityVariable, newIntegerSolution);
 			}
-			else {
-				Integer oldIntegerSolution = variable2value.get(cardinalityVariable);
-				if (oldIntegerSolution == null) {
-					throw new IllegalStateException();
-				}
-				if (oldIntegerSolution != newIntegerSolution) {
-					return null;
-				}
+			else if (!dynamicRuleMatch.check(cardinalityVariable, newIntegerSolution)) {
+				return null;
 			}
 		}
 		//
@@ -204,7 +197,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 				for (Entry<@NonNull EnumerationValue, @NonNull CardinalityExpression> entry : value2valueCardinalityExpression.entrySet()) {
 					EnumerationValue value = entry.getKey();
 					CardinalityExpression nestedExpression = entry.getValue();
-					int requiredCount = nestedExpression.solve(variable2value);
+					int requiredCount = nestedExpression.solve(dynamicRuleMatch);
 					int actualCount = slotsAnalysis.getSize(eStructuralFeature, value);
 					if (requiredCount != actualCount) {
 						return null;
@@ -213,7 +206,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			}
 			else {
 				assert expression.getEnumerationValue().isNull();
-				int requiredCount = expression.solve(variable2value);
+				int requiredCount = expression.solve(dynamicRuleMatch);
 				int actualCount = slotsAnalysis.getSize(eStructuralFeature, NullEnumerationValue.INSTANCE);
 				if (requiredCount != actualCount) {
 					return null;
@@ -231,7 +224,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 				}
 			}
 		}
-		return variable2value;
+		return dynamicRuleMatch;
 	}
 
 	/**

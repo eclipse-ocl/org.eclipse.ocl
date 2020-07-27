@@ -11,7 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -35,7 +35,7 @@ public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 	}
 
 	@Override
-	public @NonNull Integer basicGetIntegerSolution(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+	public @NonNull Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
 		return value;
 	}
 

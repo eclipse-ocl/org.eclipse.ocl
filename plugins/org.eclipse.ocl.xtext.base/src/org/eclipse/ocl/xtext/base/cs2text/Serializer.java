@@ -25,6 +25,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -34,18 +35,18 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
  */
 public class Serializer
 {
+	protected final @NonNull DynamicRuleMatch dynamicRuleMatch;
 	protected final @NonNull BasicSerializationRule serializationRule;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject element;
-	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	public Serializer(@NonNull BasicSerializationRule serializationRule, @NonNull UserModelAnalysis modelAnalysis,
-			@NonNull EObject element, @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
-		this.serializationRule = serializationRule;
+	public Serializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull UserModelAnalysis modelAnalysis,
+			@NonNull EObject element) {
+		this.dynamicRuleMatch = dynamicRuleMatch;
+		this.serializationRule = dynamicRuleMatch.getSerializationRule();
 		this.modelAnalysis = modelAnalysis;
 		this.element = element;
-		this.variable2value = variable2value;
 	}
 
 	/**
@@ -108,8 +109,7 @@ public class Serializer
 		}
 		else {
 			CardinalityVariable variable = serializationRule.getVariable(serializationNode);
-			Integer value = variable2value.get(variable);
-			assert value != null;
+			Integer value = dynamicRuleMatch.getIntegerSolution(variable);
 			for (int i = 0; i < value.intValue(); i++) {
 				idiom.serialize(serializationNode, this, serializationBuilder);
 			}

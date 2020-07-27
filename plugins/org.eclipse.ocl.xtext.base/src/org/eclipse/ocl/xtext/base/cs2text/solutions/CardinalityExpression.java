@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
@@ -158,26 +158,6 @@ public class CardinalityExpression implements Nameable
 		return enumerationValue2cardinalityExpression;
 	}
 
-	private @Nullable Integer getIntegerSolution(@Nullable CardinalitySolution solution) {
-		if (solution instanceof IntegerCardinalitySolution) {
-			return ((IntegerCardinalitySolution)solution).getValue();
-		}
-		if (solution instanceof BooleanCommonFactorCardinalitySolution) {
-			return 1;
-		}
-		if (solution instanceof Iterable) {
-			for (Object solutionElement : ((Iterable<?>)solution) ) {
-				if (solutionElement instanceof Integer) {
-					return ((Integer)solutionElement).intValue();
-				}
-				if (solutionElement instanceof BooleanCommonFactorCardinalitySolution) {
-					return 1;
-				}
-			}
-		}
-		return null;
-	}
-
 	@Override
 	public @NonNull String getName() {
 		return name;
@@ -214,10 +194,10 @@ public class CardinalityExpression implements Nameable
 		Set<@NonNull CardinalityVariable> productVariables = null;
 		int constantProduct = 1;
 		for (@NonNull CardinalityVariable variable : product) {
-			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
-			Integer integer = getIntegerSolution(solution);
-			if (integer != null) {
-				constantProduct *= integer;
+			Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
+		//	Integer integer = zzgetIntegerSolution(solution);
+			if (integerSolution != null) {
+				constantProduct *= integerSolution;
 			}
 			else {
 				if (productVariables == null) {
@@ -234,12 +214,12 @@ public class CardinalityExpression implements Nameable
 		}
 	}
 
-	public int solve(@NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value) {
+	public int solve(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		int sum = 0;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			int product = 1;
 			for (@NonNull CardinalityVariable variable : products) {
-				Integer value = variable2value.get(variable);
+				Integer value = dynamicRuleMatch.basicGetIntegerSolution(variable);
 				int intValue = value != null ? value.intValue() : 1;
 				product *= intValue;
 			}
@@ -270,7 +250,9 @@ public class CardinalityExpression implements Nameable
 		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
 			if (!cardinalityVariable.mayBeMany()) {
 				assert cardinalityVariable.mayBeNone();
-				ruleMatch.addSolution(cardinalityVariable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), sum));
+				CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
+				solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+				ruleMatch.addSolution(cardinalityVariable, solution);
 			}
 		}
 		return true;
@@ -284,8 +266,7 @@ public class CardinalityExpression implements Nameable
 			CardinalityVariable productVariable = null;
 			int product = 1;
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
-				Integer integerSolution = getIntegerSolution(solution);
+				Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
 				if (integerSolution != null) {
 					product *= integerSolution.intValue();
 				}
@@ -344,10 +325,9 @@ public class CardinalityExpression implements Nameable
 			int constantProduct = 1;
 			for (@NonNull CardinalityVariable variable : product) {
 				if (!Iterables.contains(intersection, variable)) {
-					CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
-					Integer integer = getIntegerSolution(solution);
-					if (integer != null) {
-						constantProduct *= integer;
+					Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
+					if (integerSolution != null) {
+						constantProduct *= integerSolution;
 					}
 					else if (productVariable != null) {
 						return false;
@@ -372,7 +352,9 @@ public class CardinalityExpression implements Nameable
 				}
 				else {
 					assert Iterables.contains(intersection, variable);
-					ruleMatch.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, getEnumerationValue(), 0));
+					CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
+					solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+					ruleMatch.addSolution(variable, solution);
 				}
 			}
 		}
@@ -412,7 +394,9 @@ public class CardinalityExpression implements Nameable
 						ruleMatch.addSolution(variable, solution);
 					}
 					else {
-						ruleMatch.addSolution(variable, new BooleanCommonFactorCardinalitySolution(eStructuralFeature, NullEnumerationValue.INSTANCE, 0));
+						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
+						solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
+						ruleMatch.addSolution(variable, solution);
 					}
 				}
 			}

@@ -8,34 +8,16 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
-public abstract class AbstractCardinalitySolution implements CardinalitySolution
+public interface RuleMatch
 {
-	@Override
-	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		return null;
-	}
-
-	@Override
-	public abstract boolean equals(Object obj);
-
-	@Override
-	public abstract int hashCode();
-
-	@Override
-	public boolean isRuntime() {
-		return false;
-	}
-
-	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 0);
-		return s.toString();
-	}
+	@Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable);
+	@Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue);
 }

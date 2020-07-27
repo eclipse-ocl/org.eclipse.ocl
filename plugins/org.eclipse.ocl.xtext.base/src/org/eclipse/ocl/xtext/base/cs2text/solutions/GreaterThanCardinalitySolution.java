@@ -14,31 +14,27 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
-public class DivideCardinalitySolution extends AbstractCardinalitySolution
+public class GreaterThanCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull CardinalitySolution left;
 	protected final @NonNull CardinalitySolution right;
 
-	public DivideCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+	public GreaterThanCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
 		this.left = left;
 		this.right = right;
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		Integer intRight = right.basicGetIntegerSolution(ruleMatch);
-		if ((intRight == null) || (intRight == 0)) {
-			return null;
-		}
 		Integer intLeft = left.basicGetIntegerSolution(ruleMatch);
 		if (intLeft == null) {
 			return null;
 		}
-		int result = Math.floorDiv(intLeft, intRight);
-		if (result * intRight != intLeft) {
+		Integer intRight = right.basicGetIntegerSolution(ruleMatch);
+		if (intRight == null) {
 			return null;
 		}
-		return result;
+		return intLeft > intRight ? 1 : 0;
 	}
 
 	@Override
@@ -46,10 +42,10 @@ public class DivideCardinalitySolution extends AbstractCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof DivideCardinalitySolution)) {
+		if (!(obj instanceof GreaterThanCardinalitySolution)) {
 			return false;
 		}
-		DivideCardinalitySolution that = (DivideCardinalitySolution) obj;
+		GreaterThanCardinalitySolution that = (GreaterThanCardinalitySolution) obj;
 		if (!this.left.equals(that.left)) return false;
 		if (!this.right.equals(that.right)) return false;
 		return true;
@@ -64,7 +60,7 @@ public class DivideCardinalitySolution extends AbstractCardinalitySolution
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("(");
 		left.toString(s, depth);
-		s.append(" / ");
+		s.append(" > ");
 		right.toString(s, depth);
 		s.append(")");
 	}

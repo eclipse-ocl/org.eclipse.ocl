@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.user;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -22,11 +21,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
@@ -110,9 +109,9 @@ public class UserElementAnalysis implements Nameable
 		Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-			Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = basicSerializationRule.computeActualCardinalities(slotsAnalysis);
-			if (variable2value != null) {
-				return new Serializer(basicSerializationRule, modelAnalysis, eObject, variable2value);
+			DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.computeActualCardinalities(slotsAnalysis);
+			if (dynamicRuleMatch != null) {
+				return new Serializer(dynamicRuleMatch, modelAnalysis, eObject);
 			}
 		}
 		return null;
@@ -150,13 +149,18 @@ public class UserElementAnalysis implements Nameable
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
+		toString(s, 0);
+		return s.toString();
+	}
+
+	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(getName());
 		s.append(" <=>");
 		Iterable<@NonNull SerializationRule> serializationRules2 = getSerializationRules();
 		boolean isMany = Iterables.size(serializationRules2) > 1;
 		for (@NonNull SerializationRule serializationRule : serializationRules2) {
 			if (isMany) {
-				s.append("\n    ");
+				StringUtil.appendIndentation(s, depth+1, "  ");
 			}
 			else {
 				s.append(" ");
@@ -164,8 +168,7 @@ public class UserElementAnalysis implements Nameable
 			s.append(serializationRule.getName());
 			s.append(" - ");
 			serializationRule.toRuleString(s);
-			serializationRule.toSolutionString(s, 1);
+			serializationRule.toSolutionString(s, depth+2);
 		}
-		return s.toString();
 	}
 }

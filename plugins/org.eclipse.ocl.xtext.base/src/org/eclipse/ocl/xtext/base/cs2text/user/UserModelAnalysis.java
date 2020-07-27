@@ -132,7 +132,7 @@ public class UserModelAnalysis
 				s.append("\n");
 			}
 			s.append("  ");
-			s.append(elementAnalysis);
+			elementAnalysis.toString(s, 1);
 			isFirst = false;
 		}
 		return s.toString();
