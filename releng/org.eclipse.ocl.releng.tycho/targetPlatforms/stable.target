@@ -7,12 +7,13 @@
     <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
     <repository location="https://download.eclipse.org/releases/latest"/>
-    <repository location="https://download.eclipse.org/modeling/emf/emf/builds/milestone"/>
-    <repository location="https://download.eclipse.org/modeling/mdt/uml2/updates/milestones"/>
+    <!--repository location="https://download.eclipse.org/modeling/emf/emf/builds/milestone"/-->
+    <!--repository location="https://download.eclipse.org/modeling/mdt/uml2/updates/milestones"/-->
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/modeling/emf/emf/builds/milestone"/>
+    <!--location="https://download.eclipse.org/modeling/emf/emf/builds/milestone"/-->
+    <repository location="https://download.eclipse.org/modeling/emf/emf/builds/release/latest"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
     <unit id="org.eclipse.license.feature.group" version="0.0.0"/>
@@ -22,7 +23,7 @@
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="lpg.runtime.java" version="0.0.0"/>
     <unit id="lpg.runtime.java.source" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+    <!--repository location="https://download.eclipse.org/tools/orbit/downloads/latest-S"/-->
     <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-R"/>
   </location>
 </locations>
