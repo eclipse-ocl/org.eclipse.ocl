@@ -194,7 +194,7 @@ public class CardinalityExpression implements Nameable
 		Set<@NonNull CardinalityVariable> productVariables = null;
 		int constantProduct = 1;
 		for (@NonNull CardinalityVariable variable : product) {
-			Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
+			Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);		// FIXME constants
 		//	Integer integer = zzgetIntegerSolution(solution);
 			if (integerSolution != null) {
 				constantProduct *= integerSolution;
@@ -302,7 +302,7 @@ public class CardinalityExpression implements Nameable
 		return true;
 	}
 
-	public boolean solveForNoVariables(@NonNull StaticRuleMatch ruleMatch) {
+/*	public boolean solveForNoVariables(@NonNull StaticRuleMatch ruleMatch) {
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
 				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
@@ -312,7 +312,7 @@ public class CardinalityExpression implements Nameable
 			}
 		}
 		return true;
-	}
+	} */
 
 	public boolean solveForPseudoBooleanFactors(@NonNull StaticRuleMatch ruleMatch) {
 		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
@@ -408,13 +408,13 @@ public class CardinalityExpression implements Nameable
 		CardinalityVariable trivialVariable = null;
 		int scaleFactor = 1;
 		int bias = 0;
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			int product = 1;
+		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
+			int productValue = 1;
 			boolean hasTrivialVariable = false;
-			for (@NonNull CardinalityVariable variable : products) {
+			for (@NonNull CardinalityVariable variable : product) {
 				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 				if (solution instanceof IntegerCardinalitySolution) {
-					product *= ((IntegerCardinalitySolution)solution).getValue();
+					productValue *= ((IntegerCardinalitySolution)solution).getValue();
 				}			// FIXME a solved variable can be a trivial divisor
 				else if (trivialVariable == null) {
 					trivialVariable = variable;
@@ -431,7 +431,7 @@ public class CardinalityExpression implements Nameable
 				}
 			}
 			if (hasTrivialVariable) {
-				scaleFactor *= product;
+				scaleFactor *= productValue;
 			}
 			else {
 				bias += product;
@@ -474,7 +474,7 @@ public class CardinalityExpression implements Nameable
 			List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(enumerationValue2cardinalityExpression2.values());
 			Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
 			for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
-				StringUtil.appendIndentation(s, depth, "\t");
+				StringUtil.appendIndentation(s, depth, "  ");
 				s.append("- ");
 				cardinalityExpression.toString(s, depth);
 			}

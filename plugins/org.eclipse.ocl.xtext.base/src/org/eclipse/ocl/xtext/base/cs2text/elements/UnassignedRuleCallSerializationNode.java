@@ -43,9 +43,9 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		if (!multiplicativeCardinality.mayBeZero()) {
-			super.preSerialize(serializationRule, parentStack);
+			super.analyze(serializationRule, parentStack);
 		}
 	}
 

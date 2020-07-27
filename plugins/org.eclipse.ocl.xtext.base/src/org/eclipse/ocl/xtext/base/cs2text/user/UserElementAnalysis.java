@@ -109,7 +109,7 @@ public class UserElementAnalysis implements Nameable
 		Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-			DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.computeActualCardinalities(slotsAnalysis);
+			DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
 			if (dynamicRuleMatch != null) {
 				return new Serializer(dynamicRuleMatch, modelAnalysis, eObject);
 			}
@@ -159,6 +159,7 @@ public class UserElementAnalysis implements Nameable
 		Iterable<@NonNull SerializationRule> serializationRules2 = getSerializationRules();
 		boolean isMany = Iterables.size(serializationRules2) > 1;
 		for (@NonNull SerializationRule serializationRule : serializationRules2) {
+			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 			if (isMany) {
 				StringUtil.appendIndentation(s, depth+1, "  ");
 			}
@@ -167,8 +168,8 @@ public class UserElementAnalysis implements Nameable
 			}
 			s.append(serializationRule.getName());
 			s.append(" - ");
-			serializationRule.toRuleString(s);
-			serializationRule.toSolutionString(s, depth+2);
+			basicSerializationRule.toRuleString(s);
+			basicSerializationRule.toSolutionString(s, depth+2);
 		}
 	}
 }

@@ -15,14 +15,14 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 /**
- * A CardinalitySolutionResult specifies a run-time action as pat of the cardinality varoable drtermination.
+ * A CardinalitySolutionResult specifies a run-time action as part of the cardinality varoable drtermination.
  * An expression may be assigned to or checked against some variable
  */
 public class CardinalitySolutionResult
 {
 	protected final @NonNull CardinalityVariable cardinalityVariable;
 	protected final @NonNull CardinalitySolution cardinalitySolution;
-	protected final boolean isAssigned;		// Tre to assign, false to check for consistency
+	protected final boolean isAssigned;		// True to assign, false to check for consistency
 
 	public CardinalitySolutionResult(@NonNull CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution, boolean isAssigned) {
 		this.cardinalityVariable = cardinalityVariable;

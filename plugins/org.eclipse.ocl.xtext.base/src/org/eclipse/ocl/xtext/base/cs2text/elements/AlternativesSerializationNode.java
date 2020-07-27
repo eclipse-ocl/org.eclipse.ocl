@@ -44,7 +44,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		throw new IllegalStateException();
 /*		SerializationNode chosenNode = preSerializer.getChosenNode(this);
 		if (chosenNode == this) {

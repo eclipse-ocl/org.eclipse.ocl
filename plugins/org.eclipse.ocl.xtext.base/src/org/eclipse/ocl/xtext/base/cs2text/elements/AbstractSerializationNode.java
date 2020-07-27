@@ -93,7 +93,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		serializationRule.addSerializedNode(this, parentStack);
 	}
 

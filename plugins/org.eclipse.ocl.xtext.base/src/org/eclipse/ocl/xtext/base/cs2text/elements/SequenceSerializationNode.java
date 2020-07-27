@@ -88,11 +88,11 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		super.preSerialize(serializationRule, parentStack);
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		super.analyze(serializationRule, parentStack);
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			parentStack.push(this);
-			serializationNode.preSerialize(serializationRule, parentStack);
+			serializationNode.analyze(serializationRule, parentStack);
 			parentStack.pop();
 		}
 	}

@@ -19,9 +19,21 @@ import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 public interface SerializationNode extends SerializationElement
 {
 	/**
-	 * Ceate a shallow copy of this node with a changed multiplicativeCardinality.
+	 * Traverse the serialization node hoderarchy of a serializationRule to populate its StaticRuleMatch.
+	 *
+	 * parentStack identifoes the ancestry of this node.
+	 */
+	void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack);
+
+	/**
+	 * Ceate a shallow copy of this node with a changed multiplicativeCardinality. This accommodates the nedd to change
+	 * the multiplicity when flattening one-or-more alternatives.
 	 */
 	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
-	void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack);
+
+	/**
+	 * Traverse the serialization node hoderarchy of a serializer's serializationRule to append appropriate string
+	 * segments to the serializationBuilder to represent the serializer's user element.
+	 */
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 }

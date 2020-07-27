@@ -24,11 +24,12 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 /**
  * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule
- * with the actual anlysis of the slots of a user model element.
+ * with the actual analysis of the slots of a user model element.
  */
 public class DynamicRuleMatch implements RuleMatch
 {
@@ -41,8 +42,28 @@ public class DynamicRuleMatch implements RuleMatch
 		this.slotsAnalysis = slotsAnalysis;
 	}
 
-	public void assign(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer value) {
-		variable2value.put(cardinalityVariable, value);
+	/**
+	 * Analyze the actual slots to compute the value of each cardinality variable.
+	 */
+	public boolean analyze() {
+		for (@NonNull CardinalitySolutionResult result : staticRuleMatch.getResults()) {
+			CardinalityVariable cardinalityVariable = result.getCardinalityVariable();
+			CardinalitySolution solution = result.getCardinalitySolution();
+			Integer newIntegerSolution = solution.basicGetIntegerSolution(this);
+			if (newIntegerSolution == null) {
+				throw new UnsupportedOperationException();
+			}
+			if (result.isAssigned()) {
+				variable2value.put(cardinalityVariable, newIntegerSolution);
+			}
+			else {
+				Integer integer = variable2value.get(cardinalityVariable);
+				if (!newIntegerSolution.equals(integer)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -50,15 +71,11 @@ public class DynamicRuleMatch implements RuleMatch
 		return variable2value.get(cardinalityVariable);
 	}
 
-	public boolean check(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer value) {
-		Integer integer = variable2value.get(cardinalityVariable);
-		return value.equals(integer);
-	}
-
 	public @NonNull Integer getIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
 		return ClassUtil.nonNullState(variable2value.get(cardinalityVariable));
 	}
 
+	@Override
 	public @NonNull BasicSerializationRule getSerializationRule() {
 		return staticRuleMatch.getSerializationRule();
 	}

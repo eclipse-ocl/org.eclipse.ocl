@@ -52,8 +52,8 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public void preSerialize(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		super.preSerialize(serializationRule, parentStack);
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		super.analyze(serializationRule, parentStack);
 		EnumerationValue enumerationValue = getEnumerationValue();
 		serializationRule.addAssignedNode(this, enumerationValue, parentStack);
 	}
