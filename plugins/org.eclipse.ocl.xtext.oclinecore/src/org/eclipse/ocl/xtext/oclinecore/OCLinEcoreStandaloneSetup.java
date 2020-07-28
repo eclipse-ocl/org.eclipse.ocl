@@ -12,7 +12,6 @@
 package org.eclipse.ocl.xtext.oclinecore;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetupGenerated;
 import org.eclipse.ocl.xtext.oclinecore.utilities.OCLinEcoreASResourceFactory;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 

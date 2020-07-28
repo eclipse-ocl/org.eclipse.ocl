@@ -78,17 +78,22 @@ public class StaticRuleMatch implements RuleMatch
 		return cardinalityExpression;
 	}
 
-	public void addSolution(@NonNull CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
-		boolean isAssigned = true;
-		for (@NonNull CardinalitySolutionResult result : results) {
-			if (result.getCardinalityVariable() == cardinalityVariable) {
-				isAssigned = false;
-				break;
+	public void addSolution(@Nullable CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
+		if (cardinalityVariable != null) {
+			boolean isAssigned = true;
+			for (@NonNull CardinalitySolutionResult result : results) {
+				if (result.getCardinalityVariable() == cardinalityVariable) {
+					isAssigned = false;
+					break;
+				}
+			}
+			results.add(new CardinalitySolutionResult(cardinalityVariable, cardinalitySolution, isAssigned));
+			if (isAssigned) {
+				variable2solution.put(cardinalityVariable, cardinalitySolution);
 			}
 		}
-		results.add(new CardinalitySolutionResult(cardinalityVariable, cardinalitySolution, isAssigned));
-		if (isAssigned) {
-			variable2solution.put(cardinalityVariable, cardinalitySolution);
+		else {
+			results.add(new CardinalitySolutionResult(null, cardinalitySolution, false));
 		}
 	}
 
@@ -128,7 +133,7 @@ public class StaticRuleMatch implements RuleMatch
 			oldSize = residualExpressions.size();
 			for (int i = oldSize; --i >= 0; ) {
 				CardinalityExpression residualExpression = residualExpressions.get(i);
-				if (residualExpression.solveTrivial(this)) {
+				if (residualExpression.analyzeTrivial(this)) {
 					residualExpressions.remove(i);
 				}
 			}
@@ -140,28 +145,35 @@ public class StaticRuleMatch implements RuleMatch
 		//
 		do {
 			oldSize = residualExpressions.size();
+			boolean gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
 				CardinalityExpression residualExpression = residualExpressions.get(i);
-			//	if (residualExpression.solveForNoVariables(this)) {
-			//		residualExpressions.remove(i);
-			//	}
-			//	else {
-					residualExpression.solveForBooleanCommonFactors(this);
-			//	}
+				if (residualExpression.analyzeMayBeZeroCommonFactors(this, false)) {
+					gotOne = true;
+					break;
+				}
+			}
+			if (gotOne) {
+				for (int i = oldSize; --i >= 0; ) {
+					CardinalityExpression residualExpression = residualExpressions.get(i);
+					if (residualExpression.analyzeTrivial(this)) {
+						residualExpressions.remove(i);
+					}
+				}
 			}
 		} while (residualExpressions.size() < oldSize);
-		//
+		/*
 		//	Assign 0/1 solutions for all variables involved in a linear equation in the light of other solutions.
 		//
 		do {
 			oldSize = residualExpressions.size();
 			for (int i = oldSize; --i >= 0; ) {
 				CardinalityExpression residualExpression = residualExpressions.get(i);
-				if (residualExpression.solveForConstants(this)) {
+				if (residualExpression.analyzeTrivial(this)) {
 					residualExpressions.remove(i);
 				}
 			}
-		} while (residualExpressions.size() < oldSize);
+		} while (residualExpressions.size() < oldSize); */
 		if (residualExpressions.size() > 0) {
 			Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables =
 					computeExpression2unsolvedVariables(residualExpressions);
@@ -175,10 +187,10 @@ public class StaticRuleMatch implements RuleMatch
 				int size = Iterables.size(unresolvedExpressions);
 				if (size == 1) {
 					CardinalityExpression residualExpression = unresolvedExpressions.iterator().next();
-					if (residualExpression.solveForPseudoBooleanFactors(this)) {
+					if (residualExpression.analyzeMayBeZeroCommonFactors(this, true)) {
 						// ok
 					}
-					else if (residualExpression.solveForRedundantProducts(this)) {
+					else if (residualExpression.analyzeRedundantProducts(this)) {
 						// ok
 					}
 					else {
@@ -217,6 +229,7 @@ public class StaticRuleMatch implements RuleMatch
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
+		// throw new IllegalStateException();		// move to caller
 		CardinalitySolution solution = variable2solution.get(cardinalityVariable);
 		return solution != null ? solution.basicGetIntegerSolution(this) : null;
 /*		if (solution instanceof IntegerCardinalitySolution) {
@@ -238,6 +251,7 @@ public class StaticRuleMatch implements RuleMatch
 		return null; */
 	}
 
+	@Override
 	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
 		return variable2solution.get(cardinalityVariable);
 	}
@@ -263,7 +277,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			@NonNull Iterable<@NonNull CardinalityExpression> expressions) {
 		Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables = new HashMap<>();
 		for (@NonNull CardinalityExpression expression : expressions) {
-			Iterable<@NonNull CardinalityVariable> unsolvedVariables = expression.getUnsolvedVariables(this);
+			Iterable<@NonNull CardinalityVariable> unsolvedVariables = expression.getUnknownVariables(this);
 			if (unsolvedVariables != null) {
 				for (@NonNull CardinalityVariable variable : unsolvedVariables) {
 					Set<@NonNull CardinalityVariable> variables = expression2unsolvedVariables.get(expression);
@@ -420,17 +434,14 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2solution.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull CardinalityVariable variable : variables) {	// XXX
-			CardinalitySolution solution = variable2solution.get(variable);
+		for (CardinalitySolutionResult result : results) {
 			StringUtil.appendIndentation(s, depth, "  ");
 			s.append("- ");
-			s.append(variable);
-			s.append(" = ");
-			s.append(solution);
+			result.toString(s, depth);
 		}
-		for (@NonNull CardinalitySolutionResult result : results) {
-			StringUtil.appendIndentation(s, depth, "  ");
-			result.toString(s, 1);
-		}
+	//	for (@NonNull CardinalitySolutionResult result : results) {
+	//		StringUtil.appendIndentation(s, depth, "  ");
+	//		result.toString(s, 1);
+	//s	}
 	}
 }

@@ -13,12 +13,6 @@
  */
 package org.eclipse.ocl.xtext.base;
 
-import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.xtext.serializer.ISerializer;
-
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */

@@ -13,38 +13,28 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
-public class UnsupportedCardinalitySolution extends AbstractCardinalitySolution
+public abstract class AbstractBinaryCardinalitySolution extends AbstractCardinalitySolution
 {
-	public UnsupportedCardinalitySolution() {}
+	protected final @NonNull CardinalitySolution left;
+	protected final @NonNull CardinalitySolution right;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (!(obj instanceof UnsupportedCardinalitySolution)) {
-			return false;
-		}
-		return true;
+	public AbstractBinaryCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+		this.left = left;
+		this.right = right;
 	}
 
 	@Override
 	public int hashCode() {
-		return getClass().hashCode();
+		return getClass().hashCode() + left.hashCode() + right.hashCode() * 7;
 	}
 
 	@Override
 	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
-		return false;
+		return left.isConstant(ruleMatch) && right.isConstant(ruleMatch);
 	}
 
 	@Override
 	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
-		return false;
-	}
-
-	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("?");
+		return left.isKnown(ruleMatch) && right.isKnown(ruleMatch);
 	}
 }

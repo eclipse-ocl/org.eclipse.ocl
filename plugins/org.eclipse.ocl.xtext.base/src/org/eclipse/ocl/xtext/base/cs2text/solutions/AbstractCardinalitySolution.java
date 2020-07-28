@@ -28,6 +28,11 @@ public abstract class AbstractCardinalitySolution implements CardinalitySolution
 	public abstract int hashCode();
 
 	@Override
+	public boolean isOptional() {
+		return false;
+	}
+
+	@Override
 	public boolean isRuntime() {
 		return false;
 	}

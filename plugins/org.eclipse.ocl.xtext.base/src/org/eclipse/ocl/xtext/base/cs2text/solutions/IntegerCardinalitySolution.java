@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
 public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -46,6 +47,16 @@ public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 	@Override
 	public int hashCode() {
 		return getClass().hashCode() + value;
+	}
+
+	@Override
+	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		return true;
+	}
+
+	@Override
+	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		return true;
 	}
 
 	@Override

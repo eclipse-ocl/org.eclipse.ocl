@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
 /**
  * A FeatureSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
@@ -52,6 +53,16 @@ public class FeatureSizeCardinalitySolution extends AbstractCardinalitySolution
 	@Override
 	public int hashCode() {
 		return getClass().hashCode() + eStructuralFeature.hashCode() + enumerationValue.hashCode() * 7;
+	}
+
+	@Override
+	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		return false;
+	}
+
+	@Override
+	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		return true;
 	}
 
 	@Override

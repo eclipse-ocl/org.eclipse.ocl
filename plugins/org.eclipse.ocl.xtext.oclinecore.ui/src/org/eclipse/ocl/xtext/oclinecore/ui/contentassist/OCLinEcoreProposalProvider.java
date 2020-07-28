@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.oclinecore.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.oclinecore.ui.contentassist.AbstractOCLinEcoreProposalProvider;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;

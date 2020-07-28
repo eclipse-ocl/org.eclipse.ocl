@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
 /**
  * A VariableCardinalitySolution contributes the already computed value of a cardinality variable to an
@@ -47,6 +48,23 @@ public class VariableCardinalitySolution extends AbstractCardinalitySolution
 	@Override
 	public int hashCode() {
 		return getClass().hashCode() + cardinalityVariable.hashCode();
+	}
+
+	@Override
+	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariable);
+		return solution != null ? solution.isConstant(ruleMatch) : false;
+	}
+
+	@Override
+	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariable);
+		return solution != null ? solution.isKnown(ruleMatch) : false;
+	}
+
+	@Override
+	public boolean isOptional() {
+		return cardinalityVariable.mayBeNone() && !cardinalityVariable.mayBeMany();
 	}
 
 	@Override

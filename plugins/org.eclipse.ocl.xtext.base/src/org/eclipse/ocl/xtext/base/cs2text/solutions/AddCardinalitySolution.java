@@ -14,14 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
-public class MinusCardinalitySolution extends AbstractCardinalitySolution
+public class AddCardinalitySolution extends AbstractBinaryCardinalitySolution
 {
-	protected final @NonNull CardinalitySolution left;
-	protected final @NonNull CardinalitySolution right;
-
-	public MinusCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
-		this.left = left;
-		this.right = right;
+	public AddCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+		super(left, right);
 	}
 
 	@Override
@@ -34,7 +30,7 @@ public class MinusCardinalitySolution extends AbstractCardinalitySolution
 		if (intRight == null) {
 			return null;
 		}
-		return intLeft - intRight;
+		return intLeft + intRight;
 	}
 
 	@Override
@@ -42,25 +38,20 @@ public class MinusCardinalitySolution extends AbstractCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof MinusCardinalitySolution)) {
+		if (!(obj instanceof AddCardinalitySolution)) {
 			return false;
 		}
-		MinusCardinalitySolution that = (MinusCardinalitySolution) obj;
+		AddCardinalitySolution that = (AddCardinalitySolution) obj;
 		if (!this.left.equals(that.left)) return false;
 		if (!this.right.equals(that.right)) return false;
 		return true;
 	}
 
 	@Override
-	public int hashCode() {
-		return getClass().hashCode() + left.hashCode() + right.hashCode() * 7;
-	}
-
-	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("(");
 		left.toString(s, depth);
-		s.append(" - ");
+		s.append(" + ");
 		right.toString(s, depth);
 		s.append(")");
 	}

@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
 /**
  * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the
@@ -26,6 +27,21 @@ public interface CardinalitySolution
 	 * Returns null if evaluation fails.
 	 */
 	@Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch);
+
+	/**
+	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.
+	 */
+	boolean isConstant(@NonNull StaticRuleMatch ruleMatch);
+
+	/**
+	 * Return true if this will be a known constant value at run time. i.e. an expression involving actual feature slot counts.
+	 */
+	boolean isKnown(@NonNull StaticRuleMatch ruleMatch);
+
+	/**
+	 * Return true if this expression is a two-valued optional cardinality.
+	 */
+	boolean isOptional();
 
 	boolean isRuntime();
 	void toString(@NonNull StringBuilder s, int depth);

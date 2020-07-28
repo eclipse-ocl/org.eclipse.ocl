@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
 public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 {
@@ -51,6 +52,16 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 			hashCode += 5 + unresolvedExpression.hashCode();
 		}
 		return hashCode;
+	}
+
+	@Override
+	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		return false;
+	}
+
+	@Override
+	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		return false;
 	}
 
 	@Override

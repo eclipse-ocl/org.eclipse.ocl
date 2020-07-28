@@ -31,8 +31,6 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
-import com.google.common.collect.Iterables;
-
 /**
  * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
  *
@@ -44,6 +42,14 @@ public class CardinalityExpression implements Nameable
 	protected final @NonNull String name;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 	protected final @NonNull EnumerationValue enumerationValue;
+
+	/**
+	 * The cardinalities that determine the production of a particar feature/
+	 *
+	 * e.g.  { x+=X (',' x+=X)* }? is C0[?] + C0[?] * C1[*]
+	 *
+	 * NB an empty list for no variab;es is the consyamt 1 sice unit cardinalities are suppressed.
+	 */
 	private final @NonNull List<@NonNull List<@NonNull CardinalityVariable>> sumOfProducts = new ArrayList<>();
 	private @Nullable Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression = null;
 
@@ -56,6 +62,332 @@ public class CardinalityExpression implements Nameable
 	public void addMultiplicityProduct(@NonNull List<@NonNull CardinalityVariable> variables) {
 		sumOfProducts.add(variables);
 	}
+
+	//
+	//	slots = aa + bb + cc * X + dd * X => X = (slots - (aa + bb)) / (cc + dd)
+	//
+	//	aa, bb are known, cc, dd may involve unknown terms
+	//
+	public boolean analyzeMayBeZeroCommonFactors(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany) {
+		Set<@NonNull CardinalityVariable> intersection = null;
+		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
+			List<@NonNull CardinalityVariable> unknownVariables = getUnknownVariables(ruleMatch, product);
+			if (unknownVariables == null) {
+				return false;		// No variables to be common factors
+			}
+			else if (intersection == null) {
+				intersection = new HashSet<>(unknownVariables);
+			}
+			else {
+				intersection.retainAll(unknownVariables);
+				if (intersection.isEmpty()) {
+					return false;
+				}
+			}
+		}
+		if (intersection  != null) {
+			for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
+				if (mayBeMany || !cardinalityVariable.mayBeMany()) {
+					assert cardinalityVariable.mayBeNone();
+					CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+					solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
+					ruleMatch.addSolution(cardinalityVariable, solution);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+/*	public boolean analyzeConstants(@NonNull StaticRuleMatch ruleMatch) {
+		CardinalityVariable sumVariable = null;
+		int sum = 0;
+		int factor = 0;
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			CardinalityVariable productVariable = null;
+			int product = 1;
+			for (@NonNull CardinalityVariable variable : products) {
+				Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
+				if (integerSolution != null) {
+					product *= integerSolution.intValue();
+				}
+				else {
+					if ((sumVariable != null) && (sumVariable != variable)) {
+						return false;		// Cannot solve 2 variables here
+					}
+					sumVariable = variable;
+					if (productVariable != null) {
+						return false;		// Cannot solve quadratic variables here
+					}
+					productVariable = variable;
+				}
+			}
+			if (productVariable == null) {
+				sum += product;
+			}
+			else {
+				factor += product;
+			}
+		}
+		if (sumVariable == null) {
+			return true;
+		}
+		CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+		if (sum != 0) {
+			solution = new SubtractCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+		}
+		if (factor != 1) {
+			solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(factor));
+		}
+		ruleMatch.addSolution(sumVariable, solution);
+		return true;
+	} */
+
+/*	public boolean analyzeConstants(@NonNull StaticRuleMatch ruleMatch) {
+		CardinalityVariable sumVariable = null;
+		int sum = 0;
+		int factor = 0;
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			CardinalityVariable productVariable = null;
+			int product = 1;
+			for (@NonNull CardinalityVariable variable : products) {
+				Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
+				if (integerSolution != null) {
+					product *= integerSolution.intValue();
+				}
+				else {
+					if ((sumVariable != null) && (sumVariable != variable)) {
+						return false;		// Cannot solve 2 variables here
+					}
+					sumVariable = variable;
+					if (productVariable != null) {
+						return false;		// Cannot solve quadratic variables here
+					}
+					productVariable = variable;
+				}
+			}
+			if (productVariable == null) {
+				sum += product;
+			}
+			else {
+				factor += product;
+			}
+		}
+		if (sumVariable == null) {
+			return true;
+		}
+		CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+		if (sum != 0) {
+			solution = new SubtractCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+		}
+		if (factor != 1) {
+			solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(factor));
+		}
+		ruleMatch.addSolution(sumVariable, solution);
+		return true;
+	} */
+
+	/*	public boolean analyzeNoVariables(@NonNull StaticRuleMatch ruleMatch) {
+			for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+				for (@NonNull CardinalityVariable variable : products) {
+					CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+					if (!(solution instanceof IntegerCardinalitySolution)) {
+						return false;
+					}
+				}
+			}
+			return true;
+		} */
+
+	/*	public boolean analyzePseudoBooleanFactors(@NonNull StaticRuleMatch ruleMatch) {
+			Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
+			if (intersection == null) {
+				return false;
+			}
+			int sum = 0;
+			CardinalityVariable productVariable = null;
+			for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
+				int constantProduct = 1;
+				for (@NonNull CardinalityVariable variable : product) {
+					if (!Iterables.contains(intersection, variable)) {
+						Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
+						if (integerSolution != null) {
+							constantProduct *= integerSolution;
+						}
+						else if (productVariable != null) {
+							return false;
+						}
+						else {
+							productVariable = variable;
+						}
+					}
+				}
+				if ((productVariable == null) || !product.contains(productVariable)) {
+					sum += constantProduct;
+				}
+			}
+			for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+				for (@NonNull CardinalityVariable variable : products) {
+					if (variable == productVariable) {
+						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+						if (sum != 0) {
+							solution = new SubtractCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+						}
+						ruleMatch.addSolution(variable, solution);
+					}
+					else {
+						assert Iterables.contains(intersection, variable);
+						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+						solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+						ruleMatch.addSolution(variable, solution);
+					}
+				}
+			}
+			return true;
+		} */
+
+	public boolean analyzeRedundantProducts(@NonNull StaticRuleMatch ruleMatch) {
+		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
+		if (intersection != null) {
+			return false;
+		}
+		List<@NonNull CardinalityVariable> manyProducts = null;
+		CardinalityVariable manyVariable = null;
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			boolean mayBeNone = false;
+			for (@NonNull CardinalityVariable variable : products) {
+				if (variable.mayBeNone()) {
+					mayBeNone = true;
+				}
+				if ((manyVariable == null) && variable.mayBeMany()) {
+					manyVariable = variable;
+					manyProducts = products;
+				}
+			}
+			if (!mayBeNone) {
+				return false;
+			}
+		}
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			for (@NonNull CardinalityVariable variable : products) {
+				if (ruleMatch.basicGetSolution(variable) == null) {
+					if (products != manyProducts) {
+						ruleMatch.addSolution(variable, new IntegerCardinalitySolution(0));
+					}
+					else if (variable == manyVariable) {
+						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+						ruleMatch.addSolution(variable, solution);
+					}
+					else {
+						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+						solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
+						ruleMatch.addSolution(variable, solution);
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	/*	public boolean analyzeConstants(@NonNull StaticRuleMatch ruleMatch) {
+			CardinalityVariable sumVariable = null;
+			int sum = 0;
+			int factor = 0;
+			for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+				CardinalityVariable productVariable = null;
+				int product = 1;
+				for (@NonNull CardinalityVariable variable : products) {
+					Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
+					if (integerSolution != null) {
+						product *= integerSolution.intValue();
+					}
+					else {
+						if ((sumVariable != null) && (sumVariable != variable)) {
+							return false;		// Cannot solve 2 variables here
+						}
+						sumVariable = variable;
+						if (productVariable != null) {
+							return false;		// Cannot solve quadratic variables here
+						}
+						productVariable = variable;
+					}
+				}
+				if (productVariable == null) {
+					sum += product;
+				}
+				else {
+					factor += product;
+				}
+			}
+			if (sumVariable == null) {
+				return true;
+			}
+			CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+			if (sum != 0) {
+				solution = new SubtractCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
+			}
+			if (factor != 1) {
+				solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(factor));
+			}
+			ruleMatch.addSolution(sumVariable, solution);
+			return true;
+		} */
+
+	/*	public boolean analyzeNoVariables(@NonNull StaticRuleMatch ruleMatch) {
+			for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+				for (@NonNull CardinalityVariable variable : products) {
+					CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+					if (!(solution instanceof IntegerCardinalitySolution)) {
+						return false;
+					}
+				}
+			}
+			return true;
+		} */
+
+	//
+	//	slots = aa + bb + cc * X + dd * X => X = (slots - (aa + bb)) / (cc + dd)
+	//
+	//	aa, bb, cc, dd are known
+	//
+	//	if (cc + dd) or rather a v is optional the divide isredundant not y zero.
+	//
+	public boolean analyzeTrivial(@NonNull StaticRuleMatch ruleMatch) {
+		CardinalityVariable trivialVariable = null;
+		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
+			List<@NonNull CardinalityVariable> unknownVariables = getUnknownVariables(ruleMatch, product);
+			if (unknownVariables == null) {
+				// constant is easy
+			}
+			else if (unknownVariables.size() > 1) {
+				return false;		// Two variables is not trivial
+			}
+			else {
+				CardinalityVariable unknownVariable = unknownVariables.get(0);
+				if (trivialVariable == null) {
+					trivialVariable = unknownVariable;
+				}
+				else if (trivialVariable != unknownVariable) {
+					return false;		// Two variables is not trivial
+				}
+			}
+		}
+		CardinalitySolution resultsSolution = createSolution(ruleMatch, trivialVariable);
+		ruleMatch.addSolution(trivialVariable, resultsSolution);
+		return true;
+	}
+
+/*	public boolean analyzeNoVariables(@NonNull StaticRuleMatch ruleMatch) {
+		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
+			for (@NonNull CardinalityVariable variable : products) {
+				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+				if (!(solution instanceof IntegerCardinalitySolution)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	} */
 
 	protected void appendSumOfProducts(@NonNull StringBuilder s) {
 		boolean isFirst1 = true;
@@ -131,6 +463,68 @@ public class CardinalityExpression implements Nameable
 		return (intersection != null) && !intersection.isEmpty() ? intersection : null;
 	}
 
+	/**
+	 * Create the solution for solvedVariable by inverting this expression, which is linear in in a non-null solvedVariable
+	 *
+	 * i.e.	slots = aa + bb + cc*X + dd*X => X = (slots - (aa + bb)) / (cc + dd)
+	 *
+	 *	aa, bb, cc, dd are will be known and constant at run-time.
+	 *
+	 *	if (cc + dd) or rather a v is optional the divide is redundant.
+	 *
+	 * If solved varable is null everything is known.
+	 */
+	public @NonNull CardinalitySolution createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable CardinalityVariable solvedVariable) {
+		CardinalitySolution constantSolution = null;
+		CardinalitySolution factorSolution = null;
+		for (@NonNull Iterable<@NonNull CardinalityVariable> product : sumOfProducts) {
+			boolean isFactor = false;
+			CardinalitySolution residualSolution = null;
+			for (@NonNull CardinalityVariable term : product) {
+				if (term == solvedVariable) {
+					assert !isFactor;		// Quadratic doesn't happen
+					isFactor = true;
+				}
+				else {
+					CardinalitySolution termSolution = new VariableCardinalitySolution(term);
+					if (residualSolution == null){
+						residualSolution = termSolution;
+					}
+					else {
+						residualSolution = new MultiplyCardinalitySolution(residualSolution, termSolution);
+					}
+				}
+			}
+			if (residualSolution == null) {
+				residualSolution = new IntegerCardinalitySolution(1);		// Empty / pruned list is a unit product
+			}
+			if (isFactor) {
+				if (factorSolution == null) {
+					factorSolution = residualSolution;
+				}
+				else {
+					factorSolution = new AddCardinalitySolution(factorSolution, residualSolution);
+				}
+			}
+			else {
+				if (constantSolution == null) {
+					constantSolution = residualSolution;
+				}
+				else {
+					constantSolution = new AddCardinalitySolution(constantSolution, residualSolution);
+				}
+			}
+		}
+		CardinalitySolution resultSolution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
+		if (constantSolution != null) {
+			resultSolution = new SubtractCardinalitySolution(resultSolution, constantSolution);
+		}
+		if ((factorSolution != null) && !factorSolution.isOptional() && (!Integer.valueOf(1).equals(factorSolution.basicGetIntegerSolution(ruleMatch)))) {		// No need to divide by 0 or 1 when the 0 case was a multiplier.
+			resultSolution = new DivideCardinalitySolution(resultSolution, factorSolution);
+		}
+		return resultSolution;
+	}
+
 	public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
 		Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression2 = enumerationValue2cardinalityExpression;
 		if (enumerationValue2cardinalityExpression2 == null) {
@@ -163,20 +557,44 @@ public class CardinalityExpression implements Nameable
 		return name;
 	}
 
-	public @Nullable Iterable<@NonNull CardinalityVariable> getUnsolvedVariables(@NonNull StaticRuleMatch ruleMatch) {
-		List<@NonNull CardinalityVariable> unsolvedVariables = null;
+	/**
+	 * Return a non-null list of variables that do not yet have a known solution.
+	 *
+	 * Returns null if no variable has no solution, or if a variable is used in an (impossible) non-linear fashion.
+	 */
+	public @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch) {
+		List<@NonNull CardinalityVariable> unknownVariables = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
 				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
-				if ((solution == null) || solution.isRuntime()) {
-					if (unsolvedVariables == null) {
-						unsolvedVariables = new ArrayList<>();
+				if (solution == null) {
+					if (unknownVariables == null) {
+						unknownVariables = new ArrayList<>();
 					}
-					unsolvedVariables.add(variable);
+					if (unknownVariables.contains(variable)) {
+						return null;		// Quadratic cannot happen.
+					}
+					unknownVariables.add(variable);
 				}
 			}
 		}
-		return unsolvedVariables;
+		return unknownVariables;
+	}
+	protected @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull List<@NonNull CardinalityVariable> product) {
+		List<@NonNull CardinalityVariable> unknownVariables = null;
+		for (@NonNull CardinalityVariable variable : product) {
+			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+			if (solution == null) {
+				if (unknownVariables == null) {
+					unknownVariables = new ArrayList<>();
+				}
+				if (unknownVariables.contains(variable)) {
+					return null;		// Quadratic cannot happen.
+				}
+				unknownVariables.add(variable);
+			}
+		}
+		return unknownVariables;
 	}
 
 	public boolean isOne() {
@@ -235,221 +653,6 @@ public class CardinalityExpression implements Nameable
 	//	}
 	}
 
-	public boolean solveForBooleanCommonFactors(@NonNull StaticRuleMatch ruleMatch) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
-		if (intersection == null) {
-			return false;
-		}
-		int sum = 0;
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			Object resolution = resolveProduct(ruleMatch, products);
-			if (resolution instanceof Integer) {
-				sum += ((Integer)resolution).intValue();
-			}
-		}
-		for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
-			if (!cardinalityVariable.mayBeMany()) {
-				assert cardinalityVariable.mayBeNone();
-				CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-				solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
-				ruleMatch.addSolution(cardinalityVariable, solution);
-			}
-		}
-		return true;
-	}
-
-	public boolean solveForConstants(@NonNull StaticRuleMatch ruleMatch) {
-		CardinalityVariable sumVariable = null;
-		int sum = 0;
-		int factor = 0;
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			CardinalityVariable productVariable = null;
-			int product = 1;
-			for (@NonNull CardinalityVariable variable : products) {
-				Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
-				if (integerSolution != null) {
-					product *= integerSolution.intValue();
-				}
-				else {
-					if ((sumVariable != null) && (sumVariable != variable)) {
-						return false;		// Cannot solve 2 variables here
-					}
-					sumVariable = variable;
-					if (productVariable != null) {
-						return false;		// Cannot solve quadratic variables here
-					}
-					productVariable = variable;
-				}
-			}
-			if (productVariable == null) {
-				sum += product;
-			}
-			else {
-				factor += product;
-			}
-		}
-		if (sumVariable == null) {
-			return true;
-		}
-		CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-		if (sum != 0) {
-			solution = new MinusCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
-		}
-		if (factor != 1) {
-			solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(factor));
-		}
-		ruleMatch.addSolution(sumVariable, solution);
-		return true;
-	}
-
-/*	public boolean solveForNoVariables(@NonNull StaticRuleMatch ruleMatch) {
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
-				if (!(solution instanceof IntegerCardinalitySolution)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	} */
-
-	public boolean solveForPseudoBooleanFactors(@NonNull StaticRuleMatch ruleMatch) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
-		if (intersection == null) {
-			return false;
-		}
-		int sum = 0;
-		CardinalityVariable productVariable = null;
-		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
-			int constantProduct = 1;
-			for (@NonNull CardinalityVariable variable : product) {
-				if (!Iterables.contains(intersection, variable)) {
-					Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);
-					if (integerSolution != null) {
-						constantProduct *= integerSolution;
-					}
-					else if (productVariable != null) {
-						return false;
-					}
-					else {
-						productVariable = variable;
-					}
-				}
-			}
-			if ((productVariable == null) || !product.contains(productVariable)) {
-				sum += constantProduct;
-			}
-		}
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			for (@NonNull CardinalityVariable variable : products) {
-				if (variable == productVariable) {
-					CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-					if (sum != 0) {
-						solution = new MinusCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
-					}
-					ruleMatch.addSolution(variable, solution);
-				}
-				else {
-					assert Iterables.contains(intersection, variable);
-					CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-					solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(sum));
-					ruleMatch.addSolution(variable, solution);
-				}
-			}
-		}
-		return true;
-	}
-
-	public boolean solveForRedundantProducts(@NonNull StaticRuleMatch ruleMatch) {
-		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
-		if (intersection != null) {
-			return false;
-		}
-		List<@NonNull CardinalityVariable> manyProducts = null;
-		CardinalityVariable manyVariable = null;
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			boolean mayBeNone = false;
-			for (@NonNull CardinalityVariable variable : products) {
-				if (variable.mayBeNone()) {
-					mayBeNone = true;
-				}
-				if ((manyVariable == null) && variable.mayBeMany()) {
-					manyVariable = variable;
-					manyProducts = products;
-				}
-			}
-			if (!mayBeNone) {
-				return false;
-			}
-		}
-		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
-			for (@NonNull CardinalityVariable variable : products) {
-				if (ruleMatch.basicGetSolution(variable) == null) {
-					if (products != manyProducts) {
-						ruleMatch.addSolution(variable, new IntegerCardinalitySolution(0));
-					}
-					else if (variable == manyVariable) {
-						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-						ruleMatch.addSolution(variable, solution);
-					}
-					else {
-						CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-						solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
-						ruleMatch.addSolution(variable, solution);
-					}
-				}
-			}
-		}
-		return true;
-	}
-
-	public boolean solveTrivial(@NonNull StaticRuleMatch ruleMatch) {
-		CardinalityVariable trivialVariable = null;
-		int scaleFactor = 1;
-		int bias = 0;
-		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
-			int productValue = 1;
-			boolean hasTrivialVariable = false;
-			for (@NonNull CardinalityVariable variable : product) {
-				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
-				if (solution instanceof IntegerCardinalitySolution) {
-					productValue *= ((IntegerCardinalitySolution)solution).getValue();
-				}			// FIXME a solved variable can be a trivial divisor
-				else if (trivialVariable == null) {
-					trivialVariable = variable;
-					hasTrivialVariable = true;
-				}
-				else if (variable != trivialVariable) {
-					return false;			// A second variable is not trivial
-				}
-				else if (hasTrivialVariable) {
-					return false;			// A quadratic variable is not trivial
-				}
-				else {
-					hasTrivialVariable = true;
-				}
-			}
-			if (hasTrivialVariable) {
-				scaleFactor *= productValue;
-			}
-			else {
-				bias += product;
-			}
-		}
-		if (trivialVariable != null) {
-			CardinalitySolution solution = new FeatureSizeCardinalitySolution(eStructuralFeature, getEnumerationValue());
-			if (bias != 0) {
-				solution = new MinusCardinalitySolution(solution, new IntegerCardinalitySolution(bias));
-			}
-			if (scaleFactor != 1) {
-				solution = new DivideCardinalitySolution(solution, new IntegerCardinalitySolution(scaleFactor));
-			}
-			ruleMatch.addSolution(trivialVariable, solution);
-		}
-		return true;
-	}
-
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
@@ -458,13 +661,12 @@ public class CardinalityExpression implements Nameable
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		EnumerationValue enumerationValue1 = getEnumerationValue();
 		s.append(name);
 		s.append(": |");
 		s.append(eStructuralFeature.getName());
-		if (!enumerationValue1.isNull()) {
+		if (!enumerationValue.isNull()) {
 			s.append(".\"");
-			s.append(enumerationValue1.getName());
+			s.append(enumerationValue.getName());
 			s.append("\"");
 		}
 		s.append("| = ");

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
@@ -20,17 +21,17 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
  */
 public class CardinalitySolutionResult
 {
-	protected final @NonNull CardinalityVariable cardinalityVariable;
+	protected final @Nullable CardinalityVariable cardinalityVariable;		// Null for a constant check
 	protected final @NonNull CardinalitySolution cardinalitySolution;
 	protected final boolean isAssigned;		// True to assign, false to check for consistency
 
-	public CardinalitySolutionResult(@NonNull CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution, boolean isAssigned) {
+	public CardinalitySolutionResult(@Nullable CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution, boolean isAssigned) {
 		this.cardinalityVariable = cardinalityVariable;
 		this.cardinalitySolution = cardinalitySolution;
 		this.isAssigned = isAssigned;
 	}
 
-	public @NonNull CardinalityVariable getCardinalityVariable() {
+	public @Nullable CardinalityVariable getCardinalityVariable() {
 		return cardinalityVariable;
 	}
 
@@ -51,8 +52,13 @@ public class CardinalitySolutionResult
 
 	public void toString(@NonNull StringBuilder s, int i) {
 		s.append(isAssigned ? "assign " : "check ");
-		s.append(cardinalityVariable);
-		s.append(" = ");
+		if (cardinalityVariable != null) {
+			s.append(cardinalityVariable);
+			s.append(" = ");
+		}
 		s.append(cardinalitySolution);
+		if (cardinalityVariable == null) {
+			s.append(" == 0");
+		}
 	}
 }

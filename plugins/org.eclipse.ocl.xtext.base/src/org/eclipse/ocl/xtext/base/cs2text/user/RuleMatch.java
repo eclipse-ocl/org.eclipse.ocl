@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 /**
@@ -27,6 +28,11 @@ public interface RuleMatch
 	 * Return the known integer value of cardinalityVariable if known, or null if not yet knowable.
 	 */
 	@Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable);
+
+	/**#
+	 * Return thevalue of ca rdinalityVariable which may be null if no solution approach resolved so far..
+	 */
+	@Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable);
 
 	/**
 	 * Rerturn the SerializationRule that this RuleMatch elaborates.

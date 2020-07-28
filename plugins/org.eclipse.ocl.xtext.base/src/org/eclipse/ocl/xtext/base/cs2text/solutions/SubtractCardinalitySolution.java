@@ -14,9 +14,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
-public class GreaterThanCardinalitySolution extends AbstractBinaryCardinalitySolution
+public class SubtractCardinalitySolution extends AbstractBinaryCardinalitySolution
 {
-	public GreaterThanCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+	public SubtractCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
 		super(left, right);
 	}
 
@@ -30,7 +30,7 @@ public class GreaterThanCardinalitySolution extends AbstractBinaryCardinalitySol
 		if (intRight == null) {
 			return null;
 		}
-		return intLeft > intRight ? 1 : 0;
+		return intLeft - intRight;
 	}
 
 	@Override
@@ -38,10 +38,10 @@ public class GreaterThanCardinalitySolution extends AbstractBinaryCardinalitySol
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof GreaterThanCardinalitySolution)) {
+		if (!(obj instanceof SubtractCardinalitySolution)) {
 			return false;
 		}
-		GreaterThanCardinalitySolution that = (GreaterThanCardinalitySolution) obj;
+		SubtractCardinalitySolution that = (SubtractCardinalitySolution) obj;
 		if (!this.left.equals(that.left)) return false;
 		if (!this.right.equals(that.right)) return false;
 		return true;
@@ -51,7 +51,7 @@ public class GreaterThanCardinalitySolution extends AbstractBinaryCardinalitySol
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("(");
 		left.toString(s, depth);
-		s.append(" > ");
+		s.append(" - ");
 		right.toString(s, depth);
 		s.append(")");
 	}

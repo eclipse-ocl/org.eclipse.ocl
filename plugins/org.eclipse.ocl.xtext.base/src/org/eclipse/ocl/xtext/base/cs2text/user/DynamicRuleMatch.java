@@ -54,11 +54,17 @@ public class DynamicRuleMatch implements RuleMatch
 				throw new UnsupportedOperationException();
 			}
 			if (result.isAssigned()) {
+				assert cardinalityVariable != null;
 				variable2value.put(cardinalityVariable, newIntegerSolution);
 			}
-			else {
+			else if (cardinalityVariable != null) {
 				Integer integer = variable2value.get(cardinalityVariable);
 				if (!newIntegerSolution.equals(integer)) {
+					return false;
+				}
+			}
+			else {
+				if (!newIntegerSolution.equals(0)) {
 					return false;
 				}
 			}
@@ -69,6 +75,11 @@ public class DynamicRuleMatch implements RuleMatch
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
 		return variable2value.get(cardinalityVariable);
+	}
+
+	@Override
+	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
+		throw new IllegalStateException();		// run-time shoild use known values
 	}
 
 	public @NonNull Integer getIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {

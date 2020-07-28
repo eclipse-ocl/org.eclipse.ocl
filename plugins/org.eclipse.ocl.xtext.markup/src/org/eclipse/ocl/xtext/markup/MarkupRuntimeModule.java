@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.markup;
 
-import org.eclipse.ocl.xtext.markup.AbstractMarkupRuntimeModule;
 import org.eclipse.ocl.xtext.markup.services.MarkupValueConverterService;
 import org.eclipse.xtext.conversion.IValueConverterService;
 
