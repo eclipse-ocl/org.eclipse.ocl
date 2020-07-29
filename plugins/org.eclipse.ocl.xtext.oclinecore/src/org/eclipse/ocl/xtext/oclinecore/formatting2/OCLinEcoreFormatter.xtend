@@ -19,12 +19,8 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.ocl.xtext.essentialocl.formatting2.EssentialOCLFormatter
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess
 import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS
-import org.eclipse.xtext.formatting2.IFormattableDocument
-import org.eclipse.xtext.formatting2.regionaccess.ITextReplacement
-import org.eclipse.xtext.formatting2.FormatterRequest
-import java.util.List
 import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.formatting2.IFormattableDocument
 
 class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	

@@ -28,17 +28,76 @@ import org.eclipse.xtext.CompoundElement;
  */
 public interface SerializationElement
 {
+	/**
+	 * Return a, possibly this SerializationElement, that corresponds to this SerializationElement
+	 * with an additionalSerializationElement concatenated to each its disjunct conjunctions.
+	 *
+	 * This is expected to be invoked as part of a one pass tree refiement and so this SerializationElement
+	 * may be modified and re-used for the enhanced result.
+	 */
 	@NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement);
+
+	/**
+	 * Return this ListOfSerializationNode or throw an IllegalStateException.
+	 */
 	@NonNull ListOfSerializationNode asList();
+
+	/**
+	 * Return this ListListOfSerializationNode or throw an IllegalStateException.
+	 */
 	@NonNull ListOfListOfSerializationNode asListOfList();
+
+	/**
+	 * Return this SerializationNode or throw an IllegalStateException.
+	 */
 	@NonNull SerializationNode asNode();
+
+	/**
+	 * Eliminate all ListListOfSerializationNode (and ListOfSerializationNode) content returning an
+	 * AlternativesSerializationNode if one is required to represent the disjunction of flattened conjunctions.
+	 * Else return a SequenceSerializationNOde for the one alternative.
+	 */
 	@NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives);
+
+	/**
+	 * Promote all ListOfSerializationNode future sequences into frozen SequenceSerializationNOde with
+	 * current action calls and unassigned rule calls rewritten. The return may be a ListListOfSerializationNode.
+	 */
 	@NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement);
+
+	/**
+	 * Return the (outer) configured multiplicative cardinality.
+	 */
 	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
+
+	/**
+	 * Return true if this is a ListOfSerializationNode
+	 */
 	boolean isList();
+
+	/**
+	 * Return true if this is a ListListOfSerializationNode
+	 */
 	boolean isListOfList();
+
+	/**
+	 * Return true if this is a SerializationNode
+	 */
 	boolean isNode();
+
+	/**
+	 * Return true if this is a NullSerializationNode
+	 */
 	boolean isNull();
+
+	/**
+	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater.
+	 * Returns this if existing cardinality is adequate, lor a clone with adjusted cardinality oterwise.
+	 */
 	@NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality);
+
+	/**
+	 * Append a multi-line debug serialization to a StringBuilder with the specified ndentation depth.
+	 */
 	void toString(@NonNull StringBuilder s, int depth);
 }

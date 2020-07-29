@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -19,8 +18,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
-
-import com.google.common.collect.Lists;
 
 /**
  * A ListOfListOfSerializationNode is a frozen list of frozen list of SerializationNode awaiting distribution
@@ -46,14 +43,14 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	 * Permute additionalSerializationElement as concatenations of each prevailing conjunction.
 	 */
 	@Override
-	public @NonNull SerializationElement addConcatenation(@NonNull SerializationElement additionalSerializationElement) {
+	public @NonNull ListOfListOfSerializationNode addConcatenation(@NonNull SerializationElement additionalSerializationElement) {
 		if (additionalSerializationElement.isNull()) {
 			return this;
 		}
 		else if (additionalSerializationElement.isNode()) {
 			SerializationNode additionalSerializationNode = additionalSerializationElement.asNode();
 			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-				listOfNodes.add(additionalSerializationNode);
+				appendNodeToList(listOfNodes, additionalSerializationNode);
 			}
 			return this;
 		}
@@ -92,7 +89,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 			return this;
 		}
 		else if (additionalSerializationElement.isNode()) {
-			listOfListOfNodes.add(Lists.newArrayList(additionalSerializationElement.asNode()));
+			appendNodeToListOfList(listOfListOfNodes, additionalSerializationElement.asNode());
 			return this;
 		}
 		else if (additionalSerializationElement.isList()) {
@@ -106,6 +103,21 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 		else {
 			throw new UnsupportedOperationException();
 		}
+	}
+
+	protected void appendNodeToList(@NonNull List<@NonNull SerializationNode> listOfNodes, @NonNull SerializationNode serializationNode) {
+		if (serializationNode.isOne() && (serializationNode instanceof SequenceSerializationNode)) {
+			listOfNodes.addAll(((SequenceSerializationNode)serializationNode).getSerializationNodes());
+		}
+		else {
+			listOfNodes.add(serializationNode);
+		}
+	}
+
+	protected void appendNodeToListOfList(@NonNull List<@NonNull List<@NonNull SerializationNode>> listOfListOfNodes2, @NonNull SerializationNode serializationNode) {
+		ArrayList<@NonNull SerializationNode> additionalListOfNodes = new ArrayList<>();
+		appendNodeToList(additionalListOfNodes, serializationNode);
+		listOfListOfNodes.add(additionalListOfNodes);
 	}
 
 	@Override
@@ -135,7 +147,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 				newListOfList.add(frozenSequence.asList().getNodes());
 			}
 			else if (frozenSequence.isNode()) {
-				newListOfList.add(Collections.singletonList(frozenSequence.asNode()));
+				appendNodeToListOfList(newListOfList, frozenSequence.asNode());
 			}
 			else {
 				throw new UnsupportedOperationException();

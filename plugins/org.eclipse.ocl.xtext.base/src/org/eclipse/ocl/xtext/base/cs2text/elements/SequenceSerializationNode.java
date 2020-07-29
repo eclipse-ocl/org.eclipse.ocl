@@ -22,7 +22,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
-public class SequenceSerializationNode extends CompositeSerializationNode
+public class SequenceSerializationNode extends CompositeSerializationNode //implements List<@NonNull SerializationNode>
 {
 	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
@@ -78,14 +78,25 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	//	assert !groupSerializationNodes.isEmpty();
 	}
 
-	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, serializationNodes);
+/*	@Override
+	public boolean add(@NonNull SerializationNode e) {
+		throw new UnsupportedOperationException();
 	}
 
-	public @NonNull List<@NonNull SerializationNode> getSerializationNodes() {
-		return serializationNodes;
+	@Override
+	public void add(int index, @NonNull SerializationNode element) {
+		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends @NonNull SerializationNode> c) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends @NonNull SerializationNode> c) {
+		throw new UnsupportedOperationException();
+	} */
 
 	@Override
 	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
@@ -97,12 +108,116 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		}
 	}
 
+/*	@Override
+	public void clear() {
+		throw new UnsupportedOperationException();
+	} */
+
+	@Override
+	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, serializationNodes);
+	}
+
+/*	@Override
+	public boolean contains(Object o) {
+		return serializationNodes.contains(o);
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return serializationNodes.containsAll(c);
+	}
+
+	@Override
+	public @NonNull SerializationNode get(int index) {
+		return serializationNodes.get(index);
+	} */
+
+	public @NonNull List<@NonNull SerializationNode> getSerializationNodes() {
+		return serializationNodes;
+	}
+
+/*	@Override
+	public int indexOf(Object o) {
+		return serializationNodes.indexOf(o);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return serializationNodes.isEmpty();
+	}
+
+	@Override
+	public @NonNull Iterator<@NonNull SerializationNode> iterator() {
+		return serializationNodes.iterator();
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		return serializationNodes.lastIndexOf(o);
+	}
+
+	@Override
+	public ListIterator<@NonNull SerializationNode> listIterator() {
+		return serializationNodes.listIterator();
+	}
+
+	@Override
+	public ListIterator<@NonNull SerializationNode> listIterator(int index) {
+		return serializationNodes.listIterator(index);
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull SerializationNode remove(int index) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		throw new UnsupportedOperationException();
+	} */
+
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			serializer.serializeNode(serializationBuilder, serializationNode);
 		}
 	}
+
+/*	@Override
+	public @NonNull SerializationNode set(int index, @NonNull SerializationNode element) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int size() {
+		return serializationNodes.size();
+	}
+
+	@Override
+	public List<@NonNull SerializationNode> subList(int fromIndex, int toIndex) {
+		return serializationNodes.subList(fromIndex, toIndex);
+	}
+
+	@Override
+	public Object[] toArray() {
+		return serializationNodes.toArray();
+	}
+
+	@Override
+	public <T> T @NonNull [] toArray(T @NonNull [] a) {
+		return serializationNodes.toArray(a);
+	} */
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {

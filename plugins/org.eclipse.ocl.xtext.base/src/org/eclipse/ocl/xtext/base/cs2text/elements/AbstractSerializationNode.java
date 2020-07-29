@@ -93,13 +93,18 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
+	public boolean isOne() {
+		return multiplicativeCardinality.isOne();
+	}
+
+	@Override
 	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		serializationRule.addSerializedNode(this, parentStack);
 	}
 
 	@Override
 	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality.isZeroOrMore()) {
+		if (this.multiplicativeCardinality.isZeroOrMore()) {
 			return this;
 		}
 		return clone(multiplicativeCardinality);

@@ -126,7 +126,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 					alternativeSerializationElements.add(doSwitch(classifierID, element));
 				}
 			}
-			return doAlternatives(alternatives, alternativeSerializationElements);
+			return doAlternatives(alternatives, alternativeSerializationElements, multiplicativeCardinality);
 		}
 
 		@Override
@@ -162,7 +162,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 						throw new UnsupportedOperationException("Unsupported Assignment alternative terminal '" + alternative.eClass().getName() + "'");
 					}
 				}
-				return doAlternatives(alternatives, alternativeSerializationElements);
+				return doAlternatives(alternatives, alternativeSerializationElements, multiplicativeCardinality);
 			}
 			else if (terminal instanceof CrossReference) {
 				return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, multiplicativeCardinality, (CrossReference)terminal);
@@ -184,7 +184,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(group)) {		// XXX optimize the no alternatives case
 				int classifierID = element.eClass().getClassifierID();
 				@SuppressWarnings("null") SerializationElement serializationElement = doSwitch(classifierID, element);
-				serializationResult = serializationResult.addConcatenation(serializationElement);
+				serializationResult = serializationResult.addConcatenation(serializationElement.freezeSequences(grammarAnalysis, group));
 			}
 			return serializationResult.freezeSequences(grammarAnalysis, group);
 		}
@@ -284,8 +284,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			return alternativeUnassignedKeywordsSerializationNode;
 		}
 
-	private @NonNull SerializationElement doAlternatives(@NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationElement> alternativeSerializationElements) {
-			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives);
+	private @NonNull SerializationElement doAlternatives(@NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationElement> alternativeSerializationElements, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 			if (multiplicativeCardinality.isZeroOrMore()) {	// (A|B)* => A* | B*
 				SerializationElement conjunction = new ListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
