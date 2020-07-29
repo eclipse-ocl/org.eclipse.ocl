@@ -84,11 +84,6 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 		}
 	}
 
-	@Override
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return multiplicativeCardinality;
-	}
-
 	public @NonNull List<@NonNull SerializationNode> getNodes() {
 		return listOfNodes;
 	}
@@ -96,11 +91,6 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	@Override
 	public boolean isList() {
 		return true;
-	}
-
-	@Override
-	public boolean isOne() {
-		return multiplicativeCardinality.isOne();
 	}
 
 	@Override

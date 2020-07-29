@@ -41,18 +41,8 @@ public class NullSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return MultiplicativeCardinality.ZERO_OR_MORE;
-	}
-
-	@Override
 	public boolean isNull() {
 		return true;
-	}
-
-	@Override
-	public boolean isOne() {
-		return false;
 	}
 
 	@Override

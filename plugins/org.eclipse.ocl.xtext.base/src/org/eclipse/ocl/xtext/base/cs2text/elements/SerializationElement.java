@@ -66,11 +66,6 @@ public interface SerializationElement
 	@NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement);
 
 	/**
-	 * Return the (outer) configured multiplicative cardinality.
-	 */
-	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
-
-	/**
 	 * Return true if this is a ListOfSerializationNode
 	 */
 	boolean isList();
@@ -89,11 +84,6 @@ public interface SerializationElement
 	 * Return true if this is a NullSerializationNode
 	 */
 	boolean isNull();
-
-	/**
-	 * Return true if this node has exactly one cardinality.
-	 */
-	boolean isOne();
 
 	/**
 	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater.

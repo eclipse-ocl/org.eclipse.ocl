@@ -58,19 +58,14 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 //			throw new IllegalStateException();			// Additional list should not be a future SequenceSerializationNode
 			ListOfSerializationNode additionalListOfNodes = additionalSerializationElement.asList();
 			List<@NonNull SerializationNode> additionalNodes = additionalListOfNodes.getNodes();
-			if (additionalListOfNodes.isOne()) {
-				for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-					for (@NonNull SerializationNode additionalNode : additionalNodes) {
-						appendNodeToList(listOfNodes, additionalNode);
-					}
+			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+				for (@NonNull SerializationNode additionalNode : additionalNodes) {
+					appendNodeToList(listOfNodes, additionalNode);
 				}
-				return this;
 			}
-			else {
-				throw new UnsupportedOperationException();
+			return this;
 //				SerializationNode additionalNode = new SequenceSerializationNode(additionalSerializationElement.getGrammarAnalysis(), additionalNodes)
 //				return this;
-			}
 /*			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
 				for (@NonNull List<@NonNull SerializationNode> additionalListOfNodes : additionalListOfListOfNodes) {
 					List<@NonNull SerializationNode> newList = new ArrayList<>(listOfNodes);
@@ -169,18 +164,8 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return multiplicativeCardinality;
-	}
-
-	@Override
 	public boolean isListOfList() {
 		return true;
-	}
-
-	@Override
-	public boolean isOne() {
-		return multiplicativeCardinality.isOne();
 	}
 
 	@Override
