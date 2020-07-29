@@ -91,6 +91,11 @@ public interface SerializationElement
 	boolean isNull();
 
 	/**
+	 * Return true if this node has exactly one cardinality.
+	 */
+	boolean isOne();
+
+	/**
 	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater.
 	 * Returns this if existing cardinality is adequate, lor a clone with adjusted cardinality oterwise.
 	 */

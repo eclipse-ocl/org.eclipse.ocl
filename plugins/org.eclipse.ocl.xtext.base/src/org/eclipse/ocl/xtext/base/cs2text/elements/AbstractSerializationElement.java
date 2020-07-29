@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -75,6 +76,21 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 		}
 	}
 
+	protected void appendNodeToList(@NonNull List<@NonNull SerializationNode> listOfNodes, @NonNull SerializationNode serializationNode) {
+		if (serializationNode.isOne() && (serializationNode instanceof SequenceSerializationNode)) {
+			listOfNodes.addAll(((SequenceSerializationNode)serializationNode).getSerializationNodes());
+		}
+		else {
+			listOfNodes.add(serializationNode);
+		}
+	}
+
+	protected void appendNodeToListOfList(@NonNull List<@NonNull List<@NonNull SerializationNode>> listOfListOfNodes, @NonNull SerializationNode serializationNode) {
+		ArrayList<@NonNull SerializationNode> additionalListOfNodes = new ArrayList<>();
+		appendNodeToList(additionalListOfNodes, serializationNode);
+		listOfListOfNodes.add(additionalListOfNodes);
+	}
+
 	/**
 	 * Return an immutable frozen sequence from the extensible listOfNodes eliminating assigned current rule calls and
 	 * flattening unassigned rule calls.
@@ -119,6 +135,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 	 * The listOfNodes corresponds to the content of compoundElement and has an overall multiplicativeCardinality.
 	 */
 	protected @NonNull SerializationElement createFlattenedSequence(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> listOfNodes) {
+		assert listOfNodes.size() > 0;
 		//
 		//	Scan to see whether any parser rule calls need flattening.
 		//
@@ -130,11 +147,23 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 				if (calledRuleAnalysis instanceof ParserRuleAnalysis) {
 					assert firstRuleCall == null;			// Double unassigned rule calls do not happen
 					firstRuleCall = unassignedRuleCallSerializationNode;
+					assert firstRuleCall.isOne();			// optional/many unassigned rule calls are not allowed
 				//	break;
 				}
 			}
 		}
-		if (firstRuleCall == null) {		// If no RuleCalls, just create the frozen sequence.
+		//
+		//	If no RuleCalls, just create the frozen sequence.
+		//
+		if (firstRuleCall == null) {
+			if (listOfNodes.size() == 1) {
+				SerializationNode serializationNode = listOfNodes.get(0);
+				MultiplicativeCardinality nodeMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
+				MultiplicativeCardinality maxMultiplicativeCardinality = MultiplicativeCardinality.max(multiplicativeCardinality, nodeMultiplicativeCardinality);
+				if (nodeMultiplicativeCardinality == maxMultiplicativeCardinality) {
+					return serializationNode;
+				}
+			}
 			return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
 		}
 		//
@@ -145,6 +174,9 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 			for (; searchElement instanceof Alternatives; searchElement = searchElement.eContainer()) {}
 			boolean isDelegator = searchElement instanceof ParserRule;
 			if (isDelegator) {
+				if (multiplicativeCardinality.isOne()) {
+					return firstRuleCall;
+				}
 				return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
 			}
 		}
@@ -161,7 +193,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 					ParserRuleAnalysis calledParserRuleAnalysis = (ParserRuleAnalysis) calledRuleAnalysis;
 					calledDisjunction = new ListOfListOfSerializationNode();
 					for (@NonNull SerializationRule serializationRule : calledParserRuleAnalysis.getSerializationRules()) {
-						calledDisjunction = calledDisjunction.addConcatenation(serializationRule.getRootSerializationNode());
+						calledDisjunction = calledDisjunction.addConjunction(serializationRule.getRootSerializationNode());
 					}
 				}
 			}

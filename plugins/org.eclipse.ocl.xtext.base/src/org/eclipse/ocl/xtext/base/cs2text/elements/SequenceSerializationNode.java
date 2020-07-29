@@ -37,6 +37,13 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 		assert groupSerializationNodes.size() == new HashSet<>(groupSerializationNodes).size();
 	}
 
+	public SequenceSerializationNode(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+		super(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.multiplicativeCardinality);
+		this.compoundElement = sequenceSerializationNode.compoundElement;
+		this.serializationNodes = groupSerializationNodes;
+	//	assert !groupSerializationNodes.isEmpty();
+	}
+
 	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof AssignedCurrentSerializationNode) {
 			return false;
@@ -69,13 +76,6 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 			throw new UnsupportedOperationException();
 		}
 		return true;
-	}
-
-	public SequenceSerializationNode(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.multiplicativeCardinality);
-		this.compoundElement = sequenceSerializationNode.compoundElement;
-		this.serializationNodes = groupSerializationNodes;
-	//	assert !groupSerializationNodes.isEmpty();
 	}
 
 /*	@Override

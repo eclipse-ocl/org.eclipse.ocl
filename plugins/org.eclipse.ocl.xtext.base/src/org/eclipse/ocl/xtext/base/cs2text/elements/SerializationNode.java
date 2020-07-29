@@ -32,11 +32,6 @@ public interface SerializationNode extends SerializationElement
 	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
 
 	/**
-	 * Return true if this node has exactly one cardinality.
-	 */
-	boolean isOne();
-
-	/**
 	 * Traverse the serialization node hoderarchy of a serializer's serializationRule to append appropriate string
 	 * segments to the serializationBuilder to represent the serializer's user element.
 	 */

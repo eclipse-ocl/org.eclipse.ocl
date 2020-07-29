@@ -35,6 +35,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.ListOfListOfSerializationNode
 import org.eclipse.ocl.xtext.base.cs2text.elements.ListOfSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.NullSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationElement;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
@@ -46,6 +47,7 @@ import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Group;
 import org.eclipse.xtext.Keyword;
@@ -184,7 +186,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(group)) {		// XXX optimize the no alternatives case
 				int classifierID = element.eClass().getClassifierID();
 				@SuppressWarnings("null") SerializationElement serializationElement = doSwitch(classifierID, element);
-				serializationResult = serializationResult.addConcatenation(serializationElement.freezeSequences(grammarAnalysis, group));
+				serializationResult = serializationResult.addConcatenation(serializationElement);
 			}
 			return serializationResult.freezeSequences(grammarAnalysis, group);
 		}
@@ -430,15 +432,25 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		SerializationElement serializationResult = new ParserRuleSwitch(this).analyze();
 		if (serializationResult.isListOfList()) {
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationResult.asListOfList().getLists()) {
-				assert serializationNodes.size() == 1;
-				SerializationNode serializationNode = serializationNodes.get(0);
+				SerializationNode serializationNode;
+				if (serializationNodes.size() == 1) {
+					serializationNode = serializationNodes.get(0);
+				}
+				else {
+					serializationNode = new SequenceSerializationNode(grammarAnalysis, (CompoundElement)abstractRule.getAlternatives(), MultiplicativeCardinality.ONE, serializationNodes);
+				}
 				createSerializationRules(serializationRules, serializationNode);
 			}
 		}
 		else if (serializationResult.isList()) {
 			List<@NonNull SerializationNode> serializationNodes = serializationResult.asList().getNodes();
-			assert serializationNodes.size() == 1;
-			SerializationNode serializationNode = serializationNodes.get(0);
+			SerializationNode serializationNode;
+			if (serializationNodes.size() == 1) {
+				serializationNode = serializationNodes.get(0);
+			}
+			else {
+				serializationNode = new SequenceSerializationNode(grammarAnalysis, (CompoundElement)abstractRule.getAlternatives(), MultiplicativeCardinality.ONE, serializationNodes);
+			}
 			createSerializationRules(serializationRules, serializationNode);
 		}
 		else if (serializationResult.isNode()) {

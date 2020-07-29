@@ -51,6 +51,11 @@ public class NullSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
+	public boolean isOne() {
+		return false;
+	}
+
+	@Override
 	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		return this;
 	}

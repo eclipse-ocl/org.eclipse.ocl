@@ -43,7 +43,7 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 			return this;
 		}
 		else if (additionalSerializationElement.isNode()) {
-			listOfNodes.add(additionalSerializationElement.asNode());
+			appendNodeToList(listOfNodes, additionalSerializationElement.asNode());
 			return this;
 		}
 		else if (additionalSerializationElement.isList()) {
@@ -99,6 +99,11 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
+	public boolean isOne() {
+		return multiplicativeCardinality.isOne();
+	}
+
+	@Override
 	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.multiplicativeCardinality = MultiplicativeCardinality.max(this.multiplicativeCardinality, multiplicativeCardinality);
 		return this;
@@ -116,6 +121,7 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 			StringUtil.appendIndentation(s, depth, "\t");
 		}
 		s.append("}");
+		s.append(multiplicativeCardinality);
 	//	appendCardinality(s, depth);
 	}
 }

@@ -55,7 +55,29 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 			return this;
 		}
 		else if (additionalSerializationElement.isList()) {
-			throw new IllegalStateException();			// Additional list should not be a future SequenceSerializationNode
+//			throw new IllegalStateException();			// Additional list should not be a future SequenceSerializationNode
+			ListOfSerializationNode additionalListOfNodes = additionalSerializationElement.asList();
+			List<@NonNull SerializationNode> additionalNodes = additionalListOfNodes.getNodes();
+			if (additionalListOfNodes.isOne()) {
+				for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+					for (@NonNull SerializationNode additionalNode : additionalNodes) {
+						appendNodeToList(listOfNodes, additionalNode);
+					}
+				}
+				return this;
+			}
+			else {
+				throw new UnsupportedOperationException();
+//				SerializationNode additionalNode = new SequenceSerializationNode(additionalSerializationElement.getGrammarAnalysis(), additionalNodes)
+//				return this;
+			}
+/*			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+				for (@NonNull List<@NonNull SerializationNode> additionalListOfNodes : additionalListOfListOfNodes) {
+					List<@NonNull SerializationNode> newList = new ArrayList<>(listOfNodes);
+					newList.addAll(additionalListOfNodes);
+					newListOfList.add(newList);
+				}
+			} */
 		}
 		else if (additionalSerializationElement.isListOfList()) {
 			List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
@@ -103,21 +125,6 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 		else {
 			throw new UnsupportedOperationException();
 		}
-	}
-
-	protected void appendNodeToList(@NonNull List<@NonNull SerializationNode> listOfNodes, @NonNull SerializationNode serializationNode) {
-		if (serializationNode.isOne() && (serializationNode instanceof SequenceSerializationNode)) {
-			listOfNodes.addAll(((SequenceSerializationNode)serializationNode).getSerializationNodes());
-		}
-		else {
-			listOfNodes.add(serializationNode);
-		}
-	}
-
-	protected void appendNodeToListOfList(@NonNull List<@NonNull List<@NonNull SerializationNode>> listOfListOfNodes2, @NonNull SerializationNode serializationNode) {
-		ArrayList<@NonNull SerializationNode> additionalListOfNodes = new ArrayList<>();
-		appendNodeToList(additionalListOfNodes, serializationNode);
-		listOfListOfNodes.add(additionalListOfNodes);
 	}
 
 	@Override
@@ -172,6 +179,11 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
+	public boolean isOne() {
+		return multiplicativeCardinality.isOne();
+	}
+
+	@Override
 	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.multiplicativeCardinality = MultiplicativeCardinality.max(this.multiplicativeCardinality, multiplicativeCardinality);
 		return this;
@@ -192,10 +204,11 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 					}
 					StringUtil.appendIndentation(s, depth+1, "\t");
 				}
-				s.append("}");
+				s.append("}1");
 			}
 			StringUtil.appendIndentation(s, depth, "\t");
 		}
 		s.append("}");
+		s.append(multiplicativeCardinality);
 	}
 }
