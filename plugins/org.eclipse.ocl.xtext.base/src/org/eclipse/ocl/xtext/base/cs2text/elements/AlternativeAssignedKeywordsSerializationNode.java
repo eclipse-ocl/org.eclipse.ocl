@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -23,17 +21,19 @@ import org.eclipse.xtext.Keyword;
 
 public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssignedSerializationNode
 {
-	protected final @NonNull List<@NonNull Keyword> keywords = new ArrayList<>();
+	protected final @NonNull Iterable<@NonNull Keyword> keywords;
 	protected final @NonNull EnumerationValue enumerationValue;
 
 	public AlternativeAssignedKeywordsSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> keywords) {
 		super(assignmentAnalysis, multiplicativeCardinality);
+		this.keywords = keywords;
 		this.enumerationValue = grammarAnalysis.getEnumerationValue(keywords);
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
 		return new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords);
 	}
 

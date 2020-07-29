@@ -26,16 +26,13 @@ import org.eclipse.xtext.CompoundElement;
 public class ListOfListOfSerializationNode extends AbstractSerializationElement
 {
 	private @NonNull List<@NonNull List<@NonNull SerializationNode>> listOfListOfNodes;
-	private @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
 	public ListOfListOfSerializationNode() {
 		this.listOfListOfNodes = new ArrayList<>();
-		this.multiplicativeCardinality = MultiplicativeCardinality.ONE;
 	}
 
-	public ListOfListOfSerializationNode(@NonNull List<@NonNull List<@NonNull SerializationNode>> listOfListOfNodes, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public ListOfListOfSerializationNode(@NonNull List<@NonNull List<@NonNull SerializationNode>> listOfListOfNodes) {
 		this.listOfListOfNodes = listOfListOfNodes;
-		this.multiplicativeCardinality = multiplicativeCardinality;
 		assert listOfListOfNodes.size() < 20;
 	}
 
@@ -89,7 +86,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 			else {
 				newListOfList.addAll(additionalListOfListOfNodes);
 			}
-			return new ListOfListOfSerializationNode(newListOfList, MultiplicativeCardinality.ONE);
+			return new ListOfListOfSerializationNode(newListOfList);
 		}
 		else {
 			throw new UnsupportedOperationException();
@@ -168,10 +165,30 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 		return true;
 	}
 
+//	@Override
+//	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+//		this.multiplicativeCardinality = MultiplicativeCardinality.max(this.multiplicativeCardinality, multiplicativeCardinality);
+//		return this;
+//	}
+
 	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		this.multiplicativeCardinality = MultiplicativeCardinality.max(this.multiplicativeCardinality, multiplicativeCardinality);
-		return this;
+	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality.isOne()) {
+			return this;
+		}
+		else {
+			List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
+			if (listOfListOfNodes.size() > 0) {
+				for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+					List<@NonNull SerializationNode> newList = new ArrayList<>(listOfNodes);
+					for (@NonNull SerializationNode node : listOfNodes) {
+						newList.add(node.setMultiplicativeCardinality(grammarAnalysis, compoundElement, multiplicativeCardinality));
+						newListOfList.add(newList);
+					}
+				}
+			}
+			return new ListOfListOfSerializationNode(newListOfList);
+		}
 	}
 
 	@Override
@@ -189,11 +206,10 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 					}
 					StringUtil.appendIndentation(s, depth+1, "\t");
 				}
-				s.append("}1");
+				s.append("}");
 			}
 			StringUtil.appendIndentation(s, depth, "\t");
 		}
 		s.append("}");
-		s.append(multiplicativeCardinality);
 	}
 }

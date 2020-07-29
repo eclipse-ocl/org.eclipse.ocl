@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
@@ -44,41 +46,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	//	assert !groupSerializationNodes.isEmpty();
 	}
 
-	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {
-		if (serializationNode instanceof AssignedCurrentSerializationNode) {
-			return false;
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				if (!noAssignedCurrent(nestedSerializationNode)) {
-					return false;
-				}
-			}
-		}
-		else if (serializationNode.isList() || serializationNode.isListOfList() || serializationNode.isNull() || (serializationNode instanceof AlternativesSerializationNode)) {
-			throw new UnsupportedOperationException();
-		}
-		return true;
-	}
-
-	private boolean noUnassignedParserRuleCall(@NonNull SerializationNode serializationNode) {
-		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
-			return !(((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis() instanceof ParserRuleAnalysis);
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				if (!noUnassignedParserRuleCall(nestedSerializationNode)) {
-					return false;
-				}
-			}
-		}
-		else if (serializationNode.isList() || serializationNode.isListOfList() || serializationNode.isNull() || (serializationNode instanceof AlternativesSerializationNode)) {
-			throw new UnsupportedOperationException();
-		}
-		return true;
-	}
-
-/*	@Override
+	/*	@Override
 	public boolean add(@NonNull SerializationNode e) {
 		throw new UnsupportedOperationException();
 	}
@@ -108,14 +76,43 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 		}
 	}
 
+
+
+/*	@Override
+	public boolean add(@NonNull SerializationNode e) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void add(int index, @NonNull SerializationNode element) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends @NonNull SerializationNode> c) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends @NonNull SerializationNode> c) {
+		throw new UnsupportedOperationException();
+	} */
+
+
+
 /*	@Override
 	public void clear() {
 		throw new UnsupportedOperationException();
 	} */
 
 	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, serializationNodes);
+	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+		List<@NonNull SerializationNode> newList = new ArrayList<>(serializationNodes.size());
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			newList.add(serializationNode.clone(null));
+		}
+		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
+		return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, newList);
 	}
 
 /*	@Override
@@ -126,9 +123,9 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		return serializationNodes.containsAll(c);
-	}
+	} */
 
-	@Override
+/*	@Override
 	public @NonNull SerializationNode get(int index) {
 		return serializationNodes.get(index);
 	} */
@@ -186,6 +183,40 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	public boolean retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	} */
+
+	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {
+		if (serializationNode instanceof AssignedCurrentSerializationNode) {
+			return false;
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				if (!noAssignedCurrent(nestedSerializationNode)) {
+					return false;
+				}
+			}
+		}
+		else if (serializationNode.isList() || serializationNode.isListOfList() || serializationNode.isNull() || (serializationNode instanceof AlternativesSerializationNode)) {
+			throw new UnsupportedOperationException();
+		}
+		return true;
+	}
+
+	private boolean noUnassignedParserRuleCall(@NonNull SerializationNode serializationNode) {
+		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
+			return !(((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis() instanceof ParserRuleAnalysis);
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				if (!noUnassignedParserRuleCall(nestedSerializationNode)) {
+					return false;
+				}
+			}
+		}
+		else if (serializationNode.isList() || serializationNode.isListOfList() || serializationNode.isNull() || (serializationNode instanceof AlternativesSerializationNode)) {
+			throw new UnsupportedOperationException();
+		}
+		return true;
+	}
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {

@@ -31,7 +31,31 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+			throw new IllegalStateException();
+	/*		SerializationNode chosenNode = preSerializer.getChosenNode(this);
+			if (chosenNode == this) {
+				List<@NonNull SerializationNode> multiAlternativeSerializationNodes = new ArrayList<>(alternativeSerializationNodes.size());
+				for (@NonNull SerializationNode alternativeNode : alternativeSerializationNodes) {
+					if (alternativeNode.getMultiplicativeCardinality() == MultiplicativeCardinality.ZERO_OR_MORE) {
+						multiAlternativeSerializationNodes.add(alternativeNode);
+					}
+					else {
+						multiAlternativeSerializationNodes.add(alternativeNode.clone(MultiplicativeCardinality.ZERO_OR_MORE));
+					}
+				}
+				for (@NonNull SerializationNode alternativeNode : multiAlternativeSerializationNodes) {
+					alternativeNode.preSerialize(preSerializer);
+				}
+			}
+			else if (chosenNode != null) {
+				chosenNode.preSerialize(preSerializer);
+			} */
+		}
+
+	@Override
+	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
 		return new AlternativesSerializationNode(grammarAnalysis, alternatives, multiplicativeCardinality, alternativeSerializationNodes);
 	}
 
@@ -43,28 +67,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 		return alternativeIndex < alternativeSerializationNodes.size() ? alternativeSerializationNodes.get(alternativeIndex) : null;
 	}
 
-	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		throw new IllegalStateException();
-/*		SerializationNode chosenNode = preSerializer.getChosenNode(this);
-		if (chosenNode == this) {
-			List<@NonNull SerializationNode> multiAlternativeSerializationNodes = new ArrayList<>(alternativeSerializationNodes.size());
-			for (@NonNull SerializationNode alternativeNode : alternativeSerializationNodes) {
-				if (alternativeNode.getMultiplicativeCardinality() == MultiplicativeCardinality.ZERO_OR_MORE) {
-					multiAlternativeSerializationNodes.add(alternativeNode);
-				}
-				else {
-					multiAlternativeSerializationNodes.add(alternativeNode.clone(MultiplicativeCardinality.ZERO_OR_MORE));
-				}
-			}
-			for (@NonNull SerializationNode alternativeNode : multiAlternativeSerializationNodes) {
-				alternativeNode.preSerialize(preSerializer);
-			}
-		}
-		else if (chosenNode != null) {
-			chosenNode.preSerialize(preSerializer);
-		} */
-	}
+
 
 //	@Override
 //	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {

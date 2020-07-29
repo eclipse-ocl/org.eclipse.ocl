@@ -86,13 +86,14 @@ public interface SerializationElement
 	boolean isNull();
 
 	/**
-	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater.
-	 * Returns this if existing cardinality is adequate, lor a clone with adjusted cardinality oterwise.
-	 */
-	@NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality);
-
-	/**
 	 * Append a multi-line debug serialization to a StringBuilder with the specified ndentation depth.
 	 */
 	void toString(@NonNull StringBuilder s, int depth);
+
+	/**
+	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater as part of a compoundElement.
+	 * Returns this if existing cardinality is adequate, or a SequenceSerializationNode, clone with adjusted cardinality otherwise.
+	 * @param grammarAnalysis
+	 */
+	@NonNull SerializationElement setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
 }

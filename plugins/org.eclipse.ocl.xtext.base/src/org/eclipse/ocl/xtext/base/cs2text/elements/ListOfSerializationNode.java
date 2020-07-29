@@ -25,16 +25,13 @@ import org.eclipse.xtext.CompoundElement;
 public class ListOfSerializationNode extends AbstractSerializationElement
 {
 	private final @NonNull List<@NonNull SerializationNode> listOfNodes;
-	private @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
 	public ListOfSerializationNode() {
 		this.listOfNodes = new ArrayList<>();
-		this.multiplicativeCardinality = MultiplicativeCardinality.ONE;
 	}
 
-	public ListOfSerializationNode(@NonNull List<@NonNull SerializationNode> listOfNodes, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public ListOfSerializationNode(@NonNull List<@NonNull SerializationNode> listOfNodes) {
 		this.listOfNodes = listOfNodes;
-		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
 	@Override
@@ -57,7 +54,7 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 				newList.addAll(additionalList);
 				newListOfList.add(newList);
 			}
-			return new ListOfListOfSerializationNode(newListOfList, MultiplicativeCardinality.ONE);
+			return new ListOfListOfSerializationNode(newListOfList);
 		}
 		else {
 			throw new UnsupportedOperationException();
@@ -94,9 +91,13 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		this.multiplicativeCardinality = MultiplicativeCardinality.max(this.multiplicativeCardinality, multiplicativeCardinality);
-		return this;
+	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality.isOne()) {
+			return this;
+		}
+		else {
+			return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, getNodes());
+		}
 	}
 
 	@Override
@@ -111,7 +112,6 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 			StringUtil.appendIndentation(s, depth, "\t");
 		}
 		s.append("}");
-		s.append(multiplicativeCardinality);
 	//	appendCardinality(s, depth);
 	}
 }

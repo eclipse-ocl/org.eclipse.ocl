@@ -13,8 +13,11 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.xtext.CompoundElement;
 
 public interface SerializationNode extends SerializationElement
 {
@@ -26,10 +29,11 @@ public interface SerializationNode extends SerializationElement
 	void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack);
 
 	/**
-	 * Ceate a shallow copy of this node with a changed multiplicativeCardinality. This accommodates the nedd to change
-	 * the multiplicity when flattening one-or-more alternatives.
+	 * If multiplicativeCardinality is null return a deep copy of this node, else a deep copy
+	 * with a changed multiplicativeCardinality. This accommodates the need to change the
+	 * multiplicity when flattening one-or-more alternatives and to avoid duplicates when flattening,
 	 */
-	@NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality);
+	@NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality);
 
 	/**
 	 * Return the (outer) configured multiplicative cardinality.
@@ -47,10 +51,6 @@ public interface SerializationNode extends SerializationElement
 	 */
 	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
-	/**
-	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater.
-	 * Returns this if existing cardinality is adequate, lor a clone with adjusted cardinality oterwise.
-	 */
 	@Override
-	@NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality);
+	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
 }

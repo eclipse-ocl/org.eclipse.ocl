@@ -42,7 +42,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 			List<@NonNull SerializationNode> newList = new ArrayList<>();
 			newList.add(this);
 			newList.add(additionalSerializationElement.asNode());
-			return new ListOfSerializationNode(newList, MultiplicativeCardinality.ONE);
+			return new ListOfSerializationNode(newList);
 		}
 		else if (additionalSerializationElement.isList()) {
 			throw new IllegalStateException();			// Additional list should not be a future SequenceSerializationNode
@@ -56,6 +56,11 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		else {
 			throw new UnsupportedOperationException();
 		}
+	}
+
+	@Override
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		serializationRule.addSerializedNode(this, parentStack);
 	}
 
 	protected void appendCardinality(@NonNull StringBuilder s, int depth) {
@@ -98,12 +103,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		serializationRule.addSerializedNode(this, parentStack);
-	}
-
-	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		if (this.multiplicativeCardinality.isZeroOrMore()) {
 			return this;
 		}

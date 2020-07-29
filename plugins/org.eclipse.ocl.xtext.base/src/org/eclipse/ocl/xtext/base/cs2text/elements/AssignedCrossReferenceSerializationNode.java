@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
@@ -41,7 +42,8 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
 		return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, multiplicativeCardinality, crossReference);
 	}
 

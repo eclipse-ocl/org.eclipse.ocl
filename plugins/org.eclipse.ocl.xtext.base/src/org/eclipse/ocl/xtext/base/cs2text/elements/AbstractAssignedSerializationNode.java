@@ -32,6 +32,13 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		super.analyze(serializationRule, parentStack);
+		EnumerationValue enumerationValue = getEnumerationValue();
+		serializationRule.addAssignedNode(this, enumerationValue, parentStack);
+	}
+
+	@Override
 	public @NonNull EClass getAssignedEClass() {
 		return assignmentAnalysis.getEClass();
 	}
@@ -49,12 +56,5 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	@Override
 	public @NonNull EnumerationValue getEnumerationValue() {
 		return NullEnumerationValue.INSTANCE;
-	}
-
-	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		super.analyze(serializationRule, parentStack);
-		EnumerationValue enumerationValue = getEnumerationValue();
-		serializationRule.addAssignedNode(this, enumerationValue, parentStack);
 	}
 }

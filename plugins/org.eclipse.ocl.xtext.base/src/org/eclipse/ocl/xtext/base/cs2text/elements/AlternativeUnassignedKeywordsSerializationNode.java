@@ -43,13 +43,14 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		return new AlternativeUnassignedKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality, values);
+	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
+		serializationRule.addSerializedNode(this, parentStack);
 	}
 
 	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		serializationRule.addSerializedNode(this, parentStack);
+	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
+		return new AlternativeUnassignedKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality, values);
 	}
 
 	@Override

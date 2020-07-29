@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -31,7 +32,8 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
 		return new UnassignedKeywordSerializationNode(grammarAnalysis, keyword, multiplicativeCardinality);
 	}
 

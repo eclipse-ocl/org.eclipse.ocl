@@ -109,10 +109,10 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			if (alternativeUnassignedKeywordsSerializationNode != null) {
 				return alternativeUnassignedKeywordsSerializationNode;
 			}
-		//	SerializationElement alternativeUnassignedRuleCallsSerializationNode = doAlternativeUnassignedRuleCalls(alternatives);
-		//	if (alternativeUnassignedRuleCallsSerializationNode != null) {
-		//		return alternativeUnassignedRuleCallsSerializationNode;
-		//	}
+			//	SerializationElement alternativeUnassignedRuleCallsSerializationNode = doAlternativeUnassignedRuleCalls(alternatives);
+			//	if (alternativeUnassignedRuleCallsSerializationNode != null) {
+			//		return alternativeUnassignedRuleCallsSerializationNode;
+			//	}
 			MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives);
 			List<@NonNull SerializationElement> alternativeSerializationElements = doAlternativeAssignedKeywords(alternatives, multiplicativeCardinality);
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(alternatives)) {
@@ -174,7 +174,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			}
 		}
 
-	/*	@Override
+		/*	@Override
 		public @NonNull SerializationNode caseCrossReference(CrossReference object) {
 			return nullSerializationNode;
 		} */
@@ -212,7 +212,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			if (!(calledRuleAnalysis instanceof ParserRuleAnalysis)) {
 				return NullSerializationNode.INSTANCE;
 			}
-		/*	ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
+			/*	ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 			for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)calledRuleAnalysis).getSerializationRules()) {
 				disjunction.addConjunction(serializationRule.getRootSerializationNode());
 				// XXX multipllicity
@@ -222,7 +222,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			return new UnassignedRuleCallSerializationNode(grammarAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
 		}
 
-/*		@Override
+		/*		@Override
 		public @NonNull SerializationNode caseTypeRef(TypeRef object) {
 			return nullSerializationNode;
 		} */
@@ -286,11 +286,11 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			return alternativeUnassignedKeywordsSerializationNode;
 		}
 
-	private @NonNull SerializationElement doAlternatives(@NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationElement> alternativeSerializationElements, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		private @NonNull SerializationElement doAlternatives(@NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationElement> alternativeSerializationElements, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 			if (multiplicativeCardinality.isZeroOrMore()) {	// (A|B)* => A* | B*
 				SerializationElement conjunction = new ListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
-					SerializationElement frozen = alternativeSerializationElement.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE).freezeSequences(grammarAnalysis, alternatives);
+					SerializationElement frozen = alternativeSerializationElement.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ZERO_OR_MORE).freezeSequences(grammarAnalysis, alternatives);
 					conjunction = conjunction.addConcatenation(frozen);
 				}
 				return conjunction;
@@ -302,7 +302,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 					conjunction.addConcatenation(alternativeSerializationElement1);
 					for (@NonNull SerializationElement alternativeSerializationElement2 : alternativeSerializationElements) {
 						if (alternativeSerializationElement1 != alternativeSerializationElement2) {
-							conjunction = conjunction.addConcatenation(alternativeSerializationElement2.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE));
+							conjunction = conjunction.addConcatenation(alternativeSerializationElement2.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ZERO_OR_MORE));
 						}
 					}
 					SerializationElement frozen = conjunction.freezeSequences(grammarAnalysis, alternatives);
@@ -318,7 +318,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 					SerializationElement frozen = conjunction.freezeSequences(grammarAnalysis, alternatives);
 					disjunction = disjunction.addConjunction(frozen);
 				}
-				return disjunction.setMultiplicativeCardinality(MultiplicativeCardinality.ZERO_OR_MORE);
+				return disjunction.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ZERO_OR_MORE);
 			}
 			else { // multiplicativeCardinality.isOne()
 				ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
@@ -328,11 +328,11 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 					SerializationElement frozen = conjunction.freezeSequences(grammarAnalysis, alternatives);
 					disjunction = disjunction.addConjunction(frozen);
 				}
-				return disjunction.setMultiplicativeCardinality(MultiplicativeCardinality.ONE);
+				return disjunction.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);
 			}
 		}
 
-	/*	private @Nullable SerializationElement doAlternativeUnassignedRuleCalls(@NonNull Alternatives alternatives) {
+		/*	private @Nullable SerializationElement doAlternativeUnassignedRuleCalls(@NonNull Alternatives alternatives) {
 			Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
 			List<@NonNull ParserRuleAnalysis> calledRuleAnalyses = new ArrayList<>();
 			for (@NonNull AbstractElement element : elements) {
@@ -380,11 +380,11 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			}
 		}
 
-	//	@Override
-	//	public @NonNull SerializationElement doSwitch(EObject eObject) {
-	//		int classifierID = eObject.eClass().getClassifierID();
-	//		return ClassUtil.nonNullState(doSwitch(classifierID, eObject));
-	//	}
+		//	@Override
+		//	public @NonNull SerializationElement doSwitch(EObject eObject) {
+		//		int classifierID = eObject.eClass().getClassifierID();
+		//		return ClassUtil.nonNullState(doSwitch(classifierID, eObject));
+		//	}
 
 		@Override
 		public @NonNull String toString() {
