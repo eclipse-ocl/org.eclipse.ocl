@@ -515,6 +515,7 @@ public class CardinalityExpression implements Nameable
 				}
 			}
 		}
+		// Below handles factorSolution is a Boolean scale factor but looks strange for a Boolean common factor. Dividing out in constantSolution would be clearer.
 		CardinalitySolution resultSolution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
 		if (constantSolution != null) {
 			resultSolution = new SubtractCardinalitySolution(resultSolution, constantSolution);

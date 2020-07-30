@@ -199,7 +199,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 				}
 			}
 			conjunction = conjunction.addConcatenation(calledDisjunction != null ? calledDisjunction : serializationNode);
-			flattenedDisjunction = flattenedDisjunction.addConjunction(conjunction.freezeSequences(grammarAnalysis, compoundElement));
+			flattenedDisjunction = flattenedDisjunction.addConcatenation(conjunction.freezeSequences(grammarAnalysis, compoundElement));
 		}
 		return flattenedDisjunction;
 	}

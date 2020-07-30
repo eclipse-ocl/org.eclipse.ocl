@@ -318,7 +318,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 					SerializationElement frozen = conjunction.freezeSequences(grammarAnalysis, alternatives);
 					disjunction = disjunction.addConjunction(frozen);
 				}
-				return disjunction.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ZERO_OR_MORE);
+				return disjunction.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ZERO_OR_ONE);
 			}
 			else { // multiplicativeCardinality.isOne()
 				ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
@@ -415,7 +415,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
 	protected void analyze() {
-		if ("Base::MultiplicityCS".equals(getName())) {
+		if ("OCLinEcore::TypedMultiplicityRefCS".equals(getName())) {
 			getClass(); // XXX debugging
 		}
 		for (EObject eObject : new TreeIterable(abstractRule, false)) {
@@ -427,6 +427,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 					derivedRuleAnalysis.addBaseRuleAnalysis(this);
 				}
 			}
+		}
+		if ("OCLinEcore::TypedMultiplicityRefCS".equals(getName())) {
+			getClass(); // XXX debugging
 		}
 		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
 		SerializationElement serializationResult = new ParserRuleSwitch(this).analyze();

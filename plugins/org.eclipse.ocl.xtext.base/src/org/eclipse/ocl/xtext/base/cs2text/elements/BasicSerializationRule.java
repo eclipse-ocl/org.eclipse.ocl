@@ -173,7 +173,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @NonNull StaticRuleMatch getStaticRuleMatch() {
 		StaticRuleMatch staticRuleMatch2 = staticRuleMatch;
 		if (staticRuleMatch2 == null) {
-			if ("OCLinEcore::ReferenceCS".equals(ruleAnalysis.getName())) {
+			if ("OCLinEcore::StructuredClassCS".equals(ruleAnalysis.getName())) {
 				getClass();	// XXX debugging
 			}
 			staticRuleMatch = staticRuleMatch2 = new StaticRuleMatch(this);

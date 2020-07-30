@@ -180,7 +180,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 			List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
 			if (listOfListOfNodes.size() > 0) {
 				for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-					List<@NonNull SerializationNode> newList = new ArrayList<>(listOfNodes);
+					List<@NonNull SerializationNode> newList = new ArrayList<>(listOfNodes.size());
 					for (@NonNull SerializationNode node : listOfNodes) {
 						newList.add(node.setMultiplicativeCardinality(grammarAnalysis, compoundElement, multiplicativeCardinality));
 						newListOfList.add(newList);
