@@ -23,12 +23,14 @@ public class SubIdiom
 	public static @NonNull CustomSegment COMMENT = new CustomSegment(BaseCommentSegment.class);
 
 	public static @NonNull SubIdiom CLOSE_BRACE = new SubIdiom(new KeywordLocator("}"), StringSegment.POP, StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.NEW_LINE);
+	public static @NonNull SubIdiom CLOSE_PARENTHESIS = new SubIdiom(new KeywordLocator(")"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
 	public static @NonNull SubIdiom CLOSE_SQUARE = new SubIdiom(new KeywordLocator("]"), StringSegment.NO_SPACE, ValueSegment.INSTANCE);
 	public static @NonNull SubIdiom COMMA = new SubIdiom(new KeywordLocator(","), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_SPACE);
 	public static @NonNull SubIdiom DEFAULT = new SubIdiom(DefaultLocator.INSTANCE, StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_SPACE);
 	public static @NonNull SubIdiom DOUBLE_COLON = new SubIdiom(new KeywordLocator("::"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
 	public static @NonNull SubIdiom DOT_DOT = new SubIdiom(new KeywordLocator(".."), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
 	public static @NonNull SubIdiom OPEN_BRACE = new SubIdiom(new KeywordLocator("{"), StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.PUSH, StringSegment.NEW_LINE);
+	public static @NonNull SubIdiom OPEN_PARENTHESIS = new SubIdiom(new KeywordLocator("("), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
 	public static @NonNull SubIdiom OPEN_SQUARE = new SubIdiom(new KeywordLocator("["), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
 	public static @NonNull SubIdiom SEMI_COLON = new SubIdiom(new KeywordLocator(";"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NEW_LINE);
 	public static @NonNull SubIdiom VALUE = new SubIdiom(null, ValueSegment.INSTANCE);
