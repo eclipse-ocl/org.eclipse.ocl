@@ -173,7 +173,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @NonNull StaticRuleMatch getStaticRuleMatch() {
 		StaticRuleMatch staticRuleMatch2 = staticRuleMatch;
 		if (staticRuleMatch2 == null) {
-			if ("OCLinEcore::StructuredClassCS".equals(ruleAnalysis.getName())) {
+			if ("EssentialOCL::TupleTypeCS".equals(ruleAnalysis.getName())) {
 				getClass();	// XXX debugging
 			}
 			staticRuleMatch = staticRuleMatch2 = new StaticRuleMatch(this);
@@ -182,6 +182,9 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			//	cardinality variables and expressions to be solved to characterize the serialization.
 			//
 			rootSerializationNode.analyze(this, new Stack<@NonNull SerializationNode>());
+			//
+			//	Analyze the cardinality expressions to find the solution for each cardinality variable.
+			//
 			staticRuleMatch2.analyze();
 		}
 		return staticRuleMatch2;

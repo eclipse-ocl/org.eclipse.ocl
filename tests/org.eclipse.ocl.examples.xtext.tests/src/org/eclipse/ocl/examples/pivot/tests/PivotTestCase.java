@@ -189,7 +189,8 @@ public class PivotTestCase extends TestCase
 			Resource xmiResource = resourceSet.createResource(xmiURI);
 			xmiResource.getContents().addAll(xtextResource.getContents());
 			xmiResource.save(null);
-			fail(e.toString());
+		//	fail(e.toString());
+			throw e;
 		}
 		return xtextResource;
 	}

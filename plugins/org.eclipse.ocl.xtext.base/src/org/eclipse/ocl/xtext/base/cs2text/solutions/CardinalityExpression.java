@@ -69,22 +69,7 @@ public class CardinalityExpression implements Nameable
 	//	aa, bb are known, cc, dd may involve unknown terms
 	//
 	public boolean analyzeMayBeZeroCommonFactors(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany) {
-		Set<@NonNull CardinalityVariable> intersection = null;
-		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
-			List<@NonNull CardinalityVariable> unknownVariables = getUnknownVariables(ruleMatch, product);
-			if (unknownVariables == null) {
-				return false;		// No variables to be common factors
-			}
-			else if (intersection == null) {
-				intersection = new HashSet<>(unknownVariables);
-			}
-			else {
-				intersection.retainAll(unknownVariables);
-				if (intersection.isEmpty()) {
-					return false;
-				}
-			}
-		}
+		Set<@NonNull CardinalityVariable> intersection = getUnknownCommonVariables(ruleMatch, sumOfProducts);
 		if (intersection  != null) {
 			for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
 				if (mayBeMany || !cardinalityVariable.mayBeMany()) {
@@ -475,53 +460,71 @@ public class CardinalityExpression implements Nameable
 	 * If solved varable is null everything is known.
 	 */
 	public @NonNull CardinalitySolution createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable CardinalityVariable solvedVariable) {
-		CardinalitySolution constantSolution = null;
-		CardinalitySolution factorSolution = null;
+		//
+		// Determine slots = constantSumOfProducts + factorSumOfProducts * solvedVariable
+		//
+		List<@NonNull List<@NonNull CardinalityVariable>> constantSumOfProducts = new ArrayList<>();
+		List<@NonNull List<@NonNull CardinalityVariable>> factorSumOfProducts = new ArrayList<>();
 		for (@NonNull Iterable<@NonNull CardinalityVariable> product : sumOfProducts) {
 			boolean isFactor = false;
-			CardinalitySolution residualSolution = null;
+			List<@NonNull CardinalityVariable> residualProducts = new ArrayList<>();
 			for (@NonNull CardinalityVariable term : product) {
 				if (term == solvedVariable) {
 					assert !isFactor;		// Quadratic doesn't happen
 					isFactor = true;
 				}
 				else {
-					CardinalitySolution termSolution = new VariableCardinalitySolution(term);
-					if (residualSolution == null){
-						residualSolution = termSolution;
-					}
-					else {
-						residualSolution = new MultiplyCardinalitySolution(residualSolution, termSolution);
-					}
+					residualProducts.add(term);
 				}
-			}
-			if (residualSolution == null) {
-				residualSolution = new IntegerCardinalitySolution(1);		// Empty / pruned list is a unit product
 			}
 			if (isFactor) {
-				if (factorSolution == null) {
-					factorSolution = residualSolution;
-				}
-				else {
-					factorSolution = new AddCardinalitySolution(factorSolution, residualSolution);
-				}
+				factorSumOfProducts.add(residualProducts);
 			}
 			else {
-				if (constantSolution == null) {
-					constantSolution = residualSolution;
-				}
-				else {
-					constantSolution = new AddCardinalitySolution(constantSolution, residualSolution);
+				constantSumOfProducts.add(residualProducts);
+			}
+		}
+		//
+		//	Divide out common Boolean factors from non-empty constantSumOfProducts, factorSumOfProducts
+		//	or from empty constantSumOfProducts, non-empty factorSumOfProducts
+		//	to avoid gratuitous divisions whose result is not actually used.
+		//
+		Set<@NonNull CardinalityVariable> factorCommonVariables = getKnownCommonVariables(ruleMatch, factorSumOfProducts);
+		if (factorCommonVariables != null) {
+			Set<@NonNull CardinalityVariable> constantCommonVariables = getKnownCommonVariables(ruleMatch, constantSumOfProducts);
+			for (@NonNull CardinalityVariable commonVariable : factorCommonVariables) {
+				if (!commonVariable.mayBeMany() && (constantSumOfProducts.isEmpty() || ((constantCommonVariables != null) && constantCommonVariables.contains(commonVariable)))) {
+					for (@NonNull List<@NonNull CardinalityVariable> constantProduct : constantSumOfProducts) {
+						constantProduct.remove(commonVariable);
+					}
+					for (@NonNull List<@NonNull CardinalityVariable> factorProduct : factorSumOfProducts) {
+						factorProduct.remove(commonVariable);
+					}
 				}
 			}
 		}
-		// Below handles factorSolution is a Boolean scale factor but looks strange for a Boolean common factor. Dividing out in constantSolution would be clearer.
+		//
+		//	Convert the residual constantSumOfProducts, factorSumOfProducts to
+		//	solvedVariable = (slots - constantSumOfProducts) / factorSumOfProducts
+		//
 		CardinalitySolution resultSolution = new FeatureSizeCardinalitySolution(eStructuralFeature, enumerationValue);
-		if (constantSolution != null) {
-			resultSolution = new SubtractCardinalitySolution(resultSolution, constantSolution);
+		for (@NonNull Iterable<@NonNull CardinalityVariable> constantProduct : constantSumOfProducts) {
+			CardinalitySolution sumSolution = null;
+			for (@NonNull CardinalityVariable constantTerm : constantProduct) {
+				CardinalitySolution termSolution = new VariableCardinalitySolution(constantTerm);
+				sumSolution = sumSolution != null ? new MultiplyCardinalitySolution(sumSolution, termSolution) : termSolution;
+			}
+			resultSolution = new SubtractCardinalitySolution(resultSolution, sumSolution != null ? sumSolution : new IntegerCardinalitySolution(1));
 		}
-		if ((factorSolution != null) && !factorSolution.isOptional() && (!Integer.valueOf(1).equals(factorSolution.basicGetIntegerSolution(ruleMatch)))) {		// No need to divide by 0 or 1 when the 0 case was a multiplier.
-			resultSolution = new DivideCardinalitySolution(resultSolution, factorSolution);
+		for (@NonNull Iterable<@NonNull CardinalityVariable> factorProduct : factorSumOfProducts) {
+			CardinalitySolution sumSolution = null;
+			for (@NonNull CardinalityVariable factorTerm : factorProduct) {
+				CardinalitySolution termSolution = new VariableCardinalitySolution(factorTerm);
+				sumSolution = sumSolution != null ? new MultiplyCardinalitySolution(sumSolution, termSolution) : termSolution;
+			}
+			if (sumSolution != null) {
+				resultSolution = new DivideCardinalitySolution(resultSolution, sumSolution);
+			}
 		}
 		return resultSolution;
 	}
@@ -553,9 +556,66 @@ public class CardinalityExpression implements Nameable
 		return enumerationValue2cardinalityExpression;
 	}
 
+	protected @Nullable Set<@NonNull CardinalityVariable> getKnownCommonVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<? extends @NonNull Iterable<@NonNull CardinalityVariable>> sumOfProducts2) {
+		Set<@NonNull CardinalityVariable> intersection = null;
+		for (@NonNull Iterable<@NonNull CardinalityVariable> product : sumOfProducts2) {
+			List<@NonNull CardinalityVariable> knownVariables = getKnownVariables(ruleMatch, product);
+			if (knownVariables == null) {
+				return null;		// No variables to be common factors
+			}
+			else if (intersection == null) {
+				intersection = new HashSet<>(knownVariables);
+			}
+			else {
+				intersection.retainAll(knownVariables);
+				if (intersection.isEmpty()) {
+					return null;
+				}
+			}
+		}
+		return intersection;
+	}
+
+	protected @Nullable List<@NonNull CardinalityVariable> getKnownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
+		List<@NonNull CardinalityVariable> knownVariables = null;
+		for (@NonNull CardinalityVariable variable : product) {
+			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+			if (solution != null) {
+				if (knownVariables == null) {
+					knownVariables = new ArrayList<>();
+				}
+				if (knownVariables.contains(variable)) {
+					return null;		// Quadratic cannot happen.
+				}
+				knownVariables.add(variable);
+			}
+		}
+		return knownVariables;
+	}
+
 	@Override
 	public @NonNull String getName() {
 		return name;
+	}
+
+	protected @Nullable Set<@NonNull CardinalityVariable> getUnknownCommonVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<? extends @NonNull Iterable<@NonNull CardinalityVariable>> sumOfProducts2) {
+		Set<@NonNull CardinalityVariable> intersection = null;
+		for (@NonNull Iterable<@NonNull CardinalityVariable> product : sumOfProducts2) {
+			List<@NonNull CardinalityVariable> unknownVariables = getUnknownVariables(ruleMatch, product);
+			if (unknownVariables == null) {
+				return null;		// No variables to be common factors
+			}
+			else if (intersection == null) {
+				intersection = new HashSet<>(unknownVariables);
+			}
+			else {
+				intersection.retainAll(unknownVariables);
+				if (intersection.isEmpty()) {
+					return null;
+				}
+			}
+		}
+		return intersection;
 	}
 
 	/**
@@ -581,7 +641,8 @@ public class CardinalityExpression implements Nameable
 		}
 		return unknownVariables;
 	}
-	protected @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull List<@NonNull CardinalityVariable> product) {
+
+	protected @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
 		List<@NonNull CardinalityVariable> unknownVariables = null;
 		for (@NonNull CardinalityVariable variable : product) {
 			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);

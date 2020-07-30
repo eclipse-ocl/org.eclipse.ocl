@@ -127,7 +127,7 @@ public class StaticRuleMatch implements RuleMatch
 		}
 		int oldSize;
 		//
-		//	Eliminate expressions that involve no unresolved variables or which provide alinear solution for a single variable.
+		//	Eliminate expressions that involve no unresolved variables or which provide a linear solution for a single variable.
 		//
 		do {
 			oldSize = residualExpressions.size();
@@ -143,9 +143,10 @@ public class StaticRuleMatch implements RuleMatch
 		//	assign 0/1 solutions for all optional cardinalities that are common factors to all other products.
 		//		e.g. |F| = C01 + C01 * C02 can be solved as C02 = !F| -1 if C01 is optional.
 		//
+		boolean gotOne;
 		do {
 			oldSize = residualExpressions.size();
-			boolean gotOne = false;
+			gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
 				CardinalityExpression residualExpression = residualExpressions.get(i);
 				if (residualExpression.analyzeMayBeZeroCommonFactors(this, false)) {
@@ -161,7 +162,7 @@ public class StaticRuleMatch implements RuleMatch
 					}
 				}
 			}
-		} while (residualExpressions.size() < oldSize);
+		} while (gotOne || (residualExpressions.size() < oldSize));
 		/*
 		//	Assign 0/1 solutions for all variables involved in a linear equation in the light of other solutions.
 		//
