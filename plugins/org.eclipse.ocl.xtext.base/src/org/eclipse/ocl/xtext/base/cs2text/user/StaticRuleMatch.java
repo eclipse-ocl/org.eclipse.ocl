@@ -133,7 +133,7 @@ public class StaticRuleMatch implements RuleMatch
 			oldSize = residualExpressions.size();
 			for (int i = oldSize; --i >= 0; ) {
 				CardinalityExpression residualExpression = residualExpressions.get(i);
-				if (residualExpression.analyzeTrivial(this)) {
+				if (residualExpression.analyzeTrivial(this, false)) {
 					residualExpressions.remove(i);
 				}
 			}
@@ -157,7 +157,7 @@ public class StaticRuleMatch implements RuleMatch
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
 					CardinalityExpression residualExpression = residualExpressions.get(i);
-					if (residualExpression.analyzeTrivial(this)) {
+					if (residualExpression.analyzeTrivial(this, false)) {
 						residualExpressions.remove(i);
 					}
 				}
@@ -179,7 +179,7 @@ public class StaticRuleMatch implements RuleMatch
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
 					CardinalityExpression residualExpression = residualExpressions.get(i);
-					if (residualExpression.analyzeTrivial(this)) {
+					if (residualExpression.analyzeTrivial(this, true)) {
 						residualExpressions.remove(i);
 					}
 				}

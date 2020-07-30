@@ -337,7 +337,7 @@ public class CardinalityExpression implements Nameable
 	//
 	//	if (cc + dd) or rather a v is optional the divide isredundant not y zero.
 	//
-	public boolean analyzeTrivial(@NonNull StaticRuleMatch ruleMatch) {
+	public boolean analyzeTrivial(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany) {
 		CardinalityVariable trivialVariable = null;
 		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
 			List<@NonNull CardinalityVariable> unknownVariables = getUnknownVariables(ruleMatch, product);
@@ -357,7 +357,7 @@ public class CardinalityExpression implements Nameable
 				}
 			}
 		}
-		CardinalitySolution resultsSolution = createSolution(ruleMatch, trivialVariable);
+		CardinalitySolution resultsSolution = createSolution(ruleMatch, trivialVariable, mayBeMany);
 		ruleMatch.addSolution(trivialVariable, resultsSolution);
 		return true;
 	}
@@ -459,7 +459,7 @@ public class CardinalityExpression implements Nameable
 	 *
 	 * If solved varable is null everything is known.
 	 */
-	public @NonNull CardinalitySolution createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable CardinalityVariable solvedVariable) {
+	public @NonNull CardinalitySolution createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable CardinalityVariable solvedVariable, boolean mayBeMany) {
 		//
 		// Determine slots = constantSumOfProducts + factorSumOfProducts * solvedVariable
 		//
@@ -493,7 +493,7 @@ public class CardinalityExpression implements Nameable
 		if (factorCommonVariables != null) {
 			Set<@NonNull CardinalityVariable> constantCommonVariables = getKnownCommonVariables(ruleMatch, constantSumOfProducts);
 			for (@NonNull CardinalityVariable commonVariable : factorCommonVariables) {
-				if (!commonVariable.mayBeMany() && (constantSumOfProducts.isEmpty() || ((constantCommonVariables != null) && constantCommonVariables.contains(commonVariable)))) {
+				if ((mayBeMany || !commonVariable.mayBeMany()) && (constantSumOfProducts.isEmpty() || ((constantCommonVariables != null) && constantCommonVariables.contains(commonVariable)))) {
 					for (@NonNull List<@NonNull CardinalityVariable> constantProduct : constantSumOfProducts) {
 						constantProduct.remove(commonVariable);
 					}
