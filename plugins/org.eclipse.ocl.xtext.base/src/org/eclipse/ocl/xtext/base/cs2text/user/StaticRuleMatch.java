@@ -163,6 +163,28 @@ public class StaticRuleMatch implements RuleMatch
 				}
 			}
 		} while (gotOne || (residualExpressions.size() < oldSize));
+		//
+		//	Ditto, but consider mayBeMany for the case of gratuitous mayBeMany products.
+		//
+		do {
+			oldSize = residualExpressions.size();
+			gotOne = false;
+			for (int i = oldSize; --i >= 0; ) {
+				CardinalityExpression residualExpression = residualExpressions.get(i);
+				if (residualExpression.analyzeMayBeZeroCommonFactors(this, true)) {
+					gotOne = true;
+					break;
+				}
+			}
+			if (gotOne) {
+				for (int i = oldSize; --i >= 0; ) {
+					CardinalityExpression residualExpression = residualExpressions.get(i);
+					if (residualExpression.analyzeTrivial(this)) {
+						residualExpressions.remove(i);
+					}
+				}
+			}
+		} while (gotOne || (residualExpressions.size() < oldSize));
 		/*
 		//	Assign 0/1 solutions for all variables involved in a linear equation in the light of other solutions.
 		//
@@ -188,10 +210,10 @@ public class StaticRuleMatch implements RuleMatch
 				int size = Iterables.size(unresolvedExpressions);
 				if (size == 1) {
 					CardinalityExpression residualExpression = unresolvedExpressions.iterator().next();
-					if (residualExpression.analyzeMayBeZeroCommonFactors(this, true)) {
+					/*if (residualExpression.analyzeMayBeZeroCommonFactors(this, true)) {
 						// ok
 					}
-					else if (residualExpression.analyzeRedundantProducts(this)) {
+					else*/ if (residualExpression.analyzeRedundantProducts(this)) {
 						// ok
 					}
 					else {

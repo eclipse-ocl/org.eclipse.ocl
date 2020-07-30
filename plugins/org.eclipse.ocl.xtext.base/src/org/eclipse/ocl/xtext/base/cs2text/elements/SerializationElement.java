@@ -62,8 +62,9 @@ public interface SerializationElement
 	/**
 	 * Promote all ListOfSerializationNode future sequences into frozen SequenceSerializationNOde with
 	 * current action calls and unassigned rule calls rewritten. The return may be a ListListOfSerializationNode.
+	 * @param MultiplicativeCardinality
 	 */
-	@NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement);
+	@NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
 
 	/**
 	 * Return true if this is a ListOfSerializationNode

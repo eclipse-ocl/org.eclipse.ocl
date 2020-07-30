@@ -72,12 +72,12 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement) {
+	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		if (listOfNodes.isEmpty()) {
 			return NullSerializationNode.INSTANCE;
 		}
 		else {
-			return createFrozenSequence(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), listOfNodes);
+			return createFrozenSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
 		}
 	}
 
