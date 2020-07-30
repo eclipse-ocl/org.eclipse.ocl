@@ -29,6 +29,19 @@ public abstract class AbstractCommentSegment implements Segment
 		this.epilogue = epilogue;
 	}
 
+	protected void appendComment(@NonNull SerializationBuilder serializationBuilder, @NonNull String comment) {
+		serializationBuilder.append(SerializationBuilder.HALF_NEW_LINE);
+		serializationBuilder.append(prologue);
+		serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
+		serializationBuilder.append(indentation);
+		serializationBuilder.append(SerializationBuilder.NEW_LINE);
+		serializationBuilder.append(comment);
+		serializationBuilder.append(SerializationBuilder.POP);
+		serializationBuilder.append(SerializationBuilder.NEW_LINE);
+		serializationBuilder.append(epilogue);
+		serializationBuilder.append(SerializationBuilder.NEW_LINE);
+	}
+
 	protected abstract @Nullable String getComment(@NonNull EObject eObject);
 
 	@Override
@@ -36,16 +49,7 @@ public abstract class AbstractCommentSegment implements Segment
 		EObject eObject = serializer.getElement();
 		String comment = getComment(eObject);
 		if (comment != null) {
-			serializationBuilder.append(SerializationBuilder.HALF_NEW_LINE);
-			serializationBuilder.append(prologue);
-			serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
-			serializationBuilder.append(indentation);
-			serializationBuilder.append(SerializationBuilder.NEW_LINE);
-			serializationBuilder.append(comment);
-			serializationBuilder.append(SerializationBuilder.POP);
-			serializationBuilder.append(SerializationBuilder.NEW_LINE);
-			serializationBuilder.append(epilogue);
-			serializationBuilder.append(SerializationBuilder.NEW_LINE);
+			appendComment(serializationBuilder, comment);
 		}
 	}
 
