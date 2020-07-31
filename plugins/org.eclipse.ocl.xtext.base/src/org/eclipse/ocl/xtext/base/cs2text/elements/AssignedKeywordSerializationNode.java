@@ -56,9 +56,9 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append("\"");
+		s.append("'");
 		s.append(getValue());
-		s.append("\"");
+		s.append("'");
 		appendCardinality(s, depth);
 	}
 }

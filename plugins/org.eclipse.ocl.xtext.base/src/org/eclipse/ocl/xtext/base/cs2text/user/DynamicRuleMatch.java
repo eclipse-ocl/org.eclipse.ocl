@@ -51,7 +51,8 @@ public class DynamicRuleMatch implements RuleMatch
 			CardinalitySolution solution = result.getCardinalitySolution();
 			Integer newIntegerSolution = solution.basicGetIntegerSolution(this);
 			if (newIntegerSolution == null) {
-				throw new UnsupportedOperationException();
+				// throw new UnsupportedOperationException();
+				return false;
 			}
 			if (result.isAssigned()) {
 				assert cardinalityVariable != null;

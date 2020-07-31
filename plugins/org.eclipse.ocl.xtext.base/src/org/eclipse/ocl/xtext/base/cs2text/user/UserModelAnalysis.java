@@ -104,7 +104,7 @@ public class UserModelAnalysis
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		if ("EnumerationCS".equals(element.eClass().getName())) {
+		if ("SelfExpCS".equals(element.eClass().getName())) {
 			getClass();	// XXX
 		}
 		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();

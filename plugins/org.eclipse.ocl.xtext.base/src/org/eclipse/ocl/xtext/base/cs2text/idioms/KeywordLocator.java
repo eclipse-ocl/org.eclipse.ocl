@@ -38,6 +38,6 @@ public class KeywordLocator implements Locator
 
 	@Override
 	public String toString() {
-		return "\"" + Strings.convertToJavaString(string) + "\"";
+		return "'" + Strings.convertToJavaString(string) + "'";
 	}
 }

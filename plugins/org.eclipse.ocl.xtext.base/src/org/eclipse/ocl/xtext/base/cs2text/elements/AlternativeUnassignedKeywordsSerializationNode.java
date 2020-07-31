@@ -70,9 +70,9 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 			if (!isFirst) {
 				s.append("|");
 			}
-			s.append("\"");
+			s.append("'");
 			s.append(Strings.convertToJavaString(value));
-			s.append("\"");
+			s.append("'");
 			isFirst = false;
 		}
 		if (values.size() > 1) {

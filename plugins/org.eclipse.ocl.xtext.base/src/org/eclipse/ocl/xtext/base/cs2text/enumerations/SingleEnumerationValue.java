@@ -49,6 +49,6 @@ public class SingleEnumerationValue extends AbstractEnumerationValue
 
 	@Override
 	public @NonNull String toString() {
-		return "\"" + Strings.convertToJavaString(value) + "\"";
+		return "'" + Strings.convertToJavaString(value) + "'";
 	}
 }

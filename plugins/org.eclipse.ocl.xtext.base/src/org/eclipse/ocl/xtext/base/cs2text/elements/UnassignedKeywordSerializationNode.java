@@ -48,9 +48,9 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append("\"");
+		s.append("'");
 		s.append(Strings.convertToJavaString(value));
-		s.append("\"");
+		s.append("'");
 		appendCardinality(s, depth);
 	}
 }

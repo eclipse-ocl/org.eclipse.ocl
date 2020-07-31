@@ -403,6 +403,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	private @Nullable List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure = null;
 	public final @NonNull List<@NonNull ParserRuleAnalysis> debugCalledRuleAnalysesClosure = new UniqueList<>();
 	private @Nullable List<@NonNull RuleCall> delegatingRuleCalls = null;
+	private @Nullable List<@NonNull ParserRuleAnalysis> delegatedCalledRuleAnalysesClosure = null;
 
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
@@ -601,6 +602,31 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		return callingRuleAnalysesClosureList;
 	}
 
+	public @NonNull List<@NonNull ParserRuleAnalysis> getDelegatedCalledRuleAnalysesClosure() {
+		List<@NonNull ParserRuleAnalysis> delegatedCalledRuleAnalysesClosure2 = delegatedCalledRuleAnalysesClosure;
+		if (delegatedCalledRuleAnalysesClosure2 == null) {
+			delegatedCalledRuleAnalysesClosure2 = new ArrayList<>();
+			delegatedCalledRuleAnalysesClosure2.add(this);
+			for (int i = 0; i < delegatedCalledRuleAnalysesClosure2.size(); i++) {
+				ParserRuleAnalysis ruleAnalysis = delegatedCalledRuleAnalysesClosure2.get(i);
+				List<@NonNull RuleCall> delegatingRuleCalls2 = ruleAnalysis.delegatingRuleCalls;
+				if (delegatingRuleCalls2 != null) {
+					for (@NonNull RuleCall ruleCall : delegatingRuleCalls2) {
+						ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis) grammarAnalysis.getRuleAnalysis(ruleCall.getRule());
+						for (@NonNull ParserRuleAnalysis calledRuleAnalysis2 : calledRuleAnalysis.getDelegatedCalledRuleAnalysesClosure()) {
+							if (!delegatedCalledRuleAnalysesClosure2.contains(calledRuleAnalysis2)) {
+								delegatedCalledRuleAnalysesClosure2.add(calledRuleAnalysis2);
+							}
+						}
+					}
+				}
+			}
+			Collections.sort(delegatedCalledRuleAnalysesClosure2, NameUtil.NAMEABLE_COMPARATOR);
+			this.delegatedCalledRuleAnalysesClosure = delegatedCalledRuleAnalysesClosure2;
+		}
+		return delegatedCalledRuleAnalysesClosure2;
+	}
+
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
 	}
@@ -710,7 +736,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 				isFirst1 = false;
 			}
 		}
-		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure2 = callingRuleAnalysesClosure;
+		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure2 = delegatedCalledRuleAnalysesClosure != null ? delegatedCalledRuleAnalysesClosure : callingRuleAnalysesClosure;
 		if (callingRuleAnalysesClosure2 != null) {
 			s.append(" -> ");
 			boolean isFirst1 = true;

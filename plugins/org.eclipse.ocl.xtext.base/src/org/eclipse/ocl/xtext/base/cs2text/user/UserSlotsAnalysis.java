@@ -297,7 +297,7 @@ public class UserSlotsAnalysis
 					Collections.sort(sortedEnumerationValues, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
 						int size2 = getSize(eStructuralFeature, enumerationValue);
-						s.append(String.format("\n %-29.29s%8d", "\"" + enumerationValue.getName() + "\"", size2));
+						s.append(String.format("\n %-29.29s%8d", "'" + enumerationValue.getName() + "'", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules2) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eStructuralFeature, enumerationValue);

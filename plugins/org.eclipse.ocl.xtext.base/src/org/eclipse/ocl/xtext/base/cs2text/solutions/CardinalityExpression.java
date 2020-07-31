@@ -727,9 +727,9 @@ public class CardinalityExpression implements Nameable
 		s.append(": |");
 		s.append(eStructuralFeature.getName());
 		if (!enumerationValue.isNull()) {
-			s.append(".\"");
+			s.append(".'");
 			s.append(enumerationValue.getName());
-			s.append("\"");
+			s.append("'");
 		}
 		s.append("| = ");
 		appendSumOfProducts(s);

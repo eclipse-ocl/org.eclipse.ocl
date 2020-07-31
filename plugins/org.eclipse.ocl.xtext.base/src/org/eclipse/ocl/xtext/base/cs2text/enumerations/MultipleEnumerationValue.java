@@ -74,7 +74,7 @@ public class MultipleEnumerationValue extends AbstractEnumerationValue
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append("\"");
+		s.append("'");
 		boolean isFirst = true;
 		for (@NonNull String value : values) {
 			if (!isFirst) {
@@ -83,7 +83,7 @@ public class MultipleEnumerationValue extends AbstractEnumerationValue
 			s.append(Strings.convertToJavaString(value));
 			isFirst = false;
 		}
-		s.append("\"");
+		s.append("'");
 		return s.toString();
 	}
 }
