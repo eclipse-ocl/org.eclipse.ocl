@@ -23,9 +23,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
-import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CharacterRange;
+import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Group;
@@ -64,6 +64,10 @@ public class XtextGrammarUtil
 
 	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull AssignmentAnalysis assignmentAnalysis) {
 		appendEStructuralFeatureName(s, assignmentAnalysis.getEClass(), assignmentAnalysis.getEStructuralFeature());
+	}
+
+	public static @NonNull AbstractElement getAlternatives(@NonNull AbstractRule abstractRule) {
+		return ClassUtil.nonNullState(abstractRule.getAlternatives());
 	}
 
 	public static @NonNull EClassifier getClassifier(TypeRef type) {
@@ -135,12 +139,8 @@ public class XtextGrammarUtil
 		return ClassUtil.nonNullState(eClass.getEStructuralFeature(featureName));
 	}
 
-	public static @NonNull List<@NonNull AbstractElement> getElements(@NonNull Alternatives alternatives) {
-		return ClassUtil.nullFree(alternatives.getElements());
-	}
-
-	public static @NonNull List<@NonNull AbstractElement> getElements(@NonNull Group group) {
-		return ClassUtil.nullFree(group.getElements());
+	public static @NonNull List<@NonNull AbstractElement> getElements(@NonNull CompoundElement compoundElement) {
+		return ClassUtil.nullFree(compoundElement.getElements());
 	}
 
 	public static @NonNull String getFeature(@NonNull Action action) {

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
@@ -78,7 +79,7 @@ public class UserElementAnalysis implements Nameable
 	 */
 	private @NonNull Iterable<@NonNull SerializationRule> analyzeSerializationRules() {
 		String eClassName = eClass.getName();
-		if ("ImportCS".equals(eClassName)) {
+		if ("SelfExpCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
 		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
@@ -156,20 +157,22 @@ public class UserElementAnalysis implements Nameable
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(getName());
 		s.append(" <=>");
-		Iterable<@NonNull SerializationRule> serializationRules2 = getSerializationRules();
-		boolean isMany = Iterables.size(serializationRules2) > 1;
-		for (@NonNull SerializationRule serializationRule : serializationRules2) {
-			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-			if (isMany) {
-				StringUtil.appendIndentation(s, depth+1, "  ");
+		Iterable<@NonNull SerializationRule> serializationRules2 = ClassUtil.maybeNull(serializationRules);
+		if (serializationRules2 != null) {
+			boolean isMany = Iterables.size(serializationRules2) > 1;
+			for (@NonNull SerializationRule serializationRule : serializationRules2) {
+				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
+				if (isMany) {
+					StringUtil.appendIndentation(s, depth+1, "  ");
+				}
+				else {
+					s.append(" ");
+				}
+				s.append(serializationRule.getName());
+				s.append(" - ");
+				basicSerializationRule.toRuleString(s);
+				basicSerializationRule.toSolutionString(s, depth+2);
 			}
-			else {
-				s.append(" ");
-			}
-			s.append(serializationRule.getName());
-			s.append(" - ");
-			basicSerializationRule.toRuleString(s);
-			basicSerializationRule.toSolutionString(s, depth+2);
 		}
 	}
 }

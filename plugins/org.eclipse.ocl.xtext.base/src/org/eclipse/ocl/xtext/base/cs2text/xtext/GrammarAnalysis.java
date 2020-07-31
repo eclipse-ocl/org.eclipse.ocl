@@ -38,8 +38,11 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.Group;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
@@ -67,12 +70,12 @@ public class GrammarAnalysis
 	/**
 	 * The rule analysis for each rule.
 	 */
-	private @Nullable Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = null;
+	private @NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = new HashMap<>();
 
 	/**
 	 * The assignment analysis for each assignment or action.
 	 */
-	private @Nullable Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> assignment2assignmentAnalysis = null;
+	private @NonNull Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
 
 	/**
 	 * The possible assignment analyses for containment EReference.
@@ -116,10 +119,9 @@ public class GrammarAnalysis
 	public void analyze() {
 		Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls = new HashMap<>();
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = analyzeRuleNames(rule2ruleCalls);
-		Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = createRuleAnalyses(ruleName2rules, rule2ruleCalls);
-		this.rule2ruleAnalysis = rule2ruleAnalysis;
-		this.assignment2assignmentAnalysis = analyzeAssignments(rule2ruleAnalysis);
-		this.containment2assignmentAnalyses = analyzeContainments(assignment2assignmentAnalysis);
+		/*this.rule2ruleAnalysis =*/ createRuleAnalyses(ruleName2rules, rule2ruleCalls);
+		/*this.assignment2assignmentAnalysis =*/ analyzeAssignments();
+		this.containment2assignmentAnalyses = analyzeContainments();
 		Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = rule2ruleAnalysis.values();
 		List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = new ArrayList<>(rule2ruleAnalysis.size());
 		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
@@ -149,42 +151,56 @@ public class GrammarAnalysis
 	/**
 	 *	Create an assignment analysis for each assignment..
 	 */
-	protected @NonNull Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> analyzeAssignments(
-			@NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis) {
-		/**
-		 * The assignment analysis for each assignment.
-		 */
-		Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
+	protected void analyzeAssignments() {
 		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
 			AbstractRule abstractRule = abstractRuleAnalysis.getRule();
-			for (@NonNull EObject eObject : new TreeIterable(abstractRule, false)) {
-				if (eObject instanceof Assignment) {
-					Assignment assignment = (Assignment)eObject;
-					ParserRuleAnalysis parserRuleAnalysis = getRuleAnalysis(assignment);
-					AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(parserRuleAnalysis, assignment);
-					assignment2assignmentAnalysis.put(assignment, assignmentAnalysis);
-					parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
-				}
-				else if (eObject instanceof Action) {		// ?? is this still needed / ?? is it redundant wrt AssignedCurrentSerializationNode
-					Action action = (Action)eObject;
-					String feature = action.getFeature();
-					if (feature != null) {
-						ParserRuleAnalysis parserRuleAnalysis = getRuleAnalysis(action);
-						AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(parserRuleAnalysis, action);
-						assignment2assignmentAnalysis.put(action, assignmentAnalysis);
-						parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
-					}
-				}
+			analyzeAssignments(XtextGrammarUtil.getAlternatives(abstractRule), null);
+		}
+	}
+	protected @Nullable RuleCall analyzeAssignments(@NonNull AbstractElement abstractElement, @Nullable RuleCall firstUnassignedRuleCall) {
+		if (abstractElement instanceof Assignment) {
+			Assignment assignment = (Assignment)abstractElement;
+			ParserRuleAnalysis parserRuleAnalysis = getRuleAnalysis(assignment);
+			AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(parserRuleAnalysis, assignment);
+			assignment2assignmentAnalysis.put(assignment, assignmentAnalysis);
+			parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
+		}
+		else if (abstractElement instanceof Action) {
+			Action action = (Action)abstractElement;
+			String feature = action.getFeature();
+			if (feature != null) {
+				assert firstUnassignedRuleCall != null;
+				ParserRuleAnalysis parserRuleAnalysis = getRuleAnalysis(action);
+				AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(parserRuleAnalysis, action, firstUnassignedRuleCall);
+				assignment2assignmentAnalysis.put(action, assignmentAnalysis);
+				parserRuleAnalysis.addAssignmentAnalysis(assignmentAnalysis);
 			}
 		}
-		return assignment2assignmentAnalysis;
+		else if (abstractElement instanceof RuleCall) {
+			assert firstUnassignedRuleCall == null;
+			RuleCall ruleCall = (RuleCall)abstractElement;
+			AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
+			if (XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(calledRule)) instanceof EClass) {
+				firstUnassignedRuleCall = ruleCall;
+			}
+		}
+		else if (abstractElement instanceof Alternatives) {
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((CompoundElement)abstractElement)) {
+				analyzeAssignments(nestedElement, firstUnassignedRuleCall);
+			}
+		}
+		else if (abstractElement instanceof Group) {
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((CompoundElement)abstractElement)) {
+				firstUnassignedRuleCall = analyzeAssignments(nestedElement, firstUnassignedRuleCall);
+			}
+		}
+		return firstUnassignedRuleCall;
 	}
 
 	/**
 	 *	Identify the assignment analyses that are containments.
 	 */
-	protected @NonNull Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> analyzeContainments(
-			@NonNull Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> assignment2assignmentAnalysis) {
+	protected @NonNull Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> analyzeContainments() {
 		Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
 		for (@NonNull AssignmentAnalysis assignmentAnalysis : assignment2assignmentAnalysis.values()) {
 			EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
@@ -334,6 +350,9 @@ public class GrammarAnalysis
 			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
+			if ("EssentialOCL::SelfExpCS".equals(ruleAnalysis.getName())) {
+				getClass(); // XXX debugging
+			}
 			for (@NonNull SerializationRule serializationRule : ruleAnalysis.getSerializationRules()) {
 				EClass eClass = serializationRule.getProducedEClass();
 				List<@NonNull SerializationRule> serializationRules = eClass2serializationRules.get(eClass);
@@ -350,10 +369,9 @@ public class GrammarAnalysis
 	/**
 	 *	Create a RuleAnalysis for each distinct name.
 	 */
-	protected @NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> createRuleAnalyses(
+	protected void createRuleAnalyses(
 			@NonNull Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules,
 			@NonNull Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls) {
-		Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = new HashMap<>();
 		List<@NonNull String> ruleNames = new ArrayList<>(ruleName2rules.keySet());
 		Collections.sort(ruleNames);
 		for (@NonNull String ruleName : ruleNames) {
@@ -395,7 +413,6 @@ public class GrammarAnalysis
 			}
 			rule2ruleAnalysis.put(activeRule, ruleAnalysis);
 		}
-		return rule2ruleAnalysis;
 	}
 
 	public @NonNull AssignmentAnalysis getAssignmentAnalysis(@NonNull Action action) {

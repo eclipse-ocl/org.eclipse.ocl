@@ -415,7 +415,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
 	protected void analyze() {
-		if ("OCLinEcore::TypedMultiplicityRefCS".equals(getName())) {
+		if ("EssentialOCL::SelfExpCS".equals(getName())) {
 			getClass(); // XXX debugging
 		}
 		for (EObject eObject : new TreeIterable(abstractRule, false)) {

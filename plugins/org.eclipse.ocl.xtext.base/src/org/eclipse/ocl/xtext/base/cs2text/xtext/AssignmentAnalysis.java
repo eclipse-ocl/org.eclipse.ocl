@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.xtext.AbstractElement;
@@ -65,20 +66,20 @@ public class AssignmentAnalysis implements Nameable
 		String featureName = XtextGrammarUtil.getFeature(assignment);
 		EClass eClass = (EClass)XtextGrammarUtil.getEClassifierScope(assignment);
 		this.eFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
-		addTerminal(XtextGrammarUtil.getTerminal(assignment));
+		computeTargetRuleAnalyses(XtextGrammarUtil.getTerminal(assignment));
 	}
 
-	public AssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Action action) {
+	public AssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Action action, @NonNull RuleCall firstUnassignedRuleCall) {
 		this.sourceRuleAnalysis = sourceRuleAnalysis;
 		this.assignment = action;
 		this.grammarAnalysis = sourceRuleAnalysis.getGrammarAnalysis();
 		String featureName = XtextGrammarUtil.getFeature(action);
 		EClass eClass = (EClass)XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(action));
 		this.eFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
-	//	addTerminal(XtextGrammarUtil.getTerminal(assignment));
+		computeTargetRuleAnalyses(firstUnassignedRuleCall);
 	}
 
-	private void addTerminal(@NonNull AbstractElement terminal) {
+	private void computeTargetRuleAnalyses(@NonNull AbstractElement terminal) {
 		if (terminal instanceof RuleCall) {
 			AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
 			AbstractRuleAnalysis terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
@@ -86,7 +87,7 @@ public class AssignmentAnalysis implements Nameable
 		}
 		else if (terminal instanceof Alternatives) {
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements((Alternatives)terminal)) {
-				addTerminal(element);
+				computeTargetRuleAnalyses(element);
 			}
 		}
 		else if (terminal instanceof CrossReference) {}
@@ -177,13 +178,15 @@ public class AssignmentAnalysis implements Nameable
 		StringBuilder s = new StringBuilder();
 		s.append(getName());
 		s.append(" : ");
-		boolean isFirst = true;
-		for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : targetRuleAnalyses) {
-			if (!isFirst) {
-				s.append(",");
+		if (ClassUtil.maybeNull(targetRuleAnalyses) != null) {
+			boolean isFirst = true;
+			for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : targetRuleAnalyses) {
+				if (!isFirst) {
+					s.append(",");
+				}
+				s.append(targetRuleAnalysis.getName());
+				isFirst = false;
 			}
-			s.append(targetRuleAnalysis.getName());
-			isFirst = false;
 		}
 		return s.toString();
 	}
