@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -52,7 +53,9 @@ public class AssignmentAnalysis implements Nameable
 	/**
 	 * The assigned feature.
 	 */
-	protected final @NonNull EStructuralFeature eFeature;
+	protected final @NonNull EStructuralFeature eStructuralFeature;
+
+	private @NonNull AbstractElement terminal;
 
 	/**
 	 * The rules declared to be useable as producers of the target.
@@ -65,8 +68,8 @@ public class AssignmentAnalysis implements Nameable
 		this.grammarAnalysis = sourceRuleAnalysis.getGrammarAnalysis();
 		String featureName = XtextGrammarUtil.getFeature(assignment);
 		EClass eClass = (EClass)XtextGrammarUtil.getEClassifierScope(assignment);
-		this.eFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
-		computeTargetRuleAnalyses(XtextGrammarUtil.getTerminal(assignment));
+		this.eStructuralFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
+		this.terminal = XtextGrammarUtil.getTerminal(assignment);
 	}
 
 	public AssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Action action, @NonNull RuleCall firstUnassignedRuleCall) {
@@ -75,15 +78,32 @@ public class AssignmentAnalysis implements Nameable
 		this.grammarAnalysis = sourceRuleAnalysis.getGrammarAnalysis();
 		String featureName = XtextGrammarUtil.getFeature(action);
 		EClass eClass = (EClass)XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(action));
-		this.eFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
-		computeTargetRuleAnalyses(firstUnassignedRuleCall);
+		this.eStructuralFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
+		this.terminal = firstUnassignedRuleCall;
+	}
+
+	public void analyzeContainmentAndTargets() {
+		if (eStructuralFeature instanceof EReference) {
+			EReference eReference = (EReference)eStructuralFeature;
+			if (eReference.isContainment()) {
+				grammarAnalysis.addContainment(this, eReference);
+			}
+		}
+		computeTargetRuleAnalyses(terminal);
 	}
 
 	private void computeTargetRuleAnalyses(@NonNull AbstractElement terminal) {
 		if (terminal instanceof RuleCall) {
 			AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
 			AbstractRuleAnalysis terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
-			targetRuleAnalyses.add(terminalRuleAnalysis);
+			if (terminalRuleAnalysis instanceof ParserRuleAnalysis) {
+				for (@NonNull ParserRuleAnalysis ruleAnalysis : ((ParserRuleAnalysis)terminalRuleAnalysis).getCallingRuleAnalysisClosure()) {
+					targetRuleAnalyses.add(ruleAnalysis);
+				}
+			}
+			else {
+				targetRuleAnalyses.add(terminalRuleAnalysis);
+			}
 		}
 		else if (terminal instanceof Alternatives) {
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements((Alternatives)terminal)) {
@@ -104,8 +124,8 @@ public class AssignmentAnalysis implements Nameable
 	public @NonNull String getCardinality() {
 		String cardinality = assignment.getCardinality();
 		return cardinality != null ?  cardinality : "@";
-	/*	int lowerBound = eFeature.getLowerBound();
-		int upperBound = eFeature.getUpperBound();
+	/*	int lowerBound = eStructuralFeature.getLowerBound();
+		int upperBound = eStructuralFeature.getUpperBound();
 		if (upperBound < 0) {
 			return lowerBound != 0 ? "+" : "*";
 		}
@@ -125,11 +145,11 @@ public class AssignmentAnalysis implements Nameable
 	}
 
 	public @NonNull EClass getEContainingClass() {
-		return XtextGrammarUtil.getEContainingClass(eFeature);
+		return XtextGrammarUtil.getEContainingClass(eStructuralFeature);
 	}
 
 	public @NonNull EStructuralFeature getEStructuralFeature() {
-		return eFeature;
+		return eStructuralFeature;
 	}
 
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
@@ -142,7 +162,7 @@ public class AssignmentAnalysis implements Nameable
 
 	@Override
 	public @NonNull String getName() {
-		return XtextGrammarUtil.getName(sourceRuleAnalysis.getRule()) + "-" + eFeature.getName();
+		return XtextGrammarUtil.getName(sourceRuleAnalysis.getRule()) + "-" + eStructuralFeature.getName();
 	}
 
 	public @NonNull ParserRuleAnalysis getSourceRuleAnalysis() {

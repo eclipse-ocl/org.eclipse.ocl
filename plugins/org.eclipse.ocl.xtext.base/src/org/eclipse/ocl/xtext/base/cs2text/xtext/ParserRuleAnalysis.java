@@ -24,7 +24,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeUnassignedKeywordsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSerializationNode;
@@ -398,6 +400,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
 	private @Nullable Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses = null;
+	private @Nullable List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure = null;
 
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
@@ -538,6 +541,25 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		}
 	}
 
+	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getCallingRuleAnalysisClosure() {
+		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosureList = this.callingRuleAnalysesClosure;
+		if (callingRuleAnalysesClosureList == null) {
+			UniqueList<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosureSet = new UniqueList<>();
+			callingRuleAnalysesClosureSet.add(this);
+			for (int i = 0; i < callingRuleAnalysesClosureSet.size(); i++) {
+				ParserRuleAnalysis ruleAnalysis = callingRuleAnalysesClosureSet.get(i);
+				Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses = ruleAnalysis.callingRuleAnalyses;
+				if (callingRuleAnalyses != null) {
+					callingRuleAnalysesClosureSet.addAll(callingRuleAnalyses);
+				}
+			}
+			callingRuleAnalysesClosureList = new ArrayList<>(callingRuleAnalysesClosureSet);
+			Collections.sort(callingRuleAnalysesClosureList, NameUtil.NAMEABLE_COMPARATOR);
+			this.callingRuleAnalysesClosure = callingRuleAnalysesClosureList;
+		}
+		return callingRuleAnalysesClosureList;
+	}
+
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
 	}
@@ -634,13 +656,13 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getName());
-		Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses2 = callingRuleAnalyses;
-		if (callingRuleAnalyses2 != null) {
-			s.append(" <- ");
+		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure2 = callingRuleAnalysesClosure;
+		if (callingRuleAnalysesClosure2 != null) {
+			s.append(" -> ");
 			boolean isFirst1 = true;
-			for (@NonNull ParserRuleAnalysis callingRuleAnalysis : callingRuleAnalyses2) {
+			for (@NonNull ParserRuleAnalysis callingRuleAnalysis : callingRuleAnalysesClosure2) {
 				if (!isFirst1) {
-					s.append(",");
+					s.append(", ");
 				}
 				s.append(callingRuleAnalysis.getName());
 				isFirst1 = false;

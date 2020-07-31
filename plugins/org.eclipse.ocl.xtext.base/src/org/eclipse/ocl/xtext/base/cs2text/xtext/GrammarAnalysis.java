@@ -67,17 +67,17 @@ public class GrammarAnalysis
 	/**
 	 * The rule analysis for each rule.
 	 */
-	private @NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = new HashMap<>();
+	private final @NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = new HashMap<>();
 
 	/**
 	 * The assignment analysis for each assignment or action.
 	 */
-	private @NonNull Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
+	private final @NonNull Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
 
 	/**
 	 * The possible assignment analyses for containment EReference.
 	 */
-	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = null;
+	private final @NonNull Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
 
 	/**
 	 * The possible producing rule analyses for each EClass. ??his analysis excludes overrides.
@@ -117,33 +117,42 @@ public class GrammarAnalysis
 		Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls = new HashMap<>();
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = analyzeRuleNames(rule2ruleCalls);
 		/*this.rule2ruleAnalysis =*/ createRuleAnalyses(ruleName2rules, rule2ruleCalls);
-		//
-		//	Create an assignment analysis for each assignment and current action.
-		//	Populate this.assignment2assignmentAnalysis.
-		//
-		for (@NonNull AbstractRuleAnalysis ruleAnalysis : rule2ruleAnalysis.values()) {
-			if (ruleAnalysis instanceof ParserRuleAnalysis) {
-				AbstractElement rootElement = XtextGrammarUtil.getAlternatives(ruleAnalysis.getRule());
-				((ParserRuleAnalysis)ruleAnalysis).analyzeActionsAndAssignments(rootElement, null);
-			}
-		}
-		this.containment2assignmentAnalyses = analyzeContainments();
-		Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = rule2ruleAnalysis.values();
 		List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = new ArrayList<>(rule2ruleAnalysis.size());
-		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
+		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
 			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {
 				parserRuleAnalyses.add((ParserRuleAnalysis)abstractRuleAnalysis);
 			}
 		}
 		Collections.sort(parserRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 		//
-		// Perform the intra rule analysis to determine the locally produced EClassifiers and local base rules.
+		//	Create an assignment analysis for each assignment and current action.
+		//	Populate GrammarAnalysis.assignment2assignmentAnalysis, ParserRuleAnalysis.callingRuleAnalysis
+		//
+		for (@NonNull ParserRuleAnalysis ruleAnalysis : parserRuleAnalyses) {
+			AbstractElement rootElement = XtextGrammarUtil.getAlternatives(ruleAnalysis.getRule());
+			ruleAnalysis.analyzeActionsAndAssignments(rootElement, null);
+		}
+		//
+		//	Promote ParserRuleAnalysis.callingRuleAnalysis to ParserRuleAnalysis.callingRuleAnalysisClosure
+		//
+		for (@NonNull ParserRuleAnalysis ruleAnalysis : parserRuleAnalyses) {
+			ruleAnalysis.getCallingRuleAnalysisClosure();
+		}
+		//
+		//	Identify the assignment analyses that are containments.
+		//
+		for (@NonNull AssignmentAnalysis assignmentAnalysis : assignment2assignmentAnalysis.values()) {
+			assignmentAnalysis.analyzeContainmentAndTargets();
+		}
+		//
+		//	Create the disjunction of flattened SerializationRule comprising a conjunction of SerializationNode.
 		//
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
 			parserRuleAnalysis.analyze();
 		}
 		//
-		// Perform the inter rule analysis to determine the base rule closure.
+		//	Determine the variables and expressions and their solutions to determine the cardinality of each term.
+		//
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
 			if ("EssentialOCL::URIFirstPathElementCS".equals(parserRuleAnalysis.getName())) {
 				getClass();
@@ -154,26 +163,13 @@ public class GrammarAnalysis
 		this.eClass2serializationRules = analyzeSerializations(parserRuleAnalyses);
 	}
 
-	/**
-	 *	Identify the assignment analyses that are containments.
-	 */
-	protected @NonNull Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> analyzeContainments() {
-		Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
-		for (@NonNull AssignmentAnalysis assignmentAnalysis : assignment2assignmentAnalysis.values()) {
-			EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
-			if (eFeature instanceof EReference) {
-				EReference eReference = (EReference)eFeature;
-				if (eReference.isContainment()) {
-					List<@NonNull AssignmentAnalysis> assignmentAnalyses = containment2assignmentAnalyses.get(eReference);
-					if (assignmentAnalyses == null) {
-						assignmentAnalyses = new ArrayList<>();
-						containment2assignmentAnalyses.put(eReference, assignmentAnalyses);
-					}
-					assignmentAnalyses.add(assignmentAnalysis);
-				}
-			}
+	public void addContainment(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull EReference eReference) {
+		List<@NonNull AssignmentAnalysis> assignmentAnalyses = containment2assignmentAnalyses.get(eReference);
+		if (assignmentAnalyses == null) {
+			assignmentAnalyses = new ArrayList<>();
+			containment2assignmentAnalyses.put(eReference, assignmentAnalyses);
 		}
-		return containment2assignmentAnalyses;
+		assignmentAnalyses.add(assignmentAnalysis);
 	}
 
 	/**
