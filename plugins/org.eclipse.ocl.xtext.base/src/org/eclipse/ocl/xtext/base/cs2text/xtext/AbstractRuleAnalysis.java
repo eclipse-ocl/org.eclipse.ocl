@@ -44,7 +44,7 @@ public class AbstractRuleAnalysis implements Nameable
 	/**
 	 * RuleAnalyses that this RuleAnalysis may be directly used as an alternative for.
 	 */
-	private @Nullable List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses = null;
+	private @Nullable List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses = null;		// XXX obsolete
 
 	/**
 	 * Lazily computed closure of RuleAnalyses that this RuleAnalysis may be used as an alternative for.

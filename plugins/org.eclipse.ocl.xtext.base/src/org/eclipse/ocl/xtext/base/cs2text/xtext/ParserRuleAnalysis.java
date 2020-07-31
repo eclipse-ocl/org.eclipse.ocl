@@ -13,8 +13,10 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -395,13 +397,15 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
+	private @Nullable Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses = null;
 
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
 		this.eClass = eClass;
 	}
 
-	public void addAssignmentAnalysis(@NonNull AssignmentAnalysis assignmentAnalysis) {
+	protected void addAssignmentAnalysis(@NonNull AssignmentAnalysis assignmentAnalysis) {
+		grammarAnalysis.addAssignmentAnalysis(assignmentAnalysis);
 		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 		List<@NonNull AssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eStructuralFeature);
 		if (assignmentAnalyses == null) {
@@ -409,6 +413,14 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			eFeature2assignmentAnalyses.put(eStructuralFeature, assignmentAnalyses);
 		}
 		assignmentAnalyses.add(assignmentAnalysis);
+	}
+
+	protected void addCallingRuleAnalysis(@NonNull ParserRuleAnalysis callingRuleAnalysis) {
+		Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses2 = callingRuleAnalyses;
+		if (callingRuleAnalyses2 == null) {
+			callingRuleAnalyses = callingRuleAnalyses2 = new HashSet<>();
+		}
+		callingRuleAnalyses2.add(callingRuleAnalysis);
 	}
 
 	/**
@@ -467,6 +479,48 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			Collections.sort(serializationRules, new SerializationRuleComparator());
 		}
 		this.serializationRules = serializationRules;
+	}
+
+	/**
+	 *	Create an assignment analysis for each assignment and current action returning an updated firstUnassignedRuleCall to track the
+	 *	required behaviour of a current action.
+	 */
+	public @Nullable RuleCall analyzeActionsAndAssignments(@NonNull AbstractElement abstractElement, @Nullable RuleCall firstUnassignedRuleCall) {
+		if (abstractElement instanceof Assignment) {
+			Assignment assignment = (Assignment)abstractElement;
+			AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(this, assignment);
+			addAssignmentAnalysis(assignmentAnalysis);
+		}
+		else if (abstractElement instanceof Action) {
+			Action action = (Action)abstractElement;
+			String feature = action.getFeature();
+			if (feature != null) {
+				assert firstUnassignedRuleCall != null;
+				AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(this, action, firstUnassignedRuleCall);
+				addAssignmentAnalysis(assignmentAnalysis);
+			}
+		}
+		else if (abstractElement instanceof RuleCall) {
+			assert firstUnassignedRuleCall == null;
+			RuleCall ruleCall = (RuleCall)abstractElement;
+			AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
+			if (XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(calledRule)) instanceof EClass) {
+				firstUnassignedRuleCall = ruleCall;
+				ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis)grammarAnalysis.getRuleAnalysis(calledRule);
+				calledRuleAnalysis.addCallingRuleAnalysis(this);
+			}
+		}
+		else if (abstractElement instanceof Alternatives) {
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((CompoundElement)abstractElement)) {
+				analyzeActionsAndAssignments(nestedElement, firstUnassignedRuleCall);
+			}
+		}
+		else if (abstractElement instanceof Group) {
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((CompoundElement)abstractElement)) {
+				firstUnassignedRuleCall = analyzeActionsAndAssignments(nestedElement, firstUnassignedRuleCall);
+			}
+		}
+		return firstUnassignedRuleCall;
 	}
 
 	protected void createSerializationRules(@NonNull List<@NonNull SerializationRule> serializationRules, @NonNull SerializationNode serializationNode) {
@@ -574,5 +628,33 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 			basicSerializationRule.getStaticRuleMatch();
 		}
+	}
+
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(getName());
+		Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses2 = callingRuleAnalyses;
+		if (callingRuleAnalyses2 != null) {
+			s.append(" <- ");
+			boolean isFirst1 = true;
+			for (@NonNull ParserRuleAnalysis callingRuleAnalysis : callingRuleAnalyses2) {
+				if (!isFirst1) {
+					s.append(",");
+				}
+				s.append(callingRuleAnalysis.getName());
+				isFirst1 = false;
+			}
+		}
+/*		s.append(" <=> ");
+		boolean isFirst2 = true;
+		for (@NonNull EClassifier eClassifier : eClassifiers) {
+			if (!isFirst2) {
+				s.append(",");
+			}
+			s.append(eClassifier.getName());
+			isFirst2 = false;
+		} */
+		return s.toString();
 	}
 }
