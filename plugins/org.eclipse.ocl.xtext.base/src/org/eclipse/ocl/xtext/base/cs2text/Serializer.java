@@ -27,6 +27,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 /**
@@ -93,9 +94,10 @@ public class Serializer
 
 	/**
 	 * Create and use a new serilaizer to to serialize element to the serializationBuilder.
+	 * @param ruleAnalysis
 	 */
-	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
-		modelAnalysis.serialize(serializationBuilder, element);
+	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
+		modelAnalysis.serialize(serializationBuilder, element, targetRuleAnalysis);
 	}
 
 	/**

@@ -41,7 +41,7 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 		modelAnalysis.analyze(topLevelCS);
 		var String s2 = modelAnalysis.toString();
 		System.out.println(s2);
-		modelAnalysis.serialize(serializationBuilder, topLevelCS);
+		modelAnalysis.serialize(serializationBuilder, topLevelCS, null);
 		var String s3 = serializationBuilder.toRenderedString();
 		System.out.println(s3);
 	}
@@ -59,7 +59,7 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 		modelAnalysis.analyze(topLevelCS);
 		var String s2 = modelAnalysis.toString();
 		System.out.println(s2);
-		modelAnalysis.serialize(serializationBuilder, topLevelCS);
+		modelAnalysis.serialize(serializationBuilder, topLevelCS, null);
 		var String s3 = serializationBuilder.toRenderedString();
 		System.out.println(s3);
 	}

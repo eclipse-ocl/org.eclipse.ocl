@@ -129,8 +129,7 @@ public class GrammarAnalysis
 		//	Populate GrammarAnalysis.assignment2assignmentAnalysis, ParserRuleAnalysis.callingRuleAnalysis
 		//
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : parserRuleAnalyses) {
-			AbstractElement rootElement = XtextGrammarUtil.getAlternatives(ruleAnalysis.getRule());
-			ruleAnalysis.analyzeActionsAndAssignments(rootElement, null);
+			ruleAnalysis.analyzeActionsAndAssignments();
 		}
 		//
 		//	Promote ParserRuleAnalysis.callingRuleAnalysis to ParserRuleAnalysis.callingRuleAnalysisClosure

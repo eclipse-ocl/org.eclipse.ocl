@@ -401,6 +401,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
 	private @Nullable Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses = null;
 	private @Nullable List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure = null;
+	public final @NonNull List<@NonNull ParserRuleAnalysis> debugCalledRuleAnalysesClosure = new UniqueList<>();
+	private @Nullable List<@NonNull RuleCall> delegatingRuleCalls = null;
 
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
@@ -488,7 +490,43 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	 *	Create an assignment analysis for each assignment and current action returning an updated firstUnassignedRuleCall to track the
 	 *	required behaviour of a current action.
 	 */
-	public @Nullable RuleCall analyzeActionsAndAssignments(@NonNull AbstractElement abstractElement, @Nullable RuleCall firstUnassignedRuleCall) {
+	public @Nullable RuleCall analyzeActionsAndAssignments() {
+		AbstractElement rootElement = XtextGrammarUtil.getAlternatives(getRule());
+		this.delegatingRuleCalls  = analyzeDelegatingRuleCalls(rootElement);
+		return analyzeActionsAndAssignments(rootElement, null);
+	}
+
+	/**
+	 *	Return the RuleCalls that are invoked directly without any prefix/suffix terms..
+	 */
+	private @Nullable List<@NonNull RuleCall> analyzeDelegatingRuleCalls(@NonNull AbstractElement abstractElement) {
+		if (abstractElement instanceof RuleCall) {
+			RuleCall ruleCall = (RuleCall)abstractElement;
+			return Collections.singletonList(ruleCall);
+		}
+		else if (abstractElement instanceof Alternatives) {
+			List<@NonNull RuleCall> outerDelegatingRuleCalls = null;
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((Alternatives)abstractElement)) {
+				List<@NonNull RuleCall> innerDelegatingRuleCalls = analyzeDelegatingRuleCalls(nestedElement);
+				if (innerDelegatingRuleCalls != null) {
+					if (outerDelegatingRuleCalls == null) {
+						outerDelegatingRuleCalls = new ArrayList<>();
+					}
+					outerDelegatingRuleCalls.addAll(innerDelegatingRuleCalls);
+				}
+			}
+			return outerDelegatingRuleCalls;
+		}
+		else {		// The current rule calls are decorated and so cannot delegate
+			return null;
+		}
+	}
+
+	/**
+	 *	Create an assignment analysis for each assignment and current action returning an updated firstUnassignedRuleCall to track the
+	 *	required behaviour of a current action.
+	 */
+	private @Nullable RuleCall analyzeActionsAndAssignments(@NonNull AbstractElement abstractElement, @Nullable RuleCall firstUnassignedRuleCall) {
 		if (abstractElement instanceof Assignment) {
 			Assignment assignment = (Assignment)abstractElement;
 			AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(this, assignment);
@@ -514,12 +552,12 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			}
 		}
 		else if (abstractElement instanceof Alternatives) {
-			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((CompoundElement)abstractElement)) {
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((Alternatives)abstractElement)) {
 				analyzeActionsAndAssignments(nestedElement, firstUnassignedRuleCall);
 			}
 		}
 		else if (abstractElement instanceof Group) {
-			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((CompoundElement)abstractElement)) {
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((Group)abstractElement)) {
 				firstUnassignedRuleCall = analyzeActionsAndAssignments(nestedElement, firstUnassignedRuleCall);
 			}
 		}
@@ -556,6 +594,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			callingRuleAnalysesClosureList = new ArrayList<>(callingRuleAnalysesClosureSet);
 			Collections.sort(callingRuleAnalysesClosureList, NameUtil.NAMEABLE_COMPARATOR);
 			this.callingRuleAnalysesClosure = callingRuleAnalysesClosureList;
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : callingRuleAnalysesClosureList) {
+				ruleAnalysis.debugCalledRuleAnalysesClosure.add(this);
+			}
 		}
 		return callingRuleAnalysesClosureList;
 	}
@@ -656,6 +697,19 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getName());
+		List<@NonNull RuleCall> delegatingRuleCalls2 = delegatingRuleCalls;
+		if (delegatingRuleCalls2 != null) {
+			s.append(" <= ");
+			boolean isFirst1 = true;
+			for (@NonNull RuleCall ruleCall : delegatingRuleCalls2) {
+				if (!isFirst1) {
+					s.append(", ");
+				}
+				ParserRuleAnalysis callingRuleAnalysis = (ParserRuleAnalysis) grammarAnalysis.getRuleAnalysis(ruleCall.getRule());
+				s.append(callingRuleAnalysis.getName());
+				isFirst1 = false;
+			}
+		}
 		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure2 = callingRuleAnalysesClosure;
 		if (callingRuleAnalysesClosure2 != null) {
 			s.append(" -> ");

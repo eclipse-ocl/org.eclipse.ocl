@@ -30,7 +30,7 @@ public class MySerializer extends Serializer
 		modelAnalysis.analyze(obj);
 		String s2 = modelAnalysis.toString();
 		System.out.println(s2);
-		modelAnalysis.serialize(serializationBuilder, obj);
+		modelAnalysis.serialize(serializationBuilder, obj, null);
 		String s3 = serializationBuilder.toRenderedString();
 		System.out.println(s3);
 		appendable.append(s3);

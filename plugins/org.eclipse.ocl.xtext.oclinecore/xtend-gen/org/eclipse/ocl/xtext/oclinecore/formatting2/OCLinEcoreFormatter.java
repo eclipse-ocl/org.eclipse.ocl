@@ -49,7 +49,7 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
     this.modelAnalysis.analyze(topLevelCS);
     String s2 = this.modelAnalysis.toString();
     System.out.println(s2);
-    this.modelAnalysis.serialize(this.serializationBuilder, topLevelCS);
+    this.modelAnalysis.serialize(this.serializationBuilder, topLevelCS, null);
     String s3 = this.serializationBuilder.toRenderedString();
     System.out.println(s3);
   }
@@ -68,7 +68,7 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
     this.modelAnalysis.analyze(topLevelCS);
     String s2 = this.modelAnalysis.toString();
     System.out.println(s2);
-    this.modelAnalysis.serialize(this.serializationBuilder, topLevelCS);
+    this.modelAnalysis.serialize(this.serializationBuilder, topLevelCS, null);
     String s3 = this.serializationBuilder.toRenderedString();
     System.out.println(s3);
   }

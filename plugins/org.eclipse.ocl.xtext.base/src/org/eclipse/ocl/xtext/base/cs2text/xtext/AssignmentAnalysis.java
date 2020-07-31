@@ -93,11 +93,14 @@ public class AssignmentAnalysis implements Nameable
 	}
 
 	private void computeTargetRuleAnalyses(@NonNull AbstractElement terminal) {
+		if ("ownedMultiplicity".equals(eStructuralFeature.getName())) {
+			getClass();		// XXX debugging
+		}
 		if (terminal instanceof RuleCall) {
 			AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
 			AbstractRuleAnalysis terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
 			if (terminalRuleAnalysis instanceof ParserRuleAnalysis) {
-				for (@NonNull ParserRuleAnalysis ruleAnalysis : ((ParserRuleAnalysis)terminalRuleAnalysis).getCallingRuleAnalysisClosure()) {
+				for (@NonNull ParserRuleAnalysis ruleAnalysis : ((ParserRuleAnalysis)terminalRuleAnalysis).debugCalledRuleAnalysesClosure) { //getCallingRuleAnalysisClosure()) {
 					targetRuleAnalyses.add(ruleAnalysis);
 				}
 			}

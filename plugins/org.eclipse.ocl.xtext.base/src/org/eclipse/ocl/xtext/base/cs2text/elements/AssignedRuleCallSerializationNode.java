@@ -49,7 +49,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		if (eStructuralFeature instanceof EReference) {
 			assert ((EReference)eStructuralFeature).isContainment();
 			if (eGet != null) {
-				serializer.serializeElement(serializationBuilder, (EObject)eGet);
+				serializer.serializeElement(serializationBuilder, (EObject)eGet, calledRuleAnalysis);
 			}
 		}
 		else {

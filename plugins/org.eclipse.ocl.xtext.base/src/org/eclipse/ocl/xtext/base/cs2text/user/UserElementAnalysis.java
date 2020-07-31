@@ -106,13 +106,15 @@ public class UserElementAnalysis implements Nameable
 		return serializationRules;
 	}
 
-	public @Nullable Serializer createSerializer(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @Nullable Serializer createSerializer(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-			DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
-			if (dynamicRuleMatch != null) {
-				return new Serializer(dynamicRuleMatch, modelAnalysis, eObject);
+			if ((targetRuleAnalysis == null) || (serializationRule.getRuleAnalysis() == targetRuleAnalysis)) {
+				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
+				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
+				if (dynamicRuleMatch != null) {
+					return new Serializer(dynamicRuleMatch, modelAnalysis, eObject);
+				}
 			}
 		}
 		return null;

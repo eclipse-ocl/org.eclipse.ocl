@@ -21,10 +21,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 import com.google.inject.Inject;
@@ -100,18 +102,18 @@ public class UserModelAnalysis
 	 * Create a Serializer for the appropriate configuration of element, then use it to serialize it and its descendants
 	 * to the serializationBuilder.
 	 */
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element) {
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(element);
 		if ("EnumerationCS".equals(element.eClass().getName())) {
 			getClass();	// XXX
 		}
 		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();
-		Serializer serializer = userElementAnalysis.createSerializer(slotsAnalysis);
+		Serializer serializer = userElementAnalysis.createSerializer(slotsAnalysis, targetRuleAnalysis);
 		if (serializer != null) {
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			userElementAnalysis.createSerializer(slotsAnalysis);		// XXX debugging
+			userElementAnalysis.createSerializer(slotsAnalysis, targetRuleAnalysis);		// XXX debugging
 			StringBuilder s = new StringBuilder();
 			s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
 			slotsAnalysis.diagnose(s);
