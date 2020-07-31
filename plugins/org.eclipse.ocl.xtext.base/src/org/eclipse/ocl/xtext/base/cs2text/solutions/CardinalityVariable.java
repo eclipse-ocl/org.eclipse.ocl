@@ -11,8 +11,10 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 
 /**
  * A CardinalityVariable represents the cardinality of a grammar term for which a constant value must be deduced prior
@@ -21,10 +23,12 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 public class CardinalityVariable implements Nameable
 {
 	protected final @NonNull String name;
+	protected final @Nullable AbstractRuleAnalysis ruleAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public CardinalityVariable(@NonNull String name, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public CardinalityVariable(@NonNull String name, @Nullable AbstractRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.name = name;
+		this.ruleAnalysis = ruleAnalysis;
 		this.multiplicativeCardinality = multiplicativeCardinality;
 		assert !multiplicativeCardinality.isOne();
 	}
@@ -55,6 +59,11 @@ public class CardinalityVariable implements Nameable
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(name);
+		AbstractRuleAnalysis ruleAnalysis2 = ruleAnalysis;
+		if (ruleAnalysis2 != null) {
+			s.append(":");
+			s.append(ruleAnalysis2.getName());
+		}
 		s.append("[");
 		s.append(multiplicativeCardinality);
 		s.append("]");

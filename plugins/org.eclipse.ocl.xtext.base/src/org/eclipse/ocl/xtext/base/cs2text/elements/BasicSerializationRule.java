@@ -33,6 +33,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
@@ -126,7 +127,8 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		String name = String.format("C%02d", variable2node.size());
 		assert name != null;
 		if (!multiplicativeCardinality.isConstant()) {
-			CardinalityVariable cardinalityVariable = new CardinalityVariable(name, multiplicativeCardinality);
+			AbstractRuleAnalysis ruleAnalysis = serializationNode.getRuleAnalysis();
+			CardinalityVariable cardinalityVariable = new CardinalityVariable(name, ruleAnalysis, multiplicativeCardinality);
 			CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 			assert old2 == null;
 			SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);

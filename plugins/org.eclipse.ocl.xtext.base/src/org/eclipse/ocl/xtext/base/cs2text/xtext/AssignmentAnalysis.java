@@ -60,7 +60,9 @@ public class AssignmentAnalysis implements Nameable
 	/**
 	 * The rules declared to be useable as producers of the target.
 	 */
-	private final @NonNull List<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = new ArrayList<>();
+	private final @NonNull List<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = new ArrayList<>();	// XXX obsolete
+
+	private AbstractRuleAnalysis terminalRuleAnalysis;
 
 	public AssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Assignment assignment) {
 		this.sourceRuleAnalysis = sourceRuleAnalysis;
@@ -70,6 +72,19 @@ public class AssignmentAnalysis implements Nameable
 		EClass eClass = (EClass)XtextGrammarUtil.getEClassifierScope(assignment);
 		this.eStructuralFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
 		this.terminal = XtextGrammarUtil.getTerminal(assignment);
+	//	assert terminal instanceof RuleCall;
+		AbstractRule terminalRule;
+		if (terminal instanceof CrossReference) {
+			terminalRule = XtextGrammarUtil.getRule((RuleCall)((CrossReference)terminal).getTerminal());
+			this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
+		}
+		else if (terminal instanceof RuleCall)  {
+			terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
+			this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
+		}
+		else {
+			this.terminalRuleAnalysis = null;
+		}
 	}
 
 	public AssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Action action, @NonNull RuleCall firstUnassignedRuleCall) {
@@ -80,6 +95,9 @@ public class AssignmentAnalysis implements Nameable
 		EClass eClass = (EClass)XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(action));
 		this.eStructuralFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
 		this.terminal = firstUnassignedRuleCall;
+		assert terminal instanceof RuleCall;
+		AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
+		this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
 	}
 
 	public void analyzeContainmentAndTargets() {
@@ -98,7 +116,6 @@ public class AssignmentAnalysis implements Nameable
 		}
 		if (terminal instanceof RuleCall) {
 			AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
-			AbstractRuleAnalysis terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
 			if (terminalRuleAnalysis instanceof ParserRuleAnalysis) {
 				for (@NonNull ParserRuleAnalysis ruleAnalysis : ((ParserRuleAnalysis)terminalRuleAnalysis).debugCalledRuleAnalysesClosure) { //getCallingRuleAnalysisClosure()) {
 					targetRuleAnalyses.add(ruleAnalysis);
@@ -174,6 +191,10 @@ public class AssignmentAnalysis implements Nameable
 
 	public @NonNull List<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses() {
 		return targetRuleAnalyses;
+	}
+
+	public @NonNull AbstractRuleAnalysis getTerminalRuleAnalysis() {
+		return terminalRuleAnalysis;
 	}
 
 	/**
