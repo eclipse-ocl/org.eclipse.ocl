@@ -145,15 +145,16 @@ public class UserSlotsAnalysis
 	 */
 	public static class DiscriminatedSlotAnalysis implements UserSlotAnalysis
 	{
+		protected final @NonNull List<@NonNull ParserRuleAnalysis> ruleAnalyses;
+		protected final int count;
 		private final @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull Integer> ruleAnalysis2count = new HashMap<>();
 
-		protected final int count;
-
-		public DiscriminatedSlotAnalysis(int count) {
+		public DiscriminatedSlotAnalysis(@NonNull List<@NonNull ParserRuleAnalysis> ruleAnalyses, int count) {
+			this.ruleAnalyses = ruleAnalyses;
 			this.count = count;
 		}
 
-		public void analyzeEReference(@NonNull UserElementAnalysis elementAnalysis, @NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+		public void analyzeEReference(@NonNull UserElementAnalysis elementAnalysis) {
 			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
 			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
 				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(slotsAnalysis, ruleAnalysis);
@@ -200,23 +201,21 @@ public class UserSlotsAnalysis
 			return false;
 		}
 
-	//	public void put(@NonNull ParserRuleAnalysis ruleAnalysis, int count) {
-	//		ruleAnalysis2count.put(ruleAnalysis, count);
-	//	}
-
 		@Override
 		public @NonNull String toString() {
 			StringBuilder s = new StringBuilder();
-			List<@NonNull ParserRuleAnalysis> keys  = new ArrayList<>(ruleAnalysis2count.keySet());
-			Collections.sort(keys, NameUtil.NAMEABLE_COMPARATOR);
+			List<@NonNull ParserRuleAnalysis> ruleAnalyses = new ArrayList<>(this.ruleAnalyses);
+			Collections.sort(ruleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 			boolean isFirst = true;
-			for (@NonNull ParserRuleAnalysis key : keys) {
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
 				if (!isFirst) {
-					s.append(",");
+					s.append("+");
 				}
-				s.append(key);
-				s.append("=");
-				s.append(ruleAnalysis2count.get(key));
+				s.append(ruleAnalysis.getRuleName());
+				s.append("(");
+				Integer count = ruleAnalysis2count.get(ruleAnalysis);
+				s.append(count != null ? count.intValue() : 0);
+				s.append(")");
 				isFirst = false;
 			}
 			return s.toString();
@@ -414,21 +413,21 @@ public class UserSlotsAnalysis
 			if (ruleAnalyses != null) {
 				if (eReference.isMany()) {
 					List<?> elements = (List<?>)object;
-					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(elements.size());
+					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(ruleAnalyses, elements.size());
 					for (Object element : elements) {
 						if (element != null) {			// null is not serializeable/parseable
 							UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis((EObject)element);
 						//	UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
 						//	elementAnalysis.createSerializer(this, targetRuleAnalysis)
-							discriminatedSlotAnalysis.analyzeEReference(elementAnalysis, ruleAnalyses);
+							discriminatedSlotAnalysis.analyzeEReference(elementAnalysis);
 						}
 					}
 					return discriminatedSlotAnalysis;
 				}
 				else if (object != null){
-					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(object != null ? 1 : 0);
+					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(ruleAnalyses, object != null ? 1 : 0);
 					UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis((EObject)object);
-					discriminatedSlotAnalysis.analyzeEReference(elementAnalysis, ruleAnalyses);
+					discriminatedSlotAnalysis.analyzeEReference(elementAnalysis);
 					return discriminatedSlotAnalysis;
 				}
 			}
