@@ -10,10 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
@@ -21,20 +20,17 @@ import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
  * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
  * expression determining the cardinality of a SerializationRule term.
  */
-public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySolution
+public class EStructuralFeatureSizeCardinalitySolution extends AbstractCardinalitySolution
 {
-	protected final @NonNull EAttribute eAttribute;
-	protected final @NonNull EnumerationValue enumerationValue;
+	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	public EAttributeSizeCardinalitySolution(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		this.eAttribute = eAttribute;
-		this.enumerationValue = enumerationValue;
-		assert !enumerationValue.isNull();
+	public EStructuralFeatureSizeCardinalitySolution(@NonNull EStructuralFeature eStructuralFeature) {
+		this.eStructuralFeature = eStructuralFeature;
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		return ruleMatch.getSize(eAttribute, enumerationValue);
+		return ruleMatch.getSize(eStructuralFeature);
 	}
 
 	@Override
@@ -42,18 +38,17 @@ public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySoluti
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof EAttributeSizeCardinalitySolution)) {
+		if (!(obj instanceof EStructuralFeatureSizeCardinalitySolution)) {
 			return false;
 		}
-		EAttributeSizeCardinalitySolution that = (EAttributeSizeCardinalitySolution) obj;
-		if (this.eAttribute != that.eAttribute) return false;
-		if (!this.enumerationValue.equals(that.enumerationValue)) return false;
+		EStructuralFeatureSizeCardinalitySolution that = (EStructuralFeatureSizeCardinalitySolution)obj;
+		if (this.eStructuralFeature != that.eStructuralFeature) return false;
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return getClass().hashCode() + eAttribute.hashCode() + enumerationValue.hashCode() * 7;
+		return getClass().hashCode() + eStructuralFeature.hashCode();
 	}
 
 	@Override
@@ -69,12 +64,7 @@ public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySoluti
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
-		s.append(eAttribute.getName());
-		if (!enumerationValue.isNull()) {
-			s.append(".'");
-			s.append(enumerationValue.getName());
-			s.append("'");
-		}
+		s.append(eStructuralFeature.getName());
 		s.append("|");
 	}
 }
