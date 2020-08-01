@@ -154,7 +154,14 @@ public class UserSlotsAnalysis
 		}
 
 		public void analyzeEReference(@NonNull UserElementAnalysis elementAnalysis, @NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
-			elementAnalysis.toString();
+			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
+				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(slotsAnalysis, ruleAnalysis);
+				if (dynamicRuleMatch != null) {
+					Integer oldCount = ruleAnalysis2count.get(ruleAnalysis);
+					ruleAnalysis2count.put(ruleAnalysis, oldCount != null ? oldCount+1 : 1);
+				}
+			}
 		}
 
 		public @Nullable Integer basicGet(@NonNull ParserRuleAnalysis ruleAnalysis) {
@@ -193,9 +200,9 @@ public class UserSlotsAnalysis
 			return false;
 		}
 
-		public void put(@NonNull ParserRuleAnalysis ruleAnalysis, int count) {
-			ruleAnalysis2count.put(ruleAnalysis, count);
-		}
+	//	public void put(@NonNull ParserRuleAnalysis ruleAnalysis, int count) {
+	//		ruleAnalysis2count.put(ruleAnalysis, count);
+	//	}
 
 		@Override
 		public @NonNull String toString() {
@@ -411,6 +418,8 @@ public class UserSlotsAnalysis
 					for (Object element : elements) {
 						if (element != null) {			// null is not serializeable/parseable
 							UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis((EObject)element);
+						//	UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
+						//	elementAnalysis.createSerializer(this, targetRuleAnalysis)
 							discriminatedSlotAnalysis.analyzeEReference(elementAnalysis, ruleAnalyses);
 						}
 					}
