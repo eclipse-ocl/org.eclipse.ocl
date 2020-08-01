@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -94,13 +96,22 @@ public class DynamicRuleMatch implements RuleMatch
 	}
 
 	@Override
-	public @NonNull Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
-		return slotsAnalysis.getSize(eStructuralFeature, enumerationValue);
+	public @NonNull Integer getSize(@NonNull EStructuralFeature eStructuralFeature) {
+		return slotsAnalysis.getSize(eStructuralFeature);
 	}
 
 	@Override
-	public @NonNull Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull ParserRuleAnalysis ruleAnalysis) {
-		return slotsAnalysis.getSize(eStructuralFeature, ruleAnalysis);
+	public @NonNull Integer getSize(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		return slotsAnalysis.getSize(eAttribute, enumerationValue);
+	}
+
+	@Override
+	public @NonNull Integer getSize(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis) {
+		return slotsAnalysis.getSize(eReference, ruleAnalysis);
+	}
+
+	public @NonNull UserSlotsAnalysis getSlotsAnalysis() {
+		return slotsAnalysis;
 	}
 
 	@Override

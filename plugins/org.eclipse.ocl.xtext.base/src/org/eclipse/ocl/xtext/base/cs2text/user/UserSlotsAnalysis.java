@@ -477,7 +477,7 @@ public class UserSlotsAnalysis
 		Collections.sort(sortedFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		for (@NonNull EStructuralFeature eStructuralFeature : sortedFeatures) {
 			s.append("\n");
-			int size = getSize(eStructuralFeature, NullEnumerationValue.INSTANCE);
+			int size = getSize(eStructuralFeature);
 			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
 			for (@NonNull SerializationRule serializationRule : serializationRules2) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
@@ -485,12 +485,13 @@ public class UserSlotsAnalysis
 				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 			}
 			if (eStructuralFeature instanceof EAttribute) {
-				Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues((EAttribute)eStructuralFeature);
+				EAttribute eAttribute = (EAttribute)eStructuralFeature;
+				Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
 				if (enumerationValues != null) {
 					List<@NonNull EnumerationValue> sortedEnumerationValues = Lists.newArrayList(enumerationValues);
 					Collections.sort(sortedEnumerationValues, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
-						int size2 = getSize(eStructuralFeature, enumerationValue);
+						int size2 = getSize(eAttribute, enumerationValue);
 						s.append(String.format("\n %-29.29s%8d", "'" + enumerationValue.getName() + "'", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules2) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
@@ -549,7 +550,7 @@ public class UserSlotsAnalysis
 		}
 	}
 
-/*	public int getSize(@NonNull EStructuralFeature eStructuralFeature) {
+	public int getSize(@NonNull EStructuralFeature eStructuralFeature) {
 		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
 		if (slotAnalysis == null) {
 			return 0;
@@ -558,18 +559,18 @@ public class UserSlotsAnalysis
 			return slotAnalysis.asCounted();
 		}
 		else if (slotAnalysis.isEnumerated()) {
-			return slotAnalysis.asEnumerated(enumerationValue);
+			return slotAnalysis.asEnumerated(NullEnumerationValue.INSTANCE);
 		}
 		else if (slotAnalysis.isDiscriminated()) {
-			return slotAnalysis.asDiscriminated(ruleAnalysis);		// XXX
+			return slotAnalysis.asDiscriminated(null);		// XXX
 		}
 		else {
 			throw new UnsupportedOperationException();
 		}
-	} */
+	}
 
-	public int getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
-		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
+	public int getSize(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eAttribute);
 		if (slotAnalysis == null) {
 			return 0;
 		}
@@ -587,15 +588,15 @@ public class UserSlotsAnalysis
 		}
 	}
 
-	public int getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull ParserRuleAnalysis ruleAnalysis) {
-		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
+	public int getSize(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis) {
+		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eReference);
 		if (slotAnalysis == null) {
 			return 0;
 		}
-		/*if (slotAnalysis.isCounted()) {
+		if (slotAnalysis.isCounted() && (ruleAnalysis == null)) {
 			return slotAnalysis.asCounted();
 		}
-		else if (slotAnalysis.isEnumerated()) {
+		/*else if (slotAnalysis.isEnumerated()) {
 			return slotAnalysis.asEnumerated(enumerationValue);
 		}
 		else */if (slotAnalysis.isDiscriminated()) {

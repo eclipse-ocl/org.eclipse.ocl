@@ -28,7 +28,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.AbstractCardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
@@ -101,7 +101,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 
 	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull EnumerationValue enumerationValue, @NonNull Stack<@NonNull SerializationNode> parentStack) {
 		assert staticRuleMatch != null;
-		CardinalityExpression cardinalityExpression = staticRuleMatch.addAssignedNode(assignedSerializationNode);
+		AbstractCardinalityExpression cardinalityExpression = staticRuleMatch.addAssignedNode(assignedSerializationNode);
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>();
 		for (SerializationNode serializationNode : parentStack) {
 			CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
@@ -114,7 +114,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			variables.add(cardinalityVariable);
 		}
 		if (!enumerationValue.isNull()) {
-			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), enumerationValue);
+			AbstractCardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), enumerationValue);
 			cardinalityExpression2.addMultiplicityProduct(variables);
 		}
 		else {

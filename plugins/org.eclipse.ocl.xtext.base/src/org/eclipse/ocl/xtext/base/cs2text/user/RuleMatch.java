@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -41,14 +43,20 @@ public interface RuleMatch
 	@NonNull BasicSerializationRule getSerializationRule();
 
 	/**#
-	 * Return the number of eStructuralFeature slot elements in the user model element. For a non-NullEnumerationValue, the
+	 * Return the number of eAttribute slot elements in the user model element. For a non-NullEnumerationValue, the
 	 * number of slot elements that match known enumerationValue elements is returned. Returns null if not yet computable.
 	 */
-	@Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue);
+	@Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature);
+
+	/**#
+	 * Return the number of eAttribute slot elements in the user model element. For a non-NullEnumerationValue, the
+	 * number of slot elements that match known enumerationValue elements is returned. Returns null if not yet computable.
+	 */
+	@Nullable Integer getSize(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue);
 
 	/**#
 	 * Return the number of eStructuralFeature slot elements in the user model element. For a non-NullEnumerationValue, the
 	 * number of slot elements that match known enumerationValue elements is returned. Returns null if not yet computable.
 	 */
-	@Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull ParserRuleAnalysis ruleAnalysis);
+	@Nullable Integer getSize(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis);
 }

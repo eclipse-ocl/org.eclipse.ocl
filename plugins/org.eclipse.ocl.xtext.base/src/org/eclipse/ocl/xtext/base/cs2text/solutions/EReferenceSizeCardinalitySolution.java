@@ -10,30 +10,31 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 /**
- * A FeatureSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
+ * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
  * expression determining the cardinality of a SerializationRule term.
  */
-public class FeatureSizeCardinalitySolution extends AbstractCardinalitySolution
+public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySolution
 {
-	protected final @NonNull EStructuralFeature eStructuralFeature;
-	protected final @NonNull EnumerationValue enumerationValue;
+	protected final @NonNull EReference eReference;
+	protected final @Nullable ParserRuleAnalysis ruleAnalysis;
 
-	public FeatureSizeCardinalitySolution(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
-		this.eStructuralFeature = eStructuralFeature;
-		this.enumerationValue = enumerationValue;
+	public EReferenceSizeCardinalitySolution(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis) {
+		this.eReference = eReference;
+		this.ruleAnalysis = ruleAnalysis;
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		return ruleMatch.getSize(eStructuralFeature, enumerationValue);
+		return ruleMatch.getSize(eReference, ruleAnalysis);
 	}
 
 	@Override
@@ -41,18 +42,18 @@ public class FeatureSizeCardinalitySolution extends AbstractCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof FeatureSizeCardinalitySolution)) {
+		if (!(obj instanceof EReferenceSizeCardinalitySolution)) {
 			return false;
 		}
-		FeatureSizeCardinalitySolution that = (FeatureSizeCardinalitySolution) obj;
-		if (this.eStructuralFeature != that.eStructuralFeature) return false;
-		if (!this.enumerationValue.equals(that.enumerationValue)) return false;
+		EReferenceSizeCardinalitySolution that = (EReferenceSizeCardinalitySolution) obj;
+		if (this.eReference != that.eReference) return false;
+		if (!ClassUtil.safeEquals(this.ruleAnalysis, that.ruleAnalysis)) return false;
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return getClass().hashCode() + eStructuralFeature.hashCode() + enumerationValue.hashCode() * 7;
+		return getClass().hashCode() + eReference.hashCode() + (ruleAnalysis != null ? ruleAnalysis.hashCode() * 7 : 0);
 	}
 
 	@Override
@@ -68,10 +69,11 @@ public class FeatureSizeCardinalitySolution extends AbstractCardinalitySolution
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
-		s.append(eStructuralFeature.getName());
-		if (!enumerationValue.isNull()) {
+		s.append(eReference.getName());
+		ParserRuleAnalysis ruleAnalysis2 = ruleAnalysis;
+		if (ruleAnalysis2 != null) {
 			s.append(".'");
-			s.append(enumerationValue.getName());
+			s.append(ruleAnalysis2.getName());
 			s.append("'");
 		}
 		s.append("|");
