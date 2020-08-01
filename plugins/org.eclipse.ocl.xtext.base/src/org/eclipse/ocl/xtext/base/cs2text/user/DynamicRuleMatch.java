@@ -26,6 +26,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 /**
  * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule
@@ -95,6 +96,11 @@ public class DynamicRuleMatch implements RuleMatch
 	@Override
 	public @NonNull Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		return slotsAnalysis.getSize(eStructuralFeature, enumerationValue);
+	}
+
+	@Override
+	public @NonNull Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull ParserRuleAnalysis ruleAnalysis) {
+		return slotsAnalysis.getSize(eStructuralFeature, ruleAnalysis);
 	}
 
 	@Override

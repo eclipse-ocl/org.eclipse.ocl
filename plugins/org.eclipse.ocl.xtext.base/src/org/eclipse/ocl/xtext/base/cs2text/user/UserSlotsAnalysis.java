@@ -540,6 +540,25 @@ public class UserSlotsAnalysis
 		}
 	}
 
+/*	public int getSize(@NonNull EStructuralFeature eStructuralFeature) {
+		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
+		if (slotAnalysis == null) {
+			return 0;
+		}
+		if (slotAnalysis.isCounted()) {
+			return slotAnalysis.asCounted();
+		}
+		else if (slotAnalysis.isEnumerated()) {
+			return slotAnalysis.asEnumerated(enumerationValue);
+		}
+		else if (slotAnalysis.isDiscriminated()) {
+			return slotAnalysis.asDiscriminated(ruleAnalysis);		// XXX
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	} */
+
 	public int getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
 		if (slotAnalysis == null) {
@@ -553,6 +572,25 @@ public class UserSlotsAnalysis
 		}
 		else if (slotAnalysis.isDiscriminated()) {
 			return slotAnalysis.asDiscriminated(null);		// XXX
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	public int getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull ParserRuleAnalysis ruleAnalysis) {
+		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
+		if (slotAnalysis == null) {
+			return 0;
+		}
+		/*if (slotAnalysis.isCounted()) {
+			return slotAnalysis.asCounted();
+		}
+		else if (slotAnalysis.isEnumerated()) {
+			return slotAnalysis.asEnumerated(enumerationValue);
+		}
+		else */if (slotAnalysis.isDiscriminated()) {
+			return slotAnalysis.asDiscriminated(ruleAnalysis);		// XXX
 		}
 		else {
 			throw new UnsupportedOperationException();

@@ -17,6 +17,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 /**
  * A RuleMatch identifoes some common expression evaluation functionality for constant folding by the compile-time StaticRuleMatch
@@ -44,4 +45,10 @@ public interface RuleMatch
 	 * number of slot elements that match known enumerationValue elements is returned. Returns null if not yet computable.
 	 */
 	@Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue);
+
+	/**#
+	 * Return the number of eStructuralFeature slot elements in the user model element. For a non-NullEnumerationValue, the
+	 * number of slot elements that match known enumerationValue elements is returned. Returns null if not yet computable.
+	 */
+	@Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull ParserRuleAnalysis ruleAnalysis);
 }

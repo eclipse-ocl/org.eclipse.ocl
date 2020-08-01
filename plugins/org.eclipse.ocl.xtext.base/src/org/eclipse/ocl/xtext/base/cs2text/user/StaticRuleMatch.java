@@ -35,6 +35,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.UnsupportedCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -377,6 +378,11 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 
 	@Override
 	public @Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
+		return null;
+	}
+
+	@Override
+	public @Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		return null;
 	}
 
