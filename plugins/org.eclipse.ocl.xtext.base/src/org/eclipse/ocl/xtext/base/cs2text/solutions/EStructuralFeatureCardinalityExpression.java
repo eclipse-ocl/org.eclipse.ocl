@@ -61,7 +61,6 @@ public class EStructuralFeatureCardinalityExpression extends AbstractCardinality
 		return null;
 	}
 
-
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(name);
