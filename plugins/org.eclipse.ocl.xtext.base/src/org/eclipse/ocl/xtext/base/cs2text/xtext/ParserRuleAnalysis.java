@@ -62,7 +62,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	/**
 	 * The EReferences that need a run-time check is needed that the actual user element is compatible with any rules.
 	 */
-	private @Nullable List<@NonNull EReference> discriminatedEReferences = null;
+	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
 
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
@@ -249,13 +249,14 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		for (Map.Entry<@NonNull EReference, @NonNull Object> entry : eReference2ruleAnalysisOrAnalyses.entrySet()) {
 			EReference eReference = entry.getKey();
 			Object ruleAnalysisOrAnalyses = eReference2ruleAnalysisOrAnalyses.get(eReference);
-			boolean needsParserRuleCheck  = false;
+			ParserRuleAnalysis discriminatingRuleAnalysis = null;
+			List<@NonNull ParserRuleAnalysis> discriminatingRuleAnalyses = null;
 			if (ruleAnalysisOrAnalyses instanceof ParserRuleAnalysis) {
 				// ?? check that it is not a derived rule
 				ParserRuleAnalysis ruleAnalysis = (ParserRuleAnalysis)ruleAnalysisOrAnalyses;
 				EClass returnedEClass = ruleAnalysis.getReturnedEClass();
 				if (returnedEClass != eReference.getEReferenceType()) {
-					needsParserRuleCheck  = true;		// XXX can probably be much stricter
+					discriminatingRuleAnalysis  = ruleAnalysis;		// XXX can probably be much stricter
 				}
 			}
 			else {
@@ -263,15 +264,27 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 				List<@NonNull ParserRuleAnalysis> ruleAnalyses = (List<@NonNull ParserRuleAnalysis>)ruleAnalysisOrAnalyses;
 				assert ruleAnalyses != null;
 				assert ruleAnalyses.size() >= 2;
-				needsParserRuleCheck = true;		// XXX can probably be much stricter
+				discriminatingRuleAnalyses = ruleAnalyses;		// XXX can probably be much stricter
 			}
-			if (needsParserRuleCheck) {
-				List<@NonNull EReference> discriminatedEReferences2 = discriminatedEReferences;
-				if (discriminatedEReferences2 == null) {
-					discriminatedEReferences = discriminatedEReferences2 = new ArrayList<>();
+			if ((discriminatingRuleAnalysis != null) || (discriminatingRuleAnalyses != null)) {
+				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses2 = eReference2disciminatingRuleAnalyses;
+				if (eReference2disciminatingRuleAnalyses2 == null) {
+					eReference2disciminatingRuleAnalyses = eReference2disciminatingRuleAnalyses2 = new HashMap<>();
 				}
-				if (!discriminatedEReferences2.contains(eReference)) {
-					discriminatedEReferences2.add(eReference);
+				List<@NonNull ParserRuleAnalysis> list = eReference2disciminatingRuleAnalyses2.get(eReference);
+				if (list == null) {
+					list = new ArrayList<>();
+					eReference2disciminatingRuleAnalyses2.put(eReference, list);
+				}
+				if ((discriminatingRuleAnalysis != null) && !list.contains(discriminatingRuleAnalysis)) {
+					list.add(discriminatingRuleAnalysis);
+				}
+				if (discriminatingRuleAnalyses != null) {
+					for (@NonNull ParserRuleAnalysis discriminatingRuleAnalysis2 : discriminatingRuleAnalyses) {
+						if (!list.contains(discriminatingRuleAnalysis2)) {
+							list.add(discriminatingRuleAnalysis2);
+						}
+					}
 				}
 			}
 		}
@@ -376,12 +389,12 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		return delegatedCalledRuleAnalysesClosure2;
 	}
 
-	public @Nullable Iterable<@NonNull EReference> getDiscriminatedEReferences() {
-		return discriminatedEReferences;
-	}
-
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
+	}
+
+	public @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> getEReference2DiscriminatingRuleAnalyses() {
+		return eReference2disciminatingRuleAnalyses;
 	}
 
 	public @NonNull ParserRule getParserRule() {

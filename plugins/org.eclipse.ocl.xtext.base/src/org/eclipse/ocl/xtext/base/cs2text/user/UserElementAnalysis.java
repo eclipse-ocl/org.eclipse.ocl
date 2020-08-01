@@ -11,8 +11,10 @@
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -49,7 +51,7 @@ public class UserElementAnalysis implements Nameable
 	protected final @Nullable UserElementAnalysis containingElementAnalysis;
 	protected final @Nullable EReference eContainmentFeature;
 	private @NonNull Iterable<@NonNull SerializationRule> serializationRules;
-	private @Nullable List<@NonNull EReference> discriminatedEReferences = null;
+	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
 
 	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable UserElementAnalysis containingElementAnalysis,
 			@Nullable EReference eContainmentFeature, @NonNull EObject eObject) {
@@ -94,15 +96,23 @@ public class UserElementAnalysis implements Nameable
 			ParserRuleAnalysis ruleAnalysis = serializationRule.getRuleAnalysis();
 			if (targetRuleAnalyses.contains(ruleAnalysis)) {
 				serializationRules.add(serializationRule);
-				Iterable<@NonNull EReference> ruleDiscriminatedEReferences = ruleAnalysis.getDiscriminatedEReferences();
-				if (ruleDiscriminatedEReferences != null) {
-					List<@NonNull EReference> discriminatedEReferences2 = discriminatedEReferences;
-					if (discriminatedEReferences2 == null) {
-						discriminatedEReferences = discriminatedEReferences2 = new ArrayList<>();
+				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
+				if (ruleDiscriminatingEReferences != null) {
+					Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses2 = eReference2disciminatingRuleAnalyses;
+					if (eReference2disciminatingRuleAnalyses2 == null) {
+						eReference2disciminatingRuleAnalyses = eReference2disciminatingRuleAnalyses2 = new HashMap<>();
 					}
-					for (@NonNull EReference discriminatedEReference : ruleDiscriminatedEReferences) {
-						if (!discriminatedEReferences2.contains(discriminatedEReference)) {
-							discriminatedEReferences2.add(discriminatedEReference);
+					for (Map.Entry<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> entry : ruleDiscriminatingEReferences.entrySet()) {
+						EReference eReference = entry.getKey();
+						List<@NonNull ParserRuleAnalysis> list = eReference2disciminatingRuleAnalyses2.get(eReference);
+						if (list == null) {
+							list = new ArrayList<>();
+							eReference2disciminatingRuleAnalyses2.put(eReference, list);
+						}
+						for (@NonNull ParserRuleAnalysis ruleAnalysis2 : entry.getValue()) {
+							if (!list.contains(ruleAnalysis2)) {
+								list.add(ruleAnalysis2);
+							}
 						}
 					}
 				}
@@ -151,7 +161,7 @@ public class UserElementAnalysis implements Nameable
 	}
 
 	protected @NonNull UserSlotsAnalysis getSlotsAnalysis() {
-		return new UserSlotsAnalysis(getSerializationRules(), eObject, discriminatedEReferences);
+		return new UserSlotsAnalysis(modelAnalysis, getSerializationRules(), eObject, eReference2disciminatingRuleAnalyses);
 	}
 
 	@Override

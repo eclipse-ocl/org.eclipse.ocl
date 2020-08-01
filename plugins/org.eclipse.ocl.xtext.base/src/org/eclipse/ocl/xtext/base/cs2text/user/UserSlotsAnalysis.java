@@ -36,25 +36,66 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Lists;
 
 public class UserSlotsAnalysis
 {
+	/**
+	 * A UserSlotAnalysis provides the actual run-time analysis of a particular user element slot.
+	 *
+	 * Derived classes implement distinct approach for counting slot content.
+	 */
 	public static interface UserSlotAnalysis
 	{
+		/**
+		 * Return the number of slot elements for a CountedSlotAnalysis or throw an IllegalStateException otherwose.
+		 */
 		int asCounted();
+
+		/**
+		 * Return the number of ruleAnalysis slot elements for an DiscriminatedSlotAnalysis or throw an IllegalStateException otherwose.
+		 */
+		int asDiscriminated(/* XXX @Nullable*/ ParserRuleAnalysis ruleAnalysis);
+
+		/**
+		 * Return the number of enumerationValue slot elements for an EnmeratedSlotAnalysis or throw an IllegalStateException otherwose.
+		 */
 		int asEnumerated(@NonNull EnumerationValue enumerationValue);
+
+		/**
+		 * Return true if this is a CountedSlotAnalysis.
+		 */
 		boolean isCounted();
+
+		/**
+		 * Return true if this is a DiscriminatedSlotAnalysis.
+		 */
+		boolean isDiscriminated();
+
+		/**
+		 * Return true if this is an EnmeratedSlotAnalysis.
+		 */
 		boolean isEnumerated();
 	}
 
+	/**
+	 * A CountedSlotAnalysis provides the default analysis of a slot of indeterminate compile-time content.
+	 * The analysis provides a simple count of the actual number of slots.
+	 */
 	public static class CountedSlotAnalysis implements UserSlotAnalysis
 	{
-		// Empty, default-less slot
-		public static final int ZERO = 0;
-		// Explicitly or implicitly non-default slot
-		public static final int ONE = 1;
+		private static final @NonNull CountedSlotAnalysis ZERO = new CountedSlotAnalysis(0);
+		private static @NonNull CountedSlotAnalysis ONE = new CountedSlotAnalysis(1);
+
+		public static @NonNull CountedSlotAnalysis valueOf(int value) {
+			switch (value) {
+				case 0: return ZERO;
+				case 1: return ONE;
+				default: return new CountedSlotAnalysis(value);
+			}
+		}
 
 		protected final int count;
 
@@ -68,6 +109,11 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
+		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleAnalysis ruleAnalysis) {
+			throw new IllegalStateException();
+		}
+
+		@Override
 		public int asEnumerated(@NonNull EnumerationValue enumerationValue) {
 			throw new IllegalStateException();
 		}
@@ -75,6 +121,11 @@ public class UserSlotsAnalysis
 		@Override
 		public boolean isCounted() {
 			return true;
+		}
+
+		@Override
+		public boolean isDiscriminated() {
+			return false;
 		}
 
 		@Override
@@ -88,6 +139,88 @@ public class UserSlotsAnalysis
 		}
 	}
 
+	/**
+	 * A DiscriminatedSlotAnalysis provides the analysis of a (typically many)-valued EReference slot
+	 * whose values may match some but not all possible rules applicable to their congtaining asignment.
+	 */
+	public static class DiscriminatedSlotAnalysis implements UserSlotAnalysis
+	{
+		private final @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull Integer> ruleAnalysis2count = new HashMap<>();
+
+		protected final int count;
+
+		public DiscriminatedSlotAnalysis(int count) {
+			this.count = count;
+		}
+
+		public void analyzeEReference(@NonNull UserElementAnalysis elementAnalysis, @NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+			elementAnalysis.toString();
+		}
+
+		public @Nullable Integer basicGet(@NonNull ParserRuleAnalysis ruleAnalysis) {
+			return ruleAnalysis2count.get(ruleAnalysis);
+		}
+
+		@Override
+		public int asCounted() {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleAnalysis ruleAnalysis) {
+			Integer value = ruleAnalysis2count.get(ruleAnalysis);
+		//	return value != null ? value.intValue() : 0;			// XXX
+			return count;
+		}
+
+		@Override
+		public int asEnumerated(@NonNull EnumerationValue enumerationValue) {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public boolean isCounted() {
+			return false;
+		}
+
+		@Override
+		public boolean isDiscriminated() {
+			return true;
+		}
+
+		@Override
+		public boolean isEnumerated() {
+			return false;
+		}
+
+		public void put(@NonNull ParserRuleAnalysis ruleAnalysis, int count) {
+			ruleAnalysis2count.put(ruleAnalysis, count);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			List<@NonNull ParserRuleAnalysis> keys  = new ArrayList<>(ruleAnalysis2count.keySet());
+			Collections.sort(keys, NameUtil.NAMEABLE_COMPARATOR);
+			boolean isFirst = true;
+			for (@NonNull ParserRuleAnalysis key : keys) {
+				if (!isFirst) {
+					s.append(",");
+				}
+				s.append(key);
+				s.append("=");
+				s.append(ruleAnalysis2count.get(key));
+				isFirst = false;
+			}
+			return s.toString();
+		}
+	}
+
+	/**
+	 * An EnumeratedSlotAnalysis provides the analysis of a (typically many)-valued String EAttribute slot
+	 * whose string values are defined at compile-time by the grammar. The String value therefore acts as an
+	 * enumeration and is maintained as an EnumerationValue.
+	 */
 	public static class EnumeratedSlotAnalysis implements UserSlotAnalysis
 	{
 		private final @NonNull Map<@NonNull EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
@@ -102,6 +235,11 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
+		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleAnalysis ruleAnalysis) {
+			throw new IllegalStateException();
+		}
+
+		@Override
 		public int asEnumerated(@NonNull EnumerationValue enumerationValue) {
 			Integer value = enumerationValue2count.get(enumerationValue);
 			return value != null ? value.intValue() : 0;
@@ -109,6 +247,11 @@ public class UserSlotsAnalysis
 
 		@Override
 		public boolean isCounted() {
+			return false;
+		}
+
+		@Override
+		public boolean isDiscriminated() {
 			return false;
 		}
 
@@ -140,19 +283,18 @@ public class UserSlotsAnalysis
 		}
 	}
 
-	private static final @NonNull CountedSlotAnalysis ZERO = new CountedSlotAnalysis(CountedSlotAnalysis.ZERO);
-	private static @NonNull CountedSlotAnalysis ONE = new CountedSlotAnalysis(CountedSlotAnalysis.ONE);
-
+	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject eObject;
 	protected final @Nullable Iterable<@NonNull SerializationRule> serializationRules;
-	protected final @Nullable Iterable<@NonNull EReference> discriminatedEReferences;
+	protected final @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis;
 
-	public UserSlotsAnalysis(@Nullable Iterable<@NonNull SerializationRule> serializationRules, @NonNull EObject eObject,
-			@Nullable Iterable<@NonNull EReference> discriminatedEReferences) {
+	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable Iterable<@NonNull SerializationRule> serializationRules, @NonNull EObject eObject,
+			@Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses) {
+		this.modelAnalysis = modelAnalysis;
 		this.eObject = eObject;
 		this.serializationRules = serializationRules;
-		this.discriminatedEReferences = discriminatedEReferences;
+		this.eReference2disciminatedRuleAnalyses = eReference2disciminatedRuleAnalyses;
 		this.eStructuralFeature2slotAnalysis = analyze();
 	}
 
@@ -211,12 +353,12 @@ public class UserSlotsAnalysis
 				slotAnalysis = enumeratedSlotAnalysis;
 			}
 			else {
-				slotAnalysis = valueOf(size);
+				slotAnalysis = CountedSlotAnalysis.valueOf(size);
 			}
 		}
 		else if (object instanceof Boolean) {
 			// NB Xtext has no ability to explicitly define a false Boolean.
-			slotAnalysis = valueOf(object == Boolean.TRUE ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
+			slotAnalysis = CountedSlotAnalysis.valueOf(object == Boolean.TRUE ? 1 : 0);
 		}
 		else if (eObject.eIsSet(eAttribute)) {
 			Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
@@ -234,11 +376,11 @@ public class UserSlotsAnalysis
 				slotAnalysis = enumeratedSlotAnalysis;
 			}
 			else {
-				slotAnalysis = valueOf(CountedSlotAnalysis.ONE);
+				slotAnalysis = CountedSlotAnalysis.valueOf(1);
 			}
 		}
 		else if (eAttribute.isUnsettable()) {
-			slotAnalysis = valueOf(CountedSlotAnalysis.ZERO);
+			slotAnalysis = CountedSlotAnalysis.valueOf(0);
 		}
 		else {
 			boolean allRulesNeedDefault = true;
@@ -250,7 +392,7 @@ public class UserSlotsAnalysis
 					break;
 				}
 			}
-			slotAnalysis = valueOf(allRulesNeedDefault ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
+			slotAnalysis = CountedSlotAnalysis.valueOf(allRulesNeedDefault ? 1 : 0);
 		}
 		return slotAnalysis;
 	}
@@ -260,13 +402,36 @@ public class UserSlotsAnalysis
 			return null;
 		}
 		Object object = eObject.eGet(eReference);
+		if (eReference2disciminatedRuleAnalyses != null) {
+			List<@NonNull ParserRuleAnalysis> ruleAnalyses = eReference2disciminatedRuleAnalyses.get(eReference);
+			if (ruleAnalyses != null) {
+				if (eReference.isMany()) {
+					List<?> elements = (List<?>)object;
+					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(elements.size());
+					for (Object element : elements) {
+						if (element != null) {			// null is not serializeable/parseable
+							UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis((EObject)element);
+							discriminatedSlotAnalysis.analyzeEReference(elementAnalysis, ruleAnalyses);
+						}
+					}
+					return discriminatedSlotAnalysis;
+				}
+				else if (object != null){
+					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(object != null ? 1 : 0);
+					UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis((EObject)object);
+					discriminatedSlotAnalysis.analyzeEReference(elementAnalysis, ruleAnalyses);
+					return discriminatedSlotAnalysis;
+				}
+			}
+		}
 		if (eReference.isMany()) {
 			List<?> elements = (List<?>)object;
+			assert elements != null;
 			int size = elements.size();
-			return valueOf(size);
+			return CountedSlotAnalysis.valueOf(size);
 		}
 		else {
-			return  valueOf(object != null ? CountedSlotAnalysis.ONE : CountedSlotAnalysis.ZERO);
+			return CountedSlotAnalysis.valueOf(object != null ? 1 : 0);
 		}
 	}
 
@@ -386,6 +551,9 @@ public class UserSlotsAnalysis
 		else if (slotAnalysis.isEnumerated()) {
 			return slotAnalysis.asEnumerated(enumerationValue);
 		}
+		else if (slotAnalysis.isDiscriminated()) {
+			return slotAnalysis.asDiscriminated(null);		// XXX
+		}
 		else {
 			throw new UnsupportedOperationException();
 		}
@@ -403,25 +571,19 @@ public class UserSlotsAnalysis
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		List<@NonNull EStructuralFeature> keys  = new ArrayList<>(eStructuralFeature2slotAnalysis.keySet());
-		Collections.sort(keys, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-		boolean isFirst = true;
-		for (@NonNull EStructuralFeature key : keys) {
-			if (!isFirst) {
-				s.append(", ");
+		if (ClassUtil.maybeNull(eStructuralFeature2slotAnalysis) != null) {
+			List<@NonNull EStructuralFeature> keys  = new ArrayList<>(eStructuralFeature2slotAnalysis.keySet());
+			Collections.sort(keys, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+			boolean isFirst = true;
+			for (@NonNull EStructuralFeature key : keys) {
+				if (!isFirst) {
+					s.append(", ");
+				}
+				s.append(key.getName());
+				s.append("=");
+				s.append(eStructuralFeature2slotAnalysis.get(key));
+				isFirst = false;
 			}
-			s.append(key.getName());
-			s.append("=");
-			s.append(eStructuralFeature2slotAnalysis.get(key));
-			isFirst = false;
-		}
-	}
-
-	public @NonNull CountedSlotAnalysis valueOf(int value) {
-		switch (value) {
-			case CountedSlotAnalysis.ZERO: return ZERO;
-			case CountedSlotAnalysis.ONE: return ONE;
-			default: return new CountedSlotAnalysis(value);
 		}
 	}
 }
