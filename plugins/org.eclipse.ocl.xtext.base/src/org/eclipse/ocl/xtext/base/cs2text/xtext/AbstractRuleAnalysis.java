@@ -10,15 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.xtext.AbstractRule;
 
 /**
@@ -44,12 +37,12 @@ public class AbstractRuleAnalysis implements Nameable
 	/**
 	 * RuleAnalyses that this RuleAnalysis may be directly used as an alternative for.
 	 */
-	private @Nullable List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses = null;		// XXX obsolete
+//	private @Nullable List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses = null;		// XXX obsolete
 
 	/**
 	 * Lazily computed closure of RuleAnalyses that this RuleAnalysis may be used as an alternative for.
 	 */
-	private @Nullable UniqueList<@NonNull AbstractRuleAnalysis> baseRuleAnalysesClosure = null;
+//	private @Nullable UniqueList<@NonNull AbstractRuleAnalysis> baseRuleAnalysesClosure = null;
 
 	/**
 	 * The terms for each possible permutation of alternatives.
@@ -67,7 +60,7 @@ public class AbstractRuleAnalysis implements Nameable
 		this.name = grammarName + "::" + XtextGrammarUtil.getName(abstractRule);
 	}
 
-	public void addBaseRuleAnalysis(@NonNull AbstractRuleAnalysis baseRuleAnalysis) {
+/*	public void addBaseRuleAnalysis(@NonNull AbstractRuleAnalysis baseRuleAnalysis) {
 		List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses2 = baseRuleAnalyses;
 		if (baseRuleAnalyses2 == null) {
 			baseRuleAnalyses = baseRuleAnalyses2 = new ArrayList<>();
@@ -75,22 +68,22 @@ public class AbstractRuleAnalysis implements Nameable
 		if (!baseRuleAnalyses2.contains(baseRuleAnalysis)) {
 			baseRuleAnalyses2.add(baseRuleAnalysis);
 		}
-	}
+	} */
 
 //	public void addTermsAnalysis(@NonNull XtextTermsAnalysis termsAnalysis) {
 //		assert termsAnalyses != null;
 //		termsAnalyses.add(termsAnalysis);
 //	}
 
-	public @Nullable List<@NonNull AbstractRuleAnalysis> basicGetBaseRuleAnalyses() {
+/*	public @Nullable List<@NonNull AbstractRuleAnalysis> basicGetBaseRuleAnalyses() {
 		return baseRuleAnalyses;
-	}
+	} */
 
 //	public @Nullable List<@NonNull XtextTermsAnalysis> basicGetTermsAnalyses() {
 //		return termsAnalyses;
 //	}
 
-	public @NonNull UniqueList<@NonNull AbstractRuleAnalysis> getBaseRuleAnalysisClosure() {
+/*	public @NonNull UniqueList<@NonNull AbstractRuleAnalysis> getBaseRuleAnalysisClosure() {
 		UniqueList<@NonNull AbstractRuleAnalysis> baseRuleAnalysesClosure = this.baseRuleAnalysesClosure;
 		if (baseRuleAnalysesClosure == null) {
 			baseRuleAnalysesClosure = new UniqueList<>();
@@ -106,7 +99,7 @@ public class AbstractRuleAnalysis implements Nameable
 		Collections.sort(baseRuleAnalysesClosure, NameUtil.NAMEABLE_COMPARATOR);
 		this.baseRuleAnalysesClosure = baseRuleAnalysesClosure;
 		return baseRuleAnalysesClosure;
-	}
+	} */
 
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
@@ -155,7 +148,7 @@ public class AbstractRuleAnalysis implements Nameable
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(getName());
-		s.append(" -> ");
+	/*	s.append(" -> ");
 		boolean isFirst1 = true;
 		for (@NonNull AbstractRuleAnalysis baseRuleAnalyses : getBaseRuleAnalysisClosure()) {
 			if (!isFirst1) {
@@ -163,7 +156,7 @@ public class AbstractRuleAnalysis implements Nameable
 			}
 			s.append(baseRuleAnalyses.getName());
 			isFirst1 = false;
-		}
+		} */
 /*		s.append(" <=> ");
 		boolean isFirst2 = true;
 		for (@NonNull EClassifier eClassifier : eClassifiers) {

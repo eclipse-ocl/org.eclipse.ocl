@@ -12,12 +12,12 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
@@ -75,7 +75,8 @@ public class AssignmentAnalysis implements Nameable
 	//	assert terminal instanceof RuleCall;
 		AbstractRule terminalRule;
 		if (terminal instanceof CrossReference) {
-			terminalRule = XtextGrammarUtil.getRule((RuleCall)((CrossReference)terminal).getTerminal());
+			RuleCall ruleCall = (RuleCall)XtextGrammarUtil.getTerminal((CrossReference)terminal);
+			terminalRule = XtextGrammarUtil.getRule(ruleCall);
 			this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
 		}
 		else if (terminal instanceof RuleCall)  {
@@ -115,15 +116,16 @@ public class AssignmentAnalysis implements Nameable
 			getClass();		// XXX debugging
 		}
 		if (terminal instanceof RuleCall) {
-			AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
+		//	AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
 			if (terminalRuleAnalysis instanceof ParserRuleAnalysis) {
 				for (@NonNull ParserRuleAnalysis ruleAnalysis : ((ParserRuleAnalysis)terminalRuleAnalysis).debugCalledRuleAnalysesClosure) { //getCallingRuleAnalysisClosure()) {
 					targetRuleAnalyses.add(ruleAnalysis);
 				}
 			}
-			else {
+			else if (terminalRuleAnalysis != null) {
 				targetRuleAnalyses.add(terminalRuleAnalysis);
 			}
+			else {}		// Keywords ???
 		}
 		else if (terminal instanceof Alternatives) {
 			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements((Alternatives)terminal)) {
@@ -193,20 +195,20 @@ public class AssignmentAnalysis implements Nameable
 		return targetRuleAnalyses;
 	}
 
-	public @NonNull AbstractRuleAnalysis getTerminalRuleAnalysis() {
+	public @Nullable AbstractRuleAnalysis getTerminalRuleAnalysis() {
 		return terminalRuleAnalysis;
 	}
 
 	/**
 	 * Return true if sourceActualRuleAnalysis produces an acceptable result for use as the source of this assignment.
-	 */
+	 *
 	public boolean sourceIsAssignableFrom(@NonNull AbstractRuleAnalysis sourceActualRuleAnalysis) {
 		return sourceActualRuleAnalysis.getBaseRuleAnalysisClosure().contains(this.sourceRuleAnalysis);
-	}
+	} */
 
 	/**
 	 * Return true if targetActualRuleAnalysis produces an acceptable result for use as the target of this assignment.
-	 */
+	 *
 	public boolean targetIsAssignableFrom(@NonNull AbstractRuleAnalysis targetActualRuleAnalysis) {
 		Set<@NonNull AbstractRuleAnalysis> targetActualRuleAnalysisClosure = targetActualRuleAnalysis.getBaseRuleAnalysisClosure();
 		for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : this.targetRuleAnalyses) {
@@ -215,7 +217,7 @@ public class AssignmentAnalysis implements Nameable
 			}
 		}
 		return false;
-	}
+	} */
 
 	@Override
 	public @NonNull String toString() {

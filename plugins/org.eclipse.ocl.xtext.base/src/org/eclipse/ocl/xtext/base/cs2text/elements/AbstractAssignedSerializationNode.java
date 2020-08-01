@@ -15,6 +15,7 @@ import java.util.Stack;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
@@ -60,7 +61,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @NonNull AbstractRuleAnalysis getRuleAnalysis() {
+	public @Nullable AbstractRuleAnalysis getRuleAnalysis() {
 		return assignmentAnalysis.getTerminalRuleAnalysis();
 	}
 }

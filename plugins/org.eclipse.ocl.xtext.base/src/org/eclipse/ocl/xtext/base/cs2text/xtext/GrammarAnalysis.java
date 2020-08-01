@@ -439,9 +439,9 @@ public class GrammarAnalysis
 	@Override
 	public @NonNull String toString() {
 		Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = this.rule2ruleAnalysis;
-		if (rule2ruleAnalysis == null) {
-			return "«not-ready»";
-		}
+	//	if (rule2ruleAnalysis == null) {
+	//		return "«not-ready»";
+	//	}
 		StringBuilder s = new StringBuilder();
 		s.append("Xtext production rule -> Xtext base rules <=> User EClass - User EStructuralFeatures");
 		List<@NonNull AbstractRuleAnalysis> abstractRuleAnalyses = new ArrayList<>(rule2ruleAnalysis.values());
