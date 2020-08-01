@@ -69,7 +69,7 @@ public class UserModelAnalysis
 	 */
 	public void analyze(@NonNull EObject model) {
 		assert model.eContainer() == null;
-		UserElementAnalysis rootElementAnalysis = new UserElementAnalysis(this, model);
+		UserElementAnalysis rootElementAnalysis = new UserElementAnalysis(this, null, null, model);
 		analyzeHierarchy(rootElementAnalysis, model);
 		rootElementAnalysis.getSerializationRules();		// Avoid lazy serializationRules being omiited by a toString().
 	}

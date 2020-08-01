@@ -50,21 +50,10 @@ public class UserElementAnalysis implements Nameable
 	protected final @Nullable EReference eContainmentFeature;
 	private @NonNull Iterable<@NonNull SerializationRule> serializationRules;
 
-	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull EObject eObject) {
-		assert eObject.eContainer() == null;
-		this.modelAnalysis = modelAnalysis;
-		this.grammarAnalysis = modelAnalysis.getGrammarAnalysis();
-		this.eObject = eObject;
-		this.eClass = UserModelAnalysis.eClass(eObject);
-		this.name = eClass.getName() + "@" + ++count;
-		this.containingElementAnalysis = null;
-		this.eContainmentFeature = null;
-		this.serializationRules = grammarAnalysis.getSerializationRules(eClass);
-	}
-
-	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @NonNull UserElementAnalysis containingElementAnalysis,
-			@NonNull EReference eContainmentFeature, @NonNull EObject eObject) {
-		assert eObject.eContainer() != null;
+	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable UserElementAnalysis containingElementAnalysis,
+			@Nullable EReference eContainmentFeature, @NonNull EObject eObject) {
+		assert (eContainmentFeature == null) == (containingElementAnalysis == null);
+		assert eObject.eContainer() == (containingElementAnalysis == null ? null : containingElementAnalysis.getEObject());
 		this.modelAnalysis = modelAnalysis;
 		this.grammarAnalysis = modelAnalysis.getGrammarAnalysis();
 		this.eObject = eObject;
@@ -83,25 +72,26 @@ public class UserElementAnalysis implements Nameable
 		if ("SelfExpCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
-		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
 		UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
-		if (containingElementAnalysis2 != null) {
-			Set<AbstractRuleAnalysis> targetRuleAnalyses = new HashSet<>();
-			for (@NonNull SerializationRule parentSerializationRule : grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass())) {
-				assert eContainmentFeature != null;
-				Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = parentSerializationRule.getAssignedSerializationNodes(eContainmentFeature);
-				if (assignedSerializationNodes != null) {
-					for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
-						for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
-							targetRuleAnalyses.add(targetRuleAnalysis);
-						}
+		if (containingElementAnalysis2 == null) {
+			return grammarAnalysis.getSerializationRules(eClass);
+		}
+		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
+		Set<AbstractRuleAnalysis> targetRuleAnalyses = new HashSet<>();
+		for (@NonNull SerializationRule parentSerializationRule : grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass())) {
+			assert eContainmentFeature != null;
+			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = parentSerializationRule.getAssignedSerializationNodes(eContainmentFeature);
+			if (assignedSerializationNodes != null) {
+				for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+					for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
+						targetRuleAnalyses.add(targetRuleAnalysis);
 					}
 				}
 			}
-			for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
-				if (targetRuleAnalyses.contains(serializationRule.getRuleAnalysis())) {
-					serializationRules.add(serializationRule);
-				}
+		}
+		for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+			if (targetRuleAnalyses.contains(serializationRule.getRuleAnalysis())) {
+				serializationRules.add(serializationRule);
 			}
 		}
 		return serializationRules;
