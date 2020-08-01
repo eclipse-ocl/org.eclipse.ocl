@@ -32,7 +32,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.AbstractCardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeCardinalityExpression;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeCardinalityExpression0;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceCardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
@@ -77,7 +77,7 @@ public class StaticRuleMatch implements RuleMatch
 			String name = String.format("E%02d", feature2expression.size());
 			assert name != null;;
 			if (eStructuralFeature instanceof EAttribute) {
-				cardinalityExpression = new EAttributeCardinalityExpression(name, (EAttribute)eStructuralFeature, NullEnumerationValue.INSTANCE);
+				cardinalityExpression = new EAttributeCardinalityExpression0(name, (EAttribute)eStructuralFeature, NullEnumerationValue.INSTANCE);
 			}
 			else {
 				cardinalityExpression = new EReferenceCardinalityExpression(name, (EReference)eStructuralFeature, null);

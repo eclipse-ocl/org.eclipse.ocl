@@ -33,13 +33,13 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
  * Multiple CardinalityExpressions provide a set of simultaneous equations for which an integer solution mmust be found to
  * select a potential serialization option.
  */
-public class EAttributeCardinalityExpression extends AbstractCardinalityExpression
+public abstract class EAttributeCardinalityExpression extends AbstractCardinalityExpression
 {
 	protected final @NonNull EAttribute eAttribute;
 	protected final @NonNull EnumerationValue enumerationValue;
 	private @Nullable Map<@NonNull EnumerationValue, @NonNull AbstractCardinalityExpression> enumerationValue2cardinalityExpression = null;
 
-	public EAttributeCardinalityExpression(@NonNull String name, @NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+	protected EAttributeCardinalityExpression(@NonNull String name, @NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		super(name);
 		this.eAttribute = eAttribute;
 		this.enumerationValue = enumerationValue;
@@ -85,7 +85,12 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 		if (cardinalityExpression == null) {
 			grammarAnalysis.addEnumeration(eAttribute, enumerationValue);
 			String subName = name + "." + enumerationValue2cardinalityExpression2.size();
-			cardinalityExpression = new EAttributeCardinalityExpression(subName, eAttribute, enumerationValue);
+			if (enumerationValue.isNull()) {
+				cardinalityExpression = new EAttributeCardinalityExpression0(subName, eAttribute, enumerationValue);
+			}
+			else {
+				cardinalityExpression = new EAttributeCardinalityExpression1(subName, eAttribute, enumerationValue);
+			}
 			enumerationValue2cardinalityExpression2.put(enumerationValue, cardinalityExpression);
 		}
 		return cardinalityExpression;
