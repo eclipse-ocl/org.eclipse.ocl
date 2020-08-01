@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -25,9 +24,9 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull EReference eReference;
-	protected final @Nullable ParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 
-	public EReferenceSizeCardinalitySolution(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis) {
+	public EReferenceSizeCardinalitySolution(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		this.eReference = eReference;
 		this.ruleAnalysis = ruleAnalysis;
 	}
@@ -47,13 +46,13 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 		}
 		EReferenceSizeCardinalitySolution that = (EReferenceSizeCardinalitySolution) obj;
 		if (this.eReference != that.eReference) return false;
-		if (!ClassUtil.safeEquals(this.ruleAnalysis, that.ruleAnalysis)) return false;
+		if (!this.ruleAnalysis.equals(that.ruleAnalysis)) return false;
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		return getClass().hashCode() + eReference.hashCode() + (ruleAnalysis != null ? ruleAnalysis.hashCode() * 7 : 0);
+		return getClass().hashCode() + eReference.hashCode() + ruleAnalysis.hashCode() * 7;
 	}
 
 	@Override
@@ -70,12 +69,8 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
 		s.append(eReference.getName());
-		ParserRuleAnalysis ruleAnalysis2 = ruleAnalysis;
-		if (ruleAnalysis2 != null) {
-			s.append(".'");
-			s.append(ruleAnalysis2.getName());
-			s.append("'");
-		}
-		s.append("|");
+		s.append(".'");
+		s.append(ruleAnalysis.getName());
+		s.append("'|");
 	}
 }

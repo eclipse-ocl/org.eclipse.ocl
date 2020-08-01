@@ -32,7 +32,6 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.AbstractCardinalityExpressio
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeCardinalityExpression;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceCardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureCardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
@@ -82,11 +81,11 @@ public class StaticRuleMatch implements RuleMatch
 					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
 				}
 				else {
-					cardinalityExpression = new EAttributeCardinalityExpression(name, (EAttribute)eStructuralFeature, enumerationValue); // NullEnumerationValue.INSTANCE);
+					cardinalityExpression = new EAttributeCardinalityExpression(name, (EAttribute)eStructuralFeature, enumerationValue);
 				}
 			}
 			else {
-				cardinalityExpression = new EReferenceCardinalityExpression(name, (EReference)eStructuralFeature, null);
+				cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
 			}
 			feature2expression.put(eStructuralFeature, cardinalityExpression);
 		}
@@ -401,7 +400,7 @@ protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpre
 	}
 
 	@Override
-	public @Nullable Integer getSize(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis) {
+	public @Nullable Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		return null;
 	}
 

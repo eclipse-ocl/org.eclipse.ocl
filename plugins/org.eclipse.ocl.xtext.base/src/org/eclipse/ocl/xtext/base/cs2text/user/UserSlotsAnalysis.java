@@ -588,12 +588,12 @@ public class UserSlotsAnalysis
 		}
 	}
 
-	public int getSize(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis) {
+	public int getSize(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eReference);
 		if (slotAnalysis == null) {
 			return 0;
 		}
-		if (slotAnalysis.isCounted() && (ruleAnalysis == null)) {
+		if (slotAnalysis.isCounted()) {
 			return slotAnalysis.asCounted();
 		}
 		/*else if (slotAnalysis.isEnumerated()) {

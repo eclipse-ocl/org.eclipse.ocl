@@ -58,5 +58,5 @@ public interface RuleMatch
 	 * Return the number of eStructuralFeature slot elements in the user model element. For a non-NullEnumerationValue, the
 	 * number of slot elements that match known enumerationValue elements is returned. Returns null if not yet computable.
 	 */
-	@Nullable Integer getSize(@NonNull EReference eReference, @Nullable ParserRuleAnalysis ruleAnalysis);
+	@Nullable Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis);
 }
