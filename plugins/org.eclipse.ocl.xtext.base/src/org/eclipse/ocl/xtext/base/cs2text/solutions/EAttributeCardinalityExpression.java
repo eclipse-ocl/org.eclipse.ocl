@@ -86,7 +86,7 @@ public abstract class EAttributeCardinalityExpression extends AbstractCardinalit
 			grammarAnalysis.addEnumeration(eAttribute, enumerationValue);
 			String subName = name + "." + enumerationValue2cardinalityExpression2.size();
 			if (enumerationValue.isNull()) {
-				cardinalityExpression = new EAttributeCardinalityExpression0(subName, eAttribute, enumerationValue);
+				cardinalityExpression = new EStructuralFeatureCardinalityExpression(subName, eAttribute);
 			}
 			else {
 				cardinalityExpression = new EAttributeCardinalityExpression1(subName, eAttribute, enumerationValue);
