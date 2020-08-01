@@ -19,11 +19,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.DelegateSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
@@ -57,6 +59,11 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	private @Nullable List<@NonNull RuleCall> delegatingRuleCalls = null;
 	private @Nullable List<@NonNull ParserRuleAnalysis> delegatedCalledRuleAnalysesClosure = null;	// XXX 2/3 of these closures should be redundant
 
+	/**
+	 * The EReferences that need a run-time check is needed that the actual user element is compatible with any rules.
+	 */
+	private @Nullable List<@NonNull EReference> discriminatedEReferences = null;
+
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
 		this.eClass = eClass;
@@ -85,7 +92,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
 	protected void analyze() {
-		if ("EssentialOCL::SelfExpCS".equals(getName())) {
+		if ("EssentialOCL::RoundBracketedClauseCS".equals(getName())) {
 			getClass(); // XXX debugging
 		}
 	/*	for (EObject eObject : new TreeIterable(abstractRule, false)) {
@@ -146,6 +153,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			Collections.sort(serializationRules, new SerializationRuleComparator());
 		}
 		this.serializationRules = serializationRules;
+		analyzeSerializations(serializationRules);
 	}
 
 	/**
@@ -156,32 +164,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		AbstractElement rootElement = XtextGrammarUtil.getAlternatives(getRule());
 		this.delegatingRuleCalls  = analyzeDelegatingRuleCalls(rootElement);
 		return analyzeActionsAndAssignments(rootElement, null);
-	}
-
-	/**
-	 *	Return the RuleCalls that are invoked directly without any prefix/suffix terms..
-	 */
-	private @Nullable List<@NonNull RuleCall> analyzeDelegatingRuleCalls(@NonNull AbstractElement abstractElement) {
-		if (abstractElement instanceof RuleCall) {
-			RuleCall ruleCall = (RuleCall)abstractElement;
-			return Collections.singletonList(ruleCall);
-		}
-		else if (abstractElement instanceof Alternatives) {
-			List<@NonNull RuleCall> outerDelegatingRuleCalls = null;
-			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((Alternatives)abstractElement)) {
-				List<@NonNull RuleCall> innerDelegatingRuleCalls = analyzeDelegatingRuleCalls(nestedElement);
-				if (innerDelegatingRuleCalls != null) {
-					if (outerDelegatingRuleCalls == null) {
-						outerDelegatingRuleCalls = new ArrayList<>();
-					}
-					outerDelegatingRuleCalls.addAll(innerDelegatingRuleCalls);
-				}
-			}
-			return outerDelegatingRuleCalls;
-		}
-		else {		// The current rule calls are decorated and so cannot delegate
-			return null;
-		}
 	}
 
 	/**
@@ -224,6 +206,111 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			}
 		}
 		return firstUnassignedRuleCall;
+	}
+
+	/**
+	 *	Return the RuleCalls that are invoked directly without any prefix/suffix terms..
+	 */
+	private @Nullable List<@NonNull RuleCall> analyzeDelegatingRuleCalls(@NonNull AbstractElement abstractElement) {
+		if (abstractElement instanceof RuleCall) {
+			RuleCall ruleCall = (RuleCall)abstractElement;
+			return Collections.singletonList(ruleCall);
+		}
+		else if (abstractElement instanceof Alternatives) {
+			List<@NonNull RuleCall> outerDelegatingRuleCalls = null;
+			for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((Alternatives)abstractElement)) {
+				List<@NonNull RuleCall> innerDelegatingRuleCalls = analyzeDelegatingRuleCalls(nestedElement);
+				if (innerDelegatingRuleCalls != null) {
+					if (outerDelegatingRuleCalls == null) {
+						outerDelegatingRuleCalls = new ArrayList<>();
+					}
+					outerDelegatingRuleCalls.addAll(innerDelegatingRuleCalls);
+				}
+			}
+			return outerDelegatingRuleCalls;
+		}
+		else {		// The current rule calls are decorated and so cannot delegate
+			return null;
+		}
+	}
+
+	private void analyzeSerializations(@NonNull Iterable<@NonNull SerializationRule> serializationRules) {
+		/**
+		 * Determine the ParserRuleAnalyses for each distinct EReference assignment.
+		 */
+		Map<@NonNull EReference, @NonNull Object> eReference2ruleAnalysisOrAnalyses = new HashMap<>();
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
+			SerializationNode rootSerializationNode = serializationRule.getBasicSerializationRule().getRootSerializationNode();
+			analyzeSerializations(rootSerializationNode, eReference2ruleAnalysisOrAnalyses);
+		}
+		/**
+		 * Father the EReferences for which any ParserRuleAnalyses conflict between distinct assignments.
+		 */
+		for (Map.Entry<@NonNull EReference, @NonNull Object> entry : eReference2ruleAnalysisOrAnalyses.entrySet()) {
+			EReference eReference = entry.getKey();
+			Object ruleAnalysisOrAnalyses = eReference2ruleAnalysisOrAnalyses.get(eReference);
+			boolean needsParserRuleCheck  = false;
+			if (ruleAnalysisOrAnalyses instanceof ParserRuleAnalysis) {
+				// ?? check that it is not a derived rule
+				ParserRuleAnalysis ruleAnalysis = (ParserRuleAnalysis)ruleAnalysisOrAnalyses;
+				EClass returnedEClass = ruleAnalysis.getReturnedEClass();
+				if (returnedEClass != eReference.getEReferenceType()) {
+					needsParserRuleCheck  = true;		// XXX can probably be much stricter
+				}
+			}
+			else {
+				@SuppressWarnings("unchecked")
+				List<@NonNull ParserRuleAnalysis> ruleAnalyses = (List<@NonNull ParserRuleAnalysis>)ruleAnalysisOrAnalyses;
+				assert ruleAnalyses != null;
+				assert ruleAnalyses.size() >= 2;
+				needsParserRuleCheck = true;		// XXX can probably be much stricter
+			}
+			if (needsParserRuleCheck) {
+				List<@NonNull EReference> discriminatedEReferences2 = discriminatedEReferences;
+				if (discriminatedEReferences2 == null) {
+					discriminatedEReferences = discriminatedEReferences2 = new ArrayList<>();
+				}
+				if (!discriminatedEReferences2.contains(eReference)) {
+					discriminatedEReferences2.add(eReference);
+				}
+			}
+		}
+	}
+	private void analyzeSerializations(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull Object> eReference2ruleAnalysisOrAnalyses) {
+		if (serializationNode instanceof AssignedRuleCallSerializationNode) {
+			AssignedRuleCallSerializationNode assignedSerializationNode = (AssignedRuleCallSerializationNode)serializationNode;
+			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
+			if (eStructuralFeature instanceof EReference) {
+				EReference eReference = (EReference)eStructuralFeature;
+				AbstractRuleAnalysis newRuleAnalysis = assignedSerializationNode.getCalledRuleAnalysis();
+				if (newRuleAnalysis instanceof ParserRuleAnalysis) {
+					Object oldRuleAnalysisOrAnalyses = eReference2ruleAnalysisOrAnalyses.get(eReference);
+					if (oldRuleAnalysisOrAnalyses == null) {
+						eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysis);
+					}
+					else if (oldRuleAnalysisOrAnalyses instanceof ParserRuleAnalysis) {
+						if (oldRuleAnalysisOrAnalyses != newRuleAnalysis) {
+							List<@NonNull ParserRuleAnalysis> newRuleAnalysisOrAnalyses = new ArrayList<>();
+							newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)oldRuleAnalysisOrAnalyses);
+							newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
+							eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysisOrAnalyses);
+						}
+					}
+					else {
+						@SuppressWarnings("unchecked")
+						List<@NonNull ParserRuleAnalysis> oldRuleAnalyses = (List<@NonNull ParserRuleAnalysis>)oldRuleAnalysisOrAnalyses;
+						if (!oldRuleAnalyses.contains(newRuleAnalysis)) {
+							oldRuleAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
+						}
+					}
+				}
+			}
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				analyzeSerializations(nestedSerializationNode, eReference2ruleAnalysisOrAnalyses);
+			}
+		}
 	}
 
 	protected void createSerializationRules(@NonNull List<@NonNull SerializationRule> serializationRules, @NonNull SerializationNode serializationNode) {
@@ -287,6 +374,10 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			this.delegatedCalledRuleAnalysesClosure = delegatedCalledRuleAnalysesClosure2;
 		}
 		return delegatedCalledRuleAnalysesClosure2;
+	}
+
+	public @Nullable Iterable<@NonNull EReference> getDiscriminatedEReferences() {
+		return discriminatedEReferences;
 	}
 
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {

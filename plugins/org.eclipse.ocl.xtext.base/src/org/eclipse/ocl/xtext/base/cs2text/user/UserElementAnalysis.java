@@ -49,6 +49,7 @@ public class UserElementAnalysis implements Nameable
 	protected final @Nullable UserElementAnalysis containingElementAnalysis;
 	protected final @Nullable EReference eContainmentFeature;
 	private @NonNull Iterable<@NonNull SerializationRule> serializationRules;
+	private @Nullable List<@NonNull EReference> discriminatedEReferences = null;
 
 	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable UserElementAnalysis containingElementAnalysis,
 			@Nullable EReference eContainmentFeature, @NonNull EObject eObject) {
@@ -69,7 +70,7 @@ public class UserElementAnalysis implements Nameable
 	 */
 	private @NonNull Iterable<@NonNull SerializationRule> analyzeSerializationRules() {
 		String eClassName = eClass.getName();
-		if ("SelfExpCS".equals(eClassName)) {
+		if ("RoundBracketedClauseCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
 		UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
@@ -90,8 +91,21 @@ public class UserElementAnalysis implements Nameable
 			}
 		}
 		for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
-			if (targetRuleAnalyses.contains(serializationRule.getRuleAnalysis())) {
+			ParserRuleAnalysis ruleAnalysis = serializationRule.getRuleAnalysis();
+			if (targetRuleAnalyses.contains(ruleAnalysis)) {
 				serializationRules.add(serializationRule);
+				Iterable<@NonNull EReference> ruleDiscriminatedEReferences = ruleAnalysis.getDiscriminatedEReferences();
+				if (ruleDiscriminatedEReferences != null) {
+					List<@NonNull EReference> discriminatedEReferences2 = discriminatedEReferences;
+					if (discriminatedEReferences2 == null) {
+						discriminatedEReferences = discriminatedEReferences2 = new ArrayList<>();
+					}
+					for (@NonNull EReference discriminatedEReference : ruleDiscriminatedEReferences) {
+						if (!discriminatedEReferences2.contains(discriminatedEReference)) {
+							discriminatedEReferences2.add(discriminatedEReference);
+						}
+					}
+				}
 			}
 		}
 		return serializationRules;
@@ -137,7 +151,7 @@ public class UserElementAnalysis implements Nameable
 	}
 
 	protected @NonNull UserSlotsAnalysis getSlotsAnalysis() {
-		return new UserSlotsAnalysis(getSerializationRules(), eObject);
+		return new UserSlotsAnalysis(getSerializationRules(), eObject, discriminatedEReferences);
 	}
 
 	@Override
