@@ -22,7 +22,7 @@ import org.eclipse.xtext.AbstractElement;
 public interface AssignmentAnalysis extends Nameable
 {
 	void analyzeContainmentAndTargets();
-	@NonNull AbstractElement getAssignment();
+	@NonNull AbstractElement getActionOrAssignment();
 	@NonNull EClass getEClass();
 	@NonNull EStructuralFeature getEStructuralFeature();
 	@NonNull GrammarAnalysis getGrammarAnalysis();

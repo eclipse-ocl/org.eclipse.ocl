@@ -181,7 +181,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			String feature = action.getFeature();
 			if (feature != null) {
 				assert firstUnassignedRuleCall != null;
-				AssignmentAnalysis assignmentAnalysis = new ActionAssignmentAnalysis(this, action, firstUnassignedRuleCall);
+				AbstractRule currentRule = XtextGrammarUtil.getRule(firstUnassignedRuleCall);
+				ParserRuleAnalysis currentRuleAnalysis = (ParserRuleAnalysis)grammarAnalysis.getRuleAnalysis(currentRule);
+				AssignmentAnalysis assignmentAnalysis = new ActionAssignmentAnalysis(this, action, currentRuleAnalysis);
 				addAssignmentAnalysis(assignmentAnalysis);
 			}
 		}

@@ -319,7 +319,7 @@ public class GrammarAnalysis
 	}
 
 	public void addAssignmentAnalysis(@NonNull AssignmentAnalysis assignmentAnalysis) {
-		AssignmentAnalysis old = assignment2assignmentAnalysis.put(assignmentAnalysis.getAssignment(), assignmentAnalysis);
+		AssignmentAnalysis old = assignment2assignmentAnalysis.put(assignmentAnalysis.getActionOrAssignment(), assignmentAnalysis);
 		assert old == null;
 	}
 

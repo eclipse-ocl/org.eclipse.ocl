@@ -10,19 +10,30 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
+import org.eclipse.xtext.AbstractElement;
 
 /**
  * An AbstractAssignmentAnalysis provides the extended analysis of a direct Xtext Assignment or indirect current assignment Action.
  */
-public abstract class AbstractAssignmentAnalysis implements AssignmentAnalysis
+public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> implements AssignmentAnalysis
 {
 	/**
 	 * The overall grammar analysis.
 	 */
 	protected final @NonNull GrammarAnalysis grammarAnalysis;
+
+	/**
+	 * The rule analysis that uses this assignment to assign a target rule result.
+	 */
+	protected final @NonNull ParserRuleAnalysis sourceRuleAnalysis;
 
 	/**
 	 * The assigned scope.
@@ -34,10 +45,53 @@ public abstract class AbstractAssignmentAnalysis implements AssignmentAnalysis
 	 */
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	protected AbstractAssignmentAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EClass eClass, @NonNull String featureName) {
-		this.grammarAnalysis = grammarAnalysis;
+	/**
+	 * The analyzed current action or assignment.
+	 */
+	protected final @NonNull T actionOrAssignment;
+
+	/**
+	 * The rules declared to be useable as producers of the target. Multiples may arise from an Alternatives terminal
+	 * or from 'delegating' rules.
+	 */
+	private final @NonNull List<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = new ArrayList<>();
+
+	protected AbstractAssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull EClass eClass, @NonNull String featureName, @NonNull T actionOrAssignment) {
+		this.grammarAnalysis = sourceRuleAnalysis.getGrammarAnalysis();
+		this.sourceRuleAnalysis = sourceRuleAnalysis;
 		this.eClass = eClass;
 		this.eStructuralFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
+		this.actionOrAssignment = actionOrAssignment;
+	}
+
+	protected void addTargetRuleAnalysis(@NonNull AbstractRuleAnalysis targetRuleAnalysis) {
+		if (targetRuleAnalysis instanceof ParserRuleAnalysis) {
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : ((ParserRuleAnalysis)targetRuleAnalysis).debugCalledRuleAnalysesClosure) { //getCallingRuleAnalysisClosure()) {
+				targetRuleAnalyses.add(ruleAnalysis);
+			}
+		}
+		else {
+			targetRuleAnalyses.add(targetRuleAnalysis);
+		}
+	}
+
+	protected void analyzeContainment() {
+		if (eStructuralFeature instanceof EReference) {
+			EReference eReference = (EReference)eStructuralFeature;
+			if (eReference.isContainment()) {
+				grammarAnalysis.addContainment(this, eReference);
+			}
+		}
+	}
+
+	@Override
+	public @NonNull T getActionOrAssignment() {
+		return actionOrAssignment;
+	}
+
+	public @NonNull String getCardinality() {
+		String cardinality = actionOrAssignment.getCardinality();
+		return cardinality != null ?  cardinality : "@";
 	}
 
 	@Override
@@ -53,5 +107,39 @@ public abstract class AbstractAssignmentAnalysis implements AssignmentAnalysis
 	@Override
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
+	}
+
+	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+		return MultiplicativeCardinality.toEnum(actionOrAssignment);
+	}
+
+	@Override
+	public @NonNull String getName() {
+		return XtextGrammarUtil.getName(sourceRuleAnalysis.getRule()) + "-" + eStructuralFeature.getName();
+	}
+
+	public @NonNull ParserRuleAnalysis getSourceRuleAnalysis() {
+		return sourceRuleAnalysis;
+	}
+
+	@Override
+	public @NonNull List<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses() {
+		return targetRuleAnalyses;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(getName());
+		s.append(" : ");
+		boolean isFirst = true;
+		for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : getTargetRuleAnalyses()) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			s.append(targetRuleAnalysis.getName());
+			isFirst = false;
+		}
+		return s.toString();
 	}
 }
