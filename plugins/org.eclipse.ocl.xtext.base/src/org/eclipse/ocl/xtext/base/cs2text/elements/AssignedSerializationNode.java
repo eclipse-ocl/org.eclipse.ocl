@@ -13,13 +13,21 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractAssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
 	@NonNull EClass getAssignedEClass();
-	@NonNull AssignmentAnalysis getAssignmentAnalysis();
+
+	/**
+	 * Return the RuleAnalysis that specifes matches to this SerializationNode.
+	 */
+	@Nullable AbstractRuleAnalysis getAssignedRuleAnalysis();
+
+	@NonNull AbstractAssignmentAnalysis getAssignmentAnalysis();
 	@NonNull EStructuralFeature getEStructuralFeature();
 	@NonNull EnumerationValue getEnumerationValue();
 }

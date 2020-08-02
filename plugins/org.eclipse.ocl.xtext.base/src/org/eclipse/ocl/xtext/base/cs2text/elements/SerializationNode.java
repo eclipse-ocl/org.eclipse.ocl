@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
@@ -40,11 +39,6 @@ public interface SerializationNode extends SerializationElement
 	 * Return the (outer) configured multiplicative cardinality.
 	 */
 	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
-
-	/**
-	 * Return the RuleAnalysis that types matches to this SerializationNode.
-	 */
-	@Nullable AbstractRuleAnalysis getRuleAnalysis();
 
 	/**
 	 * Return true if this node has exactly one cardinality.

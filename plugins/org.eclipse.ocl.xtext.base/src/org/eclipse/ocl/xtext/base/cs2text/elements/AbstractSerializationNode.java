@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
@@ -92,11 +90,6 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	@Override
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
 		return multiplicativeCardinality;
-	}
-
-	@Override
-	public @Nullable AbstractRuleAnalysis getRuleAnalysis() {
-		return null;
 	}
 
 	@Override

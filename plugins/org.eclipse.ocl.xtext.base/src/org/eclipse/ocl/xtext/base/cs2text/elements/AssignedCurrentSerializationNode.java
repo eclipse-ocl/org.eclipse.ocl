@@ -12,12 +12,12 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ActionAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
-	public AssignedCurrentSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public AssignedCurrentSerializationNode(@NonNull ActionAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 	}
 

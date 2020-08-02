@@ -20,8 +20,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
-import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
@@ -29,7 +29,7 @@ import org.eclipse.xtext.RuleCall;
 /**
  * An XtextAssignmentAnalysis provides the extended analysis of an Xtext Assignment
  */
-public class AssignmentAnalysis extends AbstractAssignmentAnalysis
+public class ActionAssignmentAnalysis extends AbstractAssignmentAnalysis
 {
 	/**
 	 * The rule analysis that uses this assignment to assign a target rule result.
@@ -37,9 +37,14 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 	protected final @NonNull ParserRuleAnalysis sourceRuleAnalysis;
 
 	/**
-	 * The analyzed assignment.
+	 * The analyzed action.
 	 */
-	protected final @NonNull Assignment assignment;			// Assignment or Action
+	protected final @NonNull Action action;
+
+	/**
+	 * .
+	 */
+	protected final @NonNull RuleCall firstUnassignedRuleCall;
 
 //	private @NonNull AbstractElement terminal;
 //	private @NonNull AbstractElement terminal;
@@ -51,37 +56,18 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 
 //	private AbstractRuleAnalysis terminalRuleAnalysis;
 
-	public AssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Assignment assignment) {
-		super(sourceRuleAnalysis.getGrammarAnalysis(), (EClass)XtextGrammarUtil.getEClassifierScope(assignment), XtextGrammarUtil.getFeature(assignment));
+	public ActionAssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Action action, @NonNull RuleCall firstUnassignedRuleCall) {
+		super(sourceRuleAnalysis.getGrammarAnalysis(),(EClass)XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(action)), XtextGrammarUtil.getFeature(action));
 		this.sourceRuleAnalysis = sourceRuleAnalysis;
-		this.assignment = assignment;
-	//	this.terminal = XtextGrammarUtil.getTerminal(assignment);
+		this.action = action;
+	//	String featureName = XtextGrammarUtil.getFeature(action);
+	//	EClass eClass = (EClass)XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(action));
+		this.firstUnassignedRuleCall = firstUnassignedRuleCall;
 	//	assert terminal instanceof RuleCall;
-	/*	AbstractRule terminalRule;
-		if (terminal instanceof CrossReference) {		// non-containment EReference
-			RuleCall ruleCall = (RuleCall)XtextGrammarUtil.getTerminal((CrossReference)terminal);
-			terminalRule = XtextGrammarUtil.getRule(ruleCall);
-			this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
-			assert eStructuralFeature instanceof EReference;
-		}
-		else if (terminal instanceof RuleCall)  {		// containment EReference / value EAttribute
-			terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
-			this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
-		}
-		else if (terminal instanceof Keyword)  {		// enumerated attribute
-			this.terminalRuleAnalysis = null; //grammarAnalysis.getRuleAnalysis(terminalRule);
-		}
-		else if (terminal instanceof Alternatives)  {
-		//	terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
-			this.terminalRuleAnalysis = null; //grammarAnalysis.getRuleAnalysis(terminalRule);
-		}
-		else {
-			this.terminalRuleAnalysis = null;
-			throw new UnsupportedOperationException();
-		} */
+	/*	AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
+		this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule); */
 	}
 
-	@Override
 	public void analyzeContainmentAndTargets() {
 		if (eStructuralFeature instanceof EReference) {
 			EReference eReference = (EReference)eStructuralFeature;
@@ -89,8 +75,7 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 				grammarAnalysis.addContainment(this, eReference);
 			}
 		}
-		AbstractElement terminal = XtextGrammarUtil.getTerminal(assignment);
-		computeTargetRuleAnalyses(terminal);
+		computeTargetRuleAnalyses(firstUnassignedRuleCall);
 	}
 
 	private void computeTargetRuleAnalyses(@NonNull AbstractElement terminal) {
@@ -98,6 +83,7 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 			getClass();		// XXX debugging
 		}
 		if (terminal instanceof RuleCall) {
+		//	AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
 			AbstractRule terminalRule = XtextGrammarUtil.getRule((RuleCall)terminal);
 			AbstractRuleAnalysis terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule);
 			if (terminalRuleAnalysis instanceof ParserRuleAnalysis) {
@@ -125,12 +111,12 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 	}
 
 	@Override
-	public @NonNull Assignment getAssignment() {
-		return assignment;
+	public @NonNull Action getAssignment() {
+		return action;
 	}
 
 	public @NonNull String getCardinality() {
-		String cardinality = assignment.getCardinality();
+		String cardinality = action.getCardinality();
 		return cardinality != null ?  cardinality : "@";
 	/*	int lowerBound = eStructuralFeature.getLowerBound();
 		int upperBound = eStructuralFeature.getUpperBound();
@@ -148,9 +134,8 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 		} */
 	}
 
-	@Override
 	public @NonNull EClass getEClass() {
-		return (EClass) XtextGrammarUtil.getEClassifierScope(assignment);
+		return (EClass) XtextGrammarUtil.getEClassifierScope(action);
 	}
 
 	public @NonNull EClass getEContainingClass() {
@@ -158,7 +143,7 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 	}
 
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return MultiplicativeCardinality.toEnum(assignment);
+		return MultiplicativeCardinality.toEnum(action);
 	}
 
 	@Override
@@ -170,7 +155,6 @@ public class AssignmentAnalysis extends AbstractAssignmentAnalysis
 		return sourceRuleAnalysis;
 	}
 
-	@Override
 	public @NonNull List<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses() {
 		return targetRuleAnalyses;
 	}

@@ -62,7 +62,7 @@ public class XtextGrammarUtil
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 	}
 
-	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull AssignmentAnalysis assignmentAnalysis) {
+	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull AbstractAssignmentAnalysis assignmentAnalysis) {
 		appendEStructuralFeatureName(s, assignmentAnalysis.getEClass(), assignmentAnalysis.getEStructuralFeature());
 	}
 

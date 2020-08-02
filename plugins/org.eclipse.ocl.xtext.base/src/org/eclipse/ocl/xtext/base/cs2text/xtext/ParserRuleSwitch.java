@@ -80,7 +80,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		assert action != null;
 		String feature = action.getFeature();
 		if (feature != null) {
-			AssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(action);
+			ActionAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(action);
 			return new AssignedCurrentSerializationNode(assignmentAnalysis, MultiplicativeCardinality.toEnum(action));
 
 		}

@@ -51,7 +51,7 @@ import org.eclipse.xtext.RuleCall;
 public class ParserRuleAnalysis extends AbstractRuleAnalysis
 {
 	protected final @NonNull EClass eClass;
-	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
+	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AbstractAssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
 	private @Nullable Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses = null;
 	private @Nullable List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure = null;	// XXX 2/3 of these closures should be redundant
@@ -69,10 +69,10 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		this.eClass = eClass;
 	}
 
-	protected void addAssignmentAnalysis(@NonNull AssignmentAnalysis assignmentAnalysis) {
+	protected void addAssignmentAnalysis(@NonNull AbstractAssignmentAnalysis assignmentAnalysis) {
 		grammarAnalysis.addAssignmentAnalysis(assignmentAnalysis);
 		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
-		List<@NonNull AssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eStructuralFeature);
+		List<@NonNull AbstractAssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eStructuralFeature);
 		if (assignmentAnalyses == null) {
 			assignmentAnalyses = new ArrayList<>();
 			eFeature2assignmentAnalyses.put(eStructuralFeature, assignmentAnalyses);
@@ -181,7 +181,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			String feature = action.getFeature();
 			if (feature != null) {
 				assert firstUnassignedRuleCall != null;
-				AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(this, action, firstUnassignedRuleCall);
+				AbstractAssignmentAnalysis assignmentAnalysis = new ActionAssignmentAnalysis(this, action, firstUnassignedRuleCall);
 				addAssignmentAnalysis(assignmentAnalysis);
 			}
 		}
@@ -389,7 +389,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		return delegatedCalledRuleAnalysesClosure2;
 	}
 
-	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
+	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AbstractAssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
 	}
 

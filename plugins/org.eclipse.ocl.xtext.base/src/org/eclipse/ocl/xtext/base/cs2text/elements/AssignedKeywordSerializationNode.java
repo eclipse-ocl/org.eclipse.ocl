@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
@@ -33,7 +34,12 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keyword);
+		return new AssignedKeywordSerializationNode((AssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, keyword);
+	}
+
+	@Override
+	public @Nullable AbstractRuleAnalysis getAssignedRuleAnalysis() {
+		return null;		// XXX inherited ??
 	}
 
 	@Override

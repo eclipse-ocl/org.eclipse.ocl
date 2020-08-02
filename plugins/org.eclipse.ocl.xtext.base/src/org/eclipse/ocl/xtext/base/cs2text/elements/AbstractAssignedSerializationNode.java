@@ -18,15 +18,15 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
 {
-	protected final @NonNull AssignmentAnalysis assignmentAnalysis;
+	protected final @NonNull AbstractAssignmentAnalysis assignmentAnalysis;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	protected AbstractAssignedSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
+	protected AbstractAssignedSerializationNode(@NonNull AbstractAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(assignmentAnalysis.getGrammarAnalysis(), multiplicativeCardinality);
 		this.assignmentAnalysis = assignmentAnalysis;
@@ -46,7 +46,13 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @NonNull AssignmentAnalysis getAssignmentAnalysis() {
+	public @Nullable AbstractRuleAnalysis getAssignedRuleAnalysis() {
+		throw new UnsupportedOperationException();		// XXX need better approach Assignment may be of Alternatives RuleCalls
+	//	return assignmentAnalysis.getTerminalRuleAnalysis();
+	}
+
+	@Override
+	public @NonNull AbstractAssignmentAnalysis getAssignmentAnalysis() {
 		return assignmentAnalysis;
 	}
 
@@ -58,10 +64,5 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	@Override
 	public @NonNull EnumerationValue getEnumerationValue() {
 		return NullEnumerationValue.INSTANCE;
-	}
-
-	@Override
-	public @Nullable AbstractRuleAnalysis getRuleAnalysis() {
-		return assignmentAnalysis.getTerminalRuleAnalysis();
 	}
 }

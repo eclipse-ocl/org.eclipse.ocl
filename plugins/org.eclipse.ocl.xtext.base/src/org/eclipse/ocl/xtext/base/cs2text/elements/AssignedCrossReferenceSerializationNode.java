@@ -44,7 +44,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, multiplicativeCardinality, crossReference);
+		return new AssignedCrossReferenceSerializationNode((AssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, crossReference);
 	}
 
 	@Override
