@@ -72,7 +72,7 @@ public class UserElementAnalysis implements Nameable
 	 */
 	private @NonNull Iterable<@NonNull SerializationRule> analyzeSerializationRules() {
 		String eClassName = eClass.getName();
-		if ("RoundBracketedClauseCS".equals(eClassName)) {
+		if ("NavigatingArgCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
 		UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;

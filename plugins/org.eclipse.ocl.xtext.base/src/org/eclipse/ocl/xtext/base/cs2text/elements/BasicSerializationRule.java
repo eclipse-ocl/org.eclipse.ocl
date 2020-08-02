@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -39,7 +41,8 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class BasicSerializationRule extends AbstractSerializationRule
 {
-	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull Map<@NonNull EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality>> eFeature2enumerationValue2multiplicativeCardinality = new HashMap<>();
+	private final @NonNull Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = new HashMap<>();
+	private final @NonNull Map<@NonNull EReference, @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = new HashMap<>();
 	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
 	private @Nullable StaticRuleMatch staticRuleMatch = null;
@@ -60,36 +63,40 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		MultiplicativeCardinality netMultiplicativeCardinality = MultiplicativeCardinality.max(innerMultiplicativeCardinality, outerMultiplicativeCardinality);
 		if (serializationNode instanceof AssignedSerializationNode) {		// XXX bad cast
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
 			AssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
 			EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 			if ("ownedProperties".equals(eStructuralFeature.getName())) {
 				getClass();	// XXX
 			}
-			MultiplicativeCardinality newMultiplicativeCardinality = netMultiplicativeCardinality;
-			Map<@NonNull EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eFeature2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
-			if (enumerationValue2multiplicativeCardinality == null) {
-				enumerationValue2multiplicativeCardinality = new HashMap<>();
-				eFeature2enumerationValue2multiplicativeCardinality.put(eStructuralFeature, enumerationValue2multiplicativeCardinality);
-			}
-			MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
-			if (oldMultiplicativeCardinality != null) {
-				boolean newMayBeMany = netMultiplicativeCardinality.mayBeMany();
-				boolean newMayBeZero = netMultiplicativeCardinality.mayBeZero();
-				boolean oldMayBeMany = oldMultiplicativeCardinality.mayBeMany();
-				boolean oldMayBeZero = oldMultiplicativeCardinality.mayBeZero();
-				if (!oldMayBeZero) {
-					newMayBeZero = false;
+			if (eStructuralFeature instanceof EAttribute) {
+				EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
+				// XXX is NUll
+				EAttribute eAttribute = (EAttribute)eStructuralFeature;
+				Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
+				if (enumerationValue2multiplicativeCardinality == null) {
+					enumerationValue2multiplicativeCardinality = new HashMap<>();
+					eAttribute2enumerationValue2multiplicativeCardinality.put(eAttribute, enumerationValue2multiplicativeCardinality);
 				}
-				if (oldMayBeMany) {
-					newMayBeMany = true;
-				}
-				newMultiplicativeCardinality = newMayBeMany
-					? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
-					: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
+				MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
+				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
+				enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
+	//			assignedSerializationNodes.add(assignedSerializationNode);
 			}
-			enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
-//			assignedSerializationNodes.add(assignedSerializationNode);
+			else {
+				ParserRuleAnalysis ruleAnalysis = null; // XXX assignedSerializationNode.getCalledRuleAnalysis();
+				if (ruleAnalysis != null) {
+					EReference eReference = (EReference)eStructuralFeature;
+					Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
+					if (ruleAnalysis2multiplicativeCardinality == null) {
+						ruleAnalysis2multiplicativeCardinality = new HashMap<>();
+						eReference2ruleAnalysis2multiplicativeCardinality.put(eReference, ruleAnalysis2multiplicativeCardinality);
+					}
+					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
+					MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
+					ruleAnalysis2multiplicativeCardinality.put(ruleAnalysis, newMultiplicativeCardinality);
+		//			assignedSerializationNodes.add(assignedSerializationNode);
+				}
+			}
 		}
 		else if (serializationNode instanceof SequenceSerializationNode) {
 			SequenceSerializationNode sequenceSerializationNode = (SequenceSerializationNode)serializationNode;
@@ -141,9 +148,9 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		return this;
 	}
 
-	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
-		return eFeature2enumerationValue2multiplicativeCardinality.keySet();
-	}
+//	public @NonNull Iterable<@NonNull EAttribute> getEStructuralFeatures() {
+//		return eAttribute2enumerationValue2multiplicativeCardinality.keySet();
+//	}
 
 	private void getIdiomMatches(@NonNull SerializationNode outerSerializationNode, @NonNull Idiom @NonNull [] idioms,
 			@Nullable IdiomMatch @NonNull [] idiomMatches) {
@@ -164,12 +171,33 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		}
 	}
 
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
-		Map<@NonNull EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eFeature2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
-		if (enumerationValue2multiplicativeCardinality == null) {
-			return null;
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
+		Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
+		if (enumerationValue2multiplicativeCardinality != null) {
+			return enumerationValue2multiplicativeCardinality.get(null);
 		}
-		return enumerationValue2multiplicativeCardinality.get(enumerationValue);
+		Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
+		if (ruleAnalysis2multiplicativeCardinality != null) {
+			return ruleAnalysis2multiplicativeCardinality.get(null);
+		}
+		return null;
+	}
+
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		assert !enumerationValue.isNull();		// XXX phasing out NullEnumerationValue
+		Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
+		if (enumerationValue2multiplicativeCardinality != null) {
+			return enumerationValue2multiplicativeCardinality.get(enumerationValue);
+		}
+		return null;
+	}
+
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
+		Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
+		if (ruleAnalysis2multiplicativeCardinality != null) {
+			return ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
+		}
+		return null;
 	}
 
 	public @NonNull StaticRuleMatch getStaticRuleMatch() {
@@ -236,6 +264,25 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.needsDefault(eStructuralFeature);
+	}
+
+	private @NonNull MultiplicativeCardinality refineMultiplicativeCardinality(@NonNull MultiplicativeCardinality netMultiplicativeCardinality, @Nullable MultiplicativeCardinality oldMultiplicativeCardinality) {
+		if (oldMultiplicativeCardinality == null) {
+			return netMultiplicativeCardinality;
+		}
+		boolean newMayBeMany = netMultiplicativeCardinality.mayBeMany();
+		boolean newMayBeZero = netMultiplicativeCardinality.mayBeZero();
+		boolean oldMayBeMany = oldMultiplicativeCardinality.mayBeMany();
+		boolean oldMayBeZero = oldMultiplicativeCardinality.mayBeZero();
+		if (!oldMayBeZero) {
+			newMayBeZero = false;
+		}
+		if (oldMayBeMany) {
+			newMayBeMany = true;
+		}
+		return newMayBeMany
+			? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
+			: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
 	}
 
 	@Override
