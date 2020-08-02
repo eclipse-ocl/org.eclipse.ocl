@@ -119,7 +119,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 	@Override
 	public @NonNull SerializationElement caseAssignment(Assignment assignment) {
 		assert assignment != null;
-		AssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
+		DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 		MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(assignment);
 		AbstractElement terminal = XtextGrammarUtil.getTerminal(assignment);
 		if (terminal instanceof RuleCall) {
@@ -228,7 +228,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 					if (eFeature2keywords == null) {
 						eFeature2keywords = new HashMap<>();
 					}
-					AssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
+					DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 					EStructuralFeature eFeature = assignmentAnalysis.getEStructuralFeature();
 					List<@NonNull Keyword> keywords = eFeature2keywords.get(eFeature);
 					if (keywords == null) {
@@ -243,7 +243,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		if (eFeature2keywords != null) {
 			for (@NonNull List<@NonNull Keyword> keywords : eFeature2keywords.values()) {
 				Assignment assignment = ClassUtil.nonNullState((Assignment)keywords.get(0).eContainer());
-				AssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
+				DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 				if (keywords.size() == 1) {
 					Keyword keyword = keywords.get(0);
 					alternativeSerializationElements.add(new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keyword));
@@ -356,7 +356,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		if (keywords == null) {
 			return null;
 		}
-		AssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
+		DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 		if (keywords.size() == 1) {
 			return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords.get(0));
 		}

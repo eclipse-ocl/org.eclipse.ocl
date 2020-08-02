@@ -173,7 +173,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	private @Nullable RuleCall analyzeActionsAndAssignments(@NonNull AbstractElement abstractElement, @Nullable RuleCall firstUnassignedRuleCall) {
 		if (abstractElement instanceof Assignment) {
 			Assignment assignment = (Assignment)abstractElement;
-			AssignmentAnalysis assignmentAnalysis = new AssignmentAnalysis(this, assignment);
+			DirectAssignmentAnalysis assignmentAnalysis = new DirectAssignmentAnalysis(this, assignment);
 			addAssignmentAnalysis(assignmentAnalysis);
 		}
 		else if (abstractElement instanceof Action) {

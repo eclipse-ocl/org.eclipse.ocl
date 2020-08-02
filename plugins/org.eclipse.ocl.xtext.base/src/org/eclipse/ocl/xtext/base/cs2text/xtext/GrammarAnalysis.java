@@ -376,9 +376,9 @@ public class GrammarAnalysis
 		assert assignment2assignmentAnalysis != null;
 		return (ActionAssignmentAnalysis) ClassUtil.nonNullState(assignment2assignmentAnalysis.get(action));
 	}
-	public @NonNull AssignmentAnalysis getAssignmentAnalysis(@NonNull Assignment assignment) {
+	public @NonNull DirectAssignmentAnalysis getAssignmentAnalysis(@NonNull Assignment assignment) {
 		assert assignment2assignmentAnalysis != null;
-		return (AssignmentAnalysis) ClassUtil.nonNullState(assignment2assignmentAnalysis.get(assignment));
+		return (DirectAssignmentAnalysis) ClassUtil.nonNullState(assignment2assignmentAnalysis.get(assignment));
 	}
 
 	public @NonNull List<@NonNull AbstractAssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {

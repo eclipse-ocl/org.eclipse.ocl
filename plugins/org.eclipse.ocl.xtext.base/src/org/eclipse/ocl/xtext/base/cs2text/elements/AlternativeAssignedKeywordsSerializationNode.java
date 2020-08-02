@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
 
@@ -24,7 +24,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	protected final @NonNull Iterable<@NonNull Keyword> keywords;
 	protected final @NonNull EnumerationValue enumerationValue;
 
-	public AlternativeAssignedKeywordsSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
+	public AlternativeAssignedKeywordsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> keywords) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.keywords = keywords;
@@ -34,7 +34,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AlternativeAssignedKeywordsSerializationNode((AssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, keywords);
+		return new AlternativeAssignedKeywordsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, keywords);
 	}
 
 	@Override

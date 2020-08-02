@@ -13,13 +13,12 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.xtext.AbstractElement;
 
 /**
  * An XtextAssignmentAnalysis provides the extended analysis of an Xtext Assignment
  */
-public abstract class AbstractAssignmentAnalysis implements Nameable
+public abstract class AbstractAssignmentAnalysis implements AssignmentAnalysis
 {
 	/**
 	 * The overall grammar analysis.
