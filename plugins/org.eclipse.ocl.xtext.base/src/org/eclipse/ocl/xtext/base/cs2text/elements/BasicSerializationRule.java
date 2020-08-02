@@ -83,8 +83,8 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	//			assignedSerializationNodes.add(assignedSerializationNode);
 			}
 			else {
-				ParserRuleAnalysis ruleAnalysis = null; // XXX assignedSerializationNode.getCalledRuleAnalysis();
-				if (ruleAnalysis != null) {
+				AbstractRuleAnalysis ruleAnalysis = null;//assignedSerializationNode.getAssignedRuleAnalysis();
+				if (ruleAnalysis instanceof ParserRuleAnalysis) {
 					EReference eReference = (EReference)eStructuralFeature;
 					Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
 					if (ruleAnalysis2multiplicativeCardinality == null) {
@@ -93,7 +93,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 					}
 					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
 					MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
-					ruleAnalysis2multiplicativeCardinality.put(ruleAnalysis, newMultiplicativeCardinality);
+					ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis, newMultiplicativeCardinality);
 		//			assignedSerializationNodes.add(assignedSerializationNode);
 				}
 			}
@@ -134,7 +134,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		String name = String.format("C%02d", variable2node.size());
 		assert name != null;
 		if (!multiplicativeCardinality.isConstant()) {
-			AbstractRuleAnalysis ruleAnalysis = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode) serializationNode).getAssignedRuleAnalysis() : null;
+			AbstractRuleAnalysis ruleAnalysis = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalysis() : null;
 			CardinalityVariable cardinalityVariable = new CardinalityVariable(name, ruleAnalysis, multiplicativeCardinality);
 			CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 			assert old2 == null;
