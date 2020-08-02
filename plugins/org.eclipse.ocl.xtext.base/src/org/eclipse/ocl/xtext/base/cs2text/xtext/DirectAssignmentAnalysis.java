@@ -27,7 +27,7 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
 
 /**
- * An XtextAssignmentAnalysis provides the extended analysis of an Xtext Assignment
+ * A DirectAssignmentAnalysis provides the extended analysis of an Xtext Assignment
  */
 public class DirectAssignmentAnalysis extends AbstractAssignmentAnalysis
 {

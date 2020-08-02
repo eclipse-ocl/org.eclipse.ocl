@@ -18,8 +18,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.Alternatives;
@@ -106,7 +106,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 			if (unassignedRuleContext != null) {
 				UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = unassignedRuleContext.getElement();
 				AssignedCurrentSerializationNode assignedCurrentSerializationNode = assignedCurrentContext.getElement();
-				AbstractAssignmentAnalysis assignmentAnalysis = assignedCurrentSerializationNode.getAssignmentAnalysis();
+				AssignmentAnalysis assignmentAnalysis = assignedCurrentSerializationNode.getAssignmentAnalysis();
 				MultiplicativeCardinality multiplicativeCardinality2 = assignedCurrentSerializationNode.getMultiplicativeCardinality();
 				assert multiplicativeCardinality2.isOne();
 				AbstractRuleAnalysis calledRuleAnalysis = unassignedRuleCallSerializationNode.getCalledRuleAnalysis();

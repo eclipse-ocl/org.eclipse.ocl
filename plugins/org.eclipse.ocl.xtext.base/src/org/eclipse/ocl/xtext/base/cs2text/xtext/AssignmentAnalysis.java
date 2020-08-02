@@ -10,11 +10,21 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.xtext.AbstractElement;
 
 /**
  * An AssignmentAnalysis provides the extended analysis of an Xtext Assignment or current Action
  */
 public interface AssignmentAnalysis extends Nameable
 {
+	void analyzeContainmentAndTargets();
+	@NonNull AbstractElement getAssignment();
+	@NonNull EClass getEClass();
+	@NonNull EStructuralFeature getEStructuralFeature();
+	@NonNull GrammarAnalysis getGrammarAnalysis();
+	@NonNull Iterable<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses();
 }

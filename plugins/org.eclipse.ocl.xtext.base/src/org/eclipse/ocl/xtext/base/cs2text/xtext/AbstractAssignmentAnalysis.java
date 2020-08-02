@@ -13,10 +13,9 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.xtext.AbstractElement;
 
 /**
- * An XtextAssignmentAnalysis provides the extended analysis of an Xtext Assignment
+ * An AbstractAssignmentAnalysis provides the extended analysis of a direct Xtext Assignment or indirect current assignment Action.
  */
 public abstract class AbstractAssignmentAnalysis implements AssignmentAnalysis
 {
@@ -41,21 +40,18 @@ public abstract class AbstractAssignmentAnalysis implements AssignmentAnalysis
 		this.eStructuralFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
 	}
 
-	protected abstract void analyzeContainmentAndTargets();
-
-	protected abstract @NonNull AbstractElement getAssignment();
-
+	@Override
 	public @NonNull EClass getEClass() {
 		return eClass;
 	}
 
+	@Override
 	public @NonNull EStructuralFeature getEStructuralFeature() {
 		return eStructuralFeature;
 	}
 
+	@Override
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
 	}
-
-	public abstract @NonNull Iterable<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses();
 }

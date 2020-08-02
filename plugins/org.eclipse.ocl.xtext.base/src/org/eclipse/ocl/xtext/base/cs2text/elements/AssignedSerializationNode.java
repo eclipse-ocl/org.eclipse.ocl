@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
@@ -27,7 +27,7 @@ public interface AssignedSerializationNode extends SerializationNode
 	 */
 	@Nullable AbstractRuleAnalysis getAssignedRuleAnalysis();
 
-	@NonNull AbstractAssignmentAnalysis getAssignmentAnalysis();
+	@NonNull AssignmentAnalysis getAssignmentAnalysis();
 	@NonNull EStructuralFeature getEStructuralFeature();
 	@NonNull EnumerationValue getEnumerationValue();
 }

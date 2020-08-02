@@ -16,8 +16,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.conversion.IValueConverterService;
 
@@ -27,7 +27,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	private @NonNull IValueConverterService valueConverterService;
 
-	public AssignedRuleCallSerializationNode(@NonNull AbstractAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
+	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
 		this.valueConverterService = grammarAnalysis.getValueConverterService();

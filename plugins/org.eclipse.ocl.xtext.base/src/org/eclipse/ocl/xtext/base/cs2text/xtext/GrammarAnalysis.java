@@ -72,12 +72,12 @@ public class GrammarAnalysis
 	/**
 	 * The assignment analysis for each assignment or action.
 	 */
-	private final @NonNull Map<@NonNull AbstractElement, @NonNull AbstractAssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
+	private final @NonNull Map<@NonNull AbstractElement, @NonNull AssignmentAnalysis> assignment2assignmentAnalysis = new HashMap<>();
 
 	/**
 	 * The possible assignment analyses for containment EReference.
 	 */
-	private final @NonNull Map<@NonNull EReference, @NonNull List<@NonNull AbstractAssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
+	private final @NonNull Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
 
 	/**
 	 * The possible producing rule analyses for each EClass. ??his analysis excludes overrides.
@@ -140,7 +140,7 @@ public class GrammarAnalysis
 		//
 		//	Identify the assignment analyses that are containments.
 		//
-		for (@NonNull AbstractAssignmentAnalysis assignmentAnalysis : assignment2assignmentAnalysis.values()) {
+		for (@NonNull AssignmentAnalysis assignmentAnalysis : assignment2assignmentAnalysis.values()) {
 			assignmentAnalysis.analyzeContainmentAndTargets();
 		}
 		//
@@ -162,8 +162,8 @@ public class GrammarAnalysis
 		this.eClass2serializationRules = analyzeSerializations(parserRuleAnalyses);
 	}
 
-	public void addContainment(@NonNull AbstractAssignmentAnalysis assignmentAnalysis, @NonNull EReference eReference) {
-		List<@NonNull AbstractAssignmentAnalysis> assignmentAnalyses = containment2assignmentAnalyses.get(eReference);
+	public void addContainment(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull EReference eReference) {
+		List<@NonNull AssignmentAnalysis> assignmentAnalyses = containment2assignmentAnalyses.get(eReference);
 		if (assignmentAnalyses == null) {
 			assignmentAnalyses = new ArrayList<>();
 			containment2assignmentAnalyses.put(eReference, assignmentAnalyses);
@@ -318,8 +318,8 @@ public class GrammarAnalysis
 		return eClass2serializationRules;
 	}
 
-	public void addAssignmentAnalysis(@NonNull AbstractAssignmentAnalysis assignmentAnalysis) {
-		AbstractAssignmentAnalysis old = assignment2assignmentAnalysis.put(assignmentAnalysis.getAssignment(), assignmentAnalysis);
+	public void addAssignmentAnalysis(@NonNull AssignmentAnalysis assignmentAnalysis) {
+		AssignmentAnalysis old = assignment2assignmentAnalysis.put(assignmentAnalysis.getAssignment(), assignmentAnalysis);
 		assert old == null;
 	}
 
@@ -381,7 +381,7 @@ public class GrammarAnalysis
 		return (DirectAssignmentAnalysis) ClassUtil.nonNullState(assignment2assignmentAnalysis.get(assignment));
 	}
 
-	public @NonNull List<@NonNull AbstractAssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {
+	public @NonNull List<@NonNull AssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {
 		assert containment2assignmentAnalyses != null;
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
 	}
@@ -452,7 +452,7 @@ public class GrammarAnalysis
 			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {
 				ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)abstractRuleAnalysis;
 				s.append(" -");
-				Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AbstractAssignmentAnalysis>> eFeature2assignmentAnalyses = parserRuleAnalysis.getEFeature2assignmentAnalyses();
+				Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = parserRuleAnalysis.getEFeature2assignmentAnalyses();
 				List<@NonNull EStructuralFeature> eFeatures = new ArrayList<>(eFeature2assignmentAnalyses.keySet());
 				Collections.sort(eFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 				boolean isFirstFeature = true;
@@ -463,7 +463,7 @@ public class GrammarAnalysis
 					else {
 						s.append(",");
 					}
-					List<@NonNull AbstractAssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eFeature);
+					List<@NonNull AssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eFeature);
 					assert assignmentAnalyses != null;
 					int size = assignmentAnalyses.size();
 					if (size != 1) {

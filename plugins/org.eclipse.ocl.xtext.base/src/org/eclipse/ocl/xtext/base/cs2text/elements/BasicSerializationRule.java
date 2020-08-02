@@ -35,8 +35,8 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class BasicSerializationRule extends AbstractSerializationRule
@@ -63,7 +63,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		MultiplicativeCardinality netMultiplicativeCardinality = MultiplicativeCardinality.max(innerMultiplicativeCardinality, outerMultiplicativeCardinality);
 		if (serializationNode instanceof AssignedSerializationNode) {		// XXX bad cast
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-			AbstractAssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
+			AssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
 			EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 			if ("ownedProperties".equals(eStructuralFeature.getName())) {
 				getClass();	// XXX

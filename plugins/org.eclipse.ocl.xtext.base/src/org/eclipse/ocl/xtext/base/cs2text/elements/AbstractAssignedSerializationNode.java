@@ -18,15 +18,15 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
 {
-	protected final @NonNull AbstractAssignmentAnalysis assignmentAnalysis;
+	protected final @NonNull AssignmentAnalysis assignmentAnalysis;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	protected AbstractAssignedSerializationNode(@NonNull AbstractAssignmentAnalysis assignmentAnalysis,
+	protected AbstractAssignedSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(assignmentAnalysis.getGrammarAnalysis(), multiplicativeCardinality);
 		this.assignmentAnalysis = assignmentAnalysis;
@@ -52,7 +52,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @NonNull AbstractAssignmentAnalysis getAssignmentAnalysis() {
+	public @NonNull AssignmentAnalysis getAssignmentAnalysis() {
 		return assignmentAnalysis;
 	}
 

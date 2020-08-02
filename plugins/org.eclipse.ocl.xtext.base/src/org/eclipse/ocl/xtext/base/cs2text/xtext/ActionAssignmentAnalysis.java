@@ -27,7 +27,7 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
 
 /**
- * An XtextAssignmentAnalysis provides the extended analysis of an Xtext Assignment
+ * An ActionAssignmentAnalysis provides the extended analysis of an Xtext current assignment Action
  */
 public class ActionAssignmentAnalysis extends AbstractAssignmentAnalysis
 {
@@ -68,6 +68,7 @@ public class ActionAssignmentAnalysis extends AbstractAssignmentAnalysis
 		this.terminalRuleAnalysis = grammarAnalysis.getRuleAnalysis(terminalRule); */
 	}
 
+	@Override
 	public void analyzeContainmentAndTargets() {
 		if (eStructuralFeature instanceof EReference) {
 			EReference eReference = (EReference)eStructuralFeature;
@@ -134,6 +135,7 @@ public class ActionAssignmentAnalysis extends AbstractAssignmentAnalysis
 		} */
 	}
 
+	@Override
 	public @NonNull EClass getEClass() {
 		return (EClass) XtextGrammarUtil.getEClassifierScope(action);
 	}
@@ -155,6 +157,7 @@ public class ActionAssignmentAnalysis extends AbstractAssignmentAnalysis
 		return sourceRuleAnalysis;
 	}
 
+	@Override
 	public @NonNull List<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses() {
 		return targetRuleAnalyses;
 	}
