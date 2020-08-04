@@ -87,7 +87,7 @@ public class GrammarAnalysis
 	/**
 	 * The prioritized serialization rules for each EClass.
 	 */
-	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = null;
+	private @Nullable Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = null;
 
 	/**
 	 * The values of enumerated features
@@ -298,22 +298,27 @@ public class GrammarAnalysis
 		return false;
 	} */
 
-	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> analyzeSerializations(
+	protected @NonNull Map<@NonNull EClass, @NonNull SerializationRules> analyzeSerializations(
 			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
-		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules = new HashMap<>();
+		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRuleList = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
 			if ("EssentialOCL::SelfExpCS".equals(ruleAnalysis.getName())) {
 				getClass(); // XXX debugging
 			}
 			for (@NonNull SerializationRule serializationRule : ruleAnalysis.getSerializationRules()) {
 				EClass eClass = serializationRule.getProducedEClass();
-				List<@NonNull SerializationRule> serializationRules = eClass2serializationRules.get(eClass);
+				List<@NonNull SerializationRule> serializationRules = eClass2serializationRuleList.get(eClass);
 				if (serializationRules == null) {
 					serializationRules = new ArrayList<>();
-					eClass2serializationRules.put(eClass, serializationRules);
+					eClass2serializationRuleList.put(eClass, serializationRules);
 				}
 				serializationRules.add(serializationRule);
 			}
+		}
+		Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = new HashMap<>();
+		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> entry : eClass2serializationRuleList.entrySet()) {
+			EClass eClass = entry.getKey();
+			eClass2serializationRules.put(eClass, new SerializationRules(eClass, entry.getValue()));
 		}
 		return eClass2serializationRules;
 	}
@@ -429,7 +434,7 @@ public class GrammarAnalysis
 			getClass(); // XXX
 		}
 		assert eClass2serializationRules != null;
-		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass));
+		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass)).getSerializationRules();
 	}
 
 	public @NonNull IValueConverterService getValueConverterService() {
@@ -514,12 +519,12 @@ public class GrammarAnalysis
 			}
 		} */
 		s.append("\n\nUser EClass <=> Prioritized serialization rule(s)");
-		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> eClass2serializationRules2 = eClass2serializationRules;
+		Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules2 = eClass2serializationRules;
 		assert eClass2serializationRules2 != null;
 		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2serializationRules2.keySet());
 		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		for (@NonNull EClass eClass : eClasses) {
-			Iterable<@NonNull SerializationRule> serializationRules = eClass2serializationRules2.get(eClass);
+			SerializationRules serializationRules = eClass2serializationRules2.get(eClass);
 			assert serializationRules != null;
 			s.append("\n  ");;
 			s.append(eClass.getEPackage(). getName());
@@ -529,7 +534,7 @@ public class GrammarAnalysis
 				getClass(); // XXX debugging
 			}
 			s.append(" <=>");;
-			for (@NonNull SerializationRule serializationRule : serializationRules) {
+			for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
 				s.append(" ");;
 			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
 				StringUtil.appendIndentation(s, 2);
