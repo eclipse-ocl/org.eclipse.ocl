@@ -470,7 +470,7 @@ protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpre
 			result.toString(s, depth);
 		}
 	//	for (@NonNull CardinalitySolutionResult result : results) {
-	//		StringUtil.appendIndentation(s, depth, "  ");
+	//		StringUtil.appendIndentation(s, depth);
 	//		result.toString(s, 1);
 	//s	}
 	}
