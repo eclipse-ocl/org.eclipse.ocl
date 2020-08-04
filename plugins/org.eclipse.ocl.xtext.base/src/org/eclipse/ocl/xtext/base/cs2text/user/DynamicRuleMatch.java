@@ -127,7 +127,7 @@ public class DynamicRuleMatch implements RuleMatch
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityVariable variable : variables) {
 			Integer value = variable2value.get(variable);
-			StringUtil.appendIndentation(s, depth, "  ");
+			StringUtil.appendIndentation(s, depth);
 			s.append("- ");
 			s.append(variable.getName());
 			s.append(" = ");

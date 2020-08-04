@@ -134,7 +134,7 @@ public class IdiomMatch
 			s.append(idiom);
 		}
 		for (int i = 0; i < subIdiomIndex; i++) {
-			StringUtil.appendIndentation(s, depth, "\t");
+			StringUtil.appendIndentation(s, depth);
 			s.append(matchNodes[i]);
 		}
 		if (nestedMatch != null) {

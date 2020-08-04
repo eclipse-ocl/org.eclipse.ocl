@@ -773,4 +773,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/StringUtil.java" type="org.eclipse.ocl.pivot.utilities.StringUtil">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.StringUtil"/>
+                <message_argument value="defaultIndentation"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

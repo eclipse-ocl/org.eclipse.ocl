@@ -254,11 +254,11 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("{");
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			StringUtil.appendIndentation(s, depth, "\t");
+			StringUtil.appendIndentation(s, depth);
 			s.append(depth >= 0 ? "+\t" : " ");
 			serializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		}
-		StringUtil.appendIndentation(s, depth, "\t");
+		StringUtil.appendIndentation(s, depth);
 		s.append("}");
 		appendCardinality(s, depth);
 	}

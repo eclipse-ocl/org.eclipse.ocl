@@ -80,12 +80,12 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 		s.append("{");
 	//	boolean isFirst = true;
 		for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
-			StringUtil.appendIndentation(s, depth, "\t");
+			StringUtil.appendIndentation(s, depth);
 			s.append("| ");
 			alternativeSerializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		//	isFirst = false;
 		}
-		StringUtil.appendIndentation(s, depth, "\t");
+		StringUtil.appendIndentation(s, depth);
 		s.append("}");
 		appendCardinality(s, depth);
 	}

@@ -102,7 +102,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		List<@NonNull AbstractCardinalityExpression> sortedExpressions = new ArrayList<>(ruleAnalysis2cardinalityExpression.values());
 		Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull AbstractCardinalityExpression cardinalityExpression : sortedExpressions) {
-			StringUtil.appendIndentation(s, depth, "  ");
+			StringUtil.appendIndentation(s, depth);
 			s.append("- ");
 			cardinalityExpression.toString(s, depth);
 		}

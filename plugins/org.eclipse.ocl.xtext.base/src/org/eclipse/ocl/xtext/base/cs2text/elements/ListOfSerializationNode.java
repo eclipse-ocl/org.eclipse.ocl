@@ -105,11 +105,11 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 		s.append("{");
 		if (listOfNodes.size() > 0) {
 			for (@NonNull SerializationNode serializationNode : listOfNodes) {
-				StringUtil.appendIndentation(s, depth, "\t");
+				StringUtil.appendIndentation(s, depth);
 				s.append("+\t");
 				serializationNode.toString(s, depth+1);
 			}
-			StringUtil.appendIndentation(s, depth, "\t");
+			StringUtil.appendIndentation(s, depth);
 		}
 		s.append("}");
 	//	appendCardinality(s, depth);

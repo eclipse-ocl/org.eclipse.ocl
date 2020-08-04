@@ -35,6 +35,17 @@ public class StringUtil
 	/**
 	 * @since 1.13
 	 */
+	public static @NonNull String defaultIndentation = "    ";
+
+	/**
+	 * @since 1.13
+	 */
+	public static void appendIndentation(@NonNull StringBuilder s, int depth) {
+		appendIndentation(s, depth, defaultIndentation);
+	}
+	/**
+	 * @since 1.13
+	 */
 	public static void appendIndentation(@NonNull StringBuilder s, int depth, @NonNull String string) {
 		if (depth >= 0) {
 			s.append("\n");

@@ -484,7 +484,7 @@ public class GrammarAnalysis
 				//	StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
 				//	rootSerializationNode.toString(s, 2);
 				//	serializationRule.getPreSerializer();		// XXX redundant/lazy
-							StringUtil.appendIndentation(s, 2, "  ");
+							StringUtil.appendIndentation(s, 2);
 							s.append("|& ");
 							serializationRule.toString(s, -1);
 						}
@@ -532,7 +532,7 @@ public class GrammarAnalysis
 			for (@NonNull SerializationRule serializationRule : serializationRules) {
 				s.append(" ");;
 			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
-				StringUtil.appendIndentation(s, 2, "  ");
+				StringUtil.appendIndentation(s, 2);
 				s.append("|&  ");
 				serializationRule.toString(s, -1);
 			}

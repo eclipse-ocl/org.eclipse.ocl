@@ -196,19 +196,19 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 		s.append("{");
 		if (listOfListOfNodes.size() > 0) {
 			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-				StringUtil.appendIndentation(s, depth, "\t");
+				StringUtil.appendIndentation(s, depth);
 				s.append("|\t{");
 				if (listOfNodes.size() > 0) {
 					for (@NonNull SerializationNode serializationNode : listOfNodes) {
-						StringUtil.appendIndentation(s, depth+1, "\t");
+						StringUtil.appendIndentation(s, depth+1);
 						s.append("+\t");
 						serializationNode.toString(s, depth+2);
 					}
-					StringUtil.appendIndentation(s, depth+1, "\t");
+					StringUtil.appendIndentation(s, depth+1);
 				}
 				s.append("}");
 			}
-			StringUtil.appendIndentation(s, depth, "\t");
+			StringUtil.appendIndentation(s, depth);
 		}
 		s.append("}");
 	}

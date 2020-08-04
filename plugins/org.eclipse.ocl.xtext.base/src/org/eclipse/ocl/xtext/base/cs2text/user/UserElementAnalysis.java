@@ -188,7 +188,7 @@ public class UserElementAnalysis implements Nameable
 			for (@NonNull SerializationRule serializationRule : serializationRules2) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				if (isMany) {
-					StringUtil.appendIndentation(s, depth+1, "  ");
+					StringUtil.appendIndentation(s, depth+1);
 				}
 				else {
 					s.append(" ");

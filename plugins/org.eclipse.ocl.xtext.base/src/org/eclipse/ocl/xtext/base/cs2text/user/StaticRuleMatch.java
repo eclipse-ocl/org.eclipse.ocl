@@ -458,14 +458,14 @@ protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpre
 		List<@NonNull AbstractCardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
 		Collections.sort(expressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull AbstractCardinalityExpression expression : expressions) {
-			StringUtil.appendIndentation(s, depth, "  ");
+			StringUtil.appendIndentation(s, depth);
 			s.append("- ");
 			expression.toString(s, depth);
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2solution.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		for (CardinalitySolutionResult result : results) {
-			StringUtil.appendIndentation(s, depth, "  ");
+			StringUtil.appendIndentation(s, depth);
 			s.append("- ");
 			result.toString(s, depth);
 		}

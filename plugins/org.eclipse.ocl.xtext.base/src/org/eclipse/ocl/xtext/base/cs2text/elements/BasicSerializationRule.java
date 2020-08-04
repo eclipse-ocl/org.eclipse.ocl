@@ -294,7 +294,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			for (@NonNull CardinalityVariable variable : variables) {
 				SerializationNode serializationNode = variable2node.get(variable);
 				assert serializationNode != null;
-				StringUtil.appendIndentation(s, depth, "  ");
+				StringUtil.appendIndentation(s, depth);
 				s.append("- ");
 				s.append(variable);
 				s.append(": ");
