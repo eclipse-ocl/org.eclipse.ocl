@@ -32,20 +32,6 @@ class OCLinEcoreFormatter extends EssentialOCLFormatter {
 	@Inject
 	private SerializationBuilder serializationBuilder;
 
-	def dispatch void format(TopLevelCS topLevelCS, extension IFormattableDocument document) {
-		var GrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
-		grammarAnalysis.analyze();
-		var String s1 = grammarAnalysis.toString();
-		System.out.println(s1);
-		System.out.println("\n");
-		modelAnalysis.analyze(topLevelCS);
-		var String s2 = modelAnalysis.toString();
-		System.out.println(s2);
-		modelAnalysis.serialize(serializationBuilder, topLevelCS, null);
-		var String s3 = serializationBuilder.toRenderedString();
-		System.out.println(s3);
-	}
-
 	override void _format(XtextResource resource, IFormattableDocument document) {
 		super._format(resource, document);
 	}

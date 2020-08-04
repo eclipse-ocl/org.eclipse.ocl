@@ -13,15 +13,10 @@
 package org.eclipse.ocl.xtext.oclinecore.formatting2;
 
 import com.google.inject.Inject;
-import java.util.Arrays;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.basecs.PathNameCS;
-import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
 import org.eclipse.ocl.xtext.essentialocl.formatting2.EssentialOCLFormatter;
-import org.eclipse.ocl.xtext.essentialoclcs.ContextCS;
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
 import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS;
 import org.eclipse.xtext.formatting2.IFormattableDocument;
@@ -40,20 +35,6 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
   @Inject
   private SerializationBuilder serializationBuilder;
   
-  protected void _format(final TopLevelCS topLevelCS, @Extension final IFormattableDocument document) {
-    GrammarAnalysis grammarAnalysis = this.modelAnalysis.getGrammarAnalysis();
-    grammarAnalysis.analyze();
-    String s1 = grammarAnalysis.toString();
-    System.out.println(s1);
-    System.out.println("\n");
-    this.modelAnalysis.analyze(topLevelCS);
-    String s2 = this.modelAnalysis.toString();
-    System.out.println(s2);
-    this.modelAnalysis.serialize(this.serializationBuilder, topLevelCS, null);
-    String s3 = this.serializationBuilder.toRenderedString();
-    System.out.println(s3);
-  }
-  
   @Override
   public void _format(final XtextResource resource, final IFormattableDocument document) {
     super._format(resource, document);
@@ -71,37 +52,5 @@ public class OCLinEcoreFormatter extends EssentialOCLFormatter {
     this.modelAnalysis.serialize(this.serializationBuilder, topLevelCS, null);
     String s3 = this.serializationBuilder.toRenderedString();
     System.out.println(s3);
-  }
-  
-  @Override
-  public void format(final Object topLevelCS, final IFormattableDocument document) {
-    if (topLevelCS instanceof TopLevelCS) {
-      _format((TopLevelCS)topLevelCS, document);
-      return;
-    } else if (topLevelCS instanceof ContextCS) {
-      _format((ContextCS)topLevelCS, document);
-      return;
-    } else if (topLevelCS instanceof TemplateBindingCS) {
-      _format((TemplateBindingCS)topLevelCS, document);
-      return;
-    } else if (topLevelCS instanceof XtextResource) {
-      _format((XtextResource)topLevelCS, document);
-      return;
-    } else if (topLevelCS instanceof PathNameCS) {
-      _format((PathNameCS)topLevelCS, document);
-      return;
-    } else if (topLevelCS instanceof EObject) {
-      _format((EObject)topLevelCS, document);
-      return;
-    } else if (topLevelCS == null) {
-      _format((Void)null, document);
-      return;
-    } else if (topLevelCS != null) {
-      _format(topLevelCS, document);
-      return;
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(topLevelCS, document).toString());
-    }
   }
 }
