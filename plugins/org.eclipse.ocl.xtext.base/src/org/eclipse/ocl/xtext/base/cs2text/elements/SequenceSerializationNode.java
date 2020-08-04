@@ -259,7 +259,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 			serializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		}
 		StringUtil.appendIndentation(s, depth);
-		s.append("}");
+		s.append(" }");
 		appendCardinality(s, depth);
 	}
 }

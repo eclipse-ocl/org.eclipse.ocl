@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
@@ -488,8 +489,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	}
 
 	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
+	public void toDebugString(@NonNull StringBuilder s, int depth) {
 		s.append(getName());
 		List<@NonNull RuleCall> delegatingRuleCalls2 = delegatingRuleCalls;
 		if (delegatingRuleCalls2 != null) {
@@ -517,6 +517,12 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 				isFirst1 = false;
 			}
 		}
+		if (serializationRules != null) {
+			for (@NonNull SerializationRule serializationRule : serializationRules) {
+				StringUtil.appendIndentation(s, depth+1);
+				s.append(serializationRule);
+			}
+		}
 /*		s.append(" <=> ");
 		boolean isFirst2 = true;
 		for (@NonNull EClassifier eClassifier : eClassifiers) {
@@ -526,6 +532,5 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			s.append(eClassifier.getName());
 			isFirst2 = false;
 		} */
-		return s.toString();
 	}
 }

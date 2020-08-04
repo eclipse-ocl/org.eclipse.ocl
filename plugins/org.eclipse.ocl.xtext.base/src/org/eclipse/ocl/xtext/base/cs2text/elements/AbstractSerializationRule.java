@@ -17,13 +17,18 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
-public abstract class AbstractSerializationRule implements SerializationRule
+public abstract class AbstractSerializationRule implements SerializationRule, ToDebugStringable
 {
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	private @Nullable EClass producedEClass = null;
+
+	@SuppressWarnings("unused")			// Used in the debugger
+	private final @NonNull ToDebugString toDebugSring = new ToDebugString(this){};
 
 	protected AbstractSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
@@ -98,6 +103,11 @@ public abstract class AbstractSerializationRule implements SerializationRule
 			}
 		}
 		return producedEClass;
+	}
+
+	@Override
+	public void toDebugString(@NonNull StringBuilder s, int depth) {
+		rootSerializationNode.toString(s, -1);
 	}
 
 	@Override

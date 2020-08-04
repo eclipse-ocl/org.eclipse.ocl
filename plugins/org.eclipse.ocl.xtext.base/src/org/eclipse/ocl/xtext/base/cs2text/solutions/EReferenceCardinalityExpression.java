@@ -96,7 +96,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		s.append(": |");
 		s.append(eReference.getName());
 		s.append(".'");
-		s.append(ruleAnalysis.getName());
+		s.append(ruleAnalysis.getRuleName());
 		s.append("'| = ");
 		appendSumOfProducts(s);
 		List<@NonNull AbstractCardinalityExpression> sortedExpressions = new ArrayList<>(ruleAnalysis2cardinalityExpression.values());

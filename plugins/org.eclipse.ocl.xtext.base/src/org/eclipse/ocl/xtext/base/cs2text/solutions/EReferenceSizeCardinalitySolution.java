@@ -70,7 +70,7 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 		s.append("|");
 		s.append(eReference.getName());
 		s.append(".'");
-		s.append(ruleAnalysis.getName());
+		s.append(ruleAnalysis.getRuleName());
 		s.append("'|");
 	}
 }

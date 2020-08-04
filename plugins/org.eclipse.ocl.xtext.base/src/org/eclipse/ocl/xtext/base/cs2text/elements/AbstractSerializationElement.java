@@ -18,6 +18,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -26,8 +28,11 @@ import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.ParserRule;
 
-public abstract class AbstractSerializationElement implements SerializationElement
+public abstract class AbstractSerializationElement implements SerializationElement, ToDebugStringable
 {
+	@SuppressWarnings("unused")			// Used in the debugger
+	private final @NonNull ToDebugString toDebugSring = new ToDebugString(this){};
+
 	@Override
 	public @NonNull ListOfSerializationNode asList() {
 		throw new IllegalStateException();
@@ -276,6 +281,11 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 //	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.appendError("«Unsupported serialize '" + getClass().getSimpleName() + "'»");
+	}
+
+	@Override
+	public void toDebugString(@NonNull StringBuilder s, int depth) {
+		s.append(toString());
 	}
 
 	@Override

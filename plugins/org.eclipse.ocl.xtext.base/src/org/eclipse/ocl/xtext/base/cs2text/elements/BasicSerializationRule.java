@@ -307,12 +307,12 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(ruleAnalysis.getName());
-		s.append(": ");
+		s.append("(");
 		EClass producedEClass = getProducedEClass();
 		s.append(producedEClass.getEPackage().getName());
 		s.append("::");
 		s.append(producedEClass.getName());
-		s.append(" ");
+		s.append("): ");
 		rootSerializationNode.toString(s, depth);
 	}
 }

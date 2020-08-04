@@ -12,12 +12,14 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.xtext.AbstractRule;
 
 /**
  * An XtextAbstractRuleAnalysis provides the extended analysis of an Xtext AbstractRule
  */
-public class AbstractRuleAnalysis implements Nameable
+public class AbstractRuleAnalysis implements Nameable, ToDebugStringable
 {
 	/**#
 	 * The overall (multi-)grammar analysis.
@@ -48,6 +50,9 @@ public class AbstractRuleAnalysis implements Nameable
 	 * The terms for each possible permutation of alternatives.
 	 */
 //	private @Nullable List<@NonNull XtextTermsAnalysis> termsAnalyses = null;
+
+	@SuppressWarnings("unused")			// Used in the debugger
+	private final @NonNull ToDebugString toDebugSring = new ToDebugString(this){};
 
 	public AbstractRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull AbstractRule abstractRule) {
 		this.grammarAnalysis = grammarAnalysis;
@@ -145,27 +150,12 @@ public class AbstractRuleAnalysis implements Nameable
 	}*/
 
 	@Override
+	public void toDebugString(@NonNull StringBuilder s, int depth) {
+		s.append(toString());
+	}
+
+	@Override
 	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append(getName());
-	/*	s.append(" -> ");
-		boolean isFirst1 = true;
-		for (@NonNull AbstractRuleAnalysis baseRuleAnalyses : getBaseRuleAnalysisClosure()) {
-			if (!isFirst1) {
-				s.append(",");
-			}
-			s.append(baseRuleAnalyses.getName());
-			isFirst1 = false;
-		} */
-/*		s.append(" <=> ");
-		boolean isFirst2 = true;
-		for (@NonNull EClassifier eClassifier : eClassifiers) {
-			if (!isFirst2) {
-				s.append(",");
-			}
-			s.append(eClassifier.getName());
-			isFirst2 = false;
-		} */
-		return s.toString();
+		return getRuleName();
 	}
 }
