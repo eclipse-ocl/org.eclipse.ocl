@@ -29,5 +29,5 @@ public interface AssignedSerializationNode extends SerializationNode
 
 	@NonNull AssignmentAnalysis getAssignmentAnalysis();
 	@NonNull EStructuralFeature getEStructuralFeature();
-	@NonNull EnumerationValue getEnumerationValue();
+	@Nullable EnumerationValue getEnumerationValue();
 }

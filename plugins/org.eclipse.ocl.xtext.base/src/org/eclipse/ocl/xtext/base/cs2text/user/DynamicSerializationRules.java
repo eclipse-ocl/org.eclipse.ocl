@@ -168,7 +168,7 @@ public class DynamicSerializationRules
 			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
 			if (assignedKeywordSerializationNode.getEStructuralFeature() == eAttribute) {
 				EnumerationValue enumerationValue = assignedKeywordSerializationNode.getEnumerationValue();
-				if (!enumerationValue.isNull()) {
+				if ((enumerationValue != null) && !enumerationValue.isNull()) {
 					if (enumerationValues == null) {
 						enumerationValues = new HashSet<>();
 					}

@@ -33,6 +33,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionResult;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -118,7 +119,7 @@ public class StaticRuleMatch implements RuleMatch
 			if (eStructuralFeature instanceof EAttribute) {
 				EnumerationValue enumerationValue2 = assignedSerializationNode.getEnumerationValue();
 				assert enumerationValue2 == enumerationValue;
-				if (enumerationValue2.isNull()) {
+				if ((enumerationValue2 == null) || enumerationValue2.isNull()) {
 					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
 				}
 				else {		// XXX RuleAnalysis
@@ -133,7 +134,7 @@ public class StaticRuleMatch implements RuleMatch
 		//
 		//	Add cardinalityVariables as a further product term to the sum of products.
 		//
-		if (!enumerationValue.isNull()) {
+		if ((enumerationValue != null) && !enumerationValue.isNull()) {
 			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(serializationRule.getRuleAnalysis().getGrammarAnalysis(), enumerationValue);
 			cardinalityExpression2.addMultiplicityProduct(cardinalityVariables);
 		}
@@ -173,6 +174,10 @@ public class StaticRuleMatch implements RuleMatch
 		}
 		if (eStructuralFeature instanceof EAttribute) {
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
+		//	assert !enumerationValue.isNull();
+			if (enumerationValue == null) {
+				enumerationValue = NullEnumerationValue.INSTANCE;
+			}
 			// XXX is NUll
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;

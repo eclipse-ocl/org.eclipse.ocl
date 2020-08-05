@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 
@@ -53,7 +52,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @NonNull EnumerationValue getEnumerationValue() {
-		return NullEnumerationValue.INSTANCE;
+	public @Nullable EnumerationValue getEnumerationValue() {
+		return null;
 	}
 }

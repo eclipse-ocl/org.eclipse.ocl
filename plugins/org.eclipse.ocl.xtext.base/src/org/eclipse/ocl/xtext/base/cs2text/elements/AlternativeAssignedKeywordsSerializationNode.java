@@ -35,6 +35,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.keywords = keywords;
 		this.enumerationValue = grammarAnalysis.getEnumerationValue(keywords);
+		assert !enumerationValue.isNull();
 	}
 
 	@Override
