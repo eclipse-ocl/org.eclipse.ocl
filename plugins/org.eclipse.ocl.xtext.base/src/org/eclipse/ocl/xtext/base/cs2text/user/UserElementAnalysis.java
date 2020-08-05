@@ -10,11 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -25,11 +20,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -41,13 +34,12 @@ public class UserElementAnalysis implements Nameable
 
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull GrammarAnalysis grammarAnalysis;
-	protected final @NonNull EObject eObject;
-	protected final @NonNull EClass eClass;
-	private final @NonNull String name;
 	protected final @Nullable UserElementAnalysis containingElementAnalysis;
 	protected final @Nullable EReference eContainmentFeature;
-	private @NonNull DynamicSerializationRules serializationRules;
-	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
+	protected final @NonNull EObject eObject;
+	protected final @NonNull EClass eClass;
+	protected final @NonNull String name;
+	protected final @NonNull DynamicSerializationRules serializationRules;
 
 	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable UserElementAnalysis containingElementAnalysis,
 			@Nullable EReference eContainmentFeature, @NonNull EObject eObject) {
@@ -55,66 +47,32 @@ public class UserElementAnalysis implements Nameable
 		assert eObject.eContainer() == (containingElementAnalysis == null ? null : containingElementAnalysis.getEObject());
 		this.modelAnalysis = modelAnalysis;
 		this.grammarAnalysis = modelAnalysis.getGrammarAnalysis();
+		this.containingElementAnalysis = containingElementAnalysis;
+		this.eContainmentFeature = eContainmentFeature;
 		this.eObject = eObject;
 		this.eClass = UserModelAnalysis.eClass(eObject);
 		this.name = eClass.getName() + "@" + ++count;
-		this.containingElementAnalysis = containingElementAnalysis;
-		this.eContainmentFeature = eContainmentFeature;
-		this.serializationRules = new DynamicSerializationRules(eClass, analyzeSerializationRules());
+		this.serializationRules = analyzeSerializationRules();
 	}
 
 	/**
 	 * Determine the rules able to produce this element and the containing assignments by which it can be contained.
 	 */
-	private @NonNull Iterable<@NonNull SerializationRule> analyzeSerializationRules() {
+	private @NonNull DynamicSerializationRules analyzeSerializationRules() {
 		String eClassName = eClass.getName();
 		if ("NavigatingArgCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
-		UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
-		if (containingElementAnalysis2 == null) {
-			return grammarAnalysis.getSerializationRules(eClass).getSerializationRules();
+		Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = null;
+		EReference eContainmentFeature2 = eContainmentFeature;
+		if (eContainmentFeature2 != null) {
+			UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
+			assert containingElementAnalysis2 != null;
+			SerializationRules parentSerializationRules = grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass());
+			targetRuleAnalyses = parentSerializationRules.getAssignedTargetRuleAnalyses(eContainmentFeature2);
 		}
-		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
-		Set<AbstractRuleAnalysis> targetRuleAnalyses = new HashSet<>();
-		for (@NonNull SerializationRule parentSerializationRule : grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass()).getSerializationRules()) {
-			assert eContainmentFeature != null;
-			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = parentSerializationRule.getAssignedSerializationNodes(eContainmentFeature);
-			if (assignedSerializationNodes != null) {
-				for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
-					for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
-						targetRuleAnalyses.add(targetRuleAnalysis);
-					}
-				}
-			}
-		}
-		for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules()) {
-			ParserRuleAnalysis ruleAnalysis = serializationRule.getRuleAnalysis();
-			if (targetRuleAnalyses.contains(ruleAnalysis)) {
-				serializationRules.add(serializationRule);
-				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
-				if (ruleDiscriminatingEReferences != null) {
-					Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses2 = eReference2disciminatingRuleAnalyses;
-					if (eReference2disciminatingRuleAnalyses2 == null) {
-						eReference2disciminatingRuleAnalyses = eReference2disciminatingRuleAnalyses2 = new HashMap<>();
-					}
-					for (Map.Entry<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> entry : ruleDiscriminatingEReferences.entrySet()) {
-						EReference eReference = entry.getKey();
-						List<@NonNull ParserRuleAnalysis> list = eReference2disciminatingRuleAnalyses2.get(eReference);
-						if (list == null) {
-							list = new ArrayList<>();
-							eReference2disciminatingRuleAnalyses2.put(eReference, list);
-						}
-						for (@NonNull ParserRuleAnalysis ruleAnalysis2 : entry.getValue()) {
-							if (!list.contains(ruleAnalysis2)) {
-								list.add(ruleAnalysis2);
-							}
-						}
-					}
-				}
-			}
-		}
-		return serializationRules;
+		SerializationRules serializationRules2 = grammarAnalysis.getSerializationRules(eClass);
+		return serializationRules2.createDynamicSerializationRules(targetRuleAnalyses);
 	}
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
@@ -155,7 +113,7 @@ public class UserElementAnalysis implements Nameable
 	}
 
 	protected @NonNull UserSlotsAnalysis getSlotsAnalysis() {
-		return new UserSlotsAnalysis(modelAnalysis, serializationRules, eObject, eReference2disciminatingRuleAnalyses);
+		return new UserSlotsAnalysis(modelAnalysis, serializationRules, eObject);
 	}
 
 	@Override

@@ -281,15 +281,15 @@ public class UserSlotsAnalysis
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject eObject;
 	protected final @Nullable DynamicSerializationRules serializationRules;
-	protected final @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses;
+//	protected final @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis;
 
-	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject,
-			@Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses) {
+	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject/*,
+			@Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses*/) {
 		this.modelAnalysis = modelAnalysis;
 		this.eObject = eObject;
 		this.serializationRules = serializationRules;
-		this.eReference2disciminatedRuleAnalyses = eReference2disciminatedRuleAnalyses;
+	//	this.eReference2disciminatedRuleAnalyses = eReference2disciminatedRuleAnalyses;
 		this.eStructuralFeature2slotAnalysis = analyze();
 	}
 
@@ -391,7 +391,7 @@ public class UserSlotsAnalysis
 			return null;
 		}
 		Object object = eObject.eGet(eReference);
-		if (eReference2disciminatedRuleAnalyses != null) {
+	/*	if (eReference2disciminatedRuleAnalyses != null) {
 			List<@NonNull ParserRuleAnalysis> ruleAnalyses = eReference2disciminatedRuleAnalyses.get(eReference);
 			if (ruleAnalyses != null) {
 				if (eReference.isMany()) {
@@ -414,7 +414,7 @@ public class UserSlotsAnalysis
 					return discriminatedSlotAnalysis;
 				}
 			}
-		}
+		} */
 		if (eReference.isMany()) {
 			List<?> elements = (List<?>)object;
 			assert elements != null;

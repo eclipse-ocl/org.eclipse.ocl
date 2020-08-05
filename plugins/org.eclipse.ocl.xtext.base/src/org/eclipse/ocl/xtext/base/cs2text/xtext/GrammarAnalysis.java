@@ -534,13 +534,7 @@ public class GrammarAnalysis
 				getClass(); // XXX debugging
 			}
 			s.append(" <=>");;
-			for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
-				s.append(" ");;
-			//	serializationRule.preSerialize(parserRuleAnalysis, rootSerializationNode);
-				StringUtil.appendIndentation(s, 2);
-				s.append("|&  ");
-				serializationRule.toString(s, -1);
-			}
+			serializationRules.toString(s, 2);
 		}
 		return s.toString();
 	}
