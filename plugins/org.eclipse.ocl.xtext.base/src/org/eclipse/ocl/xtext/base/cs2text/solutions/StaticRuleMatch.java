@@ -66,11 +66,15 @@ public class StaticRuleMatch implements RuleMatch
 
 	/**
 	 * The CardinalityVariable for each node, unless always exactly 1.
+	 *
+	 * Only used during serialization - replae by known indexes.
 	 */
-	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable = new HashMap<>();		// XXX debugging @NonNull
+	private final @NonNull Map<@NonNull SerializationNode, @NonNull CardinalityVariable> node2variable = new HashMap<>();
 
 	/**
 	 * The Node which each cardinality variable defines the iteration for; the inverse of node2variable.
+	 *
+	 * ?? Only used as a debugging convenience ??
 	 */
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node = new HashMap<>();
 
@@ -82,6 +86,8 @@ public class StaticRuleMatch implements RuleMatch
 
 	/**
 	 * The per-variable solution expression that computes the variable's value from the actual number of slots of an actual user element.
+	 *
+	 * Lazily populated as solutions found.
 	 */
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = new HashMap<>();
 
@@ -99,7 +105,7 @@ public class StaticRuleMatch implements RuleMatch
 	 * Create/update the sum-of-products expression for the feature assigned by assignedSerializationNode to include
 	 * a product for assignedSerializationNode's cardinality variable and for all surrounding sequences in outerVariables.
 	 */
-	protected void accumulateAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> outerVariables) {
+	protected void accumulateAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> cardinalityVariables) {
 		//
 		//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
 		//
@@ -125,22 +131,14 @@ public class StaticRuleMatch implements RuleMatch
 			feature2expression.put(eStructuralFeature, cardinalityExpression);
 		}
 		//
-		//	Determine the product term of outer variables and the current variable.
-		//
-		List<@NonNull CardinalityVariable> variablesProduct = Lists.newArrayList(outerVariables);
-		CardinalityVariable cardinalityVariable = node2variable.get(assignedSerializationNode);
-		if (cardinalityVariable != null) {
-			variablesProduct.add(cardinalityVariable);
-		}
-		//
-		//	Add the product term to the sum of products.
+		//	Add cardinalityVariables as a further product term to the sum of products.
 		//
 		if (!enumerationValue.isNull()) {
 			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(serializationRule.getRuleAnalysis().getGrammarAnalysis(), enumerationValue);
-			cardinalityExpression2.addMultiplicityProduct(variablesProduct);
+			cardinalityExpression2.addMultiplicityProduct(cardinalityVariables);
 		}
 		else {
-			cardinalityExpression.addMultiplicityProduct(variablesProduct);
+			cardinalityExpression.addMultiplicityProduct(cardinalityVariables);
 		}
 	}
 
@@ -166,7 +164,7 @@ public class StaticRuleMatch implements RuleMatch
 		}
 	}
 
-	protected void analyzeAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> outerVariables,
+	protected void analyzeAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> cardinalityVariables,
 			@NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
 		AssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
 		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
@@ -210,7 +208,7 @@ public class StaticRuleMatch implements RuleMatch
 //			assignedSerializationNodes.add(assignedSerializationNode);
 			}
 		}
-		accumulateAssignment(assignedSerializationNode, outerVariables);
+		accumulateAssignment(assignedSerializationNode, cardinalityVariables);
 	}
 
 	public void analyzeSerialization() {
@@ -219,7 +217,7 @@ public class StaticRuleMatch implements RuleMatch
 		}
 		analyzeSerialization(serializationRule.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
 	}
-	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> outerVariables, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
+	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
 		//
 		//	Allocate a CardinalityVariable for an indeterminate multiplicity.
 		//
@@ -242,24 +240,24 @@ public class StaticRuleMatch implements RuleMatch
 		//
 		//	Create the feature size expressions for an assignment
 		//
+		if (cardinalityVariable != null) {
+			cardinalityVariables.push(cardinalityVariable);
+		}
 		if (serializationNode instanceof AssignedSerializationNode) {
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-			analyzeAssignment(assignedSerializationNode, outerVariables, netMultiplicativeCardinality);
+			analyzeAssignment(assignedSerializationNode, cardinalityVariables, netMultiplicativeCardinality);
 		}
 		//
 		//	Recurse for sequences
 		//
 		else if (serializationNode instanceof SequenceSerializationNode) {
 			SequenceSerializationNode sequenceSerializationNode = (SequenceSerializationNode)serializationNode;
-			if (cardinalityVariable != null) {
-				outerVariables.push(cardinalityVariable);
-			}
 			for (@NonNull SerializationNode nestedSerializationNode : sequenceSerializationNode.getSerializationNodes()) {
-				analyzeSerialization(nestedSerializationNode, outerVariables, netMultiplicativeCardinality);
+				analyzeSerialization(nestedSerializationNode, cardinalityVariables, netMultiplicativeCardinality);
 			}
-			if (cardinalityVariable != null) {
-				outerVariables.pop();
-			}
+		}
+		if (cardinalityVariable != null) {
+			cardinalityVariables.pop();
 		}
 	}
 

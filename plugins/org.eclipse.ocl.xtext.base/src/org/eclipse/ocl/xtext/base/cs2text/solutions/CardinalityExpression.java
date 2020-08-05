@@ -27,7 +27,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
  */
 public interface CardinalityExpression extends Nameable
 {
-	void addMultiplicityProduct(@NonNull List<@NonNull CardinalityVariable> variables);
+	void addMultiplicityProduct(@NonNull Iterable<@NonNull CardinalityVariable> variables);
 	boolean analyzeMayBeZeroCommonFactors(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany);
 	boolean analyzeRedundantProducts(@NonNull StaticRuleMatch ruleMatch);
 	boolean analyzeTrivial(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany);
