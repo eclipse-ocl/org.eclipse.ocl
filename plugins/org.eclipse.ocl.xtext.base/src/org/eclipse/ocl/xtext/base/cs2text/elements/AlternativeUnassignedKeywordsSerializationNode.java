@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -23,6 +22,11 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
+/**
+ * An AlternativeUnassignedKeywordsSerializationNode corresponds to the parsing specification of a variety of keywords
+ * none of which are assigned to the parsed model, consequently the serialization cannot know which to use. The construct
+ * is therefore redundant and the first keyword is always used for serialization.
+ */
 public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSerializationNode
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
@@ -43,11 +47,6 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		serializationRule.addSerializedNode(this, parentStack);
-	}
-
-	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
 		return new AlternativeUnassignedKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality, values);
@@ -55,9 +54,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializationBuilder.append(SerializationBuilder.SOFT_SPACE);
 		serializationBuilder.append(values.get(0));
-		serializationBuilder.append(SerializationBuilder.SOFT_SPACE);
 	}
 
 	@Override

@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -65,18 +64,6 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	public boolean addAll(Collection<? extends @NonNull SerializationNode> c) {
 		throw new UnsupportedOperationException();
 	} */
-
-	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		super.analyze(serializationRule, parentStack);
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			parentStack.push(this);
-			serializationNode.analyze(serializationRule, parentStack);
-			parentStack.pop();
-		}
-	}
-
-
 
 /*	@Override
 	public boolean add(@NonNull SerializationNode e) {

@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -58,11 +57,6 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		}
 	}
 
-	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		serializationRule.addSerializedNode(this, parentStack);
-	}
-
 	protected void appendCardinality(@NonNull StringBuilder s, int depth) {
 		if ((depth >= 0) || !multiplicativeCardinality.isOne()) {
 			s.append("[");
@@ -100,6 +94,11 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	@Override
 	public boolean isOne() {
 		return multiplicativeCardinality.isOne();
+	}
+
+	@Override
+	public boolean isRedundant() {
+		return false;
 	}
 
 	@Override

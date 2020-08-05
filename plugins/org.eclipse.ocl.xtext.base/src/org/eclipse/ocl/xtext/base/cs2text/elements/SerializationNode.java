@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
-import java.util.Stack;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
@@ -21,13 +19,6 @@ import org.eclipse.xtext.CompoundElement;
 
 public interface SerializationNode extends SerializationElement
 {
-	/**
-	 * Traverse the serialization node hoderarchy of a serializationRule to populate its StaticRuleMatch.
-	 *
-	 * parentStack identifoes the ancestry of this node.
-	 */
-	void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack);
-
 	/**
 	 * If multiplicativeCardinality is null return a deep copy of this node, else a deep copy
 	 * with a changed multiplicativeCardinality. This accommodates the need to change the
@@ -44,6 +35,11 @@ public interface SerializationNode extends SerializationElement
 	 * Return true if this node has exactly one cardinality.
 	 */
 	boolean isOne();
+
+	/**
+	 * Return true if this node is unnecessary, e.g. an optional unassigned RuleCall.
+	 */
+	boolean isRedundant();
 
 	/**
 	 * Traverse the serialization node hoderarchy of a serializer's serializationRule to append appropriate string

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
-import java.util.Stack;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
@@ -30,13 +28,6 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void analyze(@NonNull BasicSerializationRule serializationRule, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		if (!multiplicativeCardinality.mayBeZero()) {
-			super.analyze(serializationRule, parentStack);
-		}
-	}
-
-	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
 		return new UnassignedRuleCallSerializationNode(grammarAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
@@ -46,9 +37,14 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 		return calledRuleAnalysis;
 	}
 
+//	@Override
+//	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+//		return MultiplicativeCardinality.ONE;			// ?? could more accurately be ZERO or ONE
+//	}
+
 	@Override
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return MultiplicativeCardinality.ONE;			// ?? could more accurately be ZERO or ONE
+	public boolean isRedundant() {
+		return multiplicativeCardinality.mayBeZero();
 	}
 
 	@Override

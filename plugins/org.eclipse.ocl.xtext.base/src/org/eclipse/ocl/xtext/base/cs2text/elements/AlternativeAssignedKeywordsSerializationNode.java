@@ -19,6 +19,12 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
 
+/**
+ * An AlternativeAssignedKeywordsSerializationNode corresponds to the parsing specification of a variety of keywords
+ * one of which is assigned to a String feature in the parsed model. The alternative keywords behave as an enumeration.
+ * Multiple AlternativeAssignedKeywordsSerializationNode for the same feature may define orthogonal or overlapping
+ * enumerations.
+ */
 public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull Iterable<@NonNull Keyword> keywords;

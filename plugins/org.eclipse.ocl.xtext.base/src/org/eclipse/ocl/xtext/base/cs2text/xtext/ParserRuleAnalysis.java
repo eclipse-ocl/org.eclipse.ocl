@@ -339,7 +339,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			}
 		}
 		else {
-			SerializationRule serializationRule = new BasicSerializationRule(this, serializationNode);
+			BasicSerializationRule serializationRule = new BasicSerializationRule(this, serializationNode);
 			serializationRules.add(serializationRule);
 		}
 	}

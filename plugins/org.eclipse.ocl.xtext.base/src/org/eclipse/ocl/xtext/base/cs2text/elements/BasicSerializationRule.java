@@ -10,12 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -23,124 +19,30 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.AbstractCardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class BasicSerializationRule extends AbstractSerializationRule
 {
-	private final @NonNull Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = new HashMap<>();
-	private final @NonNull Map<@NonNull EReference, @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = new HashMap<>();
-	private final @NonNull Map<@NonNull SerializationNode, /*@NonNull*/ CardinalityVariable> node2variable;		// XXX debugging @NonNull
-	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node;
+	/**
+	 * The variables, expressions and solutions to determine if an actual user element matches.
+	 */
 	private @Nullable StaticRuleMatch staticRuleMatch = null;
+
+	/**
+	 * The subidioms to decorate each node duringf serialization.
+	 */
 	private @Nullable Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = null;
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		super(ruleAnalysis, rootSerializationNode);
-		this.node2variable = new HashMap<>();
-		this.variable2node = new HashMap<>();
-		if ("EnumerationCS".equals(ruleAnalysis.getRuleName())) {
-			getClass();	// XXX
-		}
-		accumulate(rootSerializationNode, MultiplicativeCardinality.ONE);
-	}
-
-	private void accumulate(@NonNull SerializationNode serializationNode, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
-		MultiplicativeCardinality innerMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-		MultiplicativeCardinality netMultiplicativeCardinality = MultiplicativeCardinality.max(innerMultiplicativeCardinality, outerMultiplicativeCardinality);
-		if (serializationNode instanceof AssignedSerializationNode) {		// XXX bad cast
-			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-			AssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
-			EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
-			if ("ownedProperties".equals(eStructuralFeature.getName())) {
-				getClass();	// XXX
-			}
-			if (eStructuralFeature instanceof EAttribute) {
-				EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-				// XXX is NUll
-				EAttribute eAttribute = (EAttribute)eStructuralFeature;
-				Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
-				if (enumerationValue2multiplicativeCardinality == null) {
-					enumerationValue2multiplicativeCardinality = new HashMap<>();
-					eAttribute2enumerationValue2multiplicativeCardinality.put(eAttribute, enumerationValue2multiplicativeCardinality);
-				}
-				MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
-				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
-				enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
-	//			assignedSerializationNodes.add(assignedSerializationNode);
-			}
-			else {
-				AbstractRuleAnalysis ruleAnalysis = null;//assignedSerializationNode.getAssignedRuleAnalysis();
-				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					EReference eReference = (EReference)eStructuralFeature;
-					Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
-					if (ruleAnalysis2multiplicativeCardinality == null) {
-						ruleAnalysis2multiplicativeCardinality = new HashMap<>();
-						eReference2ruleAnalysis2multiplicativeCardinality.put(eReference, ruleAnalysis2multiplicativeCardinality);
-					}
-					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
-					MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
-					ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis, newMultiplicativeCardinality);
-		//			assignedSerializationNodes.add(assignedSerializationNode);
-				}
-			}
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			SequenceSerializationNode sequenceSerializationNode = (SequenceSerializationNode)serializationNode;
-			for (@NonNull SerializationNode nestedSerializationNode : sequenceSerializationNode.getSerializationNodes()) {
-				accumulate(nestedSerializationNode, netMultiplicativeCardinality);
-			}
-		}
-	}
-
-	public void addAssignedNode(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull EnumerationValue enumerationValue, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		assert staticRuleMatch != null;
-		AbstractCardinalityExpression cardinalityExpression = staticRuleMatch.addAssignedNode(assignedSerializationNode);
-		List<@NonNull CardinalityVariable> variables = new ArrayList<>();
-		for (SerializationNode serializationNode : parentStack) {
-			CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
-			if (cardinalityVariable != null) {
-				variables.add(cardinalityVariable);
-			}
-		}
-		CardinalityVariable cardinalityVariable = node2variable.get(assignedSerializationNode);
-		if (cardinalityVariable != null) {
-			variables.add(cardinalityVariable);
-		}
-		if (!enumerationValue.isNull()) {
-			AbstractCardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(ruleAnalysis.getGrammarAnalysis(), enumerationValue);
-			cardinalityExpression2.addMultiplicityProduct(variables);
-		}
-		else {
-			cardinalityExpression.addMultiplicityProduct(variables);
-		}
-	}
-
-	public void addSerializedNode(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull SerializationNode> parentStack) {
-		MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-		String name = String.format("C%02d", variable2node.size());
-		assert name != null;
-		if (!multiplicativeCardinality.isConstant()) {
-			AbstractRuleAnalysis ruleAnalysis = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalysis() : null;
-			CardinalityVariable cardinalityVariable = new CardinalityVariable(name, ruleAnalysis, multiplicativeCardinality);
-			CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
-			assert old2 == null;
-			SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
-			assert old3 == null;
-		}
 	}
 
 	@Override
@@ -172,32 +74,18 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	}
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
-		Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
-		if (enumerationValue2multiplicativeCardinality != null) {
-			return enumerationValue2multiplicativeCardinality.get(null);
-		}
-		Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
-		if (ruleAnalysis2multiplicativeCardinality != null) {
-			return ruleAnalysis2multiplicativeCardinality.get(null);
-		}
-		return null;
+		assert staticRuleMatch != null;
+		return staticRuleMatch.getMultiplicativeCardinality(eStructuralFeature);
 	}
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		assert !enumerationValue.isNull();		// XXX phasing out NullEnumerationValue
-		Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
-		if (enumerationValue2multiplicativeCardinality != null) {
-			return enumerationValue2multiplicativeCardinality.get(enumerationValue);
-		}
-		return null;
+		assert staticRuleMatch != null;
+		return staticRuleMatch.getMultiplicativeCardinality(eAttribute, enumerationValue);
 	}
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
-		Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
-		if (ruleAnalysis2multiplicativeCardinality != null) {
-			return ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
-		}
-		return null;
+		assert staticRuleMatch != null;
+		return staticRuleMatch.getMultiplicativeCardinality(eReference, ruleAnalysis);
 	}
 
 	public @NonNull StaticRuleMatch getStaticRuleMatch() {
@@ -206,16 +94,17 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			if ("EssentialOCL::TupleTypeCS".equals(ruleAnalysis.getName())) {
 				getClass();	// XXX debugging
 			}
+			//
 			staticRuleMatch = staticRuleMatch2 = new StaticRuleMatch(this);
 			//
-			//	Traverse the chosen serialization tree path to trigger addAssignedNode/addSerializedNode call-backs to determine the
+			//	Traverse the chosen serialization tree path to determine the
 			//	cardinality variables and expressions to be solved to characterize the serialization.
 			//
-			rootSerializationNode.analyze(this, new Stack<@NonNull SerializationNode>());
+			staticRuleMatch2.analyzeSerialization();
 			//
 			//	Analyze the cardinality expressions to find the solution for each cardinality variable.
 			//
-			staticRuleMatch2.analyze();
+			staticRuleMatch2.analyzeSolution();
 		}
 		return staticRuleMatch2;
 	}
@@ -249,11 +138,13 @@ public class BasicSerializationRule extends AbstractSerializationRule
 
 	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
 		getStaticRuleMatch();
-		return ClassUtil.nonNullState(node2variable.get(serializationNode));
+		assert staticRuleMatch != null;
+		return staticRuleMatch.getVariable(serializationNode);
 	}
 
 	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
-		return variable2node.keySet();
+		assert staticRuleMatch != null;
+		return staticRuleMatch.getVariables();
 	}
 
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
@@ -266,41 +157,11 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		return staticRuleMatch.needsDefault(eStructuralFeature);
 	}
 
-	private @NonNull MultiplicativeCardinality refineMultiplicativeCardinality(@NonNull MultiplicativeCardinality netMultiplicativeCardinality, @Nullable MultiplicativeCardinality oldMultiplicativeCardinality) {
-		if (oldMultiplicativeCardinality == null) {
-			return netMultiplicativeCardinality;
-		}
-		boolean newMayBeMany = netMultiplicativeCardinality.mayBeMany();
-		boolean newMayBeZero = netMultiplicativeCardinality.mayBeZero();
-		boolean oldMayBeMany = oldMultiplicativeCardinality.mayBeMany();
-		boolean oldMayBeZero = oldMultiplicativeCardinality.mayBeZero();
-		if (!oldMayBeZero) {
-			newMayBeZero = false;
-		}
-		if (oldMayBeMany) {
-			newMayBeMany = true;
-		}
-		return newMayBeMany
-			? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
-			: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
-	}
-
 	@Override
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
 		StaticRuleMatch staticRuleMatch2 = staticRuleMatch;
 		if (staticRuleMatch2 != null) {
-			List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2node.keySet());
-			Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
-			for (@NonNull CardinalityVariable variable : variables) {
-				SerializationNode serializationNode = variable2node.get(variable);
-				assert serializationNode != null;
-				StringUtil.appendIndentation(s, depth);
-				s.append("- ");
-				s.append(variable);
-				s.append(": ");
-				serializationNode.toString(s, -1);
-			}
-			staticRuleMatch2.toString(s, depth);
+			staticRuleMatch2.toSolutionString(s, depth);
 		}
 	}
 
