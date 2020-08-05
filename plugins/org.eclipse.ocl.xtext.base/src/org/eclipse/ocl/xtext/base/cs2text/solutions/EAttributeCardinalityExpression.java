@@ -43,7 +43,6 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 		super(name);
 		this.eAttribute = eAttribute;
 		this.enumerationValue = enumerationValue;
-		assert !enumerationValue.isNull();
 	}
 
 	@Override

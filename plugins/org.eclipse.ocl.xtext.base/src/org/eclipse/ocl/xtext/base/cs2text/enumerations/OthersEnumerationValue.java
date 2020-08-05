@@ -12,11 +12,14 @@ package org.eclipse.ocl.xtext.base.cs2text.enumerations;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public class NullEnumerationValue extends AbstractEnumerationValue
+/**
+ * The OthersEnumerationValue provides a reserved EnumerationValue to key the usage of unknown enumeration values.
+ */
+public class OthersEnumerationValue extends AbstractEnumerationValue
 {
-	public static final @NonNull NullEnumerationValue INSTANCE = new NullEnumerationValue();
+	public static final @NonNull OthersEnumerationValue INSTANCE = new OthersEnumerationValue();
 
-	private NullEnumerationValue() {}
+	private OthersEnumerationValue() {}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -25,7 +28,7 @@ public class NullEnumerationValue extends AbstractEnumerationValue
 
 	@Override
 	public @NonNull String getName() {
-		return "null";
+		return "«others";
 	}
 
 	@Override
@@ -39,12 +42,12 @@ public class NullEnumerationValue extends AbstractEnumerationValue
 	}
 
 	@Override
-	public boolean isNull() {
+	public boolean isOthers() {
 		return true;
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return "null";
+		return getName();
 	}
 }

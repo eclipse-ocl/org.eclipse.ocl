@@ -21,5 +21,5 @@ public interface EnumerationValue extends Nameable
 	@Override
 	@NonNull String getName();
 	boolean isElement(@NonNull String string);
-	boolean isNull();
+	boolean isOthers();
 }

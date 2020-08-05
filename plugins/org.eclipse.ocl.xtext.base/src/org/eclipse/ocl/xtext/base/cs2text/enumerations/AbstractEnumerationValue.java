@@ -19,7 +19,7 @@ public abstract class AbstractEnumerationValue implements EnumerationValue
 	public abstract int hashCode();
 
 	@Override
-	public boolean isNull() {
+	public boolean isOthers() {
 		return false;
 	}
 }

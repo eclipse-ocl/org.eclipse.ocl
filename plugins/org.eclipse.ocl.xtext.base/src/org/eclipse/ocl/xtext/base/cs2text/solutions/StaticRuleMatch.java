@@ -33,7 +33,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionResult;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -119,7 +118,7 @@ public class StaticRuleMatch implements RuleMatch
 			if (eStructuralFeature instanceof EAttribute) {
 				EnumerationValue enumerationValue2 = assignedSerializationNode.getEnumerationValue();
 				assert enumerationValue2 == enumerationValue;
-				if ((enumerationValue2 == null) || enumerationValue2.isNull()) {
+				if (enumerationValue2 == null) {
 					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
 				}
 				else {		// XXX RuleAnalysis
@@ -134,7 +133,7 @@ public class StaticRuleMatch implements RuleMatch
 		//
 		//	Add cardinalityVariables as a further product term to the sum of products.
 		//
-		if ((enumerationValue != null) && !enumerationValue.isNull()) {
+		if (enumerationValue != null) {
 			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(serializationRule.getRuleAnalysis().getGrammarAnalysis(), enumerationValue);
 			cardinalityExpression2.addMultiplicityProduct(cardinalityVariables);
 		}
@@ -174,11 +173,6 @@ public class StaticRuleMatch implements RuleMatch
 		}
 		if (eStructuralFeature instanceof EAttribute) {
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-		//	assert !enumerationValue.isNull();
-			if (enumerationValue == null) {
-				enumerationValue = NullEnumerationValue.INSTANCE;
-			}
-			// XXX is NUll
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 			if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
@@ -189,9 +183,11 @@ public class StaticRuleMatch implements RuleMatch
 				enumerationValue2multiplicativeCardinality = new HashMap<>();
 				eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
 			}
-			MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
-			MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
-			enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
+			if (enumerationValue != null) {
+				MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
+				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
+				enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
+			}
 //			assignedSerializationNodes.add(assignedSerializationNode);
 		}
 		else {
@@ -552,7 +548,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		assert !enumerationValue.isNull();		// XXX phasing out NullEnumerationValue
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
 			Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
 			if (enumerationValue2multiplicativeCardinality != null) {

@@ -26,7 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class UserSlotsAnalysis
@@ -346,7 +346,7 @@ public class UserSlotsAnalysis
 						others++;
 					}
 				}
-				enumeratedSlotAnalysis.put(NullEnumerationValue.INSTANCE, others);
+				enumeratedSlotAnalysis.put(OthersEnumerationValue.INSTANCE, others);
 				slotAnalysis = enumeratedSlotAnalysis;
 			}
 			else {
@@ -369,7 +369,7 @@ public class UserSlotsAnalysis
 						gotOne = true;
 					}
 				}
-				enumeratedSlotAnalysis.put(NullEnumerationValue.INSTANCE, gotOne ? 0 : 1);
+				enumeratedSlotAnalysis.put(OthersEnumerationValue.INSTANCE, gotOne ? 0 : 1);
 				slotAnalysis = enumeratedSlotAnalysis;
 			}
 			else {
@@ -455,9 +455,9 @@ public class UserSlotsAnalysis
 		if (slotAnalysis.isCounted()) {
 			return slotAnalysis.asCounted();
 		}
-		else if (slotAnalysis.isEnumerated()) {
-			return slotAnalysis.asEnumerated(NullEnumerationValue.INSTANCE);
-		}
+	//	else if (slotAnalysis.isEnumerated()) {
+	//		return slotAnalysis.asEnumerated(NullEnumerationValue.INSTANCE);
+	//	}
 		else if (slotAnalysis.isDiscriminated()) {
 			return slotAnalysis.asDiscriminated(null);		// XXX
 		}

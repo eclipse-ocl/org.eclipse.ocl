@@ -156,24 +156,20 @@ public class DynamicSerializationRules
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
 			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eAttribute) {
 				EnumerationValue enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
-				if (!enumerationValue.isNull()) {
-					if (enumerationValues == null) {
-						enumerationValues = new HashSet<>();
-					}
-					enumerationValues.add(enumerationValue);
+				if (enumerationValues == null) {
+					enumerationValues = new HashSet<>();
 				}
+				enumerationValues.add(enumerationValue);
 			}
 		}
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
 			if (assignedKeywordSerializationNode.getEStructuralFeature() == eAttribute) {
 				EnumerationValue enumerationValue = assignedKeywordSerializationNode.getEnumerationValue();
-				if ((enumerationValue != null) && !enumerationValue.isNull()) {
-					if (enumerationValues == null) {
-						enumerationValues = new HashSet<>();
-					}
-					enumerationValues.add(enumerationValue);
+				if (enumerationValues == null) {
+					enumerationValues = new HashSet<>();
 				}
+				enumerationValues.add(enumerationValue);
 			}
 		}
 		else if (serializationNode instanceof SequenceSerializationNode) {

@@ -27,7 +27,6 @@ public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySoluti
 	public EAttributeSizeCardinalitySolution(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		this.eAttribute = eAttribute;
 		this.enumerationValue = enumerationValue;
-		assert !enumerationValue.isNull();
 	}
 
 	@Override
@@ -68,11 +67,8 @@ public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySoluti
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
 		s.append(eAttribute.getName());
-		if (!enumerationValue.isNull()) {
-			s.append(".'");
-			s.append(enumerationValue.getName());
-			s.append("'");
-		}
-		s.append("|");
+		s.append(".'");
+		s.append(enumerationValue.getName());
+		s.append("'|");
 	}
 }
