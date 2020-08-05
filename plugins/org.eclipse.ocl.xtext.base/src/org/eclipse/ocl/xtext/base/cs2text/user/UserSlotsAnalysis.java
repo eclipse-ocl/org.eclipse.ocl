@@ -13,10 +13,8 @@ package org.eclipse.ocl.xtext.base.cs2text.user;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -27,20 +25,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.NullEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
-
-import com.google.common.collect.Lists;
 
 public class UserSlotsAnalysis
 {
@@ -334,10 +321,12 @@ public class UserSlotsAnalysis
 	}
 
 	protected @NonNull UserSlotAnalysis analyzeEAttribute(@NonNull EAttribute eAttribute) {
+		DynamicSerializationRules serializationRules2 = serializationRules;
+		assert serializationRules2 != null;
 		UserSlotAnalysis slotAnalysis;
 		Object object = eObject.eGet(eAttribute);
 		if (eAttribute.isMany()) {
-			Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
+			Iterable<@NonNull EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
 			List<?> elements = (List<?>)object;
 			int size = elements.size();
 			if ((size > 0) && (enumerationValues != null)) {
@@ -369,7 +358,7 @@ public class UserSlotsAnalysis
 			slotAnalysis = CountedSlotAnalysis.valueOf(object == Boolean.TRUE ? 1 : 0);
 		}
 		else if (eObject.eIsSet(eAttribute)) {
-			Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
+			Iterable<@NonNull EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
 			if (enumerationValues != null) {
 				EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
 				String string = String.valueOf(object);
@@ -391,15 +380,7 @@ public class UserSlotsAnalysis
 			slotAnalysis = CountedSlotAnalysis.valueOf(0);
 		}
 		else {
-			boolean allRulesNeedDefault = true;
-			DynamicSerializationRules serializationRules2 = serializationRules;
-			assert serializationRules2 != null;
-			for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
-				if (!serializationRule.getBasicSerializationRule().needsDefault(eAttribute)) {
-					allRulesNeedDefault = false;
-					break;
-				}
-			}
+			boolean allRulesNeedDefault = serializationRules2.allRulesNeedDefault(eAttribute);
 			slotAnalysis = CountedSlotAnalysis.valueOf(allRulesNeedDefault ? 1 : 0);
 		}
 		return slotAnalysis;
@@ -455,72 +436,7 @@ public class UserSlotsAnalysis
 			s.append(" - No serialization rules.");
 			return;
 		}
-		char c = 'A';
-		for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
-			s.append("\n  [");
-			s.append(c++);
-			s.append("] ");
-			serializationRule.toRuleString(s);
-		}
-		s.append("\n");
-		c = 'A';
-		s.append(String.format("%-30.30s%9s", "feature", "actual"));
-	//	Set<@NonNull EStructuralFeature> allFeatures = new HashSet<>();
-		for (@SuppressWarnings("unused") @NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
-			s.append(" [");
-			s.append(c++);
-			s.append("] ");
-	//		for (@NonNull EStructuralFeature eStructuralFeature : serializationRule.getEStructuralFeatures()) {
-	//			allFeatures.add(eStructuralFeature);
-	//		}
-		}
-		List<@NonNull EStructuralFeature> sortedFeatures = new ArrayList<>(eStructuralFeature2slotAnalysis.keySet());
-		Collections.sort(sortedFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-		for (@NonNull EStructuralFeature eStructuralFeature : sortedFeatures) {
-			s.append("\n");
-			int size = getSize(eStructuralFeature);
-			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
-			for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
-				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-				MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eStructuralFeature);
-				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
-			}
-			if (eStructuralFeature instanceof EAttribute) {
-				EAttribute eAttribute = (EAttribute)eStructuralFeature;
-				Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
-				if (enumerationValues != null) {
-					List<@NonNull EnumerationValue> sortedEnumerationValues = Lists.newArrayList(enumerationValues);
-					Collections.sort(sortedEnumerationValues, NameUtil.NAMEABLE_COMPARATOR);
-					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
-						int size2 = getSize(eAttribute, enumerationValue);
-						s.append(String.format("\n %-29.29s%8d", "'" + enumerationValue.getName() + "'", size2));
-						for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
-							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eAttribute, enumerationValue);
-							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
-						}
-					}
-				}
-			}
-			else {
-				EReference eReference = (EReference)eStructuralFeature;
-				Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses = getRuleAnalyses(eReference);
-				if (ruleAnalyses != null) {
-					List<@NonNull ParserRuleAnalysis> sortedRuleAnalyses = Lists.newArrayList(ruleAnalyses);
-					Collections.sort(sortedRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
-					for (@NonNull ParserRuleAnalysis ruleAnalysis : sortedRuleAnalyses) {
-						int size2 = getSize(eReference, ruleAnalysis);
-						s.append(String.format("\n %-29.29s%8d", "'" + ruleAnalysis.getName() + "'", size2));
-						for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
-							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eReference, ruleAnalysis);
-							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
-						}
-					}
-				}
-			}
-		}
-		s.append("\n");
+		serializationRules2.diagnose(s, this);
 	}
 
 	public @NonNull EObject getEObject() {
@@ -529,76 +445,6 @@ public class UserSlotsAnalysis
 
 	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
 		return eStructuralFeature2slotAnalysis.keySet();
-	}
-
-	protected @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		Set<@NonNull EnumerationValue> enumerationValues = new HashSet<>();
-		assert serializationRules != null;
-		for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
-			getEnumerationValues(eAttribute, serializationRule.getRootSerializationNode(), enumerationValues);
-		}
-		return enumerationValues.isEmpty() ? null : enumerationValues;
-	}
-
-	private void getEnumerationValues(@NonNull EAttribute eAttribute, @NonNull SerializationNode serializationNode, @NonNull Set<@NonNull EnumerationValue> enumerationValues) {
-		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
-			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
-			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eAttribute) {
-				EnumerationValue enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
-				if (!enumerationValue.isNull()) {
-					enumerationValues.add(enumerationValue);
-				}
-			}
-		}
-		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
-			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
-			if (assignedKeywordSerializationNode.getEStructuralFeature() == eAttribute) {
-				EnumerationValue enumerationValue = assignedKeywordSerializationNode.getEnumerationValue();
-				if (!enumerationValue.isNull()) {
-					enumerationValues.add(enumerationValue);
-				}
-			}
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				getEnumerationValues(eAttribute, nestedSerializationNode, enumerationValues);
-			}
-		}
-	}
-
-	protected @Nullable Iterable<@NonNull ParserRuleAnalysis> getRuleAnalyses(@NonNull EReference eReference) {
-		Set<@NonNull ParserRuleAnalysis> ruleAnalyses = new HashSet<>();
-		assert serializationRules != null;
-		for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
-			getRuleAnalyses(eReference, serializationRule.getRootSerializationNode(), ruleAnalyses);
-		}
-		return ruleAnalyses.isEmpty() ? null : ruleAnalyses;
-	}
-
-	private void getRuleAnalyses(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @NonNull Set<@NonNull ParserRuleAnalysis> ruleAnalyses) {
-		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
-			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
-			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eReference) {
-				ParserRuleAnalysis enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
-				if (!enumerationValue.isNull()) {
-					ruleAnalyses.add(enumerationValue);
-				}
-			}
-		}
-		else*/ if (serializationNode instanceof AssignedRuleCallSerializationNode) {
-			AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = (AssignedRuleCallSerializationNode)serializationNode;
-			if (assignedRuleCallSerializationNode.getEStructuralFeature() == eReference) {
-				AbstractRuleAnalysis ruleAnalysis = assignedRuleCallSerializationNode.getCalledRuleAnalysis();
-				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					ruleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
-				}
-			}
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				getRuleAnalyses(eReference, nestedSerializationNode, ruleAnalyses);
-			}
-		}
 	}
 
 	public int getSize(@NonNull EStructuralFeature eStructuralFeature) {

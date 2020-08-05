@@ -24,16 +24,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
-
-import com.google.common.collect.Iterables;
 
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -122,17 +118,7 @@ public class UserElementAnalysis implements Nameable
 	}
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
-		DynamicSerializationRules serializationRules = getSerializationRules();
-		for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
-			if ((targetRuleAnalysis == null) || ((ParserRuleAnalysis)targetRuleAnalysis).getDelegatedCalledRuleAnalysesClosure().contains(serializationRule.getRuleAnalysis())) {
-				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
-				if (dynamicRuleMatch != null) {
-					return dynamicRuleMatch;
-				}
-			}
-		}
-		return null;
+		return serializationRules.createDynamicRuleMatch(slotsAnalysis, targetRuleAnalysis);
 	}
 
 	public @Nullable Serializer createSerializer(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
@@ -182,22 +168,9 @@ public class UserElementAnalysis implements Nameable
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(getName());
 		s.append(" <=>");
-		Iterable<@NonNull SerializationRule> serializationRules2 = ClassUtil.maybeNull(serializationRules.getSerializationRules());
+		DynamicSerializationRules serializationRules2 = ClassUtil.maybeNull(serializationRules);
 		if (serializationRules2 != null) {
-			boolean isMany = Iterables.size(serializationRules2) > 1;
-			for (@NonNull SerializationRule serializationRule : serializationRules2) {
-				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-				if (isMany) {
-					StringUtil.appendIndentation(s, depth+1);
-				}
-				else {
-					s.append(" ");
-				}
-				s.append(serializationRule.getName());
-				s.append(" - ");
-				basicSerializationRule.toRuleString(s);
-				basicSerializationRule.toSolutionString(s, depth+2);
-			}
+			serializationRules2.toString(s, depth);
 		}
 	}
 }
