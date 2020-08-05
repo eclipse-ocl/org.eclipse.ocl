@@ -50,7 +50,7 @@ public class UserElementAnalysis implements Nameable
 	private final @NonNull String name;
 	protected final @Nullable UserElementAnalysis containingElementAnalysis;
 	protected final @Nullable EReference eContainmentFeature;
-	private @NonNull Iterable<@NonNull SerializationRule> serializationRules;
+	private @NonNull DynamicSerializationRules serializationRules;
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
 
 	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable UserElementAnalysis containingElementAnalysis,
@@ -64,7 +64,7 @@ public class UserElementAnalysis implements Nameable
 		this.name = eClass.getName() + "@" + ++count;
 		this.containingElementAnalysis = containingElementAnalysis;
 		this.eContainmentFeature = eContainmentFeature;
-		this.serializationRules = analyzeSerializationRules();
+		this.serializationRules = new DynamicSerializationRules(eClass, analyzeSerializationRules());
 	}
 
 	/**
@@ -122,8 +122,8 @@ public class UserElementAnalysis implements Nameable
 	}
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
-		Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		DynamicSerializationRules serializationRules = getSerializationRules();
+		for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
 			if ((targetRuleAnalysis == null) || ((ParserRuleAnalysis)targetRuleAnalysis).getDelegatedCalledRuleAnalysesClosure().contains(serializationRule.getRuleAnalysis())) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
@@ -164,12 +164,12 @@ public class UserElementAnalysis implements Nameable
 		return name;
 	}
 
-	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
+	public @NonNull DynamicSerializationRules getSerializationRules() {
 		return serializationRules;
 	}
 
 	protected @NonNull UserSlotsAnalysis getSlotsAnalysis() {
-		return new UserSlotsAnalysis(modelAnalysis, getSerializationRules(), eObject, eReference2disciminatingRuleAnalyses);
+		return new UserSlotsAnalysis(modelAnalysis, serializationRules, eObject, eReference2disciminatingRuleAnalyses);
 	}
 
 	@Override
@@ -182,7 +182,7 @@ public class UserElementAnalysis implements Nameable
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(getName());
 		s.append(" <=>");
-		Iterable<@NonNull SerializationRule> serializationRules2 = ClassUtil.maybeNull(serializationRules);
+		Iterable<@NonNull SerializationRule> serializationRules2 = ClassUtil.maybeNull(serializationRules.getSerializationRules());
 		if (serializationRules2 != null) {
 			boolean isMany = Iterables.size(serializationRules2) > 1;
 			for (@NonNull SerializationRule serializationRule : serializationRules2) {

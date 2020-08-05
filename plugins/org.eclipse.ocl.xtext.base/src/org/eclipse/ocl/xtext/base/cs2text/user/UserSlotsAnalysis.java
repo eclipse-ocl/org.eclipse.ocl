@@ -293,11 +293,11 @@ public class UserSlotsAnalysis
 
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject eObject;
-	protected final @Nullable Iterable<@NonNull SerializationRule> serializationRules;
+	protected final @Nullable DynamicSerializationRules serializationRules;
 	protected final @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis;
 
-	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable Iterable<@NonNull SerializationRule> serializationRules, @NonNull EObject eObject,
+	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject,
 			@Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses) {
 		this.modelAnalysis = modelAnalysis;
 		this.eObject = eObject;
@@ -308,7 +308,7 @@ public class UserSlotsAnalysis
 
 	protected @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> analyze() {
 		Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis = new HashMap<>();
-		Iterable<@NonNull SerializationRule> serializationRules2 = serializationRules;
+		DynamicSerializationRules serializationRules2 = serializationRules;
 		if (serializationRules2 != null) {
 			EClass eClass = eObject.eClass();
 			for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
@@ -392,9 +392,9 @@ public class UserSlotsAnalysis
 		}
 		else {
 			boolean allRulesNeedDefault = true;
-			Iterable<@NonNull SerializationRule> serializationRules2 = serializationRules;
+			DynamicSerializationRules serializationRules2 = serializationRules;
 			assert serializationRules2 != null;
-			for (@NonNull SerializationRule serializationRule : serializationRules2) {
+			for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
 				if (!serializationRule.getBasicSerializationRule().needsDefault(eAttribute)) {
 					allRulesNeedDefault = false;
 					break;
@@ -450,13 +450,13 @@ public class UserSlotsAnalysis
 	}
 
 	public void diagnose(@NonNull StringBuilder s) {
-		Iterable<@NonNull SerializationRule> serializationRules2 = serializationRules;
+		DynamicSerializationRules serializationRules2 = serializationRules;
 		if (serializationRules2 == null) {
 			s.append(" - No serialization rules.");
 			return;
 		}
 		char c = 'A';
-		for (@NonNull SerializationRule serializationRule : serializationRules2) {
+		for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
 			s.append("\n  [");
 			s.append(c++);
 			s.append("] ");
@@ -466,7 +466,7 @@ public class UserSlotsAnalysis
 		c = 'A';
 		s.append(String.format("%-30.30s%9s", "feature", "actual"));
 	//	Set<@NonNull EStructuralFeature> allFeatures = new HashSet<>();
-		for (@SuppressWarnings("unused") @NonNull SerializationRule serializationRule : serializationRules2) {
+		for (@SuppressWarnings("unused") @NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
 			s.append(" [");
 			s.append(c++);
 			s.append("] ");
@@ -480,7 +480,7 @@ public class UserSlotsAnalysis
 			s.append("\n");
 			int size = getSize(eStructuralFeature);
 			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
-			for (@NonNull SerializationRule serializationRule : serializationRules2) {
+			for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eStructuralFeature);
 				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
@@ -494,7 +494,7 @@ public class UserSlotsAnalysis
 					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
 						int size2 = getSize(eAttribute, enumerationValue);
 						s.append(String.format("\n %-29.29s%8d", "'" + enumerationValue.getName() + "'", size2));
-						for (@NonNull SerializationRule serializationRule : serializationRules2) {
+						for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eAttribute, enumerationValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
@@ -511,7 +511,7 @@ public class UserSlotsAnalysis
 					for (@NonNull ParserRuleAnalysis ruleAnalysis : sortedRuleAnalyses) {
 						int size2 = getSize(eReference, ruleAnalysis);
 						s.append(String.format("\n %-29.29s%8d", "'" + ruleAnalysis.getName() + "'", size2));
-						for (@NonNull SerializationRule serializationRule : serializationRules2) {
+						for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eReference, ruleAnalysis);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
@@ -534,7 +534,7 @@ public class UserSlotsAnalysis
 	protected @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		Set<@NonNull EnumerationValue> enumerationValues = new HashSet<>();
 		assert serializationRules != null;
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
 			getEnumerationValues(eAttribute, serializationRule.getRootSerializationNode(), enumerationValues);
 		}
 		return enumerationValues.isEmpty() ? null : enumerationValues;
@@ -569,7 +569,7 @@ public class UserSlotsAnalysis
 	protected @Nullable Iterable<@NonNull ParserRuleAnalysis> getRuleAnalyses(@NonNull EReference eReference) {
 		Set<@NonNull ParserRuleAnalysis> ruleAnalyses = new HashSet<>();
 		assert serializationRules != null;
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule serializationRule : serializationRules.getSerializationRules()) {
 			getRuleAnalyses(eReference, serializationRule.getRootSerializationNode(), ruleAnalyses);
 		}
 		return ruleAnalyses.isEmpty() ? null : ruleAnalyses;
