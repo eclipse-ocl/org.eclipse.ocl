@@ -173,22 +173,21 @@ public class StaticRuleMatch implements RuleMatch
 		}
 		if (eStructuralFeature instanceof EAttribute) {
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-			EAttribute eAttribute = (EAttribute)eStructuralFeature;
-			Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
-			if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
-				eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
-			}
-			Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
-			if (enumerationValue2multiplicativeCardinality == null) {
-				enumerationValue2multiplicativeCardinality = new HashMap<>();
-				eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
-			}
 			if (enumerationValue != null) {
+				EAttribute eAttribute = (EAttribute)eStructuralFeature;
+				Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+				if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
+					eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
+				}
+				Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
+				if (enumerationValue2multiplicativeCardinality == null) {
+					enumerationValue2multiplicativeCardinality = new HashMap<>();
+					eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
+				}
 				MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
 				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 				enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
 			}
-//			assignedSerializationNodes.add(assignedSerializationNode);
 		}
 		else {
 			AbstractRuleAnalysis ruleAnalysis = null;// XXX assignedSerializationNode.getAssignedRuleAnalysis();
@@ -206,7 +205,6 @@ public class StaticRuleMatch implements RuleMatch
 				MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
 				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 				ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis, newMultiplicativeCardinality);
-//			assignedSerializationNodes.add(assignedSerializationNode);
 			}
 		}
 		accumulateAssignment(assignedSerializationNode, cardinalityVariables);
