@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 /**

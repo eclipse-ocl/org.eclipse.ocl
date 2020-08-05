@@ -13,8 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
 /**
  * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an

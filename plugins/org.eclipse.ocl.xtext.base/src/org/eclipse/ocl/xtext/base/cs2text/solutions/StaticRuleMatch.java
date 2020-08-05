@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,14 +33,9 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.AbstractCardinalityExpression;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeCardinalityExpression;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureCardinalityExpression;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RuntimeCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.UnsupportedCardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionResult;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;

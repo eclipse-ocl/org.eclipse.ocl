@@ -12,8 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.StaticRuleMatch;
 
 /**
  * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the

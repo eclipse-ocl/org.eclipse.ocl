@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.user.RuleMatch;
 
 public class AddCardinalitySolution extends AbstractBinaryCardinalitySolution
 {
