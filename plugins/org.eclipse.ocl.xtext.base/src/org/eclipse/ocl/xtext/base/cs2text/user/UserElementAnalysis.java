@@ -77,11 +77,11 @@ public class UserElementAnalysis implements Nameable
 		}
 		UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
 		if (containingElementAnalysis2 == null) {
-			return grammarAnalysis.getSerializationRules(eClass);
+			return grammarAnalysis.getSerializationRules(eClass).getSerializationRules();
 		}
 		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
 		Set<AbstractRuleAnalysis> targetRuleAnalyses = new HashSet<>();
-		for (@NonNull SerializationRule parentSerializationRule : grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass())) {
+		for (@NonNull SerializationRule parentSerializationRule : grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass()).getSerializationRules()) {
 			assert eContainmentFeature != null;
 			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = parentSerializationRule.getAssignedSerializationNodes(eContainmentFeature);
 			if (assignedSerializationNodes != null) {
@@ -92,7 +92,7 @@ public class UserElementAnalysis implements Nameable
 				}
 			}
 		}
-		for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+		for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules()) {
 			ParserRuleAnalysis ruleAnalysis = serializationRule.getRuleAnalysis();
 			if (targetRuleAnalyses.contains(ruleAnalysis)) {
 				serializationRules.add(serializationRule);

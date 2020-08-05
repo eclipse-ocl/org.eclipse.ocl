@@ -429,12 +429,12 @@ public class GrammarAnalysis
 		return ClassUtil.nonNullState(rule2ruleAnalysis.get(abstractRule));
 	}
 
-	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules(@NonNull EClass eClass) {
+	public @NonNull SerializationRules getSerializationRules(@NonNull EClass eClass) {
 		if ("PathElementWithURICS".equals(eClass.getName())) {
 			getClass(); // XXX
 		}
 		assert eClass2serializationRules != null;
-		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass)).getSerializationRules();
+		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass));
 	}
 
 	public @NonNull IValueConverterService getValueConverterService() {
