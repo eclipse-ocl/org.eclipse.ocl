@@ -50,12 +50,12 @@ public class EStructuralFeatureCardinalityExpression extends AbstractCardinality
 	}
 
 	@Override
-	public @NonNull AbstractCardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
+	public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull AbstractCardinalityExpression> getCardinalityExpressions() {
+	public @Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions() {
 		return null;
 	}
 

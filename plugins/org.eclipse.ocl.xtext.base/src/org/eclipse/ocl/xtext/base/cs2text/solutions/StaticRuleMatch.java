@@ -136,7 +136,7 @@ public class StaticRuleMatch implements RuleMatch
 		//	Add the product term to the sum of products.
 		//
 		if (!enumerationValue.isNull()) {
-			AbstractCardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(serializationRule.getRuleAnalysis().getGrammarAnalysis(), enumerationValue);
+			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(serializationRule.getRuleAnalysis().getGrammarAnalysis(), enumerationValue);
 			cardinalityExpression2.addMultiplicityProduct(variablesProduct);
 		}
 		else {
@@ -270,11 +270,11 @@ public class StaticRuleMatch implements RuleMatch
 //		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
 //		assert variable2solution2 == null;
 //		variable2solution = variable2solution2 = new HashMap<>();
-		List<@NonNull AbstractCardinalityExpression> residualExpressions = new ArrayList<>();
-		for (@NonNull AbstractCardinalityExpression expression : feature2expression.values()) {
-			Iterable<@NonNull AbstractCardinalityExpression> cardinalityExpressions = expression.getCardinalityExpressions();
+		List<@NonNull CardinalityExpression> residualExpressions = new ArrayList<>();
+		for (@NonNull CardinalityExpression expression : feature2expression.values()) {
+			Iterable<@NonNull CardinalityExpression> cardinalityExpressions = expression.getCardinalityExpressions();
 			if (cardinalityExpressions != null) {
-				for (@NonNull AbstractCardinalityExpression cardinalityExpression : cardinalityExpressions) {
+				for (@NonNull CardinalityExpression cardinalityExpression : cardinalityExpressions) {
 					residualExpressions.add(cardinalityExpression);
 				}
 			}
@@ -298,7 +298,7 @@ public class StaticRuleMatch implements RuleMatch
 		do {
 			oldSize = residualExpressions.size();
 			for (int i = oldSize; --i >= 0; ) {
-				AbstractCardinalityExpression residualExpression = residualExpressions.get(i);
+				CardinalityExpression residualExpression = residualExpressions.get(i);
 				if (residualExpression.analyzeTrivial(this, false)) {
 					residualExpressions.remove(i);
 				}
@@ -314,7 +314,7 @@ public class StaticRuleMatch implements RuleMatch
 			oldSize = residualExpressions.size();
 			gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
-				AbstractCardinalityExpression residualExpression = residualExpressions.get(i);
+				CardinalityExpression residualExpression = residualExpressions.get(i);
 				if (residualExpression.analyzeMayBeZeroCommonFactors(this, false)) {
 					gotOne = true;
 					break;
@@ -322,7 +322,7 @@ public class StaticRuleMatch implements RuleMatch
 			}
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
-					AbstractCardinalityExpression residualExpression = residualExpressions.get(i);
+					CardinalityExpression residualExpression = residualExpressions.get(i);
 					if (residualExpression.analyzeTrivial(this, false)) {
 						residualExpressions.remove(i);
 					}
@@ -336,7 +336,7 @@ public class StaticRuleMatch implements RuleMatch
 			oldSize = residualExpressions.size();
 			gotOne = false;
 			for (int i = oldSize; --i >= 0; ) {
-				AbstractCardinalityExpression residualExpression = residualExpressions.get(i);
+				CardinalityExpression residualExpression = residualExpressions.get(i);
 				if (residualExpression.analyzeMayBeZeroCommonFactors(this, true)) {
 					gotOne = true;
 					break;
@@ -344,7 +344,7 @@ public class StaticRuleMatch implements RuleMatch
 			}
 			if (gotOne) {
 				for (int i = oldSize; --i >= 0; ) {
-					AbstractCardinalityExpression residualExpression = residualExpressions.get(i);
+					CardinalityExpression residualExpression = residualExpressions.get(i);
 					if (residualExpression.analyzeTrivial(this, true)) {
 						residualExpressions.remove(i);
 					}
@@ -364,18 +364,18 @@ public class StaticRuleMatch implements RuleMatch
 			}
 		} while (residualExpressions.size() < oldSize); */
 		if (residualExpressions.size() > 0) {
-			Map<@NonNull AbstractCardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables =
+			Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables =
 					computeExpression2unsolvedVariables(residualExpressions);
-			Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull AbstractCardinalityExpression>> unsolvedVariable2expressions =
+			Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> unsolvedVariable2expressions =
 					computeVariable2expressions(expression2unsolvedVariables);
 			Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityVariable>> unsolvedVariable2unsolvedVariableGroups =
 					computeUnsolvedVariableGroups(unsolvedVariable2expressions, expression2unsolvedVariables);
 
 			for (@NonNull Set<@NonNull CardinalityVariable> unsolvedVariableGroup : new HashSet<>(unsolvedVariable2unsolvedVariableGroups.values())) {
-				Iterable<@NonNull AbstractCardinalityExpression> unresolvedExpressions = computeExpressions(unsolvedVariableGroup, unsolvedVariable2expressions);
+				Iterable<@NonNull CardinalityExpression> unresolvedExpressions = computeExpressions(unsolvedVariableGroup, unsolvedVariable2expressions);
 				int size = Iterables.size(unresolvedExpressions);
 				if (size == 1) {
-					AbstractCardinalityExpression residualExpression = unresolvedExpressions.iterator().next();
+					CardinalityExpression residualExpression = unresolvedExpressions.iterator().next();
 					/*if (residualExpression.analyzeMayBeZeroCommonFactors(this, true)) {
 						// ok
 					}
@@ -448,11 +448,11 @@ public class StaticRuleMatch implements RuleMatch
 	/**
  * Return all the expressions that use any of variableGroup.
  */
-protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpressions(@NonNull Set<@NonNull CardinalityVariable> variableGroup,
-		@NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull AbstractCardinalityExpression>> variable2expressions) {
-	Set<@NonNull AbstractCardinalityExpression> unresolvedExpressions = new HashSet<>();
+protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@NonNull Set<@NonNull CardinalityVariable> variableGroup,
+		@NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions) {
+	Set<@NonNull CardinalityExpression> unresolvedExpressions = new HashSet<>();
 	for (@NonNull CardinalityVariable variable : variableGroup) {
-		Set<@NonNull AbstractCardinalityExpression> expressions = variable2expressions.get(variable);
+		Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
 		assert expressions != null;
 		unresolvedExpressions.addAll(expressions);
 	}
@@ -462,10 +462,10 @@ protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpre
 	/**
 	 * Return the Map from each of expressions to its variables that lack a solution.
 	 */
-	protected @NonNull Map<@NonNull AbstractCardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> computeExpression2unsolvedVariables(
-			@NonNull Iterable<@NonNull AbstractCardinalityExpression> expressions) {
-		Map<@NonNull AbstractCardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables = new HashMap<>();
-		for (@NonNull AbstractCardinalityExpression expression : expressions) {
+	protected @NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> computeExpression2unsolvedVariables(
+			@NonNull Iterable<@NonNull CardinalityExpression> expressions) {
+		Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables = new HashMap<>();
+		for (@NonNull CardinalityExpression expression : expressions) {
 			Iterable<@NonNull CardinalityVariable> unsolvedVariables = expression.getUnknownVariables(this);
 			if (unsolvedVariables != null) {
 				for (@NonNull CardinalityVariable variable : unsolvedVariables) {
@@ -485,8 +485,8 @@ protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpre
 	 * Return a Map from each variable to the set of variables that participate in non-independent expressions.
 	 */
 	protected @NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityVariable>> computeUnsolvedVariableGroups(
-			@NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull AbstractCardinalityExpression>> unsolvedVariable2expressions,
-			@NonNull Map<@NonNull AbstractCardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables) {
+			@NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> unsolvedVariable2expressions,
+			@NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables) {
 		Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityVariable>> unsolvedVariable2unresolvedVariables = new HashMap<>();
 		List<@NonNull CardinalityVariable> workVariables = new ArrayList<>(unsolvedVariable2expressions.keySet());
 		for (@NonNull CardinalityVariable workVariable : workVariables) {
@@ -495,9 +495,9 @@ protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpre
 				unsolvedVariables = new HashSet<>();
 				unsolvedVariable2unresolvedVariables.put(workVariable, unsolvedVariables);
 				unsolvedVariables.add(workVariable);
-				Set<@NonNull AbstractCardinalityExpression> expressions = unsolvedVariable2expressions.get(workVariable);
+				Set<@NonNull CardinalityExpression> expressions = unsolvedVariable2expressions.get(workVariable);
 				assert expressions != null;
-				for (@NonNull AbstractCardinalityExpression expression : expressions) {
+				for (@NonNull CardinalityExpression expression : expressions) {
 					Set<@NonNull CardinalityVariable> moreUnsolvedVariables = expression2unsolvedVariables.get(expression);
 					assert moreUnsolvedVariables != null;
 					moreUnsolvedVariables.removeAll(unsolvedVariables);
@@ -514,14 +514,14 @@ protected @NonNull Iterable<@NonNull AbstractCardinalityExpression> computeExpre
 	/**
 	 * Return the inverse of the Map from expressions to variables.
 	 */
-	protected @NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull AbstractCardinalityExpression>> computeVariable2expressions(
-			@NonNull Map<@NonNull AbstractCardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2variables) {
-		Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull AbstractCardinalityExpression>> variable2expressions = new HashMap<>();
-		for (@NonNull AbstractCardinalityExpression expression : expression2variables.keySet()) {
+	protected @NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> computeVariable2expressions(
+			@NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2variables) {
+		Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions = new HashMap<>();
+		for (@NonNull CardinalityExpression expression : expression2variables.keySet()) {
 			Set<@NonNull CardinalityVariable> variables = expression2variables.get(expression);
 			assert variables != null;
 			for (@NonNull CardinalityVariable variable : variables) {
-				Set<@NonNull AbstractCardinalityExpression> expressions = variable2expressions.get(variable);
+				Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
 				if (expressions == null) {
 					expressions = new HashSet<>();
 					variable2expressions.put(variable, expressions);

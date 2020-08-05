@@ -38,7 +38,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 {
 	protected final @NonNull EReference eReference;
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
-	private @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull AbstractCardinalityExpression> ruleAnalysis2cardinalityExpression = new HashMap<>();
+	private @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull CardinalityExpression> ruleAnalysis2cardinalityExpression = new HashMap<>();
 
 	public EReferenceCardinalityExpression(@NonNull String name, @NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		super(name);
@@ -49,9 +49,9 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 	@Override
 	public boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
-		for (Entry<@NonNull ParserRuleAnalysis, @NonNull AbstractCardinalityExpression> entry : ruleAnalysis2cardinalityExpression.entrySet()) {
+		for (Entry<@NonNull ParserRuleAnalysis, @NonNull CardinalityExpression> entry : ruleAnalysis2cardinalityExpression.entrySet()) {
 			ParserRuleAnalysis value = entry.getKey();
-			AbstractCardinalityExpression nestedExpression = entry.getValue();
+			CardinalityExpression nestedExpression = entry.getValue();
 			int requiredCount = nestedExpression.solve(dynamicRuleMatch);
 			int actualCount = slotsAnalysis.getSize(eReference, value);
 			if (requiredCount != actualCount) {
@@ -67,8 +67,8 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 	}
 
 	@Override
-	public @NonNull AbstractCardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
-		AbstractCardinalityExpression cardinalityExpression = ruleAnalysis2cardinalityExpression.get(ruleAnalysis);
+	public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
+		CardinalityExpression cardinalityExpression = ruleAnalysis2cardinalityExpression.get(ruleAnalysis);
 		if (cardinalityExpression == null) {
 			String subName = name + "." + ruleAnalysis2cardinalityExpression.size();
 			cardinalityExpression = new EReferenceCardinalityExpression(subName, eReference, ruleAnalysis);
@@ -78,7 +78,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull AbstractCardinalityExpression> getCardinalityExpressions() {
+	public @Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions() {
 		return ruleAnalysis2cardinalityExpression.values();
 	}
 
@@ -86,7 +86,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		return ruleAnalysis;
 	}
 
-	public @Nullable Map<@NonNull ParserRuleAnalysis, @NonNull AbstractCardinalityExpression> getRuleAnalysis2cardinalityExpression() {
+	public @Nullable Map<@NonNull ParserRuleAnalysis, @NonNull CardinalityExpression> getRuleAnalysis2cardinalityExpression() {
 		return ruleAnalysis2cardinalityExpression;
 	}
 
@@ -99,9 +99,9 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		s.append(ruleAnalysis.getRuleName());
 		s.append("'| = ");
 		appendSumOfProducts(s);
-		List<@NonNull AbstractCardinalityExpression> sortedExpressions = new ArrayList<>(ruleAnalysis2cardinalityExpression.values());
+		List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(ruleAnalysis2cardinalityExpression.values());
 		Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull AbstractCardinalityExpression cardinalityExpression : sortedExpressions) {
+		for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
 			StringUtil.appendIndentation(s, depth);
 			s.append("- ");
 			cardinalityExpression.toString(s, depth);

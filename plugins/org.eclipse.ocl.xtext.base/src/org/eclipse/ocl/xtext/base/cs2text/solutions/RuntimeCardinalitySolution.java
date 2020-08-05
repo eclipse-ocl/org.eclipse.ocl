@@ -17,14 +17,14 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 //	protected final @NonNull CardinalityExpression cardinalityExpression;
 //	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
 	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
-	protected final @NonNull Iterable<@NonNull AbstractCardinalityExpression> unresolvedExpressions;
+	protected final @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions;
 
 //	public RuntimeSolution(@NonNull CardinalityExpression cardinalityExpression, @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables) {
 //		this.cardinalityExpression = cardinalityExpression;
 //		this.unresolvedVariables = unresolvedVariables;
 //	}
 
-	public RuntimeCardinalitySolution(@NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables, @NonNull Iterable<@NonNull AbstractCardinalityExpression> unresolvedExpressions) {
+	public RuntimeCardinalitySolution(@NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
 		this.unresolvedVariables = unresolvedVariables;
 		this.unresolvedExpressions = unresolvedExpressions;
 	}
@@ -47,7 +47,7 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 		for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
 			hashCode += 3 + unresolvedVariable.hashCode();
 		}
-		for (@NonNull AbstractCardinalityExpression unresolvedExpression : unresolvedExpressions) {
+		for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
 			hashCode += 5 + unresolvedExpression.hashCode();
 		}
 		return hashCode;
@@ -80,7 +80,7 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 		}
 		s.append(" in ");
 		isFirst = true;
-		for (@NonNull AbstractCardinalityExpression unresolvedExpression : unresolvedExpressions) {
+		for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
 			if (!isFirst) {
 				s.append(",");
 			}

@@ -17,19 +17,16 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 /**
- * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
+ * A CardinalityExpression equates the sum of CardinalityVariable products to the number of elements in an eStructuralFeature slot.
  *
  * Multiple CardinalityExpressions provide a set of simultaneous equations for which an integer solution mmust be found to
  * select a potential serialization option.
  */
-public abstract class AbstractCardinalityExpression implements Nameable
+public abstract class AbstractCardinalityExpression implements CardinalityExpression
 {
 	protected final @NonNull String name;
 
@@ -46,6 +43,7 @@ public abstract class AbstractCardinalityExpression implements Nameable
 		this.name = name;
 	}
 
+	@Override
 	public void addMultiplicityProduct(@NonNull List<@NonNull CardinalityVariable> variables) {
 		sumOfProducts.add(variables);
 	}
@@ -55,6 +53,7 @@ public abstract class AbstractCardinalityExpression implements Nameable
 	//
 	//	aa, bb are known, cc, dd may involve unknown terms
 	//
+	@Override
 	public boolean analyzeMayBeZeroCommonFactors(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany) {
 		Set<@NonNull CardinalityVariable> intersection = getUnknownCommonVariables(ruleMatch, sumOfProducts);
 		if (intersection  != null) {
@@ -218,6 +217,7 @@ public abstract class AbstractCardinalityExpression implements Nameable
 			return true;
 		} */
 
+	@Override
 	public boolean analyzeRedundantProducts(@NonNull StaticRuleMatch ruleMatch) {
 		Iterable<@NonNull CardinalityVariable> intersection = computeUnsolvedCommonFactors(ruleMatch);
 		if (intersection != null) {
@@ -326,6 +326,7 @@ public abstract class AbstractCardinalityExpression implements Nameable
 	//
 	//	if (cc + dd) or rather a v is optional the divide isredundant not y zero.
 	//
+	@Override
 	public boolean analyzeTrivial(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany) {
 		CardinalityVariable trivialVariable = null;
 		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
@@ -522,10 +523,6 @@ public abstract class AbstractCardinalityExpression implements Nameable
 		return resultSolution;
 	}
 
-	public abstract AbstractCardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue);
-
-	public abstract @Nullable Iterable<@NonNull AbstractCardinalityExpression> getCardinalityExpressions();
-
 	@Override
 	public @NonNull String getName() {
 		return name;
@@ -593,6 +590,7 @@ public abstract class AbstractCardinalityExpression implements Nameable
 	 *
 	 * Returns null if no variable has no solution, or if a variable is used in an (impossible) non-linear fashion.
 	 */
+	@Override
 	public @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch) {
 		List<@NonNull CardinalityVariable> unknownVariables = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
@@ -612,7 +610,8 @@ public abstract class AbstractCardinalityExpression implements Nameable
 		return unknownVariables;
 	}
 
-	protected @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
+	@Override
+	public @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
 		List<@NonNull CardinalityVariable> unknownVariables = null;
 		for (@NonNull CardinalityVariable variable : product) {
 			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
@@ -664,6 +663,7 @@ public abstract class AbstractCardinalityExpression implements Nameable
 		}
 	}
 
+	@Override
 	public int solve(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		int sum = 0;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
@@ -691,6 +691,4 @@ public abstract class AbstractCardinalityExpression implements Nameable
 		toString(s, 0);
 		return String.valueOf(s);
 	}
-
-	public abstract void toString(@NonNull StringBuilder s, int depth);
 }
