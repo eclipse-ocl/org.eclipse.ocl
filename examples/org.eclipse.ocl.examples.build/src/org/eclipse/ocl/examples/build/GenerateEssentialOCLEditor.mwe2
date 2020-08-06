@@ -81,7 +81,10 @@ Workflow {
 			name = "${essentialOCLprojectName}.EssentialOCL"
 			fileExtensions = "essentialocl"
 			generator = null
-			serializer = {
+		//	serializer = {
+		//		generateStub = false
+		//	}
+			fragment = org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment {
 				generateStub = false
 			}
 			validator = {
@@ -98,7 +101,11 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			formatter = {
+		//	formatter = {
+		//		generateStub = true
+		//		generateXtendStub = true
+		//	}
+			fragment = org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment {
 				generateStub = true
 				generateXtendStub = true
 			}

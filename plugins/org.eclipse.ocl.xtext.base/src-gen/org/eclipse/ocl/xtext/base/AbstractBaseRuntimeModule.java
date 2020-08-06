@@ -12,13 +12,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base;
 
+import com.google.inject.Binder;
+import com.google.inject.Provider;
+import com.google.inject.name.Names;
 import java.util.Properties;
-
 import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.formatting2.BaseFormatter;
+import org.eclipse.ocl.xtext.base.formatting3.BaseFormatter;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseParser;
 import org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseLexer;
@@ -64,10 +63,6 @@ import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.SingletonBinding;
 
-import com.google.inject.Binder;
-import com.google.inject.Provider;
-import com.google.inject.name.Names;
-
 /**
  * Manual modifications go to {@link BaseRuntimeModule}.
  */
@@ -101,30 +96,12 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 		return BaseGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	@Override
-	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-		return BaseSemanticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-		return BaseSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	@Override
-	public Class<? extends ISerializer> bindISerializer() {
-		return MySerializer.class;
-	}
-
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public Class<? extends IParser> bindIParser() {
 		return BaseParser.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-	@Override
 	public Class<? extends ITokenToStringConverter> bindITokenToStringConverter() {
 		return AntlrTokenToStringConverter.class;
 	}
@@ -140,7 +117,6 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-	@Override
 	public Class<? extends ITokenDefProvider> bindITokenDefProvider() {
 		return AntlrTokenDefProvider.class;
 	}
@@ -164,7 +140,6 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-	@Override
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return BaseScopeProvider.class;
 	}
@@ -175,7 +150,6 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-	@Override
 	public Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return DefaultGlobalScopeProvider.class;
 	}
@@ -186,13 +160,11 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
-	@Override
 	public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
 		return DefaultDeclarativeQualifiedNameProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-	@Override
 	public Class<? extends IContainer.Manager> bindIContainer$Manager() {
 		return StateBasedContainerManager.class;
 	}
@@ -203,7 +175,6 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-	@Override
 	public void configureIResourceDescriptions(Binder binder) {
 		binder.bind(IResourceDescriptions.class).to(ResourceSetBasedResourceDescriptions.class);
 	}
@@ -213,12 +184,27 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
+		return BaseSemanticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
+		return BaseSyntacticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISerializer> bindISerializer() {
+		return MySerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public Class<? extends IFormatter2> bindIFormatter2() {
 		return BaseFormatter.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public void configureFormatterPreferences(Binder binder) {
 		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
 	}
@@ -228,15 +214,4 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 		return BaseGrammarResource.GrammarProvider.class;
 	}
 
-	public Class<? extends GrammarAnalysis> bindGrammarAnalysis() {
-		return GrammarAnalysis.class;
-	}
-
-	public Class<? extends SerializationBuilder> bindSerializationBuilder() {
-		return SerializationBuilder.class;
-	}
-
-	public Class<? extends UserModelAnalysis> bindUserModelAnalysis() {
-		return UserModelAnalysis.class;
-	}
 }

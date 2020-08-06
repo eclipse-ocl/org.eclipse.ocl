@@ -562,7 +562,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final Keyword cRightCurlyBracketKeyword_4_0_2 = (Keyword)cGroup_4_0.eContents().get(2);
 		private final Keyword cSemicolonKeyword_4_1 = (Keyword)cAlternatives_4.eContents().get(1);
 
-		//AnnotationCS base::AnnotationCS:
+		///** a comment */ AnnotationCS base::AnnotationCS:
 		//	{base::AnnotationCS} 'annotation' name=(UnrestrictedName | SINGLE_QUOTED_STRING)? ('(' ownedDetails+=DetailCS (','
 		//	ownedDetails+=DetailCS)* ')')? ('{' (ownedAnnotations+=AnnotationElementCS
 		//	| ownedContents+=ModelElementCS
@@ -3592,7 +3592,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		return getPreconditionConstraintCSAccess().getRule();
 	}
 
-	//AnnotationCS base::AnnotationCS:
+	///** a comment */ AnnotationCS base::AnnotationCS:
 	//	{base::AnnotationCS} 'annotation' name=(UnrestrictedName | SINGLE_QUOTED_STRING)? ('(' ownedDetails+=DetailCS (','
 	//	ownedDetails+=DetailCS)* ')')? ('{' (ownedAnnotations+=AnnotationElementCS
 	//	| ownedContents+=ModelElementCS

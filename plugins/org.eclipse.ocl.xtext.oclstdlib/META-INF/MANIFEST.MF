@@ -28,7 +28,8 @@ Export-Package: org.eclipse.ocl.xtext.oclstdlib,
  org.eclipse.ocl.xtext.oclstdlibcs,
  org.eclipse.ocl.xtext.oclstdlibcs.impl,
  org.eclipse.ocl.xtext.oclstdlibcs.util,
- org.eclipse.ocl.xtext.oclstdlib.formatting2
+ org.eclipse.ocl.xtext.oclstdlib.formatting2,
+ org.eclipse.ocl.xtext.oclstdlib.formatting3
 Import-Package: org.apache.log4j;version="[1.2.15,2.0.0)"
 Bundle-Activator: org.eclipse.ocl.xtext.oclstdlib.utilities.OCLstdlibPlugin$Implementation
 Automatic-Module-Name: org.eclipse.ocl.xtext.oclstdlib

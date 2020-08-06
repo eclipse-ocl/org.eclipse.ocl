@@ -17,6 +17,7 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
+import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingDiagnosticMessageProvider;
@@ -29,7 +30,7 @@ import org.eclipse.ocl.xtext.base.utilities.CS2ASLinker;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
-import org.eclipse.ocl.xtext.oclstdlib.formatting2.OCLstdlibFormatter;
+import org.eclipse.ocl.xtext.oclstdlib.formatting3.OCLstdlibFormatter;
 import org.eclipse.ocl.xtext.oclstdlib.parser.antlr.OCLstdlibAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.oclstdlib.parser.antlr.OCLstdlibParser;
 import org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal.InternalOCLstdlibLexer;
@@ -76,7 +77,6 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.serializer.impl.Serializer;
 import org.eclipse.xtext.serializer.sequencer.IHiddenTokenSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
@@ -118,21 +118,6 @@ public abstract class AbstractOCLstdlibRuntimeModule extends DefaultRuntimeModul
 	// contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
 	public Class<? extends IGrammarAccess> bindIGrammarAccess() {
 		return OCLstdlibGrammarAccess.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-		return OCLstdlibSemanticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-		return OCLstdlibSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISerializer> bindISerializer() {
-		return Serializer.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
@@ -218,12 +203,27 @@ public abstract class AbstractOCLstdlibRuntimeModule extends DefaultRuntimeModul
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
+		return OCLstdlibSemanticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
+		return OCLstdlibSyntacticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISerializer> bindISerializer() {
+		return MySerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public Class<? extends IFormatter2> bindIFormatter2() {
 		return OCLstdlibFormatter.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public void configureFormatterPreferences(Binder binder) {
 		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
 	}

@@ -12,8 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore;
 
+import com.google.inject.Binder;
+import com.google.inject.Provider;
+import com.google.inject.name.Names;
 import java.util.Properties;
-
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
 import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
@@ -28,7 +30,7 @@ import org.eclipse.ocl.xtext.base.utilities.CS2ASLinker;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
-import org.eclipse.ocl.xtext.oclinecore.formatting2.OCLinEcoreFormatter;
+import org.eclipse.ocl.xtext.oclinecore.formatting3.OCLinEcoreFormatter;
 import org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreParser;
 import org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreLexer;
@@ -85,10 +87,6 @@ import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 import org.eclipse.xtext.validation.IResourceValidator;
 
-import com.google.inject.Binder;
-import com.google.inject.Provider;
-import com.google.inject.name.Names;
-
 /**
  * Manual modifications go to {@link OCLinEcoreRuntimeModule}.
  */
@@ -122,30 +120,12 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 		return OCLinEcoreGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	@Override
-	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-		return OCLinEcoreSemanticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-		return OCLinEcoreSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	@Override
-	public Class<? extends ISerializer> bindISerializer() {
-		return MySerializer.class;
-	}
-
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public Class<? extends IParser> bindIParser() {
 		return OCLinEcoreParser.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-	@Override
 	public Class<? extends ITokenToStringConverter> bindITokenToStringConverter() {
 		return AntlrTokenToStringConverter.class;
 	}
@@ -161,7 +141,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
-	@Override
 	public Class<? extends ITokenDefProvider> bindITokenDefProvider() {
 		return AntlrTokenDefProvider.class;
 	}
@@ -185,7 +164,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-	@Override
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return OCLinEcoreScopeProvider.class;
 	}
@@ -196,7 +174,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
-	@Override
 	public Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return DefaultGlobalScopeProvider.class;
 	}
@@ -207,7 +184,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-	@Override
 	public Class<? extends IContainer.Manager> bindIContainer$Manager() {
 		return StateBasedContainerManager.class;
 	}
@@ -218,7 +194,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
-	@Override
 	public void configureIResourceDescriptions(Binder binder) {
 		binder.bind(IResourceDescriptions.class).to(ResourceSetBasedResourceDescriptions.class);
 	}
@@ -228,12 +203,27 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
+		return OCLinEcoreSemanticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
+		return OCLinEcoreSyntacticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISerializer> bindISerializer() {
+		return MySerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public Class<? extends IFormatter2> bindIFormatter2() {
 		return OCLinEcoreFormatter.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public void configureFormatterPreferences(Binder binder) {
 		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
 	}
@@ -249,7 +239,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	@Override
 	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
 		return BaseFragmentProvider.class;
 	}
@@ -260,7 +249,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	@Override
 	public Class<? extends ILinker> bindILinker() {
 		return CS2ASLinker.class;
 	}
@@ -271,7 +259,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	@Override
 	public Class<? extends ILinkingService> bindILinkingService() {
 		return BaseLinkingService.class;
 	}
@@ -282,7 +269,6 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	@Override
 	public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
 		return BaseQualifiedNameProvider.class;
 	}
@@ -298,13 +284,11 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	@Override
 	public Class<? extends IValueConverterService> bindIValueConverterService() {
 		return BaseValueConverterService.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
-	@Override
 	public Class<? extends XtextResource> bindXtextResource() {
 		return EssentialOCLCSResource.class;
 	}

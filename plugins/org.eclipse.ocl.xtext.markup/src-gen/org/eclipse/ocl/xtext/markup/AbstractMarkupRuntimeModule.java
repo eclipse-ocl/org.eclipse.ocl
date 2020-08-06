@@ -16,7 +16,8 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
-import org.eclipse.ocl.xtext.markup.formatting2.MarkupFormatter;
+import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
+import org.eclipse.ocl.xtext.markup.formatting3.MarkupFormatter;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupParser;
 import org.eclipse.ocl.xtext.markup.parser.antlr.internal.InternalMarkupLexer;
@@ -56,7 +57,6 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.serializer.impl.Serializer;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
@@ -94,21 +94,6 @@ public abstract class AbstractMarkupRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
 	public Class<? extends IGrammarAccess> bindIGrammarAccess() {
 		return MarkupGrammarAccess.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-		return MarkupSemanticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-		return MarkupSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISerializer> bindISerializer() {
-		return Serializer.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
@@ -199,12 +184,27 @@ public abstract class AbstractMarkupRuntimeModule extends DefaultRuntimeModule {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
+		return MarkupSemanticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
+		return MarkupSyntacticSequencer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
+	public Class<? extends ISerializer> bindISerializer() {
+		return MySerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public Class<? extends IFormatter2> bindIFormatter2() {
 		return MarkupFormatter.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
 	public void configureFormatterPreferences(Binder binder) {
 		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
 	}
