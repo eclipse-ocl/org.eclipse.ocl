@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
@@ -46,6 +47,11 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	@Override
 	public @NonNull EnumerationValue getEnumerationValue() {
 		return enumerationValue;
+	}
+
+	@Override
+	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
+		return null;
 	}
 
 	@Override

@@ -38,8 +38,8 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
-	public @Nullable AbstractRuleAnalysis getAssignedRuleAnalysis() {
-		return null;		// XXX inherited ??
+	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
+		return null;
 	}
 
 	@Override

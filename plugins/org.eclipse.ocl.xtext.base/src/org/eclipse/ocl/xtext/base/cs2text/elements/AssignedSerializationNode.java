@@ -23,9 +23,9 @@ public interface AssignedSerializationNode extends SerializationNode
 	@NonNull EClass getAssignedEClass();
 
 	/**
-	 * Return the RuleAnalysis that specifes matches to this SerializationNode.
+	 * Return the possibly many RuleAnalysis that specify matches to this SerializationNode.
 	 */
-	@Nullable AbstractRuleAnalysis getAssignedRuleAnalysis();
+	@Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses();
 
 	@NonNull AssignmentAnalysis getAssignmentAnalysis();
 	@NonNull EStructuralFeature getEStructuralFeature();

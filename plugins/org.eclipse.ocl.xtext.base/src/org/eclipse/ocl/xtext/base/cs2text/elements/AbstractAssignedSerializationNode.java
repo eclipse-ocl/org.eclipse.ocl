@@ -36,7 +36,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @Nullable AbstractRuleAnalysis getAssignedRuleAnalysis() {
+	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
 		throw new UnsupportedOperationException();		// XXX need better approach Assignment may be of Alternatives RuleCalls
 	//	return assignmentAnalysis.getTerminalRuleAnalysis();
 	}

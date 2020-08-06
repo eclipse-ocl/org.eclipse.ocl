@@ -230,8 +230,8 @@ public class StaticRuleMatch implements RuleMatch
 			if (!multiplicativeCardinality.isConstant()) {
 				String name = String.format("C%02d", variable2node.size());
 				assert name != null;
-				AbstractRuleAnalysis ruleAnalysis = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalysis() : null;
-				cardinalityVariable = new CardinalityVariable(name, ruleAnalysis, multiplicativeCardinality);
+				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalyses() : null;
+				cardinalityVariable = new CardinalityVariable(name, ruleAnalyses, multiplicativeCardinality);
 				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 				assert old2 == null;
 				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);

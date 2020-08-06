@@ -23,12 +23,12 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 public class CardinalityVariable implements Nameable
 {
 	protected final @NonNull String name;
-	protected final @Nullable AbstractRuleAnalysis ruleAnalysis;
+	protected final @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public CardinalityVariable(@NonNull String name, @Nullable AbstractRuleAnalysis ruleAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public CardinalityVariable(@NonNull String name, @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.name = name;
-		this.ruleAnalysis = ruleAnalysis;
+		this.ruleAnalyses = ruleAnalyses;
 		this.multiplicativeCardinality = multiplicativeCardinality;
 		assert !multiplicativeCardinality.isOne();
 	}
@@ -59,10 +59,17 @@ public class CardinalityVariable implements Nameable
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(name);
-		AbstractRuleAnalysis ruleAnalysis2 = ruleAnalysis;
-		if (ruleAnalysis2 != null) {
+		Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses2 = ruleAnalyses;
+		if (ruleAnalyses2 != null) {
 			s.append(":");
-			s.append(ruleAnalysis2.getName());
+			boolean isFirst = true;
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses2) {
+				if (!isFirst) {
+					s.append("|");
+				}
+				s.append(ruleAnalysis.getName());
+				isFirst = false;
+			}
 		}
 		s.append("[");
 		s.append(multiplicativeCardinality);
