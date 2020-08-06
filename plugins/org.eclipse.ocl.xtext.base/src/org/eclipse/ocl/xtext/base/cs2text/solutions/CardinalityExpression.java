@@ -31,10 +31,12 @@ public interface CardinalityExpression extends Nameable
 	boolean analyzeMayBeZeroCommonFactors(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany);
 	boolean analyzeRedundantProducts(@NonNull StaticRuleMatch ruleMatch);
 	boolean analyzeTrivial(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany);
+	boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch);
 	CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue);
 	@Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions();
 	@Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch);
 	@Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product);
+	boolean isOne();
 	int solve(@NonNull DynamicRuleMatch dynamicRuleMatch);
 	void toString(@NonNull StringBuilder s, int depth);
 }

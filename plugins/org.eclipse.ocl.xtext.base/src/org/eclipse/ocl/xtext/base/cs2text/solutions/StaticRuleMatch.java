@@ -38,7 +38,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Iterables;
@@ -82,7 +82,7 @@ public class StaticRuleMatch implements RuleMatch
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
-	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull AbstractCardinalityExpression> feature2expression = new HashMap<>();
+	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression = new HashMap<>();
 
 	/**
 	 * The per-variable solution expression that computes the variable's value from the actual number of slots of an actual user element.
@@ -99,47 +99,6 @@ public class StaticRuleMatch implements RuleMatch
 
 	public StaticRuleMatch(@NonNull BasicSerializationRule serializationRule) {
 		this.serializationRule = serializationRule;
-	}
-
-	/**
-	 * Create/update the sum-of-products expression for the feature assigned by assignedSerializationNode to include
-	 * a product for assignedSerializationNode's cardinality variable and for all surrounding sequences in outerVariables.
-	 */
-	protected void accumulateAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> cardinalityVariables) {
-		//
-		//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
-		//
-		EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
-		AbstractCardinalityExpression cardinalityExpression = feature2expression.get(eStructuralFeature);
-		if (cardinalityExpression == null) {
-			String name = String.format("E%02d", feature2expression.size());
-			assert name != null;;
-			if (eStructuralFeature instanceof EAttribute) {
-				EnumerationValue enumerationValue2 = assignedSerializationNode.getEnumerationValue();
-				assert enumerationValue2 == enumerationValue;
-				if (enumerationValue2 == null) {
-					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
-				}
-				else {		// XXX RuleAnalysis
-					cardinalityExpression = new EAttributeCardinalityExpression(name, (EAttribute)eStructuralFeature, enumerationValue2);
-				}
-			}
-			else {
-				cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
-			}
-			feature2expression.put(eStructuralFeature, cardinalityExpression);
-		}
-		//
-		//	Add cardinalityVariables as a further product term to the sum of products.
-		//
-		if (enumerationValue != null) {
-			CardinalityExpression cardinalityExpression2 = cardinalityExpression.getCardinalityExpression(serializationRule.getRuleAnalysis().getGrammarAnalysis(), enumerationValue);
-			cardinalityExpression2.addMultiplicityProduct(cardinalityVariables);
-		}
-		else {
-			cardinalityExpression.addMultiplicityProduct(cardinalityVariables);
-		}
 	}
 
 	/**
@@ -164,15 +123,23 @@ public class StaticRuleMatch implements RuleMatch
 		}
 	}
 
+	/**
+	 * Create/update the sum-of-products expression for the feature assigned by assignedSerializationNode to include
+	 * a product for assignedSerializationNode's cardinality variable and for all surrounding sequences in outerVariables.
+	 */
 	protected void analyzeAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> cardinalityVariables,
 			@NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
-		AssignmentAnalysis assignmentAnalysis = assignedSerializationNode.getAssignmentAnalysis();
-		EStructuralFeature eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
+		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 		if ("ownedProperties".equals(eStructuralFeature.getName())) {
 			getClass();	// XXX
 		}
+		//
+		//	Accumulate enumerated attributes
+		//
+		CardinalityExpression cardinalityExpression = feature2expression.get(eStructuralFeature);
+		EnumerationValue enumerationValue = null;
 		if (eStructuralFeature instanceof EAttribute) {
-			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
+			enumerationValue = assignedSerializationNode.getEnumerationValue();
 			if (enumerationValue != null) {
 				EAttribute eAttribute = (EAttribute)eStructuralFeature;
 				Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
@@ -188,9 +155,33 @@ public class StaticRuleMatch implements RuleMatch
 				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 				enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
 			}
+			//
+			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
+			//
+			if (cardinalityExpression == null) {
+				String name = String.format("E%02d", feature2expression.size());
+				assert name != null;;
+				if (enumerationValue == null) {
+					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
+				}
+				else {		// XXX RuleAnalysis
+					cardinalityExpression = new EAttributeCardinalityExpression(name, (EAttribute)eStructuralFeature, enumerationValue);
+				}
+				feature2expression.put(eStructuralFeature, cardinalityExpression);
+			}
+			//
+			//	Add cardinalityVariables as a further product term to the sum of products.
+			//
+			if (enumerationValue != null) {
+				GrammarAnalysis grammarAnalysis = serializationRule.getRuleAnalysis().getGrammarAnalysis();
+				cardinalityExpression = cardinalityExpression.getCardinalityExpression(grammarAnalysis, enumerationValue);
+			}
 		}
+		//
+		//	Accumulate discriminated references
+		//
 		else {
-			AbstractRuleAnalysis ruleAnalysis = null;// XXX assignedSerializationNode.getAssignedRuleAnalysis();
+			AbstractRuleAnalysis ruleAnalysis = null; //assignedSerializationNode.getAssignedRuleAnalysis();
 			if (ruleAnalysis instanceof ParserRuleAnalysis) {
 				EReference eReference = (EReference)eStructuralFeature;
 				Map<@NonNull EReference, @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
@@ -206,8 +197,21 @@ public class StaticRuleMatch implements RuleMatch
 				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 				ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis, newMultiplicativeCardinality);
 			}
+			//
+			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
+			//
+			cardinalityExpression = feature2expression.get(eStructuralFeature);
+			if (cardinalityExpression == null) {
+				String name = String.format("E%02d", feature2expression.size());
+				assert name != null;;
+				cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
+				feature2expression.put(eStructuralFeature, cardinalityExpression);
+			}
 		}
-		accumulateAssignment(assignedSerializationNode, cardinalityVariables);
+		//
+		//	Add cardinalityVariables as a further product term to the sum of products.
+		//
+		cardinalityExpression.addMultiplicityProduct(cardinalityVariables);
 	}
 
 	public void analyzeSerialization() {
@@ -598,7 +602,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
-		AbstractCardinalityExpression expression = feature2expression.get(eStructuralFeature);
+		CardinalityExpression expression = feature2expression.get(eStructuralFeature);
 		if (expression == null) {
 			return false;
 		}
@@ -617,7 +621,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		//	Evaluate the expressions to determine the required size of each slot.
 		//
 		for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
-			AbstractCardinalityExpression expression = feature2expression.get(eStructuralFeature);
+			CardinalityExpression expression = feature2expression.get(eStructuralFeature);
 			assert expression != null;
 			if (!expression.checkSize(dynamicRuleMatch)) {
 				return null;
@@ -682,9 +686,9 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		List<@NonNull AbstractCardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
+		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
 		Collections.sort(expressions, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull AbstractCardinalityExpression expression : expressions) {
+		for (@NonNull CardinalityExpression expression : expressions) {
 			StringUtil.appendIndentation(s, depth);
 			s.append("- ");
 			expression.toString(s, depth);
