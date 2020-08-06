@@ -16,7 +16,7 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
-import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
+import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.markup.formatting3.MarkupFormatter;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupParser;
@@ -196,7 +196,7 @@ public abstract class AbstractMarkupRuntimeModule extends DefaultRuntimeModule {
 
 	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
-		return MySerializer.class;
+		return DeclarativeSerializer.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment

@@ -17,7 +17,7 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
-import org.eclipse.ocl.xtext.base.cs2text.MySerializer;
+import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingDiagnosticMessageProvider;
@@ -215,7 +215,7 @@ public abstract class AbstractEssentialOCLRuntimeModule extends DefaultRuntimeMo
 
 	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
-		return MySerializer.class;
+		return DeclarativeSerializer.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment

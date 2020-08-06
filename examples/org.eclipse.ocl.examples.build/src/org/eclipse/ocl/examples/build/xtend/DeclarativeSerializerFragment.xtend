@@ -72,7 +72,7 @@ import static extension org.eclipse.xtext.xtext.generator.util.GenModelUtil2.*
 import org.eclipse.xtext.xtext.generator.serializer.SemanticSequencerExtensions
 import org.eclipse.xtext.xtext.generator.serializer.DebugGraphGenerator
 import org.eclipse.xtext.xtext.generator.serializer.SyntacticSequencerExtensions
-import org.eclipse.ocl.xtext.base.cs2text.MySerializer
+import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer
 
 class DeclarativeSerializerFragment extends AbstractStubGeneratingFragment {
 	
@@ -137,7 +137,7 @@ class DeclarativeSerializerFragment extends AbstractStubGeneratingFragment {
 		new GuiceModuleAccess.BindingFactory()
 			.addTypeToType(ISemanticSequencer.typeRef, grammar.semanticSequencerClass)
 			.addTypeToType(ISyntacticSequencer.typeRef, grammar.syntacticSequencerClass)
-			.addTypeToType(ISerializer.typeRef, MySerializer.typeRef)
+			.addTypeToType(ISerializer.typeRef, DeclarativeSerializer.typeRef)
 			.contributeTo(language.runtimeGenModule)
 		
 		if (projectConfig.runtime.manifest !== null) {
