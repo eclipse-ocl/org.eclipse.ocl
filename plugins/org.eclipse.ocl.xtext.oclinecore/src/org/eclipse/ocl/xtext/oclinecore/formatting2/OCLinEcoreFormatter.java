@@ -17,7 +17,6 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.essentialocl.formatting2.EssentialOCLFormatter;
-import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
 import org.eclipse.ocl.xtext.oclinecorecs.TopLevelCS;
 import org.eclipse.xtext.formatting2.IFormattableDocument;
 import org.eclipse.xtext.resource.XtextResource;
@@ -25,10 +24,6 @@ import org.eclipse.xtext.xbase.lib.Extension;
 
 @SuppressWarnings("all")
 public class OCLinEcoreFormatter extends EssentialOCLFormatter {
-  @Inject
-  @Extension
-  private OCLinEcoreGrammarAccess _oCLinEcoreGrammarAccess;
-  
   @Inject
   private UserModelAnalysis modelAnalysis;
   
