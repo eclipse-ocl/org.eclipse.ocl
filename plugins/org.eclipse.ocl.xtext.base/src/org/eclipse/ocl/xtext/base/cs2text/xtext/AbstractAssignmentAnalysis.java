@@ -20,6 +20,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.xtext.AbstractElement;
 
+import com.google.common.collect.Iterables;
+
 /**
  * An AbstractAssignmentAnalysis provides the extended analysis of a direct Xtext Assignment or indirect current assignment Action.
  */
@@ -52,7 +54,7 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 
 	/**
 	 * The rules declared to be useable as producers of the target. Multiples may arise from an Alternatives terminal
-	 * or from 'delegating' rules.
+	 * or from sub-rules.
 	 */
 	private final @NonNull List<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = new ArrayList<>();
 
@@ -66,11 +68,11 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 
 	protected void addTargetRuleAnalysis(@NonNull AbstractRuleAnalysis targetRuleAnalysis) {
 		if (targetRuleAnalysis instanceof ParserRuleAnalysis) {
-			List<@NonNull ParserRuleAnalysis> debugSubRuleAnalysesClosure = ((ParserRuleAnalysis)targetRuleAnalysis).debugSubRuleAnalysesClosure;
-			if (debugSubRuleAnalysesClosure.size() > 1) {
+			Iterable<@NonNull ParserRuleAnalysis> subRuleAnalysesClosure = ((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure();
+			if (Iterables.size(subRuleAnalysesClosure) > 1) {
 				getClass(); 	// XXX debugging
 			}
-			for (@NonNull ParserRuleAnalysis ruleAnalysis : debugSubRuleAnalysesClosure) { //getCallingRuleAnalysisClosure()) {
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : subRuleAnalysesClosure) {
 				targetRuleAnalyses.add(ruleAnalysis);
 			}
 		}

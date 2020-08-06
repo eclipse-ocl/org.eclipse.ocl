@@ -132,7 +132,7 @@ public class GrammarAnalysis
 			ruleAnalysis.analyzeActionsAndAssignments();
 		}
 		//
-		//	Promote ParserRuleAnalysis.callingRuleAnalysis to ParserRuleAnalysis.callingRuleAnalysisClosure
+		//	Promote ParserRuleAnalysis.superRuleAnalysis to ParserRuleAnalysis.sub/superRuleAnalysisClosure
 		//
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : parserRuleAnalyses) {
 			ruleAnalysis.getSuperRuleAnalysisClosure();
@@ -156,7 +156,7 @@ public class GrammarAnalysis
 			if ("EssentialOCL::URIFirstPathElementCS".equals(parserRuleAnalysis.getName())) {
 				getClass();
 			}
-			parserRuleAnalysis.preSerialize();
+			parserRuleAnalysis.getStaticRuleMatch();
 		}
 		this.eClass2ruleAnalyses = analyzeProductions(parserRuleAnalyses);
 		this.eClass2serializationRules = analyzeSerializations(parserRuleAnalyses);

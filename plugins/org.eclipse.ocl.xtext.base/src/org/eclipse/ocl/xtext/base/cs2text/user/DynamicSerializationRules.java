@@ -66,7 +66,7 @@ public class DynamicSerializationRules
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			if ((targetRuleAnalysis == null) || ((ParserRuleAnalysis)targetRuleAnalysis).getDelegatedCalledRuleAnalysesClosure().contains(serializationRule.getRuleAnalysis())) {
+			if ((targetRuleAnalysis == null) || ((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure().contains(serializationRule.getRuleAnalysis())) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {
