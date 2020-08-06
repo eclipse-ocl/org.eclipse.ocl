@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
@@ -33,12 +32,6 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	@Override
 	public @NonNull EClass getAssignedEClass() {
 		return assignmentAnalysis.getEClass();
-	}
-
-	@Override
-	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
-		throw new UnsupportedOperationException();		// XXX need better approach Assignment may be of Alternatives RuleCalls
-	//	return assignmentAnalysis.getTerminalRuleAnalysis();
 	}
 
 	@Override

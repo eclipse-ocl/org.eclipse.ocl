@@ -46,10 +46,6 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		return Collections.singletonList(calledRuleAnalysis);
 	}
 
-	public @NonNull AbstractRuleAnalysis getCalledRuleAnalysis() {
-		return calledRuleAnalysis;
-	}
-
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		Object eGet = serializer.consumeNext(eStructuralFeature);

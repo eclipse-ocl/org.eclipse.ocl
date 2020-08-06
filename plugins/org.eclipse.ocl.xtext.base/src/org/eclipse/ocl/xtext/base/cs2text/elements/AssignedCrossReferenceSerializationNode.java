@@ -42,6 +42,11 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	}
 
 	@Override
+	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
 		return new AssignedCrossReferenceSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, crossReference);

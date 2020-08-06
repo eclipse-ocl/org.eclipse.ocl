@@ -24,8 +24,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedRuleCallsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
@@ -125,9 +127,9 @@ public class DynamicSerializationRules
 			}
 			else {
 				EReference eReference = (EReference)eStructuralFeature;
-				Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses = getRuleAnalyses(eReference);
-				if (ruleAnalyses != null) {
-					List<@NonNull ParserRuleAnalysis> sortedRuleAnalyses = Lists.newArrayList(ruleAnalyses);
+				Iterable<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = getAssignedRuleAnalyses(eReference);
+				if (assignedRuleAnalyses != null) {
+					List<@NonNull ParserRuleAnalysis> sortedRuleAnalyses = Lists.newArrayList(assignedRuleAnalyses);
 					Collections.sort(sortedRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull ParserRuleAnalysis ruleAnalysis : sortedRuleAnalyses) {
 						int size2 = slotsAnalysis.getSize(eReference, ruleAnalysis);
@@ -142,6 +144,54 @@ public class DynamicSerializationRules
 			}
 		}
 		s.append("\n");
+	}
+
+	private @Nullable Set<@NonNull ParserRuleAnalysis> gatherAssignedRuleAnalyses(@Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses,
+			@Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
+		if (ruleAnalyses != null) {
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+				if (ruleAnalysis instanceof ParserRuleAnalysis) {
+					if (assignedRuleAnalyses == null) {
+						assignedRuleAnalyses = new HashSet<>();
+					}
+					assignedRuleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
+				}
+			}
+		}
+		return assignedRuleAnalyses;
+	}
+
+	public @Nullable Iterable<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
+		Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = null;
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
+			assignedRuleAnalyses = getAssignedRuleAnalyses(eReference, serializationRule.getRootSerializationNode(), assignedRuleAnalyses);
+		}
+		return assignedRuleAnalyses;
+	}
+
+	private @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
+		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
+			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
+			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eReference) {
+				ParserRuleAnalysis enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
+				if (!enumerationValue.isNull()) {
+					ruleAnalyses.add(enumerationValue);
+				}
+			}
+		}
+		else*/ if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)) {
+			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
+			if (assignedSerializationNode.getEStructuralFeature() == eReference) {
+				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
+				assignedRuleAnalyses = gatherAssignedRuleAnalyses(ruleAnalyses, assignedRuleAnalyses);
+			}
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				assignedRuleAnalyses = getAssignedRuleAnalyses(eReference, nestedSerializationNode, assignedRuleAnalyses);
+			}
+		}
+		return assignedRuleAnalyses;
 	}
 
 	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
@@ -180,39 +230,7 @@ public class DynamicSerializationRules
 		return enumerationValues;
 	}
 
-	public @Nullable Iterable<@NonNull ParserRuleAnalysis> getRuleAnalyses(@NonNull EReference eReference) {
-		Set<@NonNull ParserRuleAnalysis> ruleAnalyses = new HashSet<>();
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			getRuleAnalyses(eReference, serializationRule.getRootSerializationNode(), ruleAnalyses);
-		}
-		return ruleAnalyses.isEmpty() ? null : ruleAnalyses;
-	}
 
-	private void getRuleAnalyses(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @NonNull Set<@NonNull ParserRuleAnalysis> ruleAnalyses) {
-		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
-			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
-			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eReference) {
-				ParserRuleAnalysis enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
-				if (!enumerationValue.isNull()) {
-					ruleAnalyses.add(enumerationValue);
-				}
-			}
-		}
-		else*/ if (serializationNode instanceof AssignedRuleCallSerializationNode) {
-			AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = (AssignedRuleCallSerializationNode)serializationNode;
-			if (assignedRuleCallSerializationNode.getEStructuralFeature() == eReference) {
-				AbstractRuleAnalysis ruleAnalysis = assignedRuleCallSerializationNode.getCalledRuleAnalysis();
-				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					ruleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
-				}
-			}
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				getRuleAnalyses(eReference, nestedSerializationNode, ruleAnalyses);
-			}
-		}
-	}
 
 //	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
 //		return serializationRules;

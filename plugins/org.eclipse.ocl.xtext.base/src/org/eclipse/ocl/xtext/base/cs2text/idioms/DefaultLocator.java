@@ -12,12 +12,15 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedRuleCallsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class DefaultLocator implements Locator
@@ -34,8 +37,16 @@ public class DefaultLocator implements Locator
 		else if (serializationNode instanceof AssignedCrossReferenceSerializationNode) {
 			return true;
 		}
-		else if (serializationNode instanceof AssignedRuleCallSerializationNode) {
-			return !(((AssignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis() instanceof ParserRuleAnalysis);
+		else if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)){
+			Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalyses();
+			if (assignedRuleAnalyses != null) {
+				for (@NonNull AbstractRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
+					if (!(assignedRuleAnalysis instanceof ParserRuleAnalysis)) {
+						return true;
+					}
+				}
+			}
+			return false;		// XXX Is this still right ??
 		}
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			return true;

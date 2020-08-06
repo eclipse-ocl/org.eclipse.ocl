@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.DelegateSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
@@ -82,6 +83,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	}
 
 	protected void addCallingRuleAnalysis(@NonNull ParserRuleAnalysis callingRuleAnalysis) {
+		if ("NavigatingArgExpCS".equals(callingRuleAnalysis.getRuleName())) {
+			getClass();
+		}
 		Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses2 = callingRuleAnalyses;
 		if (callingRuleAnalyses2 == null) {
 			callingRuleAnalyses = callingRuleAnalyses2 = new HashSet<>();
@@ -294,29 +298,33 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	}
 	private void analyzeSerializations(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull Object> eReference2ruleAnalysisOrAnalyses) {
 		if (serializationNode instanceof AssignedRuleCallSerializationNode) {
-			AssignedRuleCallSerializationNode assignedSerializationNode = (AssignedRuleCallSerializationNode)serializationNode;
+			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
 			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
-				AbstractRuleAnalysis newRuleAnalysis = assignedSerializationNode.getCalledRuleAnalysis();
-				if (newRuleAnalysis instanceof ParserRuleAnalysis) {
-					Object oldRuleAnalysisOrAnalyses = eReference2ruleAnalysisOrAnalyses.get(eReference);
-					if (oldRuleAnalysisOrAnalyses == null) {
-						eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysis);
-					}
-					else if (oldRuleAnalysisOrAnalyses instanceof ParserRuleAnalysis) {
-						if (oldRuleAnalysisOrAnalyses != newRuleAnalysis) {
-							List<@NonNull ParserRuleAnalysis> newRuleAnalysisOrAnalyses = new ArrayList<>();
-							newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)oldRuleAnalysisOrAnalyses);
-							newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
-							eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysisOrAnalyses);
-						}
-					}
-					else {
-						@SuppressWarnings("unchecked")
-						List<@NonNull ParserRuleAnalysis> oldRuleAnalyses = (List<@NonNull ParserRuleAnalysis>)oldRuleAnalysisOrAnalyses;
-						if (!oldRuleAnalyses.contains(newRuleAnalysis)) {
-							oldRuleAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
+				Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
+				if (assignedRuleAnalyses != null) {
+					for (@NonNull AbstractRuleAnalysis newRuleAnalysis : assignedRuleAnalyses) {
+						if (newRuleAnalysis instanceof ParserRuleAnalysis) {
+							Object oldRuleAnalysisOrAnalyses = eReference2ruleAnalysisOrAnalyses.get(eReference);
+							if (oldRuleAnalysisOrAnalyses == null) {
+								eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysis);
+							}
+							else if (oldRuleAnalysisOrAnalyses instanceof ParserRuleAnalysis) {
+								if (oldRuleAnalysisOrAnalyses != newRuleAnalysis) {
+									List<@NonNull ParserRuleAnalysis> newRuleAnalysisOrAnalyses = new ArrayList<>();
+									newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)oldRuleAnalysisOrAnalyses);
+									newRuleAnalysisOrAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
+									eReference2ruleAnalysisOrAnalyses.put(eReference, newRuleAnalysisOrAnalyses);
+								}
+							}
+							else {
+								@SuppressWarnings("unchecked")
+								List<@NonNull ParserRuleAnalysis> oldRuleAnalyses = (List<@NonNull ParserRuleAnalysis>)oldRuleAnalysisOrAnalyses;
+								if (!oldRuleAnalyses.contains(newRuleAnalysis)) {
+									oldRuleAnalyses.add((ParserRuleAnalysis)newRuleAnalysis);
+								}
+							}
 						}
 					}
 				}
@@ -345,6 +353,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	}
 
 	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getCallingRuleAnalysisClosure() {
+		if ("SelfExpCS".equals(eClass.getName())) {
+			getClass();				// XXX
+		}
 		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosureList = this.callingRuleAnalysesClosure;
 		if (callingRuleAnalysesClosureList == null) {
 			UniqueList<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosureSet = new UniqueList<>();
@@ -367,6 +378,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	}
 
 	public @NonNull List<@NonNull ParserRuleAnalysis> getDelegatedCalledRuleAnalysesClosure() {
+		if ("SelfExpCS".equals(eClass.getName())) {
+			getClass();				// XXX
+		}
 		List<@NonNull ParserRuleAnalysis> delegatedCalledRuleAnalysesClosure2 = delegatedCalledRuleAnalysesClosure;
 		if (delegatedCalledRuleAnalysesClosure2 == null) {
 			delegatedCalledRuleAnalysesClosure2 = new ArrayList<>();

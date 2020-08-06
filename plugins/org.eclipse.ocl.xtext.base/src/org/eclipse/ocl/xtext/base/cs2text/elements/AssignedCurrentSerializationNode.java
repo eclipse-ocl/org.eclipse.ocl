@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ActionAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -24,6 +25,11 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		throw new IllegalStateException();		// clone occurs for flattened SerializationRules
+	}
+
+	@Override
+	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
