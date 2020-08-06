@@ -67,7 +67,7 @@ public class CardinalityVariable implements Nameable
 				if (!isFirst) {
 					s.append("|");
 				}
-				s.append(ruleAnalysis.getName());
+				s.append(ruleAnalysis.getRuleName());
 				isFirst = false;
 			}
 		}

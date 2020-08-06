@@ -39,6 +39,7 @@ public class Serializer
 	protected final @NonNull DynamicRuleMatch dynamicRuleMatch;
 	protected final @NonNull BasicSerializationRule serializationRule;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
+
 	protected final @NonNull EObject element;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
@@ -83,6 +84,10 @@ public class Serializer
 
 	public @NonNull EObject getElement() {
 		return element;
+	}
+
+	public @NonNull UserModelAnalysis getModelAnalysis() {
+		return modelAnalysis;
 	}
 
 	/**

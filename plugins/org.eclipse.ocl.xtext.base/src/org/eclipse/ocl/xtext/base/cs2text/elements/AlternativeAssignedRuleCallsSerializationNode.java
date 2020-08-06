@@ -10,16 +10,22 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.conversion.IValueConverterService;
+import org.eclipse.xtext.conversion.ValueConverterException;
 
 /**
  * An AlternativeAssignedKeywordsSerializationNode corresponds to the parsing specification of a variety of keywords
@@ -53,18 +59,37 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 
 	@Override
 	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		Object eGet = serializer.consumeNext(eStructuralFeature);
-		AbstractRuleAnalysis calledRuleAnalysis = calledRuleAnalyses.iterator().next();		// XXX search for matching rule
-		if (eStructuralFeature instanceof EReference) {
-			assert ((EReference)eStructuralFeature).isContainment();
-			if (eGet != null) {
-				serializer.serializeElement(serializationBuilder, (EObject)eGet, calledRuleAnalysis);
+		Object object = serializer.consumeNext(eStructuralFeature);
+		if (eStructuralFeature instanceof EAttribute) {
+			for (@NonNull AbstractRuleAnalysis calledRuleAnalysis : calledRuleAnalyses) {
+				try {
+					String val = valueConverterService.toString(object, calledRuleAnalysis.getRuleName());
+					serializationBuilder.append(String.valueOf(val));
+					return;
+				}
+				catch (ValueConverterException e) {}
 			}
+			serializationBuilder.appendError("Failed to convert '" + String.valueOf(object) + "'");
 		}
-		else {
-			String val = valueConverterService.toString(eGet, calledRuleAnalysis.getRuleName());
-			serializationBuilder.append(String.valueOf(val));
+		else if (object != null) {
+			EReference eReference = (EReference)eStructuralFeature;
+			EObject eObject = (EObject)object;
+			assert eReference.isContainment();
+			UserElementAnalysis elementAnalysis = serializer.getModelAnalysis().getElementAnalysis(eObject);
+			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
+			for (@NonNull AbstractRuleAnalysis calledRuleAnalysis : calledRuleAnalyses) {		// search for matching rule
+				for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)calledRuleAnalysis).getSerializationRules()) {
+					DynamicRuleMatch match = serializationRule.getBasicSerializationRule().getStaticRuleMatch().match(slotsAnalysis);
+					if (match != null) {
+						// XXX we could mark the serializationBuilder context and catch a backtracking exception/null return if needed here
+						serializer.serializeElement(serializationBuilder, eObject, calledRuleAnalysis);
+						return;
+					}
+				}
+			}
+			serializationBuilder.appendError("Failed to convert " + eObject.eClass().getName() + ": '" + String.valueOf(object) + "'");
 		}
+		// else {}		-- null never happens
 	}
 
 	@Override

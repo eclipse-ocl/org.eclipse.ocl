@@ -40,6 +40,7 @@ public class UserElementAnalysis implements Nameable
 	protected final @NonNull EClass eClass;
 	protected final @NonNull String name;
 	protected final @NonNull DynamicSerializationRules serializationRules;
+	private @Nullable UserSlotsAnalysis slotsAnalysis = null;
 
 	public UserElementAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable UserElementAnalysis containingElementAnalysis,
 			@Nullable EReference eContainmentFeature, @NonNull EObject eObject) {
@@ -112,8 +113,12 @@ public class UserElementAnalysis implements Nameable
 		return serializationRules;
 	}
 
-	protected @NonNull UserSlotsAnalysis getSlotsAnalysis() {
-		return new UserSlotsAnalysis(modelAnalysis, serializationRules, eObject);
+	public @NonNull UserSlotsAnalysis getSlotsAnalysis() {
+		UserSlotsAnalysis slotsAnalysis2 = slotsAnalysis;
+		if (slotsAnalysis2 == null) {
+			slotsAnalysis = slotsAnalysis2 = new UserSlotsAnalysis(modelAnalysis, serializationRules, eObject);
+		}
+		return slotsAnalysis2;
 	}
 
 	@Override
