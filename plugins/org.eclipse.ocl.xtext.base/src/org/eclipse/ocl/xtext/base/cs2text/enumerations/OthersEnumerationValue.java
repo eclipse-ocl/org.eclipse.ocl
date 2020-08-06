@@ -28,7 +28,7 @@ public class OthersEnumerationValue extends AbstractEnumerationValue
 
 	@Override
 	public @NonNull String getName() {
-		return "«others";
+		return "«others»";
 	}
 
 	@Override

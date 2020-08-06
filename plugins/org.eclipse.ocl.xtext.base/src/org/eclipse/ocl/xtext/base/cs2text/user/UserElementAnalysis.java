@@ -61,7 +61,7 @@ public class UserElementAnalysis implements Nameable
 	 */
 	private @NonNull DynamicSerializationRules analyzeSerializationRules() {
 		String eClassName = eClass.getName();
-		if ("NavigatingArgCS".equals(eClassName)) {
+		if ("SelfExpCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
 		Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = null;

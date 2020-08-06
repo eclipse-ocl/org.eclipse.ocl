@@ -145,9 +145,9 @@ public class DynamicSerializationRules
 	}
 
 	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		Set<@NonNull EnumerationValue> enumerationValues = new HashSet<>();
+		Set<@NonNull EnumerationValue> enumerationValues = null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			enumerationValues = getEnumerationValues(eAttribute, serializationRule.getRootSerializationNode(), null);
+			enumerationValues = getEnumerationValues(eAttribute, serializationRule.getRootSerializationNode(), enumerationValues);
 		}
 		return enumerationValues;
 	}
