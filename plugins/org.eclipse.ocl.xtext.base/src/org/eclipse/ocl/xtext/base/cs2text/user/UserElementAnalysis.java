@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -22,6 +23,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
 /**
@@ -71,6 +73,11 @@ public class UserElementAnalysis implements Nameable
 			assert containingElementAnalysis2 != null;
 			SerializationRules parentSerializationRules = grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass());
 			targetRuleAnalyses = parentSerializationRules.getAssignedTargetRuleAnalyses(eContainmentFeature2);
+			for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : new ArrayList<>(targetRuleAnalyses)) {
+				if (targetRuleAnalysis instanceof ParserRuleAnalysis) {
+					targetRuleAnalyses.addAll(((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure());
+				}
+			}
 		}
 		SerializationRules serializationRules2 = grammarAnalysis.getSerializationRules(eClass);
 		return serializationRules2.createDynamicSerializationRules(targetRuleAnalyses);

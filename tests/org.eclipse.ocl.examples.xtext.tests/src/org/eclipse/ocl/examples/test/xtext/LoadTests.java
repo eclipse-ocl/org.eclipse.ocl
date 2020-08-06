@@ -751,13 +751,13 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_Overloads_oclinecore() throws IOException, InterruptedException {
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		doLoad_Concrete(ocl, getTestModelURI("models/oclinecore/Overloads.oclinecore"));
 		ocl.dispose();
 	}
 
 	public void testLoad_Refresh_oclinecore() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			//			OCLDelegateDomain.initialize(null);

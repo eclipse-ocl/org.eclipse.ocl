@@ -222,13 +222,23 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		}
 		else if (abstractElement instanceof Group) {
 			List<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements((Group)abstractElement);
-			if (elements.size() == 1) {
-				firstUnassignedRuleCall = analyzeActionsAndAssignments(elements.get(0), firstUnassignedRuleCall, isSimpleAlternative);
-			}
-			else {
-				for (@NonNull AbstractElement nestedElement : elements) {
-					firstUnassignedRuleCall = analyzeActionsAndAssignments(nestedElement, firstUnassignedRuleCall, false);
+			AbstractElement nonOptionalElement = null;
+			for (@NonNull AbstractElement nestedElement : elements) {
+				MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(nestedElement);
+				if (multiplicativeCardinality.isOne()) {
+					if (nonOptionalElement != null) {
+						nonOptionalElement = null;
+						break;
+					}
+					nonOptionalElement = nestedElement;
 				}
+				else if (!multiplicativeCardinality.mayBeZero()) {
+					nonOptionalElement = null;
+					break;
+				}
+			}
+			for (@NonNull AbstractElement nestedElement : elements) {
+				firstUnassignedRuleCall = analyzeActionsAndAssignments(nestedElement, firstUnassignedRuleCall, (nestedElement == nonOptionalElement) && isSimpleAlternative);
 			}
 		}
 		return firstUnassignedRuleCall;

@@ -139,8 +139,10 @@ public class SerializationRules
 	}
 
 	public void toString(StringBuilder s, int i) {
+		s.append(eClass.getEPackage().getName());
+		s.append("::");
+		s.append(eClass.getName());
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			s.append(" ");;
 			StringUtil.appendIndentation(s, i);
 			s.append("|&  ");
 			serializationRule.toString(s, -1);

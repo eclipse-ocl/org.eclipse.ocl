@@ -37,7 +37,6 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
@@ -253,15 +252,18 @@ public class DynamicSerializationRules
 	} */
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		boolean isMany = Iterables.size(serializationRules) > 1;
+		s.append(eClass.getEPackage().getName());
+		s.append("::");
+		s.append(eClass.getName());
+	//	boolean isMany = Iterables.size(serializationRules) > 1;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-			if (isMany) {
+	//		if (isMany) {
 				StringUtil.appendIndentation(s, depth+1);
-			}
-			else {
-				s.append(" ");
-			}
+	//		}
+	//		else {
+	//			s.append(" ");
+	//		}
 			s.append(serializationRule.getName());
 			s.append(" - ");
 			basicSerializationRule.toRuleString(s);
