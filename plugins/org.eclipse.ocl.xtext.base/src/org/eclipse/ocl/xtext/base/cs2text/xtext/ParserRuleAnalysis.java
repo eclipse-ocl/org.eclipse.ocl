@@ -55,9 +55,19 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
-	private @Nullable Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses = null;
-	private @Nullable List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure = null;	// XXX 2/3 of these closures should be redundant
-	public final @NonNull List<@NonNull ParserRuleAnalysis> debugCalledRuleAnalysesClosure = new UniqueList<>();	// XXX 2/3 of these closures should be redundant
+
+	/**
+	 * The super rules directly call this rule as an undecorated unassigned alterative.
+	 * This rule may therefore substitute the super rule.
+	 */
+	private @Nullable Set<@NonNull ParserRuleAnalysis> superRuleAnalyses = null;
+
+	/**
+	 * The rules which transitively call this rule as an undecorated unassigned alterative.
+	 * This rule may therefore substitute the super rule.
+	 */
+	private @Nullable List<@NonNull ParserRuleAnalysis> superRuleAnalysesClosure = null;
+	public final @NonNull List<@NonNull ParserRuleAnalysis> debugSubRuleAnalysesClosure = new UniqueList<>();	// XXX 2/3 of these closures should be redundant
 	private @Nullable List<@NonNull RuleCall> delegatingRuleCalls = null;
 	private @Nullable List<@NonNull ParserRuleAnalysis> delegatedCalledRuleAnalysesClosure = null;	// XXX 2/3 of these closures should be redundant
 
@@ -82,15 +92,15 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		assignmentAnalyses.add(assignmentAnalysis);
 	}
 
-	protected void addCallingRuleAnalysis(@NonNull ParserRuleAnalysis callingRuleAnalysis) {
-		if ("NavigatingArgExpCS".equals(callingRuleAnalysis.getRuleName())) {
+	protected void addSuperRuleAnalysis(@NonNull ParserRuleAnalysis superRuleAnalysis) {
+		if ("NavigatingArgExpCS".equals(superRuleAnalysis.getRuleName())) {
 			getClass();
 		}
-		Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses2 = callingRuleAnalyses;
-		if (callingRuleAnalyses2 == null) {
-			callingRuleAnalyses = callingRuleAnalyses2 = new HashSet<>();
+		Set<@NonNull ParserRuleAnalysis> superRuleAnalyses2 = superRuleAnalyses;
+		if (superRuleAnalyses2 == null) {
+			superRuleAnalyses = superRuleAnalyses2 = new HashSet<>();
 		}
-		callingRuleAnalyses2.add(callingRuleAnalysis);
+		superRuleAnalyses2.add(superRuleAnalysis);
 	}
 
 	/**
@@ -195,11 +205,11 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		else if (abstractElement instanceof RuleCall) {
 			assert firstUnassignedRuleCall == null;
 			RuleCall ruleCall = (RuleCall)abstractElement;
-			AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
-			if (XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(calledRule)) instanceof EClass) {
+			AbstractRule subRule = XtextGrammarUtil.getRule(ruleCall);
+			if (XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(subRule)) instanceof EClass) {
 				firstUnassignedRuleCall = ruleCall;
-				ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis)grammarAnalysis.getRuleAnalysis(calledRule);
-				calledRuleAnalysis.addCallingRuleAnalysis(this);
+				ParserRuleAnalysis subRuleAnalysis = (ParserRuleAnalysis)grammarAnalysis.getRuleAnalysis(subRule);
+				subRuleAnalysis.addSuperRuleAnalysis(this);
 			}
 		}
 		else if (abstractElement instanceof Alternatives) {
@@ -352,31 +362,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		}
 	}
 
-	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getCallingRuleAnalysisClosure() {
-		if ("SelfExpCS".equals(eClass.getName())) {
-			getClass();				// XXX
-		}
-		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosureList = this.callingRuleAnalysesClosure;
-		if (callingRuleAnalysesClosureList == null) {
-			UniqueList<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosureSet = new UniqueList<>();
-			callingRuleAnalysesClosureSet.add(this);
-			for (int i = 0; i < callingRuleAnalysesClosureSet.size(); i++) {
-				ParserRuleAnalysis ruleAnalysis = callingRuleAnalysesClosureSet.get(i);
-				Set<@NonNull ParserRuleAnalysis> callingRuleAnalyses = ruleAnalysis.callingRuleAnalyses;
-				if (callingRuleAnalyses != null) {
-					callingRuleAnalysesClosureSet.addAll(callingRuleAnalyses);
-				}
-			}
-			callingRuleAnalysesClosureList = new ArrayList<>(callingRuleAnalysesClosureSet);
-			Collections.sort(callingRuleAnalysesClosureList, NameUtil.NAMEABLE_COMPARATOR);
-			this.callingRuleAnalysesClosure = callingRuleAnalysesClosureList;
-			for (@NonNull ParserRuleAnalysis ruleAnalysis : callingRuleAnalysesClosureList) {
-				ruleAnalysis.debugCalledRuleAnalysesClosure.add(this);
-			}
-		}
-		return callingRuleAnalysesClosureList;
-	}
-
 	public @NonNull List<@NonNull ParserRuleAnalysis> getDelegatedCalledRuleAnalysesClosure() {
 		if ("SelfExpCS".equals(eClass.getName())) {
 			getClass();				// XXX
@@ -428,6 +413,31 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		}
 		assert serializationRules != null;
 		return serializationRules;
+	}
+
+	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getSuperRuleAnalysisClosure() {
+		if ("SelfExpCS".equals(eClass.getName())) {
+			getClass();				// XXX
+		}
+		List<@NonNull ParserRuleAnalysis> superRuleAnalysesClosureList = this.superRuleAnalysesClosure;
+		if (superRuleAnalysesClosureList == null) {
+			UniqueList<@NonNull ParserRuleAnalysis> superRuleAnalysesClosureSet = new UniqueList<>();
+			superRuleAnalysesClosureSet.add(this);
+			for (int i = 0; i < superRuleAnalysesClosureSet.size(); i++) {
+				ParserRuleAnalysis ruleAnalysis = superRuleAnalysesClosureSet.get(i);
+				Set<@NonNull ParserRuleAnalysis> superRuleAnalyses = ruleAnalysis.superRuleAnalyses;
+				if (superRuleAnalyses != null) {
+					superRuleAnalysesClosureSet.addAll(superRuleAnalyses);
+				}
+			}
+			superRuleAnalysesClosureList = new ArrayList<>(superRuleAnalysesClosureSet);
+			Collections.sort(superRuleAnalysesClosureList, NameUtil.NAMEABLE_COMPARATOR);
+			this.superRuleAnalysesClosure = superRuleAnalysesClosureList;
+			for (@NonNull ParserRuleAnalysis superRuleAnalysis : superRuleAnalysesClosureList) {
+				superRuleAnalysis.debugSubRuleAnalysesClosure.add(this);
+			}
+		}
+		return superRuleAnalysesClosureList;
 	}
 
 	/**
@@ -519,7 +529,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 				isFirst1 = false;
 			}
 		}
-		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure2 = delegatedCalledRuleAnalysesClosure != null ? delegatedCalledRuleAnalysesClosure : callingRuleAnalysesClosure;
+		List<@NonNull ParserRuleAnalysis> callingRuleAnalysesClosure2 = delegatedCalledRuleAnalysesClosure != null ? delegatedCalledRuleAnalysesClosure : superRuleAnalysesClosure;
 		if (callingRuleAnalysesClosure2 != null) {
 			s.append(" -> ");
 			boolean isFirst1 = true;

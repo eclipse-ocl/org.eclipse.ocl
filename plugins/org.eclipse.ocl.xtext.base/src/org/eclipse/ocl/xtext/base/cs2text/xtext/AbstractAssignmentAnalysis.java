@@ -66,7 +66,11 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 
 	protected void addTargetRuleAnalysis(@NonNull AbstractRuleAnalysis targetRuleAnalysis) {
 		if (targetRuleAnalysis instanceof ParserRuleAnalysis) {
-			for (@NonNull ParserRuleAnalysis ruleAnalysis : ((ParserRuleAnalysis)targetRuleAnalysis).debugCalledRuleAnalysesClosure) { //getCallingRuleAnalysisClosure()) {
+			List<@NonNull ParserRuleAnalysis> debugSubRuleAnalysesClosure = ((ParserRuleAnalysis)targetRuleAnalysis).debugSubRuleAnalysesClosure;
+			if (debugSubRuleAnalysesClosure.size() > 1) {
+				getClass(); 	// XXX debugging
+			}
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : debugSubRuleAnalysesClosure) { //getCallingRuleAnalysisClosure()) {
 				targetRuleAnalyses.add(ruleAnalysis);
 			}
 		}

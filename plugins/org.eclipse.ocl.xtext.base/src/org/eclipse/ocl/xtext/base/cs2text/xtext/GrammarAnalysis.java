@@ -135,7 +135,7 @@ public class GrammarAnalysis
 		//	Promote ParserRuleAnalysis.callingRuleAnalysis to ParserRuleAnalysis.callingRuleAnalysisClosure
 		//
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : parserRuleAnalyses) {
-			ruleAnalysis.getCallingRuleAnalysisClosure();
+			ruleAnalysis.getSuperRuleAnalysisClosure();
 		}
 		//
 		//	Identify the assignment analyses that are containments.
