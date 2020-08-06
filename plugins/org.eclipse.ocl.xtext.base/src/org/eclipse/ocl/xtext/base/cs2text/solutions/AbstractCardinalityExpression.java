@@ -61,7 +61,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		if (intersection  != null) {
 			for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
 				if (mayBeMany || !cardinalityVariable.mayBeMany()) {
-					assert cardinalityVariable.mayBeNone();
+				//	assert cardinalityVariable.mayBeNone();
 					CardinalitySolution solution = createSizeCardinalitySolution();
 					solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
 					ruleMatch.addSolution(cardinalityVariable, solution);
@@ -416,6 +416,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		}
 	} */
 
+	@Override
 	public abstract boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch);
 
 	/**
@@ -630,6 +631,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		return unknownVariables;
 	}
 
+	@Override
 	public boolean isOne() {
 		return (sumOfProducts.size() == 1) && (sumOfProducts.get(0).size() == 0);
 	}
