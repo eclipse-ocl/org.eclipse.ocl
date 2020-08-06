@@ -12,8 +12,8 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.xtext.util.Strings;
 
 public class StringSegment implements Segment
@@ -35,7 +35,7 @@ public class StringSegment implements Segment
 	}
 
 	@Override
-	public void serialize(@NonNull SerializationNode serializationNode, @NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull SerializationNode serializationNode, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.append(string);
 	}
 

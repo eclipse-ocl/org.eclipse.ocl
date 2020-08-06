@@ -13,8 +13,8 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -52,7 +52,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
-	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		assert !eStructuralFeature.isUnsettable() || serializer.getElement().eIsSet(eStructuralFeature);
 		String name = enumerationValue.getName();
 		serializationBuilder.append(name);

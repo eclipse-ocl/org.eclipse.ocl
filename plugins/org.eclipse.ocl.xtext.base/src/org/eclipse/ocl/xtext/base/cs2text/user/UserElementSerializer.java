@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text;
+package org.eclipse.ocl.xtext.base.cs2text.user;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,12 +21,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
-import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -34,7 +33,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
  * A Serializer supports the serialization of a user model element, automatocally creating a hierarchy
  * of Serizers for the containment herarchy od the user model element.
  */
-public class Serializer
+public class UserElementSerializer
 {
 	protected final @NonNull DynamicRuleMatch dynamicRuleMatch;
 	protected final @NonNull BasicSerializationRule serializationRule;
@@ -43,7 +42,7 @@ public class Serializer
 	protected final @NonNull EObject element;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	public Serializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull UserModelAnalysis modelAnalysis,
+	public UserElementSerializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull UserModelAnalysis modelAnalysis,
 			@NonNull EObject element) {
 		this.dynamicRuleMatch = dynamicRuleMatch;
 		this.serializationRule = dynamicRuleMatch.getSerializationRule();

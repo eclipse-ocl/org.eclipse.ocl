@@ -25,7 +25,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
@@ -108,7 +107,7 @@ public class UserModelAnalysis
 			getClass();	// XXX
 		}
 		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();
-		Serializer serializer = userElementAnalysis.createSerializer(slotsAnalysis, targetRuleAnalysis);
+		UserElementSerializer serializer = userElementAnalysis.createSerializer(slotsAnalysis, targetRuleAnalysis);
 		if (serializer != null) {
 			serializer.serialize(serializationBuilder);
 		}

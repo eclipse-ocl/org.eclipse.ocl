@@ -14,8 +14,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public abstract class AbstractCommentSegment implements Segment
 {
@@ -45,7 +45,7 @@ public abstract class AbstractCommentSegment implements Segment
 	protected abstract @Nullable String getComment(@NonNull EObject eObject);
 
 	@Override
-	public void serialize(@NonNull SerializationNode serializationNode, @NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull SerializationNode serializationNode, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		EObject eObject = serializer.getElement();
 		String comment = getComment(eObject);
 		if (comment != null) {

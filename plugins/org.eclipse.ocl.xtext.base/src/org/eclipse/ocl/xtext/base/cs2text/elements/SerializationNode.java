@@ -13,7 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
@@ -45,7 +45,7 @@ public interface SerializationNode extends SerializationElement
 	 * Traverse the serialization node hoderarchy of a serializer's serializationRule to append appropriate string
 	 * segments to the serializationBuilder to represent the serializer's user element.
 	 */
-	void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder);
+	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
 	@Override
 	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);

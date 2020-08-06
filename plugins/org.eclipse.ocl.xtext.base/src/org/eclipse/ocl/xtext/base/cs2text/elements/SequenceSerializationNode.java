@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.Serializer;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.CompoundElement;
@@ -206,7 +206,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	}
 
 	@Override
-	public void serialize(@NonNull Serializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			serializer.serializeNode(serializationBuilder, serializationNode);
 		}

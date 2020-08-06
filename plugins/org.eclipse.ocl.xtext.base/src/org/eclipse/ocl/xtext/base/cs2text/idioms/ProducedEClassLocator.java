@@ -19,7 +19,8 @@ public class ProducedEClassLocator implements Locator
 {
 	protected final @NonNull EClass eClass;
 
-	public ProducedEClassLocator(@NonNull EClass eClass) {
+	public ProducedEClassLocator(/*@NonNull*/ EClass eClass) {
+		assert eClass != null;
 		this.eClass = eClass;
 	}
 

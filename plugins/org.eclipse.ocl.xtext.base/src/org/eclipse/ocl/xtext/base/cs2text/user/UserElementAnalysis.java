@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.Serializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -87,10 +86,10 @@ public class UserElementAnalysis implements Nameable
 		return serializationRules.createDynamicRuleMatch(slotsAnalysis, targetRuleAnalysis);
 	}
 
-	public @Nullable Serializer createSerializer(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
+	public @Nullable UserElementSerializer createSerializer(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		DynamicRuleMatch dynamicRuleMatch = createDynamicRuleMatch(slotsAnalysis, targetRuleAnalysis);
 		if (dynamicRuleMatch != null) {
-			return new Serializer(dynamicRuleMatch, modelAnalysis, eObject);
+			return new UserElementSerializer(dynamicRuleMatch, modelAnalysis, eObject);
 		}
 		return null;
 	}
