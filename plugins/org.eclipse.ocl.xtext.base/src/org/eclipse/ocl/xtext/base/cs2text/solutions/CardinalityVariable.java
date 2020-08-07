@@ -33,6 +33,7 @@ public class CardinalityVariable implements Nameable
 		this.name = name;
 		this.ruleAnalyses = ruleAnalyses;
 		this.multiplicativeCardinality = multiplicativeCardinality;
+	// XXX	assert !multiplicativeCardinality.isOne();
 	}
 
 	public boolean isOne() {

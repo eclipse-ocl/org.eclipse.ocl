@@ -64,10 +64,6 @@ public enum MultiplicativeCardinality
 		this.state = state;
 	}
 
-//	public boolean isConstant() {
-//		return isOne();
-//	}
-
 	public boolean isOne() {
 		return (state & 3) == ONE.state;
 	}

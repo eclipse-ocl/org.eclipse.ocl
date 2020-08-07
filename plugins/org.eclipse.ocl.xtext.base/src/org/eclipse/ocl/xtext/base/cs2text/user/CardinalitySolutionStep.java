@@ -19,6 +19,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
+import com.google.common.collect.Iterables;
+
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.
  * An expression may be assigned to or checked against some variable
@@ -94,16 +96,17 @@ public abstract class CardinalitySolutionStep
 	}
 
 	/**
-	 * A TypeCheck step checks that a slot value conforms to that required by the rule assignment on behalf of the invoking DynamicRuleMatch=.
+	 * A TypeCheck step checks that a slot value conforms to a type required by a rule assignment on behalf of the invoking DynamicRuleMatch=.
 	 */
 	public static class TypeCheck extends CardinalitySolutionStep
 	{
 		protected final @NonNull EReference eReference;
-		protected final @NonNull EClass eClass;
+		protected final @NonNull Iterable<@NonNull EClass> eClasses;
 
-		public TypeCheck(@NonNull EReference eReference, @NonNull EClass eClass) {
+		public TypeCheck(@NonNull EReference eReference, @NonNull Iterable<@NonNull EClass> eClasses) {
 			this.eReference = eReference;
-			this.eClass = eClass;
+			this.eClasses = eClasses;
+			assert Iterables.size(eClasses) >= 1;
 			if ("ownedType".equals(eReference.getName())) {
 				getClass();			// XXX debugging
 			}
@@ -113,24 +116,33 @@ public abstract class CardinalitySolutionStep
 		public boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 			UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
 			EObject eObject = slotsAnalysis.getEObject();
-			if (!eReference.getEReferenceType().isInstance(eObject)) {
+			if (!eReference.getEContainingClass().isInstance(eObject)) {
 				return false;
 			}
 			Object slotContent = eObject.eGet(eReference);
 			if (eReference.isMany()) {
 				for (Object element : (List<?>)slotContent) {
-					if (!eClass.isInstance(element)) {
+					if (!isInstance(element)) {
 						return false;
 					}
 				}
-				return true;
 			}
 			else if (slotContent != null) {
-				return eClass.isInstance(slotContent);
+				if (!isInstance(slotContent)) {
+					return false;
+				}
 			}
-			else {				// Null is never actually serialized,
-				return true;
+			else {}				// Null is never actually serialized,
+			return true;
+		}
+
+		protected boolean isInstance(Object slotContent) {
+			for (@NonNull EClass eClass : eClasses) {
+				if (eClass.isInstance(slotContent)) {
+					return true;
+				}
 			}
+			return false;
 		}
 
 		@Override
@@ -141,10 +153,13 @@ public abstract class CardinalitySolutionStep
 			s.append(eReference.getEContainingClass().getName());
 			s.append(".");
 			s.append(eReference.getName());
-			s.append(" : ");
-			s.append(eClass.getEPackage().getName());
-			s.append("::");
-			s.append(eClass.getName());
+			s.append(" :");
+			for (@NonNull EClass eClass : eClasses) {
+				s.append(" ");
+				s.append(eClass.getEPackage().getName());
+				s.append("::");
+				s.append(eClass.getName());
+			}
 		}
 	}
 

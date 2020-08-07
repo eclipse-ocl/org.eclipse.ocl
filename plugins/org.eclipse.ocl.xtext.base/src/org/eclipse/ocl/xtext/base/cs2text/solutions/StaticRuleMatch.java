@@ -274,7 +274,7 @@ public class StaticRuleMatch implements RuleMatch
 	}
 
 	public void analyzeSolution() {
-		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : feature2expression.entrySet()) {
+	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : feature2expression.entrySet()) {
 			EStructuralFeature eStructuralFeature = entry.getKey();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
@@ -282,6 +282,34 @@ public class StaticRuleMatch implements RuleMatch
 			//	cardinalityExpression.get
 				EClass eReferenceType = eReference.getEReferenceType();
 			//	steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eReferenceType));
+			}
+		} */
+		for (@NonNull SerializationNode serializationNode : variable2node.values()) {
+			if (serializationNode instanceof AssignedSerializationNode) {
+				AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
+				EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
+				if (eStructuralFeature instanceof EReference) {
+					EReference eReference = (EReference)eStructuralFeature;
+					EClass eReferenceType = eReference.getEReferenceType();
+					Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
+					if (assignedRuleAnalyses != null) {
+						Set<@NonNull EClass> eClasses = null;
+						for (@NonNull AbstractRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
+							if (assignedRuleAnalysis instanceof ParserRuleAnalysis) {
+								EClass returnedEClass = ((ParserRuleAnalysis)assignedRuleAnalysis).getReturnedEClass();		// XXX sub rule closure
+							//	if (returnedEClass != eReferenceType) {
+									if (eClasses == null) {
+										eClasses = new HashSet<>();
+									}
+									eClasses.add(returnedEClass);
+							//	}
+							}
+						}
+						if ((eClasses != null) && !eClasses.contains(eReferenceType)) {		// Prune derivations
+							steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eClasses));
+						}
+					}
+				}
 			}
 		}
 		//
