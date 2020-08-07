@@ -91,7 +91,7 @@ public class DynamicSerializationRules
 		for (@SuppressWarnings("unused") @NonNull SerializationRule serializationRule : serializationRules) {
 			s.append(" [");
 			s.append(c++);
-			s.append("] ");
+			s.append("]");
 	//		for (@NonNull EStructuralFeature eStructuralFeature : serializationRule.getEStructuralFeatures()) {
 	//			allFeatures.add(eStructuralFeature);
 	//		}

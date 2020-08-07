@@ -57,12 +57,12 @@ public class StaticRuleMatch implements RuleMatch
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
 
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
 	 */
-	private @Nullable Map<@NonNull EReference, @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
 
 	/**
 	 * The CardinalityVariable for each node, unless always exactly 1.
@@ -140,13 +140,13 @@ public class StaticRuleMatch implements RuleMatch
 		EnumerationValue enumerationValue = null;
 		if (eStructuralFeature instanceof EAttribute) {
 			enumerationValue = assignedSerializationNode.getEnumerationValue();
-			if (enumerationValue != null) {
+		//	if (enumerationValue != null) {
 				EAttribute eAttribute = (EAttribute)eStructuralFeature;
-				Map<@NonNull EAttribute, @NonNull Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+				Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 				if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
 					eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
 				}
-				Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
+				Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
 				if (enumerationValue2multiplicativeCardinality == null) {
 					enumerationValue2multiplicativeCardinality = new HashMap<>();
 					eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
@@ -154,7 +154,7 @@ public class StaticRuleMatch implements RuleMatch
 				MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
 				MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 				enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
-			}
+		//	}
 			//
 			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
 			//
@@ -184,11 +184,11 @@ public class StaticRuleMatch implements RuleMatch
 			AbstractRuleAnalysis ruleAnalysis = null; //assignedSerializationNode.getAssignedRuleAnalysis();
 			if (ruleAnalysis instanceof ParserRuleAnalysis) {
 				EReference eReference = (EReference)eStructuralFeature;
-				Map<@NonNull EReference, @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
+				Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 				if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 					eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
 				}
-				Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2.get(eReference);
+				Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2.get(eReference);
 				if (ruleAnalysis2multiplicativeCardinality == null) {
 					ruleAnalysis2multiplicativeCardinality = new HashMap<>();
 					eReference2ruleAnalysis2multiplicativeCardinality2.put(eReference, ruleAnalysis2multiplicativeCardinality);
@@ -535,13 +535,13 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
+			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
 			if (enumerationValue2multiplicativeCardinality != null) {
 				return enumerationValue2multiplicativeCardinality.get(null);
 			}
 		}
 		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
+			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
 			if (ruleAnalysis2multiplicativeCardinality != null) {
 				return ruleAnalysis2multiplicativeCardinality.get(null);
 			}
@@ -551,7 +551,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@NonNull EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
+			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
 			if (enumerationValue2multiplicativeCardinality != null) {
 				return enumerationValue2multiplicativeCardinality.get(enumerationValue);
 			}
@@ -561,7 +561,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@NonNull ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
+			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
 			if (ruleAnalysis2multiplicativeCardinality != null) {
 				return ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
 			}
