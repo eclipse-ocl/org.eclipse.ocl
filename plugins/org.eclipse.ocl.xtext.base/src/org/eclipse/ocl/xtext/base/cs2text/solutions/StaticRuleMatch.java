@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -281,6 +280,9 @@ public class StaticRuleMatch implements RuleMatch
 	}
 
 	public void analyzeSolution() {
+		if ("EssentialOCL::ExpCS".equals(serializationRule.getName())) {
+			getClass();		// XXX debugging
+		}
 	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : feature2expression.entrySet()) {
 			EStructuralFeature eStructuralFeature = entry.getKey();
 			if (eStructuralFeature instanceof EReference) {
@@ -291,13 +293,25 @@ public class StaticRuleMatch implements RuleMatch
 			//	steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eReferenceType));
 			}
 		} */
-		for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
+			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
+				EReference eReference = entry.getKey();
+				if (eReference.isContainment()) {
+					Iterable<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();		// XXX exclude null
+					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleAnalyses));
+				}
+			}
+		}
+	/*	for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
 			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
 				EClass eReferenceType = eReference.getEReferenceType();
 				Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
 				if (assignedRuleAnalyses != null) {
+					if (eReference.isContainment()) {
+						steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleAnalyses));
+					}
 					Set<@NonNull EClass> eClasses = null;
 					for (@NonNull AbstractRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
 						if (assignedRuleAnalysis instanceof ParserRuleAnalysis) {
@@ -315,7 +329,7 @@ public class StaticRuleMatch implements RuleMatch
 					}
 				}
 			}
-		}
+		} */
 		//
 		//	Prepare to restructure the variables/expressions as solutions.
 		//

@@ -208,6 +208,9 @@ public class SerializationBuilder
 				}
 			}
 		}
+	//	if (prevCh != FULL_NEW_LINE_PREVCH) {
+	//		appendNewLine(s);
+	//	}
 		return String.valueOf(s);
 	}
 

@@ -449,6 +449,10 @@ public class UserSlotsAnalysis
 		return eStructuralFeature2slotAnalysis.keySet();
 	}
 
+	public @NonNull UserModelAnalysis getModelAnalysis() {
+		return modelAnalysis;
+	}
+
 	public int getSize(@NonNull EStructuralFeature eStructuralFeature) {
 		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eStructuralFeature);
 		if (slotAnalysis == null) {
