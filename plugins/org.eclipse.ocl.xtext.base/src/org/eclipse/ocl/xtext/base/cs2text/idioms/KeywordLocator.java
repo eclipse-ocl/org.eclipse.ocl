@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
@@ -20,13 +22,18 @@ import org.eclipse.xtext.util.Strings;
 public class KeywordLocator implements Locator
 {
 	protected final @NonNull String string;
+	protected final @Nullable EClass inEClass;
 
-	public KeywordLocator(@NonNull String string) {
+	public KeywordLocator(@NonNull String string, @Nullable EClass inEClass) {
 		this.string = string;
+		this.inEClass = inEClass;
 	}
 
 	@Override
 	public boolean matches(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+		if ((inEClass != null) && !inEClass.isSuperTypeOf(serializationRule.getProducedEClass())) {
+			return false;
+		}
 		if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			return string.equals(((AssignedKeywordSerializationNode)serializationNode).getValue());
 		}

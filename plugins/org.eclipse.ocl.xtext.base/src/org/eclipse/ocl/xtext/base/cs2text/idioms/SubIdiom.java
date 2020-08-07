@@ -22,19 +22,19 @@ public class SubIdiom
 {
 	public static @NonNull CustomSegment COMMENT = new CustomSegment(BaseCommentSegment.class);
 
-	public static @NonNull SubIdiom CLOSE_BRACE = new SubIdiom(new KeywordLocator("}"), StringSegment.POP, StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_NEW_LINE);
-	public static @NonNull SubIdiom CLOSE_PARENTHESIS = new SubIdiom(new KeywordLocator(")"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
-	public static @NonNull SubIdiom CLOSE_SQUARE = new SubIdiom(new KeywordLocator("]"), StringSegment.NO_SPACE, ValueSegment.INSTANCE);
-	public static @NonNull SubIdiom COMMA = new SubIdiom(new KeywordLocator(","), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_SPACE);
+	public static @NonNull SubIdiom CLOSE_BRACE = new SubIdiom(new KeywordLocator("}", null), StringSegment.POP, StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_NEW_LINE);
+	public static @NonNull SubIdiom CLOSE_PARENTHESIS = new SubIdiom(new KeywordLocator(")", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
+	public static @NonNull SubIdiom CLOSE_SQUARE = new SubIdiom(new KeywordLocator("]", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE);
+//	public static @NonNull SubIdiom COLON_IN_OPERATIONCONTEXTDECLCS = new SubIdiom(new KeywordLocator(":", CompleteOCL), StringSegment.NO_SPACE, ValueSegment.INSTANCE);
+	public static @NonNull SubIdiom COMMA = new SubIdiom(new KeywordLocator(",", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_SPACE);
 	public static @NonNull SubIdiom DEFAULT = new SubIdiom(DefaultLocator.INSTANCE, StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_SPACE);
-	public static @NonNull SubIdiom DOUBLE_COLON = new SubIdiom(new KeywordLocator("::"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
-	public static @NonNull SubIdiom DOT_DOT = new SubIdiom(new KeywordLocator(".."), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
-	public static @NonNull SubIdiom OPEN_BRACE = new SubIdiom(new KeywordLocator("{"), StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.PUSH, StringSegment.SOFT_NEW_LINE);
-	public static @NonNull SubIdiom OPEN_PARENTHESIS = new SubIdiom(new KeywordLocator("("), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
-	public static @NonNull SubIdiom OPEN_SQUARE = new SubIdiom(new KeywordLocator("["), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
-	public static @NonNull SubIdiom SEMI_COLON = new SubIdiom(new KeywordLocator(";"), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_NEW_LINE);
+	public static @NonNull SubIdiom DOUBLE_COLON = new SubIdiom(new KeywordLocator("::", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
+	public static @NonNull SubIdiom DOT_DOT = new SubIdiom(new KeywordLocator("..", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
+	public static @NonNull SubIdiom OPEN_BRACE = new SubIdiom(new KeywordLocator("{", null), StringSegment.SOFT_SPACE, ValueSegment.INSTANCE, StringSegment.PUSH, StringSegment.SOFT_NEW_LINE);
+	public static @NonNull SubIdiom OPEN_PARENTHESIS = new SubIdiom(new KeywordLocator("(", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
+	public static @NonNull SubIdiom OPEN_SQUARE = new SubIdiom(new KeywordLocator("[", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.NO_SPACE);
+	public static @NonNull SubIdiom SEMI_COLON = new SubIdiom(new KeywordLocator(";", null), StringSegment.NO_SPACE, ValueSegment.INSTANCE, StringSegment.SOFT_NEW_LINE);
 	public static @NonNull SubIdiom VALUE = new SubIdiom(null, ValueSegment.INSTANCE);
-
 //	public static @NonNull SubIdiom COMMENTED_PACKAGE = new SubIdiom(new KeywordLocator("enum"), new CustomSegment(BaseCommentSegment.class), ValueSegment.INSTANCE);
 	public static @NonNull SubIdiom COMMENTED_RULE = new SubIdiom(new ProducedEClassLocator(BaseCSPackage.Literals.MODEL_ELEMENT_CS), new CustomSegment(BaseCommentSegment.class), ValueSegment.INSTANCE);
 
