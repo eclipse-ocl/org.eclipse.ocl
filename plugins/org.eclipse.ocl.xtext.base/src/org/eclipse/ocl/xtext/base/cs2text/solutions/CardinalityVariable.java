@@ -17,13 +17,24 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 
 /**
- * A CardinalityVariable represents the cardinality of a grammar term for which a constant value must be deduced prior
+ * A CardinalityVariable represents the unknown cardinality of a grammar term for which a constant value must be deduced prior
  * to serialization of the term.
  */
 public class CardinalityVariable implements Nameable
 {
+	/**
+	 * A convenience debug name for the variable. Jnique within its paent rule match.
+	 */
 	protected final @NonNull String name;
+
+	/**
+	 * The rule analyses that type the variable. null for sequence variables.
+	 */
 	protected final @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses;
+
+	/**
+	 * The possible cardinalities of the variable. ?/+/*. Unit variables are known/redundant and so excluded from computations.
+	 */
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
 	public CardinalityVariable(@NonNull String name, @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses, @NonNull MultiplicativeCardinality multiplicativeCardinality) {

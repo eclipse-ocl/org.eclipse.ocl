@@ -144,9 +144,8 @@ public class UserSlotsAnalysis
 		}
 
 		public void analyzeEReference(@NonNull UserElementAnalysis elementAnalysis) {
-			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
 			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(slotsAnalysis, ruleAnalysis);
+				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleAnalysis);
 				if (dynamicRuleMatch != null) {
 					Integer oldCount = ruleAnalysis2count.get(ruleAnalysis);
 					ruleAnalysis2count.put(ruleAnalysis, oldCount != null ? oldCount+1 : 1);

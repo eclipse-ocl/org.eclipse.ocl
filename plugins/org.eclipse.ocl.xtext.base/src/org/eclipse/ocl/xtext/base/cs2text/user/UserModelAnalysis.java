@@ -101,21 +101,21 @@ public class UserModelAnalysis
 	 * Create a Serializer for the appropriate configuration of element, then use it to serialize it and its descendants
 	 * to the serializationBuilder.
 	 */
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
-		UserElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		if ("PrefixExpCS".equals(element.eClass().getName())) {
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
+		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
+		if ("PrefixExpCS".equals(eObject.eClass().getName())) {
 			getClass();	// XXX
 		}
-		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();
-		UserElementSerializer serializer = userElementAnalysis.createSerializer(slotsAnalysis, targetRuleAnalysis);
-		if (serializer != null) {
+		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis);
+		if (dynamicRuleMatch != null) {
+			UserElementSerializer serializer = new UserElementSerializer(dynamicRuleMatch, this, eObject);
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			userElementAnalysis.createSerializer(slotsAnalysis, targetRuleAnalysis);		// XXX debugging
+			userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis);		// XXX debugging
 			StringBuilder s = new StringBuilder();
-			s.append("\n\n«incompatible '" + element.eClass().getName() + "'");
-			slotsAnalysis.diagnose(s);
+			s.append("\n\n«incompatible '" + eObject.eClass().getName() + "'");
+			userElementAnalysis.getSlotsAnalysis().diagnose(s);
 			s.append("»\n\n");
 			serializationBuilder.appendError(s.toString());
 		}

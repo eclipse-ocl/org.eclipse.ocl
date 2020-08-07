@@ -66,8 +66,8 @@ public class DynamicSerializationRules
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		Collection<@NonNull ParserRuleAnalysis> targetSubRuleAnalysesClosure = targetRuleAnalysis != null ? ((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure() : null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			ParserRuleAnalysis serialiizationRuleAnalysis = serializationRule.getRuleAnalysis();
-			if ((targetSubRuleAnalysesClosure == null) || targetSubRuleAnalysesClosure.contains(serialiizationRuleAnalysis)) {
+			ParserRuleAnalysis serializationRuleAnalysis = serializationRule.getRuleAnalysis();
+			if ((targetSubRuleAnalysesClosure == null) || targetSubRuleAnalysesClosure.contains(serializationRuleAnalysis)) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {
@@ -268,7 +268,7 @@ public class DynamicSerializationRules
 	//		}
 			s.append(serializationRule.getName());
 			s.append(" - ");
-			basicSerializationRule.toRuleString(s);
+		//	basicSerializationRule.toRuleString(s);
 			basicSerializationRule.toSolutionString(s, depth+2);
 		}
 	}
