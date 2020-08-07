@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class UserSlotsAnalysis
@@ -280,8 +281,13 @@ public class UserSlotsAnalysis
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 	protected final @NonNull EObject eObject;
 	protected final @Nullable DynamicSerializationRules serializationRules;
-//	protected final @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis;
+
+	/**
+	 * Cache of DynamicRuleMatch per StaticRuleMatch. This cache reduces the DynamicRuleMatch per StaticRuleMatch ratio
+	 * from nearly 10 to less than 2 by re-using the lookahead from the tree descent.
+	 */
+	private @NonNull List<@NonNull DynamicRuleMatch> dynamicRuleMatches = new ArrayList<>();
 
 	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject/*,
 			@Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses*/) {
@@ -290,6 +296,7 @@ public class UserSlotsAnalysis
 		this.serializationRules = serializationRules;
 	//	this.eReference2disciminatedRuleAnalyses = eReference2disciminatedRuleAnalyses;
 		this.eStructuralFeature2slotAnalysis = analyze();
+		modelAnalysis.debugAddUserSlotsAnalysis(this);
 	}
 
 	protected @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> analyze() {
@@ -428,8 +435,25 @@ public class UserSlotsAnalysis
 		}
 	}
 
+	public @Nullable DynamicRuleMatch basicGetDynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch) {
+		// Typically one or perhaps two entries; npt worth  a Map.
+		for (@NonNull DynamicRuleMatch dynamicRuleMatch : dynamicRuleMatches) {
+			if (dynamicRuleMatch.getStaticRuleMatch() == staticRuleMatch) {
+				return dynamicRuleMatch;
+			}
+		}
+		return null;
+	}
+
 	public @Nullable UserSlotAnalysis basicGetSlotAnalysis(@NonNull EStructuralFeature eStructuralFeature) {
 		return eStructuralFeature2slotAnalysis.get(eStructuralFeature);
+	}
+
+	public @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch) {
+		assert basicGetDynamicRuleMatch(staticRuleMatch) == null;
+		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(staticRuleMatch, this);
+		dynamicRuleMatches.add(dynamicRuleMatch);
+		return dynamicRuleMatch;
 	}
 
 	public void diagnose(@NonNull StringBuilder s) {

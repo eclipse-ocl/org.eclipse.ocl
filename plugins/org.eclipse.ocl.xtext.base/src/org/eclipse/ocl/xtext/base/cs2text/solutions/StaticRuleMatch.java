@@ -679,29 +679,38 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		//
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
-		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(this, slotsAnalysis);
-		if (!dynamicRuleMatch.analyze()) {
-			return null;
-		}
-		//
-		//	Evaluate the expressions to determine the required size of each slot.
-		//
-		for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
-			CardinalityExpression expression = feature2expression.get(eStructuralFeature);
-			assert expression != null;
-			if (!expression.checkSize(dynamicRuleMatch)) {
+		DynamicRuleMatch dynamicRuleMatch = slotsAnalysis.basicGetDynamicRuleMatch(this); // new DynamicRuleMatch(this, slotsAnalysis);
+		if (dynamicRuleMatch == null) {
+			dynamicRuleMatch = slotsAnalysis.createDynamicRuleMatch(this);
+			if (!dynamicRuleMatch.analyze()) {
 				return null;
 			}
-		}
-		//
-		//	Check that no 'unused' features are used.
-		//
-		for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
-			if (!feature2expression.containsKey(eStructuralFeature)) {
-				UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
-				if (!object.isCounted() || (object.asCounted() != 0)) {
+			//
+			//	Evaluate the expressions to determine the required size of each slot.
+			//
+			for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
+				CardinalityExpression expression = feature2expression.get(eStructuralFeature);
+				assert expression != null;
+				if (!expression.checkSize(dynamicRuleMatch)) {
 					return null;
 				}
+			}
+			//
+			//	Check that no 'unused' features are used.
+			//
+			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
+				if (!feature2expression.containsKey(eStructuralFeature)) {
+					UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
+					if (!object.isCounted() || (object.asCounted() != 0)) {
+						return null;
+					}
+				}
+			}
+			dynamicRuleMatch.setChecked();
+		}
+		else {
+			if (!dynamicRuleMatch.isChecked()) {
+				return null;
 			}
 		}
 		return dynamicRuleMatch;

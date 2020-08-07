@@ -41,10 +41,12 @@ public class DynamicRuleMatch implements RuleMatch
 	protected final @NonNull StaticRuleMatch staticRuleMatch;
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
 	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
+	private boolean checked = false;
 
 	public DynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch, @NonNull UserSlotsAnalysis slotsAnalysis) {
 		this.staticRuleMatch = staticRuleMatch;
 		this.slotsAnalysis = slotsAnalysis;
+		slotsAnalysis.getModelAnalysis().debugAddDynamicRuleMatch(this);
 	}
 
 	/**
@@ -97,12 +99,24 @@ public class DynamicRuleMatch implements RuleMatch
 		return slotsAnalysis;
 	}
 
+	public @NonNull StaticRuleMatch getStaticRuleMatch() {
+		return staticRuleMatch;
+	}
+
 	public @NonNull Integer getValue(@Nullable CardinalityVariable cardinalityVariable) {
 		return ClassUtil.nonNullState(variable2value.get(cardinalityVariable));
 	}
 
+	public boolean isChecked() {
+		return checked;
+	}
+
 	public void putValue(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer integerSolution) {
 		variable2value.put(cardinalityVariable, integerSolution);
+	}
+
+	public void setChecked() {
+		checked  = true;
 	}
 
 	@Override

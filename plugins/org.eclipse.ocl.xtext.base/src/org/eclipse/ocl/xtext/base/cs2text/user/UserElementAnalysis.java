@@ -55,6 +55,7 @@ public class UserElementAnalysis implements Nameable
 		this.eClass = UserModelAnalysis.eClass(eObject);
 		this.name = eClass.getName() + "@" + ++count;
 		this.serializationRules = analyzeSerializationRules();
+		modelAnalysis.debugAddUserElementAnalysis(this);
 	}
 
 	/**
@@ -79,7 +80,9 @@ public class UserElementAnalysis implements Nameable
 			}
 		}
 		SerializationRules serializationRules2 = grammarAnalysis.getSerializationRules(eClass);
-		return serializationRules2.createDynamicSerializationRules(targetRuleAnalyses);
+		DynamicSerializationRules dynamicSerializationRules = serializationRules2.createDynamicSerializationRules(targetRuleAnalyses);
+		modelAnalysis.debugAddDynamicSerializationRules(dynamicSerializationRules);
+		return dynamicSerializationRules;
 	}
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@Nullable AbstractRuleAnalysis targetRuleAnalysis) {

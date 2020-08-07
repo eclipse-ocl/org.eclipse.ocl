@@ -43,6 +43,7 @@ public class DeclarativeSerializer extends Serializer
 	//	String s2 = modelAnalysis.toString();
 	//	System.out.println(s2);
 		modelAnalysis.serialize(serializationBuilder, rootEObject, null);
+		System.out.println(modelAnalysis.diagnose());
 		String s3 = serializationBuilder.toRenderedString();
 	//	System.out.println(s3);
 		appendable.append(s3);

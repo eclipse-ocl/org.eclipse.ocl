@@ -63,6 +63,12 @@ public class UserModelAnalysis
 	 */
 	private final @NonNull Map<@NonNull EObject, @NonNull UserElementAnalysis> element2elementAnalysis = new HashMap<>();
 
+	private int debugUserElementAnalysisCount = 0;
+	private int debugUserSlotsAnalysisCount = 0;
+	private int debugSerializeCount = 0;
+	private int debugDynamicRuleMatchCount = 0;
+	private int debugDynamicSerializationRules = 0;
+
 	/**
 	 * Perform analysis of each user model element.
 	 */
@@ -86,6 +92,32 @@ public class UserModelAnalysis
 		}
 	}
 
+	public void debugAddDynamicSerializationRules(@NonNull DynamicSerializationRules dynamicSerializationRules) {
+		debugDynamicSerializationRules++;
+	}
+
+	public void debugAddDynamicRuleMatch(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+		debugDynamicRuleMatchCount++;
+	}
+
+	public void debugAddUserElementAnalysis(@NonNull UserElementAnalysis userElementAnalysis) {
+		debugUserElementAnalysisCount++;
+	}
+
+	public void debugAddUserSlotsAnalysis(UserSlotsAnalysis userSlotsAnalysis) {
+		debugUserSlotsAnalysisCount++;
+	}
+
+	public @NonNull String diagnose() {
+		StringBuilder s = new StringBuilder();
+		s.append("debugUserElementAnalysisCount = " + debugUserElementAnalysisCount + "\n");
+		s.append("debugUserSlotsAnalysisCount = " + debugUserSlotsAnalysisCount + "\n");
+		s.append("debugSerializeCount = " + debugSerializeCount + "\n");
+		s.append("debugDynamicRuleMatchCount = " + debugDynamicRuleMatchCount + "\n");
+		s.append("debugDynamicSerializationRules = " + debugDynamicSerializationRules + "\n");
+		return s.toString();
+	}
+
 	/**
 	 * Return the analysis of a user model element.
 	 */
@@ -102,6 +134,7 @@ public class UserModelAnalysis
 	 * to the serializationBuilder.
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
+		debugSerializeCount++;
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
 		if ("PrefixExpCS".equals(eObject.eClass().getName())) {
 			getClass();	// XXX
