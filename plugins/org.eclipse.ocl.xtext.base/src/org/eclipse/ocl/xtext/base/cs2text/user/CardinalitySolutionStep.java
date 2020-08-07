@@ -153,12 +153,16 @@ public abstract class CardinalitySolutionStep
 			s.append(eReference.getEContainingClass().getName());
 			s.append(".");
 			s.append(eReference.getName());
-			s.append(" :");
+			s.append(" : ");
+			boolean isFirst = true;
 			for (@NonNull EClass eClass : eClasses) {
-				s.append(" ");
+				if (!isFirst) {
+					s.append("|");
+				}
 				s.append(eClass.getEPackage().getName());
 				s.append("::");
 				s.append(eClass.getName());
+				isFirst = false;
 			}
 		}
 	}

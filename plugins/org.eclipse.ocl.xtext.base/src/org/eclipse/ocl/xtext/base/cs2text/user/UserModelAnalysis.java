@@ -103,7 +103,7 @@ public class UserModelAnalysis
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(element);
-		if ("CollectionLiteralPartCS".equals(element.eClass().getName())) {
+		if ("PrefixExpCS".equals(element.eClass().getName())) {
 			getClass();	// XXX
 		}
 		UserSlotsAnalysis slotsAnalysis = userElementAnalysis.getSlotsAnalysis();

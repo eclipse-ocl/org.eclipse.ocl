@@ -47,9 +47,8 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	public void addMultiplicityProduct(@NonNull Iterable<@NonNull CardinalityVariable> variables) {
 		List<@NonNull CardinalityVariable> prunedList = new ArrayList<>();
 		for (@NonNull CardinalityVariable variable : variables) {
-			if (!variable.isOne()) {
-				prunedList.add(variable);
-			}
+			assert !variable.isOne();
+			prunedList.add(variable);
 		}
 		sumOfProducts.add(prunedList);
 	}

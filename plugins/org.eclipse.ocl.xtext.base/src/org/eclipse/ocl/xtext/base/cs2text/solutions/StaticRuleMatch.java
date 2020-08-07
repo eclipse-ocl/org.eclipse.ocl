@@ -80,6 +80,13 @@ public class StaticRuleMatch implements RuleMatch
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node = new HashMap<>();
 
 	/**
+	 * The Node which each cardinality variable defines the iteration for; the inverse of node2variable.
+	 *
+	 * ?? Only used as a debugging convenience ??
+	 */
+	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
+
+	/**
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
@@ -235,8 +242,7 @@ public class StaticRuleMatch implements RuleMatch
 		CardinalityVariable cardinalityVariable = null;
 		if (!serializationNode.isRedundant()) {
 			MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-			boolean needsVariable = !multiplicativeCardinality.isOne() || (serializationNode instanceof AssignedSerializationNode);
-			if (needsVariable) {
+			if (!multiplicativeCardinality.isOne()) {
 				String name = String.format("C%02d", variable2node.size());
 				assert name != null;
 				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalyses() : null;
@@ -257,6 +263,7 @@ public class StaticRuleMatch implements RuleMatch
 		}
 		if (serializationNode instanceof AssignedSerializationNode) {
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
+			assignedSerializationNodes.add(assignedSerializationNode);
 			analyzeAssignment(assignedSerializationNode, cardinalityVariables, netMultiplicativeCardinality);
 		}
 		//
@@ -284,30 +291,27 @@ public class StaticRuleMatch implements RuleMatch
 			//	steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eReferenceType));
 			}
 		} */
-		for (@NonNull SerializationNode serializationNode : variable2node.values()) {
-			if (serializationNode instanceof AssignedSerializationNode) {
-				AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-				EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
-				if (eStructuralFeature instanceof EReference) {
-					EReference eReference = (EReference)eStructuralFeature;
-					EClass eReferenceType = eReference.getEReferenceType();
-					Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-					if (assignedRuleAnalyses != null) {
-						Set<@NonNull EClass> eClasses = null;
-						for (@NonNull AbstractRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
-							if (assignedRuleAnalysis instanceof ParserRuleAnalysis) {
-								EClass returnedEClass = ((ParserRuleAnalysis)assignedRuleAnalysis).getReturnedEClass();		// XXX sub rule closure
-							//	if (returnedEClass != eReferenceType) {
-									if (eClasses == null) {
-										eClasses = new HashSet<>();
-									}
-									eClasses.add(returnedEClass);
-							//	}
-							}
+		for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
+			if (eStructuralFeature instanceof EReference) {
+				EReference eReference = (EReference)eStructuralFeature;
+				EClass eReferenceType = eReference.getEReferenceType();
+				Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
+				if (assignedRuleAnalyses != null) {
+					Set<@NonNull EClass> eClasses = null;
+					for (@NonNull AbstractRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
+						if (assignedRuleAnalysis instanceof ParserRuleAnalysis) {
+							EClass returnedEClass = ((ParserRuleAnalysis)assignedRuleAnalysis).getReturnedEClass();		// XXX sub rule closure
+						//	if (returnedEClass != eReferenceType) {
+								if (eClasses == null) {
+									eClasses = new HashSet<>();
+								}
+								eClasses.add(returnedEClass);
+						//	}
 						}
-						if ((eClasses != null) && !eClasses.contains(eReferenceType)) {		// Prune derivations
-							steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eClasses));
-						}
+					}
+					if ((eClasses != null) && !eClasses.contains(eReferenceType)) {		// Prune derivations
+						steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eClasses));
 					}
 				}
 			}
@@ -336,9 +340,9 @@ public class StaticRuleMatch implements RuleMatch
 		//
 		//	Confirm that variables with a "1" solution were skipped.
 		//
-	//	for (@NonNull CardinalityVariable variable : variables) {
-	//		assert !variable.isOne();
-	//	}
+		for (@NonNull CardinalityVariable variable : variables) {
+			assert !variable.isOne();
+		}
 		int oldSize;
 		//
 		//	Eliminate expressions that involve no unresolved variables or which provide a linear solution for a single variable.
@@ -453,7 +457,8 @@ public class StaticRuleMatch implements RuleMatch
 		// XXX need to encode residue for run-time resolution
 		//
 		for (@NonNull CardinalityVariable variable : variables) {
-			if (!variable.isOne() && (basicGetSolution(variable) == null)) {
+			assert !variable.isOne();
+			if (basicGetSolution(variable) == null) {
 				if (residualExpressions.isEmpty()) {
 					addSolution(variable, new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
 				}
@@ -744,14 +749,12 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2solution.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityVariable variable : variables) {
-			if(!variable.isOne()) {
-				SerializationNode serializationNode = variable2node.get(variable);
-				assert serializationNode != null;
-				StringUtil.appendIndentation(s, depth);
-				s.append(variable);
-				s.append(": ");
-				serializationNode.toString(s, -1);
-			}
+			SerializationNode serializationNode = variable2node.get(variable);
+			assert serializationNode != null;
+			StringUtil.appendIndentation(s, depth);
+			s.append(variable);
+			s.append(": ");
+			serializationNode.toString(s, -1);
 		}
 		for (CardinalitySolutionStep step : steps) {
 			StringUtil.appendIndentation(s, depth);

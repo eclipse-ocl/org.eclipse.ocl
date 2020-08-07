@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -63,8 +64,10 @@ public class DynamicSerializationRules
 	}
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
+		Collection<@NonNull ParserRuleAnalysis> targetSubRuleAnalysesClosure = targetRuleAnalysis != null ? ((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure() : null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			if ((targetRuleAnalysis == null) || ((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure().contains(serializationRule.getRuleAnalysis())) {
+			ParserRuleAnalysis serialiizationRuleAnalysis = serializationRule.getRuleAnalysis();
+			if ((targetSubRuleAnalysesClosure == null) || targetSubRuleAnalysesClosure.contains(serialiizationRuleAnalysis)) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {
