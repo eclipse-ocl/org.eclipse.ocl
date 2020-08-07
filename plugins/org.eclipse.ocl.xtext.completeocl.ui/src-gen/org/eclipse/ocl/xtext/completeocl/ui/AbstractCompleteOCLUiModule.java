@@ -198,6 +198,11 @@ public abstract class AbstractCompleteOCLUiModule extends DefaultUiModule {
 		return PersistentDataAwareDirtyResource.class;
 	}
 
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
+	public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
+		return ContentFormatterFactory.class;
+	}
+
 	// contributed by org.eclipse.xtext.xtext.generator.ui.labeling.LabelProviderFragment2
 	public Class<? extends ILabelProvider> bindILabelProvider() {
 		return CompleteOCLLabelProvider.class;
@@ -294,11 +299,6 @@ public abstract class AbstractCompleteOCLUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.compare.CompareFragment2
 	public void configureCompareViewerTitle(Binder binder) {
 		binder.bind(String.class).annotatedWith(Names.named(UIBindings.COMPARE_VIEWER_TITLE)).toInstance("CompleteOCL Compare");
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
-	public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
-		return ContentFormatterFactory.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment

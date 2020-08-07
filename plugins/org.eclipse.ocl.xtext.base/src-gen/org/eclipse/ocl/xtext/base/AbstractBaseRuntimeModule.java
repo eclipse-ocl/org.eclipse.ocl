@@ -22,8 +22,6 @@ import org.eclipse.ocl.xtext.base.parser.antlr.BaseAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseParser;
 import org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseLexer;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeProvider;
-import org.eclipse.ocl.xtext.base.serializer.BaseSemanticSequencer;
-import org.eclipse.ocl.xtext.base.serializer.BaseSyntacticSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 import org.eclipse.ocl.xtext.base.validation.BaseValidator;
 import org.eclipse.xtext.Constants;
@@ -57,8 +55,6 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.SingletonBinding;
@@ -94,6 +90,11 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessFragment2
 	public Class<? extends IGrammarAccess> bindIGrammarAccess() {
 		return BaseGrammarAccess.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends ISerializer> bindISerializer() {
+		return DeclarativeSerializer.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
@@ -182,21 +183,6 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public void configureIResourceDescriptionsPersisted(Binder binder) {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
-	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-		return BaseSemanticSequencer.class;
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
-	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-		return BaseSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeSerializerFragment
-	public Class<? extends ISerializer> bindISerializer() {
-		return DeclarativeSerializer.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment

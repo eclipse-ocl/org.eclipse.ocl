@@ -174,6 +174,11 @@ public abstract class AbstractBaseUiModule extends DefaultUiModule {
 		return PersistentDataAwareDirtyResource.class;
 	}
 
+	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
+	public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
+		return ContentFormatterFactory.class;
+	}
+
 	// contributed by org.eclipse.xtext.xtext.generator.ui.labeling.LabelProviderFragment2
 	public Class<? extends ILabelProvider> bindILabelProvider() {
 		return BaseLabelProvider.class;
@@ -270,11 +275,6 @@ public abstract class AbstractBaseUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.compare.CompareFragment2
 	public void configureCompareViewerTitle(Binder binder) {
 		binder.bind(String.class).annotatedWith(Names.named(UIBindings.COMPARE_VIEWER_TITLE)).toInstance("Base Compare");
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
-	public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
-		return ContentFormatterFactory.class;
 	}
 
 }

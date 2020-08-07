@@ -38,8 +38,9 @@ import org.eclipse.xtext.xtext.generator.util.GenModelUtil2
 import static extension org.eclipse.xtext.GrammarUtil.*
 import static extension org.eclipse.xtext.xtext.generator.model.TypeReference.*
 import static extension org.eclipse.xtext.xtext.generator.util.GrammarUtil2.*
+import org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2
 
-class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
+class DeclarativeFormatterFragment extends Formatter2Fragment2 {
 	
 	static val Logger LOG = Logger.getLogger(DeclarativeFormatterFragment)
 	
@@ -48,7 +49,7 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 	@Inject extension XtextGeneratorNaming
 	@Inject extension GrammarAccessExtensions
 
-	protected def TypeReference getFormatter2Stub(Grammar grammar) {
+	protected override TypeReference getFormatter2Stub(Grammar grammar) {
 		new TypeReference(grammar.runtimeBasePackage + '.formatting3.' + getSimpleName(grammar) + 'Formatter')
 	}
 	
@@ -71,12 +72,12 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 		doGenerateStubFile()
 	}
 
-	protected def doGenerateStubFile() {
+	protected override doGenerateStubFile() {
 		val xtendFile = doGetXtendStubFile
 		xtendFile?.writeTo(projectConfig.runtime.src)
 	}
 
-	protected def doGetXtendStubFile() {
+	protected override doGetXtendStubFile() {
 		if(!isGenerateStub)
 			return null
 			
@@ -110,7 +111,7 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 		null
 	}
 	
-	protected def StringConcatenationClient generateFormatMethod(EClass clazz, Collection<EReference> containmentRefs, boolean isOverriding) '''
+	protected override StringConcatenationClient generateFormatMethod(EClass clazz, Collection<EReference> containmentRefs, boolean isOverriding) '''
 		«IF isOverriding»override«ELSE»def«ENDIF» dispatch void format(«clazz» «clazz.toVarName», extension «IFormattableDocument» document) {
 			// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 			«FOR ref:containmentRefs»
@@ -125,7 +126,7 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 		}
 	'''
 
-	protected def void getLocallyAssignedContainmentReferences(Grammar grammar, Multimap<EClass, EReference> type2ref) {
+	protected override void getLocallyAssignedContainmentReferences(Grammar grammar, Multimap<EClass, EReference> type2ref) {
 		for (assignment : grammar.containedAssignments) {
 			val type = assignment.findCurrentType
 			if (type instanceof EClass) {
@@ -149,7 +150,7 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 		}
 	}
 	
-	protected def void getInheritedContainmentReferences(Grammar grammar, Multimap<EClass, EReference> type2ref,
+	protected override void getInheritedContainmentReferences(Grammar grammar, Multimap<EClass, EReference> type2ref,
 			Set<Grammar> visitedGrammars) {
 		visitedGrammars.add(grammar)
 		for (Grammar usedGrammar : grammar.usedGrammars) {
@@ -160,7 +161,7 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 		}
 	}
 
-	protected def TypeReference getStubSuperClass() {
+	protected override TypeReference getStubSuperClass() {
 		val superGrammar = language.grammar.nonTerminalsSuperGrammar
 		if (superGrammar !== null)
 			return superGrammar.formatter2Stub
@@ -168,7 +169,7 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 			return AbstractFormatter2.typeRef
 	}
 	
-	protected def String toVarName(ENamedElement element, String... reservedNames) {
+	protected override String toVarName(ENamedElement element, String... reservedNames) {
 		if (element instanceof EReference)
 			return element.EReferenceType.toVarName(reservedNames)
 		var name = element.name.toFirstLower
@@ -181,7 +182,7 @@ class DeclarativeFormatterFragment extends AbstractStubGeneratingFragment {
 		name
 	}
 	
-	protected def String getGetAccessor(EStructuralFeature feature) {
+	protected override String getGetAccessor(EStructuralFeature feature) {
 		GenModelUtil2.getGenFeature(feature, language.resourceSet).name
 	}
 	
