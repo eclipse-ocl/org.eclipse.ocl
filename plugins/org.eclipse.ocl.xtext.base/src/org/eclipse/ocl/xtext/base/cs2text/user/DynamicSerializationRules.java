@@ -62,7 +62,6 @@ public class DynamicSerializationRules
 		return true;
 	}
 
-
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			if ((targetRuleAnalysis == null) || ((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure().contains(serializationRule.getRuleAnalysis())) {

@@ -18,7 +18,10 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 
 /**
  * A CardinalityVariable represents the cardinality of a grammar term for which a constant value must be deduced prior
- * to serilaization of the term.
+ * to serialization of the term.
+ *
+ * A variable with unit multiplicity is not very variable, but is a covenient place holder in a StaticRuleMatch to
+ * maintain the mapping between the mode and parser ytypes for a serialization node.
  */
 public class CardinalityVariable implements Nameable
 {
@@ -30,7 +33,6 @@ public class CardinalityVariable implements Nameable
 		this.name = name;
 		this.ruleAnalyses = ruleAnalyses;
 		this.multiplicativeCardinality = multiplicativeCardinality;
-		assert !multiplicativeCardinality.isOne();
 	}
 
 	public boolean isOne() {

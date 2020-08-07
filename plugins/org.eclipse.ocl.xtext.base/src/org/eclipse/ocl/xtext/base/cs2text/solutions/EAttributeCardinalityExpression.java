@@ -103,7 +103,6 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 		Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
 			StringUtil.appendIndentation(s, depth);
-			s.append("- ");
 			cardinalityExpression.toString(s, depth);
 		}
 	}

@@ -20,8 +20,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 
-import com.google.common.collect.Lists;
-
 /**
  * A CardinalityExpression equates the sum of CardinalityVariable products to the number of elements in an eStructuralFeature slot.
  *
@@ -47,7 +45,13 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 
 	@Override
 	public void addMultiplicityProduct(@NonNull Iterable<@NonNull CardinalityVariable> variables) {
-		sumOfProducts.add(Lists.newArrayList(variables));
+		List<@NonNull CardinalityVariable> prunedList = new ArrayList<>();
+		for (@NonNull CardinalityVariable variable : variables) {
+			if (!variable.isOne()) {
+				prunedList.add(variable);
+			}
+		}
+		sumOfProducts.add(prunedList);
 	}
 
 	//

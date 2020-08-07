@@ -119,7 +119,6 @@ public class DynamicRuleMatch implements RuleMatch
 		for (@NonNull CardinalityVariable variable : variables) {
 			Integer value = variable2value.get(variable);
 			StringUtil.appendIndentation(s, depth);
-			s.append("- ");
 			s.append(variable.getName());
 			s.append(" = ");
 			s.append(value);

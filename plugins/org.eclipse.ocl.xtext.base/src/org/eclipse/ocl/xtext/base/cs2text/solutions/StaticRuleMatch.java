@@ -108,6 +108,7 @@ public class StaticRuleMatch implements RuleMatch
 	public void addSolution(@Nullable CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
 		CardinalitySolutionStep newStep;
 		if (cardinalityVariable != null) {
+			assert !cardinalityVariable.isOne();
 			boolean isAssigned = true;
 			for (@NonNull CardinalitySolutionStep step : steps) {
 				if (step.isAssignTo(cardinalityVariable)) {
@@ -234,7 +235,8 @@ public class StaticRuleMatch implements RuleMatch
 		CardinalityVariable cardinalityVariable = null;
 		if (!serializationNode.isRedundant()) {
 			MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-			if (!multiplicativeCardinality.isConstant()) {
+			boolean needsVariable = !multiplicativeCardinality.isOne() || (serializationNode instanceof AssignedSerializationNode);
+			if (needsVariable) {
 				String name = String.format("C%02d", variable2node.size());
 				assert name != null;
 				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalyses() : null;
@@ -306,9 +308,9 @@ public class StaticRuleMatch implements RuleMatch
 		//
 		//	Confirm that variables with a "1" solution were skipped.
 		//
-		for (@NonNull CardinalityVariable variable : variables) {
-			assert !variable.isOne();
-		}
+	//	for (@NonNull CardinalityVariable variable : variables) {
+	//		assert !variable.isOne();
+	//	}
 		int oldSize;
 		//
 		//	Eliminate expressions that involve no unresolved variables or which provide a linear solution for a single variable.
@@ -423,7 +425,7 @@ public class StaticRuleMatch implements RuleMatch
 		// XXX need to encode residue for run-time resolution
 		//
 		for (@NonNull CardinalityVariable variable : variables) {
-			if (basicGetSolution(variable) == null) {
+			if (!variable.isOne() && (basicGetSolution(variable) == null)) {
 				if (residualExpressions.isEmpty()) {
 					addSolution(variable, new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
 				}
@@ -684,7 +686,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			SerializationNode serializationNode = variable2node.get(variable);
 			assert serializationNode != null;
 			StringUtil.appendIndentation(s, depth);
-			s.append("- ");
 			s.append(variable);
 			s.append(": ");
 			serializationNode.toString(s, -1);
@@ -715,12 +716,14 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2solution.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityVariable variable : variables) {
-			SerializationNode serializationNode = variable2node.get(variable);
-			assert serializationNode != null;
-			StringUtil.appendIndentation(s, depth);
-			s.append(variable);
-			s.append(": ");
-			serializationNode.toString(s, -1);
+			if(!variable.isOne()) {
+				SerializationNode serializationNode = variable2node.get(variable);
+				assert serializationNode != null;
+				StringUtil.appendIndentation(s, depth);
+				s.append(variable);
+				s.append(": ");
+				serializationNode.toString(s, -1);
+			}
 		}
 		for (CardinalitySolutionStep step : steps) {
 			StringUtil.appendIndentation(s, depth);
