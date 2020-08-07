@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -271,8 +272,15 @@ public class StaticRuleMatch implements RuleMatch
 	}
 
 	public void analyzeSolution() {
-		for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
-			steps.add(new CardinalitySolutionStep.TypeCheck(eStructuralFeature));
+		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : feature2expression.entrySet()) {
+			EStructuralFeature eStructuralFeature = entry.getKey();
+			if (eStructuralFeature instanceof EReference) {
+				EReference eReference = (EReference)eStructuralFeature;
+				CardinalityExpression cardinalityExpression = entry.getValue();
+			//	cardinalityExpression.get
+				EClass eReferenceType = eReference.getEReferenceType();
+			//	steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eReferenceType));
+			}
 		}
 		//
 		//	Prepare to restructure the variables/expressions as solutions.
@@ -687,31 +695,37 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append(serializationRule.getName());
-		s.append(" : ");
-		serializationRule.toRuleString(s);
+	//	s.append(serializationRule.getName());
+	//	s.append(" : ");
+	//	serializationRule.toRuleString(s);
 		toString(s, 1);
 		return s.toString();
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
+		s.append(serializationRule.getName());
+		s.append(" : ");
+		serializationRule.toRuleString(s);
 		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
 		Collections.sort(expressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityExpression expression : expressions) {
 			StringUtil.appendIndentation(s, depth);
-			s.append("- ");
 			expression.toString(s, depth);
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2solution.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
-		for (CardinalitySolutionStep result : steps) {
+		for (@NonNull CardinalityVariable variable : variables) {
+			SerializationNode serializationNode = variable2node.get(variable);
+			assert serializationNode != null;
 			StringUtil.appendIndentation(s, depth);
-			s.append("- ");
-			result.toString(s, depth);
+			s.append(variable);
+			s.append(": ");
+			serializationNode.toString(s, -1);
 		}
-	//	for (@NonNull CardinalitySolutionResult result : results) {
-	//		StringUtil.appendIndentation(s, depth);
-	//		result.toString(s, 1);
-	//s	}
+		for (CardinalitySolutionStep step : steps) {
+			StringUtil.appendIndentation(s, depth);
+			step.toString(s, depth+1);
+			s.append(";");
+		}
 	}
 }

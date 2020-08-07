@@ -10,11 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.
@@ -91,45 +94,62 @@ public abstract class CardinalitySolutionStep
 	}
 
 	/**
-	 * A ValueCheck step re-computes the value of a variable on behalf of the invoking DynamicRuleMatch and requires it to be#
-	 * consistent with the previous computation.
+	 * A TypeCheck step checks that a slot value conforms to that required by the rule assignment on behalf of the invoking DynamicRuleMatch=.
 	 */
 	public static class TypeCheck extends CardinalitySolutionStep
 	{
-		protected final @NonNull EStructuralFeature eStructuralFeature;
+		protected final @NonNull EReference eReference;
+		protected final @NonNull EClass eClass;
 
-		public TypeCheck(@NonNull EStructuralFeature eStructuralFeature) {
-			this.eStructuralFeature = eStructuralFeature;
+		public TypeCheck(@NonNull EReference eReference, @NonNull EClass eClass) {
+			this.eReference = eReference;
+			this.eClass = eClass;
+			if ("ownedType".equals(eReference.getName())) {
+				getClass();			// XXX debugging
+			}
 		}
 
 		@Override
 		public boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch) {
-			UserSlotAnalysis slotAnalysis = dynamicRuleMatch.getSlotsAnalysis().getSlotAnalysis(eStructuralFeature);
-			return true;
-
-
-		/*	Integer newIntegerSolution = cardinalitySolution.basicGetIntegerSolution(dynamicRuleMatch);
-			if (newIntegerSolution == null) {
-				// throw new UnsupportedOperationException();
+			UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
+			EObject eObject = slotsAnalysis.getEObject();
+			if (!eReference.getEReferenceType().isInstance(eObject)) {
 				return false;
 			}
-			Integer integer = dynamicRuleMatch.getValue(cardinalityVariable);
-			return newIntegerSolution.equals(integer); */
+			Object slotContent = eObject.eGet(eReference);
+			if (eReference.isMany()) {
+				for (Object element : (List<?>)slotContent) {
+					if (!eClass.isInstance(element)) {
+						return false;
+					}
+				}
+				return true;
+			}
+			else if (slotContent != null) {
+				return eClass.isInstance(slotContent);
+			}
+			else {				// Null is never actually serialized,
+				return true;
+			}
 		}
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
 			s.append("check ");
-			s.append(eStructuralFeature.getEContainingClass().getEPackage().getName());
+			s.append(eReference.getEContainingClass().getEPackage().getName());
 			s.append("::");
-			s.append(eStructuralFeature.getEContainingClass().getName());
+			s.append(eReference.getEContainingClass().getName());
 			s.append(".");
-			s.append(eStructuralFeature.getName());
+			s.append(eReference.getName());
+			s.append(" : ");
+			s.append(eClass.getEPackage().getName());
+			s.append("::");
+			s.append(eClass.getName());
 		}
 	}
 
 	/**
-	 * A ValueCheck step re-computes the value of a variable on behalf of the invoking DynamicRuleMatch and requires it to be#
+	 * A ValueCheck step re-computes the value of a variable on behalf of the invoking DynamicRuleMatch and requires it to be
 	 * consistent with the previous computation.
 	 */
 	public static class ValueCheck extends CardinalitySolutionStep
