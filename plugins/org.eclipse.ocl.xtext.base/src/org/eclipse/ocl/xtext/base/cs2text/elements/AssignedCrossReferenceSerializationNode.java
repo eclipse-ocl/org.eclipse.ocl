@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.Collections;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -43,7 +45,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	@Override
 	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
-		throw new UnsupportedOperationException();
+		return Collections.singletonList(calledRuleAnalysis);
 	}
 
 	@Override

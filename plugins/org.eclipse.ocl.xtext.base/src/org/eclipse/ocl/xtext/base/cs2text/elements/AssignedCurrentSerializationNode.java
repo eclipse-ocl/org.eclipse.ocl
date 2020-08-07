@@ -29,7 +29,7 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 
 	@Override
 	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();		// Should have been flattened away
 	}
 
 	@Override

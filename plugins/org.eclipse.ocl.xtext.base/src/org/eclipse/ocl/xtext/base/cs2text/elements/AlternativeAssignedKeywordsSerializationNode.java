@@ -40,7 +40,9 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
+		if (multiplicativeCardinality == null) {
+			multiplicativeCardinality = this.multiplicativeCardinality;
+		}
 		return new AlternativeAssignedKeywordsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, keywords);
 	}
 
