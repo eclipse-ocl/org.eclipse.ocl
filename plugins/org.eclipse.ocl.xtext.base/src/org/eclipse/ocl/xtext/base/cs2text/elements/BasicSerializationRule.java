@@ -102,7 +102,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 			//
 			staticRuleMatch2.analyzeSerialization();
 			//
-			//	Analyze the cardinality expressions to find the solution for each cardinality variable.
+			//	Analyze the cardinality expressions to determine the steps that compute/validate each cardinality variable.
 			//
 			staticRuleMatch2.analyzeSolution();
 		}

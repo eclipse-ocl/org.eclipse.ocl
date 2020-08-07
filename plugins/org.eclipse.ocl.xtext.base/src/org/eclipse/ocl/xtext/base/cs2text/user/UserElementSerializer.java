@@ -98,7 +98,6 @@ public class UserElementSerializer
 
 	/**
 	 * Create and use a new serilaizer to to serialize element to the serializationBuilder.
-	 * @param ruleAnalysis
 	 */
 	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
 		modelAnalysis.serialize(serializationBuilder, element, targetRuleAnalysis);

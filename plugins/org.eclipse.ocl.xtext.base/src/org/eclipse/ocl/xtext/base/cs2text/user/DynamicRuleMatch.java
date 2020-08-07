@@ -51,28 +51,9 @@ public class DynamicRuleMatch implements RuleMatch
 	 * Analyze the actual slots to compute the value of each cardinality variable.
 	 */
 	public boolean analyze() {
-		for (@NonNull CardinalitySolutionResult result : staticRuleMatch.getResults()) {
-			CardinalityVariable cardinalityVariable = result.getCardinalityVariable();
-			CardinalitySolution solution = result.getCardinalitySolution();
-			Integer newIntegerSolution = solution.basicGetIntegerSolution(this);
-			if (newIntegerSolution == null) {
-				// throw new UnsupportedOperationException();
+		for (@NonNull CardinalitySolutionStep step : staticRuleMatch.getSteps()) {
+			if (!step.execute(this)) {
 				return false;
-			}
-			if (result.isAssigned()) {
-				assert cardinalityVariable != null;
-				variable2value.put(cardinalityVariable, newIntegerSolution);
-			}
-			else if (cardinalityVariable != null) {
-				Integer integer = variable2value.get(cardinalityVariable);
-				if (!newIntegerSolution.equals(integer)) {
-					return false;
-				}
-			}
-			else {
-				if (!newIntegerSolution.equals(0)) {
-					return false;
-				}
 			}
 		}
 		return true;
@@ -114,6 +95,14 @@ public class DynamicRuleMatch implements RuleMatch
 
 	public @NonNull UserSlotsAnalysis getSlotsAnalysis() {
 		return slotsAnalysis;
+	}
+
+	public @NonNull Integer getValue(@Nullable CardinalityVariable cardinalityVariable) {
+		return ClassUtil.nonNullState(variable2value.get(cardinalityVariable));
+	}
+
+	public void putValue(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer integerSolution) {
+		variable2value.put(cardinalityVariable, integerSolution);
 	}
 
 	@Override

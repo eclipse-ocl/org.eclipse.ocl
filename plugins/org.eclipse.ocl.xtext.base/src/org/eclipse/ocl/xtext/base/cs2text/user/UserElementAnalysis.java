@@ -136,7 +136,7 @@ public class UserElementAnalysis implements Nameable
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(getName());
-		s.append(" <=>");
+		s.append(" - ");
 		DynamicSerializationRules serializationRules2 = ClassUtil.maybeNull(serializationRules);
 		if (serializationRules2 != null) {
 			serializationRules2.toString(s, depth);

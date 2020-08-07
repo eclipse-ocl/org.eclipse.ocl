@@ -33,7 +33,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionResult;
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
@@ -95,7 +95,7 @@ public class StaticRuleMatch implements RuleMatch
 	 * The ordered sequence of assign/check instructions to evaluate at run-time to realize the computation of
 	 * each solution for its variable.
 	 */
-	private final @NonNull List<@NonNull CardinalitySolutionResult> results = new ArrayList<>();
+	private final @NonNull List<@NonNull CardinalitySolutionStep> steps = new ArrayList<>();
 
 	public StaticRuleMatch(@NonNull BasicSerializationRule serializationRule) {
 		this.serializationRule = serializationRule;
@@ -105,22 +105,27 @@ public class StaticRuleMatch implements RuleMatch
 	 * Accumulate an additional cardinalitySolution expression for a cardinalityVariable.
 	 */
 	public void addSolution(@Nullable CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
+		CardinalitySolutionStep newStep;
 		if (cardinalityVariable != null) {
 			boolean isAssigned = true;
-			for (@NonNull CardinalitySolutionResult result : results) {
-				if (result.getCardinalityVariable() == cardinalityVariable) {
+			for (@NonNull CardinalitySolutionStep step : steps) {
+				if (step.isAssignTo(cardinalityVariable)) {
 					isAssigned = false;
 					break;
 				}
 			}
-			results.add(new CardinalitySolutionResult(cardinalityVariable, cardinalitySolution, isAssigned));
 			if (isAssigned) {
+				newStep = new CardinalitySolutionStep.Assign(cardinalityVariable, cardinalitySolution);
 				variable2solution.put(cardinalityVariable, cardinalitySolution);
+			}
+			else {
+				newStep = new CardinalitySolutionStep.ValueCheck(cardinalityVariable, cardinalitySolution);
 			}
 		}
 		else {
-			results.add(new CardinalitySolutionResult(null, cardinalitySolution, false));
+			newStep = new CardinalitySolutionStep.Assert(cardinalitySolution);
 		}
+		steps.add(newStep);
 	}
 
 	/**
@@ -266,6 +271,9 @@ public class StaticRuleMatch implements RuleMatch
 	}
 
 	public void analyzeSolution() {
+		for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
+			steps.add(new CardinalitySolutionStep.TypeCheck(eStructuralFeature));
+		}
 		//
 		//	Prepare to restructure the variables/expressions as solutions.
 		//
@@ -570,10 +578,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return null;
 	}
 
-	public @NonNull Iterable<@NonNull CardinalitySolutionResult> getResults() {
-		return results;
-	}
-
 	@Override
 	public @NonNull BasicSerializationRule getSerializationRule() {
 		return serializationRule;
@@ -592,6 +596,10 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	@Override
 	public @Nullable Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		return null;
+	}
+
+	public @NonNull Iterable<@NonNull CardinalitySolutionStep> getSteps() {
+		return steps;
 	}
 
 	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
@@ -696,7 +704,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		}
 		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2solution.keySet());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
-		for (CardinalitySolutionResult result : results) {
+		for (CardinalitySolutionStep result : steps) {
 			StringUtil.appendIndentation(s, depth);
 			s.append("- ");
 			result.toString(s, depth);
