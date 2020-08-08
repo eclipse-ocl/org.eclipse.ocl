@@ -315,6 +315,17 @@ public interface IdiomsPackage extends EPackage
 	EReference getCustomSegment_Delegate();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getDelegateClass <em>Delegate Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Delegate Class</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getDelegateClass()
+	 * @see #getCustomSegment()
+	 * @generated
+	 */
+	EAttribute getCustomSegment_DelegateClass();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getString <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -346,15 +357,15 @@ public interface IdiomsPackage extends EPackage
 	EClass getIdiom();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getSubIdioms <em>Sub Idioms</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getOwnedSubIdioms <em>Owned Sub Idioms</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Sub Idioms</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getSubIdioms()
+	 * @return the meta object for the containment reference list '<em>Owned Sub Idioms</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getOwnedSubIdioms()
 	 * @see #getIdiom()
 	 * @generated
 	 */
-	EReference getIdiom_SubIdioms();
+	EReference getIdiom_OwnedSubIdioms();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel <em>Idiom Model</em>}'.
@@ -367,15 +378,37 @@ public interface IdiomsPackage extends EPackage
 	EClass getIdiomModel();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getIdioms <em>Idioms</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedIdioms <em>Owned Idioms</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Idioms</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getIdioms()
+	 * @return the meta object for the containment reference list '<em>Owned Idioms</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedIdioms()
 	 * @see #getIdiomModel()
 	 * @generated
 	 */
-	EReference getIdiomModel_Idioms();
+	EReference getIdiomModel_OwnedIdioms();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedLocators <em>Owned Locators</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Locators</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedLocators()
+	 * @see #getIdiomModel()
+	 * @generated
+	 */
+	EReference getIdiomModel_OwnedLocators();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedSegments <em>Owned Segments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Segments</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedSegments()
+	 * @see #getIdiomModel()
+	 * @generated
+	 */
+	EReference getIdiomModel_OwnedSegments();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Locator <em>Locator</em>}'.
@@ -493,10 +526,10 @@ public interface IdiomsPackage extends EPackage
 	EClass getSubIdiom();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getLocator <em>Locator</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getLocator <em>Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Locator</em>'.
+	 * @return the meta object for the reference '<em>Locator</em>'.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getLocator()
 	 * @see #getSubIdiom()
 	 * @generated
@@ -504,10 +537,10 @@ public interface IdiomsPackage extends EPackage
 	EReference getSubIdiom_Locator();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getSegments <em>Segments</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getSegments <em>Segments</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Segments</em>'.
+	 * @return the meta object for the reference list '<em>Segments</em>'.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getSegments()
 	 * @see #getSubIdiom()
 	 * @generated
@@ -673,6 +706,14 @@ public interface IdiomsPackage extends EPackage
 		EReference CUSTOM_SEGMENT__DELEGATE = eINSTANCE.getCustomSegment_Delegate();
 
 		/**
+		 * The meta object literal for the '<em><b>Delegate Class</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CUSTOM_SEGMENT__DELEGATE_CLASS = eINSTANCE.getCustomSegment_DelegateClass();
+
+		/**
 		 * The meta object literal for the '<em><b>String</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -701,12 +742,12 @@ public interface IdiomsPackage extends EPackage
 		EClass IDIOM = eINSTANCE.getIdiom();
 
 		/**
-		 * The meta object literal for the '<em><b>Sub Idioms</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Owned Sub Idioms</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference IDIOM__SUB_IDIOMS = eINSTANCE.getIdiom_SubIdioms();
+		EReference IDIOM__OWNED_SUB_IDIOMS = eINSTANCE.getIdiom_OwnedSubIdioms();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomModelImpl <em>Idiom Model</em>}' class.
@@ -719,12 +760,28 @@ public interface IdiomsPackage extends EPackage
 		EClass IDIOM_MODEL = eINSTANCE.getIdiomModel();
 
 		/**
-		 * The meta object literal for the '<em><b>Idioms</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Owned Idioms</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference IDIOM_MODEL__IDIOMS = eINSTANCE.getIdiomModel_Idioms();
+		EReference IDIOM_MODEL__OWNED_IDIOMS = eINSTANCE.getIdiomModel_OwnedIdioms();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Locators</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference IDIOM_MODEL__OWNED_LOCATORS = eINSTANCE.getIdiomModel_OwnedLocators();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Segments</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference IDIOM_MODEL__OWNED_SEGMENTS = eINSTANCE.getIdiomModel_OwnedSegments();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.LocatorImpl <em>Locator</em>}' class.
@@ -827,7 +884,7 @@ public interface IdiomsPackage extends EPackage
 		EClass SUB_IDIOM = eINSTANCE.getSubIdiom();
 
 		/**
-		 * The meta object literal for the '<em><b>Locator</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Locator</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -835,7 +892,7 @@ public interface IdiomsPackage extends EPackage
 		EReference SUB_IDIOM__LOCATOR = eINSTANCE.getSubIdiom_Locator();
 
 		/**
-		 * The meta object literal for the '<em><b>Segments</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Segments</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

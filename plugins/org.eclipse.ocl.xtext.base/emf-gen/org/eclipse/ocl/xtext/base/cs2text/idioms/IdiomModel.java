@@ -23,7 +23,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getIdioms <em>Idioms</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedIdioms <em>Owned Idioms</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedLocators <em>Owned Locators</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedSegments <em>Owned Segments</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel()
@@ -33,19 +35,51 @@ import org.eclipse.emf.ecore.EObject;
 public interface IdiomModel extends EObject
 {
 	/**
-	 * Returns the value of the '<em><b>Idioms</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Owned Idioms</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Idioms</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Owned Idioms</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Idioms</em>' containment reference list.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_Idioms()
+	 * @return the value of the '<em>Owned Idioms</em>' containment reference list.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_OwnedIdioms()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Idiom> getIdioms();
+	EList<Idiom> getOwnedIdioms();
+
+	/**
+	 * Returns the value of the '<em><b>Owned Locators</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.xtext.base.cs2text.idioms.Locator}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Locators</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Locators</em>' containment reference list.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_OwnedLocators()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Locator> getOwnedLocators();
+
+	/**
+	 * Returns the value of the '<em><b>Owned Segments</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owned Segments</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owned Segments</em>' containment reference list.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_OwnedSegments()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Segment> getOwnedSegments();
 
 } // IdiomModel

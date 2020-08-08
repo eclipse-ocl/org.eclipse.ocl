@@ -34,18 +34,21 @@
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//CustomSegment">
       <genFeatures createChild="false" ecoreFeature="ecore:EReference Idioms.ecore#//CustomSegment/delegate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/delegateClass"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/string"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
     <genClasses ecoreClass="Idioms.ecore#//Idiom">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//Idiom/subIdioms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//Idiom/ownedSubIdioms"/>
       <genOperations ecoreOperation="Idioms.ecore#//Idiom/firstMatch">
         <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationNode"/>
         <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationRule"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//IdiomModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/idioms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/ownedIdioms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/ownedLocators"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/ownedSegments"/>
     </genClasses>
     <genClasses image="false" ecoreClass="Idioms.ecore#//Locator">
       <genOperations ecoreOperation="Idioms.ecore#//Locator/matches">

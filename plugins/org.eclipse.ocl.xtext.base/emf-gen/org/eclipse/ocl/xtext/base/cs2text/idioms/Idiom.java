@@ -26,7 +26,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getSubIdioms <em>Sub Idioms</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getOwnedSubIdioms <em>Owned Sub Idioms</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiom()
@@ -36,20 +36,20 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 public interface Idiom extends EObject
 {
 	/**
-	 * Returns the value of the '<em><b>Sub Idioms</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Owned Sub Idioms</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Sub Idioms</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Owned Sub Idioms</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Sub Idioms</em>' containment reference list.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiom_SubIdioms()
+	 * @return the value of the '<em>Owned Sub Idioms</em>' containment reference list.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiom_OwnedSubIdioms()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<SubIdiom> getSubIdioms();
+	EList<SubIdiom> getOwnedSubIdioms();
 
 	/**
 	 * <!-- begin-user-doc -->

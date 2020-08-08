@@ -47,7 +47,7 @@ public class DeclarativeSerializer extends Serializer
 	//	System.out.println(s2);
 		modelAnalysis.serialize(serializationBuilder, obj, null);
 		System.out.println(modelAnalysis.diagnose());
-		String s3 = serializationBuilder.toRenderedString();
+		String s3 = serializationBuilder.toString();
 	//	System.out.println(s3);
 		writer.append(s3);
 		writer.flush();

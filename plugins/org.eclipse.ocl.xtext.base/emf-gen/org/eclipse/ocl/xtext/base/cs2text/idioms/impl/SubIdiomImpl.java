@@ -13,14 +13,12 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
@@ -57,7 +55,7 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 
 
 	/**
-	 * The cached value of the '{@link #getLocator() <em>Locator</em>}' containment reference.
+	 * The cached value of the '{@link #getLocator() <em>Locator</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getLocator()
@@ -67,7 +65,7 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	protected Locator locator;
 
 	/**
-	 * The cached value of the '{@link #getSegments() <em>Segments</em>}' containment reference list.
+	 * The cached value of the '{@link #getSegments() <em>Segments</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getSegments()
@@ -105,6 +103,16 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	@Override
 	public Locator getLocator()
 	{
+		if (locator != null && locator.eIsProxy())
+		{
+			InternalEObject oldLocator = (InternalEObject)locator;
+			locator = (Locator)eResolveProxy(oldLocator);
+			if (locator != oldLocator)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 0, oldLocator, locator));
+			}
+		}
 		return locator;
 	}
 
@@ -113,16 +121,9 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetLocator(Locator newLocator, NotificationChain msgs)
+	public Locator basicGetLocator()
 	{
-		Locator oldLocator = locator;
-		locator = newLocator;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 0, oldLocator, newLocator);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+		return locator;
 	}
 
 	/**
@@ -133,51 +134,32 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	@Override
 	public void setLocator(Locator newLocator)
 	{
-		if (newLocator != locator)
-		{
-			NotificationChain msgs = null;
-			if (locator != null)
-				msgs = ((InternalEObject)locator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (0), null, msgs);
-			if (newLocator != null)
-				msgs = ((InternalEObject)newLocator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (0), null, msgs);
-			msgs = basicSetLocator(newLocator, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 0, newLocator, newLocator));
+		Locator oldLocator = locator;
+		locator = newLocator;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldLocator, locator));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT FIXME workaround BUG 89325
 	 */
+	@SuppressWarnings("serial")
 	@Override
 	public EList<Segment> getSegments()
 	{
 		if (segments == null)
 		{
-			segments = new EObjectContainmentEList<Segment>(Segment.class, this, 1);
+			segments = new EObjectEList<Segment>(Segment.class, this, IdiomsPackage.Literals.SUB_IDIOM__SEGMENTS.getFeatureID())
+			{
+				@Override
+				protected boolean isUnique() {
+					return false;
+				}
+			};
 		}
 		return segments;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
-			case 0:
-				return basicSetLocator(null, msgs);
-			case 1:
-				return ((InternalEList<?>)getSegments()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -191,7 +173,8 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 		switch (featureID)
 		{
 			case 0:
-				return getLocator();
+				if (resolve) return getLocator();
+				return basicGetLocator();
 			case 1:
 				return getSegments();
 		}

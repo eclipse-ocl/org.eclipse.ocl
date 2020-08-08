@@ -34,6 +34,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getDelegate <em>Delegate</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getDelegateClass <em>Delegate Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getString <em>String</em>}</li>
  * </ul>
  *
@@ -48,7 +49,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CUSTOM_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 2;
+	public static final int CUSTOM_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 3;
 
 
 	/**
@@ -60,6 +61,17 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @ordered
 	 */
 	protected Segment delegate;
+
+	/**
+	 * The cached value of the '{@link #getDelegateClass() <em>Delegate Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDelegateClass()
+	 * @generated
+	 * @ordered
+	 */
+	protected Class<Segment> delegateClass;
+
 
 	/**
 	 * The default value of the '{@link #getString() <em>String</em>}' attribute.
@@ -153,6 +165,31 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
+	public Class<Segment> getDelegateClass()
+	{
+		return delegateClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setDelegateClass(Class<Segment> newDelegateClass)
+	{
+		Class<Segment> oldDelegateClass = delegateClass;
+		delegateClass = newDelegateClass;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldDelegateClass, delegateClass));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String getString()
 	{
 		return string;
@@ -169,7 +206,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		String oldString = string;
 		string = newString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldString, string));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldString, string));
 	}
 
 	/**
@@ -186,6 +223,8 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 				if (resolve) return getDelegate();
 				return basicGetDelegate();
 			case 1:
+				return getDelegateClass();
+			case 2:
 				return getString();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -206,6 +245,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 				setDelegate((Segment)newValue);
 				return;
 			case 1:
+				setDelegateClass((Class<Segment>)newValue);
+				return;
+			case 2:
 				setString((String)newValue);
 				return;
 		}
@@ -226,6 +268,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 				setDelegate((Segment)null);
 				return;
 			case 1:
+				setDelegateClass((Class<Segment>)null);
+				return;
+			case 2:
 				setString(STRING_EDEFAULT);
 				return;
 		}
@@ -245,6 +290,8 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 			case 0:
 				return delegate != null;
 			case 1:
+				return delegateClass != null;
+			case 2:
 				return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
 		}
 		return super.eIsSet(featureID);

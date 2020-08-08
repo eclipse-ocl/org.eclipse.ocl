@@ -19,7 +19,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
     <eStructuralFeatures xsi:type="ecore:EReference" name="delegate" lowerBound="1"
-        eType="#//Segment"/>
+        eType="#//Segment" transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delegateClass" lowerBound="1">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+        <eTypeArguments eClassifier="#//Segment"/>
+      </eGenericType>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -29,12 +34,16 @@
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subIdioms" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubIdioms" upperBound="-1"
         eType="#//SubIdiom" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IdiomModel">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="idioms" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIdioms" upperBound="-1"
         eType="#//Idiom" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedLocators" upperBound="-1"
+        eType="#//Locator" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSegments" upperBound="-1"
+        eType="#//Segment" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Locator" abstract="true">
     <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -74,10 +83,9 @@
       <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
       <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="locator" eType="#//Locator"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="segments" upperBound="-1"
-        eType="#//Segment" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locator" eType="#//Locator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="segments" unique="false"
+        upperBound="-1" eType="#//Segment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValueSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EDataType" name="BasicSerializationRule" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule"

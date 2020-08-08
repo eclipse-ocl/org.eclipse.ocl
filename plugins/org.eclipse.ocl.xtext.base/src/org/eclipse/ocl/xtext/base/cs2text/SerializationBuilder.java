@@ -16,6 +16,7 @@ import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 
 /**
  * SerializationBuilder builds the intermediate serialization as an interleaving of concrete strings and virtual
@@ -24,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * Finally the toRenderedString returns a simple string with the virtual characters converted to concrete equivalents where
  * appropriate.
  */
-public class SerializationBuilder
+public class SerializationBuilder implements ToDebugStringable
 {
 	public static final @NonNull String HALF_NEW_LINE = new String("«½\\n»");
 	public static final @NonNull String NEW_LINE = new String("«\\n»");
@@ -44,6 +45,8 @@ public class SerializationBuilder
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
 	private @NonNull Stack<@NonNull String> indents = new Stack<>();
 	private @Nullable List<@NonNull String> errors = null;
+	@SuppressWarnings("unused")		// Used to obtain a raw debug representation
+	private @NonNull ToDebugString toDebugSring = new ToDebugString(this);
 
 	public SerializationBuilder() {
 		this.newLineString = "\n";
@@ -87,7 +90,29 @@ public class SerializationBuilder
 		return errors != null;
 	}
 
-	public @NonNull String toRenderedString() {
+	public void throwErrors() {
+		List<@NonNull String> errors2 = errors;
+		if (errors2 != null) {
+			StringBuilder s = new StringBuilder();
+			for (@NonNull String error : errors2) {
+				if (s.length() > 0) {
+					s.append("\n");
+				}
+				s.append(error);
+			}
+			throw new IllegalStateException(s.toString());		// FIXME A more consistent exception
+		}
+	}
+
+	@Override
+	public void toDebugString(@NonNull StringBuilder s, int depth) {
+		for (@NonNull String string : strings) {
+			s.append(string);
+		}
+	}
+
+	@Override
+	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		int prevCh = FULL_NEW_LINE_PREVCH;
 		final int indexMax = strings.size();
@@ -212,28 +237,5 @@ public class SerializationBuilder
 	//		appendNewLine(s);
 	//	}
 		return String.valueOf(s);
-	}
-
-	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		for (@NonNull String string : strings) {
-			s.append(string);
-		}
-		return String.valueOf(s);
-	}
-
-	public void throwErrors() {
-		List<@NonNull String> errors2 = errors;
-		if (errors2 != null) {
-			StringBuilder s = new StringBuilder();
-			for (@NonNull String error : errors2) {
-				if (s.length() > 0) {
-					s.append("\n");
-				}
-				s.append(error);
-			}
-			throw new IllegalStateException(s.toString());		// FIXME A more consistent exception
-		}
 	}
 }

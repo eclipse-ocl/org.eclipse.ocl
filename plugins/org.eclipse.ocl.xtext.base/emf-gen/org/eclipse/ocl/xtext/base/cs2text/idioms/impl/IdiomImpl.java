@@ -37,7 +37,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl#getSubIdioms <em>Sub Idioms</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl#getOwnedSubIdioms <em>Owned Sub Idioms</em>}</li>
  * </ul>
  *
  * @generated
@@ -55,14 +55,14 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 
 
 	/**
-	 * The cached value of the '{@link #getSubIdioms() <em>Sub Idioms</em>}' containment reference list.
+	 * The cached value of the '{@link #getOwnedSubIdioms() <em>Owned Sub Idioms</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSubIdioms()
+	 * @see #getOwnedSubIdioms()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<SubIdiom> subIdioms;
+	protected EList<SubIdiom> ownedSubIdioms;
 
 
 	/**
@@ -92,13 +92,13 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 	 * @generated
 	 */
 	@Override
-	public EList<SubIdiom> getSubIdioms()
+	public EList<SubIdiom> getOwnedSubIdioms()
 	{
-		if (subIdioms == null)
+		if (ownedSubIdioms == null)
 		{
-			subIdioms = new EObjectContainmentEList<SubIdiom>(SubIdiom.class, this, 0);
+			ownedSubIdioms = new EObjectContainmentEList<SubIdiom>(SubIdiom.class, this, 0);
 		}
-		return subIdioms;
+		return ownedSubIdioms;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
-				return ((InternalEList<?>)getSubIdioms()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedSubIdioms()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -128,7 +128,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
-				return getSubIdioms();
+				return getOwnedSubIdioms();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -145,8 +145,8 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
-				getSubIdioms().clear();
-				getSubIdioms().addAll((Collection<? extends SubIdiom>)newValue);
+				getOwnedSubIdioms().clear();
+				getOwnedSubIdioms().addAll((Collection<? extends SubIdiom>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -163,7 +163,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
-				getSubIdioms().clear();
+				getOwnedSubIdioms().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -180,7 +180,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
-				return subIdioms != null && !subIdioms.isEmpty();
+				return ownedSubIdioms != null && !ownedSubIdioms.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -190,7 +190,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 	}
 
 	public @NonNull SubIdiom getSubidiom(int subIdiomIndex) {
-		return subIdioms.get(subIdiomIndex);
+		return ownedSubIdioms.get(subIdiomIndex);
 	}
 
 /*	public @NonNull SubIdiom @NonNull [] getSubIdioms() {
@@ -199,7 +199,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 
 	@Override
 	public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
-		if (!subIdioms.get(0).matches(serializationNode, serializationRule)) {
+		if (!ownedSubIdioms.get(0).matches(serializationNode, serializationRule)) {
 			return null;
 		}
 		IdiomMatch idiomMatch = createIdiomMatch(serializationNode);
@@ -212,7 +212,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		StringBuilder s = new StringBuilder();
 		s.append("{");
 		boolean isFirst = true;
-		for (@NonNull SubIdiom subIdiom: subIdioms) {
+		for (@NonNull SubIdiom subIdiom: ownedSubIdioms) {
 			if (!isFirst) {
 				s.append(",");
 			}

@@ -41,33 +41,33 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 public interface SubIdiom extends EObject
 {
 	/**
-	 * Returns the value of the '<em><b>Locator</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Locator</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Locator</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Locator</em>' containment reference.
+	 * @return the value of the '<em>Locator</em>' reference.
 	 * @see #setLocator(Locator)
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getSubIdiom_Locator()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	Locator getLocator();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getLocator <em>Locator</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getLocator <em>Locator</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Locator</em>' containment reference.
+	 * @param value the new value of the '<em>Locator</em>' reference.
 	 * @see #getLocator()
 	 * @generated
 	 */
 	void setLocator(Locator value);
 
 	/**
-	 * Returns the value of the '<em><b>Segments</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Segments</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -75,9 +75,9 @@ public interface SubIdiom extends EObject
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Segments</em>' containment reference list.
+	 * @return the value of the '<em>Segments</em>' reference list.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getSubIdiom_Segments()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	EList<Segment> getSegments();

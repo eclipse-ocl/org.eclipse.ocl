@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +38,9 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomModelImpl#getIdioms <em>Idioms</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomModelImpl#getOwnedIdioms <em>Owned Idioms</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomModelImpl#getOwnedLocators <em>Owned Locators</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomModelImpl#getOwnedSegments <em>Owned Segments</em>}</li>
  * </ul>
  *
  * @generated
@@ -50,18 +54,41 @@ public class IdiomModelImpl extends EObjectImpl implements IdiomModel
 	 * @generated
 	 * @ordered
 	 */
-	public static final int IDIOM_MODEL_FEATURE_COUNT = 1;
+	public static final int IDIOM_MODEL_FEATURE_COUNT = 3;
 
 
 	/**
-	 * The cached value of the '{@link #getIdioms() <em>Idioms</em>}' containment reference list.
+	 * The cached value of the '{@link #getOwnedIdioms() <em>Owned Idioms</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getIdioms()
+	 * @see #getOwnedIdioms()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Idiom> idioms;
+	protected EList<Idiom> ownedIdioms;
+
+
+	/**
+	 * The cached value of the '{@link #getOwnedLocators() <em>Owned Locators</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedLocators()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Locator> ownedLocators;
+
+
+	/**
+	 * The cached value of the '{@link #getOwnedSegments() <em>Owned Segments</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedSegments()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Segment> ownedSegments;
+
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -90,13 +117,43 @@ public class IdiomModelImpl extends EObjectImpl implements IdiomModel
 	 * @generated
 	 */
 	@Override
-	public EList<Idiom> getIdioms()
+	public EList<Idiom> getOwnedIdioms()
 	{
-		if (idioms == null)
+		if (ownedIdioms == null)
 		{
-			idioms = new EObjectContainmentEList<Idiom>(Idiom.class, this, 0);
+			ownedIdioms = new EObjectContainmentEList<Idiom>(Idiom.class, this, 0);
 		}
-		return idioms;
+		return ownedIdioms;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<Locator> getOwnedLocators()
+	{
+		if (ownedLocators == null)
+		{
+			ownedLocators = new EObjectContainmentEList<Locator>(Locator.class, this, 1);
+		}
+		return ownedLocators;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<Segment> getOwnedSegments()
+	{
+		if (ownedSegments == null)
+		{
+			ownedSegments = new EObjectContainmentEList<Segment>(Segment.class, this, 2);
+		}
+		return ownedSegments;
 	}
 
 	/**
@@ -110,7 +167,11 @@ public class IdiomModelImpl extends EObjectImpl implements IdiomModel
 		switch (featureID)
 		{
 			case 0:
-				return ((InternalEList<?>)getIdioms()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedIdioms()).basicRemove(otherEnd, msgs);
+			case 1:
+				return ((InternalEList<?>)getOwnedLocators()).basicRemove(otherEnd, msgs);
+			case 2:
+				return ((InternalEList<?>)getOwnedSegments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -126,7 +187,11 @@ public class IdiomModelImpl extends EObjectImpl implements IdiomModel
 		switch (featureID)
 		{
 			case 0:
-				return getIdioms();
+				return getOwnedIdioms();
+			case 1:
+				return getOwnedLocators();
+			case 2:
+				return getOwnedSegments();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -143,8 +208,16 @@ public class IdiomModelImpl extends EObjectImpl implements IdiomModel
 		switch (featureID)
 		{
 			case 0:
-				getIdioms().clear();
-				getIdioms().addAll((Collection<? extends Idiom>)newValue);
+				getOwnedIdioms().clear();
+				getOwnedIdioms().addAll((Collection<? extends Idiom>)newValue);
+				return;
+			case 1:
+				getOwnedLocators().clear();
+				getOwnedLocators().addAll((Collection<? extends Locator>)newValue);
+				return;
+			case 2:
+				getOwnedSegments().clear();
+				getOwnedSegments().addAll((Collection<? extends Segment>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -161,7 +234,13 @@ public class IdiomModelImpl extends EObjectImpl implements IdiomModel
 		switch (featureID)
 		{
 			case 0:
-				getIdioms().clear();
+				getOwnedIdioms().clear();
+				return;
+			case 1:
+				getOwnedLocators().clear();
+				return;
+			case 2:
+				getOwnedSegments().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -178,7 +257,11 @@ public class IdiomModelImpl extends EObjectImpl implements IdiomModel
 		switch (featureID)
 		{
 			case 0:
-				return idioms != null && !idioms.isEmpty();
+				return ownedIdioms != null && !ownedIdioms.isEmpty();
+			case 1:
+				return ownedLocators != null && !ownedLocators.isEmpty();
+			case 2:
+				return ownedSegments != null && !ownedSegments.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

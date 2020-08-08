@@ -21,6 +21,7 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getDelegate <em>Delegate</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getDelegateClass <em>Delegate Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getString <em>String</em>}</li>
  * </ul>
  *
@@ -41,7 +42,7 @@ public interface CustomSegment extends Segment
 	 * @return the value of the '<em>Delegate</em>' reference.
 	 * @see #setDelegate(Segment)
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCustomSegment_Delegate()
-	 * @model required="true"
+	 * @model required="true" transient="true"
 	 * @generated
 	 */
 	Segment getDelegate();
@@ -55,6 +56,32 @@ public interface CustomSegment extends Segment
 	 * @generated
 	 */
 	void setDelegate(Segment value);
+
+	/**
+	 * Returns the value of the '<em><b>Delegate Class</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Delegate Class</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Delegate Class</em>' attribute.
+	 * @see #setDelegateClass(Class)
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCustomSegment_DelegateClass()
+	 * @model required="true"
+	 * @generated
+	 */
+	Class<Segment> getDelegateClass();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getDelegateClass <em>Delegate Class</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Delegate Class</em>' attribute.
+	 * @see #getDelegateClass()
+	 * @generated
+	 */
+	void setDelegateClass(Class<Segment> value);
 
 	/**
 	 * Returns the value of the '<em><b>String</b></em>' attribute.
