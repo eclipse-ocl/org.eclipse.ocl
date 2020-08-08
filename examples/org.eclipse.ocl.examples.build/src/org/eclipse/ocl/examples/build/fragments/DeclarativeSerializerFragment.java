@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Willink Transformations and others.
+ * Copyright (c) 2020 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,11 @@ import org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2;
 
 import com.google.inject.Inject;
 
+/**
+ * The DeclarativeSerializerFragment collaborates with the DeclarativeFormatterFragment to replace the
+ * backtracking serializer and the Xtend-dependent formatting specifiation approach of the 'new infrastructure'
+ * by a largely statically determined serializer and declarative idiom-based formatter.
+ */
 @SuppressWarnings("all")
 public class DeclarativeSerializerFragment extends SerializerFragment2
 {

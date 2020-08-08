@@ -62,8 +62,6 @@ import org.eclipse.xtext.ui.editor.contentassist.IProposalConflictHelper;
 import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.AntlrProposalConflictHelper;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.DelegatingContentAssistContextFactory;
-import org.eclipse.xtext.ui.editor.formatting.IContentFormatterFactory;
-import org.eclipse.xtext.ui.editor.formatting2.ContentFormatterFactory;
 import org.eclipse.xtext.ui.editor.outline.IOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.IOutlineTreeStructureProvider;
 import org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer;
@@ -172,11 +170,6 @@ public abstract class AbstractMarkupUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public Class<? extends DocumentBasedDirtyResource> bindDocumentBasedDirtyResource() {
 		return PersistentDataAwareDirtyResource.class;
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
-	public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
-		return ContentFormatterFactory.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.ui.labeling.LabelProviderFragment2

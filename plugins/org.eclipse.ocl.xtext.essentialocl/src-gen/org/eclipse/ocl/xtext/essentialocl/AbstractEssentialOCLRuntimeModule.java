@@ -29,7 +29,6 @@ import org.eclipse.ocl.xtext.base.services.PivotResourceServiceProvider;
 import org.eclipse.ocl.xtext.base.utilities.CS2ASLinker;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
-import org.eclipse.ocl.xtext.essentialocl.formatting3.EssentialOCLFormatter;
 import org.eclipse.ocl.xtext.essentialocl.parser.antlr.EssentialOCLAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.essentialocl.parser.antlr.EssentialOCLParser;
 import org.eclipse.ocl.xtext.essentialocl.parser.antlr.internal.InternalEssentialOCLLexer;
@@ -40,9 +39,6 @@ import org.eclipse.ocl.xtext.essentialocl.validation.EssentialOCLValidator;
 import org.eclipse.xtext.Constants;
 import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.formatting2.FormatterPreferenceValuesProvider;
-import org.eclipse.xtext.formatting2.FormatterPreferences;
-import org.eclipse.xtext.formatting2.IFormatter2;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.linking.ILinkingDiagnosticMessageProvider;
 import org.eclipse.xtext.linking.ILinkingService;
@@ -57,7 +53,6 @@ import org.eclipse.xtext.parser.antlr.ITokenDefProvider;
 import org.eclipse.xtext.parser.antlr.Lexer;
 import org.eclipse.xtext.parser.antlr.LexerBindings;
 import org.eclipse.xtext.parser.antlr.LexerProvider;
-import org.eclipse.xtext.preferences.IPreferenceValuesProvider;
 import org.eclipse.xtext.resource.IContainer;
 import org.eclipse.xtext.resource.IFragmentProvider;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -202,16 +197,6 @@ public abstract class AbstractEssentialOCLRuntimeModule extends DefaultRuntimeMo
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public void configureIResourceDescriptionsPersisted(Binder binder) {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
-	public Class<? extends IFormatter2> bindIFormatter2() {
-		return EssentialOCLFormatter.class;
-	}
-
-	// contributed by org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment
-	public void configureFormatterPreferences(Binder binder) {
-		binder.bind(IPreferenceValuesProvider.class).annotatedWith(FormatterPreferences.class).to(FormatterPreferenceValuesProvider.class);
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment

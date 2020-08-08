@@ -95,12 +95,9 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			formatter = org.eclipse.ocl.examples.build.xtend.DeclarativeFormatterFragment {
-				generateStub = true
-				generateXtendStub = true
-			}
+			formatter = org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment {}
 			// *.xtextbin support on Xtext 2.3		
-			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}			
+			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}
 		}
 	}
 	component = org.eclipse.ocl.examples.build.xtend.GenerateGrammarXtend {

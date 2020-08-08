@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.IOException;
 import java.io.Writer;
 
@@ -31,26 +33,25 @@ public class DeclarativeSerializer extends Serializer
 	private @NonNull SerializationBuilder serializationBuilder;
 
 	@Override
-	protected void serialize(EObject rootEObject, Appendable appendable, SaveOptions options) throws IOException {
-		assert rootEObject != null;
-		assert appendable != null;
+	public void serialize(EObject obj, Writer writer, SaveOptions options) throws IOException {
+		checkNotNull(obj, "obj must not be null.");
+		checkNotNull(writer, "writer must not be null.");
+		checkNotNull(options, "options must not be null.");
 		GrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
 		grammarAnalysis.analyze();
 	//	String s1 = grammarAnalysis.toString();
 	//	System.out.println(s1);
 	//	System.out.println("\n");
-		modelAnalysis.analyze(rootEObject);
+		modelAnalysis.analyze(obj);
 	//	String s2 = modelAnalysis.toString();
 	//	System.out.println(s2);
-		modelAnalysis.serialize(serializationBuilder, rootEObject, null);
+		modelAnalysis.serialize(serializationBuilder, obj, null);
 		System.out.println(modelAnalysis.diagnose());
 		String s3 = serializationBuilder.toRenderedString();
 	//	System.out.println(s3);
-		appendable.append(s3);
+		writer.append(s3);
+		writer.flush();
 		if (serializationBuilder.hasErrors()) {
-			if (appendable instanceof Writer) {
-				((Writer)appendable).flush();
-			}
 			serializationBuilder.throwErrors();
 		}
 	}
