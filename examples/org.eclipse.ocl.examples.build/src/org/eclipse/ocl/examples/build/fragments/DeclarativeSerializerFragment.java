@@ -13,9 +13,7 @@ package org.eclipse.ocl.examples.build.fragments;
 import org.apache.log4j.Logger;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
 import org.eclipse.xtext.Grammar;
-import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming;
 import org.eclipse.xtext.xtext.generator.model.GuiceModuleAccess;
 import org.eclipse.xtext.xtext.generator.model.TypeReference;
@@ -29,8 +27,7 @@ public class DeclarativeSerializerFragment extends SerializerFragment2
 	private static final Logger LOG = Logger.getLogger(DeclarativeSerializerFragment.class);
 
 	@Inject
-	@Extension
-	private XtextGeneratorNaming _xtextGeneratorNaming;
+	private XtextGeneratorNaming xtextGeneratorNaming;
 
 	@Override
 	public void generate() {
@@ -74,11 +71,7 @@ public class DeclarativeSerializerFragment extends SerializerFragment2
 
 	@Override
 	protected String getGrammarConstraintsPath(final Grammar grammar) {
-		String _replace = this.getSerializerBasePackage(grammar).replace(".", "/");
-		String _plus = (_replace + "/");
-		String _simpleName = GrammarUtil.getSimpleName(grammar);
-		String _plus_1 = (_plus + _simpleName);
-		return (_plus_1 + "GrammarConstraints.txt");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -88,7 +81,7 @@ public class DeclarativeSerializerFragment extends SerializerFragment2
 
 	@Override
 	protected String getSerializerBasePackage(final Grammar grammar) {
-		String _runtimeBasePackage = this._xtextGeneratorNaming.getRuntimeBasePackage(grammar);
+		String _runtimeBasePackage = this.xtextGeneratorNaming.getRuntimeBasePackage(grammar);
 		return (_runtimeBasePackage + ".serializer");
 	}
 

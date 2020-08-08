@@ -81,9 +81,7 @@ Workflow {
 			name = "${essentialOCLprojectName}.EssentialOCL"
 			fileExtensions = "essentialocl"
 			generator = null
-			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment {
-				generateStub = false
-			}
+			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment {}
 			validator = {
 				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 				generateDeprecationValidation = false
