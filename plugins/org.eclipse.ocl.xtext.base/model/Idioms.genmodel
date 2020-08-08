@@ -4,18 +4,83 @@
     modelDirectory="/org.eclipse.ocl.xtext.base/emf-gen" editDirectory="/org.eclipse.ocl.xtext.base.edit/emf-gen"
     editorDirectory="/org.eclipse.ocl.xtext.base.editor/emf-gen" modelPluginID="org.eclipse.ocl.xtext.base"
     templateDirectory="/org.eclipse.ocl.examples.codegen/templates" redirection=""
-    forceOverwrite="true" modelName="BaseCS" nonNLSMarkers="true" codeFormatting="true"
+    forceOverwrite="true" modelName="Idioms" nonNLSMarkers="true" codeFormatting="true"
     testsDirectory="/org.eclipse.ocl.xtext.base.tests/emf-gen" booleanFlagsField=""
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    runtimeVersion="2.7" language=""
-    classNamePattern="" importOrganizing="true">
+    runtimeVersion="2.7" language="" classNamePattern="" importOrganizing="true">
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel">
     <details key="Use Delegates" value="false"/>
     <details key="Use Null Annotations" value="true"/>
     <details key="Generate Classifier ints" value="true"/>
   </genAnnotations>
   <foreignModel>Idioms.ecore</foreignModel>
-  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext" disposableProviderFactory="true"
+  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base" disposableProviderFactory="true"
       generateExampleClass="false" ecorePackage="Idioms.ecore#/" publicationLocation="">
+    <genDataTypes ecoreDataType="Idioms.ecore#//BasicSerializationRule"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//IdiomMatch"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationNode"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//UserElementSerializer"/>
+    <genClasses image="false" ecoreClass="Idioms.ecore#//AbstractCommentSegment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/epilogue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/indentation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/prologue"/>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//CustomSegment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/delegate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/string"/>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
+    <genClasses ecoreClass="Idioms.ecore#//Idiom">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//Idiom/subidioms"/>
+      <genOperations ecoreOperation="Idioms.ecore#//Idiom/firstMatch">
+        <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationRule"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//IdiomModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/idioms"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Idioms.ecore#//Locator">
+      <genOperations ecoreOperation="Idioms.ecore#//Locator/matches">
+        <genParameters ecoreParameter="Idioms.ecore#//Locator/matches/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//Locator/matches/serializationRule"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//KeywordLocator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//KeywordLocator/string"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//KeywordLocator/inEClass"/>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//ProducedEClassLocator">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//ProducedEClassLocator/eClass"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Idioms.ecore#//Segment">
+      <genOperations ecoreOperation="Idioms.ecore#//Segment/serialize">
+        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializer"/>
+        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializationBuilder"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//StringSegment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//StringSegment/printable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//StringSegment/string"/>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//SubIdiom">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//SubIdiom/locator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//SubIdiom/segments"/>
+      <genOperations ecoreOperation="Idioms.ecore#//SubIdiom/matches">
+        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/matches/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/matches/serializationRule"/>
+      </genOperations>
+      <genOperations ecoreOperation="Idioms.ecore#//SubIdiom/serialize">
+        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/serialize/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/serialize/serializer"/>
+        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/serialize/serializationBuilder"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//ValueSegment"/>
   </genPackages>
 </genmodel:GenModel>

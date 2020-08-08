@@ -4,15 +4,15 @@
   <eClassifiers xsi:type="ecore:EClass" name="AbstractCommentSegment" abstract="true"
       eSuperTypes="#//Segment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="epilogue" lowerBound="1"
-        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="indentation" lowerBound="1"
-        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prologue" lowerBound="1"
-        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AssignmentLocator" eSuperTypes="#//Locator">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delegate" lowerBound="1">
@@ -21,7 +21,7 @@
       </eGenericType>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
-        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DefaultLocator" eSuperTypes="#//Locator"/>
   <eClassifiers xsi:type="ecore:EClass" name="Idiom">
@@ -37,19 +37,19 @@
         eType="#//Idiom" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Locator" abstract="true">
-    <eOperations name="matches" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean">
+    <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordLocator" eSuperTypes="#//Locator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
-        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inEClass" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inEClass" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProducedEClassLocator" eSuperTypes="#//Locator">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Segment" abstract="true">
     <eOperations name="serialize">
@@ -60,13 +60,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringSegment" eSuperTypes="#//Segment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="printable" lowerBound="1"
-        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="true"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
-        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SubIdiom">
-    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean">
+    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
     </eOperations>
