@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="idioms" nsURI="http://www.eclipse.org/ocl/2020/Idioms" nsPrefix="idioms">
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractCommentSegment" abstract="true"
+      eSuperTypes="#//Segment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="epilogue" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="indentation" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="prologue" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssignmentLocator" eSuperTypes="#//Locator">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delegate" lowerBound="1">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+        <eTypeArguments eClassifier="#//Segment"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DefaultLocator" eSuperTypes="#//Locator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Idiom">
+    <eOperations name="firstMatch" lowerBound="1" eType="#//IdiomMatch">
+      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subidioms" upperBound="-1"
+        eType="#//SubIdiom" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IdiomModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="idioms" upperBound="-1"
+        eType="#//Idiom" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Locator" abstract="true">
+    <eOperations name="matches" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean">
+      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="KeywordLocator" eSuperTypes="#//Locator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inEClass" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProducedEClassLocator" eSuperTypes="#//Locator">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Segment" abstract="true">
+    <eOperations name="serialize">
+      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
+      <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringSegment" eSuperTypes="#//Segment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="printable" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
+        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubIdiom">
+    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean">
+      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
+    </eOperations>
+    <eOperations name="serialize">
+      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
+      <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locator" eType="#//Locator"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="segments" upperBound="-1"
+        eType="#//Segment" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueSegment" eSuperTypes="#//Segment"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="BasicSerializationRule" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="IdiomMatch" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="SerializationBuilder" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="SerializationNode" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="UserElementSerializer" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer"
+      serializable="false"/>
+</ecore:EPackage>

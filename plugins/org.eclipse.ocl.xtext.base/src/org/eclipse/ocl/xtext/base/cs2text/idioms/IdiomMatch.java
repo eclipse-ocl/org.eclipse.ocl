@@ -20,7 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 /**
  * An IdiomMatch is created after a first successful match of an idiom. It accumulates
- * subsequent matches for idoms with multiple subidioms.
+ * subsequent matches for idioms with multiple subidioms.
  *
  * An Idiom such as {...} may be nested or cascaded to support {..{..]..} or {..}..{..}
  */
