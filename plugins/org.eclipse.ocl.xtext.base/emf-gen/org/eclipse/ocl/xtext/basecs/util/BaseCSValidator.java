@@ -879,7 +879,7 @@ public class BaseCSValidator extends EObjectValidator
 		// Ensure that you remove @generated or mark it @generated NOT
 		return super.getResourceLocator();
 	}
-	
+
 	@Override
 	public boolean validate_EveryProxyResolves(EObject eObject, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {

@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
@@ -112,10 +113,10 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @NonNull SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
-			serializationNode2subIdiom = serializationNode2subIdiom2 = getSerializationNode2subIdioms(Idiom.IDIOMS);
+			serializationNode2subIdiom = serializationNode2subIdiom2 = getSerializationNode2subIdioms(IdiomsUtils.IDIOMS);
 		}
 		SubIdiom subIdiom = serializationNode2subIdiom2.get(serializationNode);
-		return subIdiom != null ? subIdiom : SubIdiom.VALUE;
+		return subIdiom != null ? subIdiom : IdiomsUtils.SUB_VALUE;
 	}
 
 	private @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms(@NonNull Idiom @NonNull [] idioms) {
@@ -125,7 +126,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		@Nullable IdiomMatch @NonNull [] idiomMatches = new @Nullable IdiomMatch[idioms.length];
 		getIdiomMatches(rootSerializationNode, idioms, idiomMatches);
 		//
-		//	Install the subdioms for each first full idom match.
+		//	Install the subdioms for each first full idiom match.
 		//
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = new HashMap<>();
 		for (@Nullable IdiomMatch idiomMatch : idiomMatches) {

@@ -3,6 +3,9 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="idioms" nsURI="http://www.eclipse.org/ocl/2020/Idioms" nsPrefix="idioms">
   <eClassifiers xsi:type="ecore:EClass" name="AbstractCommentSegment" abstract="true"
       eSuperTypes="#//Segment">
+    <eOperations name="getComment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="eObject" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="epilogue" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="indentation" lowerBound="1"
@@ -15,11 +18,8 @@
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delegate" lowerBound="1">
-      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
-        <eTypeArguments eClassifier="#//Segment"/>
-      </eGenericType>
-    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delegate" lowerBound="1"
+        eType="#//Segment"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -29,7 +29,7 @@
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subidioms" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subIdioms" upperBound="-1"
         eType="#//SubIdiom" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IdiomModel">

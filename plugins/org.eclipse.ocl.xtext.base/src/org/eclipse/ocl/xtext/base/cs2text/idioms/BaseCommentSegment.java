@@ -17,13 +17,16 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AbstractCommentSegmentImpl;
 
-public class BaseCommentSegment extends AbstractCommentSegment
+public class BaseCommentSegment extends AbstractCommentSegmentImpl
 {
 	private static final @NonNull String EMPTY_COMMENT = "£$%^&*";
 
 	public BaseCommentSegment() {
-		super("/**", " * ", " */");
+		setPrologue("/**");
+		setIndentation(" * ");
+		setEpilogue(" */");
 	}
 
 	@Override
@@ -39,7 +42,7 @@ public class BaseCommentSegment extends AbstractCommentSegment
 	}
 
 	@Override
-	protected @Nullable String getComment(@NonNull EObject eObject) {
+	public @Nullable String getComment(EObject eObject) {
 		if (eObject instanceof Pivotable) {
 			Element asElement = ((Pivotable)eObject).getPivot();
 			if (asElement != null) {

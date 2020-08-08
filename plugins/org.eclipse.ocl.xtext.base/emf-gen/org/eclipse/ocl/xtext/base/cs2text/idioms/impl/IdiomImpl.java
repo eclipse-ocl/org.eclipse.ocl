@@ -1,0 +1,256 @@
+/**
+ * Copyright (c) 2020 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - Initial API and implementation
+ */
+package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
+
+import java.util.Collection;
+import java.util.Map;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Idiom</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl#getSubIdioms <em>Sub Idioms</em>}</li>
+ * </ul>
+ *
+ * @generated
+ */
+public class IdiomImpl extends EObjectImpl implements Idiom
+{
+	/**
+	 * The number of structural features of the '<em>Idiom</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int IDIOM_FEATURE_COUNT = 1;
+
+
+	/**
+	 * The cached value of the '{@link #getSubIdioms() <em>Sub Idioms</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSubIdioms()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SubIdiom> subIdioms;
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IdiomImpl()
+	{
+		super();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass()
+	{
+		return IdiomsPackage.Literals.IDIOM;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<SubIdiom> getSubIdioms()
+	{
+		if (subIdioms == null)
+		{
+			subIdioms = new EObjectContainmentEList<SubIdiom>(SubIdiom.class, this, 0);
+		}
+		return subIdioms;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return ((InternalEList<?>)getSubIdioms()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return getSubIdioms();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue)
+	{
+		switch (featureID)
+		{
+			case 0:
+				getSubIdioms().clear();
+				getSubIdioms().addAll((Collection<? extends SubIdiom>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eUnset(int featureID)
+	{
+		switch (featureID)
+		{
+			case 0:
+				getSubIdioms().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean eIsSet(int featureID)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return subIdioms != null && !subIdioms.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
+
+	protected @NonNull IdiomMatch createIdiomMatch(@NonNull SerializationNode serializationNode) {
+		return new IdiomMatch(this, serializationNode);
+	}
+
+	public @NonNull SubIdiom getSubidiom(int subIdiomIndex) {
+		return subIdioms.get(subIdiomIndex);
+	}
+
+/*	public @NonNull SubIdiom @NonNull [] getSubIdioms() {
+		return subIdioms;
+	} */
+
+	@Override
+	public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+		if (!subIdioms.get(0).matches(serializationNode, serializationRule)) {
+			return null;
+		}
+		IdiomMatch idiomMatch = createIdiomMatch(serializationNode);
+	//	idiomMatch.nextMatch(serializationNode, serializationRule);		// Opportunity for X ... X formatting
+		return idiomMatch;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append("{");
+		boolean isFirst = true;
+		for (@NonNull SubIdiom subIdiom: subIdioms) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			s.append(subIdiom.toString());
+			isFirst = false;
+		}
+		s.append("}");
+		return s.toString();
+	}
+
+	public static class DebugIdiom extends IdiomImpl
+	{
+		@Override
+		protected @NonNull IdiomMatch createIdiomMatch(@NonNull SerializationNode serializationNode) {
+			return new IdiomMatch(this, serializationNode) {
+
+				@Override
+				public boolean installIn(@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom) {
+					return super.installIn(serializationNode2subIdiom);
+				}
+
+				@Override
+				public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+					return super.nextMatch(serializationNode, serializationRule);
+				}
+
+			};
+		}
+
+		@Override
+		public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+			IdiomMatch firstMatch = super.firstMatch(serializationNode, serializationRule);
+			if (firstMatch != null) {
+				getClass(); 		// XXX debugging
+			}
+			return firstMatch;
+		}
+
+	}
+
+} //IdiomImpl

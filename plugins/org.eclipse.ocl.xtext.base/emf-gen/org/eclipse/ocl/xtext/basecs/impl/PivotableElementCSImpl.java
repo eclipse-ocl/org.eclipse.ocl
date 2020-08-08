@@ -161,7 +161,7 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 		}
 		return super.eIsSet(featureID);
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

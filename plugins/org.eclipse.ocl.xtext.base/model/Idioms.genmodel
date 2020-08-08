@@ -14,7 +14,7 @@
     <details key="Generate Classifier ints" value="true"/>
   </genAnnotations>
   <foreignModel>Idioms.ecore</foreignModel>
-  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base" disposableProviderFactory="true"
+  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base.cs2text" disposableProviderFactory="true"
       generateExampleClass="false" ecorePackage="Idioms.ecore#/" publicationLocation="">
     <genDataTypes ecoreDataType="Idioms.ecore#//BasicSerializationRule"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//IdiomMatch"/>
@@ -25,17 +25,20 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/epilogue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/indentation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/prologue"/>
+      <genOperations ecoreOperation="Idioms.ecore#//AbstractCommentSegment/getComment">
+        <genParameters ecoreParameter="Idioms.ecore#//AbstractCommentSegment/getComment/eObject"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//CustomSegment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/delegate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference Idioms.ecore#//CustomSegment/delegate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/string"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
     <genClasses ecoreClass="Idioms.ecore#//Idiom">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//Idiom/subidioms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//Idiom/subIdioms"/>
       <genOperations ecoreOperation="Idioms.ecore#//Idiom/firstMatch">
         <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationNode"/>
         <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationRule"/>

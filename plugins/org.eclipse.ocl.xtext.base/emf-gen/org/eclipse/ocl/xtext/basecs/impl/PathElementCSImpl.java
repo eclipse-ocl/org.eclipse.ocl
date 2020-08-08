@@ -335,7 +335,7 @@ public class PathElementCSImpl extends ElementCSImpl implements PathElementCS
 		}
 		return super.eIsSet(featureID);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @generated

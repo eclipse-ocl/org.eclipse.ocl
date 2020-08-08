@@ -21,4 +21,12 @@
       	class="org.eclipse.ocl.xtext.base.utilities.NamedElementCSLabelGenerator"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Idioms -->
+      <package
+            uri="http://www.eclipse.org/ocl/2020/Idioms"
+            class="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage"
+            genModel="model/Idioms.genmodel"/>
+   </extension>
+
 </plugin>

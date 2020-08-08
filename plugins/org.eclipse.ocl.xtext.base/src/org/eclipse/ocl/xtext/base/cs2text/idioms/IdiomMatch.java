@@ -34,7 +34,7 @@ public class IdiomMatch
 
 	public IdiomMatch(@NonNull Idiom idiom, @NonNull SerializationNode serializationNode) {
 		this.idiom = idiom;
-		this.matchNodes = new @NonNull SerializationNode[idiom.getSubIdioms().length];
+		this.matchNodes = new @NonNull SerializationNode[idiom.getSubIdioms().size()];
 		matchNodes[subIdiomIndex++] = serializationNode;
 	}
 
@@ -59,7 +59,7 @@ public class IdiomMatch
 		if (isMatchedLocal()) {
 			for (int i = 0; i < matchNodes.length; i++) {
 				SerializationNode serializationNode = matchNodes[i];
-				serializationNode2subIdiom.put(serializationNode, idiom.getSubidiom(i));
+				serializationNode2subIdiom.put(serializationNode, idiom.getSubIdioms().get(i));
 			}
 		}
 		return true;
@@ -90,7 +90,7 @@ public class IdiomMatch
 			if (additionalMatch != null) {
 				additionalMatch.nextMatch(serializationNode, serializationRule);
 			}
-			else if (idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to chain a new sub-match
+			else if (idiom.getSubIdioms().get(0).matches(serializationNode, serializationRule)) {								// Look to chain a new sub-match
 				additionalMatch = new IdiomMatch(idiom, serializationNode);
 			}
 			return true;		// Handled by additional match
@@ -100,11 +100,11 @@ public class IdiomMatch
 				return true;
 			}
 		}
-		if (idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
+		if (idiom.getSubIdioms().get(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
 			nestedMatch = new IdiomMatch(idiom, serializationNode);
 			return true;
 		}
-		else if (idiom.getSubidiom(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
+		else if (idiom.getSubIdioms().get(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
 			matchNodes[subIdiomIndex++] = serializationNode;
 			return true;
 		}
