@@ -18,22 +18,19 @@
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="delegate" lowerBound="1"
-        eType="#//Segment" transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delegateClass" lowerBound="1">
-      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
-        <eTypeArguments eClassifier="#//Segment"/>
-      </eGenericType>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delegate" eType="#//Segment"
+        transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delegateClass" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DefaultLocator" eSuperTypes="#//Locator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="HalfNewLineSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="Idiom">
     <eOperations name="firstMatch" lowerBound="1" eType="#//IdiomMatch">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
     </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubIdioms" upperBound="-1"
         eType="#//SubIdiom" containment="true"/>
   </eClassifiers>
@@ -50,23 +47,31 @@
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
     </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordLocator" eSuperTypes="#//Locator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inEClass" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NewLineSegment" eSuperTypes="#//Segment"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NoSpaceSegment" eSuperTypes="#//Segment"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PopSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="ProducedEClassLocator" eSuperTypes="#//Locator">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PushSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="Segment" abstract="true">
     <eOperations name="serialize">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
       <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
     </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SoftNewLineSegment" eSuperTypes="#//Segment"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SoftSpaceSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="StringSegment" eSuperTypes="#//Segment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="printable" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
@@ -84,6 +89,7 @@
       <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="locator" eType="#//Locator"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="segments" unique="false"
         upperBound="-1" eType="#//Segment"/>
   </eClassifiers>

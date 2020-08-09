@@ -105,6 +105,11 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 				return createDefaultLocatorAdapter();
 			}
 			@Override
+			public Adapter caseHalfNewLineSegment(HalfNewLineSegment object)
+			{
+				return createHalfNewLineSegmentAdapter();
+			}
+			@Override
 			public Adapter caseIdiom(Idiom object)
 			{
 				return createIdiomAdapter();
@@ -125,14 +130,44 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 				return createKeywordLocatorAdapter();
 			}
 			@Override
+			public Adapter caseNewLineSegment(NewLineSegment object)
+			{
+				return createNewLineSegmentAdapter();
+			}
+			@Override
+			public Adapter caseNoSpaceSegment(NoSpaceSegment object)
+			{
+				return createNoSpaceSegmentAdapter();
+			}
+			@Override
+			public Adapter casePopSegment(PopSegment object)
+			{
+				return createPopSegmentAdapter();
+			}
+			@Override
 			public Adapter caseProducedEClassLocator(ProducedEClassLocator object)
 			{
 				return createProducedEClassLocatorAdapter();
 			}
 			@Override
+			public Adapter casePushSegment(PushSegment object)
+			{
+				return createPushSegmentAdapter();
+			}
+			@Override
 			public Adapter caseSegment(Segment object)
 			{
 				return createSegmentAdapter();
+			}
+			@Override
+			public Adapter caseSoftNewLineSegment(SoftNewLineSegment object)
+			{
+				return createSoftNewLineSegmentAdapter();
+			}
+			@Override
+			public Adapter caseSoftSpaceSegment(SoftSpaceSegment object)
+			{
+				return createSoftSpaceSegmentAdapter();
 			}
 			@Override
 			public Adapter caseStringSegment(StringSegment object)
@@ -232,6 +267,21 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment <em>Half New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
+	 * @generated
+	 */
+	public Adapter createHalfNewLineSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom <em>Idiom</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -292,6 +342,51 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment <em>New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment
+	 * @generated
+	 */
+	public Adapter createNewLineSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment <em>No Space Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment
+	 * @generated
+	 */
+	public Adapter createNoSpaceSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment <em>Pop Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment
+	 * @generated
+	 */
+	public Adapter createPopSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator <em>Produced EClass Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -307,6 +402,21 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment <em>Push Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment
+	 * @generated
+	 */
+	public Adapter createPushSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment <em>Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -317,6 +427,36 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	public Adapter createSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment <em>Soft New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment
+	 * @generated
+	 */
+	public Adapter createSoftNewLineSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment <em>Soft Space Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment
+	 * @generated
+	 */
+	public Adapter createSoftSpaceSegmentAdapter()
 	{
 		return null;
 	}

@@ -87,13 +87,20 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 			case 1: return createAssignmentLocator();
 			case 2: return createCustomSegment();
 			case 3: return createDefaultLocator();
-			case 4: return createIdiom();
-			case 5: return createIdiomModel();
-			case 7: return createKeywordLocator();
-			case 8: return createProducedEClassLocator();
-			case 10: return createStringSegment();
-			case 11: return createSubIdiom();
-			case 12: return createValueSegment();
+			case 4: return createHalfNewLineSegment();
+			case 5: return createIdiom();
+			case 6: return createIdiomModel();
+			case 8: return createKeywordLocator();
+			case 9: return createNewLineSegment();
+			case 10: return createNoSpaceSegment();
+			case 11: return createPopSegment();
+			case 12: return createProducedEClassLocator();
+			case 13: return createPushSegment();
+			case 15: return createSoftNewLineSegment();
+			case 16: return createSoftSpaceSegment();
+			case 17: return createStringSegment();
+			case 18: return createSubIdiom();
+			case 19: return createValueSegment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -109,7 +116,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 16:
+			case 23:
 				return createSerializationNodeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -126,7 +133,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 16:
+			case 23:
 				return convertSerializationNodeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -175,6 +182,18 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
+	public HalfNewLineSegment createHalfNewLineSegment()
+	{
+		HalfNewLineSegmentImpl halfNewLineSegment = new HalfNewLineSegmentImpl();
+		return halfNewLineSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Idiom createIdiom()
 	{
 		IdiomImpl idiom = new IdiomImpl();
@@ -211,10 +230,82 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
+	public NewLineSegment createNewLineSegment()
+	{
+		NewLineSegmentImpl newLineSegment = new NewLineSegmentImpl();
+		return newLineSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NoSpaceSegment createNoSpaceSegment()
+	{
+		NoSpaceSegmentImpl noSpaceSegment = new NoSpaceSegmentImpl();
+		return noSpaceSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public PopSegment createPopSegment()
+	{
+		PopSegmentImpl popSegment = new PopSegmentImpl();
+		return popSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public ProducedEClassLocator createProducedEClassLocator()
 	{
 		ProducedEClassLocatorImpl producedEClassLocator = new ProducedEClassLocatorImpl();
 		return producedEClassLocator;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public PushSegment createPushSegment()
+	{
+		PushSegmentImpl pushSegment = new PushSegmentImpl();
+		return pushSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public SoftNewLineSegment createSoftNewLineSegment()
+	{
+		SoftNewLineSegmentImpl softNewLineSegment = new SoftNewLineSegmentImpl();
+		return softNewLineSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public SoftSpaceSegment createSoftSpaceSegment()
+	{
+		SoftSpaceSegmentImpl softSpaceSegment = new SoftSpaceSegmentImpl();
+		return softSpaceSegment;
 	}
 
 	/**

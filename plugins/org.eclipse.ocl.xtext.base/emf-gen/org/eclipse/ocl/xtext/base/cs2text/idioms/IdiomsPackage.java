@@ -73,7 +73,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSegment()
 	 * @generated
 	 */
-	int SEGMENT = 9;
+	int SEGMENT = 14;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AbstractCommentSegmentImpl <em>Abstract Comment Segment</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -91,7 +91,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getLocator()
 	 * @generated
 	 */
-	int LOCATOR = 6;
+	int LOCATOR = 7;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AssignmentLocatorImpl <em>Assignment Locator</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -127,7 +127,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getIdiom()
 	 * @generated
 	 */
-	int IDIOM = 4;
+	int IDIOM = 5;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomModelImpl <em>Idiom Model</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -136,7 +136,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getIdiomModel()
 	 * @generated
 	 */
-	int IDIOM_MODEL = 5;
+	int IDIOM_MODEL = 6;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.KeywordLocatorImpl <em>Keyword Locator</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -145,7 +145,37 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getKeywordLocator()
 	 * @generated
 	 */
-	int KEYWORD_LOCATOR = 7;
+	int KEYWORD_LOCATOR = 8;
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NewLineSegmentImpl <em>New Line Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NewLineSegmentImpl
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getNewLineSegment()
+	 * @generated
+	 */
+	int NEW_LINE_SEGMENT = 9;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NoSpaceSegmentImpl <em>No Space Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NoSpaceSegmentImpl
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getNoSpaceSegment()
+	 * @generated
+	 */
+	int NO_SPACE_SEGMENT = 10;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PopSegmentImpl <em>Pop Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PopSegmentImpl
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getPopSegment()
+	 * @generated
+	 */
+	int POP_SEGMENT = 11;
+
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.ProducedEClassLocatorImpl <em>Produced EClass Locator</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -154,7 +184,37 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getProducedEClassLocator()
 	 * @generated
 	 */
-	int PRODUCED_ECLASS_LOCATOR = 8;
+	int PRODUCED_ECLASS_LOCATOR = 12;
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PushSegmentImpl <em>Push Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PushSegmentImpl
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getPushSegment()
+	 * @generated
+	 */
+	int PUSH_SEGMENT = 13;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftNewLineSegmentImpl <em>Soft New Line Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftNewLineSegmentImpl
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSoftNewLineSegment()
+	 * @generated
+	 */
+	int SOFT_NEW_LINE_SEGMENT = 15;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftSpaceSegmentImpl <em>Soft Space Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftSpaceSegmentImpl
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSoftSpaceSegment()
+	 * @generated
+	 */
+	int SOFT_SPACE_SEGMENT = 16;
+
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.StringSegmentImpl <em>String Segment</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -163,7 +223,17 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getStringSegment()
 	 * @generated
 	 */
-	int STRING_SEGMENT = 10;
+	int STRING_SEGMENT = 17;
+	/**
+	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.HalfNewLineSegmentImpl <em>Half New Line Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.HalfNewLineSegmentImpl
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getHalfNewLineSegment()
+	 * @generated
+	 */
+	int HALF_NEW_LINE_SEGMENT = 4;
+
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SubIdiomImpl <em>Sub Idiom</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -172,7 +242,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSubIdiom()
 	 * @generated
 	 */
-	int SUB_IDIOM = 11;
+	int SUB_IDIOM = 18;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.ValueSegmentImpl <em>Value Segment</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -181,7 +251,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getValueSegment()
 	 * @generated
 	 */
-	int VALUE_SEGMENT = 12;
+	int VALUE_SEGMENT = 19;
 	/**
 	 * The meta object id for the '<em>Basic Serialization Rule</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -190,7 +260,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getBasicSerializationRule()
 	 * @generated
 	 */
-	int BASIC_SERIALIZATION_RULE = 13;
+	int BASIC_SERIALIZATION_RULE = 20;
 	/**
 	 * The meta object id for the '<em>Idiom Match</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -199,7 +269,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getIdiomMatch()
 	 * @generated
 	 */
-	int IDIOM_MATCH = 14;
+	int IDIOM_MATCH = 21;
 	/**
 	 * The meta object id for the '<em>Serialization Builder</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -208,7 +278,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationBuilder()
 	 * @generated
 	 */
-	int SERIALIZATION_BUILDER = 15;
+	int SERIALIZATION_BUILDER = 22;
 	/**
 	 * The meta object id for the '<em>Serialization Node</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -217,7 +287,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationNode()
 	 * @generated
 	 */
-	int SERIALIZATION_NODE = 16;
+	int SERIALIZATION_NODE = 23;
 	/**
 	 * The meta object id for the '<em>User Element Serializer</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -226,7 +296,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getUserElementSerializer()
 	 * @generated
 	 */
-	int USER_ELEMENT_SERIALIZER = 17;
+	int USER_ELEMENT_SERIALIZER = 24;
 
 
 	/**
@@ -326,17 +396,6 @@ public interface IdiomsPackage extends EPackage
 	EAttribute getCustomSegment_DelegateClass();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getString <em>String</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>String</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getString()
-	 * @see #getCustomSegment()
-	 * @generated
-	 */
-	EAttribute getCustomSegment_String();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator <em>Default Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -347,6 +406,16 @@ public interface IdiomsPackage extends EPackage
 	EClass getDefaultLocator();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment <em>Half New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Half New Line Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
+	 * @generated
+	 */
+	EClass getHalfNewLineSegment();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom <em>Idiom</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -355,6 +424,17 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EClass getIdiom();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getName()
+	 * @see #getIdiom()
+	 * @generated
+	 */
+	EAttribute getIdiom_Name();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom#getOwnedSubIdioms <em>Owned Sub Idioms</em>}'.
@@ -421,6 +501,17 @@ public interface IdiomsPackage extends EPackage
 	EClass getLocator();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Locator#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Locator#getName()
+	 * @see #getLocator()
+	 * @generated
+	 */
+	EAttribute getLocator_Name();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator <em>Keyword Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -453,6 +544,36 @@ public interface IdiomsPackage extends EPackage
 	EReference getKeywordLocator_InEClass();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment <em>New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>New Line Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment
+	 * @generated
+	 */
+	EClass getNewLineSegment();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment <em>No Space Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>No Space Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment
+	 * @generated
+	 */
+	EClass getNoSpaceSegment();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment <em>Pop Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Pop Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment
+	 * @generated
+	 */
+	EClass getPopSegment();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator <em>Produced EClass Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -474,6 +595,16 @@ public interface IdiomsPackage extends EPackage
 	EReference getProducedEClassLocator_EClass();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment <em>Push Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Push Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment
+	 * @generated
+	 */
+	EClass getPushSegment();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment <em>Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -482,6 +613,37 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EClass getSegment();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Segment#getName()
+	 * @see #getSegment()
+	 * @generated
+	 */
+	EAttribute getSegment_Name();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment <em>Soft New Line Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Soft New Line Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment
+	 * @generated
+	 */
+	EClass getSoftNewLineSegment();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment <em>Soft Space Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Soft Space Segment</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment
+	 * @generated
+	 */
+	EClass getSoftSpaceSegment();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment <em>String Segment</em>}'.
@@ -535,6 +697,17 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EReference getSubIdiom_Locator();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getName()
+	 * @see #getSubIdiom()
+	 * @generated
+	 */
+	EAttribute getSubIdiom_Name();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom#getSegments <em>Segments</em>}'.
@@ -714,14 +887,6 @@ public interface IdiomsPackage extends EPackage
 		EAttribute CUSTOM_SEGMENT__DELEGATE_CLASS = eINSTANCE.getCustomSegment_DelegateClass();
 
 		/**
-		 * The meta object literal for the '<em><b>String</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CUSTOM_SEGMENT__STRING = eINSTANCE.getCustomSegment_String();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.DefaultLocatorImpl <em>Default Locator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -732,6 +897,16 @@ public interface IdiomsPackage extends EPackage
 		EClass DEFAULT_LOCATOR = eINSTANCE.getDefaultLocator();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.HalfNewLineSegmentImpl <em>Half New Line Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.HalfNewLineSegmentImpl
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getHalfNewLineSegment()
+		 * @generated
+		 */
+		EClass HALF_NEW_LINE_SEGMENT = eINSTANCE.getHalfNewLineSegment();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl <em>Idiom</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -740,6 +915,14 @@ public interface IdiomsPackage extends EPackage
 		 * @generated
 		 */
 		EClass IDIOM = eINSTANCE.getIdiom();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IDIOM__NAME = eINSTANCE.getIdiom_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Sub Idioms</b></em>' containment reference list feature.
@@ -794,6 +977,14 @@ public interface IdiomsPackage extends EPackage
 		EClass LOCATOR = eINSTANCE.getLocator();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LOCATOR__NAME = eINSTANCE.getLocator_Name();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.KeywordLocatorImpl <em>Keyword Locator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -820,6 +1011,36 @@ public interface IdiomsPackage extends EPackage
 		EReference KEYWORD_LOCATOR__IN_ECLASS = eINSTANCE.getKeywordLocator_InEClass();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NewLineSegmentImpl <em>New Line Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NewLineSegmentImpl
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getNewLineSegment()
+		 * @generated
+		 */
+		EClass NEW_LINE_SEGMENT = eINSTANCE.getNewLineSegment();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NoSpaceSegmentImpl <em>No Space Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NoSpaceSegmentImpl
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getNoSpaceSegment()
+		 * @generated
+		 */
+		EClass NO_SPACE_SEGMENT = eINSTANCE.getNoSpaceSegment();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PopSegmentImpl <em>Pop Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PopSegmentImpl
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getPopSegment()
+		 * @generated
+		 */
+		EClass POP_SEGMENT = eINSTANCE.getPopSegment();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.ProducedEClassLocatorImpl <em>Produced EClass Locator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -838,6 +1059,16 @@ public interface IdiomsPackage extends EPackage
 		EReference PRODUCED_ECLASS_LOCATOR__ECLASS = eINSTANCE.getProducedEClassLocator_EClass();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PushSegmentImpl <em>Push Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PushSegmentImpl
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getPushSegment()
+		 * @generated
+		 */
+		EClass PUSH_SEGMENT = eINSTANCE.getPushSegment();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SegmentImpl <em>Segment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -846,6 +1077,34 @@ public interface IdiomsPackage extends EPackage
 		 * @generated
 		 */
 		EClass SEGMENT = eINSTANCE.getSegment();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SEGMENT__NAME = eINSTANCE.getSegment_Name();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftNewLineSegmentImpl <em>Soft New Line Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftNewLineSegmentImpl
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSoftNewLineSegment()
+		 * @generated
+		 */
+		EClass SOFT_NEW_LINE_SEGMENT = eINSTANCE.getSoftNewLineSegment();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftSpaceSegmentImpl <em>Soft Space Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftSpaceSegmentImpl
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSoftSpaceSegment()
+		 * @generated
+		 */
+		EClass SOFT_SPACE_SEGMENT = eINSTANCE.getSoftSpaceSegment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.StringSegmentImpl <em>String Segment</em>}' class.
@@ -890,6 +1149,14 @@ public interface IdiomsPackage extends EPackage
 		 * @generated
 		 */
 		EReference SUB_IDIOM__LOCATOR = eINSTANCE.getSubIdiom_Locator();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SUB_IDIOM__NAME = eINSTANCE.getSubIdiom_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Segments</b></em>' reference list feature.

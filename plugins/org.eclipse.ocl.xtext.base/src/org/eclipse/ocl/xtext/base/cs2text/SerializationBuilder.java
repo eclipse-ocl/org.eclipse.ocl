@@ -30,7 +30,7 @@ public class SerializationBuilder implements ToDebugStringable
 	public static final @NonNull String HALF_NEW_LINE = new String("«½\\n»");
 	public static final @NonNull String NEW_LINE = new String("«\\n»");
 	public static final @NonNull String NO_SPACE = new String("«! »");
-	public static final @NonNull String SOFT_NEW_LINE = new String("«?\\n »");
+	public static final @NonNull String SOFT_NEW_LINE = new String("«?\\n»");
 	public static final @NonNull String SOFT_SPACE = new String("«? »");
 	public static final @NonNull String PUSH = new String("«+»");
 	public static final @NonNull String PUSH_NEXT = new String("«+?»");
@@ -58,8 +58,10 @@ public class SerializationBuilder implements ToDebugStringable
 		this.indentString = indentString;
 	}
 
-	public void append(@NonNull String string) {
-		strings.add(string);
+	public void append(@Nullable String string) {
+		if (string != null) {
+			strings.add(string);
+		}
 	}
 
 	public void appendError(@NonNull String string) {
@@ -108,6 +110,9 @@ public class SerializationBuilder implements ToDebugStringable
 	public void toDebugString(@NonNull StringBuilder s, int depth) {
 		for (@NonNull String string : strings) {
 			s.append(string);
+			if ((string == NEW_LINE) || (string == HALF_NEW_LINE) || (string == SOFT_NEW_LINE)) {
+				s.append("\n");
+			}
 		}
 	}
 

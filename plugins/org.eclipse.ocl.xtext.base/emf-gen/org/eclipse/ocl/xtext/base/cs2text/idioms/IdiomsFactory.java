@@ -58,6 +58,15 @@ public interface IdiomsFactory extends EFactory
 	DefaultLocator createDefaultLocator();
 
 	/**
+	 * Returns a new object of class '<em>Half New Line Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Half New Line Segment</em>'.
+	 * @generated
+	 */
+	HalfNewLineSegment createHalfNewLineSegment();
+
+	/**
 	 * Returns a new object of class '<em>Idiom</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -85,6 +94,33 @@ public interface IdiomsFactory extends EFactory
 	KeywordLocator createKeywordLocator();
 
 	/**
+	 * Returns a new object of class '<em>New Line Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>New Line Segment</em>'.
+	 * @generated
+	 */
+	NewLineSegment createNewLineSegment();
+
+	/**
+	 * Returns a new object of class '<em>No Space Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>No Space Segment</em>'.
+	 * @generated
+	 */
+	NoSpaceSegment createNoSpaceSegment();
+
+	/**
+	 * Returns a new object of class '<em>Pop Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Pop Segment</em>'.
+	 * @generated
+	 */
+	PopSegment createPopSegment();
+
+	/**
 	 * Returns a new object of class '<em>Produced EClass Locator</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,6 +128,33 @@ public interface IdiomsFactory extends EFactory
 	 * @generated
 	 */
 	ProducedEClassLocator createProducedEClassLocator();
+
+	/**
+	 * Returns a new object of class '<em>Push Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Push Segment</em>'.
+	 * @generated
+	 */
+	PushSegment createPushSegment();
+
+	/**
+	 * Returns a new object of class '<em>Soft New Line Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Soft New Line Segment</em>'.
+	 * @generated
+	 */
+	SoftNewLineSegment createSoftNewLineSegment();
+
+	/**
+	 * Returns a new object of class '<em>Soft Space Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Soft Space Segment</em>'.
+	 * @generated
+	 */
+	SoftSpaceSegment createSoftSpaceSegment();
 
 	/**
 	 * Returns a new object of class '<em>String Segment</em>'.

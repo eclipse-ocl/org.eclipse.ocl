@@ -13,10 +13,12 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 import java.util.Collection;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -37,6 +39,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl#getOwnedSubIdioms <em>Owned Sub Idioms</em>}</li>
  * </ul>
  *
@@ -51,7 +54,29 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 	 * @generated
 	 * @ordered
 	 */
-	public static final int IDIOM_FEATURE_COUNT = 1;
+	public static final int IDIOM_FEATURE_COUNT = 2;
+
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 
 
 	/**
@@ -92,11 +117,36 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 	 * @generated
 	 */
 	@Override
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setName(String newName)
+	{
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EList<SubIdiom> getOwnedSubIdioms()
 	{
 		if (ownedSubIdioms == null)
 		{
-			ownedSubIdioms = new EObjectContainmentEList<SubIdiom>(SubIdiom.class, this, 0);
+			ownedSubIdioms = new EObjectContainmentEList<SubIdiom>(SubIdiom.class, this, 1);
 		}
 		return ownedSubIdioms;
 	}
@@ -111,7 +161,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 	{
 		switch (featureID)
 		{
-			case 0:
+			case 1:
 				return ((InternalEList<?>)getOwnedSubIdioms()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -128,6 +178,8 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
+				return getName();
+			case 1:
 				return getOwnedSubIdioms();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -145,6 +197,9 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
+				setName((String)newValue);
+				return;
+			case 1:
 				getOwnedSubIdioms().clear();
 				getOwnedSubIdioms().addAll((Collection<? extends SubIdiom>)newValue);
 				return;
@@ -163,6 +218,9 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
+				setName(NAME_EDEFAULT);
+				return;
+			case 1:
 				getOwnedSubIdioms().clear();
 				return;
 		}
@@ -180,6 +238,8 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		switch (featureID)
 		{
 			case 0:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 1:
 				return ownedSubIdioms != null && !ownedSubIdioms.isEmpty();
 		}
 		return super.eIsSet(featureID);

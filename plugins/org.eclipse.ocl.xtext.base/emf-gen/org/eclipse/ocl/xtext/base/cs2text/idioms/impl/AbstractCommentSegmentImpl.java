@@ -151,7 +151,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 		String oldEpilogue = epilogue;
 		epilogue = newEpilogue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldEpilogue, epilogue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEpilogue, epilogue));
 	}
 
 	/**
@@ -176,7 +176,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 		String oldIndentation = indentation;
 		indentation = newIndentation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldIndentation, indentation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldIndentation, indentation));
 	}
 
 	/**
@@ -201,7 +201,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 		String oldPrologue = prologue;
 		prologue = newPrologue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPrologue, prologue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldPrologue, prologue));
 	}
 
 	/**
@@ -227,11 +227,11 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 0:
-				return getEpilogue();
 			case 1:
-				return getIndentation();
+				return getEpilogue();
 			case 2:
+				return getIndentation();
+			case 3:
 				return getPrologue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -247,13 +247,13 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 0:
+			case 1:
 				setEpilogue((String)newValue);
 				return;
-			case 1:
+			case 2:
 				setIndentation((String)newValue);
 				return;
-			case 2:
+			case 3:
 				setPrologue((String)newValue);
 				return;
 		}
@@ -270,13 +270,13 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 0:
+			case 1:
 				setEpilogue(EPILOGUE_EDEFAULT);
 				return;
-			case 1:
+			case 2:
 				setIndentation(INDENTATION_EDEFAULT);
 				return;
-			case 2:
+			case 3:
 				setPrologue(PROLOGUE_EDEFAULT);
 				return;
 		}
@@ -293,11 +293,11 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 0:
-				return EPILOGUE_EDEFAULT == null ? epilogue != null : !EPILOGUE_EDEFAULT.equals(epilogue);
 			case 1:
-				return INDENTATION_EDEFAULT == null ? indentation != null : !INDENTATION_EDEFAULT.equals(indentation);
+				return EPILOGUE_EDEFAULT == null ? epilogue != null : !EPILOGUE_EDEFAULT.equals(epilogue);
 			case 2:
+				return INDENTATION_EDEFAULT == null ? indentation != null : !INDENTATION_EDEFAULT.equals(indentation);
+			case 3:
 				return PROLOGUE_EDEFAULT == null ? prologue != null : !PROLOGUE_EDEFAULT.equals(prologue);
 		}
 		return super.eIsSet(featureID);

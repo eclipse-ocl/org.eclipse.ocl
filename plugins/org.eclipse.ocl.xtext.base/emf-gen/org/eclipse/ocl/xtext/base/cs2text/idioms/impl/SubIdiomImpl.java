@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
@@ -37,6 +38,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SubIdiomImpl#getLocator <em>Locator</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SubIdiomImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SubIdiomImpl#getSegments <em>Segments</em>}</li>
  * </ul>
  *
@@ -51,7 +53,7 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SUB_IDIOM_FEATURE_COUNT = 2;
+	public static final int SUB_IDIOM_FEATURE_COUNT = 3;
 
 
 	/**
@@ -63,6 +65,28 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	 * @ordered
 	 */
 	protected Locator locator;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
 
 	/**
 	 * The cached value of the '{@link #getSegments() <em>Segments</em>}' reference list.
@@ -143,6 +167,31 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setName(String newName)
+	{
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT FIXME workaround BUG 89325
 	 */
 	@SuppressWarnings("serial")
@@ -176,6 +225,8 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 				if (resolve) return getLocator();
 				return basicGetLocator();
 			case 1:
+				return getName();
+			case 2:
 				return getSegments();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -196,6 +247,9 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 				setLocator((Locator)newValue);
 				return;
 			case 1:
+				setName((String)newValue);
+				return;
+			case 2:
 				getSegments().clear();
 				getSegments().addAll((Collection<? extends Segment>)newValue);
 				return;
@@ -217,6 +271,9 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 				setLocator((Locator)null);
 				return;
 			case 1:
+				setName(NAME_EDEFAULT);
+				return;
+			case 2:
 				getSegments().clear();
 				return;
 		}
@@ -236,6 +293,8 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 			case 0:
 				return locator != null;
 			case 1:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 2:
 				return segments != null && !segments.isEmpty();
 		}
 		return super.eIsSet(featureID);

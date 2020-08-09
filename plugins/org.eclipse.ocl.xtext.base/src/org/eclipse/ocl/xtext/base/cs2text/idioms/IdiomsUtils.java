@@ -10,20 +10,36 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
+import java.util.List;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl;
-import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl;
 
 public class IdiomsUtils
 {
-	public static @NonNull IdiomModel IDIOM_MODEL = createIdiomModel();
+	public static @NonNull IdiomModel IDIOM_MODEL = getIdiomModel(URI.createPlatformResourceURI("org.eclipse.ocl.xtext.base/model/BaseIdioms.xmi", true));
 
-	private static final @NonNull StringSegment HALF_NEW_LINE = createStringSegment(IDIOM_MODEL, SerializationBuilder.HALF_NEW_LINE);
+	public static @NonNull IdiomModel getIdiomModel(@NonNull URI idiomURI) {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		IdiomsPackageImpl.eINSTANCE.getClass();
+		Resource resource = resourceSet.getResource(idiomURI, true);
+		return (IdiomModel) resource.getContents().get(0);
+	}
+
+
+
+
+/*	private static final @NonNull StringSegment HALF_NEW_LINE = createStringSegment(IDIOM_MODEL, SerializationBuilder.HALF_NEW_LINE);
 	private static final @NonNull StringSegment NO_SPACE = createStringSegment(IDIOM_MODEL, SerializationBuilder.NO_SPACE);
 	private static final @NonNull StringSegment POP = createStringSegment(IDIOM_MODEL, SerializationBuilder.POP);
 	private static final @NonNull StringSegment PUSH = createStringSegment(IDIOM_MODEL, SerializationBuilder.PUSH);
@@ -43,7 +59,8 @@ public class IdiomsUtils
 	private static final @NonNull SubIdiom SUB_OPEN_PARENTHESIS = createSubIdiom(createKeywordLocator(IDIOM_MODEL, "(", null), NO_SPACE, VALUE_SEGMENT, NO_SPACE);
 	private static final @NonNull SubIdiom SUB_OPEN_SQUARE = createSubIdiom(createKeywordLocator(IDIOM_MODEL, "[", null), NO_SPACE, VALUE_SEGMENT, NO_SPACE);
 	private static final @NonNull SubIdiom SUB_SEMI_COLON = createSubIdiom(createKeywordLocator(IDIOM_MODEL, ";", null), NO_SPACE, VALUE_SEGMENT, SOFT_NEW_LINE);
-	public static final @NonNull SubIdiom SUB_VALUE = createSubIdiom(null, VALUE_SEGMENT);
+
+	private static final @NonNull SubIdiom SUB_VALUE = createSubIdiom(null, VALUE_SEGMENT);
 //	private static final @NonNull SubIdiom SUB_COMMENTED_PACKAGE = createSubIdiom(createKeywordLocator(IDIOM_MODEL, " enum"), new CustomSegment(BaseCommentSegment.class), IdiomUtils.SERIALIZED_VALUE);
 	private static final @NonNull SubIdiom SUB_COMMENTED_RULE = createSubIdiom(createProducedEClassLocator(IDIOM_MODEL, BaseCSPackage.Literals.MODEL_ELEMENT_CS), createCustomSegment(IDIOM_MODEL, BaseCommentSegment.class), VALUE_SEGMENT);
 
@@ -63,13 +80,36 @@ public class IdiomsUtils
 	private static final @NonNull Idiom INTER_CLASSSES = createDebugIdiom(SUB_PackagesCS_ownedClasses);//, SubIdiom.PackagesCS_ownedClasses);
 
 	public static final @NonNull Idiom @NonNull [] IDIOMS = new @NonNull Idiom[] { COMMENTED_RULE, BRACES, PARENTHESES, SQUARES, COMMA, DOUBLE_COLON, DOT_DOT, SEMI_COLON, INTER_CLASSSES, DEFAULT};
+*/
+	public static final @NonNull Idiom @NonNull [] IDIOMS = getIdioms(IDIOM_MODEL);
 
+	protected static @NonNull Idiom @NonNull [] getIdioms(@NonNull IdiomModel idiomModel) {
+		List<Idiom> ownedSegments = idiomModel.getOwnedIdioms();
+		return ownedSegments.toArray(new @NonNull Idiom[ownedSegments.size()]);
+	}
+
+	public static final @NonNull SubIdiom SUB_VALUE = getValueSubIdiom(IDIOM_MODEL);
 
 	public static @NonNull AssignmentLocator createAssignmentLocator(@NonNull IdiomModel idiomModel, EStructuralFeature eStructuralFeature) {
 		AssignmentLocator locator = IdiomsFactory.eINSTANCE.createAssignmentLocator();
 		locator.setEStructuralFeature(eStructuralFeature);
 		idiomModel.getOwnedLocators().add(locator);
 		return locator;
+	}
+
+	private static @NonNull SubIdiom getValueSubIdiom(@NonNull IdiomModel idiomModel) {
+		for (Idiom idiom : idiomModel.getOwnedIdioms()) {
+			for (SubIdiom subIdiom : idiom.getOwnedSubIdioms()) {
+				EList<Segment> segments = subIdiom.getSegments();
+				if (segments.size() == 1) {
+					Segment segment = segments.get(0);
+					if (segment instanceof ValueSegment) {
+						return subIdiom;
+					}
+				}
+			}
+		}
+		throw new IllegalStateException("No ValueSegment subidiom");
 	}
 
 	private static @NonNull CustomSegment createCustomSegment(@NonNull IdiomModel idiomModel, @NonNull Class<@NonNull BaseCommentSegment> customSegmentClass) {
