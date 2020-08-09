@@ -202,6 +202,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 
 	@Override
 	public String toString() {
+		EClass eClass = getEClass();
 		return eClass.getEPackage().getName() + "::" + eClass.getName();
 	}
 } //ProducedEClassLocatorImpl
