@@ -10,27 +10,57 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl;
 
 public abstract class AbstractIdiomsProvider implements IdiomsProvider
 {
-	private static @NonNull IdiomModel IDIOM_MODEL = getIdiomModel(URI.createPlatformResourceURI("org.eclipse.ocl.xtext.base/model/BaseIdioms.xmi", true));
-
-	private static @NonNull IdiomModel getIdiomModel(@NonNull URI idiomURI) {
+	protected /*@NonNull*/ IdiomModel getIdiomModel(@NonNull Class<?> contextClass, /*@NonNull*/ String path) {
+		URL url = contextClass.getResource(path);
+		if (url == null) {
+			throw new IllegalStateException("Failed to locate " + path + " wrt " + contextClass.getName());
+		}
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			try {
+				url = FileLocator.resolve(url);
+			}
+			catch (IOException e) {
+				throw new IllegalStateException("Failed to resolvee " + path + " wrt " + contextClass.getName(), e);
+			}
+		}
+		URI uri = URI.createFileURI(url.getPath());
 		ResourceSet resourceSet = new ResourceSetImpl();
-		IdiomsPackageImpl.eINSTANCE.getClass();
-		Resource resource = resourceSet.getResource(idiomURI, true);
-		return (IdiomModel) resource.getContents().get(0);
+		IdiomsPackage.eINSTANCE.getClass();
+		Resource resource = resourceSet.getResource(uri, true);
+		return (IdiomModel)resource.getContents().get(0);
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull Idiom> getIdioms() {
-		return IDIOM_MODEL.getOwnedIdioms();
+	protected /*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms(/*@NonNull*/ IdiomModel rootIdiomModel) {
+		List<Idiom> allIdioms = new ArrayList<>();
+		if (rootIdiomModel != null) {
+			List<IdiomModel> allIdiomModels = new ArrayList<>();
+			allIdiomModels.add(rootIdiomModel);
+			for (int i = 0; i < allIdiomModels.size(); i++) {
+				IdiomModel idiomModel = allIdiomModels.get(i);
+				allIdioms.addAll(idiomModel.getOwnedIdioms());
+				for (IdiomModel importedIdiomModel : idiomModel.getImports()) {
+					if (!allIdiomModels.contains(importedIdiomModel)) {
+						allIdiomModels.add(importedIdiomModel);
+					}
+				}
+			}
+		}
+		return allIdioms;
 	}
 
 }

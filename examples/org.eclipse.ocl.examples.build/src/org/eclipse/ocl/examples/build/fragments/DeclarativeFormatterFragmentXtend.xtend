@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
+import org.eclipse.xtext.xtext.generator.model.TypeReference
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom
+
 /**
  * DeclarativeFormatterFragmentXtend augments DeclarativeFormatterFragment with M2T functionality
  * exploiting Xtend's string template capabilities.
@@ -24,8 +28,19 @@ class DeclarativeFormatterFragmentXtend extends DeclarativeFormatterFragment
 
 	protected override doGetIdiomsProviderStubContent() {
 		'''
-				public class «getIdiomsProviderClass(grammar).simpleName» extends «getIdiomsProviderSuperClass(grammar)» {
+		public class «getIdiomsProviderClass(grammar).simpleName» extends «getIdiomsProviderSuperClass(grammar)»
+		{
+			private static Iterable<«new TypeReference(Idiom)»> idioms = null;
+		
+			@Override
+			public Iterable<«new TypeReference(Idiom)»> getIdioms() {
+				if (idioms == null) {
+					«new TypeReference(IdiomModel)» idiomModel = getIdiomModel(getClass(), "«getIdiomsPath(grammar)»");
+					idioms = getIdioms(idiomModel);
 				}
-			'''
+				return idioms;
+			}
+		}
+		'''
 	}
 }

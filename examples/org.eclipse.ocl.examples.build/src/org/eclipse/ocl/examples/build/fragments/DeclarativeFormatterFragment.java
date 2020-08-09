@@ -106,6 +106,10 @@ public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 		throw new UnsupportedOperationException();
 	}
 
+	protected String getIdiomsPath(Grammar grammar) {
+		return "/" + grammar.getName().replace('.', '/') + ".idioms";
+	}
+
 	protected TypeReference getIdiomsProviderClass(Grammar grammar) {
 		return new TypeReference(getFormatterBasePackage(grammar), GrammarUtil.getSimpleName(grammar) + "IdiomsProvider");
 	}

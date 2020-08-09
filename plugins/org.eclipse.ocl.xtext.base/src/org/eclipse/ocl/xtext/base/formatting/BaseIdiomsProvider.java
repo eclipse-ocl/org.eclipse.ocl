@@ -13,6 +13,19 @@
 package org.eclipse.ocl.xtext.base.formatting;
 
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractIdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 
-public class BaseIdiomsProvider extends AbstractIdiomsProvider {
+public class BaseIdiomsProvider extends AbstractIdiomsProvider
+{
+	private static Iterable<Idiom> idioms = null;
+
+	@Override
+	public Iterable<Idiom> getIdioms() {
+		if (idioms == null) {
+			IdiomModel idiomModel = getIdiomModel(getClass(), "/org/eclipse/ocl/xtext/base/Base.idioms");
+			idioms = getIdioms(idiomModel);
+		}
+		return idioms;
+	}
 }

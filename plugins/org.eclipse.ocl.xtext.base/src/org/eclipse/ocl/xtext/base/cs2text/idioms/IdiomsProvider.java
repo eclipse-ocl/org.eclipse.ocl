@@ -10,9 +10,7 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 public interface IdiomsProvider
 {
-	@NonNull Iterable<@NonNull Idiom> getIdioms();
+	/*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms();
 }

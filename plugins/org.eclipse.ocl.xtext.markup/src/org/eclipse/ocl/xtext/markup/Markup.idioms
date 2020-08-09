@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idioms:IdiomModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:idioms="http://www.eclipse.org/ocl/2020/Idioms" xsi:schemaLocation="http://www.eclipse.org/ocl/2020/Idioms ../../../../../../../org.eclipse.ocl.xtext.base/model/Idioms.ecore" name="Markup">
+  <imports href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#/"/>
+</idioms:IdiomModel>
