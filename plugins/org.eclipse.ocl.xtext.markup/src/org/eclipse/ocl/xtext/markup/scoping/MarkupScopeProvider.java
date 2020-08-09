@@ -27,9 +27,9 @@ import org.eclipse.xtext.scoping.impl.AbstractScope;
 
 /**
  * This class contains custom scoping description.
- * 
+ *
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
- * on how and when to use it 
+ * on how and when to use it
  *
  */
 public class MarkupScopeProvider extends AbstractDeclarativeScopeProvider {
@@ -50,7 +50,7 @@ public class MarkupScopeProvider extends AbstractDeclarativeScopeProvider {
 						}
 					}
 					return allFigures;
-				}				
+				}
 			};
 		}
 		return super.getScope(context, reference);

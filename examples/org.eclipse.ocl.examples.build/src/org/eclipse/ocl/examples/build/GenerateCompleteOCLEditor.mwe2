@@ -80,7 +80,9 @@ Workflow {
 			name = "${completeOCLprojectName}.CompleteOCL"
 			fileExtensions = "ocl"
 			generator = null
-			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment {}
+			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragmentXtend {
+				generateStub = true
+			}
 			validator = {
 				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 				generateDeprecationValidation = false
@@ -115,7 +117,22 @@ Workflow {
 		fileName = "${completeOCLruntimeProject}/src-gen/org/eclipse/ocl/xtext/completeocl/parser/antlr/internal/InternalCompleteOCLParser.java"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/emf-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/src"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${completeOCLruntimeProject}/src-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}.ui/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}.ui/src"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${completeOCLruntimeProject}.ui/src-gen"

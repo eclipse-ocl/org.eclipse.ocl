@@ -19,7 +19,7 @@ public class ImportDiagnostic extends AbstractDiagnostic
 	private final String message;
 	private final String code;
 	private final String[] data;
-	
+
 	public ImportDiagnostic(INode node, String message, String code, String... data) {
 		this.node = node;
 		this.message = message;
@@ -53,7 +53,7 @@ public class ImportDiagnostic extends AbstractDiagnostic
 	public String getCode() {
 		return code;
 	}
-	
+
 	@Override
 	public int getColumn() {
 		return -1;
@@ -82,7 +82,7 @@ public class ImportDiagnostic extends AbstractDiagnostic
 		result = prime * result + ((node == null) ? 0 : node.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getMessage();

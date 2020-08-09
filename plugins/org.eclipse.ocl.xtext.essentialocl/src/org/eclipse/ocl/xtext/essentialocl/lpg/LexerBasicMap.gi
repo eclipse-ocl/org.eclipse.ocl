@@ -2,11 +2,11 @@
     --
     -- Additional methods for the action class not provided in the template
     --
-    
+
 	-- [cwd] Template provided by LPG defines a constructor that uses an Option
 	--       class that does not exist in LPG Runtime.  Deleted this constructor
-	
-    /.        
+
+    /.
         final void makeToken(int kind)
         {
             int startOffset = getLeftSpan(),
@@ -26,7 +26,7 @@
         {
             if (printTokens) printValue(getLeftSpan(), getRightSpan());
         }
-        
+
         final void checkForKeyWord()
         {
             int startOffset = getLeftSpan(),
@@ -35,7 +35,7 @@
             makeToken(startOffset, endOffset, kwKind);
             if (printTokens) printValue(startOffset, endOffset);
         }
-        
+
         final void printValue(int startOffset, int endOffset)
         {
             String s = new String(getInputChars(), startOffset, endOffset - startOffset + 1);
@@ -178,9 +178,9 @@
 
             Char_Acute,           // for the acute accent 0xb4
             Char_AfterASCIINotAcute,  // for all chars in range 0x80..0xfffe excluding the acute accent
-            Char_EOF              // for '\uffff' or 65535 
+            Char_EOF              // for '\uffff' or 65535
         };
-                
+
         @Override public final int getKind(int i)  // Classify character at ith location
         {
             char c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));

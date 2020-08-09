@@ -78,7 +78,7 @@ public final class CompleteOCLPlugin extends EMFPlugin
 	public static Implementation getPlugin() {
 		return plugin;
 	}
-	
+
 	public static void log(String message, Throwable t) {
 		getPlugin().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, 1, message, t));
 	}

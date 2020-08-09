@@ -110,7 +110,7 @@ import com.google.inject.Inject;
 
 /**
  * Provides labels for a EObjects.
- * 
+ *
  * see http://www.eclipse.org/Xtext/documentation.html#labelProvider
  */
 public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
@@ -144,7 +144,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 				EcoreUtil.resolve(element, element);
 			}
 			appendString(s, NameUtil.getSafeName(element));
-		}	
+		}
 	}
 
 	protected void appendName(@NonNull StringBuilder s, NamedElementCS csElement) {
@@ -153,7 +153,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 				EcoreUtil.resolve(csElement, csElement);
 			}
 			appendString(s, NameUtil.getSafeName(csElement));
-		}	
+		}
 	}
 
 	protected void appendName(@NonNull StringBuilder s, Nameable csElement) {
@@ -169,20 +169,20 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 		if (sourceType == null) {
 			return;
 		}
-		s.append(PivotUtil.getNavigationOperator(ele.isIsSafe(), PivotUtil.isAggregate(sourceType))); 
+		s.append(PivotUtil.getNavigationOperator(ele.isIsSafe(), PivotUtil.isAggregate(sourceType)));
 		s.append(" ");
 	}
 
 	protected void appendOptionalName(@NonNull StringBuilder s, Nameable csElement) {
 		if (csElement != null) {
 			appendOptionalString(s, csElement.getName());
-		}	
+		}
 	}
 
 	protected void appendOptionalString(@NonNull StringBuilder s, String string) {
 		if (string != null) {
 			s.append(string);
-		}	
+		}
 	}
 
 	protected void appendParameters(@NonNull StringBuilder s, List<Parameter> parameters) {
@@ -200,10 +200,10 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected void appendString(@NonNull StringBuilder s, String string) {
 		if (string != null) {
 			s.append(string);
-		}	
+		}
 		else {
 			s.append("<null>");
-		}	
+		}
 	}
 
 	protected void appendPathName(StringBuilder s, PathNameCS pathName) {
@@ -213,14 +213,14 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected void appendString(@NonNull StringBuilder s, String string, int countLimit) {
 		if (string == null) {
 			s.append("<null>");
-		}	
+		}
 		else if (string.length() > countLimit){
 			s.append(string.substring(0, countLimit-3));
 			s.append("...");
-		}	
+		}
 		else {
 			s.append(string);
-		}	
+		}
 	}
 
 	protected void appendSuperTypes(@NonNull StringBuilder s, List<? extends Type> superTypes) {
@@ -280,12 +280,12 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 		Element pivot = type.getPivot();
 		appendString(s, safeGetMoniker(pivot));
 	}
-	
+
 	@Override
 	protected Image convertToImage(Object imageDescription) {
 		if (imageDescription instanceof String) {
 			String imagePath = (String)imageDescription;
-			if (imagePath.startsWith("/")) {	
+			if (imagePath.startsWith("/")) {
 				int index = imagePath.indexOf('/', 1);
 				if (index > 1) {
 					String bundlePath = imagePath.substring(1, index);
@@ -299,11 +299,11 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 						}
 					}
 				}
-			}				
+			}
 		}
 		return super.convertToImage(imageDescription);
 	}
-	 
+
 	@Override
 	protected Object doGetText(Object element) {
 		Object object = super.doGetText(element);
@@ -341,7 +341,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	public String text(Annotation ele) {
 		StringBuilder s = new StringBuilder();
 		s.append("\"");
-		appendString(s, ele.getName(), 40);			
+		appendString(s, ele.getName(), 40);
 		s.append("\"");
 		return s.toString();
 	}
@@ -413,7 +413,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	public String text(Comment ele) {
 		StringBuilder s = new StringBuilder();
 		s.append("\"");
-		appendString(s, ele.getBody(), 40);			
+		appendString(s, ele.getBody(), 40);
 		s.append("\"");
 		return s.toString();
 	}
@@ -452,7 +452,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 		String name = ele != null ? ele.getName() : null;
 		if (name != null) {
 			s.append(name);
-		}	
+		}
 		return s.toString();
 	}
 
@@ -495,7 +495,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	public String text(Detail ele) {
 		StringBuilder s = new StringBuilder();
 		s.append("\"");
-		appendString(s, ele.getName());			
+		appendString(s, ele.getName());
 		s.append("\" : ");
 		appendString(s, ele.getValues().get(0), 40);
 		return s.toString();
@@ -738,11 +738,11 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 		appendPathName(s, ele);
 		return s.toString();
 	}
-	
+
 	protected Object image(PivotableElementCS ele) {
 		return doGetImage(ele.getPivot());
 	}
-	
+
 	protected Object text(PivotableElementCS ele) {
 		return doGetText(ele.getPivot());
 	}

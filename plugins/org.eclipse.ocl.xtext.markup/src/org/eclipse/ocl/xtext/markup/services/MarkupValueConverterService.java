@@ -126,7 +126,7 @@ public class MarkupValueConverterService extends AbstractDeclarativeValueConvert
 			}
 		};
 	}
-	
+
 	@ValueConverter(rule = "TEXT")
 	public IValueConverter<String> TEXT() {
 		return new AbstractNullSafeConverter<String>() {

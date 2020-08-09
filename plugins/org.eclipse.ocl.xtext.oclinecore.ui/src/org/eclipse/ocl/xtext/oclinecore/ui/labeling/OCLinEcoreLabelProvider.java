@@ -36,7 +36,7 @@ import com.google.inject.Inject;
 
 /**
  * Provides labels for OCLinEcoreCS objects.
- * 
+ *
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class OCLinEcoreLabelProvider extends EssentialOCLLabelProvider {
@@ -50,11 +50,11 @@ public class OCLinEcoreLabelProvider extends EssentialOCLLabelProvider {
 		StringBuilder s = new StringBuilder();
 //		String idName = ele.getIdSource();
 //		if (idName != null) {
-//			appendString(s, idName);			
+//			appendString(s, idName);
 //		}
 //		else {
 			s.append("\"");
-			appendString(s, ele.getName());			
+			appendString(s, ele.getName());
 			s.append("\"");
 //		}
 		return s.toString();

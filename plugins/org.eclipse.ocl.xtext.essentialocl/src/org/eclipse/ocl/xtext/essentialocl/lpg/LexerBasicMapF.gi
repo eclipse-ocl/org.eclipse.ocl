@@ -2,7 +2,7 @@
     --
     -- Additional methods for the action class not provided in the template
     --
-    
+
 	--
 	-- In grammar file including this .gi file should define the following macros
 	--        $kw_lexer_class  => the keyword lexer class
@@ -10,11 +10,11 @@
 	--
     -- [cwd] Template provided by LPG defines a constructor that uses an Option
     --       class that does not exist in LPG Runtime.  Deleted this constructor
-    
-    -- [adolfosbh] The previous old cwd's comment has been corrected in this
-    --       template version   
 
-    -- [adolfosbh] a constructor method has been moved to LexerTemplateF.gi file	
+    -- [adolfosbh] The previous old cwd's comment has been corrected in this
+    --       template version
+
+    -- [adolfosbh] a constructor method has been moved to LexerTemplateF.gi file
     /.
         //
         // The Lexer contains an array of characters as the input stream to be parsed.
@@ -40,12 +40,12 @@
         {
             reset(content, filename);
         }
-        
+
         final void makeToken(int left_token, int right_token, int kind)
         {
             lexStream.makeToken(left_token, right_token, kind);
         }
-        
+
         final void makeToken(int kind)
         {
             int startOffset = getLeftSpan(),
@@ -65,7 +65,7 @@
         {
             if (printTokens) printValue(getLeftSpan(), getRightSpan());
         }
-        
+
         final void checkForKeyWord()
         {
             int startOffset = getLeftSpan(),
@@ -74,7 +74,7 @@
             lexStream.makeToken(startOffset, endOffset, kwKind);
             if (printTokens) printValue(startOffset, endOffset);
         }
-        
+
         //
         // This flavor of checkForKeyWord is necessary when the default kind
         // (which is returned when the keyword filter doesn't match) is something
@@ -90,7 +90,7 @@
             lexStream.makeToken(startOffset, endOffset, kwKind);
             if (printTokens) printValue(startOffset, endOffset);
         }
-        
+
         final void printValue(int startOffset, int endOffset)
         {
             String s = new String(lexStream.getInputChars(), startOffset, endOffset - startOffset + 1);
@@ -235,15 +235,15 @@
 
             $sym_type.$prefix$Acute$suffix$,           // for the acute accent 0xb4
             $sym_type.$prefix$AfterASCIINotAcute$suffix$,      // for all chars in range 0x80..0xfffe excluding the acute accent
-            $sym_type.$prefix$EOF$suffix$              // for '\uffff' or 65535 
+            $sym_type.$prefix$EOF$suffix$              // for '\uffff' or 65535
         };
-                
+
         @Override
         public final int getKind(int i)  // Classify character at ith location
         {
             char c = (i >= getStreamLength() ? '\uffff' : getCharValue(i));
             return (c < 128) // ASCII Character
-                      ? tokenKind[c] 
+                      ? tokenKind[c]
                       : (c == '\uffff')
 	                      ?$sym_type.$prefix$EOF$suffix$
 	                      : (c == '\u00b4')
@@ -263,7 +263,7 @@
         {
             super($adapt_environment, input_chars, filename, tab);
         }
-    
+
         public $super_stream_class($environment_class environment, char[] input_chars, String filename)
         {
             super($adapt_environment, input_chars, filename, 1);

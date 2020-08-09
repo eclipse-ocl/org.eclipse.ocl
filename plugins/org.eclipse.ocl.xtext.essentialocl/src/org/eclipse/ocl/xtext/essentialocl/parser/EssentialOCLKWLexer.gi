@@ -55,7 +55,7 @@
  *   E.D.Willink - Lexer and Parser refactoring to support extensibility and flexible error handling
  *   E.D.Willink - Bug 285633, 292112
  *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - LPG v 2.0.17 adoption (242153)
- *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Introducing new LPG templates (299396) 
+ *   Adolfo Sanchez-Barbudo Herrera (Open Canarias) - Introducing new LPG templates (299396)
 $copyright_contributions
  * </copyright>
  *
@@ -91,7 +91,7 @@ $copyright_contributions
 	-- the remainder of the LPG keywords are defined as such for the
 	-- purpose of constructing the CST grammar.  They are not OCL
 	-- reserved words
-	--		
+	--
 	Set
 	Bag
 	Sequence
@@ -123,103 +123,103 @@ $copyright_contributions
 			$setResult($_self);
 		  $EndAction
 		./
-		
+
 		| i f
 		/.$BeginAction
 			$setResult($_if);
 		  $EndAction
 		./
-		
+
 		| t h e n
 		/.$BeginAction
 			$setResult($_then);
 		  $EndAction
 		./
-		
+
 		| e l s e
 		/.$BeginAction
 			$setResult($_else);
 		  $EndAction
 		./
-		
+
 		| e n d i f
 		/.$BeginAction
 			$setResult($_endif);
 		  $EndAction
 		./
-		
+
 		| a n d
 		/.$BeginAction
 			$setResult($_and);
 		  $EndAction
 		./
-		
+
 		| o r
 		/.$BeginAction
 			$setResult($_or);
 		  $EndAction
 		./
-		
+
 		| x o r
 		/.$BeginAction
 			$setResult($_xor);
 		  $EndAction
 		./
-		
+
 		| n o t
 		/.$BeginAction
 			$setResult($_not);
 		  $EndAction
 		./
-		
+
 		| i m p l i e s
 		/.$BeginAction
 			$setResult($_implies);
 		  $EndAction
 		./
-		
+
 		| l e t
 		/.$BeginAction
 			$setResult($_let);
 		  $EndAction
 		./
-		
+
 		| i n
 		/.$BeginAction
 			$setResult($_in);
 		  $EndAction
 		./
-		
+
 		| t r u e
 		/.$BeginAction
 			$setResult($_true);
 		  $EndAction
 		./
-		
+
 		| f a l s e
 		/.$BeginAction
 			$setResult($_false);
 		  $EndAction
 		./
-		
+
 		| S e t
 		/.$BeginAction
 			$setResult($_Set);
 		  $EndAction
 		./
-		
+
 		| B a g
 		/.$BeginAction
 			$setResult($_Bag);
 		  $EndAction
 		./
-		
+
 		| S e q u e n c e
 		/.$BeginAction
 			$setResult($_Sequence);
 		  $EndAction
 		./
-		
+
 		| C o l l e c t i o n
 		/.$BeginAction
 			$setResult($_Collection);
@@ -243,19 +243,19 @@ $copyright_contributions
 			$setResult($_Integer);
 		  $EndAction
 		./
-		
+
 		| U n l i m i t e d N a t u r a l
 		/.$BeginAction
 			$setResult($_UnlimitedNatural);
 		  $EndAction
 		./
-		
+
 		| R e a l
 		/.$BeginAction
 			$setResult($_Real);
 		  $EndAction
 		./
-		
+
 		| B o o l e a n
 		/.$BeginAction
 			$setResult($_Boolean);

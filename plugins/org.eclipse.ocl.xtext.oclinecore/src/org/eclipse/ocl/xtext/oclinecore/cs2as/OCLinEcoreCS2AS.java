@@ -21,8 +21,8 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2AS;
 import org.eclipse.ocl.xtext.oclinecorecs.util.OCLinEcoreCSVisitor;
 
-public class OCLinEcoreCS2AS extends EssentialOCLCS2AS 
-{	
+public class OCLinEcoreCS2AS extends EssentialOCLCS2AS
+{
 	public OCLinEcoreCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}

@@ -12,7 +12,7 @@ package org.eclipse.ocl.examples.build.fragments;
 
 /**
  * DeclarativeFormatterFragmentXtend augments DeclarativeFormatterFragment with M2T functionality
- * exploiting Xtend'sstring template capabilities.
+ * exploiting Xtend's string template capabilities.
  */
 class DeclarativeFormatterFragmentXtend extends DeclarativeFormatterFragment
 {

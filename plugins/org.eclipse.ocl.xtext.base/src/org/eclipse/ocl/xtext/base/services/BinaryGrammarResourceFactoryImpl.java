@@ -27,12 +27,12 @@ public class BinaryGrammarResourceFactoryImpl implements Factory {
 	@Override
 	public Resource createResource(URI uri) {
 		XMIResourceImpl resource = new XMIResourceImpl(uri);
-		
+
 		// make it a binary resource
 		resource.getDefaultLoadOptions().put(XMLResource.OPTION_BINARY, Boolean.TRUE);
 		resource.getDefaultSaveOptions().put(XMLResource.OPTION_BINARY, Boolean.TRUE);
-		
-		// don't do any resolution, since the only external references point to Ecore elements from EPackages in the registry. 
+
+		// don't do any resolution, since the only external references point to Ecore elements from EPackages in the registry.
 		XMLResource.URIHandler uriHandler = new XMLResource.URIHandler() {
 
 			@Override

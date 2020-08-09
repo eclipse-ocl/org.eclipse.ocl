@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
@@ -63,7 +63,7 @@ public abstract class AbstractGrammarResource extends XMIResourceImpl
 		}
 		ABSTRACT_ELEMENT_SET_FIRST_SET_PREDICATED_METHOD = abstractElement_setFirstSetPredicated_Method;
 	}
-	
+
 	protected static @NonNull Action createAction(@Nullable String feature, @Nullable String operator, @NonNull TypeRef typeRef) {
 		@SuppressWarnings("null")@NonNull Action action = XtextFactory.eINSTANCE.createAction();
 		action.setFeature(feature);
@@ -102,21 +102,21 @@ public abstract class AbstractGrammarResource extends XMIResourceImpl
 		crossReference.setTerminal(terminal);
 		return crossReference;
 	}
-	
+
 	protected static @NonNull EnumRule createEnumRule(@NonNull String name, @NonNull TypeRef typeRef) {
 		@SuppressWarnings("null")@NonNull EnumRule enumRule = XtextFactory.eINSTANCE.createEnumRule();
 		enumRule.setName(name);
 		enumRule.setType(typeRef);
 		return enumRule;
 	}
-	
+
 	protected static @NonNull EnumLiteralDeclaration createEnumLiteral(Keyword keyword, EEnumLiteral eEnumLiteral) {
 		@SuppressWarnings("null")@NonNull EnumLiteralDeclaration enumLiteral = XtextFactory.eINSTANCE.createEnumLiteralDeclaration();
 		enumLiteral.setLiteral(keyword);
 		enumLiteral.setEnumLiteral(eEnumLiteral);
 		return enumLiteral;
 	}
-	
+
 	protected static @NonNull Grammar createGrammar(@NonNull String name) {
 		@SuppressWarnings("null")@NonNull Grammar grammar = XtextFactory.eINSTANCE.createGrammar();
 		grammar.setName(name);
@@ -150,7 +150,7 @@ public abstract class AbstractGrammarResource extends XMIResourceImpl
 		parserRule.setType(typeRef);
 		return parserRule;
 	}
-	
+
 	protected static @NonNull ReferencedMetamodel createReferencedMetamodel(EPackage ePackage, String alias) {
 		@SuppressWarnings("null")@NonNull ReferencedMetamodel referencedMetamodel = XtextFactory.eINSTANCE.createReferencedMetamodel();
 		referencedMetamodel.setEPackage(ePackage);
@@ -170,7 +170,7 @@ public abstract class AbstractGrammarResource extends XMIResourceImpl
 		typeRef.setClassifier(eClassifier);
 		return typeRef;
 	}
-	
+
 	protected static @NonNull TerminalRule createTerminalRule(@NonNull String name, @NonNull TypeRef typeRef) {
 		@SuppressWarnings("null")@NonNull TerminalRule terminalRule = XtextFactory.eINSTANCE.createTerminalRule();
 		terminalRule.setName(name);
@@ -212,7 +212,7 @@ public abstract class AbstractGrammarResource extends XMIResourceImpl
 		}
 		return abstractElement;
 	}
-	
+
 	protected static <T extends AbstractElement> T setPredicated(@NonNull T abstractElement) {
 		abstractElement.setPredicated(true);
 		return abstractElement;

@@ -19,9 +19,9 @@ import org.eclipse.ocl.xtext.completeoclcs.PathNameDeclCS;
 public final class PathNameDeclCSLabelGenerator extends AbstractLabelGenerator<PathNameDeclCS>
 {
 	public static void initialize(Registry registry) {
-		registry.install(PathNameDeclCS.class, new PathNameDeclCSLabelGenerator());		
+		registry.install(PathNameDeclCS.class, new PathNameDeclCSLabelGenerator());
 	}
-	
+
 	public PathNameDeclCSLabelGenerator() {
 		super(PathNameDeclCS.class);
 	}

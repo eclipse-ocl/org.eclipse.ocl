@@ -20,19 +20,19 @@ import org.eclipse.ocl.xtext.oclstdlibcs.util.OCLstdlibCSValidator;
 import com.google.inject.Injector;
 
 /**
- * Initialization support for running Xtext languages 
+ * Initialization support for running Xtext languages
  * without equinox extension registry
  */
 public class OCLstdlibStandaloneSetup extends OCLstdlibStandaloneSetupGenerated
 {
 	private static Injector injector = null;
-	
+
 	public static void doSetup() {
 		if (injector == null) {
 			new OCLstdlibStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
 	}
-	
+
 	public static void doTearDown() {
 		injector = null;
 	}
@@ -44,7 +44,7 @@ public class OCLstdlibStandaloneSetup extends OCLstdlibStandaloneSetupGenerated
 		EPackage.Registry.INSTANCE.put(OCLstdlibCSPackage.eNS_URI, OCLstdlibCSPackage.eINSTANCE);
 		EValidator.Registry.INSTANCE.put(OCLstdlibCSPackage.eINSTANCE, OCLstdlibCSValidator.INSTANCE);
 	}
-	
+
 	/**
 	 * Return the Injector for this plugin.
 	 */

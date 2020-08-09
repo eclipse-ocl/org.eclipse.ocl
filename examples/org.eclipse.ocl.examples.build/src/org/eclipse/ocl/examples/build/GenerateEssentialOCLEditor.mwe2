@@ -81,7 +81,9 @@ Workflow {
 			name = "${essentialOCLprojectName}.EssentialOCL"
 			fileExtensions = "essentialocl"
 			generator = null
-			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment {}
+			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragmentXtend {
+				generateStub = true
+			}
 			validator = {
 				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 				generateDeprecationValidation = false
@@ -116,7 +118,22 @@ Workflow {
 		fileName = "${essentialOCLruntimeProject}/src-gen/org/eclipse/ocl/xtext/essentialocl/parser/antlr/internal/InternalEssentialOCLParser.java"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${essentialOCLruntimeProject}/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${essentialOCLruntimeProject}/emf-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${essentialOCLruntimeProject}/src"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${essentialOCLruntimeProject}/src-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${essentialOCLruntimeProject}.ui/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${essentialOCLruntimeProject}.ui/src"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${essentialOCLruntimeProject}.ui/src-gen"

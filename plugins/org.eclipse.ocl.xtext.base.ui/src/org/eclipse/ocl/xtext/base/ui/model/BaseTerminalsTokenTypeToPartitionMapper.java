@@ -17,12 +17,12 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class BaseTerminalsTokenTypeToPartitionMapper extends TerminalsTokenTypeToPartitionMapper
-{	
+{
 	public final static String STRING_LITERAL_PARTITION1 = "__string1";
 	public final static String STRING_LITERAL_PARTITION2 = "__string2";
 	public final static String ML_STRING_LITERAL_PARTITION = "__ml_string";
 	public final static String ESCAPED_ID_PARTITION = "__escaped_id";
-	
+
 	protected static final String[] BASE_SUPPORTED_PARTITIONS = new String[]{
 		COMMENT_PARTITION,
 		STRING_LITERAL_PARTITION1,
@@ -31,7 +31,7 @@ public class BaseTerminalsTokenTypeToPartitionMapper extends TerminalsTokenTypeT
 		ESCAPED_ID_PARTITION,
 		IDocument.DEFAULT_CONTENT_TYPE
 	};
-	
+
 	@Override
 	protected String calculateId(String tokenName, int tokenType) {
 		if ("RULE_ML_COMMENT".equals(tokenName)) {

@@ -12,17 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.formatting;
 
-import com.google.inject.Inject;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractIdiomsProvider;
-import org.eclipse.ocl.xtext.completeocl.services.CompleteOCLGrammarAccess;
 
 public class CompleteOCLIdiomsProvider extends AbstractIdiomsProvider {
-	
-//	@Inject extension CompleteOCLGrammarAccess
-//	"FOR type : types.take(2)"
-
-//		"type.generateFormatMethod(type2ref.get(type), inheritedTypes.containsKey(type))"
-//	"ENDFOR"	
-	
-	// TODO: implement for "types.drop(2).map[name].join(", ")"
 }

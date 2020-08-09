@@ -219,7 +219,7 @@ TypeExpCS returns base::TypedRefCS:
 //---------------------------------------------------------------------
 // An ExpCS permits a LetExpCS only in the final term to ensure
 //  that let is right associative, whereas infix operators are left associative.
-//   a = 64 / 16 / let b : Integer in 8 / let c : Integer in 4 
+//   a = 64 / 16 / let b : Integer in 8 / let c : Integer in 4
 // is
 //   a = (64 / 16) / (let b : Integer in 8 / (let c : Integer in 4 ))
 /* An expression elaborates a prefixed expression with zero or more binary operator and expression suffixes.
@@ -264,7 +264,7 @@ NameExpCS returns NameExpCS:
 CurlyBracketedClauseCS:
 	{CurlyBracketedClauseCS} '{' ((ownedParts+=ShadowPartCS (',' ownedParts+=ShadowPartCS)*))? '}'
 	;
-	
+
 /* A curly bracket clause is a generalized rule for template specialisations and operations arguments.*/
 RoundBracketedClauseCS:
 	{RoundBracketedClauseCS} '(' (ownedArguments+=NavigatingArgCS (ownedArguments+=(NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS))*)? ')'

@@ -14,12 +14,12 @@ package org.eclipse.ocl.xtext.oclstdlib.validation;
 
 
 /**
- * This class contains custom validation rules. 
+ * This class contains custom validation rules.
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class OCLstdlibValidator extends AbstractOCLstdlibValidator {
-	
+
 //	public static final String INVALID_NAME = "invalidName";
 //
 //	@Check
@@ -30,5 +30,5 @@ public class OCLstdlibValidator extends AbstractOCLstdlibValidator {
 //					INVALID_NAME);
 //		}
 //	}
-	
+
 }

@@ -17,7 +17,7 @@ import org.eclipse.ocl.xtext.base.ui.model.BaseDocumentProvider;
 import org.eclipse.ui.IStorageEditorInput;
 
 /**
- * CompleteOCLDocumentProvider adds Annotation support for XtextReadonlyEditorInputs. 
+ * CompleteOCLDocumentProvider adds Annotation support for XtextReadonlyEditorInputs.
  */
 public class CompleteOCLDocumentProvider extends BaseDocumentProvider
 {

@@ -44,13 +44,13 @@ public class DeferredDocumentProvider extends XtextDocumentProvider
 			this.document = document;
 			this.sourceText = sourceText;
 		}
-		
+
 		@Override
 		protected IStatus run(final IProgressMonitor monitor) {
 			return Status.OK_STATUS;
 		}
 	}
-	
+
 	/**
 	 * @deprecated no longer used - retained for API compatibility
 	 */
@@ -70,7 +70,7 @@ public class DeferredDocumentProvider extends XtextDocumentProvider
 			return Boolean.TRUE;
 		}
 	}
-	
+
 	/**
 	 * @deprecated no longer used - retained for API compatibility
 	 */
@@ -102,7 +102,7 @@ public class DeferredDocumentProvider extends XtextDocumentProvider
 	 */
 	@Deprecated
 	public void scheduleDeferredSetTextJob(@NonNull BaseEditor baseEditor) {}
-	
+
 	/**
 	 * @deprecated no longer used - does nothing - retained for API compatibility
 	 */

@@ -78,7 +78,7 @@
 	        }
 	        return;
 	    }
-	
+
 	    public void ruleAction$rule_number(int ruleNumber)
 	    {
 	        switch (ruleNumber)
@@ -99,21 +99,21 @@
         {
             return parse$entry_name(null, $default_repair_count);
         }
-            
+
         public $ast_class parse$entry_name(Monitor monitor)
         {
             return parse$entry_name(monitor, $default_repair_count);
         }
-            
+
         public $ast_class parse$entry_name(int error_repair_count)
         {
             return parse$entry_name(null, error_repair_count);
         }
-            
+
         public $ast_class parse$entry_name(Monitor monitor, int error_repair_count)
         {
             btParser.setMonitor(monitor);
-            
+
             try
             {
                 return ($ast_class) btParser.fuzzyParseEntry($sym_type.$entry_marker, error_repair_count);
@@ -142,7 +142,7 @@
 	$super_parser_class /.AbstractParser./ -- The super class to which the generated parser inherits
 	$super_lexer_class /.AbstractLexer./
 	$prs_stream_class /.PrsStream./
-	
+
     --
     -- Old deprecated macros that should NEVER be used.
     --
@@ -165,7 +165,7 @@
     public class $action_type extends $super_parser_class implements RuleAction$additional_interfaces
     {
         private $prs_stream_class prsStream = null;
-        
+
         private boolean unimplementedSymbolsWarning = $unimplemented_symbols_warning;
 
         private static ParseTable prsTable = new $prs_type();
@@ -184,7 +184,7 @@
         protected int getRhsTokenIndex(int i) { return btParser.getToken(i); }
         @Override
         protected IToken getRhsIToken(int i) { return prsStream.getIToken(getRhsTokenIndex(i)); }
-        
+
         @Override
         protected int getRhsFirstTokenIndex(int i) { return btParser.getFirstToken(i); }
         @Override
@@ -243,7 +243,7 @@
                     for (int i = 0; i < unimplemented_symbols.size(); i++)
                     {
                         Integer id = (Integer) unimplemented_symbols.get(i);
-                        System.out.println("    " + $sym_type.orderedTerminalSymbols[id.intValue()]);               
+                        System.out.println("    " + $sym_type.orderedTerminalSymbols[id.intValue()]);
                     }
                     System.out.println();
                 }
@@ -253,11 +253,11 @@
                 throw new Error(new UndefinedEofSymbolException
                                     ("The Lexer does not implement the Eof symbol " +
                                      $sym_type.orderedTerminalSymbols[prsTable.getEoftSymbol()]));
-            } 
+            }
         }
-        
+
         @SuppressWarnings("nls")
-        public $action_type($super_lexer_class lexer)        
+        public $action_type($super_lexer_class lexer)
         {
         		super(lexer);
             try
@@ -273,13 +273,13 @@
             {
                 throw new Error(new BadParseSymFileException("Bad Parser Symbol File -- $sym_type.java"));
             }
-            
+
 	        ILexStream lexStream = lexer.getILexStream();
 	        if (lexStream != null) {
 	        	reset(lexStream);
 	        }
         }
-        
+
         @Override
         public int numTokenKinds() { return $sym_type.numTokenKinds; }
         @Override
@@ -294,13 +294,13 @@
         {
             return parser(null, getDefaultRepairCount());
         }
-        
+
         @Override
         public $ast_class parser(Monitor monitor)
         {
             return parser(monitor, getDefaultRepairCount());
         }
-        
+
         @Override
         public $ast_class parser(int error_repair_count)
         {
@@ -311,7 +311,7 @@
         public $ast_class parser(Monitor monitor, int error_repair_count)
         {
             btParser.setMonitor(monitor);
-            
+
             try
             {
             	if (error_repair_count > 0)

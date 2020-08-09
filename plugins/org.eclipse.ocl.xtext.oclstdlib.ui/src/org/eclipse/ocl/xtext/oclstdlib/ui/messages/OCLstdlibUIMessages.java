@@ -17,7 +17,7 @@ import org.eclipse.osgi.util.NLS;
  * An accessor class for externalized strings.
  */
 public class OCLstdlibUIMessages
-{	
+{
 	static {
 		NLS.initializeMessages(OCLstdlibUIMessages.class.getName(), OCLstdlibUIMessages.class);
 	}

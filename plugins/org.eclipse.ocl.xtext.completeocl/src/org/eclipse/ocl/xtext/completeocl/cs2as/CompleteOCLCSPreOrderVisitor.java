@@ -21,7 +21,7 @@ import org.eclipse.ocl.xtext.completeoclcs.PropertyContextDeclCS;
 import org.eclipse.ocl.xtext.completeoclcs.util.AbstractCompleteOCLCSPreOrderVisitor;
 
 public class CompleteOCLCSPreOrderVisitor extends AbstractCompleteOCLCSPreOrderVisitor
-{	
+{
 	public CompleteOCLCSPreOrderVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 	}

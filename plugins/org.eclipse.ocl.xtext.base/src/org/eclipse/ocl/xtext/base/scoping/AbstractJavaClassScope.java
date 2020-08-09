@@ -29,9 +29,9 @@ public abstract class AbstractJavaClassScope extends AbstractScope implements Ad
 	public static @Nullable AbstractJavaClassScope findAdapter(@NonNull BaseCSResource csResource) {
 		return ClassUtil.getAdapter(AbstractJavaClassScope.class, csResource);
 	}
-	
+
 	private Notifier target;
-	
+
 	protected AbstractJavaClassScope() {
 		super(IScope.NULLSCOPE, false);
 	}

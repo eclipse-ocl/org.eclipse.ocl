@@ -55,7 +55,7 @@ public class MarkupToString extends MarkupSwitch<@Nullable StringBuilder>
 		assert string != null;
 		return string;
 	}
-	
+
 	protected final StringBuilder s = new StringBuilder();
 
 	@Override
@@ -71,7 +71,7 @@ public class MarkupToString extends MarkupSwitch<@Nullable StringBuilder>
 		s.append("]");
 		return s;
 	}
-	
+
 	@Override
 	public StringBuilder caseCompoundElement(CompoundElement object) {
 		for (MarkupElement element : object.getElements()) {

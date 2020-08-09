@@ -36,7 +36,7 @@ import com.google.inject.Inject;
 
 /**
  * Provides labels for CompleteOCLCS objects.
- * 
+ *
  * see
  * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */

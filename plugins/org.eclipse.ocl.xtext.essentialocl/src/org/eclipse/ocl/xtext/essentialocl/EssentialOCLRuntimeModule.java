@@ -22,32 +22,32 @@ import com.google.inject.name.Names;
  * Use this class to register components to be used within the IDE.
  */
 public class EssentialOCLRuntimeModule extends org.eclipse.ocl.xtext.essentialocl.AbstractEssentialOCLRuntimeModule
-{	
+{
 	@Override
 	public void configure(Binder binder) {
 		super.configure(binder);
 		binder.bindConstant().annotatedWith(Names.named(org.eclipse.xtext.validation.CompositeEValidator.USE_EOBJECT_VALIDATOR)).to(false);
 	}
-	
+
 	@Override
 	public Class<? extends org.eclipse.xtext.parser.IParser> bindIParser() {
 		return RetokenizingEssentialOCLParser.class;
 	}
 
 	public static long enterRuleCounter = 0;
-	
+
 	public static class RetokenizingEssentialOCLParser extends EssentialOCLParser
-	{		
+	{
 		@Override
 		protected org.eclipse.ocl.xtext.essentialocl.parser.antlr.internal.InternalEssentialOCLParser createParser(XtextTokenStream stream) {
 			return new org.eclipse.ocl.xtext.essentialocl.parser.antlr.internal.InternalEssentialOCLParser(stream, getGrammarAccess())
-			{				
+			{
 				@Override
 				protected void enterRule() {
 					enterRuleCounter++;
 					super.enterRule();
 				}
-				
+
 			};
 		}
 

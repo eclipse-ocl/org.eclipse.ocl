@@ -10,17 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
-import java.util.Set;
-
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
-import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xtext.generator.IXtextGeneratorLanguage;
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming;
 import org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2;
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory;
@@ -29,7 +25,6 @@ import org.eclipse.xtext.xtext.generator.model.JavaFileAccess;
 import org.eclipse.xtext.xtext.generator.model.TypeReference;
 import org.eclipse.xtext.xtext.generator.model.XtendFileAccess;
 
-import com.google.common.collect.LinkedHashMultimap;
 import com.google.inject.Inject;
 
 /**
@@ -56,34 +51,27 @@ public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 	}
 
 	protected JavaFileAccess doGetIdiomsStubFile() {
-		Object _xblockexpression = null;
-		{
-			boolean _isGenerateStub = this.isGenerateStub();
-			boolean _not = (!_isGenerateStub);
-			if (_not) {
-				return null;
-			}
-			boolean _isGenerateXtendStub = this.isGenerateXtendStub();
-			if (_isGenerateXtendStub) {
-				String _name = this.getClass().getName();
-				String _plus = (_name + " has been configured to generate an Xtend stub, but that\'s not yet supported.");
-				LOG.error(_plus);
-			} else {
-				TypeReference idiomsProviderStub = this.getIdiomsProviderClass(this.getGrammar());
-				final JavaFileAccess javaFile = this.fileAccessFactory.createJavaFile(idiomsProviderStub);
-				javaFile.setResourceSet(this.getLanguage().getResourceSet());
-				final LinkedHashMultimap<EClass, EReference> type2ref = LinkedHashMultimap.<EClass, EReference>create();
-				this.getLocallyAssignedContainmentReferences(this.getLanguage().getGrammar(), type2ref);
-				final LinkedHashMultimap<EClass, EReference> inheritedTypes = LinkedHashMultimap.<EClass, EReference>create();
-				this.getInheritedContainmentReferences(this.getLanguage().getGrammar(), inheritedTypes, CollectionLiterals.<Grammar>newHashSet());
-				final Set<EClass> types = type2ref.keySet();
-				StringConcatenationClient _client = doGetIdiomsProviderStubContent();;
-				javaFile.setContent(_client);
-				return javaFile;
-			}
-			_xblockexpression = null;
+		if (!isGenerateStub()) {
+			return null;
 		}
-		return ((JavaFileAccess)_xblockexpression);
+		if (isGenerateXtendStub()) {
+			String name = getClass().getName();
+			LOG.error(name + " has been configured to generate an Xtend stub, but that\'s not yet supported.");
+			return null;
+		}
+		IXtextGeneratorLanguage language = getLanguage();
+		Grammar grammar = language.getGrammar();
+		Grammar grammar2 = this.getGrammar();
+		assert grammar == grammar2;
+		TypeReference idiomsProviderStub = getIdiomsProviderClass(grammar2);
+		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(idiomsProviderStub);
+		javaFile.setResourceSet(language.getResourceSet());
+	//	LinkedHashMultimap<EClass, EReference> type2ref = LinkedHashMultimap.<EClass, EReference>create();
+	//	getLocallyAssignedContainmentReferences(grammar, type2ref);
+	//	LinkedHashMultimap<EClass, EReference> inheritedTypes = LinkedHashMultimap.<EClass, EReference>create();
+	//	getInheritedContainmentReferences(grammar, inheritedTypes, CollectionLiterals.<Grammar>newHashSet());
+		javaFile.setContent(doGetIdiomsProviderStubContent());
+		return javaFile;
 	}
 
 	protected abstract StringConcatenationClient doGetIdiomsProviderStubContent();

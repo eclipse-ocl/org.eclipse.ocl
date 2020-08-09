@@ -570,7 +570,7 @@ public class LetVariableCSImpl
 			return super.accept(visitor);
 		}
 	}
-	
+
 	@SuppressWarnings("cast")
 	@Override
 	public void resetPivot() {

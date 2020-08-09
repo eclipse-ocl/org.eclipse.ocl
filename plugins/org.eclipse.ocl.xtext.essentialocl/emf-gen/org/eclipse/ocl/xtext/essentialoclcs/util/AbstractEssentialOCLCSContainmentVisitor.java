@@ -34,7 +34,7 @@ public abstract class AbstractEssentialOCLCSContainmentVisitor
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractEssentialOCLCSContainmentVisitor(@NonNull CS2ASConversion context) {

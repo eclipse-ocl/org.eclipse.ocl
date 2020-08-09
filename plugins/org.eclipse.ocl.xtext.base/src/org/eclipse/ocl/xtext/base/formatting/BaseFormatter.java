@@ -17,15 +17,15 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
 /**
  * This class contains custom formatting description.
- * 
+ *
  * see : http://www.eclipse.org/Xtext/documentation.html#formatting
- * on how and when to use it 
+ * on how and when to use it
  */
 public class BaseFormatter extends AbstractBaseFormatter
 {
 //	@Inject
-//	private BaseGrammarAccess grammarAccess; 
-	
+//	private BaseGrammarAccess grammarAccess;
+
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 // It's usually a good idea to activate the following three statements.

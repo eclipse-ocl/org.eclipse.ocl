@@ -36,7 +36,7 @@ TemplateBindingCS returns TemplateBindingCS:
 ;
 
 TemplateParameterSubstitutionCS returns TemplateParameterSubstitutionCS:
-	ownedActualParameter=TypeRefCS	
+	ownedActualParameter=TypeRefCS
 ;
 
 TemplateSignatureCS returns TemplateSignatureCS:
@@ -95,7 +95,7 @@ StringLiteral:
 UPPER returns ecore::EInt:
 	INT | '*'
 ;
-	
+
 URI:
 	SINGLE_QUOTED_STRING;
 
@@ -136,4 +136,4 @@ terminal WS:
 	(' ' | '\t' | '\r' | '\n')+;
 
 terminal ANY_OTHER:
-	.;	
+	.;

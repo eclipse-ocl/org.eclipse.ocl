@@ -42,5 +42,5 @@ public class BaseAntlrTokenToAttributeIdMapper extends DefaultAntlrTokenToAttrib
 		}
 		return DefaultHighlightingConfiguration.DEFAULT_ID;
 */	}
-	
+
 }

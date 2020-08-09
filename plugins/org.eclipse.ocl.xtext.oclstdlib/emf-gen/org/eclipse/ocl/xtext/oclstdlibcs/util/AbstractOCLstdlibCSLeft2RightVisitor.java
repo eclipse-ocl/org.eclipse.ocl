@@ -34,7 +34,7 @@ public abstract class AbstractOCLstdlibCSLeft2RightVisitor
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractOCLstdlibCSLeft2RightVisitor(@NonNull CS2ASConversion context) {

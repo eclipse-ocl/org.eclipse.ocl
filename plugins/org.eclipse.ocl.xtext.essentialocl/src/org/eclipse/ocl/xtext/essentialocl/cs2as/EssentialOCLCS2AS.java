@@ -22,11 +22,11 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 
 public class EssentialOCLCS2AS extends BaseCS2AS
-{		
+{
 	public EssentialOCLCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}
-	
+
 	public EssentialOCLCS2AS(@NonNull EssentialOCLCS2AS cs2as) {
 		super(cs2as);
 	}

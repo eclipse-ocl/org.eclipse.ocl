@@ -31,31 +31,31 @@
 	-- Definition of new macros used by the grammar file
 	-- which are not intended to be extended.
 	$lpg_ns /.lpg.runtime./ -- package namespace of the LPG Runtime API
-	
 
-	-- Some useful macros	
+
+	-- Some useful macros
     $NewCase
     /. $Header
                 case $rule_number:./
 
 
-	
+
     $EmptyListAction -- Deprecated, code inline with correct generic parameter type
     /. $Header
                 case $rule_number:
                     setResult(new BasicEList<Object>());
                     break;./
-                    
+
     -- BeginJava and EndJava need to be reworked in order to be able to properly use $NewCase macro
-    
+
     -- BeginJava does nothing
 	-- block-actions should call BeginCode, instead
     $BeginJava /../
-    
+
   	-- EndJava does nothing
 	-- block-actions should call EndCode, instead
 	$EndJava /../
-	
+
 	$BeginCode
 	/.$BeginAction
 					$symbol_declarations./
@@ -121,9 +121,9 @@
 	import org.eclipse.ocl.cst.TypeCS;
 	import org.eclipse.ocl.cst.UnlimitedNaturalLiteralExpCS;
 	import org.eclipse.ocl.cst.VariableCS;
-	import org.eclipse.ocl.cst.VariableExpCS;	
+	import org.eclipse.ocl.cst.VariableExpCS;
 	import org.eclipse.ocl.lpg.DerivedPrsStream;
-	
+
 	import $lpg_ns.BadParseException;
 	import $lpg_ns.BadParseSymFileException;
 	import $lpg_ns.DiagnoseParser;
@@ -136,21 +136,21 @@
 	import $lpg_ns.ParseTable;
 	import $lpg_ns.RuleAction;
 	import $lpg_ns.UndefinedEofSymbolException;
-	import $lpg_ns.UnimplementedTerminalsException;	
+	import $lpg_ns.UnimplementedTerminalsException;
     ./
 %End
 
 %KeyWords
 -- Reserved keywords
-    and implies not or xor  
-    if then else endif  
-    let in  
+    and implies not or xor
+    if then else endif
+    let in
     false true
     null invalid
-    self    
+    self
 
 -- Restricted keywords
-    Bag Collection OrderedSet Sequence Set  
+    Bag Collection OrderedSet Sequence Set
     Tuple
     Boolean Integer Real String UnlimitedNatural
     OclAny OclInvalid OclVoid
@@ -162,9 +162,9 @@
 %End
 
 %Terminals
-    
+
     QUOTED_IDENTIFIER INTEGER_LITERAL REAL_LITERAL STRING_LITERAL
-    
+
     PLUS     ::= '+'
     MINUS    ::= '-'
     MULTIPLY ::= '*'
@@ -196,51 +196,51 @@
 
 %Headers
 	/.
-	
+
 	public $environment_class getOCLEnvironment() {
 		return getLexer().getOCLEnvironment();
 	}
-		
+
 	@Override
 	public $super_lexer_class getLexer() {
 		return ($super_lexer_class) super.getLexer();
 	}
-	
-	
-	
-	// Some methods for backwards compatibility 
+
+
+
+	// Some methods for backwards compatibility
 	/**
 	* <p>
 	* Before 3.0, this method was used with the now-deprecated  "dollar"getToken macro (which
 	* provided token index in the prsStream) to obtain an IToken f a rule given the index of the
 	* right hand side token in the said rule. In 3.0 a convenience method has been introduced
 	* in order to directly return the IToken, given the index of the right hand side token in the rule.
-	* </p> 
+	* </p>
 	*
 	* <p>
-	* In an action-block of a rule, instead of doing <code>getIToken("dollar"getToken(i))</code> 
+	* In an action-block of a rule, instead of doing <code>getIToken("dollar"getToken(i))</code>
 	* you should do <code>getRhsTokenText(i)</code>
 	* </p>
 	* @param i the right hand side token index
 	* @return the correspondent IToken.
 	*
-	* @since 3.0	
+	* @since 3.0
 	*/
 	@Deprecated
 	protected IToken getIToken(int i) {
 		return prsStream.getIToken(i);
 	}
-	
+
 	/**
 	* <p>
 	* Before 3.0, this method was used with the now-deprecated "dollar"getToken macro (which
 	* provided token index in the prsStream) to obtain an IToken f a rule given the index of the
 	* right hand side token in the said rule. In 3.0 a convenience method has been introduced
 	* in order to directly return the IToken, given the index of the right hand side token in the rule.
-	* </p> 
-	* 
+	* </p>
+	*
 	* <p>
-	* In an action-block of a rule, instead of doing <code>getTokenText("dollar"getToken(i))</code> 
+	* In an action-block of a rule, instead of doing <code>getTokenText("dollar"getToken(i))</code>
 	* you should do <code>getRhsTokenText(i)</code>
 	* </p>
 	* @param i the right hand side token index
@@ -250,16 +250,16 @@
 	protected String getTokenText(int i) {
 		return prsStream.getTokenText(i);
 	}
-	
+
 	/**
 	* A convenience method to obtain the text of a right hand side IToken.
-	*  
+	*
 	* @param i the right hand side token index
 	* @result the text of the correspondent right hand side IToken.
 	*
 	* @since 3.0
 	*/
-	protected String getRhsTokenText(int i) { 
+	protected String getRhsTokenText(int i) {
 		return prsStream.getTokenText(getRhsTokenIndex(i));
 	}
 	./
@@ -270,7 +270,7 @@
 -----------------------------------------------------------------------
 --  Names
 -----------------------------------------------------------------------
-    
+
     reservedKeyword -> and
     reservedKeyword -> else
     reservedKeyword -> endif
@@ -292,7 +292,7 @@
 --  restrictedKeywordCS -> selfKeywordCS
     restrictedKeywordCS -> PrimitiveTypeIdentifier
     restrictedKeywordCS -> tupleKeywordCS
-        
+
     SimpleName ::= IDENTIFIER
     SimpleName -> QuotedSimpleNameCS
     QuotedSimpleNameCS ::= QUOTED_IDENTIFIER
@@ -317,10 +317,10 @@
 	InfixOperator -> 'implies'
 	InfixOperator -> '.'
 	InfixOperator -> '->'
- 
+
 	PrefixOperator -> '-'
 	PrefixOperator -> 'not'
-        
+
 -----------------------------------------------------------------------
 --  Types
 -----------------------------------------------------------------------
@@ -332,9 +332,9 @@
     PrimitiveTypeIdentifier ::= OclAny
     PrimitiveTypeIdentifier ::= OclInvalid
     PrimitiveTypeIdentifier ::= OclVoid
-        
+
     PrimitiveTypeCS ::= PrimitiveTypeIdentifier
-    
+
     CollectionTypeIdentifier ::= Set
     CollectionTypeIdentifier ::= Bag
     CollectionTypeIdentifier ::= Sequence
@@ -357,7 +357,7 @@
 
 -----------------------------------------------------------------------
 --  Declarations
------------------------------------------------------------------------     
+-----------------------------------------------------------------------
     VariableDeclarationCS -> SimpleName
     VariableDeclarationCS -> SimpleName '=' OCLExpressionCS
     VariableDeclarationCS -> SimpleName ':' TypeExpCS
@@ -411,7 +411,7 @@
     InvalidLiteralExpCS ::= invalid
 
     NullLiteralExpCS ::= null
-        
+
     TypeLiteralExpCS ::= PrimitiveTypeCS
     TypeLiteralExpCS ::= CollectionTypeCS
     TypeLiteralExpCS ::= TupleTypeCS
@@ -459,7 +459,7 @@
 	IndexExpCS -> NameExpCS
 	IndexExpCS ::= NameExpCS '[' ExpCSlist ']'
 	IndexExpCS ::= NameExpCS '[' ExpCSlist ']' '[' ExpCSlist ']'
-	
+
 	ExpCSlist ::= OCLExpressionCS
 	ExpCSlist ::= ExpCSlist ',' OCLExpressionCS
 
@@ -486,14 +486,14 @@
     IfExpCS ::= if OCLExpressionCS then OCLExpressionCS else OCLExpressionCS endif
 
     LetExpCS ::= let LetVariableCSlist in OCLExpressionCS
-    
-    LetVariableCSlist ::= LetVariableCS 
+
+    LetVariableCSlist ::= LetVariableCS
     LetVariableCSlist ::= LetVariableCSlist ',' LetVariableCS
 
-    LetVariableCS ::= SimpleName '=' OCLExpressionCS 
-    LetVariableCS ::= SimpleName ':' TypeExpCS '=' OCLExpressionCS 
+    LetVariableCS ::= SimpleName '=' OCLExpressionCS
+    LetVariableCS ::= SimpleName ':' TypeExpCS '=' OCLExpressionCS
 
 	NestedExpCS  ::= '(' OCLExpressionCS ')'
-        
+
     SelfExpCS ::= self
 %End

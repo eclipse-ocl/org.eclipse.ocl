@@ -31,13 +31,13 @@ import com.google.inject.Injector;
 public class BaseStandaloneSetup //implements ISetup
 {
 	private static Injector injector = null;
-	
+
 	public static void doSetup() {
 		if (injector == null) {
 			new BaseStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
 	}
-	
+
 	public static void doTearDown() {
 		injector = null;
 	}
@@ -49,7 +49,7 @@ public class BaseStandaloneSetup //implements ISetup
 		EValidator.Registry.INSTANCE.put(BaseCSPackage.eINSTANCE, BaseCSValidator.INSTANCE);
 		NamedElementCSLabelGenerator.initialize(ILabelGenerator.Registry.INSTANCE);
 	}
-	
+
 	/**
 	 * Return the Injector for this plugin.
 	 */
@@ -83,7 +83,7 @@ public class BaseStandaloneSetup //implements ISetup
 		register(injector);
 		return injector;
 	}
-	
+
 	public void register(Injector injector) {
 //		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
 //		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);

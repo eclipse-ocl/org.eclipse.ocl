@@ -22,7 +22,7 @@ import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
  * BaseCS2AS provides an extensible conversion from CS models to the pivot model.
  */
 public class BaseCS2AS extends CS2AS
-{	
+{
 	public BaseCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}

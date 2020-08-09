@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 
 /**
  * Provides labels for OCLstdlibCS objects.
- * 
+ *
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class OCLstdlibLabelProvider extends BaseLabelProvider {
@@ -28,8 +28,8 @@ public class OCLstdlibLabelProvider extends BaseLabelProvider {
 	public OCLstdlibLabelProvider(@NonNull AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
-	 
+
     String image(JavaClassCS ele) {
       return "/org.eclipse.ocl.xtext.oclstdlib.ui/icons/class_obj.gif";
-    }	 
+    }
 }

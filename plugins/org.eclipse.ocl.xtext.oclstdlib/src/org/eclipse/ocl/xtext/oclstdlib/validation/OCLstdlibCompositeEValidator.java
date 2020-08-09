@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.xtext.validation.CompositeEValidator;
- 
+
 public class OCLstdlibCompositeEValidator extends CompositeEValidator
 {
 	@Override

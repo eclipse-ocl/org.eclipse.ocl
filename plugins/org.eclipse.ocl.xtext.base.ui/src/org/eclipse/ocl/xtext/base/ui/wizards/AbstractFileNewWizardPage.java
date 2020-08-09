@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.wizards;
 
@@ -40,7 +40,7 @@ import org.eclipse.ui.ide.undo.WorkspaceUndoUtil;
  */
 public class AbstractFileNewWizardPage extends WizardPage implements Listener
 {
-	protected final @NonNull AbstractFileNewWizard wizard;	
+	protected final @NonNull AbstractFileNewWizard wizard;
 	protected final @Nullable IResource initialSelection;
 
 	// cache of newly-created file
@@ -91,7 +91,7 @@ public class AbstractFileNewWizardPage extends WizardPage implements Listener
 	 * This method should be called within a workspace modify operation since it
 	 * creates resources.
 	 * </p>
-	 * 
+	 *
 	 * @return the created file resource, or <code>null</code> if the file was
 	 *         not created
 	 */
@@ -158,7 +158,7 @@ public class AbstractFileNewWizardPage extends WizardPage implements Listener
 	/**
 	 * Returns a stream containing the initial contents to be given to new
 	 * complete OCL file resource instances.
-	 * 
+	 *
 	 * @return initial contents to be given to new complete OCL file resource
 	 *         instances
 	 */
@@ -192,7 +192,7 @@ public class AbstractFileNewWizardPage extends WizardPage implements Listener
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
 	 */
 	@Override
@@ -205,7 +205,7 @@ public class AbstractFileNewWizardPage extends WizardPage implements Listener
 
 	/**
 	 * Returns whether this page's controls currently all contain valid values.
-	 * 
+	 *
 	 * @return <code>true</code> if all controls are valid, and
 	 *         <code>false</code> if at least one is invalid
 	 */

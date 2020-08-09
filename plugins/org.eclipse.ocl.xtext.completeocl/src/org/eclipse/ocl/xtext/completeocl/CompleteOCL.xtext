@@ -30,7 +30,7 @@ CompleteOCLDocumentCS returns CompleteOCLDocumentCS:
 	(ownedPackages+=PackageDeclarationCS | ownedContexts+=ContextDeclCS)*;
 
 terminal UNQUOTED_STRING:	// Never forward parsed; just provides a placeholder
-	'£$%^£$%^'				//  for reverse serialisation of embedded OCL 
+	'£$%^£$%^'				//  for reverse serialisation of embedded OCL
 ;
 
 CompleteOCLNavigationOperatorName:
@@ -38,16 +38,16 @@ CompleteOCLNavigationOperatorName:
 
 ClassifierContextDeclCS returns ClassifierContextDeclCS:
 	'context' (ownedSignature=TemplateSignatureCS)? (selfName=UnrestrictedName)?
-	ownedPathName=PathNameCS	
+	ownedPathName=PathNameCS
 	(('inv' ownedInvariants+=ConstraintCS)
 	| ownedDefinitions+=DefCS
 	)+;
-	
+
 /*
- * A Constraint such as 
- * 
+ * A Constraint such as
+ *
  * oclText[IsNull('should be null') : self = null]
- * 
+ *
  * comprises at least the OCL specification of the constraint. The constraint may
  * additionally have a name which may be followed by a parenthesized expression defining an OCL
  * expression to be evaluated to provide an error message.
@@ -71,12 +71,12 @@ DefCS returns DefCS:
 
 /*
  * An operation definition provides an additional operation for its classifier context.
- * 
+ *
  * oclText[static def redundantName: isEven(i : Integer) : Boolean = i mod 2 = 0]
- * 
+ *
  * comprises at least an operation name, return type and an OCL expression that evaluates the operation value.
  * The operation may have parameters and may be declared static in which case there is no oclText[self].
- * 
+ *
  * For compatibility with invariants the definition may have a name that is never used.
  */
 DefOperationCS returns DefOperationCS:
@@ -89,12 +89,12 @@ DefParameterCS returns base::ParameterCS:
 
 /*
  * A property definition provides an additional property for its classifier context.
- * 
+ *
  * oclText[static def redundantName: upperCaseName : Boolean = name.toUpperCase()]
- * 
+ *
  * comprises at least a property name, type and an OCL expression that evaluates the property value.
  * The property may be declared static in which case there is no oclText[self].
- * 
+ *
  * For compatibility with invariants the definition may have a name that is never used.
  */
 DefPropertyCS returns DefPropertyCS:
@@ -106,18 +106,18 @@ ImportCS returns base::ImportCS:
 
 /*
  * An operation context declaration complements an existing operation with additional details.
- * 
+ *
  * oclText[context (T) Stack::pop() : T]
  * oclText[pre NotEmptyPop: size() > 0]
  * oclText[post: size()@pre = size() + 1]
- * 
+ *
  * The operation declaration comprises at least an operation name, which must be qualified with at least a
- * class name. If used outside a package declaration, package name qualification is also needed. 
+ * class name. If used outside a package declaration, package name qualification is also needed.
  * If the return type is omitted OclVoid is used.
  * The operation may also have operation parameters and template parameters.
  * The declaration may be followed by any number of preconditions,
- * and/or postconditions. It may also be followed by a body expression that defines the evaluation. 
- * 
+ * and/or postconditions. It may also be followed by a body expression that defines the evaluation.
+ *
  * For compatibility with invariants the body expression may have a name that is never used.
  */
 OperationContextDeclCS returns OperationContextDeclCS:
@@ -136,25 +136,25 @@ ParameterCS returns base::ParameterCS:
 
 /*
  * A property context declaration complements an existing property with additional details.
- * 
+ *
  * oclText[context (T) Stack::isEmpty : Boolean]
  * oclText[derive IsEmpty: size() = 0]
- * 
+ *
  * The property declaration comprises at least a property name and type.
  * The type must be qualified with at least a class name.
- * If used outside a package declaration, package name qualification is also needed. 
+ * If used outside a package declaration, package name qualification is also needed.
  * The declaration may be followed by a derive constraint and/or an init expression.
- * 
+ *
  * A derive constraint provides an alternate mechanism for defining a class invariant;
  * the only difference is that the property is identified as a constrainedElement. As an
  * invariant the constraint provides an OCL expression that should always be true.
- * 
+ *
  * For a non-derived property, an init expression defines the value to be assigned to the property
- * when its containing object is first created. 
- * 
+ * when its containing object is first created.
+ *
  * For a derived property, an init expression defines the evaluation of the property, which
  * may vary from access to access even for read-only properties.
- * 
+ *
  * NB. RoyalAndLoyal gratuitously names its derived values.
  */
 PropertyContextDeclCS returns PropertyContextDeclCS:

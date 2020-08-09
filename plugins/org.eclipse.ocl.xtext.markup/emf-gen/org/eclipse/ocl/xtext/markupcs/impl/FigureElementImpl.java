@@ -467,7 +467,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	}
 
 	/**
-	 * Start of copy from platform:/resource/org.eclipse.ocl.xtext.markup/model/FigureElement.javacopy 
+	 * Start of copy from platform:/resource/org.eclipse.ocl.xtext.markup/model/FigureElement.javacopy
 	 */
 	@SuppressWarnings("unused") private static int _START_OF_COPY_ = 0;
 
@@ -542,7 +542,7 @@ public class FigureElementImpl extends MarkupElementImpl implements FigureElemen
 	}
 
 	/**
-	 * End of copy from platform:/resource/org.eclipse.ocl.xtext.markup/model/FigureElement.javacopy 
+	 * End of copy from platform:/resource/org.eclipse.ocl.xtext.markup/model/FigureElement.javacopy
 	 */
 	@SuppressWarnings("unused") private static int _END_OF_COPY_ = 0;
 } //FigElementImpl

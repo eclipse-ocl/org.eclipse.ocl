@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateValidator;
  * A OCLinEcoreEObjectValidator enhances the standard EObjectValidator to allow validation failures
  * to obtain a corresponding diagnostic from the validation delegate rather using the default
  * delegate exception message.
- * 
+ *
  * This class may go obsolete once Bug 337792 resolved.
  */
 public class OCLinEcoreEObjectValidator extends OCLDelegateValidator
@@ -30,7 +30,7 @@ public class OCLinEcoreEObjectValidator extends OCLDelegateValidator
 	public OCLinEcoreEObjectValidator() {
 		super(null);
 	}
-	
+
 	// Overridden to invoke OCLDelegateValidator
 	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {

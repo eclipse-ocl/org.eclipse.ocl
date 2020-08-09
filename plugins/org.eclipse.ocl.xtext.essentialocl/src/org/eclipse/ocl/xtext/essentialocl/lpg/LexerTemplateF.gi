@@ -38,18 +38,18 @@
     -- Macros that are be needed in an instance of this template
     --
     $eof_token /.$_EOF_TOKEN./
-    
+
     $additional_interfaces /../
     $super_stream_class /.$file_prefix$LpgLexStream./
     $prs_stream_class /.IPrsStream./
-    
+
     --
     -- Some added macros needed by the modified template
     --
     $lex_stream_class /.LpgLexStream./
-    $super_lexer_class  /.AbstractLexer./        
+    $super_lexer_class  /.AbstractLexer./
     $environment_class /.BasicEnvironment./
-    $adapt_environment /.environment./    
+    $adapt_environment /.environment./
 
     $prs_stream /. // macro prs_stream is deprecated. Use function getPrsStream
                   getPrsStream()./
@@ -137,7 +137,7 @@
     public class $action_type extends $super_lexer_class implements RuleAction$additional_interfaces
     {
         private $super_stream_class lexStream;
-        
+
         private static ParseTable prs = new $prs_type();
         @Override
         public ParseTable getParseTable() { return prs; }
@@ -152,7 +152,7 @@
 
         public int getLeftSpan() { return lexParser.getToken(1); }
         public int getRightSpan() { return lexParser.getLastToken(); }
-  
+
         @Override
         public void resetKeywordLexer()
         {
@@ -166,7 +166,7 @@
         {
             reset(input_chars, filename, 1);
         }
-        
+
         @Override
         public void reset(char[] input_chars, String filename, int tab)
         {
@@ -175,7 +175,7 @@
             resetKeywordLexer();
         }
 
-        
+
         public $action_type($environment_class environment) {
             super($adapt_environment);
             oclEnvironment = environment;
@@ -188,11 +188,11 @@
         public $action_type($environment_class environment, char[] input_chars, String filename, int tab) {
             super($adapt_environment);
             oclEnvironment = environment;
-            reset(input_chars, filename, tab);            
+            reset(input_chars, filename, tab);
         }
 
 		private final $environment_class oclEnvironment;
-        
+
 		public $environment_class getOCLEnvironment() {
         	return oclEnvironment;
         }
@@ -226,7 +226,7 @@
         {
             lexer(null, prsStream);
         }
-        
+
         @Override
         public void lexer(Monitor monitor, $prs_stream_class prsStream)
         {
@@ -240,7 +240,7 @@
         {
             lexer(null, prsStream, start_offset, end_offset);
         }
-        
+
         @Override
         public void lexer(Monitor monitor, $prs_stream_class prsStream, int start_offset, int end_offset)
         {
@@ -274,7 +274,7 @@
                     else break;
                 }
                 prs_stream.makeToken(startLoc, endLoc, 0); // add an error token to the prsStream
-            }        
+            }
         }
     ./
 %End

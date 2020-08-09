@@ -61,10 +61,10 @@ $copyright_contributions
 	derive
 	init
 	--
-	-- the following were introduced in the OCL 2.1 RTF 09-05-02. 
+	-- the following were introduced in the OCL 2.1 RTF 09-05-02.
 	--
 	static
-	
+
 	OclMessage
 %End
 
@@ -90,43 +90,43 @@ $copyright_contributions
 			$setResult($_post);
 		  $EndAction
 		./
-		
+
 		| b o d y
 		/.$BeginAction
 			$setResult($_body);
 		  $EndAction
 		./
-		
+
 		| c o n t e x t
 		/.$BeginAction
 			$setResult($_context);
 		  $EndAction
 		./
-		
+
 		| p a c k a g e
 		/.$BeginAction
 			$setResult($_package);
 		  $EndAction
 		./
-		
+
 		| e n d p a c k a g e
 		/.$BeginAction
 			$setResult($_endpackage);
 		  $EndAction
 		./
-		
+
 		| d e f
 		/.$BeginAction
 			$setResult($_def);
 		  $EndAction
 		./
-		
+
 		| d e r i v e
 		/.$BeginAction
 			$setResult($_derive);
 		  $EndAction
 		./
-		
+
 		| i n i t
 		/.$BeginAction
 			$setResult($_init);

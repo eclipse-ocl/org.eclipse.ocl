@@ -52,24 +52,24 @@ public abstract class CompleteOCLLoader
 	protected final @NonNull OCLInternal ocl;
 	protected final @NonNull List<Model> oclModels = new ArrayList<Model>();
 	protected final @NonNull Set<EPackage> mmPackages;
-	
+
 	public CompleteOCLLoader(@NonNull EnvironmentFactory environmentFactory) {
 		this.ocl = OCLInternal.newInstance((EnvironmentFactoryInternal)environmentFactory);
 		this.mmPackages = new HashSet<EPackage>();
 	}
-	
+
 	public void dispose() {
 		ocl.dispose();
 	}
-	
+
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ocl.getEnvironmentFactory();
 	}
-	
+
 	public @NonNull MetamodelManager getMetamodelManager() {
 		return ocl.getMetamodelManager();
 	}
-	
+
 	public boolean loadMetamodels() {
 		for (Resource resource : ocl.getResourceSet().getResources()) {
 			assert resource != null;
@@ -182,7 +182,7 @@ public abstract class CompleteOCLLoader
 				}
 			}
 			if (retryURI != null) {
-				xtextResource = (CSResource) resourceSet.getResource(retryURI, true);			
+				xtextResource = (CSResource) resourceSet.getResource(retryURI, true);
 			}
 			else {
 				throw e;

@@ -146,7 +146,7 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 	}
 
 	private static final Logger logger = Logger.getLogger(ExtensibleQuickfixProvider.class);
-	
+
 	@Inject
 	private ISimilarityMatcher similarityMatcher;
 
@@ -158,16 +158,16 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 
 	@Inject
 	private IScopeProvider scopeProvider;
-	
+
 	@Inject
 	protected IQualifiedNameConverter qualifiedNameConverter;
-	
+
 	@Inject
 	protected IValueConverterService valueConverter;
-	
+
 	@Inject
 	private ICaseInsensitivityHelper caseInsensitivityHelper;
-	
+
 	private CrossReference findCrossReference(EObject context, INode node) {
 		if (node == null || (node.hasDirectSemanticElement() && context.equals(node.getSemanticElement())))
 			return null;
@@ -197,7 +197,7 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 			Issue issue, IssueResolutionAcceptor issueResolutionAcceptor) {
 		return new QuickfixProcessor(xtextDocument, issue, issueResolutionAcceptor);
 	}
-	
+
 	protected Iterable<IEObjectDescription> queryScope(IScope scope) {
 		return scope.getAllElements();
 	}
@@ -235,9 +235,9 @@ public class ExtensibleQuickfixProvider extends AbstractDeclarativeQuickfixProvi
 			} else
 				return super.getResolutions(issue);
 		} finally {
-			stopWatch.resetAndLog("#getResolutions");			
+			stopWatch.resetAndLog("#getResolutions");
 		}
-		
+
 	}
 
 	@Override

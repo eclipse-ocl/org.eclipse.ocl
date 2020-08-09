@@ -17,7 +17,7 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  * This class contains custom formatting description.
  */
 public class MarkupFormatter extends AbstractDeclarativeFormatter {
-	
+
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 // It's usually a good idea to activate the following three statements.

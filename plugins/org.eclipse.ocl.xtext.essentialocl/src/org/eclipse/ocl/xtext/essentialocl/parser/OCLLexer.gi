@@ -9,7 +9,7 @@
 -- *
 -- * Contributors:
 -- *   See (or edit) Notice Declaration below
--- *   
+-- *
 -- * </copyright>
 -- */
 --
@@ -87,7 +87,7 @@
 					makeToken($_CARETCARET);
 		  $EndAction
 		./
-		
+
 	Token ::= '?'
 		/.$BeginAction
 					makeToken($_QUESTIONMARK);

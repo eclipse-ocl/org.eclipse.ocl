@@ -24,7 +24,7 @@ import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 
 /**
  * customization of the default outline structure
- * 
+ *
  */
 public class CompleteOCLOutlineTreeProvider extends EssentialOCLOutlineTreeProvider
 {
@@ -44,7 +44,7 @@ public class CompleteOCLOutlineTreeProvider extends EssentialOCLOutlineTreeProvi
 			createNode(parentNode, csChild);
 		}
 	}
-	
+
 	protected void _createChildren(IOutlineNode parentNode, PackageDeclarationCS csElement) {
 		for (ElementCS csChild : csElement.getOwnedInvariants()) {
 			createNode(parentNode, csChild);
@@ -53,19 +53,19 @@ public class CompleteOCLOutlineTreeProvider extends EssentialOCLOutlineTreeProvi
 			createNode(parentNode, csChild);
 		}
 	}
-	
+
 //	protected void _createChildren(IOutlineNode parentNode, PropertyContextDeclCS ele) {
 //		createChildren(parentNode, (EObject)ele);
 //	}
-	
+
 	protected void _createNode(IOutlineNode parentNode, ClassifierContextDeclCS ele) {
 		_createNode(parentNode, (EObject)ele);
 	}
-	
+
 	protected void _createNode(IOutlineNode parentNode, OperationContextDeclCS ele) {
 		_createNode(parentNode, (EObject)ele);
 	}
-	
+
 	protected void _createNode(IOutlineNode parentNode, PropertyContextDeclCS ele) {
 		_createNode(parentNode, (EObject)ele);
 	}
@@ -73,10 +73,10 @@ public class CompleteOCLOutlineTreeProvider extends EssentialOCLOutlineTreeProvi
 	protected void _createNode(DocumentRootNode parentNode, PackageDeclarationCS ele) {
 		_createNode(parentNode, (EObject)ele);
 	}
-	
+
 	protected void _createNode(IOutlineNode parentNode, PackageDeclarationCS ele) {
 		_createNode(parentNode, (EObject)ele);
 	}
 
-	protected void _createNode(IOutlineNode parentNode, PathNameCS ele) {}	
+	protected void _createNode(IOutlineNode parentNode, PathNameCS ele) {}
 }

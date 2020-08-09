@@ -236,7 +236,7 @@ public class InfixExpCSImpl
 			return super.accept(visitor);
 		}
 	}
-	
+
 	private boolean hasArgument = false;
 
 	@Override
@@ -280,7 +280,7 @@ public class InfixExpCSImpl
 		}
 		return source;
 	}
-	
+
 	@Override
 	public boolean isLocalRightAncestorOf(@NonNull ExpCS csExp) {	// csExp should be to the right of this for associativity resolution
 		return !csExp.isLocalLeftAncestorOf(this);

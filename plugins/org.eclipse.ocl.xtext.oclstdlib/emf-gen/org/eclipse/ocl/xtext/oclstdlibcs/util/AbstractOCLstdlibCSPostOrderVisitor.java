@@ -34,7 +34,7 @@ public abstract class AbstractOCLstdlibCSPostOrderVisitor
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractOCLstdlibCSPostOrderVisitor(@NonNull CS2ASConversion context) {

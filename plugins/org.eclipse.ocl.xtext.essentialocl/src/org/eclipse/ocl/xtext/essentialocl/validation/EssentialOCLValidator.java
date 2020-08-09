@@ -14,12 +14,12 @@ package org.eclipse.ocl.xtext.essentialocl.validation;
 
 
 /**
- * This class contains custom validation rules. 
+ * This class contains custom validation rules.
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class EssentialOCLValidator extends AbstractEssentialOCLValidator {
-	
+
 //	public static final String INVALID_NAME = "invalidName";
 //
 //	@Check
@@ -30,5 +30,5 @@ public class EssentialOCLValidator extends AbstractEssentialOCLValidator {
 //					INVALID_NAME);
 //		}
 //	}
-	
+
 }

@@ -55,7 +55,7 @@ public abstract class AbstractFileNewWizard extends Wizard implements INewWizard
 	/**
 	 * Returns a string containing the initial contents to be given to new
 	 * complete OCL file resource instances.
-	 * 
+	 *
 	 * @return contents to be given to new complete OCL file resource instances
 	 */
 	public abstract @NonNull String getInitialContentsAsString(@NonNull IFile newFile, @NonNull AbstractFileDialog dialog);
@@ -63,7 +63,7 @@ public abstract class AbstractFileNewWizard extends Wizard implements INewWizard
 	/**
 	 * Returns the extension to display in the file name specification visual
 	 * component group.
-	 * 
+	 *
 	 * @return the extension to display in the file name specification visual
 	 *         component group
 	 */
@@ -72,7 +72,7 @@ public abstract class AbstractFileNewWizard extends Wizard implements INewWizard
 	/**
 	 * Returns the name to display in the file name specification visual
 	 * component group.
-	 * 
+	 *
 	 * @return the name to display in the file name specification visual
 	 *         component group
 	 */
@@ -81,7 +81,7 @@ public abstract class AbstractFileNewWizard extends Wizard implements INewWizard
 	/**
 	 * Returns the label to display in the file name specification visual
 	 * component group.
-	 * 
+	 *
 	 * @return the label to display in the file name specification visual
 	 *         component group
 	 */
@@ -137,7 +137,7 @@ public abstract class AbstractFileNewWizard extends Wizard implements INewWizard
 
 	/**
 	 * Performs finish action of this wizard.
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override
@@ -148,7 +148,7 @@ public abstract class AbstractFileNewWizard extends Wizard implements INewWizard
 		} catch (PartInitException e) {
 			BaseUiPluginHelper.log(e);
 			return false;
-		} 
+		}
 		return true;
 	}
 }

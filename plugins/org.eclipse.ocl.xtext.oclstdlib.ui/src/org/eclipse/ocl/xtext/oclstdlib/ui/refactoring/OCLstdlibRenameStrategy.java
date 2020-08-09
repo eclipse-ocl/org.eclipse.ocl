@@ -18,14 +18,14 @@ package org.eclipse.ocl.xtext.oclstdlib.ui.refactoring;
 public class OCLstdlibRenameStrategy { /*extends AbstractRenameStrategy {
 
 	public static class Provider implements IRenameStrategy.Provider
-	{		
+	{
 		@Inject
 		private ILocationInFileProvider locationProvider;
- 
+
 		public IRenameStrategy get(EObject targetEObject, IRenameElementContext renameElementContext) {
 			if (targetEObject instanceof NamedElement)
 				return new OCLstdlibRenameStrategy(renameElementContext, (NamedElement) targetEObject, locationProvider);
-			else 
+			else
 				return null;
 		}
 	}
@@ -64,5 +64,5 @@ public class OCLstdlibRenameStrategy { /*extends AbstractRenameStrategy {
 		targetElement.eSet(nameAttribute, newName);
 		return targetElement;
 	} */
-	
+
 }

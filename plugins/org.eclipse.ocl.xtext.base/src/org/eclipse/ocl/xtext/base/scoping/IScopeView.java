@@ -20,7 +20,7 @@ import org.eclipse.xtext.scoping.IScope;
  * resolution.
  */
 public interface IScopeView extends ScopeView, IScope
-{	
+{
 	@Override
 	@NonNull IScopeView getParent();
 

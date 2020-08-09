@@ -77,7 +77,7 @@ public class EssentialOCLLabelProvider extends BaseLabelProvider
 		}
 		else {
 			super.appendType(s, type);
-		}	
+		}
 	}
 
 /*	protected String text(InfixExpCS ele) {

@@ -27,5 +27,5 @@ public class MarkupIdeSetup extends MarkupStandaloneSetup {
 	public Injector createInjector() {
 		return Guice.createInjector(Modules2.mixin(new MarkupRuntimeModule(), new MarkupIdeModule()));
 	}
-	
+
 }

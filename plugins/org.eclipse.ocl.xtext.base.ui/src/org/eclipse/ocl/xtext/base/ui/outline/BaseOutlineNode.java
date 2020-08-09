@@ -35,7 +35,7 @@ public class BaseOutlineNode extends EObjectNode
 	public URI getEObjectURI() {
 		return csURI;
 	}
-	
+
 	public boolean isImplicit() {
 		return isImplicit;
 	}

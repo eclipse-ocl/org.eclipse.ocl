@@ -31,7 +31,7 @@ import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 
 public class BaseScoping
-{	
+{
 	public static void init() {
 		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
 		registry.put(BaseCSPackage.Literals.ELEMENT_CS, ElementCSAttribution.INSTANCE);
@@ -42,13 +42,13 @@ public class BaseScoping
 		CS2AS.addUnresolvedProxyMessageProvider(new SimpleNamedElementRefCSTypeUnresolvedProxyMessageProvider());
 		CS2AS.addUnresolvedProxyMessageProvider(new TypedTypeRefCSTypeUnresolvedProxyMessageProvider());
 	}
-	
+
 	private static final class SimpleNamedElementRefCSTypeUnresolvedProxyMessageProvider extends AbstractUnresolvedProxyMessageProvider
-	{		
+	{
 		private SimpleNamedElementRefCSTypeUnresolvedProxyMessageProvider() {
 			super(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
 		}
-		
+
 		@Override
 		public @Nullable String getMessage(@NonNull EObject context, @NonNull String linkText) {
 			PathElementCS pathElement = (PathElementCS)context;
@@ -67,13 +67,13 @@ public class BaseScoping
 			return CS2AS.getMessageBinder().bind(context, messageTemplate, element, linkText);
 		}
 	}
-	
+
 	private static final class TypedTypeRefCSTypeUnresolvedProxyMessageProvider extends AbstractUnresolvedProxyMessageProvider
-	{		
+	{
 		private TypedTypeRefCSTypeUnresolvedProxyMessageProvider() {
 			super(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__REFERRED_TYPE);
 		}
-		
+
 		@Override
 		public @Nullable String getMessage(@NonNull EObject context, @NonNull String linkText) {
 			@SuppressWarnings("null") @NonNull String messageTemplate = PivotMessagesInternal.UnresolvedType_ERROR_;
