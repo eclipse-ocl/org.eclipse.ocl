@@ -7,4 +7,35 @@
     xsi:schemaLocation="http://www.eclipse.org/ocl/2020/Idioms ../../../../../../../org.eclipse.ocl.xtext.base/model/Idioms.ecore"
     name="OCLinEcore">
   <imports href="../../../../../../../org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.idioms#/"/>
+  <ownedIdioms
+      name="COLON in OperationCS">
+    <ownedSubIdioms
+        locator="//@ownedLocators.0"
+        name="COLON in OperationCS">
+      <segments
+          xsi:type="idioms:StringSegment"
+          href="#//@ownedSegments.0"/>
+      <segments
+          xsi:type="idioms:ValueSegment"
+          href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
+      <segments
+          xsi:type="idioms:StringSegment"
+          href="#//@ownedSegments.1"/>
+    </ownedSubIdioms>
+  </ownedIdioms>
+  <ownedLocators
+      xsi:type="idioms:KeywordLocator"
+      name="COLON in OperationCS"
+      string=":">
+    <inEClass
+        href="http://www.eclipse.org/ocl/2015/BaseCS#//OperationCS"/>
+  </ownedLocators>
+  <ownedSegments
+      xsi:type="idioms:StringSegment"
+      name="XX"
+      string="xx"/>
+  <ownedSegments
+      xsi:type="idioms:StringSegment"
+      name="YY"
+      string="yy"/>
 </idioms:IdiomModel>

@@ -18,7 +18,7 @@
   </ownedIdioms>
   <ownedIdioms name="PARENTHESES">
     <ownedSubIdioms locator="//@ownedLocators.9" name="OPEN PARENTHESIS" segments="//@ownedSegments.1 //@ownedSegments.8 //@ownedSegments.2"/>
-    <ownedSubIdioms locator="//@ownedLocators.3" name="CLOSE PARENTHESIS" segments="//@ownedSegments.1 //@ownedSegments.8 //@ownedSegments.2"/>
+    <ownedSubIdioms locator="//@ownedLocators.3" name="CLOSE PARENTHESIS" segments="//@ownedSegments.1 //@ownedSegments.8"/>
   </ownedIdioms>
   <ownedIdioms name="SEMI COLON">
     <ownedSubIdioms locator="//@ownedLocators.11" name="SEMI COLON" segments="//@ownedSegments.1 //@ownedSegments.8 //@ownedSegments.5"/>

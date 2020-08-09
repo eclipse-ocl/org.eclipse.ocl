@@ -191,7 +191,6 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	@Override
 	public boolean matches(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
 		if (serializationNode == serializationRule.getRootSerializationNode()) {
-			EClass eClass = getEClass();			// Resolves proxy
 			EClass producedEClass = serializationRule.getProducedEClass();
 			if (eClass.isSuperTypeOf(producedEClass)) {
 				return true;
@@ -202,7 +201,6 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 
 	@Override
 	public String toString() {
-		EClass eClass = getEClass();
 		return eClass.getEPackage().getName() + "::" + eClass.getName();
 	}
 } //ProducedEClassLocatorImpl

@@ -13,7 +13,9 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.emf.common.EMFPlugin;
@@ -21,6 +23,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class AbstractIdiomsProvider implements IdiomsProvider
@@ -35,14 +39,23 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 				url = FileLocator.resolve(url);
 			}
 			catch (IOException e) {
-				throw new IllegalStateException("Failed to resolvee " + path + " wrt " + contextClass.getName(), e);
+				throw new IllegalStateException("Failed to resolve " + path + " wrt " + contextClass.getName(), e);
 			}
 		}
 		URI uri = URI.createFileURI(url.getPath());
 		ResourceSet resourceSet = new ResourceSetImpl();
 		IdiomsPackage.eINSTANCE.getClass();
-		Resource resource = resourceSet.getResource(uri, true);
-		return (IdiomModel)resource.getContents().get(0);
+	//	Resource resource = resourceSet.getResource(uri, true);
+		Resource resource = resourceSet.createResource(uri);
+		Map<Object,Object> options = new HashMap<>();
+		options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
+		try {
+			resource.load(options);
+			EcoreUtil.resolveAll(resourceSet);				// Avoid no-equality of proxies
+			return (IdiomModel)resource.getContents().get(0);	//OPTION_DEFER_IDREF_RESOLUTION
+		} catch (IOException e) {
+			throw new IllegalStateException("Failed to load " + uri, e);
+		}
 	}
 
 	protected /*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms(/*@NonNull*/ IdiomModel rootIdiomModel) {

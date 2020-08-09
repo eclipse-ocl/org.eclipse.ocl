@@ -248,20 +248,37 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 
 	@Override
 	public boolean matches(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+		String value = null;
+		if (serializationNode instanceof AssignedKeywordSerializationNode) {
+			value = ((AssignedKeywordSerializationNode)serializationNode).getValue();
+		}
+		else if (serializationNode instanceof UnassignedKeywordSerializationNode) {
+			value = ((UnassignedKeywordSerializationNode)serializationNode).getValue();
+		}
+		if (!string.equals(value)) {
+			return false;
+		}
+		if (":".equals(string) && (inEClass != null)) {
+			getClass();
+		}
 		if ((inEClass != null) && !inEClass.isSuperTypeOf(serializationRule.getProducedEClass())) {
 			return false;
 		}
-		if (serializationNode instanceof AssignedKeywordSerializationNode) {
-			return string.equals(((AssignedKeywordSerializationNode)serializationNode).getValue());
-		}
-		else if (serializationNode instanceof UnassignedKeywordSerializationNode) {
-			return string.equals(((UnassignedKeywordSerializationNode)serializationNode).getValue());
-		}
-		return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "'" + Strings.convertToJavaString(string) + "'";
+		StringBuilder s = new StringBuilder();
+		s.append("'");
+		s.append(Strings.convertToJavaString(string));
+		s.append("'");
+		if (inEClass != null) {
+			s.append(" in ");
+			s.append(inEClass.getEPackage().getName());
+			s.append("::");
+			s.append(inEClass.getName());
+		}
+		return s.toString();
 	}
 } //KeywordLocatorImpl

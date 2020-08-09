@@ -130,7 +130,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		@Nullable IdiomMatch @NonNull [] idiomMatches = new @Nullable IdiomMatch[Iterables.size(idioms)];
 		getIdiomMatches(rootSerializationNode, idioms, idiomMatches);
 		//
-		//	Install the subdioms for each first full idiom match.
+		//	Install the subidioms for each first full idiom match.
 		//
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = new HashMap<>();
 		for (@Nullable IdiomMatch idiomMatch : idiomMatches) {
