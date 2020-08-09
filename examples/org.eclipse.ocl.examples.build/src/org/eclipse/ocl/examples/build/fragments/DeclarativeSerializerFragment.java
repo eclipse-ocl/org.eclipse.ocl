@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
-import org.apache.log4j.Logger;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.serializer.ISerializer;
@@ -26,17 +25,17 @@ import com.google.inject.Inject;
  * backtracking serializer and the Xtend-dependent formatting specifiation approach of the 'new infrastructure'
  * by a largely statically determined serializer and declarative idiom-based formatter.
  */
-@SuppressWarnings("all")
+@SuppressWarnings("restriction")
 public class DeclarativeSerializerFragment extends SerializerFragment2
 {
-	private static final Logger LOG = Logger.getLogger(DeclarativeSerializerFragment.class);
-
 	@Inject
 	private XtextGeneratorNaming xtextGeneratorNaming;
 
 	@Override
 	public void generate() {
-		new GuiceModuleAccess.BindingFactory().addTypeToType(TypeReference.typeRef(ISerializer.class), TypeReference.typeRef(DeclarativeSerializer.class)).contributeTo(this.getLanguage().getRuntimeGenModule());
+		GuiceModuleAccess.BindingFactory bindingFactory = new GuiceModuleAccess.BindingFactory();
+		GuiceModuleAccess runtimeGenModule = this.getLanguage().getRuntimeGenModule();
+		bindingFactory.addTypeToType(TypeReference.typeRef(ISerializer.class), TypeReference.typeRef(DeclarativeSerializer.class)).contributeTo(runtimeGenModule);
 	}
 
 	@Override

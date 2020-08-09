@@ -95,7 +95,9 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			formatter = org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment {}
+			formatter = org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragmentXtend {
+				generateStub = true
+			}
 			// *.xtextbin support on Xtext 2.3		
 			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}
 		}

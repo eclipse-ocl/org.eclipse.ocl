@@ -45,6 +45,9 @@
         eType="#//SubIdiom" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IdiomModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="#//IdiomModel"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIdioms" upperBound="-1"
         eType="#//Idiom" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedLocators" upperBound="-1"

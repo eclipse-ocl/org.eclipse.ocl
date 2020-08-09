@@ -107,16 +107,25 @@ public class UserElementSerializer
 	 * Serialize a serializationNode to the serializationBuilder.
 	 */
 	public void serializeNode(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializationNode) {
-		SubIdiom idiom = getSubIdiom(serializationNode);
-		//idiom.serialize(value, serializationBuilder);
+		SubIdiom subIdiom = getSubIdiom(serializationNode);
 		if (serializationNode.getMultiplicativeCardinality().isOne()) {
-			idiom.serialize(serializationNode, this, serializationBuilder);
+			if (subIdiom != null) {
+				subIdiom.serialize(serializationNode, this, serializationBuilder);
+			}
+			else {
+				serializationNode.serialize(this, serializationBuilder);
+			}
 		}
 		else {
 			CardinalityVariable variable = serializationRule.getVariable(serializationNode);
 			Integer value = dynamicRuleMatch.getIntegerSolution(variable);
 			for (int i = 0; i < value.intValue(); i++) {
-				idiom.serialize(serializationNode, this, serializationBuilder);
+				if (subIdiom != null) {
+					subIdiom.serialize(serializationNode, this, serializationBuilder);
+				}
+				else {
+					serializationNode.serialize(this, serializationBuilder);
+				}
 			}
 		}
 	}
@@ -182,7 +191,7 @@ public class UserElementSerializer
 		return SubIdiom.DEFAULT;
 	} */
 
-	public @NonNull SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
+	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
 		return serializationRule.getBasicSerializationRule().getSubIdiom(serializationNode);
 	}
 }

@@ -18,6 +18,7 @@ import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingDiagnosticMessageProvider;
@@ -29,6 +30,7 @@ import org.eclipse.ocl.xtext.base.services.PivotResourceServiceProvider;
 import org.eclipse.ocl.xtext.base.utilities.CS2ASLinker;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
+import org.eclipse.ocl.xtext.completeocl.formatting.CompleteOCLIdiomsProvider;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLParser;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLLexer;
@@ -197,6 +199,11 @@ public abstract class AbstractCompleteOCLRuntimeModule extends DefaultRuntimeMod
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public void configureIResourceDescriptionsPersisted(Binder binder) {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment
+	public Class<? extends IdiomsProvider> bindIdiomsProvider() {
+		return CompleteOCLIdiomsProvider.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment

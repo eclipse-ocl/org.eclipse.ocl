@@ -54,6 +54,8 @@
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//IdiomModel">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/imports"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//IdiomModel/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/ownedIdioms"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/ownedLocators"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/ownedSegments"/>

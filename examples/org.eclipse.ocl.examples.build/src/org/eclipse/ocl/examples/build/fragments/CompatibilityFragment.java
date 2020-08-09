@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 /**
  * Provide the Xtext 2.4+ *.xtextbin support for Xtext 2.3
  */
+@SuppressWarnings("restriction")
 public class CompatibilityFragment extends AbstractXtextGeneratorFragment
 {
 	@Inject

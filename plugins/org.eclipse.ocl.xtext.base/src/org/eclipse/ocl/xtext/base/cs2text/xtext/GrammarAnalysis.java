@@ -35,6 +35,8 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -63,6 +65,9 @@ public class GrammarAnalysis
 
 	@Inject
 	private @NonNull GrammarProvider grammarProvider;
+
+	@Inject
+	private @NonNull IdiomsProvider idiomsProvider;
 
 	/**
 	 * The rule analysis for each rule.
@@ -417,6 +422,10 @@ public class GrammarAnalysis
 			values2enumerationValue.put(values, enumerationValue);
 		}
 		return enumerationValue;
+	}
+
+	public @NonNull Iterable<@NonNull Idiom> getIdioms() {
+		return idiomsProvider.getIdioms();
 	}
 
 	public @NonNull List<@NonNull ParserRuleAnalysis> getProducingRuleAnalyses(@NonNull EClass eClass) {

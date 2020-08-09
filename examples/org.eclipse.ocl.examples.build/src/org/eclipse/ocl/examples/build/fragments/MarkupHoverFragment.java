@@ -28,6 +28,7 @@ import com.google.inject.Inject;
 /**
  * Support Markup in hover text.
  */
+@SuppressWarnings("restriction")
 public class MarkupHoverFragment  extends AbstractXtextGeneratorFragment
 {
 	@Inject

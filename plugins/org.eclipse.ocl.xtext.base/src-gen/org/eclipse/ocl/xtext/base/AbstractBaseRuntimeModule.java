@@ -17,6 +17,8 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.formatting.BaseIdiomsProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseParser;
 import org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseLexer;
@@ -178,6 +180,11 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public void configureIResourceDescriptionsPersisted(Binder binder) {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment
+	public Class<? extends IdiomsProvider> bindIdiomsProvider() {
+		return BaseIdiomsProvider.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.CompatibilityFragment

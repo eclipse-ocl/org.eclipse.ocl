@@ -96,7 +96,9 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			formatter = org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment {}
+			formatter = org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragmentXtend {
+				generateStub = true
+			}
 			// EssentialOCL bindings 
 			fragment = org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment {}
 			// Support Markup and Hover text 

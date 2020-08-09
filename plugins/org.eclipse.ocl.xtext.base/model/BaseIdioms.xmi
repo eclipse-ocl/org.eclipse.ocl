@@ -5,20 +5,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:idioms="http://www.eclipse.org/ocl/2020/Idioms"
-    xsi:schemaLocation="http://www.eclipse.org/ocl/2020/Idioms Idioms.ecore">
+    xsi:schemaLocation="http://www.eclipse.org/ocl/2020/Idioms Idioms.ecore"
+    name="Base">
   <ownedIdioms
       name="COMMENTED RULE">
     <ownedSubIdioms
         locator="//@ownedLocators.12"
         name="COMMENTED RULE"
         segments="//@ownedSegments.0 //@ownedSegments.8"/>
-  </ownedIdioms>
-  <ownedIdioms
-      name="VALUE">
-    <ownedSubIdioms
-        locator="//@ownedLocators.13"
-        name="VALUE"
-        segments="//@ownedSegments.8"/>
   </ownedIdioms>
   <ownedIdioms
       name="BRACES">
@@ -144,10 +138,6 @@
     <eClass
         href="http://www.eclipse.org/ocl/2015/BaseCS#//ModelElementCS"/>
   </ownedLocators>
-  <ownedLocators
-      xsi:type="idioms:KeywordLocator"
-      name="GARBAGE"
-      string="xyzzy%%"/>
   <ownedSegments
       xsi:type="idioms:CustomSegment"
       name="BASE COMMENT"

@@ -482,7 +482,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getIdiomModel_OwnedIdioms()
+	public EReference getIdiomModel_Imports()
 	{
 		return (EReference)idiomModelEClass.getEStructuralFeatures().get(0);
 	}
@@ -493,9 +493,31 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
+	public EAttribute getIdiomModel_Name()
+	{
+		return (EAttribute)idiomModelEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getIdiomModel_OwnedIdioms()
+	{
+		return (EReference)idiomModelEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EReference getIdiomModel_OwnedLocators()
 	{
-		return (EReference)idiomModelEClass.getEStructuralFeatures().get(1);
+		return (EReference)idiomModelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -506,7 +528,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	@Override
 	public EReference getIdiomModel_OwnedSegments()
 	{
-		return (EReference)idiomModelEClass.getEStructuralFeatures().get(2);
+		return (EReference)idiomModelEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -872,8 +894,10 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 
 		idiomModelEClass = createEClass(7);
 		createEReference(idiomModelEClass, 0);
-		createEReference(idiomModelEClass, 1);
+		createEAttribute(idiomModelEClass, 1);
 		createEReference(idiomModelEClass, 2);
+		createEReference(idiomModelEClass, 3);
+		createEReference(idiomModelEClass, 4);
 
 		locatorEClass = createEClass(8);
 		createEAttribute(locatorEClass, 0);
@@ -1003,6 +1027,8 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		addEParameter(op, this.getBasicSerializationRule(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(idiomModelEClass, IdiomModel.class, "IdiomModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getIdiomModel_Imports(), this.getIdiomModel(), null, "imports", null, 0, -1, IdiomModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getIdiomModel_Name(), ecorePackage.getEString(), "name", null, 1, 1, IdiomModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIdiomModel_OwnedIdioms(), this.getIdiom(), null, "ownedIdioms", null, 0, -1, IdiomModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIdiomModel_OwnedLocators(), this.getLocator(), null, "ownedLocators", null, 0, -1, IdiomModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIdiomModel_OwnedSegments(), this.getSegment(), null, "ownedSegments", null, 0, -1, IdiomModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

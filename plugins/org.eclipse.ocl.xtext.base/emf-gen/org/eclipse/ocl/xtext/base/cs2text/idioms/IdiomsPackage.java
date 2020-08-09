@@ -479,6 +479,28 @@ public interface IdiomsPackage extends EPackage
 	EClass getIdiomModel();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getImports <em>Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Imports</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getImports()
+	 * @see #getIdiomModel()
+	 * @generated
+	 */
+	EReference getIdiomModel_Imports();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getName()
+	 * @see #getIdiomModel()
+	 * @generated
+	 */
+	EAttribute getIdiomModel_Name();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel#getOwnedIdioms <em>Owned Idioms</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -972,6 +994,22 @@ public interface IdiomsPackage extends EPackage
 		 * @generated
 		 */
 		EClass IDIOM_MODEL = eINSTANCE.getIdiomModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Imports</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference IDIOM_MODEL__IMPORTS = eINSTANCE.getIdiomModel_Imports();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IDIOM_MODEL__NAME = eINSTANCE.getIdiomModel_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Idioms</b></em>' containment reference list feature.

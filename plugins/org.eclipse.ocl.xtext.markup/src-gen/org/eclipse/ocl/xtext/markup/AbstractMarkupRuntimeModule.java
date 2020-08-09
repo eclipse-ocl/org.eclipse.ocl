@@ -17,6 +17,8 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.markup.formatting.MarkupIdiomsProvider;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupParser;
 import org.eclipse.ocl.xtext.markup.parser.antlr.internal.InternalMarkupLexer;
@@ -178,6 +180,11 @@ public abstract class AbstractMarkupRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public void configureIResourceDescriptionsPersisted(Binder binder) {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment
+	public Class<? extends IdiomsProvider> bindIdiomsProvider() {
+		return MarkupIdiomsProvider.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.CompatibilityFragment
