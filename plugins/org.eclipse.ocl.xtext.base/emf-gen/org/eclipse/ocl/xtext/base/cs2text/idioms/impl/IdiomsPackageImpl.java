@@ -17,17 +17,14 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-
-import org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
@@ -48,7 +45,6 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
-
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
@@ -64,13 +60,6 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass abstractCommentSegmentEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass assignmentLocatorEClass = null;
 
 	/**
@@ -78,7 +67,21 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass commentSegmentSupportEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass customSegmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass customSegmentSupportEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -303,50 +306,6 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getAbstractCommentSegment()
-	{
-		return abstractCommentSegmentEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getAbstractCommentSegment_Epilogue()
-	{
-		return (EAttribute)abstractCommentSegmentEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getAbstractCommentSegment_Indentation()
-	{
-		return (EAttribute)abstractCommentSegmentEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getAbstractCommentSegment_Prologue()
-	{
-		return (EAttribute)abstractCommentSegmentEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getAssignmentLocator()
 	{
 		return assignmentLocatorEClass;
@@ -369,6 +328,50 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
+	public EClass getCommentSegmentSupport()
+	{
+		return commentSegmentSupportEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCommentSegmentSupport_Epilogue()
+	{
+		return (EAttribute)commentSegmentSupportEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCommentSegmentSupport_Indentation()
+	{
+		return (EAttribute)commentSegmentSupportEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCommentSegmentSupport_Prologue()
+	{
+		return (EAttribute)commentSegmentSupportEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getCustomSegment()
 	{
 		return customSegmentEClass;
@@ -380,9 +383,9 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getCustomSegment_Delegate()
+	public EAttribute getCustomSegment_SupportClass()
 	{
-		return (EReference)customSegmentEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)customSegmentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -391,9 +394,20 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCustomSegment_DelegateClass()
+	public EAttribute getCustomSegment_SupportClassName()
 	{
 		return (EAttribute)customSegmentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getCustomSegmentSupport()
+	{
+		return customSegmentSupportEClass;
 	}
 
 	/**
@@ -834,73 +848,75 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		isCreated = true;
 
 		// Create classes and their features
-		abstractCommentSegmentEClass = createEClass(0);
-		createEAttribute(abstractCommentSegmentEClass, 1);
-		createEAttribute(abstractCommentSegmentEClass, 2);
-		createEAttribute(abstractCommentSegmentEClass, 3);
-
-		assignmentLocatorEClass = createEClass(1);
+		assignmentLocatorEClass = createEClass(0);
 		createEReference(assignmentLocatorEClass, 1);
 
+		commentSegmentSupportEClass = createEClass(1);
+		createEAttribute(commentSegmentSupportEClass, 0);
+		createEAttribute(commentSegmentSupportEClass, 1);
+		createEAttribute(commentSegmentSupportEClass, 2);
+
 		customSegmentEClass = createEClass(2);
-		createEReference(customSegmentEClass, 1);
+		createEAttribute(customSegmentEClass, 1);
 		createEAttribute(customSegmentEClass, 2);
 
-		defaultLocatorEClass = createEClass(3);
+		customSegmentSupportEClass = createEClass(3);
 
-		halfNewLineSegmentEClass = createEClass(4);
+		defaultLocatorEClass = createEClass(4);
 
-		idiomEClass = createEClass(5);
+		halfNewLineSegmentEClass = createEClass(5);
+
+		idiomEClass = createEClass(6);
 		createEAttribute(idiomEClass, 0);
 		createEReference(idiomEClass, 1);
 
-		idiomModelEClass = createEClass(6);
+		idiomModelEClass = createEClass(7);
 		createEReference(idiomModelEClass, 0);
 		createEReference(idiomModelEClass, 1);
 		createEReference(idiomModelEClass, 2);
 
-		locatorEClass = createEClass(7);
+		locatorEClass = createEClass(8);
 		createEAttribute(locatorEClass, 0);
 
-		keywordLocatorEClass = createEClass(8);
+		keywordLocatorEClass = createEClass(9);
 		createEAttribute(keywordLocatorEClass, 1);
 		createEReference(keywordLocatorEClass, 2);
 
-		newLineSegmentEClass = createEClass(9);
+		newLineSegmentEClass = createEClass(10);
 
-		noSpaceSegmentEClass = createEClass(10);
+		noSpaceSegmentEClass = createEClass(11);
 
-		popSegmentEClass = createEClass(11);
+		popSegmentEClass = createEClass(12);
 
-		producedEClassLocatorEClass = createEClass(12);
+		producedEClassLocatorEClass = createEClass(13);
 		createEReference(producedEClassLocatorEClass, 1);
 
-		pushSegmentEClass = createEClass(13);
+		pushSegmentEClass = createEClass(14);
 
-		segmentEClass = createEClass(14);
+		segmentEClass = createEClass(15);
 		createEAttribute(segmentEClass, 0);
 
-		softNewLineSegmentEClass = createEClass(15);
+		softNewLineSegmentEClass = createEClass(16);
 
-		softSpaceSegmentEClass = createEClass(16);
+		softSpaceSegmentEClass = createEClass(17);
 
-		stringSegmentEClass = createEClass(17);
+		stringSegmentEClass = createEClass(18);
 		createEAttribute(stringSegmentEClass, 1);
 		createEAttribute(stringSegmentEClass, 2);
 
-		subIdiomEClass = createEClass(18);
+		subIdiomEClass = createEClass(19);
 		createEReference(subIdiomEClass, 0);
 		createEAttribute(subIdiomEClass, 1);
 		createEReference(subIdiomEClass, 2);
 
-		valueSegmentEClass = createEClass(19);
+		valueSegmentEClass = createEClass(20);
 
 		// Create data types
-		basicSerializationRuleEDataType = createEDataType(20);
-		idiomMatchEDataType = createEDataType(21);
-		serializationBuilderEDataType = createEDataType(22);
-		serializationNodeEDataType = createEDataType(23);
-		userElementSerializerEDataType = createEDataType(24);
+		basicSerializationRuleEDataType = createEDataType(21);
+		idiomMatchEDataType = createEDataType(22);
+		serializationBuilderEDataType = createEDataType(23);
+		serializationNodeEDataType = createEDataType(24);
+		userElementSerializerEDataType = createEDataType(25);
 	}
 
 	/**
@@ -932,8 +948,8 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		abstractCommentSegmentEClass.getESuperTypes().add(this.getSegment());
 		assignmentLocatorEClass.getESuperTypes().add(this.getLocator());
+		commentSegmentSupportEClass.getESuperTypes().add(this.getCustomSegmentSupport());
 		customSegmentEClass.getESuperTypes().add(this.getSegment());
 		defaultLocatorEClass.getESuperTypes().add(this.getLocator());
 		halfNewLineSegmentEClass.getESuperTypes().add(this.getSegment());
@@ -949,20 +965,30 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		valueSegmentEClass.getESuperTypes().add(this.getSegment());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(abstractCommentSegmentEClass, AbstractCommentSegment.class, "AbstractCommentSegment", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getAbstractCommentSegment_Epilogue(), ecorePackage.getEString(), "epilogue", null, 1, 1, AbstractCommentSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getAbstractCommentSegment_Indentation(), ecorePackage.getEString(), "indentation", null, 1, 1, AbstractCommentSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getAbstractCommentSegment_Prologue(), ecorePackage.getEString(), "prologue", null, 1, 1, AbstractCommentSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		EOperation op = addEOperation(abstractCommentSegmentEClass, ecorePackage.getEString(), "getComment", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, ecorePackage.getEObject(), "eObject", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-
 		initEClass(assignmentLocatorEClass, AssignmentLocator.class, "AssignmentLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getAssignmentLocator_EStructuralFeature(), ecorePackage.getEStructuralFeature(), null, "eStructuralFeature", null, 1, 1, AssignmentLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(commentSegmentSupportEClass, CommentSegmentSupport.class, "CommentSegmentSupport", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getCommentSegmentSupport_Epilogue(), ecorePackage.getEString(), "epilogue", null, 1, 1, CommentSegmentSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getCommentSegmentSupport_Indentation(), ecorePackage.getEString(), "indentation", null, 1, 1, CommentSegmentSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getCommentSegmentSupport_Prologue(), ecorePackage.getEString(), "prologue", null, 1, 1, CommentSegmentSupport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		EOperation op = addEOperation(commentSegmentSupportEClass, ecorePackage.getEString(), "getComment", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEObject(), "eObject", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(customSegmentEClass, CustomSegment.class, "CustomSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getCustomSegment_Delegate(), this.getSegment(), null, "delegate", null, 1, 1, CustomSegment.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getCustomSegment_DelegateClass(), ecorePackage.getEString(), "delegateClass", null, 1, 1, CustomSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		EGenericType g1 = createEGenericType(ecorePackage.getEJavaClass());
+		EGenericType g2 = createEGenericType(this.getCustomSegmentSupport());
+		g1.getETypeArguments().add(g2);
+		initEAttribute(getCustomSegment_SupportClass(), g1, "supportClass", null, 0, 1, CustomSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getCustomSegment_SupportClassName(), ecorePackage.getEString(), "supportClassName", null, 0, 1, CustomSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(customSegmentSupportEClass, CustomSegmentSupport.class, "CustomSegmentSupport", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		op = addEOperation(customSegmentSupportEClass, null, "serialize", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getSerializationNode(), "serializationNode", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getUserElementSerializer(), "serializer", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getSerializationBuilder(), "serializationBuilder", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(defaultLocatorEClass, DefaultLocator.class, "DefaultLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

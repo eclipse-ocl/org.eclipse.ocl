@@ -84,17 +84,17 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 		{
 			case 0:
 			{
-				AbstractCommentSegment abstractCommentSegment = (AbstractCommentSegment)theEObject;
-				T result = caseAbstractCommentSegment(abstractCommentSegment);
-				if (result == null) result = caseSegment(abstractCommentSegment);
+				AssignmentLocator assignmentLocator = (AssignmentLocator)theEObject;
+				T result = caseAssignmentLocator(assignmentLocator);
+				if (result == null) result = caseLocator(assignmentLocator);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 1:
 			{
-				AssignmentLocator assignmentLocator = (AssignmentLocator)theEObject;
-				T result = caseAssignmentLocator(assignmentLocator);
-				if (result == null) result = caseLocator(assignmentLocator);
+				CommentSegmentSupport commentSegmentSupport = (CommentSegmentSupport)theEObject;
+				T result = caseCommentSegmentSupport(commentSegmentSupport);
+				if (result == null) result = caseCustomSegmentSupport(commentSegmentSupport);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -108,13 +108,20 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 			}
 			case 3:
 			{
+				CustomSegmentSupport customSegmentSupport = (CustomSegmentSupport)theEObject;
+				T result = caseCustomSegmentSupport(customSegmentSupport);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 4:
+			{
 				DefaultLocator defaultLocator = (DefaultLocator)theEObject;
 				T result = caseDefaultLocator(defaultLocator);
 				if (result == null) result = caseLocator(defaultLocator);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 4:
+			case 5:
 			{
 				HalfNewLineSegment halfNewLineSegment = (HalfNewLineSegment)theEObject;
 				T result = caseHalfNewLineSegment(halfNewLineSegment);
@@ -122,28 +129,28 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 5:
+			case 6:
 			{
 				Idiom idiom = (Idiom)theEObject;
 				T result = caseIdiom(idiom);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 6:
+			case 7:
 			{
 				IdiomModel idiomModel = (IdiomModel)theEObject;
 				T result = caseIdiomModel(idiomModel);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 7:
+			case 8:
 			{
 				Locator locator = (Locator)theEObject;
 				T result = caseLocator(locator);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 8:
+			case 9:
 			{
 				KeywordLocator keywordLocator = (KeywordLocator)theEObject;
 				T result = caseKeywordLocator(keywordLocator);
@@ -151,7 +158,7 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 9:
+			case 10:
 			{
 				NewLineSegment newLineSegment = (NewLineSegment)theEObject;
 				T result = caseNewLineSegment(newLineSegment);
@@ -159,7 +166,7 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 10:
+			case 11:
 			{
 				NoSpaceSegment noSpaceSegment = (NoSpaceSegment)theEObject;
 				T result = caseNoSpaceSegment(noSpaceSegment);
@@ -167,7 +174,7 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 11:
+			case 12:
 			{
 				PopSegment popSegment = (PopSegment)theEObject;
 				T result = casePopSegment(popSegment);
@@ -175,7 +182,7 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 12:
+			case 13:
 			{
 				ProducedEClassLocator producedEClassLocator = (ProducedEClassLocator)theEObject;
 				T result = caseProducedEClassLocator(producedEClassLocator);
@@ -183,7 +190,7 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 13:
+			case 14:
 			{
 				PushSegment pushSegment = (PushSegment)theEObject;
 				T result = casePushSegment(pushSegment);
@@ -191,14 +198,14 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 14:
+			case 15:
 			{
 				Segment segment = (Segment)theEObject;
 				T result = caseSegment(segment);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 15:
+			case 16:
 			{
 				SoftNewLineSegment softNewLineSegment = (SoftNewLineSegment)theEObject;
 				T result = caseSoftNewLineSegment(softNewLineSegment);
@@ -206,7 +213,7 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 16:
+			case 17:
 			{
 				SoftSpaceSegment softSpaceSegment = (SoftSpaceSegment)theEObject;
 				T result = caseSoftSpaceSegment(softSpaceSegment);
@@ -214,7 +221,7 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 17:
+			case 18:
 			{
 				StringSegment stringSegment = (StringSegment)theEObject;
 				T result = caseStringSegment(stringSegment);
@@ -222,14 +229,14 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 18:
+			case 19:
 			{
 				SubIdiom subIdiom = (SubIdiom)theEObject;
 				T result = caseSubIdiom(subIdiom);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 19:
+			case 20:
 			{
 				ValueSegment valueSegment = (ValueSegment)theEObject;
 				T result = caseValueSegment(valueSegment);
@@ -239,22 +246,6 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 			}
 			default: return defaultCase(theEObject);
 		}
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Abstract Comment Segment</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Abstract Comment Segment</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAbstractCommentSegment(AbstractCommentSegment object)
-	{
-		return null;
 	}
 
 	/**
@@ -274,6 +265,22 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Comment Segment Support</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Comment Segment Support</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCommentSegmentSupport(CommentSegmentSupport object)
+	{
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Custom Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -285,6 +292,22 @@ public class IdiomsSwitch<@Nullable T> extends Switch<T>
 	 * @generated
 	 */
 	public T caseCustomSegment(CustomSegment object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Custom Segment Support</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Custom Segment Support</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCustomSegmentSupport(CustomSegmentSupport object)
 	{
 		return null;
 	}

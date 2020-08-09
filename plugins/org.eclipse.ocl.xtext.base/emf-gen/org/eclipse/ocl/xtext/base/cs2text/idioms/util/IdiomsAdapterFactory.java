@@ -85,19 +85,24 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 		new IdiomsSwitch<@Nullable Adapter>()
 		{
 			@Override
-			public Adapter caseAbstractCommentSegment(AbstractCommentSegment object)
-			{
-				return createAbstractCommentSegmentAdapter();
-			}
-			@Override
 			public Adapter caseAssignmentLocator(AssignmentLocator object)
 			{
 				return createAssignmentLocatorAdapter();
 			}
 			@Override
+			public Adapter caseCommentSegmentSupport(CommentSegmentSupport object)
+			{
+				return createCommentSegmentSupportAdapter();
+			}
+			@Override
 			public Adapter caseCustomSegment(CustomSegment object)
 			{
 				return createCustomSegmentAdapter();
+			}
+			@Override
+			public Adapter caseCustomSegmentSupport(CustomSegmentSupport object)
+			{
+				return createCustomSegmentSupportAdapter();
 			}
 			@Override
 			public Adapter caseDefaultLocator(DefaultLocator object)
@@ -207,21 +212,6 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment <em>Abstract Comment Segment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment
-	 * @generated
-	 */
-	public Adapter createAbstractCommentSegmentAdapter()
-	{
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator <em>Assignment Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -237,6 +227,21 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport <em>Comment Segment Support</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport
+	 * @generated
+	 */
+	public Adapter createCommentSegmentSupportAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment <em>Custom Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -247,6 +252,21 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	public Adapter createCustomSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport <em>Custom Segment Support</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport
+	 * @generated
+	 */
+	public Adapter createCustomSegmentSupportAdapter()
 	{
 		return null;
 	}

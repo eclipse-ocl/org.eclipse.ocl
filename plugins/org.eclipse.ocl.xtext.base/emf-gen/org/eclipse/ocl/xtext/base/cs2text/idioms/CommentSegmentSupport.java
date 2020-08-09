@@ -15,23 +15,23 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Abstract Comment Segment</b></em>'.
+ * A representation of the model object '<em><b>Comment Segment Support</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment#getEpilogue <em>Epilogue</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment#getIndentation <em>Indentation</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment#getPrologue <em>Prologue</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getEpilogue <em>Epilogue</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getIndentation <em>Indentation</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getPrologue <em>Prologue</em>}</li>
  * </ul>
  *
- * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getAbstractCommentSegment()
+ * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCommentSegmentSupport()
  * @model abstract="true"
  * @generated
  */
-public interface AbstractCommentSegment extends Segment
+public interface CommentSegmentSupport extends CustomSegmentSupport
 {
 	/**
 	 * Returns the value of the '<em><b>Epilogue</b></em>' attribute.
@@ -43,14 +43,14 @@ public interface AbstractCommentSegment extends Segment
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Epilogue</em>' attribute.
 	 * @see #setEpilogue(String)
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getAbstractCommentSegment_Epilogue()
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCommentSegmentSupport_Epilogue()
 	 * @model required="true"
 	 * @generated
 	 */
 	String getEpilogue();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment#getEpilogue <em>Epilogue</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getEpilogue <em>Epilogue</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Epilogue</em>' attribute.
@@ -69,14 +69,14 @@ public interface AbstractCommentSegment extends Segment
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Indentation</em>' attribute.
 	 * @see #setIndentation(String)
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getAbstractCommentSegment_Indentation()
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCommentSegmentSupport_Indentation()
 	 * @model required="true"
 	 * @generated
 	 */
 	String getIndentation();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment#getIndentation <em>Indentation</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getIndentation <em>Indentation</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Indentation</em>' attribute.
@@ -95,14 +95,14 @@ public interface AbstractCommentSegment extends Segment
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Prologue</em>' attribute.
 	 * @see #setPrologue(String)
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getAbstractCommentSegment_Prologue()
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCommentSegmentSupport_Prologue()
 	 * @model required="true"
 	 * @generated
 	 */
 	String getPrologue();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment#getPrologue <em>Prologue</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getPrologue <em>Prologue</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Prologue</em>' attribute.
@@ -119,4 +119,4 @@ public interface AbstractCommentSegment extends Segment
 	 */
 	String getComment(EObject eObject);
 
-} // AbstractCommentSegment
+} // CommentSegmentSupport

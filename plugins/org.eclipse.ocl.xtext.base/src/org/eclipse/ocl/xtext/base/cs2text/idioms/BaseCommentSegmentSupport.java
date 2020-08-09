@@ -17,13 +17,17 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AbstractCommentSegmentImpl;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl;
 
-public class BaseCommentSegment extends AbstractCommentSegmentImpl
+public class BaseCommentSegmentSupport extends CommentSegmentSupportImpl
 {
-	private static final @NonNull String EMPTY_COMMENT = "£$%^&*";
+	/**
+	 * To preserve legacy testing functionality, empty comments use an abbreviated one line form. The following
+	 * reserved string serves to distinguish the empty case from the no-comment case.
+	 */
+	private static final @NonNull String EMPTY_COMMENT = "/**/";
 
-	public BaseCommentSegment() {
+	public BaseCommentSegmentSupport() {
 		setPrologue("/**");
 		setIndentation(" * ");
 		setEpilogue(" */");
@@ -33,7 +37,7 @@ public class BaseCommentSegment extends AbstractCommentSegmentImpl
 	protected void appendComment(@NonNull SerializationBuilder serializationBuilder, @NonNull String comment) {
 		if (comment == EMPTY_COMMENT) {		// NB == rather than equals() for private instance
 			serializationBuilder.append(SerializationBuilder.HALF_NEW_LINE);
-			serializationBuilder.append("/**/");
+			serializationBuilder.append(EMPTY_COMMENT);
 			serializationBuilder.append(SerializationBuilder.NEW_LINE);
 		}
 		else {

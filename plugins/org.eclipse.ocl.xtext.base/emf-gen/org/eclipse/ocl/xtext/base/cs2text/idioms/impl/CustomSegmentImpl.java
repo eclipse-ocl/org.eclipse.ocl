@@ -10,19 +10,16 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
@@ -33,8 +30,8 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getDelegate <em>Delegate</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getDelegateClass <em>Delegate Class</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getSupportClass <em>Support Class</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getSupportClassName <em>Support Class Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -52,36 +49,36 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 
 
 	/**
-	 * The cached value of the '{@link #getDelegate() <em>Delegate</em>}' reference.
+	 * The cached value of the '{@link #getSupportClass() <em>Support Class</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDelegate()
+	 * @see #getSupportClass()
 	 * @generated
 	 * @ordered
 	 */
-	protected Segment delegate;
+	protected Class<CustomSegmentSupport> supportClass;
 
 
 	/**
-	 * The default value of the '{@link #getDelegateClass() <em>Delegate Class</em>}' attribute.
+	 * The default value of the '{@link #getSupportClassName() <em>Support Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDelegateClass()
+	 * @see #getSupportClassName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String DELEGATE_CLASS_EDEFAULT = null;
+	protected static final String SUPPORT_CLASS_NAME_EDEFAULT = null;
 
 
 	/**
-	 * The cached value of the '{@link #getDelegateClass() <em>Delegate Class</em>}' attribute.
+	 * The cached value of the '{@link #getSupportClassName() <em>Support Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDelegateClass()
+	 * @see #getSupportClassName()
 	 * @generated
 	 * @ordered
 	 */
-	protected String delegateClass = DELEGATE_CLASS_EDEFAULT;
+	protected String supportClassName = SUPPORT_CLASS_NAME_EDEFAULT;
 
 
 	/**
@@ -111,29 +108,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
-	public Segment getDelegate()
+	public Class<CustomSegmentSupport> getSupportClass()
 	{
-		if (delegate != null && delegate.eIsProxy())
-		{
-			InternalEObject oldDelegate = (InternalEObject)delegate;
-			delegate = (Segment)eResolveProxy(oldDelegate);
-			if (delegate != oldDelegate)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldDelegate, delegate));
-			}
-		}
-		return delegate;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Segment basicGetDelegate()
-	{
-		return delegate;
+		return supportClass;
 	}
 
 	/**
@@ -142,12 +119,12 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
-	public void setDelegate(Segment newDelegate)
+	public void setSupportClass(Class<CustomSegmentSupport> newSupportClass)
 	{
-		Segment oldDelegate = delegate;
-		delegate = newDelegate;
+		Class<CustomSegmentSupport> oldSupportClass = supportClass;
+		supportClass = newSupportClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldDelegate, delegate));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldSupportClass, supportClass));
 	}
 
 	/**
@@ -156,9 +133,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
-	public String getDelegateClass()
+	public String getSupportClassName()
 	{
-		return delegateClass;
+		return supportClassName;
 	}
 
 	/**
@@ -167,12 +144,12 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
-	public void setDelegateClass(String newDelegateClass)
+	public void setSupportClassName(String newSupportClassName)
 	{
-		String oldDelegateClass = delegateClass;
-		delegateClass = newDelegateClass;
+		String oldSupportClassName = supportClassName;
+		supportClassName = newSupportClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldDelegateClass, delegateClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldSupportClassName, supportClassName));
 	}
 
 	/**
@@ -186,10 +163,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				if (resolve) return getDelegate();
-				return basicGetDelegate();
+				return getSupportClass();
 			case 2:
-				return getDelegateClass();
+				return getSupportClassName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -206,10 +182,10 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				setDelegate((Segment)newValue);
+				setSupportClass((Class<CustomSegmentSupport>)newValue);
 				return;
 			case 2:
-				setDelegateClass((String)newValue);
+				setSupportClassName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -226,10 +202,10 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				setDelegate((Segment)null);
+				setSupportClass((Class<CustomSegmentSupport>)null);
 				return;
 			case 2:
-				setDelegateClass(DELEGATE_CLASS_EDEFAULT);
+				setSupportClassName(SUPPORT_CLASS_NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -246,55 +222,53 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				return delegate != null;
+				return supportClass != null;
 			case 2:
-				return DELEGATE_CLASS_EDEFAULT == null ? delegateClass != null : !DELEGATE_CLASS_EDEFAULT.equals(delegateClass);
+				return SUPPORT_CLASS_NAME_EDEFAULT == null ? supportClassName != null : !SUPPORT_CLASS_NAME_EDEFAULT.equals(supportClassName);
 		}
 		return super.eIsSet(featureID);
 	}
 
-	@Override
-	public void serialize(SerializationNode serializationNode, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
-		delegate.serialize(serializationNode, serializer, serializationBuilder);
+	private @Nullable CustomSegmentSupport support = null;
+
+	protected @Nullable CustomSegmentSupport getSupport(Object contextObject) {
+		if (support == null) {
+			Class<CustomSegmentSupport> supportClass = this.supportClass;
+			if ((supportClass == null) && (supportClassName != null)) {
+				ClassLoader classLoader = contextObject.getClass().getClassLoader();
+				try {
+					supportClass = (Class<CustomSegmentSupport>) classLoader.loadClass(supportClassName);
+				} catch (ClassNotFoundException e) {
+					return null;
+				}
+			}
+			if (supportClass != null) {
+				try {
+					support = supportClass.newInstance();
+				} catch (InstantiationException | IllegalAccessException e) {
+					return null;
+				}
+			}
+		}
+		return support;
 	}
 
-	public void setDelegate(@NonNull Class<? extends Segment> delegatedClass, Object ... objects) {
-		try {
-			if (objects.length == 0) {
-				this.delegate = delegatedClass.newInstance();
-			}
-			else {
-				Constructor<Segment> matchingConstructor = null;
-				for (Constructor<?> constructor : delegatedClass.getConstructors()) {
-					Class<?>[] parameterTypes = constructor.getParameterTypes();
-					int iMax = parameterTypes.length;
-					if (iMax == objects.length) {
-						boolean gotIt = true;
-						for (int i = 0; i < iMax; i++) {
-							if (!parameterTypes[i].isAssignableFrom(objects[i].getClass())) {
-								gotIt = false;
-								break;
-							}
-						}
-						if (gotIt) {
-							@SuppressWarnings("unchecked")
-							Constructor<Segment> castConstructor = (Constructor<Segment>) constructor;
-							matchingConstructor = castConstructor;
-						}
-					}
-				}
-				if (matchingConstructor != null) {
-					setDelegate(matchingConstructor.newInstance(objects));
-				}
-			}
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-			throw new IllegalArgumentException();
+	@Override
+	public void serialize(SerializationNode serializationNode, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
+		assert serializationBuilder != null;
+		EObject eObject = serializer.getElement();
+		CustomSegmentSupport support = getSupport(eObject);
+		if (support == null) {
+			String className = supportClass != null ? supportClass.getName() : supportClassName;
+			serializationBuilder.appendError("\n\n«missing " + className + "»\n\n");
+		}
+		else {
+			support.serialize(serializationNode, serializer, serializationBuilder);
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "delegate-to " + delegate;
+		return "supported by " + (support != null ? support.getClass().getName() : supportClass != null ? supportClass.getName() : supportClassName);
 	}
 } //CustomSegmentImpl

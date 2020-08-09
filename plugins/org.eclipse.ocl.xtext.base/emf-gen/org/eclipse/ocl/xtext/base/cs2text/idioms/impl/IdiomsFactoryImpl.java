@@ -84,23 +84,23 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eClass.getClassifierID())
 		{
-			case 1: return createAssignmentLocator();
+			case 0: return createAssignmentLocator();
 			case 2: return createCustomSegment();
-			case 3: return createDefaultLocator();
-			case 4: return createHalfNewLineSegment();
-			case 5: return createIdiom();
-			case 6: return createIdiomModel();
-			case 8: return createKeywordLocator();
-			case 9: return createNewLineSegment();
-			case 10: return createNoSpaceSegment();
-			case 11: return createPopSegment();
-			case 12: return createProducedEClassLocator();
-			case 13: return createPushSegment();
-			case 15: return createSoftNewLineSegment();
-			case 16: return createSoftSpaceSegment();
-			case 17: return createStringSegment();
-			case 18: return createSubIdiom();
-			case 19: return createValueSegment();
+			case 4: return createDefaultLocator();
+			case 5: return createHalfNewLineSegment();
+			case 6: return createIdiom();
+			case 7: return createIdiomModel();
+			case 9: return createKeywordLocator();
+			case 10: return createNewLineSegment();
+			case 11: return createNoSpaceSegment();
+			case 12: return createPopSegment();
+			case 13: return createProducedEClassLocator();
+			case 14: return createPushSegment();
+			case 16: return createSoftNewLineSegment();
+			case 17: return createSoftSpaceSegment();
+			case 18: return createStringSegment();
+			case 19: return createSubIdiom();
+			case 20: return createValueSegment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -116,7 +116,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 23:
+			case 24:
 				return createSerializationNodeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -133,7 +133,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 23:
+			case 24:
 				return convertSerializationNodeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

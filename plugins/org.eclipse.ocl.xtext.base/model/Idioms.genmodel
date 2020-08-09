@@ -21,20 +21,27 @@
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationNode"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//UserElementSerializer"/>
-    <genClasses image="false" ecoreClass="Idioms.ecore#//AbstractCommentSegment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/epilogue"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/indentation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//AbstractCommentSegment/prologue"/>
-      <genOperations ecoreOperation="Idioms.ecore#//AbstractCommentSegment/getComment">
-        <genParameters ecoreParameter="Idioms.ecore#//AbstractCommentSegment/getComment/eObject"/>
-      </genOperations>
-    </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="Idioms.ecore#//CommentSegmentSupport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CommentSegmentSupport/epilogue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CommentSegmentSupport/indentation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CommentSegmentSupport/prologue"/>
+      <genOperations ecoreOperation="Idioms.ecore#//CommentSegmentSupport/getComment">
+        <genParameters ecoreParameter="Idioms.ecore#//CommentSegmentSupport/getComment/eObject"/>
+      </genOperations>
+    </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//CustomSegment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EReference Idioms.ecore#//CustomSegment/delegate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/delegateClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/supportClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/supportClassName"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Idioms.ecore#//CustomSegmentSupport">
+      <genOperations ecoreOperation="Idioms.ecore#//CustomSegmentSupport/serialize">
+        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializer"/>
+        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationBuilder"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
     <genClasses ecoreClass="Idioms.ecore#//HalfNewLineSegment"/>

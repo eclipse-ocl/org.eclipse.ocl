@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="idioms" nsURI="http://www.eclipse.org/ocl/2020/Idioms" nsPrefix="idioms">
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractCommentSegment" abstract="true"
-      eSuperTypes="#//Segment">
+  <eClassifiers xsi:type="ecore:EClass" name="AssignmentLocator" eSuperTypes="#//Locator">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CommentSegmentSupport" abstract="true"
+      eSuperTypes="#//CustomSegmentSupport">
     <eOperations name="getComment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eParameters name="eObject" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     </eOperations>
@@ -13,15 +17,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prologue" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AssignmentLocator" eSuperTypes="#//Locator">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="delegate" eType="#//Segment"
-        transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delegateClass" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportClass">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
+        <eTypeArguments eClassifier="#//CustomSegmentSupport"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportClassName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomSegmentSupport" abstract="true"
+      interface="true">
+    <eOperations name="serialize">
+      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
+      <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
+    </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DefaultLocator" eSuperTypes="#//Locator"/>
   <eClassifiers xsi:type="ecore:EClass" name="HalfNewLineSegment" eSuperTypes="#//Segment"/>

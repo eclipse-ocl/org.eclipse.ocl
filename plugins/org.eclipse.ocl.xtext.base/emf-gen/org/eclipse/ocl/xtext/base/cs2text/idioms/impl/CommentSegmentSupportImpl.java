@@ -14,38 +14,39 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractCommentSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Abstract Comment Segment</b></em>'.
+ * An implementation of the model object '<em><b>Comment Segment Support</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AbstractCommentSegmentImpl#getEpilogue <em>Epilogue</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AbstractCommentSegmentImpl#getIndentation <em>Indentation</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AbstractCommentSegmentImpl#getPrologue <em>Prologue</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl#getEpilogue <em>Epilogue</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl#getIndentation <em>Indentation</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl#getPrologue <em>Prologue</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements AbstractCommentSegment
+public abstract class CommentSegmentSupportImpl extends EObjectImpl implements CommentSegmentSupport
 {
 	/**
-	 * The number of structural features of the '<em>Abstract Comment Segment</em>' class.
+	 * The number of structural features of the '<em>Comment Segment Support</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ABSTRACT_COMMENT_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 3;
+	public static final int COMMENT_SEGMENT_SUPPORT_FEATURE_COUNT = 3;
 
 
 	/**
@@ -113,7 +114,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected AbstractCommentSegmentImpl()
+	protected CommentSegmentSupportImpl()
 	{
 		super();
 	}
@@ -126,7 +127,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	@Override
 	protected EClass eStaticClass()
 	{
-		return IdiomsPackage.Literals.ABSTRACT_COMMENT_SEGMENT;
+		return IdiomsPackage.Literals.COMMENT_SEGMENT_SUPPORT;
 	}
 
 	/**
@@ -151,7 +152,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 		String oldEpilogue = epilogue;
 		epilogue = newEpilogue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEpilogue, epilogue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 0, oldEpilogue, epilogue));
 	}
 
 	/**
@@ -176,7 +177,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 		String oldIndentation = indentation;
 		indentation = newIndentation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldIndentation, indentation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldIndentation, indentation));
 	}
 
 	/**
@@ -201,20 +202,7 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 		String oldPrologue = prologue;
 		prologue = newPrologue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldPrologue, prologue));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getComment(EObject eObject)
-	{
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPrologue, prologue));
 	}
 
 	/**
@@ -227,11 +215,11 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 0:
 				return getEpilogue();
-			case 2:
+			case 1:
 				return getIndentation();
-			case 3:
+			case 2:
 				return getPrologue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -247,13 +235,13 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 0:
 				setEpilogue((String)newValue);
 				return;
-			case 2:
+			case 1:
 				setIndentation((String)newValue);
 				return;
-			case 3:
+			case 2:
 				setPrologue((String)newValue);
 				return;
 		}
@@ -270,13 +258,13 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 0:
 				setEpilogue(EPILOGUE_EDEFAULT);
 				return;
-			case 2:
+			case 1:
 				setIndentation(INDENTATION_EDEFAULT);
 				return;
-			case 3:
+			case 2:
 				setPrologue(PROLOGUE_EDEFAULT);
 				return;
 		}
@@ -293,14 +281,35 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 0:
 				return EPILOGUE_EDEFAULT == null ? epilogue != null : !EPILOGUE_EDEFAULT.equals(epilogue);
-			case 2:
+			case 1:
 				return INDENTATION_EDEFAULT == null ? indentation != null : !INDENTATION_EDEFAULT.equals(indentation);
-			case 3:
+			case 2:
 				return PROLOGUE_EDEFAULT == null ? prologue != null : !PROLOGUE_EDEFAULT.equals(prologue);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (epilogue: "); //$NON-NLS-1$
+		result.append(epilogue);
+		result.append(", indentation: "); //$NON-NLS-1$
+		result.append(indentation);
+		result.append(", prologue: "); //$NON-NLS-1$
+		result.append(prologue);
+		result.append(')');
+		return result.toString();
 	}
 
 	protected void appendComment(@NonNull SerializationBuilder serializationBuilder, @NonNull String comment) {
@@ -318,15 +327,12 @@ public abstract class AbstractCommentSegmentImpl extends SegmentImpl implements 
 
 	@Override
 	public void serialize(SerializationNode serializationNode, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
+		assert serializer != null;
+		assert serializationBuilder != null;
 		EObject eObject = serializer.getElement();
 		String comment = getComment(eObject);
 		if (comment != null) {
 			appendComment(serializationBuilder, comment);
 		}
 	}
-
-	@Override
-	public String toString() {
-		return getClass().getSimpleName();
-	}
-} //AbstractCommentSegmentImpl
+} //CommentSegmentSupportImpl

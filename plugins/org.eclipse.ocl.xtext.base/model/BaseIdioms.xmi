@@ -93,7 +93,7 @@
       name="PackageCS::ownedClasses">
     <eStructuralFeature
         xsi:type="ecore:EReference"
-        href="BaseCS.ecore#//PackageCS/ownedClasses"/>
+        href="http://www.eclipse.org/ocl/2015/BaseCS#//PackageCS/ownedClasses"/>
   </ownedLocators>
   <ownedLocators
       xsi:type="idioms:DefaultLocator"
@@ -142,7 +142,7 @@
       xsi:type="idioms:ProducedEClassLocator"
       name="ModelElementCS">
     <eClass
-        href="BaseCS.ecore#//ModelElementCS"/>
+        href="http://www.eclipse.org/ocl/2015/BaseCS#//ModelElementCS"/>
   </ownedLocators>
   <ownedLocators
       xsi:type="idioms:KeywordLocator"
@@ -150,8 +150,8 @@
       string="xyzzy%%"/>
   <ownedSegments
       xsi:type="idioms:CustomSegment"
-      name="BaseCommentSegment"
-      delegateClass="org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegment"/>
+      name="BASE COMMENT"
+      supportClassName="org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport"/>
   <ownedSegments
       xsi:type="idioms:NoSpaceSegment"
       name="NO SPACE (a)"/>

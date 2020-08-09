@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl;
 
@@ -112,12 +111,12 @@ public class IdiomsUtils
 		throw new IllegalStateException("No ValueSegment subidiom");
 	}
 
-	private static @NonNull CustomSegment createCustomSegment(@NonNull IdiomModel idiomModel, @NonNull Class<@NonNull BaseCommentSegment> customSegmentClass) {
+/*	private static @NonNull CustomSegment createCustomSegment(@NonNull IdiomModel idiomModel, @NonNull Class<@NonNull BaseCommentSegment> customSegmentClass) {
 		CustomSegmentImpl segment = (CustomSegmentImpl) IdiomsFactory.eINSTANCE.createCustomSegment();
-		segment.setDelegate(customSegmentClass);
+	//	segment.setDelegate(customSegmentClass);
 		idiomModel.getOwnedSegments().add(segment);
 		return segment;
-	}
+	} */
 
 	public static @NonNull Idiom createDebugIdiom(@NonNull SubIdiom @NonNull ... subIdioms) {
 		Idiom idiom = new IdiomImpl.DebugIdiom();
