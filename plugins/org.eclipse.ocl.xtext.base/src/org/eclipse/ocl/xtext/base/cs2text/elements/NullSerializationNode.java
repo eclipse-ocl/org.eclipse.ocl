@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -31,12 +30,12 @@ public class NullSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull Alternatives alternatives) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		return this;
 	}
 
@@ -46,7 +45,7 @@ public class NullSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		throw new UnsupportedOperationException();		// Surely never happens; maybe just return this
 	}
 

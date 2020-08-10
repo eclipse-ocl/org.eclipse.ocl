@@ -24,7 +24,7 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 
 	protected AbstractAssignedSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(assignmentAnalysis.getGrammarAnalysis(), multiplicativeCardinality);
+		super(multiplicativeCardinality);
 		this.assignmentAnalysis = assignmentAnalysis;
 		this.eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
 	}

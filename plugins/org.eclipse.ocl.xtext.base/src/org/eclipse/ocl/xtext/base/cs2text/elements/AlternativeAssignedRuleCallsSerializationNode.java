@@ -43,7 +43,7 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull AbstractRuleAnalysis> calledRuleAnalyses) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleAnalyses = calledRuleAnalyses;
-		this.valueConverterService = grammarAnalysis.getValueConverterService();
+		this.valueConverterService = assignmentAnalysis.getGrammarAnalysis().getValueConverterService();
 	}
 
 	@Override

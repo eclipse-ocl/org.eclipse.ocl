@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
 public interface SerializationNode extends SerializationElement
@@ -48,5 +47,5 @@ public interface SerializationNode extends SerializationElement
 	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
 	@Override
-	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
+	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
 }

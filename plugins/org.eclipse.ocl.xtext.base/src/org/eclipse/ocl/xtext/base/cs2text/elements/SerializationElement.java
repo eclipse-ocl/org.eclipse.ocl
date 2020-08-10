@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -57,14 +56,14 @@ public interface SerializationElement
 	 * AlternativesSerializationNode if one is required to represent the disjunction of flattened conjunctions.
 	 * Else return a SequenceSerializationNOde for the one alternative.
 	 */
-	@NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives);
+	@NonNull SerializationNode freezeAlternatives(@NonNull Alternatives alternatives);
 
 	/**
 	 * Promote all ListOfSerializationNode future sequences into frozen SequenceSerializationNOde with
 	 * current action calls and unassigned rule calls rewritten. The return may be a ListListOfSerializationNode.
 	 * @param MultiplicativeCardinality
 	 */
-	@NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
+	@NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
 
 	/**
 	 * Return true if this is a ListOfSerializationNode
@@ -94,7 +93,6 @@ public interface SerializationElement
 	/**
 	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater as part of a compoundElement.
 	 * Returns this if existing cardinality is adequate, or a SequenceSerializationNode, clone with adjusted cardinality otherwise.
-	 * @param grammarAnalysis
 	 */
-	@NonNull SerializationElement setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
+	@NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
 }

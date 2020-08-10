@@ -11,12 +11,11 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {
-	public CompositeSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, /*@NonNull CompoundElement compoundElement,*/ @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		super(grammarAnalysis, multiplicativeCardinality);
+	public CompositeSerializationNode(/*@NonNull CompoundElement compoundElement,*/ @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		super(multiplicativeCardinality);
 //		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
 	}

@@ -37,9 +37,9 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		super(assignmentAnalysis, multiplicativeCardinality);
 		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
-		this.calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
+		this.calledRuleAnalysis = assignmentAnalysis.getGrammarAnalysis().getRuleAnalysis(calledRule);
 		this.crossReference = crossReference;
-		this.crossReferenceSerializer = grammarAnalysis.getCrossReferenceSerializer();
+		this.crossReferenceSerializer = assignmentAnalysis.getGrammarAnalysis().getCrossReferenceSerializer();
 		assert !((EReference)eStructuralFeature).isContainment();
 	}
 

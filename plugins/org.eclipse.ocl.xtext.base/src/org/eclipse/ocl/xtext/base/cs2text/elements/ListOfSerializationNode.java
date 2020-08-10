@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -67,17 +66,17 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull Alternatives alternatives) {
 		throw new IllegalStateException();
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement freezeSequences( @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		if (listOfNodes.isEmpty()) {
 			return NullSerializationNode.INSTANCE;
 		}
 		else {
-			return createFrozenSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
+			return createFrozenSequence(compoundElement, multiplicativeCardinality, listOfNodes);
 		}
 	}
 
@@ -91,12 +90,12 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality.isOne()) {
 			return this;
 		}
 		else {
-			return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, getNodes());
+			return new SequenceSerializationNode(compoundElement, multiplicativeCardinality, getNodes());
 		}
 	}
 

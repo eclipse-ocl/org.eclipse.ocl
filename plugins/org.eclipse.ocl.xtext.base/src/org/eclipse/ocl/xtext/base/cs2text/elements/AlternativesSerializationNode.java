@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 
 public class AlternativesSerializationNode extends CompositeSerializationNode
@@ -23,8 +22,8 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	protected final @NonNull Alternatives alternatives;
 	protected final @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes;
 
-	public AlternativesSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
-		super(grammarAnalysis, multiplicativeCardinality);
+	public AlternativesSerializationNode(@NonNull Alternatives alternatives, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
+		super(multiplicativeCardinality);
 		this.alternatives = alternatives;
 		this.alternativeSerializationNodes = alternativeSerializationNodes;
 	}
@@ -32,7 +31,7 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
-		return new AlternativesSerializationNode(grammarAnalysis, alternatives, multiplicativeCardinality, alternativeSerializationNodes);
+		return new AlternativesSerializationNode(alternatives, multiplicativeCardinality, alternativeSerializationNodes);
 	}
 
 	/**

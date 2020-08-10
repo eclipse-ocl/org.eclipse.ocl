@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.RuleCall;
 
 public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
@@ -21,8 +20,8 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	protected final @NonNull RuleCall ruleCall;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedRuleCallSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull RuleCall ruleCall, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
-		super(grammarAnalysis, multiplicativeCardinality);
+	public UnassignedRuleCallSerializationNode(@NonNull RuleCall ruleCall, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
+		super(multiplicativeCardinality);
 		this.ruleCall = ruleCall;
 		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
@@ -30,7 +29,7 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
-		return new UnassignedRuleCallSerializationNode(grammarAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
+		return new UnassignedRuleCallSerializationNode(ruleCall, multiplicativeCardinality, calledRuleAnalysis);
 	}
 
 	public @NonNull AbstractRuleAnalysis getCalledRuleAnalysis() {

@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
@@ -31,9 +30,8 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 
-	public AlternativeUnassignedKeywordsSerializationNode(@NonNull GrammarAnalysis grammarAnalysis,
-			@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
-		super(grammarAnalysis, multiplicativeCardinality);
+	public AlternativeUnassignedKeywordsSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
+		super(multiplicativeCardinality);
 		if (values != null) {
 			for (@NonNull String value : values) {
 				this.values.add(value);
@@ -49,7 +47,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AlternativeUnassignedKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality, values);
+		return new AlternativeUnassignedKeywordsSerializationNode(multiplicativeCardinality, values);
 	}
 
 	@Override

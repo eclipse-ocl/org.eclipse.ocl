@@ -10,9 +10,6 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
-import org.eclipse.emf.common.util.EList;
-
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Custom Segment</b></em>'.

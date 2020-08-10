@@ -204,7 +204,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 			@SuppressWarnings("null") SerializationElement serializationElement = doSwitch(classifierID, element);
 			serializationResult = serializationResult.addConcatenation(serializationElement);
 		}
-		return serializationResult.freezeSequences(grammarAnalysis, group, MultiplicativeCardinality.toEnum(group));
+		return serializationResult.freezeSequences(group, MultiplicativeCardinality.toEnum(group));
 	}
 
 	@Override
@@ -215,7 +215,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 			return NullSerializationNode.INSTANCE;	// Skip gratuitous output
 		}
 		else {
-			return new UnassignedKeywordSerializationNode(grammarAnalysis, keyword, multiplicativeCardinality);
+			return new UnassignedKeywordSerializationNode(keyword, multiplicativeCardinality);
 		}
 	}
 
@@ -235,7 +235,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		}
 		return disjunction; */
 		MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(ruleCall);
-		return new UnassignedRuleCallSerializationNode(grammarAnalysis, ruleCall, multiplicativeCardinality, calledRuleAnalysis);
+		return new UnassignedRuleCallSerializationNode(ruleCall, multiplicativeCardinality, calledRuleAnalysis);
 	}
 
 	/*		@Override
@@ -295,7 +295,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 			}
 		}
 		MultiplicativeCardinality multiplicativeCardinality = MultiplicativeCardinality.toEnum(alternatives);
-		AlternativeUnassignedKeywordsSerializationNode alternativeUnassignedKeywordsSerializationNode = new AlternativeUnassignedKeywordsSerializationNode(grammarAnalysis, multiplicativeCardinality, null);
+		AlternativeUnassignedKeywordsSerializationNode alternativeUnassignedKeywordsSerializationNode = new AlternativeUnassignedKeywordsSerializationNode(multiplicativeCardinality, null);
 		for (@NonNull AbstractElement element : elements) {
 			alternativeUnassignedKeywordsSerializationNode.addKeyword((Keyword)element);
 		}
@@ -306,7 +306,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		if (multiplicativeCardinality.isZeroOrMore()) {	// (A|B)* => A* | B*
 			SerializationElement conjunction = new ListOfSerializationNode();
 			for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
-				SerializationElement frozen = alternativeSerializationElement.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ZERO_OR_MORE).freezeSequences(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);
+				SerializationElement frozen = alternativeSerializationElement.setMultiplicativeCardinality(alternatives, MultiplicativeCardinality.ZERO_OR_MORE).freezeSequences(alternatives, MultiplicativeCardinality.ONE);
 				conjunction = conjunction.addConcatenation(frozen);
 			}
 			return conjunction;
@@ -317,9 +317,9 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 				SerializationElement conjunction = new ListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement2 : alternativeSerializationElements) {
 					MultiplicativeCardinality termCardinality = alternativeSerializationElement1 != alternativeSerializationElement2 ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE;
-					conjunction = conjunction.addConcatenation(alternativeSerializationElement2.setMultiplicativeCardinality(grammarAnalysis, alternatives, termCardinality));
+					conjunction = conjunction.addConcatenation(alternativeSerializationElement2.setMultiplicativeCardinality(alternatives, termCardinality));
 				}
-				SerializationElement frozen = conjunction.freezeSequences(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);
+				SerializationElement frozen = conjunction.freezeSequences(alternatives, MultiplicativeCardinality.ONE);
 				disjunction = disjunction.addConjunction(frozen);
 			}
 			return disjunction;
@@ -329,7 +329,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 			for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
 				SerializationElement conjunction = new ListOfSerializationNode();
 				conjunction = conjunction.addConcatenation(alternativeSerializationElement);
-				SerializationElement frozen = conjunction.freezeSequences(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);
+				SerializationElement frozen = conjunction.freezeSequences(alternatives, MultiplicativeCardinality.ONE);
 				disjunction = disjunction.addConjunction(frozen);
 			}
 			disjunction = disjunction.addConjunction(NullSerializationNode.INSTANCE);
@@ -341,7 +341,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 			for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
 				SerializationElement conjunction = new ListOfSerializationNode();
 				conjunction = conjunction.addConcatenation(alternativeSerializationElement);
-				SerializationElement frozen = conjunction.freezeSequences(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);
+				SerializationElement frozen = conjunction.freezeSequences(alternatives, MultiplicativeCardinality.ONE);
 				disjunction = disjunction.addConjunction(frozen);
 			}
 			return disjunction;//.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);

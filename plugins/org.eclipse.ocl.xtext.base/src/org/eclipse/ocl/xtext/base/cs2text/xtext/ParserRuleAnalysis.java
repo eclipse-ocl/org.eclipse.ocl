@@ -134,7 +134,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 				}
 				else {
 					CompoundElement alternatives = (CompoundElement)XtextGrammarUtil.getAlternatives(abstractRule);
-					serializationNode = new SequenceSerializationNode(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE, serializationNodes);
+					serializationNode = new SequenceSerializationNode(alternatives, MultiplicativeCardinality.ONE, serializationNodes);
 				}
 				createSerializationRules(serializationRules, serializationNode);
 			}
@@ -147,7 +147,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 			}
 			else {
 				CompoundElement alternatives = (CompoundElement)XtextGrammarUtil.getAlternatives(abstractRule);
-				serializationNode = new SequenceSerializationNode(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE, serializationNodes);
+				serializationNode = new SequenceSerializationNode(alternatives, MultiplicativeCardinality.ONE, serializationNodes);
 			}
 			createSerializationRules(serializationRules, serializationNode);
 		}

@@ -32,7 +32,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
-		this.valueConverterService = grammarAnalysis.getValueConverterService();
+		this.valueConverterService = assignmentAnalysis.getGrammarAnalysis().getValueConverterService();
 	}
 
 	@Override

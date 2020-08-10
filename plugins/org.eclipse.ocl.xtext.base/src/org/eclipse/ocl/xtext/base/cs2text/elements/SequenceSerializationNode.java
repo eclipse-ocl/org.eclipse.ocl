@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
@@ -28,8 +27,8 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
 
-	public SequenceSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(grammarAnalysis, multiplicativeCardinality);
+	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+		super(multiplicativeCardinality);
 		this.compoundElement = compoundElement;
 		this.serializationNodes = groupSerializationNodes;
 		assert !groupSerializationNodes.isEmpty();
@@ -39,7 +38,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	}
 
 	public SequenceSerializationNode(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(sequenceSerializationNode.grammarAnalysis, sequenceSerializationNode.multiplicativeCardinality);
+		super(sequenceSerializationNode.multiplicativeCardinality);
 		this.compoundElement = sequenceSerializationNode.compoundElement;
 		this.serializationNodes = groupSerializationNodes;
 	//	assert !groupSerializationNodes.isEmpty();
@@ -99,7 +98,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 			newList.add(serializationNode.clone(null));
 		}
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new SequenceSerializationNode(grammarAnalysis, compoundElement, multiplicativeCardinality, newList);
+		return new SequenceSerializationNode(compoundElement, multiplicativeCardinality, newList);
 	}
 
 /*	@Override

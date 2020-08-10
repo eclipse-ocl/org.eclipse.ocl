@@ -15,20 +15,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
 public abstract class AbstractSerializationNode extends AbstractSerializationElement implements SerializationNode
 {
-	/**
-	 * The overall (multi-)grammar analysis.
-	 */
-	protected final @NonNull GrammarAnalysis grammarAnalysis;
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	protected AbstractSerializationNode(@NonNull GrammarAnalysis grammarAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		this.grammarAnalysis = grammarAnalysis;
+	protected AbstractSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
@@ -71,14 +65,14 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull Alternatives alternatives) {
 		return this;
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) { // XXX is this needed ?
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) { // XXX is this needed ?
 	//	return new SequenceSerializationNode(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), Collections.singletonList(this));
-		return createFrozenSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, Collections.singletonList(this));
+		return createFrozenSequence(compoundElement, multiplicativeCardinality, Collections.singletonList(this));
 	}
 
 	@Override
@@ -102,7 +96,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		if (this.multiplicativeCardinality.isZeroOrMore()) {
 			return this;
 		}

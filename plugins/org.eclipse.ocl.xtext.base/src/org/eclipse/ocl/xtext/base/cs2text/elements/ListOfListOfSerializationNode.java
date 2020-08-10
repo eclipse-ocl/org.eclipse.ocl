@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -125,20 +124,20 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationNode freezeAlternatives(@NonNull GrammarAnalysis grammarAnalysis, @NonNull Alternatives alternatives) {
+	public @NonNull SerializationNode freezeAlternatives(@NonNull Alternatives alternatives) {
 		List<@NonNull SerializationNode> newList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
 			assert listOfNodes.size() == 1;
 			newList.add(listOfNodes.get(0));
 		}
-		return new AlternativesSerializationNode(grammarAnalysis, alternatives, MultiplicativeCardinality.toEnum(alternatives), newList);
+		return new AlternativesSerializationNode(alternatives, MultiplicativeCardinality.toEnum(alternatives), newList);
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-			SerializationElement frozenSequence = createFrozenSequence(grammarAnalysis, compoundElement, multiplicativeCardinality, listOfNodes);
+			SerializationElement frozenSequence = createFrozenSequence(compoundElement, multiplicativeCardinality, listOfNodes);
 			if (frozenSequence.isListOfList()) {
 				newListOfList.addAll(frozenSequence.asListOfList().getLists());
 			}
@@ -172,7 +171,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 //	}
 
 	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull GrammarAnalysis grammarAnalysis, @NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality.isOne()) {
 			return this;
 		}
@@ -182,7 +181,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 				for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
 					List<@NonNull SerializationNode> newList = new ArrayList<>(listOfNodes.size());
 					for (@NonNull SerializationNode node : listOfNodes) {
-						newList.add(node.setMultiplicativeCardinality(grammarAnalysis, compoundElement, multiplicativeCardinality));
+						newList.add(node.setMultiplicativeCardinality(compoundElement, multiplicativeCardinality));
 						newListOfList.add(newList);
 					}
 				}

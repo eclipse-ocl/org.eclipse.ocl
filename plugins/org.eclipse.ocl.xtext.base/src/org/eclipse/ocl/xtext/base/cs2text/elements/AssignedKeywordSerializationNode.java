@@ -28,7 +28,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	public AssignedKeywordSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.keyword = keyword;
-		this.enumerationValue = grammarAnalysis.getEnumerationValue(keyword);
+		this.enumerationValue = assignmentAnalysis.getGrammarAnalysis().getEnumerationValue(keyword);
 	}
 
 	@Override
