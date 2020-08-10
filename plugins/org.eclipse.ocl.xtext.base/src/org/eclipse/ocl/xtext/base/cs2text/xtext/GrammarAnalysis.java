@@ -70,6 +70,8 @@ public class GrammarAnalysis
 	@Inject
 	private @NonNull IdiomsProvider idiomsProvider;
 
+	private @Nullable Grammar grammar = null;
+
 	/**
 	 * The rule analysis for each rule.
 	 */
@@ -104,6 +106,12 @@ public class GrammarAnalysis
 	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
 
 	private @Nullable RTGrammarAnalysis runtime = null;
+
+	public GrammarAnalysis() {}
+
+	public GrammarAnalysis(@NonNull Grammar grammar) {
+		this.grammar = grammar;
+	}
 
 	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
@@ -220,9 +228,8 @@ public class GrammarAnalysis
 	 */
 	protected @NonNull Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> analyzeRuleNames(
 			@NonNull Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls) {
-		Grammar grammar = ClassUtil.nonNullState(grammarProvider.getGrammar(this));
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = new HashMap<>();
-		for (@NonNull EObject eObject : new TreeIterable(XtextGrammarUtil.getResource(grammar))) {
+		for (@NonNull EObject eObject : new TreeIterable(XtextGrammarUtil.getResource(getGrammar()))) {
 			if (eObject instanceof AbstractRule) {
 				AbstractRule abstractRule = (AbstractRule)eObject;
 				String ruleName = XtextGrammarUtil.getName(abstractRule);
@@ -427,8 +434,23 @@ public class GrammarAnalysis
 		return enumerationValue;
 	}
 
+	public @NonNull Grammar getGrammar() {
+		Grammar grammar2 = grammar;
+		if (grammar2 == null) {
+			grammar = grammar2 = ClassUtil.nonNullState(grammarProvider.getGrammar(this));
+		}
+		return grammar2;
+	}
+
 	public @NonNull Iterable<@NonNull Idiom> getIdioms() {
 		return idiomsProvider.getIdioms();
+	}
+
+	public @NonNull Iterable<@NonNull EClass> getSortedProducedEClasses() {
+		assert eClass2serializationRules != null;
+		List<@NonNull EClass> list = new ArrayList<>(ClassUtil.nonNullState(eClass2serializationRules.keySet()));
+		Collections.sort(list, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		return list;
 	}
 
 	public @NonNull List<@NonNull ParserRuleAnalysis> getProducingRuleAnalyses(@NonNull EClass eClass) {

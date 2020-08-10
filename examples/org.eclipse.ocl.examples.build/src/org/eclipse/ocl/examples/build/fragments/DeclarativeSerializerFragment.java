@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.build.fragments;
 import org.apache.log4j.Logger;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -43,7 +44,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	@Inject
 	private  FileAccessFactory fileAccessFactory;
 
-	protected abstract StringConcatenationClient doGetAnalysisProviderContent();
+//	@Inject
+//	private  GrammarAnalysis grammarAnalysis;
+
+	protected abstract StringConcatenationClient doGetAnalysisProviderContent(GrammarAnalysis grammarAnalysis);
 
 	protected void doGenerateAnalysisStubFile() {
 		JavaFileAccess javaFile = this.doGetAnalysisStubFile();
@@ -67,7 +71,9 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		TypeReference analysisProviderStub = getAnalysisProviderClass(grammar);
 		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(analysisProviderStub);
 		javaFile.setResourceSet(language.getResourceSet());
-		javaFile.setContent(doGetAnalysisProviderContent());
+		GrammarAnalysis grammarAnalysis = new GrammarAnalysis(grammar);
+		grammarAnalysis.analyze();
+		javaFile.setContent(doGetAnalysisProviderContent(grammarAnalysis));
 		return javaFile;
 	}
 

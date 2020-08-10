@@ -43,6 +43,8 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	 */
 	private @Nullable Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = null;
 
+	private @Nullable RTSerializationRule2 runtime = null;
+
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		super(ruleAnalysis, rootSerializationNode);
 	}
@@ -89,6 +91,14 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.getMultiplicativeCardinality(eReference, ruleAnalysis);
+	}
+
+	public @NonNull RTSerializationRule getRuntime() {
+		RTSerializationRule2 runtime2 = runtime ;
+		if (runtime2 == null) {
+			runtime = runtime2 = new RTSerializationRule2(this);
+		}
+		return runtime2;
 	}
 
 	public @NonNull StaticRuleMatch getStaticRuleMatch() {
