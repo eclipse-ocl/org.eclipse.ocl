@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <idioms:IdiomModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:idioms="http://www.eclipse.org/ocl/2020/Idioms" xsi:schemaLocation="http://www.eclipse.org/ocl/2020/Idioms ../../../../../../../org.eclipse.ocl.xtext.base/model/Idioms.ecore" name="OCLinEcore">
   <imports href="../../../../../../../org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.idioms#/"/>
-  <ownedIdioms name="COLON in OperationCS">
+  <ownedIdioms name="2nd COLON in OperationCS">
+    <ownedSubIdioms locator="//@ownedLocators.0" name="COLON in OperationCS"/>
     <ownedSubIdioms locator="//@ownedLocators.0" name="COLON in OperationCS">
+      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.1"/>
+      <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
+      <segments xsi:type="idioms:SoftSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.6"/>
+    </ownedSubIdioms>
+  </ownedIdioms>
+  <ownedIdioms name="COLON in OCLinEcoreConstraintCS">
+    <ownedSubIdioms locator="//@ownedLocators.1" name="COLON in OCLinEcoreConstraintCS">
+      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.1"/>
       <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
       <segments xsi:type="idioms:SoftSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.6"/>
     </ownedSubIdioms>
   </ownedIdioms>
   <ownedLocators xsi:type="idioms:KeywordLocator" name="COLON in OperationCS" string=":">
     <inEClass href="http://www.eclipse.org/ocl/2015/BaseCS#//OperationCS"/>
+  </ownedLocators>
+  <ownedLocators xsi:type="idioms:KeywordLocator" name="COLON in OCLinEcoreConstraintCS" string=":">
+    <inEClass href="http://www.eclipse.org/ocl/2015/OCLinEcoreCS#//OCLinEcoreConstraintCS"/>
   </ownedLocators>
 </idioms:IdiomModel>

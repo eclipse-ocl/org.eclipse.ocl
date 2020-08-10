@@ -53,7 +53,7 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 			for (Idiom idiom : ((IdiomModel)resource.getContents().get(0)).getOwnedIdioms()) {
 				for (SubIdiom subIdiom : idiom.getOwnedSubIdioms()) {
 					for (Segment segment : subIdiom.getSegments()) {
-						segment.toString();
+						segment.toString();		// XXX debugging
 					}
 				}
 			}

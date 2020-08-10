@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -59,7 +60,10 @@ public class IdiomMatch
 		if (isMatchedLocal()) {
 			for (int i = 0; i < matchNodes.length; i++) {
 				SerializationNode serializationNode = matchNodes[i];
-				serializationNode2subIdiom.put(serializationNode, idiom.getOwnedSubIdioms().get(i));
+				SubIdiom subIdiom = idiom.getOwnedSubIdioms().get(i);
+				if (subIdiom.getSegments().size() > 0) {		// Locator-only subidioms do not inhibit other matches
+					serializationNode2subIdiom.put(serializationNode, subIdiom);
+				}
 			}
 		}
 		return true;
@@ -86,40 +90,32 @@ public class IdiomMatch
 	}
 
 	public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+		EList<SubIdiom> subIdioms = idiom.getOwnedSubIdioms();
 		if (isMatchedLocal()) {
 			if (additionalMatch != null) {
 				additionalMatch.nextMatch(serializationNode, serializationRule);
 			}
-			else if (idiom.getOwnedSubIdioms().get(0).matches(serializationNode, serializationRule)) {								// Look to chain a new sub-match
+			else if (subIdioms.get(0).matches(serializationNode, serializationRule)) {		// Look to chain a new sub-match
 				additionalMatch = new IdiomMatch(idiom, serializationNode);
 			}
-			return true;		// Handled by additional match
+			return true;																	// Handled by additional match
 		}
 		if (nestedMatch != null) {															// Pass down to active sub-match
 			if (nestedMatch.nextMatch(serializationNode, serializationRule)) {
 				return true;
 			}
 		}
-		if (idiom.getOwnedSubIdioms().get(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
-			nestedMatch = new IdiomMatch(idiom, serializationNode);
+		if (subIdioms.get(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
+			matchNodes[subIdiomIndex++] = serializationNode;
 			return true;
 		}
-		else if (idiom.getOwnedSubIdioms().get(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
-			matchNodes[subIdiomIndex++] = serializationNode;
+		else if (subIdioms.get(0).matches(serializationNode, serializationRule)) {			// Look to nest a recursive sub-match
+			nestedMatch = new IdiomMatch(idiom, serializationNode);
 			return true;
 		}
 		else {
 			return false;
 		}
-//			assert nestedMatch != null;
-//		}
-//		else if ((idiom.getSubIdioms().length > 1) &&  idiom.getSubidiom(0).matches(serializationNode, serializationRule)) {								// Look to nest a new sub-match
-//			nestedMatch = new IdiomMatch(idiom, serializationNode);
-//		}
-//		else if (!isMatchedLocal() && idiom.getSubidiom(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
-//			matchNodes[subIdiomIndex++] = serializationNode;
-//		}
-//		return true;
 	}
 
 	@Override

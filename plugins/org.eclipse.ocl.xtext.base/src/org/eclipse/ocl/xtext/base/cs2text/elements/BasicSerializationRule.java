@@ -56,22 +56,22 @@ public class BasicSerializationRule extends AbstractSerializationRule
 //		return eAttribute2enumerationValue2multiplicativeCardinality.keySet();
 //	}
 
-	private void getIdiomMatches(@NonNull SerializationNode outerSerializationNode, @NonNull Iterable<@NonNull Idiom> idioms,
+	private void getIdiomMatches(@NonNull SerializationNode serializationNode, @NonNull Iterable<@NonNull Idiom> idioms,
 			@Nullable IdiomMatch @NonNull [] idiomMatches) {
 		int idiomIndex = 0;
 		for (@NonNull Idiom idiom : idioms) {
 			IdiomMatch idiomMatch = idiomMatches[idiomIndex];
 			if (idiomMatch == null) {
-				idiomMatches[idiomIndex] = idiom.firstMatch(outerSerializationNode, this);
+				idiomMatches[idiomIndex] = idiom.firstMatch(serializationNode, this);
 			}
 			else {
-				idiomMatch.nextMatch(outerSerializationNode, this);
+				idiomMatch.nextMatch(serializationNode, this);
 			}
 			idiomIndex++;
 		}
-		if (outerSerializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode innerSerializationNode : ((SequenceSerializationNode)outerSerializationNode).getSerializationNodes()) {
-				getIdiomMatches(innerSerializationNode, idioms, idiomMatches);
+		if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				getIdiomMatches(nestedSerializationNode, idioms, idiomMatches);
 			}
 		}
 	}
