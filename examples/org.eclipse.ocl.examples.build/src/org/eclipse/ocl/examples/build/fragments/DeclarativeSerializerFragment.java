@@ -11,6 +11,14 @@
 package org.eclipse.ocl.examples.build.fragments;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
+import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -44,10 +52,11 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	@Inject
 	private  FileAccessFactory fileAccessFactory;
 
-//	@Inject
-//	private  GrammarAnalysis grammarAnalysis;
+	private @NonNull OCL ocl = OCL.newInstance();
+	private @NonNull MetamodelManager metamodelManager = ocl.getMetamodelManager();
+	private @NonNull GenModelHelper genModelHelper = new AbstractGenModelHelper((PivotMetamodelManager)metamodelManager);
 
-	protected abstract StringConcatenationClient doGetAnalysisProviderContent(GrammarAnalysis grammarAnalysis);
+	protected abstract StringConcatenationClient doGetAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis);
 
 	protected void doGenerateAnalysisStubFile() {
 		JavaFileAccess javaFile = this.doGetAnalysisStubFile();
@@ -68,6 +77,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		IXtextGeneratorLanguage language = getLanguage();
 		Grammar grammar = getGrammar();
+		assert grammar != null;
 		TypeReference analysisProviderStub = getAnalysisProviderClass(grammar);
 		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(analysisProviderStub);
 		javaFile.setResourceSet(language.getResourceSet());
@@ -75,6 +85,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		grammarAnalysis.analyze();
 		javaFile.setContent(doGetAnalysisProviderContent(grammarAnalysis));
 		return javaFile;
+	}
+
+	protected String emitLiteral(@NonNull EClassifier eClassifier) {
+		return genModelHelper.getLiteralName(eClassifier);
+	}
+
+	protected String emitQualifiedLiteral(@NonNull EPackage ePackage) {
+		return genModelHelper.getQualifiedPackageInterfaceName(ePackage);
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
@@ -31,15 +30,12 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
  * Once the actual EObject instance of EClass is known a DynamicSerializationRules identifies the subset of the
  * rules with compatiible containment ancestry.
  */
-public class SerializationRules
+public class SerializationRules extends RTSerializationRules
 {
-	protected final @NonNull EClass eClass;
-	protected final @NonNull Iterable<@NonNull SerializationRule> serializationRules;
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
 
 	public SerializationRules(@NonNull EClass eClass, @NonNull Iterable<@NonNull SerializationRule> serializationRules) {
-		this.eClass = eClass;
-		this.serializationRules = serializationRules;
+		super(eClass, serializationRules);
 	}
 
 	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses) {
@@ -75,34 +71,6 @@ public class SerializationRules
 			}
 		}
 		return new DynamicSerializationRules(eClass, newSerializationRules);
-		/*	List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
-		for (@NonNull SerializationRule serializationRule : serializationRules2.getSerializationRules()) {
-			ParserRuleAnalysis ruleAnalysis = serializationRule.getRuleAnalysis();
-			if (targetRuleAnalyses.contains(ruleAnalysis)) {
-				serializationRules.add(serializationRule);
-				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
-				if (ruleDiscriminatingEReferences != null) {
-					Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses2 = eReference2disciminatingRuleAnalyses;
-					if (eReference2disciminatingRuleAnalyses2 == null) {
-						eReference2disciminatingRuleAnalyses = eReference2disciminatingRuleAnalyses2 = new HashMap<>();
-					}
-					for (Map.Entry<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> entry : ruleDiscriminatingEReferences.entrySet()) {
-						EReference eReference = entry.getKey();
-						List<@NonNull ParserRuleAnalysis> list = eReference2disciminatingRuleAnalyses2.get(eReference);
-						if (list == null) {
-							list = new ArrayList<>();
-							eReference2disciminatingRuleAnalyses2.put(eReference, list);
-						}
-						for (@NonNull ParserRuleAnalysis ruleAnalysis2 : entry.getValue()) {
-							if (!list.contains(ruleAnalysis2)) {
-								list.add(ruleAnalysis2);
-							}
-						}
-					}
-				}
-			}
-		}
-		return new DynamicSerializationRules(eClass, serializationRules); */
 	}
 
 	/**
@@ -125,27 +93,5 @@ public class SerializationRules
 
 	public @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> getEReference2disciminatedRuleAnalyses() {
 		return eReference2disciminatingRuleAnalyses;
-	}
-
-	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
-		return serializationRules;
-	}
-
-	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 0);
-		return s.toString();
-	}
-
-	public void toString(StringBuilder s, int i) {
-		s.append(eClass.getEPackage().getName());
-		s.append("::");
-		s.append(eClass.getName());
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			StringUtil.appendIndentation(s, i);
-			s.append("|&  ");
-			serializationRule.toString(s, -1);
-		}
 	}
 }

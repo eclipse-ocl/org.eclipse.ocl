@@ -10,10 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
-import org.eclipse.xtext.xtext.generator.model.TypeReference
+import java.util.ArrayList
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules
+import org.eclipse.xtext.xtext.generator.model.TypeReference
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -32,36 +34,36 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				if (analysis == null) {
 					analysis = new «new TypeReference(RTGrammarAnalysis)»();
 				}
+				«FOR eClass : grammarAnalysis.getSortedProducedEClasses()»
+					analysis.addSerializationRules(create_«eClass.getName()»_Rules());
+				«ENDFOR»
 				return analysis;
 			}
 			
-			«FOR eClass : grammarAnalysis.getSortedProducedEClasses()»
-
-			/**
-			 * «eClass.getName()»
-			 */
-			«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules()»
-			// «serializationRule.toString()»
-			«ENDFOR»
-			«ENDFOR»
+			«generateSerializationRules(grammarAnalysis)»
 		}
 		'''
 	}
 	
-	protected def generateSerializationRule(BasicSerializationRule serializationRule) {
+	protected def generateSerializationRule(GrammarAnalysis grammarAnalysis, EClass eClass) {
 		'''
-		public class «getAnalysisProviderClass(grammar).simpleName» extends «getAnalysisProviderSuperClass(grammar)»
-		{
-			private static «new TypeReference(RTGrammarAnalysis)» analysis = null;
-		
-			@Override
-			public «new TypeReference(RTGrammarAnalysis)» getAnalysis() {
-				if (analysis == null) {
-					analysis = new «new TypeReference(RTGrammarAnalysis)»();
-				}
-				return analysis;
-			}
+		/**
+		 * «eClass.getName()»
+		 */
+		private «new TypeReference(SerializationRules)» create_«eClass.getName()»_Rules() {
+		«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules()»
+			// «serializationRule.toString()»
+		«ENDFOR»
+			return new «new TypeReference(SerializationRules)»(«new TypeReference(emitQualifiedLiteral(eClass.getEPackage()))».Literals.«emitLiteral(eClass)», new «new TypeReference(ArrayList)»<>());
 		}
+		'''
+	}
+	
+	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis) {
+		'''
+			«FOR eClass : grammarAnalysis.getSortedProducedEClasses()»
+			«generateSerializationRule(grammarAnalysis, eClass)»
+			«ENDFOR»
 		'''
 	}
 }
