@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class AbstractIdiomsProvider implements IdiomsProvider
@@ -48,9 +47,16 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 	//	Resource resource = resourceSet.getResource(uri, true);
 		Resource resource = resourceSet.createResource(uri);
 		Map<Object,Object> options = new HashMap<>();
-		options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
+	//	options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
 		try {
 			resource.load(options);
+			for (Idiom idiom : ((IdiomModel)resource.getContents().get(0)).getOwnedIdioms()) {
+				for (SubIdiom subIdiom : idiom.getOwnedSubIdioms()) {
+					for (Segment segment : subIdiom.getSegments()) {
+						segment.toString();
+					}
+				}
+			}
 			EcoreUtil.resolveAll(resourceSet);				// Avoid no-equality of proxies
 			return (IdiomModel)resource.getContents().get(0);	//OPTION_DEFER_IDREF_RESOLUTION
 		} catch (IOException e) {

@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
@@ -200,7 +199,7 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	{
 		if (segments == null)
 		{
-			segments = new EObjectEList<Segment>(Segment.class, this, IdiomsPackage.Literals.SUB_IDIOM__SEGMENTS.getFeatureID())
+			segments = new EObjectResolvingEList<Segment>(Segment.class, this, IdiomsPackage.Literals.SUB_IDIOM__SEGMENTS.getFeatureID())
 			{
 				@Override
 				protected boolean isUnique() {
