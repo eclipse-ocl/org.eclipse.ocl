@@ -229,26 +229,38 @@ public class GrammarAnalysis
 	protected @NonNull Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> analyzeRuleNames(
 			@NonNull Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls) {
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = new HashMap<>();
-		for (@NonNull EObject eObject : new TreeIterable(XtextGrammarUtil.getResource(getGrammar()))) {
-			if (eObject instanceof AbstractRule) {
-				AbstractRule abstractRule = (AbstractRule)eObject;
-				String ruleName = XtextGrammarUtil.getName(abstractRule);
-				List<@NonNull AbstractRule> rules = ruleName2rules.get(ruleName);
-				if (rules == null) {
-					rules = new ArrayList<>();
-					ruleName2rules.put(ruleName, rules);
+		List<@NonNull Grammar> grammars = new ArrayList<>();
+		grammars.add(getGrammar());
+		for (int i = 0; i < grammars.size(); i++) {
+			@NonNull Grammar grammar = grammars.get(i);
+			for (@NonNull EObject eObject : new TreeIterable(grammar, true)) {
+				if (eObject instanceof Grammar) {
+					for (Grammar usedGrammar : ((Grammar)eObject).getUsedGrammars()) {
+						if ((usedGrammar != null) && !grammars.contains(usedGrammar)) {
+							grammars.add(usedGrammar);
+						}
+					}
 				}
-				rules.add(abstractRule);
-			}
-			else if (eObject instanceof RuleCall) {
-				RuleCall ruleCall = (RuleCall)eObject;
-				AbstractRule rule = XtextGrammarUtil.getRule(ruleCall);
-				List<@NonNull RuleCall> ruleCalls = rule2ruleCalls.get(rule);
-				if (ruleCalls == null) {
-					ruleCalls = new ArrayList<>();
-					rule2ruleCalls.put(rule, ruleCalls);
+				else if (eObject instanceof AbstractRule) {
+					AbstractRule abstractRule = (AbstractRule)eObject;
+					String ruleName = XtextGrammarUtil.getName(abstractRule);
+					List<@NonNull AbstractRule> rules = ruleName2rules.get(ruleName);
+					if (rules == null) {
+						rules = new ArrayList<>();
+						ruleName2rules.put(ruleName, rules);
+					}
+					rules.add(abstractRule);
 				}
-				ruleCalls.add(ruleCall);
+				else if (eObject instanceof RuleCall) {
+					RuleCall ruleCall = (RuleCall)eObject;
+					AbstractRule rule = XtextGrammarUtil.getRule(ruleCall);
+					List<@NonNull RuleCall> ruleCalls = rule2ruleCalls.get(rule);
+					if (ruleCalls == null) {
+						ruleCalls = new ArrayList<>();
+						rule2ruleCalls.put(rule, ruleCalls);
+					}
+					ruleCalls.add(ruleCall);
+				}
 			}
 		}
 		return ruleName2rules;
