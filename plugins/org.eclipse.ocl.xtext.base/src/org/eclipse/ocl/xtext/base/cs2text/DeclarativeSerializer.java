@@ -18,7 +18,6 @@ import java.io.Writer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.serializer.impl.Serializer;
 
@@ -37,8 +36,7 @@ public class DeclarativeSerializer extends Serializer
 		checkNotNull(obj, "obj must not be null.");
 		checkNotNull(writer, "writer must not be null.");
 		checkNotNull(options, "options must not be null.");
-		GrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
-		grammarAnalysis.analyze();
+		modelAnalysis.getInjectedGrammarAnalysis().analyze();
 	//	String s1 = grammarAnalysis.toString();
 	//	System.out.println(s1);
 	//	System.out.println("\n");

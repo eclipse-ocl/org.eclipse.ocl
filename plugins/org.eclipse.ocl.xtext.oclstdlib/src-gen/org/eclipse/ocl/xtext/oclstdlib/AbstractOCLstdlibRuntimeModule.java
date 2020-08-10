@@ -17,8 +17,9 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
+import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingDiagnosticMessageProvider;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.xtext.oclstdlib.parser.antlr.OCLstdlibAntlrTokenFileProvi
 import org.eclipse.ocl.xtext.oclstdlib.parser.antlr.OCLstdlibParser;
 import org.eclipse.ocl.xtext.oclstdlib.parser.antlr.internal.InternalOCLstdlibLexer;
 import org.eclipse.ocl.xtext.oclstdlib.scoping.OCLstdlibScopeProvider;
+import org.eclipse.ocl.xtext.oclstdlib.serializer.OCLstdlibAnalysisProvider;
 import org.eclipse.ocl.xtext.oclstdlib.services.OCLstdlibGrammarAccess;
 import org.eclipse.ocl.xtext.oclstdlib.validation.OCLstdlibValidator;
 import org.eclipse.xtext.Constants;
@@ -116,6 +118,11 @@ public abstract class AbstractOCLstdlibRuntimeModule extends DefaultRuntimeModul
 	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends AbstractAnalysisProvider> bindAbstractAnalysisProvider() {
+		return OCLstdlibAnalysisProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2

@@ -125,7 +125,12 @@ public class UserModelAnalysis
 		return ClassUtil.nonNullState(element2elementAnalysis.get(element));
 	}
 
-	public @NonNull GrammarAnalysis getGrammarAnalysis() {
+	public @NonNull RTGrammarAnalysis getGrammarAnalysis() {
+		return grammarAnalysis.getRuntime();
+	}
+
+	@Deprecated
+	public @NonNull GrammarAnalysis getInjectedGrammarAnalysis() {
 		return grammarAnalysis;
 	}
 

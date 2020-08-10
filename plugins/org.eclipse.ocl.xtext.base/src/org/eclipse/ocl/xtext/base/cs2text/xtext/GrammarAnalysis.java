@@ -31,12 +31,13 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -101,6 +102,8 @@ public class GrammarAnalysis
 
 	private  final @NonNull Map<@NonNull String, @NonNull SingleEnumerationValue> value2enumerationValue = new HashMap<>();
 	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
+
+	private @Nullable RTGrammarAnalysis runtime = null;
 
 	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
@@ -436,6 +439,14 @@ public class GrammarAnalysis
 	public @NonNull AbstractRuleAnalysis getRuleAnalysis(@NonNull AbstractRule abstractRule) {
 		assert rule2ruleAnalysis != null;
 		return ClassUtil.nonNullState(rule2ruleAnalysis.get(abstractRule));
+	}
+
+	public @NonNull RTGrammarAnalysis getRuntime() {
+		RTGrammarAnalysis runtime2 = runtime;
+		if (runtime2 == null)  {
+			runtime = runtime2 = new RTGrammarAnalysis(this);
+		}
+		return runtime2 ;
 	}
 
 	public @NonNull SerializationRules getSerializationRules(@NonNull EClass eClass) {

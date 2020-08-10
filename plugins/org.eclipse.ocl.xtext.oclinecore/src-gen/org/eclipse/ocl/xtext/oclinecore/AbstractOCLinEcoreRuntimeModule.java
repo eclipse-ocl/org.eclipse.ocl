@@ -17,8 +17,9 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
+import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingDiagnosticMessageProvider;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreAntlrTokenFilePro
 import org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreParser;
 import org.eclipse.ocl.xtext.oclinecore.parser.antlr.internal.InternalOCLinEcoreLexer;
 import org.eclipse.ocl.xtext.oclinecore.scoping.OCLinEcoreScopeProvider;
+import org.eclipse.ocl.xtext.oclinecore.serializer.OCLinEcoreAnalysisProvider;
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreGrammarAccess;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreValidator;
 import org.eclipse.xtext.Constants;
@@ -116,6 +118,11 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends AbstractAnalysisProvider> bindAbstractAnalysisProvider() {
+		return OCLinEcoreAnalysisProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2

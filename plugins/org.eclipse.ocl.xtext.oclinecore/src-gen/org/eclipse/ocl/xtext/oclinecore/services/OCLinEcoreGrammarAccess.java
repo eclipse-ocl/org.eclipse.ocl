@@ -47,7 +47,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final RuleCall cOwnedPackagesPackageCSParserRuleCall_3_0 = (RuleCall)cOwnedPackagesAssignment_3.eContents().get(0);
 
 		////generate oclinEcore2 "http://www.eclipse.org/ocl/examples/xtext/oclinecore/OCLinEcore"
-		// TopLevelCS:
+		//TopLevelCS:
 		//	{TopLevelCS} ('module' UnrestrictedName)?
 		//	ownedImports+=ImportCS*
 		//	ownedPackages+=PackageCS*;
@@ -1102,8 +1102,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 
 		//DataTypeCS base::DataTypeCS:
 		//	isPrimitive?='primitive'? 'datatype' name=UnrestrictedName
-		//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{'
-		//	(isSerializable?='serializable' | '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
+		//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{' (isSerializable?='serializable'
+		//	| '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
 		//	| ownedConstraints+=InvariantConstraintCS)* '}' | ';');
 		@Override public ParserRule getRule() { return rule; }
 
@@ -1347,8 +1347,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 
 		//EnumerationCS base::EnumerationCS:
 		//	'enum' name=UnrestrictedName
-		//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{'
-		//	(isSerializable?='serializable' | '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
+		//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{' (isSerializable?='serializable'
+		//	| '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
 		//	| ownedLiterals+=EnumerationLiteralCS
 		//	| ownedConstraints+=InvariantConstraintCS)* '}' | ';');
 		@Override public ParserRule getRule() { return rule; }
@@ -1759,8 +1759,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 
 		//(qualifiers+='static' qualifiers+='definition'? | qualifiers+='definition' qualifiers+='static'?)? 'operation'
 		//ownedSignature=TemplateSignatureCS? name=UnrestrictedName '(' (ownedParameters+=ParameterCS (','
-		//ownedParameters+=ParameterCS)*)? ')' (':' ownedType=TypedMultiplicityRefCS)? ('throws' ownedExceptions+=TypedRefCS
-		//(',' ownedExceptions+=TypedRefCS)*)? ('{' ((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' |
+		//ownedParameters+=ParameterCS)*)? ')' (':' ownedType=TypedMultiplicityRefCS)? ('throws' ownedExceptions+=TypedRefCS (','
+		//ownedExceptions+=TypedRefCS)*)? ('{' ((qualifiers+='derived' | qualifiers+='!derived' | qualifiers+='ordered' |
 		//qualifiers+='!ordered' | qualifiers+='transient' | qualifiers+='!transient' | qualifiers+='unique' |
 		//qualifiers+='!unique') ','?)+ '}')? ('{' (ownedAnnotations+=AnnotationElementCS |
 		//ownedPreconditions+=PreconditionConstraintCS | 'body' UnrestrictedName? ':' ownedBodyExpressions+=SpecificationCS? ';'
@@ -2442,8 +2442,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		//	qualifiers+='!unique' | qualifiers+='unsettable' | qualifiers+='!unsettable' | qualifiers+='volatile' |
 		//	qualifiers+='!volatile') ','?)+
 		//	'}')? ('{' (ownedAnnotations+=AnnotationElementCS
-		//	| 'key' referredKeys+=[pivot::Property|UnrestrictedName] (',' referredKeys+=[pivot::Property|UnrestrictedName])* ';'
-		//	| 'initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';' | 'derivation' UnrestrictedName? ':'
+		//	| 'key' referredKeys+=[pivot::Property|UnrestrictedName] (',' referredKeys+=[pivot::Property|UnrestrictedName])* ';' |
+		//	'initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';' | 'derivation' UnrestrictedName? ':'
 		//	ownedDefaultExpressions+=SpecificationCS? ';' | ownedImplicitOpposites+=ImplicitOppositeCS ';')* '}' | ';');
 		@Override public ParserRule getRule() { return rule; }
 
@@ -3154,11 +3154,9 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 
 		////---------------------------------------------------------------------------------
-		// //	Base overrides
-		//
+		////	Base overrides
 		////---------------------------------------------------------------------------------
-		// TemplateSignatureCS
-		//base::TemplateSignatureCS:
+		//TemplateSignatureCS base::TemplateSignatureCS:
 		//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')' | '<'
 		//	ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* '>';
 		@Override public ParserRule getRule() { return rule; }
@@ -3474,7 +3472,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 
 
 	////generate oclinEcore2 "http://www.eclipse.org/ocl/examples/xtext/oclinecore/OCLinEcore"
-	// TopLevelCS:
+	//TopLevelCS:
 	//	{TopLevelCS} ('module' UnrestrictedName)?
 	//	ownedImports+=ImportCS*
 	//	ownedPackages+=PackageCS*;
@@ -3487,8 +3485,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	//terminal UNQUOTED_STRING: // Never forward parsed; just provides a placeholder
-	// '£$%^£$%^'
-	//	//  for reverse serialisation of embedded OCL
+	//	'£$%^£$%^' //  for reverse serialisation of embedded OCL
 	//;
 	public TerminalRule getUNQUOTED_STRINGRule() {
 		return tUNQUOTED_STRING;
@@ -3645,8 +3642,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 
 	//DataTypeCS base::DataTypeCS:
 	//	isPrimitive?='primitive'? 'datatype' name=UnrestrictedName
-	//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{'
-	//	(isSerializable?='serializable' | '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
+	//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{' (isSerializable?='serializable'
+	//	| '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
 	//	| ownedConstraints+=InvariantConstraintCS)* '}' | ';');
 	public DataTypeCSElements getDataTypeCSAccess() {
 		return pDataTypeCS;
@@ -3680,8 +3677,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 
 	//EnumerationCS base::EnumerationCS:
 	//	'enum' name=UnrestrictedName
-	//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{'
-	//	(isSerializable?='serializable' | '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
+	//	ownedSignature=TemplateSignatureCS? (':' instanceClassName=SINGLE_QUOTED_STRING)? ('{' (isSerializable?='serializable'
+	//	| '!serializable')? '}')? ('{' (ownedAnnotations+=AnnotationElementCS
 	//	| ownedLiterals+=EnumerationLiteralCS
 	//	| ownedConstraints+=InvariantConstraintCS)* '}' | ';');
 	public EnumerationCSElements getEnumerationCSAccess() {
@@ -3799,8 +3796,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	//	qualifiers+='!unique' | qualifiers+='unsettable' | qualifiers+='!unsettable' | qualifiers+='volatile' |
 	//	qualifiers+='!volatile') ','?)+
 	//	'}')? ('{' (ownedAnnotations+=AnnotationElementCS
-	//	| 'key' referredKeys+=[pivot::Property|UnrestrictedName] (',' referredKeys+=[pivot::Property|UnrestrictedName])* ';'
-	//	| 'initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';' | 'derivation' UnrestrictedName? ':'
+	//	| 'key' referredKeys+=[pivot::Property|UnrestrictedName] (',' referredKeys+=[pivot::Property|UnrestrictedName])* ';' |
+	//	'initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';' | 'derivation' UnrestrictedName? ':'
 	//	ownedDefaultExpressions+=SpecificationCS? ';' | ownedImplicitOpposites+=ImplicitOppositeCS ';')* '}' | ';');
 	public ReferenceCSElements getReferenceCSAccess() {
 		return pReferenceCS;
@@ -3879,11 +3876,9 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	////---------------------------------------------------------------------------------
-	// //	Base overrides
-	//
+	////	Base overrides
 	////---------------------------------------------------------------------------------
-	// TemplateSignatureCS
-	//base::TemplateSignatureCS:
+	//TemplateSignatureCS base::TemplateSignatureCS:
 	//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')' | '<'
 	//	ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* '>';
 	public TemplateSignatureCSElements getTemplateSignatureCSAccess() {
@@ -3932,7 +3927,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	////generate essentialOCLCST "http://www.eclipse.org/ocl/3.0.0/EssentialOCLCST"
-	// Model ContextCS:
+	//Model ContextCS:
 	//	ownedExpression=ExpCS;
 	public EssentialOCLGrammarAccess.ModelElements getModelAccess() {
 		return gaEssentialOCL.getModelAccess();
@@ -4043,10 +4038,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	////---------------------------------------------------------------------
-	// //  Names
-	//
+	////  Names
 	////---------------------------------------------------------------------
-	//
 	///** <<<This is a join point for derived grammars - replace with a more disciplined grammar extensibility>>> */
 	//EssentialOCLUnrestrictedName:
 	//	Identifier;
@@ -4115,10 +4108,9 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	////---------------------------------------------------------------------
-	// //  Types
-	//
+	////  Types
 	////---------------------------------------------------------------------
-	// PrimitiveTypeIdentifier:
+	//PrimitiveTypeIdentifier:
 	//	'Boolean'
 	//	| 'Integer'
 	//	| 'Real'
@@ -4201,10 +4193,9 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	////---------------------------------------------------------------------
-	// //  Literals
-	//
+	////  Literals
 	////---------------------------------------------------------------------
-	// CollectionLiteralExpCS:
+	//CollectionLiteralExpCS:
 	//	ownedType=CollectionTypeCS
 	//	'{' (ownedParts+=CollectionLiteralPartCS (',' ownedParts+=CollectionLiteralPartCS)*)?
 	//	'}';
@@ -4449,22 +4440,15 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	////---------------------------------------------------------------------
-	// //  Expressions
-	//
+	////  Expressions
 	////---------------------------------------------------------------------
-	//
 	//// An ExpCS permits a LetExpCS only in the final term to ensure
-	//
 	////  that let is right associative, whereas infix operators are left associative.
-	//
 	////   a = 64 / 16 / let b : Integer in 8 / let c : Integer in 4
-	// // is
-	//
+	//// is
 	////   a = (64 / 16) / (let b : Integer in 8 / (let c : Integer in 4 ))
-	//
 	///* An expression elaborates a prefixed expression with zero or more binary operator and expression suffixes.
-	// * An optionally prefixed let expression is permitted except when suffixed with further expressions.*/
-	//ExpCS:
+	// * An optionally prefixed let expression is permitted except when suffixed with further expressions.*/ ExpCS:
 	//	PrefixedPrimaryExpCS ({InfixExpCS.ownedLeft=current} name=BinaryOperatorName ownedRight=ExpCS)? | PrefixedLetExpCS;
 	public EssentialOCLGrammarAccess.ExpCSElements getExpCSAccess() {
 		return gaEssentialOCL.getExpCSAccess();
@@ -4517,8 +4501,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	///* A name expression is a generalised rule for expressions that start with a name and which may be followed by square, round or
-	// * curly bracket clauses and optionally an @pre as well.*/
-	//NameExpCS:
+	// * curly bracket clauses and optionally an @pre as well.*/ NameExpCS:
 	//	ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS*
 	//	ownedRoundBracketedClause=RoundBracketedClauseCS? ownedCurlyBracketedClause=CurlyBracketedClauseCS? (isPre?='@'
 	//	'pre')?;
@@ -4564,8 +4547,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	///* A navigating argument is a generalized rule for the first argument in a round bracket clause. This is typically the first operation
-	// * parameter or an iterator. */
-	//NavigatingArgCS:
+	// * parameter or an iterator. */ NavigatingArgCS:
 	//	ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('=' ownedInitExpression=ExpCS)? |
 	//	':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('=' ownedInitExpression=ExpCS)? | (':'
 	//	ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in' ownedInitExpression=ExpCS)?
@@ -4579,7 +4561,6 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	//// Type-less init is an illegal infix expression
-	//
 	///* A navigating bar argument is a generalized rule for a bar-prefixed argument in a round bracket clause. This is typically the body of an iteration. */
 	//NavigatingBarArgCS NavigatingArgCS:
 	//	prefix='|' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;
@@ -4592,10 +4573,8 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	//// Type-less init is an illegal infix expression
-	//
 	///* A navigating comma argument is a generalized rule for non-first argument in a round bracket clause. These are typically non-first operation
-	// * parameters or a second iterator. */
-	//NavigatingCommaArgCS NavigatingArgCS:
+	// * parameters or a second iterator. */ NavigatingCommaArgCS NavigatingArgCS:
 	//	prefix=',' ownedNameExpression=NavigatingArgExpCS ('<-' ownedCoIterator=CoIteratorVariableCS ('='
 	//	ownedInitExpression=ExpCS)? | ':' ownedType=TypeExpCS ('<-' ownedCoIterator=CoIteratorVariableCS)? ('='
 	//	ownedInitExpression=ExpCS)? | (':' ownedType=TypeExpCS)? ('<-' ownedCoIterator=CoIteratorVariableCS)? 'in'
@@ -4609,7 +4588,6 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	//// Type-less init is an illegal infix expression
-	//
 	///* A navigating semi argument is a generalized rule for a semicolon prefixed argument in a round bracket clause. This is typically an iterate accumulator. */
 	//NavigatingSemiArgCS NavigatingArgCS:
 	//	prefix=';' ownedNameExpression=NavigatingArgExpCS (':' ownedType=TypeExpCS ('=' ownedInitExpression=ExpCS)?)?;
@@ -4622,7 +4600,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	//// Type-less init is an illegal infix expression
-	// NavigatingArgExpCS ExpCS:
+	//NavigatingArgExpCS ExpCS:
 	//	ExpCS
 	//	//	'?'	-- defined by Complete OCL
 	//;
@@ -4648,7 +4626,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	//	'if' ownedCondition=(ExpCS | PatternExpCS)
 	//	'then' ownedThenExpression=ExpCS
 	//	//	ifThenExpressions+=IfThenExpCS
-	// ownedIfThenExpressions+=ElseIfThenExpCS*
+	//	ownedIfThenExpressions+=ElseIfThenExpCS*
 	//	'else' ownedElseExpression=ExpCS
 	//	'endif';
 	public EssentialOCLGrammarAccess.IfExpCSElements getIfExpCSAccess() {
@@ -4660,11 +4638,10 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	////IfThenExpCS returns IfThenExpCS:
-	// //	'if' condition=ExpCS
-	// //	'then' thenExpression=ExpCS
-	// //;
-	// ElseIfThenExpCS
-	//IfThenExpCS:
+	////	'if' condition=ExpCS
+	////	'then' thenExpression=ExpCS
+	////;
+	//ElseIfThenExpCS IfThenExpCS:
 	//	'elseif' ownedCondition=ExpCS
 	//	'then' ownedThenExpression=ExpCS;
 	public EssentialOCLGrammarAccess.ElseIfThenExpCSElements getElseIfThenExpCSAccess() {
@@ -4863,8 +4840,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	// * lookahead conflicts in simple lexers between a dot within a floating point number and the dot-dot in a CollectionLiteralPartCS. A
 	// * practical implementation should give high priority to a successful parse of INT ('.' INT)? (('e' | 'E') ('+' | '-')? INT)? than
 	// * to the unsuccessful partial parse of INT '..'. The type of the INT terminal is String to allow the floating point syntax to be used.
-	// */
-	//NUMBER_LITERAL BigNumber:
+	// */ NUMBER_LITERAL BigNumber:
 	//	INT;
 	public BaseGrammarAccess.NUMBER_LITERALElements getNUMBER_LITERALAccess() {
 		return gaBase.getNUMBER_LITERALAccess();
@@ -4875,7 +4851,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 
 	//// EssentialOCLTokenSource pieces this together ('.' INT)? (('e' | 'E') ('+' | '-')? INT)?;
-	// StringLiteral:
+	//StringLiteral:
 	//	SINGLE_QUOTED_STRING;
 	public BaseGrammarAccess.StringLiteralElements getStringLiteralAccess() {
 		return gaBase.getStringLiteralAccess();

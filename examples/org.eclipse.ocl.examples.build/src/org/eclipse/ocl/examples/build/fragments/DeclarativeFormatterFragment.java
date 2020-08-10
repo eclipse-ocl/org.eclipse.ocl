@@ -11,8 +11,8 @@
 package org.eclipse.ocl.examples.build.fragments;
 
 import org.apache.log4j.Logger;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.AbstractIdiomsProvider;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -44,9 +44,10 @@ public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 	private  FileAccessFactory fileAccessFactory;
 
 	protected void doGenerateIdiomsStubFile() {
-		final JavaFileAccess xtendFile = this.doGetIdiomsStubFile();
-		if (xtendFile!=null) {
-			xtendFile.writeTo(this.getProjectConfig().getRuntime().getSrc());
+		JavaFileAccess javaFile = this.doGetIdiomsStubFile();
+		if (javaFile != null) {
+			javaFile.setMarkedAsGenerated(true);		// FIXME There must be a smarter way
+			javaFile.writeTo(this.getProjectConfig().getRuntime().getSrcGen());
 		}
 	}
 
@@ -60,16 +61,10 @@ public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 			return null;
 		}
 		IXtextGeneratorLanguage language = getLanguage();
-		Grammar grammar = language.getGrammar();
-		Grammar grammar2 = this.getGrammar();
-		assert grammar == grammar2;
-		TypeReference idiomsProviderStub = getIdiomsProviderClass(grammar2);
+		Grammar grammar = getGrammar();
+		TypeReference idiomsProviderStub = getIdiomsProviderClass(grammar);
 		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(idiomsProviderStub);
 		javaFile.setResourceSet(language.getResourceSet());
-	//	LinkedHashMultimap<EClass, EReference> type2ref = LinkedHashMultimap.<EClass, EReference>create();
-	//	getLocallyAssignedContainmentReferences(grammar, type2ref);
-	//	LinkedHashMultimap<EClass, EReference> inheritedTypes = LinkedHashMultimap.<EClass, EReference>create();
-	//	getInheritedContainmentReferences(grammar, inheritedTypes, CollectionLiterals.<Grammar>newHashSet());
 		javaFile.setContent(doGetIdiomsProviderStubContent());
 		return javaFile;
 	}
@@ -82,7 +77,6 @@ public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 		GuiceModuleAccess.BindingFactory bindingFactory = new GuiceModuleAccess.BindingFactory();
 		GuiceModuleAccess runtimeGenModule = this.getLanguage().getRuntimeGenModule();
 		bindingFactory.addTypeToType(TypeReference.typeRef(IdiomsProvider.class), getIdiomsProviderClass(grammar)).contributeTo(runtimeGenModule);
-
 		doGenerateIdiomsStubFile();
 	}
 
@@ -97,8 +91,7 @@ public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 	}
 
 	protected String getFormatterBasePackage(final Grammar grammar) {
-		String _runtimeBasePackage = this.xtextGeneratorNaming.getRuntimeBasePackage(grammar);
-		return (_runtimeBasePackage + ".formatting");
+		return xtextGeneratorNaming.getRuntimeBasePackage(grammar) + ".formatting";
 	}
 
 	@Override

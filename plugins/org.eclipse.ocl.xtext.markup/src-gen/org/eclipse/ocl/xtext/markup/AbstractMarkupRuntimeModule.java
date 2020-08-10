@@ -16,13 +16,15 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
+import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.markup.formatting.MarkupIdiomsProvider;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.markup.parser.antlr.MarkupParser;
 import org.eclipse.ocl.xtext.markup.parser.antlr.internal.InternalMarkupLexer;
 import org.eclipse.ocl.xtext.markup.scoping.MarkupScopeProvider;
+import org.eclipse.ocl.xtext.markup.serializer.MarkupAnalysisProvider;
 import org.eclipse.ocl.xtext.markup.services.MarkupGrammarAccess;
 import org.eclipse.ocl.xtext.markup.validation.MarkupValidator;
 import org.eclipse.xtext.Constants;
@@ -92,6 +94,11 @@ public abstract class AbstractMarkupRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends AbstractAnalysisProvider> bindAbstractAnalysisProvider() {
+		return MarkupAnalysisProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2

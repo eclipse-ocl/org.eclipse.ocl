@@ -21,7 +21,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
@@ -34,7 +33,7 @@ public class UserElementAnalysis implements Nameable
 	private static int count = 0;
 
 	protected final @NonNull UserModelAnalysis modelAnalysis;
-	protected final @NonNull GrammarAnalysis grammarAnalysis;
+	protected final @NonNull RTGrammarAnalysis grammarAnalysis;
 	protected final @Nullable UserElementAnalysis containingElementAnalysis;
 	protected final @Nullable EReference eContainmentFeature;
 	protected final @NonNull EObject eObject;
@@ -102,9 +101,9 @@ public class UserElementAnalysis implements Nameable
 		return eObject;
 	}
 
-	public @NonNull GrammarAnalysis getGrammarAnalysis() {
-		return grammarAnalysis;
-	}
+//	public @NonNull GrammarAnalysis getGrammarAnalysis() {
+//		return grammarAnalysis;
+//	}
 
 	@Override
 	public @NonNull String getName() {

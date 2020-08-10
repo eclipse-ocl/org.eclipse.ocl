@@ -62,6 +62,7 @@ Workflow {
 			}
 			code = {
 				preferXtendStubs = false
+				lineDelimiter = "\n"
 				encoding = "UTF-8"
 				fileHeader =
 "/*******************************************************************************

@@ -17,8 +17,9 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
+import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
 import org.eclipse.ocl.xtext.base.services.BaseLinkingDiagnosticMessageProvider;
@@ -35,6 +36,7 @@ import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLAntlrTokenFileP
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLParser;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLLexer;
 import org.eclipse.ocl.xtext.completeocl.scoping.CompleteOCLScopeProvider;
+import org.eclipse.ocl.xtext.completeocl.serializer.CompleteOCLAnalysisProvider;
 import org.eclipse.ocl.xtext.completeocl.services.CompleteOCLGrammarAccess;
 import org.eclipse.ocl.xtext.completeocl.validation.CompleteOCLValidator;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
@@ -116,6 +118,11 @@ public abstract class AbstractCompleteOCLRuntimeModule extends DefaultRuntimeMod
 	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends AbstractAnalysisProvider> bindAbstractAnalysisProvider() {
+		return CompleteOCLAnalysisProvider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
