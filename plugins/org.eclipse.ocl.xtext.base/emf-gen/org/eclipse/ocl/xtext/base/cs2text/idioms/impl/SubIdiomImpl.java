@@ -26,6 +26,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
@@ -305,9 +306,9 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	}
 
 	@Override
-	public void serialize(SerializationNode serializationNode, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
+	public void serialize(RTSerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
 		for (Segment segment : segments) {
-			segment.serialize(serializationNode, serializer, serializationBuilder);
+			segment.serialize(serializationStep, serializer, serializationBuilder);
 		}
 	}
 

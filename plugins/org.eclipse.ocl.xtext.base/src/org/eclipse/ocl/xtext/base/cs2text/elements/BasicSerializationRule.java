@@ -98,7 +98,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @NonNull RTSerializationRule getRuntime() {
 		RTSerializationRule2 runtime2 = runtime;
 		if (runtime2 == null) {
-			runtime = runtime2 = new RTSerializationRule2(this);
+			runtime = runtime2 = new RTSerializationRule2(this, getSerializationNode2subIdioms());
 		}
 		return runtime2;
 	}
@@ -125,32 +125,31 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	}
 
 	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
-		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
-		if (serializationNode2subIdiom2 == null) {
-			serializationNode2subIdiom = serializationNode2subIdiom2 = getSerializationNode2subIdioms();
-		}
-		SubIdiom subIdiom = serializationNode2subIdiom2.get(serializationNode);
-		return subIdiom;
+		return getSerializationNode2subIdioms().get(serializationNode);
 	}
 
 	private @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms() {
-		assert staticRuleMatch != null;
-		@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRule().getRuleAnalysis().getGrammarAnalysis().getIdioms();
-		//
-		//	Locate the matches for each idiom.
-		//
-		@Nullable IdiomMatch @NonNull [] idiomMatches = new @Nullable IdiomMatch[Iterables.size(idioms)];
-		getIdiomMatches(rootSerializationNode, idioms, idiomMatches);
-		//
-		//	Install the subidioms for each first full idiom match.
-		//
-		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = new HashMap<>();
-		for (@Nullable IdiomMatch idiomMatch : idiomMatches) {
-			if (idiomMatch != null) {
-				idiomMatch.installIn(serializationNode2subIdiom);
+		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
+		if (serializationNode2subIdiom2 == null) {
+			assert staticRuleMatch != null;
+			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRule().getRuleAnalysis().getGrammarAnalysis().getIdioms();
+			//
+			//	Locate the matches for each idiom.
+			//
+			@Nullable IdiomMatch @NonNull [] idiomMatches = new @Nullable IdiomMatch[Iterables.size(idioms)];
+			getIdiomMatches(rootSerializationNode, idioms, idiomMatches);
+			//
+			//	Install the subidioms for each first full idiom match.
+			//
+			serializationNode2subIdiom2 = new HashMap<>();
+			for (@Nullable IdiomMatch idiomMatch : idiomMatches) {
+				if (idiomMatch != null) {
+					idiomMatch.installIn(serializationNode2subIdiom2);
+				}
 			}
+			serializationNode2subIdiom = serializationNode2subIdiom2;
 		}
-		return serializationNode2subIdiom;
+		return serializationNode2subIdiom2;
 	}
 
 	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {

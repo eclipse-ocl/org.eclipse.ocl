@@ -16,10 +16,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
@@ -254,7 +254,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	}
 
 	@Override
-	public void serialize(SerializationNode serializationNode, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
+	public void serialize(RTSerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
 		assert serializationBuilder != null;
 		EObject eObject = serializer.getElement();
 		CustomSegmentSupport support = getSupport(eObject);
@@ -263,7 +263,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 			serializationBuilder.appendError("\n\n«missing " + className + "»\n\n");
 		}
 		else {
-			support.serialize(serializationNode, serializer, serializationBuilder);
+			support.serialize(serializationStep, serializer, serializationBuilder);
 		}
 	}
 
