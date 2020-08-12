@@ -18,17 +18,14 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 {
-	protected final @NonNull RTSerializationRule serializationRule;
-
 	/**
 	 * The number of steps within the linearized steps for the rule that support the sequence.
 	 */
 	private int startIndex = 0;
 	private int endIndex = 0;
 
-	public RTSerializationSequenceStep(@NonNull RTSerializationRule serializationRule, @Nullable CardinalityVariable cardinalityVariable) {
+	public RTSerializationSequenceStep(@Nullable CardinalityVariable cardinalityVariable) {
 		super(cardinalityVariable);		// Default unit sequence wraps the whole rule and may have a comment idiom
-		this.serializationRule = serializationRule;
 	}
 
 	@Override
@@ -52,7 +49,7 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 
 	@Override
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializationRule.serializeSubRule(startIndex, endIndex, serializer, serializationBuilder);
+		serializer.getSerializationRule().serializeSubRule(startIndex, endIndex, serializer, serializationBuilder);
 	}
 
 	public void setSubRange(int startIndex, int endIndex) {

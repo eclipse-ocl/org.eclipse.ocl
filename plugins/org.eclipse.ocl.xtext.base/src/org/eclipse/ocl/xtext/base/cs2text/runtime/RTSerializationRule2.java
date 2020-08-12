@@ -18,31 +18,30 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class RTSerializationRule2 extends RTSerializationRule
 {
-	private final @NonNull BasicSerializationRule basicSerializationRule;
-	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
-	private final @Nullable SubIdiom @NonNull [] staticSubIdioms;
-
-	public RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms) {
-		this.basicSerializationRule = basicSerializationRule;
+	public static @NonNull RTSerializationRule2 create(@NonNull BasicSerializationRule basicSerializationRule, @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms) {
 		List<@NonNull RTSerializationStep> stepsList = new ArrayList<>();
 		List<@Nullable SubIdiom> subIdiomsList = new ArrayList<>();
-		basicSerializationRule.getRootSerializationNode().gatherRuntime(this, stepsList, serializationNode2subIdioms, subIdiomsList);
+		basicSerializationRule.getRootSerializationNode().gatherRuntime(basicSerializationRule.getStaticRuleMatch(), stepsList, serializationNode2subIdioms, subIdiomsList);
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
-		this.serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
-		this.staticSubIdioms = subIdiomsList.toArray(new @Nullable SubIdiom[size]);
+		@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
+		@Nullable SubIdiom @NonNull [] staticSubIdioms = subIdiomsList.toArray(new @Nullable SubIdiom[size]);
+		return new RTSerializationRule2(basicSerializationRule, serializationSteps, staticSubIdioms);
+	}
+
+	private final @NonNull BasicSerializationRule basicSerializationRule;
+
+	private RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable SubIdiom @NonNull [] staticSubIdioms) {
+		super(serializationSteps, staticSubIdioms);
+		this.basicSerializationRule = basicSerializationRule;
 	}
 
 	@Override
@@ -76,42 +75,6 @@ public class RTSerializationRule2 extends RTSerializationRule
 	}
 
 	@Override
-	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
-	}
-	@Override
-	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		for (int index = startIndex; index < endIndex; ) {
-			SubIdiom subIdiom = staticSubIdioms[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
-			RTSerializationStep serializationStep = serializationSteps[index++];
-			CardinalityVariable cardinalityVariable = serializationStep.getCardinalityVariable();
-			int stepLoopCount = cardinalityVariable != null ? serializer.getValue(cardinalityVariable) : 1;
-			if (serializationStep instanceof RTSerializationSequenceStep) {
-				int stepsRange = ((RTSerializationSequenceStep)serializationStep).getStepsRange();
-				if (subIdiom != null) {
-					subIdiom.serialize(serializationStep, serializer, serializationBuilder);
-				}
-				else {
-					for (int i = 0; i < stepLoopCount; i++) {
-						serializeSubRule(index, index + stepsRange, serializer, serializationBuilder);
-					}
-				}
-				index += stepsRange;
-			}
-			else {
-				for (int i = 0; i < stepLoopCount; i++) {
-					if (subIdiom != null) {
-						subIdiom.serialize(serializationStep, serializer, serializationBuilder);
-					}
-					else {
-						serializationStep.serialize(serializer, serializationBuilder);
-					}
-				}
-			}
-		}
-	}
-
-	@Override
 	public void toRuleString(@NonNull StringBuilder s) {
 		basicSerializationRule.toRuleString(s);
 	}
@@ -124,14 +87,6 @@ public class RTSerializationRule2 extends RTSerializationRule
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		basicSerializationRule.toString(s, depth);
-		StringUtil.appendIndentation(s, depth);
-		s.append("Serialization Steps");
-		for (int i = 0; i < serializationSteps.length; i++) {
-			StringUtil.appendIndentation(s, depth+1);
-			SubIdiom subIdiom = staticSubIdioms[i];
-			s.append(subIdiom != null ? subIdiom.getName() : "null");
-			s.append(" == ");
-			serializationSteps[i].toString(s, depth+1);
-		}
+		super.toString(s, depth);
 	}
 }

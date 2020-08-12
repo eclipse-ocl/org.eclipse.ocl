@@ -11,63 +11,74 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public abstract class RTSerializationRule implements SerializationRule
 {
-	public abstract void serializeRule(@NonNull UserElementSerializer userElementSerializer, @NonNull SerializationBuilder serializationBuilder);
-	public abstract void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer userElementSerializer, @NonNull SerializationBuilder serializationBuilder);
-/*	@Override
-	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
-		return basicSerializationRule.getAssignedSerializationNodes(eReference);
-	}
+	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
+	private final @Nullable SubIdiom @NonNull [] staticSubIdioms;
 
-	@Override
-	public @NonNull BasicSerializationRule getBasicSerializationRule() {
-		return basicSerializationRule;
+	protected RTSerializationRule(@NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable SubIdiom @NonNull [] staticSubIdioms) {
+		this.serializationSteps = serializationSteps;
+		this.staticSubIdioms = staticSubIdioms;
 	}
-
-	@Override
-	public @NonNull String getName() {
-		return basicSerializationRule.getName();
+	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
 	}
-
-	@Override
-	public @NonNull EClass getProducedEClass() {
-		return basicSerializationRule.getProducedEClass();
+	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		for (int index = startIndex; index < endIndex; ) {
+			SubIdiom subIdiom = staticSubIdioms[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
+			RTSerializationStep serializationStep = serializationSteps[index++];
+			CardinalityVariable cardinalityVariable = serializationStep.getCardinalityVariable();
+			int stepLoopCount = cardinalityVariable != null ? serializer.getValue(cardinalityVariable) : 1;
+			if (serializationStep instanceof RTSerializationSequenceStep) {
+				int stepsRange = ((RTSerializationSequenceStep)serializationStep).getStepsRange();
+				if (subIdiom != null) {
+					subIdiom.serialize(serializationStep, serializer, serializationBuilder);
+				}
+				else {
+					for (int i = 0; i < stepLoopCount; i++) {
+						serializeSubRule(index, index + stepsRange, serializer, serializationBuilder);
+					}
+				}
+				index += stepsRange;
+			}
+			else {
+				for (int i = 0; i < stepLoopCount; i++) {
+					if (subIdiom != null) {
+						subIdiom.serialize(serializationStep, serializer, serializationBuilder);
+					}
+					else {
+						serializationStep.serialize(serializer, serializationBuilder);
+					}
+				}
+			}
+		}
 	}
-
-	@Override
-	public @NonNull SerializationNode getRootSerializationNode() {
-		return basicSerializationRule.getRootSerializationNode();
-	}
-
-	@Override
-	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
-		return basicSerializationRule.getRuleAnalysis();
-	}
-
-	@Override
-	public void toRuleString(@NonNull StringBuilder s) {
-		basicSerializationRule.toRuleString(s);
-	}
-
-	@Override
-	public void toSolutionString(@NonNull StringBuilder s, int depth) {
-		basicSerializationRule.toSolutionString(s, depth);
-	}
-
-	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
-		basicSerializationRule.toString(s, depth);
-	} */
 
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
 		return s.toString();
+	}
+
+	@Override
+	public void toString(@NonNull StringBuilder s, int depth) {
+		StringUtil.appendIndentation(s, depth);
+		s.append("Serialization Steps");
+		for (int i = 0; i < serializationSteps.length; i++) {
+			StringUtil.appendIndentation(s, depth+1);
+			SubIdiom subIdiom = staticSubIdioms[i];
+			s.append(subIdiom != null ? subIdiom.getName() : "null");
+			s.append(" == ");
+			serializationSteps[i].toString(s, depth+1);
+		}
 	}
 }

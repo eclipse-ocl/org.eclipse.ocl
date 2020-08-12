@@ -127,6 +127,10 @@ public class UserElementSerializer
 		return SubIdiom.DEFAULT;
 	} */
 
+	public @NonNull RTSerializationRule getSerializationRule() {
+		return serializationRule.getRuntime();
+	}
+
 	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
 		return serializationRule.getBasicSerializationRule().getSubIdiom(serializationNode);
 	}

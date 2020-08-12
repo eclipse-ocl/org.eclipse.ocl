@@ -16,8 +16,8 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.xtext.CompoundElement;
 
 public interface SerializationNode extends SerializationElement
@@ -39,7 +39,7 @@ public interface SerializationNode extends SerializationElement
 	 * @param subIdiomsList
 	 * @param serializationNode2subIdioms
 	 */
-	void gatherRuntime(@NonNull RTSerializationRule serializationRule, @NonNull List<@NonNull RTSerializationStep> stepsList,
+	void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 		@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList);
 
 	/**

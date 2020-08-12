@@ -16,8 +16,8 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.xtext.RuleCall;
 
@@ -39,7 +39,7 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void gatherRuntime(@NonNull RTSerializationRule serializationRule, @NonNull List<@NonNull RTSerializationStep> stepsList,
+	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
 		throw new UnsupportedOperationException();		// Should have been flattened away
 	}

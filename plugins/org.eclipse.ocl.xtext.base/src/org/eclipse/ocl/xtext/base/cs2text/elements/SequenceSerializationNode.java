@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
@@ -60,16 +59,15 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void gatherRuntime(@NonNull RTSerializationRule serializationRule, @NonNull List<@NonNull RTSerializationStep> stepsList,
+	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		StaticRuleMatch staticRuleMatch = serializationRule.getBasicSerializationRule().getStaticRuleMatch();
 		CardinalityVariable loopVariable = staticRuleMatch.basicGetCardinalityVariable(this);
-		RTSerializationSequenceStep sequenceStep = new RTSerializationSequenceStep(serializationRule, loopVariable);
+		RTSerializationSequenceStep sequenceStep = new RTSerializationSequenceStep(loopVariable);
 		stepsList.add(sequenceStep);
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 		int loopStartIndex = stepsList.size();
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializationNode.gatherRuntime(serializationRule, stepsList, serializationNode2subIdioms, subIdiomsList);
+			serializationNode.gatherRuntime(staticRuleMatch, stepsList, serializationNode2subIdioms, subIdiomsList);
 		}
 		sequenceStep.setSubRange(loopStartIndex, stepsList.size());
 	}

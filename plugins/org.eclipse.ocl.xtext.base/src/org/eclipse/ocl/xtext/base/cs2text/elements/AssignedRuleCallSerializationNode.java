@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
@@ -41,9 +40,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
-	public void gatherRuntime(@NonNull RTSerializationRule serializationRule, @NonNull List<@NonNull RTSerializationStep> stepsList,
+	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		StaticRuleMatch staticRuleMatch = serializationRule.getBasicSerializationRule().getStaticRuleMatch();
 		stepsList.add(new RTSerializationAssignedRuleCallStep(staticRuleMatch.basicGetCardinalityVariable(this), eStructuralFeature, calledRuleAnalysis));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
