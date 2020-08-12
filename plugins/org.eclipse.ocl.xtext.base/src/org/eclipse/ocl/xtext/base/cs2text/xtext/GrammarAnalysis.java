@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -60,7 +61,7 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 	private @NonNull GrammarProvider grammarProvider;
 
 	@Inject
-	private @NonNull IdiomsProvider idiomsProvider;
+	private @Nullable IdiomsProvider idiomsProvider;
 
 	private @Nullable Grammar grammar = null;
 
@@ -435,7 +436,24 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 	}
 
 	public @NonNull Iterable<@NonNull Idiom> getIdioms() {
-		return idiomsProvider.getIdioms();
+		IdiomsProvider idiomsProvider2 = idiomsProvider;
+		if (idiomsProvider2 == null) {
+
+			idiomsProvider = idiomsProvider2 = new AbstractIdiomsProvider()
+			{
+				private Iterable<Idiom> idioms = null;
+
+				@Override
+				public Iterable<Idiom> getIdioms() {
+					if (idioms == null) {
+					//	IdiomModel idiomModel = getIdiomModel(getGrammar().getClass(), getGrammar().getName().replace(".", "/") + ".idioms");
+					//	idioms = getIdioms(idiomModel);
+					}
+					return idioms;
+				}
+			};
+		}
+		return idiomsProvider2.getIdioms() != null ? idiomsProvider2.getIdioms() : Collections.emptyList();
 	}
 
 /*	public @NonNull Iterable<@NonNull EClass> getSortedProducedEClasses() {
