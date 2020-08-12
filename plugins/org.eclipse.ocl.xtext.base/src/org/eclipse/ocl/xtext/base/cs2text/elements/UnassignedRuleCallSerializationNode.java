@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.xtext.RuleCall;
 
@@ -32,14 +36,14 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 		return new UnassignedRuleCallSerializationNode(ruleCall, multiplicativeCardinality, calledRuleAnalysis);
 	}
 
+	@Override
+	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> steps) {
+		throw new UnsupportedOperationException();		// Should have been flattened away
+	}
+
 	public @NonNull AbstractRuleAnalysis getCalledRuleAnalysis() {
 		return calledRuleAnalysis;
 	}
-
-//	@Override
-//	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-//		return MultiplicativeCardinality.ONE;			// ?? could more accurately be ZERO or ONE
-//	}
 
 	@Override
 	public boolean isRedundant() {

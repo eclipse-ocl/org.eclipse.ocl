@@ -11,28 +11,24 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.Collections;
+import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
-import org.eclipse.xtext.conversion.IValueConverterService;
 
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
 
-	private @NonNull IValueConverterService valueConverterService;
-
 	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
-		this.valueConverterService = assignmentAnalysis.getGrammarAnalysis().getValueConverterService();
 	}
 
 	@Override
@@ -42,23 +38,13 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
-		return Collections.singletonList(calledRuleAnalysis);
+	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> steps) {
+		steps.add(new RTSerializationAssignedRuleCallStep(staticRuleMatch.basicGetCardinalityVariable(this), eStructuralFeature, calledRuleAnalysis));
 	}
 
 	@Override
-	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		Object eGet = serializer.consumeNext(eStructuralFeature);
-		if (eStructuralFeature instanceof EReference) {
-			assert ((EReference)eStructuralFeature).isContainment();
-			if (eGet != null) {
-				serializer.serializeElement(serializationBuilder, (EObject)eGet, calledRuleAnalysis);
-			}
-		}
-		else {
-			String val = valueConverterService.toString(eGet, calledRuleAnalysis.getRuleName());
-			serializationBuilder.append(String.valueOf(val));
-		}
+	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
+		return Collections.singletonList(calledRuleAnalysis);
 	}
 
 	@Override

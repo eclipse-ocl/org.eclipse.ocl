@@ -15,12 +15,19 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
 public abstract class AbstractSerializationNode extends AbstractSerializationElement implements SerializationNode
 {
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
+	private @Nullable RTSerializationStep runtime = null;
 
 	protected AbstractSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.multiplicativeCardinality = multiplicativeCardinality;
@@ -64,6 +71,8 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		return this;
 	}
 
+//	protected abstract @NonNull RTSerializationStep createRuntime(@NonNull StaticRuleMatch staticRuleMatch);
+
 	@Override
 	public @NonNull SerializationNode freezeAlternatives(@NonNull Alternatives alternatives) {
 		return this;
@@ -75,9 +84,18 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		return createFrozenSequence(compoundElement, multiplicativeCardinality, Collections.singletonList(this));
 	}
 
+//	@Override
+//	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> steps) {
+//		steps.add(getRuntime(staticRuleMatch));
+//	}
+
 	@Override
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
 		return multiplicativeCardinality;
+	}
+
+	final protected @NonNull RTSerializationStep getRuntime(@NonNull StaticRuleMatch staticRuleMatch) {
+		return ClassUtil.nonNullState(runtime);
 	}
 
 	@Override
@@ -93,6 +111,12 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	@Override
 	public boolean isRedundant() {
 		return false;
+	}
+
+	@Override
+	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		StaticRuleMatch staticRuleMatch = serializer.getDynamicRuleMatch().getStaticRuleMatch();
+		getRuntime(staticRuleMatch).serialize(serializer, serializationBuilder);
 	}
 
 	@Override

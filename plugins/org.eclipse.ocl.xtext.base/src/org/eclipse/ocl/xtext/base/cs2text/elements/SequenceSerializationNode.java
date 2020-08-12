@@ -17,12 +17,14 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.CompoundElement;
 
-public class SequenceSerializationNode extends CompositeSerializationNode //implements List<@NonNull SerializationNode>
+public class SequenceSerializationNode extends CompositeSerializationNode
 {
 	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
@@ -44,53 +46,6 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 	//	assert !groupSerializationNodes.isEmpty();
 	}
 
-	/*	@Override
-	public boolean add(@NonNull SerializationNode e) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void add(int index, @NonNull SerializationNode element) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends @NonNull SerializationNode> c) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean addAll(Collection<? extends @NonNull SerializationNode> c) {
-		throw new UnsupportedOperationException();
-	} */
-
-/*	@Override
-	public boolean add(@NonNull SerializationNode e) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void add(int index, @NonNull SerializationNode element) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends @NonNull SerializationNode> c) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean addAll(Collection<? extends @NonNull SerializationNode> c) {
-		throw new UnsupportedOperationException();
-	} */
-
-
-
-/*	@Override
-	public void clear() {
-		throw new UnsupportedOperationException();
-	} */
-
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		List<@NonNull SerializationNode> newList = new ArrayList<>(serializationNodes.size());
@@ -101,74 +56,26 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 		return new SequenceSerializationNode(compoundElement, multiplicativeCardinality, newList);
 	}
 
-/*	@Override
-	public boolean contains(Object o) {
-		return serializationNodes.contains(o);
-	}
-
 	@Override
-	public boolean containsAll(Collection<?> c) {
-		return serializationNodes.containsAll(c);
-	} */
-
-/*	@Override
-	public @NonNull SerializationNode get(int index) {
-		return serializationNodes.get(index);
-	} */
+	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> steps) {
+		CardinalityVariable loopVariable = staticRuleMatch.basicGetCardinalityVariable(this);
+		RTSerializationSequenceStep sequenceStep = null;
+		if (loopVariable != null) {
+			sequenceStep = new RTSerializationSequenceStep(loopVariable);
+			steps.add(sequenceStep);
+		}
+		int loopStartIndex = steps.size();
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			serializationNode.gatherRuntime(staticRuleMatch, steps);
+		}
+		if (sequenceStep != null) {
+			sequenceStep.setStepsRange(steps.size() - loopStartIndex);
+		}
+	}
 
 	public @NonNull List<@NonNull SerializationNode> getSerializationNodes() {
 		return serializationNodes;
 	}
-
-/*	@Override
-	public int indexOf(Object o) {
-		return serializationNodes.indexOf(o);
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return serializationNodes.isEmpty();
-	}
-
-	@Override
-	public @NonNull Iterator<@NonNull SerializationNode> iterator() {
-		return serializationNodes.iterator();
-	}
-
-	@Override
-	public int lastIndexOf(Object o) {
-		return serializationNodes.lastIndexOf(o);
-	}
-
-	@Override
-	public ListIterator<@NonNull SerializationNode> listIterator() {
-		return serializationNodes.listIterator();
-	}
-
-	@Override
-	public ListIterator<@NonNull SerializationNode> listIterator(int index) {
-		return serializationNodes.listIterator(index);
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull SerializationNode remove(int index) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		throw new UnsupportedOperationException();
-	} */
 
 	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof AssignedCurrentSerializationNode) {
@@ -204,37 +111,12 @@ public class SequenceSerializationNode extends CompositeSerializationNode //impl
 		return true;
 	}
 
-	@Override
-	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializer.serializeNode(serializationBuilder, serializationNode);
-		}
-	}
-
-/*	@Override
-	public @NonNull SerializationNode set(int index, @NonNull SerializationNode element) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int size() {
-		return serializationNodes.size();
-	}
-
-	@Override
-	public List<@NonNull SerializationNode> subList(int fromIndex, int toIndex) {
-		return serializationNodes.subList(fromIndex, toIndex);
-	}
-
-	@Override
-	public Object[] toArray() {
-		return serializationNodes.toArray();
-	}
-
-	@Override
-	public <T> T @NonNull [] toArray(T @NonNull [] a) {
-		return serializationNodes.toArray(a);
-	} */
+//	@Override
+//	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+//		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+//			serializer.serializeNode(serializationBuilder, serializationNode);
+//		}
+//	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {

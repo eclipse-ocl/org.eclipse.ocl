@@ -10,10 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.xtext.CompoundElement;
 
 public interface SerializationNode extends SerializationElement
@@ -31,6 +33,11 @@ public interface SerializationNode extends SerializationElement
 	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
 
 	/**
+	 * Gather the runtime represetation of the nodes in steps.
+	 */
+	void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> steps);
+
+	/**
 	 * Return true if this node has exactly one cardinality.
 	 */
 	boolean isOne();
@@ -44,7 +51,7 @@ public interface SerializationNode extends SerializationElement
 	 * Traverse the serialization node hoderarchy of a serializer's serializationRule to append appropriate string
 	 * segments to the serializationBuilder to represent the serializer's user element.
 	 */
-	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
+//	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
 	@Override
 	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);

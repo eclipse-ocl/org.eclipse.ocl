@@ -483,6 +483,10 @@ public class StaticRuleMatch implements RuleMatch
 		}
 	}
 
+	public@Nullable CardinalityVariable basicGetCardinalityVariable(@NonNull SerializationNode serializationNode) {
+		return node2variable.get(serializationNode);
+	}
+
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
 		// throw new IllegalStateException();		// move to caller
@@ -599,6 +603,14 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return variable2expressions;
 	}
 
+	public @NonNull CardinalityVariable getCardinalityVariable(@NonNull SerializationNode serializationNode) {
+		return ClassUtil.nonNullState(node2variable.get(serializationNode));
+	}
+
+	public @NonNull Iterable<@NonNull CardinalityVariable> getCardinalityVariables() {
+		return variable2node.keySet();
+	}
+
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
 			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
@@ -657,14 +669,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 
 	public @NonNull Iterable<@NonNull CardinalitySolutionStep> getSteps() {
 		return steps;
-	}
-
-	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
-		return ClassUtil.nonNullState(node2variable.get(serializationNode));
-	}
-
-	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
-		return variable2node.keySet();
 	}
 
 	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {

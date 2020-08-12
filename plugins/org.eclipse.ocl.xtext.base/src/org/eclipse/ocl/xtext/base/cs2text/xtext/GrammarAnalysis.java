@@ -47,8 +47,6 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
-import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 import org.eclipse.xtext.service.GrammarProvider;
 
 import com.google.inject.Inject;
@@ -58,12 +56,6 @@ import com.google.inject.Inject;
  */
 public class GrammarAnalysis extends RTGrammarAnalysis
 {
-	@Inject
-	private @NonNull IValueConverterService valueConverterService;
-
-	@Inject
-	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
-
 	@Inject
 	private @NonNull GrammarProvider grammarProvider;
 
@@ -410,10 +402,6 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
 	}
 
-	public @NonNull ICrossReferenceSerializer getCrossReferenceSerializer() {
-		return crossReferenceSerializer;
-	}
-
 	public @NonNull EnumerationValue getEnumerationValue(@NonNull Keyword keyword) {
 		String value = XtextGrammarUtil.getValue(keyword);
 		SingleEnumerationValue enumerationValue = value2enumerationValue.get(value);
@@ -484,10 +472,6 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		}
 	//	assert eClass2serializationRules != null;
 		return super.getSerializationRules(eClass);
-	}
-
-	public @NonNull IValueConverterService getValueConverterService() {
-		return valueConverterService;
 	}
 
 	@Override

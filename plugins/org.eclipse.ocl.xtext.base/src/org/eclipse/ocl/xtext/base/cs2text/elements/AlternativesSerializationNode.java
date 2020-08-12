@@ -15,6 +15,8 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.xtext.Alternatives;
 
 public class AlternativesSerializationNode extends CompositeSerializationNode
@@ -32,6 +34,11 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
 		return new AlternativesSerializationNode(alternatives, multiplicativeCardinality, alternativeSerializationNodes);
+	}
+
+	@Override
+	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> steps) {
+		throw new UnsupportedOperationException();		// Should have been flattened away
 	}
 
 	/**

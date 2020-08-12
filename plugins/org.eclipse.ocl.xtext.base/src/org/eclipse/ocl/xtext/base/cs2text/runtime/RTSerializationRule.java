@@ -8,10 +8,16 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.elements;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public abstract class RTSerializationRule implements SerializationRule
 {
+	public abstract void serializeRule(@NonNull UserElementSerializer userElementSerializer, @NonNull SerializationBuilder serializationBuilder);
 /*	@Override
 	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
 		return basicSerializationRule.getAssignedSerializationNodes(eReference);
@@ -56,4 +62,11 @@ public abstract class RTSerializationRule implements SerializationRule
 	public void toString(@NonNull StringBuilder s, int depth) {
 		basicSerializationRule.toString(s, depth);
 	} */
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, 0);
+		return s.toString();
+	}
 }

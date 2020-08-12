@@ -23,6 +23,8 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
@@ -94,7 +96,7 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	}
 
 	public @NonNull RTSerializationRule getRuntime() {
-		RTSerializationRule2 runtime2 = runtime ;
+		RTSerializationRule2 runtime2 = runtime;
 		if (runtime2 == null) {
 			runtime = runtime2 = new RTSerializationRule2(this);
 		}
@@ -154,12 +156,12 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
 		getStaticRuleMatch();
 		assert staticRuleMatch != null;
-		return staticRuleMatch.getVariable(serializationNode);
+		return staticRuleMatch.getCardinalityVariable(serializationNode);
 	}
 
 	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
 		assert staticRuleMatch != null;
-		return staticRuleMatch.getVariables();
+		return staticRuleMatch.getCardinalityVariables();
 	}
 
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {

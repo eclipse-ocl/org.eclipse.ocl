@@ -20,11 +20,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -48,6 +50,10 @@ public class UserElementSerializer
 		this.serializationRule = dynamicRuleMatch.getSerializationRule();
 		this.modelAnalysis = modelAnalysis;
 		this.element = element;
+	}
+
+	public @Nullable CardinalityVariable basicGetVariable(@NonNull SerializationNode serializationNode) {
+		return dynamicRuleMatch.getStaticRuleMatch().basicGetCardinalityVariable(serializationNode);
 	}
 
 	/**
@@ -81,6 +87,10 @@ public class UserElementSerializer
 		return object;
 	}
 
+	public @NonNull DynamicRuleMatch getDynamicRuleMatch() {
+		return dynamicRuleMatch;
+	}
+
 	public @NonNull EObject getElement() {
 		return element;
 	}
@@ -89,11 +99,49 @@ public class UserElementSerializer
 		return modelAnalysis;
 	}
 
+	/*	public @NonNull SubIdiom zz/getKeywordIdiom(@NonNull SerializationNode serializationNode, @NonNull String value) {
+		if ("}".equals(value)) {
+			return SubIdiom.CLOSE_BRACE;
+		}
+		else if ("]".equals(value)) {
+			return SubIdiom.CLOSE_SQUARE;
+		}
+		else if (",".equals(value)) {
+			return SubIdiom.COMMA;
+		}
+		else if ("::".equals(value)) {
+			return SubIdiom.DOUBLE_COLON;
+		}
+		else if ("..".equals(value)) {
+			return SubIdiom.DOT_DOT;
+		}
+		else if ("{".equals(value)) {
+			return SubIdiom.OPEN_BRACE;
+		}
+		else if ("[".equals(value)) {
+			return SubIdiom.OPEN_SQUARE;
+		}
+		else if (";".equals(value)) {
+			return SubIdiom.SEMI_COLON;
+		}
+		return SubIdiom.DEFAULT;
+	} */
+
+	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
+		return serializationRule.getBasicSerializationRule().getSubIdiom(serializationNode);
+	}
+
+	public int getValue(@NonNull CardinalityVariable cardinalityVariable) {
+		return ClassUtil.nonNullState(dynamicRuleMatch.getValue(cardinalityVariable)).intValue();
+	}
+
 	/**
 	 * Serialize this serializer's configured element to the serializationBuilder.
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
-		serializeNode(serializationBuilder, serializationRule.getRootSerializationNode());
+		RTSerializationRule runtime = serializationRule.getRuntime();
+		runtime.serializeRule(this, serializationBuilder);
+//		serializeNode(serializationBuilder, serializationRule.getRootSerializationNode());
 	}
 
 	/**
@@ -105,7 +153,7 @@ public class UserElementSerializer
 
 	/**
 	 * Serialize a serializationNode to the serializationBuilder.
-	 */
+	 *
 	public void serializeNode(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializationNode) {
 		SubIdiom subIdiom = getSubIdiom(serializationNode);
 		if (serializationNode.getMultiplicativeCardinality().isOne()) {
@@ -128,16 +176,16 @@ public class UserElementSerializer
 				}
 			}
 		}
-	}
+	} */
 
 	/**
 	 * Serialize a sequence of serializationNodes to the serializationBuilder.
-	 */
+	 *
 	public void serializeNodes(@NonNull SerializationBuilder serializationBuilder, @NonNull Iterable<@NonNull SerializationNode> serializationNodes) {
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			serializeNode(serializationBuilder, serializationNode);
 		}
-	}
+	} */
 
 	@Override
 	public @NonNull String toString() {
@@ -190,8 +238,4 @@ public class UserElementSerializer
 		}
 		return SubIdiom.DEFAULT;
 	} */
-
-	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
-		return serializationRule.getBasicSerializationRule().getSubIdiom(serializationNode);
-	}
 }

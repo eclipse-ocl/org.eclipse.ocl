@@ -27,6 +27,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.xtext.conversion.IValueConverterService;
+import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 
 import com.google.inject.Inject;
 
@@ -41,6 +43,13 @@ public class UserModelAnalysis
 	 */
 	@Inject
 	private @NonNull GrammarAnalysis grammarAnalysis;
+
+	@Inject
+	private @NonNull IValueConverterService valueConverterService;
+
+	@Inject
+	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
+
 
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eClass());
@@ -118,6 +127,10 @@ public class UserModelAnalysis
 		return s.toString();
 	}
 
+	public @NonNull ICrossReferenceSerializer getCrossReferenceSerializer() {
+		return crossReferenceSerializer;
+	}
+
 	/**
 	 * Return the analysis of a user model element.
 	 */
@@ -132,6 +145,10 @@ public class UserModelAnalysis
 	@Deprecated
 	public @NonNull GrammarAnalysis getInjectedGrammarAnalysis() {
 		return grammarAnalysis;
+	}
+
+	public @NonNull IValueConverterService getValueConverterService() {
+		return valueConverterService;
 	}
 
 	/**
@@ -176,4 +193,5 @@ public class UserModelAnalysis
 		}
 		return s.toString();
 	}
+
 }
