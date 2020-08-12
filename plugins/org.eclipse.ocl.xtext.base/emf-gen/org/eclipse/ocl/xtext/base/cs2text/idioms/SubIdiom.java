@@ -122,4 +122,6 @@ public interface SubIdiom extends EObject
 	 */
 	void serialize(RTSerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder);
 
+//	void serialize(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
+
 } // SubIdiom

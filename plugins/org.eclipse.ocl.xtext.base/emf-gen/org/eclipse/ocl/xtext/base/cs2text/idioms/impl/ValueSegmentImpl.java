@@ -59,6 +59,8 @@ public class ValueSegmentImpl extends SegmentImpl implements ValueSegment
 
 	@Override
 	public void serialize(RTSerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
+		assert serializer != null;
+		assert serializationBuilder != null;
 		serializationStep.serialize(serializer, serializationBuilder);
 	}
 

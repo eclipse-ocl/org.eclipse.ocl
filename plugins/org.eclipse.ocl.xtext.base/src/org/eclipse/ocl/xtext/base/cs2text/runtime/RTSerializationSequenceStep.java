@@ -11,19 +11,24 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 {
+	protected final @NonNull RTSerializationRule serializationRule;
+
 	/**
 	 * The number of steps within the linearized steps for the rule that support the sequence.
 	 */
-	private int stepsRange = 0;
+	private int startIndex = 0;
+	private int endIndex = 0;
 
-	public RTSerializationSequenceStep(@NonNull CardinalityVariable cardinalityVariable) {
-		super(cardinalityVariable);
+	public RTSerializationSequenceStep(@NonNull RTSerializationRule serializationRule, @Nullable CardinalityVariable cardinalityVariable) {
+		super(cardinalityVariable);		// Default unit sequence wraps the whole rule and may have a comment idiom
+		this.serializationRule = serializationRule;
 	}
 
 	@Override
@@ -41,31 +46,27 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 		return super.equalTo(that);
 	}
 
-	@Override
-	public @NonNull CardinalityVariable getCardinalityVariable() {
-		assert cardinalityVariable != null;
-		return cardinalityVariable;
-	}
-
 	public int getStepsRange() {
-		return stepsRange;
+		return endIndex- startIndex;
 	}
 
 	@Override
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		throw new IllegalStateException();			// A sequence is steppped in a recursing caller
+		serializationRule.serializeSubRule(startIndex, endIndex, serializer, serializationBuilder);
 	}
 
-	public void setStepsRange(int stepsRange) {
-		assert stepsRange > 0;
-		this.stepsRange = stepsRange ;
+	public void setSubRange(int startIndex, int endIndex) {
+		assert startIndex >= 0;
+		assert endIndex > startIndex;
+		this.startIndex = startIndex ;
+		this.endIndex = endIndex ;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		super.toString(s, depth);
 		s.append("next-");
-		s.append(stepsRange);
+		s.append(getStepsRange());
 		s.append("-steps");
 	}
 }

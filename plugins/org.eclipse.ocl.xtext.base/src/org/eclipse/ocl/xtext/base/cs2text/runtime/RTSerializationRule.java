@@ -18,6 +18,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 public abstract class RTSerializationRule implements SerializationRule
 {
 	public abstract void serializeRule(@NonNull UserElementSerializer userElementSerializer, @NonNull SerializationBuilder serializationBuilder);
+	public abstract void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer userElementSerializer, @NonNull SerializationBuilder serializationBuilder);
 /*	@Override
 	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
 		return basicSerializationRule.getAssignedSerializationNodes(eReference);
