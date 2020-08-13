@@ -12,31 +12,42 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 public abstract class RTAbstractSerializationStep implements RTSerializationStep
 {
+	protected final int variableIndex;		// -ve not used
 	protected final @Nullable CardinalityVariable cardinalityVariable;
 
-	public RTAbstractSerializationStep(@Nullable CardinalityVariable cardinalityVariable) {
+	protected RTAbstractSerializationStep(@Nullable CardinalityVariable cardinalityVariable) {
+		this.variableIndex = cardinalityVariable != null ? cardinalityVariable.getIndex() : -1;
 		this.cardinalityVariable = cardinalityVariable;
+	}
+
+	protected RTAbstractSerializationStep(int variableIndex) {
+		this.variableIndex = variableIndex;
+		this.cardinalityVariable = null;
 	}
 
 	@Override
 	public abstract boolean equals(Object obj);
 
 	protected boolean equalTo(@NonNull RTAbstractSerializationStep that) {
-		return ClassUtil.safeEquals(this.getCardinalityVariable(), that.getCardinalityVariable());
+		return this.variableIndex == that.variableIndex;
 	}
 
+	@Override
 	public @Nullable CardinalityVariable getCardinalityVariable() {
 		return cardinalityVariable;
 	}
 
+	public int getVariableIndex() {
+		return variableIndex;
+	}
+
 	@Override
 	public int hashCode() {
-		return getClass().hashCode() + 7 * (cardinalityVariable != null ? cardinalityVariable.hashCode() : 0);
+		return getClass().hashCode() + 7 * variableIndex;
 	}
 
 	@Override
@@ -48,9 +59,16 @@ public abstract class RTAbstractSerializationStep implements RTSerializationStep
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		if (cardinalityVariable != null) {
-			s.append(cardinalityVariable.getName());
-			s.append("*");
+		if (variableIndex >= 0) {
+			s.append(String.format("V%02d", variableIndex));
 		}
+		else {
+			s.append("1");
+		}
+		s.append("*");
+	//	if (cardinalityVariable != null) {
+	//		s.append(cardinalityVariable.getName());
+	//		s.append("*");
+	//	}
 	}
 }

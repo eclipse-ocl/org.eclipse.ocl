@@ -30,6 +30,11 @@ public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstract
 		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 
+	public RTSerializationAssignedRuleCallStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature, @NonNull String calledRuleKey) {
+		super(variableIndex, eStructuralFeature);
+		this.calledRuleAnalysis = (AbstractRuleAnalysis)(Object)calledRuleKey;		// XXX
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -43,6 +48,10 @@ public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstract
 
 	protected boolean equalTo(@NonNull RTSerializationAssignedRuleCallStep that) {
 		return super.equalTo(that) && this.calledRuleAnalysis.equals(that.calledRuleAnalysis);
+	}
+
+	public @NonNull String getCalledRuleKey() {
+		return calledRuleAnalysis.getName();
 	}
 
 	@Override

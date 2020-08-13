@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -37,6 +41,11 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 		this.calledRuleAnalyses = calledRuleAnalyses;
 	}
 
+	public RTSerializationAssignedRuleCallsStep(int variableIndex, EStructuralFeature eStructuralFeature, @NonNull String @NonNull ... calledRuleKeys) {
+		super(variableIndex, eStructuralFeature);
+		this.calledRuleAnalyses = Collections.emptyList();	// XXX
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -50,6 +59,14 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 
 	protected boolean equalTo(@NonNull RTSerializationAssignedRuleCallsStep that) {
 		return super.equalTo(that) && this.calledRuleAnalyses.equals(that.calledRuleAnalyses);
+	}
+
+	public @NonNull Iterable<@NonNull String> getCalledRuleKeys() {
+		List<@NonNull String> list = new ArrayList<>();
+		for (@NonNull AbstractRuleAnalysis calledRuleAnalysis : calledRuleAnalyses) {
+			list.add(calledRuleAnalysis.getName());
+		}
+		return list;
 	}
 
 	@Override

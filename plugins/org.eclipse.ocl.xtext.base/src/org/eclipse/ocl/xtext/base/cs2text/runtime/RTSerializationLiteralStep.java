@@ -26,6 +26,11 @@ public class RTSerializationLiteralStep extends RTAbstractSerializationStep
 		this.string = string;
 	}
 
+	public RTSerializationLiteralStep(int variableIndex,  @NonNull String string) {
+		super(variableIndex);
+		this.string = string;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -41,6 +46,10 @@ public class RTSerializationLiteralStep extends RTAbstractSerializationStep
 		return super.equalTo(that) && this.string.equals(that.string);
 	}
 
+	public @NonNull String getString() {
+		return string;
+	}
+
 	@Override
 	public int hashCode() {
 		return super.hashCode() + 5 * string.hashCode();
@@ -53,6 +62,7 @@ public class RTSerializationLiteralStep extends RTAbstractSerializationStep
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
+		super.toString(s, depth);
 		s.append("'");
 		s.append(Strings.convertToJavaString(string));
 		s.append("'");

@@ -21,13 +21,18 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
 
-public class RTCrossReferenceSerializationStep extends RTSerializationAbstractFeatureStep
+public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFeatureStep
 {
 	protected final @NonNull CrossReference crossReference;
 
-	public RTCrossReferenceSerializationStep(@Nullable CardinalityVariable variable, @NonNull EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
+	public RTSerializationCrossReferenceStep(@Nullable CardinalityVariable variable, @NonNull EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
 		super(variable, eStructuralFeature);
 		this.crossReference = crossReference;
+	}
+
+	public RTSerializationCrossReferenceStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature) {
+		super(variableIndex, eStructuralFeature);
+		this.crossReference = (CrossReference)eStructuralFeature;			// XXX
 	}
 
 	@Override
@@ -35,13 +40,13 @@ public class RTCrossReferenceSerializationStep extends RTSerializationAbstractFe
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof RTCrossReferenceSerializationStep)) {
+		if (!(obj instanceof RTSerializationCrossReferenceStep)) {
 			return false;
 		}
-		return equalTo((RTCrossReferenceSerializationStep)obj);
+		return equalTo((RTSerializationCrossReferenceStep)obj);
 	}
 
-	protected boolean equalTo(@NonNull RTCrossReferenceSerializationStep that) {
+	protected boolean equalTo(@NonNull RTSerializationCrossReferenceStep that) {
 		return super.equalTo(that) && crossReference.equals(that.crossReference);
 	}
 

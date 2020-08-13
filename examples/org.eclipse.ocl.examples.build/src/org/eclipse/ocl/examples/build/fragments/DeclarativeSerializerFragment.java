@@ -10,17 +10,29 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
@@ -88,7 +100,11 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	protected String emitLiteral(@NonNull EClassifier eClassifier) {
-		return genModelHelper.getLiteralName(eClassifier);
+		return new TypeReference(genModelHelper.getQualifiedPackageInterfaceName(eClassifier.getEPackage())) + ".Literals." + genModelHelper.getLiteralName(eClassifier);
+	}
+
+	protected String emitLiteral(@NonNull EStructuralFeature eStructuralFeature) {
+		return new TypeReference(genModelHelper.getQualifiedPackageInterfaceName(eStructuralFeature.getEContainingClass().getEPackage())) + ".Literals." + genModelHelper.getEcoreLiteralName(eStructuralFeature);
 	}
 
 	protected String emitQualifiedLiteral(@NonNull EPackage ePackage) {
@@ -161,6 +177,36 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	@Override
 	protected String getSerializerBasePackage(final Grammar grammar) {
 		return xtextGeneratorNaming.getRuntimeBasePackage(grammar) + ".serializer";
+	}
+
+	private @Nullable Map<@NonNull RTSerializationStep, @NonNull String> serializationStep2id = null;
+
+	protected @NonNull Iterable<@NonNull RTSerializationStep> getSortedSerializationSteps(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull RTSerializationStep, @NonNull String> serializationStep2id2 = serializationStep2id;
+		if (serializationStep2id2 == null) {
+			serializationStep2id = serializationStep2id2 = new HashMap<>();
+		}
+		for (@NonNull EClass eClass : grammarAnalysis.getSortedProducedEClasses()) {
+			for(@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules()) {
+				for(@NonNull RTSerializationStep serializationStep : serializationRule.getBasicSerializationRule().getRuntime().getSerializationSteps()) {
+					serializationStep2id2.put(serializationStep, "");
+				}
+			}
+		}
+		List<@NonNull RTSerializationStep> steps = new ArrayList<>(serializationStep2id2.keySet());
+		Collections.sort(steps, NameUtil.TO_STRING_COMPARATOR);
+		int i = 0;
+		for (@NonNull RTSerializationStep step : steps) {
+			serializationStep2id2.put(step, String.format("Step%04d", i++));
+		}
+		return steps;
+	}
+
+	protected @NonNull String getSerializationStepId(@NonNull RTSerializationStep step) {
+		assert serializationStep2id != null;
+		String id = serializationStep2id.get(step);
+		assert id != null;
+		return id;
 	}
 
 	@Override

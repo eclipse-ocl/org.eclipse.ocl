@@ -242,10 +242,11 @@ public class StaticRuleMatch implements RuleMatch
 		if (!serializationNode.isRedundant()) {
 			MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 			if (!multiplicativeCardinality.isOne()) {
-				String name = String.format("C%02d", variable2node.size());
+				int index = variable2node.size();
+				String name = String.format("C%02d", index);
 				assert name != null;
 				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalyses() : null;
-				cardinalityVariable = new CardinalityVariable(name, ruleAnalyses, multiplicativeCardinality);
+				cardinalityVariable = new CardinalityVariable(index, name, ruleAnalyses, multiplicativeCardinality);
 				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 				assert old2 == null;
 				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);

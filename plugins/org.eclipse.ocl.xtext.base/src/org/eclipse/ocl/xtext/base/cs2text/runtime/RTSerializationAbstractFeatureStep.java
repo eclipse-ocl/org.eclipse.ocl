@@ -19,13 +19,22 @@ public abstract class RTSerializationAbstractFeatureStep extends RTAbstractSeria
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	public RTSerializationAbstractFeatureStep(@Nullable CardinalityVariable variable, @NonNull EStructuralFeature eStructuralFeature) {
+	protected RTSerializationAbstractFeatureStep(@Nullable CardinalityVariable variable, @NonNull EStructuralFeature eStructuralFeature) {
 		super(variable);
+		this.eStructuralFeature = eStructuralFeature;
+	}
+
+	protected RTSerializationAbstractFeatureStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature) {
+		super(variableIndex);
 		this.eStructuralFeature = eStructuralFeature;
 	}
 
 	protected boolean equalTo(@NonNull RTSerializationAbstractFeatureStep that) {
 		return super.equalTo(that) && eStructuralFeature.equals(that.eStructuralFeature);
+	}
+
+	public @NonNull EStructuralFeature getEStructuralFeature() {
+		return eStructuralFeature;
 	}
 
 	@Override

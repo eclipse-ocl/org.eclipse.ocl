@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTCrossReferenceSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationCrossReferenceStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
@@ -58,7 +58,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	@Override
 	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		stepsList.add(new RTCrossReferenceSerializationStep(staticRuleMatch.basicGetCardinalityVariable(this), eStructuralFeature, crossReference));
+		stepsList.add(new RTSerializationCrossReferenceStep(staticRuleMatch.basicGetCardinalityVariable(this), eStructuralFeature, crossReference));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 

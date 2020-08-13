@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
 public class RTGrammarAnalysis
@@ -43,6 +44,10 @@ public class RTGrammarAnalysis
 		assert serializationRules != null;
 		SerializationRules old = eClass2serializationRules.put(serializationRules.getEClass(), serializationRules);
 		assert old == null;
+	}
+
+	public void addSerializationRules(/*@NonNull*/ RTSerializationRules create_AttributeCS_Rules) {
+		throw new UnsupportedOperationException("Migration to RT pending");
 	}
 
 	public @NonNull SerializationRules getSerializationRules(@NonNull EClass eClass) {

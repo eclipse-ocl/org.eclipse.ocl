@@ -34,8 +34,9 @@ public class SerializationRules extends RTSerializationRules
 {
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
 
-	public SerializationRules(@NonNull EClass eClass, @NonNull Iterable<@NonNull SerializationRule> serializationRules) {
+	public SerializationRules(/*@NonNull*/ EClass eClass, @NonNull Iterable<@NonNull SerializationRule> serializationRules) {
 		super(eClass, serializationRules);
+		assert eClass != null;
 	}
 
 	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses) {

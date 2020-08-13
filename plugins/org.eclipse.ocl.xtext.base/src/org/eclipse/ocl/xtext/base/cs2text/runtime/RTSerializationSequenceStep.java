@@ -28,6 +28,12 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 		super(cardinalityVariable);		// Default unit sequence wraps the whole rule and may have a comment idiom
 	}
 
+	public RTSerializationSequenceStep(int variableIndex, int startIndex, int endIndex) {
+		super(variableIndex);
+		this.startIndex = startIndex;
+		this.endIndex = endIndex;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -41,6 +47,14 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 
 	protected boolean equalTo(@NonNull RTSerializationSequenceStep that) {
 		return super.equalTo(that);
+	}
+
+	public int getEndIndex() {
+		return endIndex;
+	}
+
+	public int getStartIndex() {
+		return startIndex;
 	}
 
 	public int getStepsRange() {

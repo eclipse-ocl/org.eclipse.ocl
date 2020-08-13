@@ -10,10 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 
 /**
  * The (static) SerializationRules identify the alternative rules that may be used to serialize a given EClass.
@@ -30,6 +34,13 @@ public class RTSerializationRules
 		this.eClass = eClass;
 		assert serializationRules != null;
 		this.serializationRules = serializationRules;
+	}
+
+	public RTSerializationRules(/*@NonNull*/ EClass eClass, /*@NonNull*/ List<@NonNull RTSerializationRule> serializationRules, int dummy) {
+		assert eClass != null;
+		this.eClass = eClass;
+		assert serializationRules != null;
+		this.serializationRules = Collections.emptyList(); // XXX migrate serializationRules;
 	}
 
 	public @NonNull EClass getEClass() {

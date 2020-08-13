@@ -23,6 +23,11 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 public class CardinalityVariable implements Nameable
 {
 	/**
+	 * Distinguishing index within the serailzation rule.
+	 */
+	protected final int index;
+
+	/**
 	 * A convenience debug name for the variable. Jnique within its paent rule match.
 	 */
 	protected final @NonNull String name;
@@ -37,11 +42,21 @@ public class CardinalityVariable implements Nameable
 	 */
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public CardinalityVariable(@NonNull String name, @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public CardinalityVariable(int index, @NonNull String name, @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		this.index = index;
 		this.name = name;
 		this.ruleAnalyses = ruleAnalyses;
 		this.multiplicativeCardinality = multiplicativeCardinality;
 		assert !multiplicativeCardinality.isOne();
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	@Override
+	public @NonNull String getName() {
+		return name;
 	}
 
 	public boolean isOne() {
@@ -54,11 +69,6 @@ public class CardinalityVariable implements Nameable
 
 	public boolean mayBeNone() {
 		return multiplicativeCardinality.mayBeZero();
-	}
-
-	@Override
-	public @NonNull String getName() {
-		return name;
 	}
 
 	@Override
