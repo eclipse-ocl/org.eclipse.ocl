@@ -13,6 +13,7 @@
 package org.eclipse.ocl.xtext.oclinecore.serializer;
 
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 
@@ -279,11 +280,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private static final /* @@NonNull*/ RTSerializationStep Step0088 // 1*ownedExceptions+=TypedRefCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, "OCLinEcore::TypedRefCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0089 // 1*ownedExpression=ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
-		private static final /* @@NonNull*/ RTSerializationStep Step0090 // 1*ownedExpression=ExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
-		private static final /* @@NonNull*/ RTSerializationStep Step0091 // 1*ownedExpression=ExpCS
+		private static final /* @@NonNull*/ RTSerializationStep Step0090 // 1*ownedExpression=ExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
+		private static final /* @@NonNull*/ RTSerializationStep Step0091 // 1*ownedExpression=ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0092 // 1*ownedExpression=ExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0093 // 1*ownedExpression=PatternExpCS
@@ -299,9 +300,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private static final /* @@NonNull*/ RTSerializationStep Step0098 // 1*ownedInExpression=ExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0099 // 1*ownedInitExpression=ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, "EssentialOCL::ExpCS");
-		private static final /* @@NonNull*/ RTSerializationStep Step0100 // 1*ownedInitExpression=ExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, "EssentialOCL::ExpCS");
+		private static final /* @@NonNull*/ RTSerializationStep Step0100 // 1*ownedInitExpression=ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0101 // 1*ownedInitExpression=ExpCS|PatternExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION , "EssentialOCL::ExpCS", "EssentialOCL::PatternExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0102 // 1*ownedInitExpression=StringLiteralExpCS
@@ -341,11 +342,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private static final /* @@NonNull*/ RTSerializationStep Step0119 // 1*ownedPathElements+=URIFirstPathElementCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, "EssentialOCL::URIFirstPathElementCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0120 // 1*ownedPathName=PathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, "Base::PathNameCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, "Base::PathNameCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0121 // 1*ownedPathName=PathNameCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, "Base::PathNameCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0122 // 1*ownedPathName=PathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, "Base::PathNameCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, "Base::PathNameCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0123 // 1*ownedPathName=PathNameCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, "Base::PathNameCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0124 // 1*ownedPathName=URIPathNameCS
@@ -377,11 +378,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private static final /* @@NonNull*/ RTSerializationStep Step0137 // 1*ownedType=MapTypeCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, "EssentialOCL::MapTypeCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0138 // 1*ownedType=TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0139 // 1*ownedType=TypeExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0140 // 1*ownedType=TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0141 // 1*ownedType=TypeExpWithoutMultiplicityCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, "EssentialOCL::TypeExpWithoutMultiplicityCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step0142 // 1*ownedType=TypeLiteralWithMultiplicityCS
@@ -586,9 +587,64 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(13, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, "OCLinEcore::PostconditionConstraintCS");
 	}
 
+	private static class _Segments
+	{
+		private static final /* @@NonNull*/ Segment [] Segments00 // []
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments01 // [supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport, «value»]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.createCustomSegment(null, org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport.class) /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments02 // [«! », «value», «! »]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.NO_SPACE /* «! » */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.NO_SPACE /* «! » */};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments03 // [«! », «value», «? »]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.NO_SPACE /* «! » */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_SPACE /* «? » */};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments04 // [«! », «value», «?\n»]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.NO_SPACE /* «! » */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_NEW_LINE /* «?\n» */};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments05 // [«! », «value»]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.NO_SPACE /* «! » */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments06 // [«-», «? », «value», «?\n»]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.POP /* «-» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_SPACE /* «? » */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_NEW_LINE /* «?\n» */};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments07 // [«? », «value», «+», «?\n»]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_SPACE /* «? » */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.PUSH /* «+» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_NEW_LINE /* «?\n» */};
+			;
+		private static final /* @@NonNull*/ Segment [] Segments08 // [«? », «value», «? »]
+			= new org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] {
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_SPACE /* «? » */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.VALUE /* «value» */,
+				org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils.SOFT_SPACE /* «? » */};
+			;
+	}
+
 	private static class _Rules
 	{
-
 		/**
 		 * AnnotationCS
 		 */
@@ -609,19 +665,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -642,23 +698,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0211 /* V05*ownedReferences+=ModelElementRefCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -679,23 +735,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0211 /* V05*ownedReferences+=ModelElementRefCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -716,23 +772,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0211 /* V05*ownedReferences+=ModelElementRefCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -749,19 +805,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -782,23 +838,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0211 /* V05*ownedReferences+=ModelElementRefCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -819,23 +875,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0211 /* V05*ownedReferences+=ModelElementRefCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -856,23 +912,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0211 /* V05*ownedReferences+=ModelElementRefCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -901,23 +957,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -940,25 +996,25 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -981,25 +1037,25 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1032,35 +1088,35 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1095,37 +1151,37 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1160,37 +1216,37 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1211,23 +1267,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1250,25 +1306,25 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1291,25 +1347,25 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1342,35 +1398,35 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1405,37 +1461,37 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1470,37 +1526,37 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1521,23 +1577,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1560,25 +1616,25 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1601,25 +1657,25 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1652,35 +1708,35 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1715,37 +1771,37 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1780,37 +1836,37 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -1825,54 +1881,54 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0158 /* 1*symbol */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol={'false|true'}
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0158 /* 1*symbol */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol={'false|true'}
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0158 /* 1*symbol */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol={'false|true'}
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0158 /* 1*symbol */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol={'false|true'}
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0158 /* 1*symbol */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol={'false|true'}
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0158 /* 1*symbol */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -1895,17 +1951,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0111 /* 1*ownedParts+=CollectionLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1920,17 +1976,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0111 /* 1*ownedParts+=CollectionLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1945,17 +2001,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0111 /* 1*ownedParts+=CollectionLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1970,17 +2026,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0111 /* 1*ownedParts+=CollectionLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -1995,17 +2051,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0111 /* 1*ownedParts+=CollectionLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -2020,26 +2076,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0093 /* 1*ownedExpression=PatternExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-4-steps */,
-						_Steps.Step0091 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step0090 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0008 /* 1*'..' */,
 						_Steps.Step0105 /* 1*ownedLastExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -2064,19 +2120,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0156 /* 1*restVariableName=Identifier */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2094,20 +2150,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0192 /* V02*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						null
+					}
 				),
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2124,19 +2180,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0156 /* 1*restVariableName=Identifier */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -2157,15 +2213,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0183 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2178,15 +2234,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0183 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2200,16 +2256,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0192 /* V02*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2222,15 +2278,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0183 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2243,15 +2299,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0183 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2265,16 +2321,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0192 /* V02*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2288,16 +2344,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0192 /* V02*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2310,15 +2366,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0183 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				)
 			), 0);
 		}
@@ -2331,11 +2387,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedExpression=ExpCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
-						_Steps.Step0089 /* 1*ownedExpression=ExpCS */
+						_Steps.Step0091 /* 1*ownedExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				)
 			), 0);
 		}
@@ -2357,16 +2413,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0114 /* 1*ownedParts+=ShadowPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -2392,20 +2448,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2424,21 +2480,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2457,21 +2513,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2492,23 +2548,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2530,24 +2586,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2569,24 +2625,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0215 /* V06*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2604,20 +2660,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2636,21 +2692,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2669,21 +2725,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2704,23 +2760,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2742,24 +2798,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2781,24 +2837,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0215 /* V06*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2816,20 +2872,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2848,21 +2904,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2881,21 +2937,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2916,23 +2972,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2954,24 +3010,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -2993,24 +3049,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0215 /* V06*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -3028,12 +3084,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0014 /* 1*'=' */,
 						_Steps.Step0178 /* V00*values+=SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -3058,19 +3114,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3087,19 +3143,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -3124,19 +3180,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3154,20 +3210,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3185,20 +3241,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3219,23 +3275,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3257,24 +3313,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3296,24 +3352,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0215 /* V06*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3330,19 +3386,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3360,20 +3416,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3391,20 +3447,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3425,23 +3481,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3463,24 +3519,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3502,24 +3558,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0215 /* V06*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3536,19 +3592,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3566,20 +3622,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3597,20 +3653,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3631,23 +3687,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3669,24 +3725,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0209 /* V05*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3708,24 +3764,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0215 /* V06*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -3748,17 +3804,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0161 /* 1*value=SIGNED */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3774,18 +3830,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0161 /* 1*value=SIGNED */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3802,19 +3858,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0190 /* V02*ownedAnnotations+=AnnotationElementCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3832,20 +3888,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0190 /* V02*ownedAnnotations+=AnnotationElementCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3860,17 +3916,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0161 /* 1*value=SIGNED */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3886,18 +3942,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0161 /* 1*value=SIGNED */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3914,19 +3970,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0190 /* V02*ownedAnnotations+=AnnotationElementCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -3944,20 +4000,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0190 /* V02*ownedAnnotations+=AnnotationElementCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -3972,144 +4028,144 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0005 /* 1*'*' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'invalid'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0040 /* 1*'invalid' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'null'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0046 /* 1*'null' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'self'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0055 /* 1*'self' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// '*'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0005 /* 1*'*' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'invalid'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0040 /* 1*'invalid' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'null'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0046 /* 1*'null' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'self'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0055 /* 1*'self' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'invalid'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0040 /* 1*'invalid' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'null'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0046 /* 1*'null' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'self'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0055 /* 1*'self' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// '*'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0005 /* 1*'*' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'invalid'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0040 /* 1*'invalid' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'null'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0046 /* 1*'null' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'self'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0055 /* 1*'self' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// '*'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0005 /* 1*'*' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -4124,18 +4180,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0065 /* 1*exprString=UNQUOTED_STRING */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// ownedExpression=ExpCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0092 /* 1*ownedExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				)
 			), 0);
 		}
@@ -4158,17 +4214,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0087 /* 1*ownedElseExpression=ExpCS */,
 						_Steps.Step0033 /* 1*'endif' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4183,17 +4239,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0087 /* 1*ownedElseExpression=ExpCS */,
 						_Steps.Step0033 /* 1*'endif' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4208,17 +4264,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0087 /* 1*ownedElseExpression=ExpCS */,
 						_Steps.Step0033 /* 1*'endif' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4233,17 +4289,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0087 /* 1*ownedElseExpression=ExpCS */,
 						_Steps.Step0033 /* 1*'endif' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4258,17 +4314,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0087 /* 1*ownedElseExpression=ExpCS */,
 						_Steps.Step0033 /* 1*'endif' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -4287,13 +4343,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0058 /* 1*'then' */,
 						_Steps.Step0133 /* 1*ownedThenExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -4317,18 +4373,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0147 /* 1*qualifiers */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -4350,16 +4406,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0179 /* V01*'::*' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -4377,12 +4433,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0069 /* 1*name=BinaryOperatorName */,
 						_Steps.Step0127 /* 1*ownedRight=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4392,12 +4448,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0069 /* 1*name=BinaryOperatorName */,
 						_Steps.Step0127 /* 1*ownedRight=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -4412,9 +4468,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0040 /* 1*'invalid' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -4433,13 +4489,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0094 /* 1*ownedExpressionCS=ExpCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4450,13 +4506,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0094 /* 1*ownedExpressionCS=ExpCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4467,13 +4523,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0094 /* 1*ownedExpressionCS=ExpCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4484,13 +4540,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0094 /* 1*ownedExpressionCS=ExpCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4501,13 +4557,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0094 /* 1*ownedExpressionCS=ExpCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -4529,16 +4585,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0038 /* 1*'in' */,
 						_Steps.Step0098 /* 1*ownedInExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4552,16 +4608,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0038 /* 1*'in' */,
 						_Steps.Step0098 /* 1*ownedInExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4575,16 +4631,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0038 /* 1*'in' */,
 						_Steps.Step0098 /* 1*ownedInExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4598,16 +4654,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0038 /* 1*'in' */,
 						_Steps.Step0098 /* 1*ownedInExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -4625,20 +4681,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0172 /* V00*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step0181 /* V01*next-2-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -4661,17 +4717,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0112 /* 1*ownedParts+=MapLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4686,17 +4742,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0112 /* 1*ownedParts+=MapLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4711,17 +4767,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0112 /* 1*ownedParts+=MapLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4736,17 +4792,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0112 /* 1*ownedParts+=MapLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4761,17 +4817,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0112 /* 1*ownedParts+=MapLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -4789,12 +4845,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0013 /* 1*'<-' */,
 						_Steps.Step0144 /* 1*ownedValue=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -4816,16 +4872,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0145 /* 1*ownedValueType=TypeExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4839,16 +4895,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0145 /* 1*ownedValueType=TypeExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4863,17 +4919,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0185 /* V01*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4887,16 +4943,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0145 /* 1*ownedValueType=TypeExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4910,16 +4966,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0145 /* 1*ownedValueType=TypeExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4934,17 +4990,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0185 /* V01*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4959,17 +5015,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0185 /* V01*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -4983,16 +5039,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0145 /* 1*ownedValueType=TypeExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				)
 			), 0);
 		}
@@ -5010,12 +5066,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0123 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -5034,13 +5090,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0008 /* 1*'..' */,
 						_Steps.Step0160 /* 1*upperBound=UPPER */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5053,15 +5109,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0160 /* 1*upperBound=UPPER */,
 						_Steps.Step0022 /* 1*']' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5075,16 +5131,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0062 /* 1*'|?' */,
 						_Steps.Step0022 /* 1*']' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] isNullFree='|1'[?] ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5098,16 +5154,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0180 /* V01*'|1' */,
 						_Steps.Step0022 /* 1*']' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				)
 			), 0);
 		}
@@ -5125,12 +5181,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0157 /* 1*stringBounds */,
 						_Steps.Step0022 /* 1*']' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '[' stringBounds={'*|+|?'} '|?' ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5141,13 +5197,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0062 /* 1*'|?' */,
 						_Steps.Step0022 /* 1*']' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5158,22 +5214,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0167 /* V00*'|1' */,
 						_Steps.Step0022 /* 1*']' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// stringBounds={'*|+|?'}
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0157 /* 1*stringBounds */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -5187,7 +5243,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-7-steps */,
-						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step0187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step0191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -5195,22 +5251,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0017 /* 1*'@' */,
 						_Steps.Step0051 /* 1*'pre' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-7-steps */,
-						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step0187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step0191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -5218,22 +5274,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0017 /* 1*'@' */,
 						_Steps.Step0051 /* 1*'pre' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-7-steps */,
-						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step0187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step0191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -5241,22 +5297,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0017 /* 1*'@' */,
 						_Steps.Step0051 /* 1*'pre' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-7-steps */,
-						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step0187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step0191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -5264,22 +5320,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0017 /* 1*'@' */,
 						_Steps.Step0051 /* 1*'pre' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-7-steps */,
-						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step0187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step0191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -5287,16 +5343,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0017 /* 1*'@' */,
 						_Steps.Step0051 /* 1*'pre' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -5311,22 +5367,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// { ':' ownedType=TypeExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-2-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0140 /* 1*ownedType=TypeExpCS */
+						_Steps.Step0138 /* 1*ownedType=TypeExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5337,17 +5393,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5355,26 +5411,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0076 /* 1*next-9-steps */,
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0013 /* 1*'<-' */,
 						_Steps.Step0082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
 						_Steps.Step0181 /* V01*next-2-steps */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5383,25 +5439,25 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0181 /* V01*next-2-steps */,
 						_Steps.Step0013 /* 1*'<-' */,
 						_Steps.Step0082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
 						_Steps.Step0038 /* 1*'in' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5411,22 +5467,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step0169 /* V00*next-5-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0181 /* V01*next-2-steps */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5435,11 +5491,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0007 /* 1*',' */,
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null
+					}
 				),
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5451,18 +5507,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5471,27 +5527,27 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0007 /* 1*',' */,
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0013 /* 1*'<-' */,
 						_Steps.Step0082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
 						_Steps.Step0181 /* V01*next-2-steps */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5501,26 +5557,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0181 /* V01*next-2-steps */,
 						_Steps.Step0013 /* 1*'<-' */,
 						_Steps.Step0082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
 						_Steps.Step0038 /* 1*'in' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5530,22 +5586,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step0169 /* V00*next-5-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0181 /* V01*next-2-steps */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -5560,75 +5616,75 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-3-steps */,
 						_Steps.Step0003 /* 1*'(' */,
-						_Steps.Step0090 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step0089 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-3-steps */,
 						_Steps.Step0003 /* 1*'(' */,
-						_Steps.Step0090 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step0089 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-3-steps */,
 						_Steps.Step0003 /* 1*'(' */,
-						_Steps.Step0090 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step0089 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-3-steps */,
 						_Steps.Step0003 /* 1*'(' */,
-						_Steps.Step0090 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step0089 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-3-steps */,
 						_Steps.Step0003 /* 1*'(' */,
-						_Steps.Step0090 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step0089 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				)
 			), 0);
 		}
@@ -5643,9 +5699,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0046 /* 1*'null' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -5660,54 +5716,54 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0159 /* 1*symbol=NUMBER_LITERAL */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol=NUMBER_LITERAL
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0159 /* 1*symbol=NUMBER_LITERAL */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol=NUMBER_LITERAL
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0159 /* 1*symbol=NUMBER_LITERAL */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol=NUMBER_LITERAL
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0159 /* 1*symbol=NUMBER_LITERAL */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol=NUMBER_LITERAL
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0159 /* 1*symbol=NUMBER_LITERAL */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// symbol=NUMBER_LITERAL
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0159 /* 1*symbol=NUMBER_LITERAL */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -5731,18 +5787,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5760,20 +5816,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0200 /* V03*ownedSpecification=SpecificationCS */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5790,19 +5846,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0194 /* V02*ownedSpecification=SpecificationCS */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { stereotype='precondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5819,19 +5875,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0194 /* V02*ownedSpecification=SpecificationCS */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -5871,34 +5927,34 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5932,36 +5988,36 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -5995,36 +6051,36 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6065,43 +6121,43 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0239 /* V12*ownedPostconditions+=PostconditionConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6144,45 +6200,45 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0241 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6225,45 +6281,45 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0241 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6295,34 +6351,34 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6356,36 +6412,36 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6419,36 +6475,36 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6489,43 +6545,43 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0239 /* V12*ownedPostconditions+=PostconditionConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6568,45 +6624,45 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0241 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6649,45 +6705,45 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0241 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -6711,18 +6767,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0078 /* 1*nsURI=URI */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6742,22 +6798,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0204 /* V04*ownedClasses+=ClassCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6773,18 +6829,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0078 /* 1*nsURI=URI */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6804,22 +6860,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0204 /* V04*ownedClasses+=ClassCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -6847,22 +6903,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0203 /* V04*ownedAnnotations+=AnnotationElementCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -6875,29 +6931,29 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// referredElement=UnrestrictedName
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
-						_Steps.Step0151 /* 1*referredElement=UnrestrictedName */
+						_Steps.Step0150 /* 1*referredElement=UnrestrictedName */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// referredElement=UnreservedName
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0149 /* 1*referredElement=UnreservedName */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// referredElement=UnrestrictedName
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
-						_Steps.Step0150 /* 1*referredElement=UnrestrictedName */
+						_Steps.Step0151 /* 1*referredElement=UnrestrictedName */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -6912,9 +6968,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0148 /* 1*referredElement=URI */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -6933,22 +6989,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0010 /* 1*'::' */,
 						_Steps.Step0118 /* 1*ownedPathElements+=NextPathElementCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null
+					}
 				),
 				// ownedPathElements+=FirstPathElementCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0117 /* 1*ownedPathElements+=FirstPathElementCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// { ownedPathElements+=URIFirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -6959,13 +7015,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0010 /* 1*'::' */,
 						_Steps.Step0118 /* 1*ownedPathElements+=NextPathElementCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -6983,12 +7039,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0009 /* 1*':' */,
 						_Steps.Step0126 /* 1*ownedPatternType=TypeExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -7005,11 +7061,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0073 /* 1*name=UnaryOperatorName */,
 						_Steps.Step0129 /* 1*ownedRight=PrefixedPrimaryExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { name=UnaryOperatorName ownedRight=PrefixedLetExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7018,11 +7074,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0073 /* 1*name=UnaryOperatorName */,
 						_Steps.Step0128 /* 1*ownedRight=PrefixedLetExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7031,11 +7087,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0073 /* 1*name=UnaryOperatorName */,
 						_Steps.Step0129 /* 1*ownedRight=PrefixedPrimaryExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { name=UnaryOperatorName ownedRight=PrefixedLetExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7044,11 +7100,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0073 /* 1*name=UnaryOperatorName */,
 						_Steps.Step0128 /* 1*ownedRight=PrefixedLetExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { name=UnaryOperatorName ownedRight=PrefixedLetExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7057,11 +7113,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0073 /* 1*name=UnaryOperatorName */,
 						_Steps.Step0128 /* 1*ownedRight=PrefixedLetExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7070,11 +7126,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0073 /* 1*name=UnaryOperatorName */,
 						_Steps.Step0129 /* 1*ownedRight=PrefixedPrimaryExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -7089,27 +7145,27 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0040 /* 1*'invalid' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// 'null'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0046 /* 1*'null' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// '*'
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0005 /* 1*'*' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -7124,18 +7180,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7144,29 +7200,29 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */,
 						_Steps.Step0171 /* V00*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7175,11 +7231,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */,
 						_Steps.Step0171 /* V00*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7188,20 +7244,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */,
 						_Steps.Step0171 /* V00*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0072 /* 1*name=PrimitiveTypeIdentifier */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -7233,26 +7289,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7278,28 +7334,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7325,28 +7381,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7392,48 +7448,48 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7481,50 +7537,50 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7572,50 +7628,50 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7639,26 +7695,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7684,28 +7740,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7731,28 +7787,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7798,48 +7854,48 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7887,50 +7943,50 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -7978,50 +8034,50 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8045,26 +8101,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8090,28 +8146,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8137,28 +8193,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8204,48 +8260,48 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8293,50 +8349,50 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8384,50 +8440,50 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -8447,14 +8503,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0182 /* V01*ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				)
 			), 0);
 		}
@@ -8469,9 +8525,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0055 /* 1*'self' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -8486,9 +8542,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0102 /* 1*ownedInitExpression=StringLiteralExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8498,12 +8554,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0014 /* 1*'=' */,
 						_Steps.Step0101 /* 1*ownedInitExpression=ExpCS|PatternExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -8524,15 +8580,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0132 /* 1*ownedTerms+=ExpCS */,
 						_Steps.Step0022 /* 1*']' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				)
 			), 0);
 		}
@@ -8547,54 +8603,54 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0176 /* V00*segments+=StringLiteral */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0176 /* V00*segments+=StringLiteral */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0176 /* V00*segments+=StringLiteral */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0176 /* V00*segments+=StringLiteral */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0176 /* V00*segments+=StringLiteral */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0176 /* V00*segments+=StringLiteral */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -8627,27 +8683,27 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8677,32 +8733,32 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0230 /* V10*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8727,27 +8783,27 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8777,32 +8833,32 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0230 /* V10*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8827,27 +8883,27 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8877,32 +8933,32 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0230 /* V10*ownedConstraints+=InvariantConstraintCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -8920,12 +8976,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0086 /* 1*ownedDetails+=DetailCS */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8938,15 +8994,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'sysml' ownedDetails+=DetailCS ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8956,12 +9012,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0086 /* 1*ownedDetails+=DetailCS */,
 						_Steps.Step0011 /* 1*';' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */
+					}
 				),
 				// { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -8974,15 +9030,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0011 /* 1*';' */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments04 /* «! » + «value» + «?\n» */,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -9002,14 +9058,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0130 /* 1*ownedSubstitutions+=TemplateParameterSubstitutionCS */,
 						_Steps.Step0186 /* V01*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						null
+					}
 				)
 			), 0);
 		}
@@ -9024,9 +9080,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0079 /* 1*ownedActualParameter=TypeRefCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				)
 			), 0);
 		}
@@ -9047,15 +9103,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0110 /* 1*ownedParameters+=TypeParameterCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { '<' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9068,15 +9124,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0110 /* 1*ownedParameters+=TypeParameterCS */,
 						_Steps.Step0015 /* 1*'>' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -9095,13 +9151,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0184 /* V01*ownedImports+=ImportCS */,
 						_Steps.Step0193 /* V02*ownedPackages+=PackageCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null
+					}
 				)
 			), 0);
 		}
@@ -9123,16 +9179,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0115 /* 1*ownedParts+=TupleLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9146,16 +9202,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0115 /* 1*ownedParts+=TupleLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9169,16 +9225,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0115 /* 1*ownedParts+=TupleLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9192,16 +9248,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0115 /* 1*ownedParts+=TupleLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9215,16 +9271,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0115 /* 1*ownedParts+=TupleLiteralPartCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -9241,19 +9297,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0074 /* 1*name=UnrestrictedName */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step0140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step0014 /* 1*'=' */,
-						_Steps.Step0100 /* 1*ownedInitExpression=ExpCS */
+						_Steps.Step0099 /* 1*ownedInitExpression=ExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -9271,12 +9327,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0009 /* 1*':' */,
 						_Steps.Step0139 /* 1*ownedType=TypeExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -9300,18 +9356,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0116 /* 1*ownedParts+=TuplePartCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9327,18 +9383,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0116 /* 1*ownedParts+=TuplePartCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9355,19 +9411,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0198 /* V03*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9383,18 +9439,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0116 /* 1*ownedParts+=TuplePartCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9410,18 +9466,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0116 /* 1*ownedParts+=TuplePartCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9438,19 +9494,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0198 /* V03*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9467,19 +9523,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0198 /* V03*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9495,18 +9551,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0116 /* 1*ownedParts+=TuplePartCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						null,
+						null,
+						_Segments.Segments03 /* «! » + «value» + «? » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				)
 			), 0);
 		}
@@ -9521,45 +9577,45 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				)
 			), 0);
 		}
@@ -9573,7 +9629,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-8-steps */,
-						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0169 /* V00*next-5-steps */,
 						_Steps.Step0085 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
 						_Steps.Step0181 /* V01*next-3-steps */,
@@ -9582,23 +9638,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0063 /* 1*'}' */,
 						_Steps.Step0192 /* V02*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */,
+						null
+					}
 				),
 				// { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-7-steps */,
-						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0169 /* V00*next-5-steps */,
 						_Steps.Step0085 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
 						_Steps.Step0181 /* V01*next-3-steps */,
@@ -9606,22 +9662,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0125 /* 1*ownedPatternGuard=ExpCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				),
 				// { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0076 /* 1*next-7-steps */,
-						_Steps.Step0120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step0122 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0169 /* V00*next-5-steps */,
 						_Steps.Step0085 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
 						_Steps.Step0181 /* V01*next-3-steps */,
@@ -9629,16 +9685,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0125 /* 1*ownedPatternGuard=ExpCS */,
 						_Steps.Step0063 /* 1*'}' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null,
+						null,
+						null,
+						_Segments.Segments07 /* «? » + «value» + «+» + «?\n» */,
+						null,
+						_Segments.Segments06 /* «-» + «? » + «value» + «?\n» */
+					}
 				)
 			), 0);
 		}
@@ -9660,16 +9716,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0002 /* 1*'&&' */,
 						_Steps.Step0095 /* 1*ownedExtends+=TypedRefCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -9684,9 +9740,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0121 /* 1*ownedPathName=PathNameCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9697,13 +9753,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0081 /* 1*ownedBinding=TemplateBindingCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9714,13 +9770,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0081 /* 1*ownedBinding=TemplateBindingCS */,
 						_Steps.Step0015 /* 1*'>' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9729,11 +9785,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0121 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step0171 /* V00*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						null
+					}
 				),
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9745,14 +9801,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0004 /* 1*')' */,
 						_Steps.Step0171 /* V00*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */,
+						null
+					}
 				),
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9764,23 +9820,23 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0015 /* 1*'>' */,
 						_Steps.Step0171 /* V00*ownedMultiplicity=MultiplicityCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// ownedPathName=PathNameCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0121 /* 1*ownedPathName=PathNameCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9791,13 +9847,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0081 /* 1*ownedBinding=TemplateBindingCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9808,22 +9864,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0081 /* 1*ownedBinding=TemplateBindingCS */,
 						_Steps.Step0015 /* 1*'>' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				),
 				// ownedPathName=PathNameCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0121 /* 1*ownedPathName=PathNameCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null
+					}
 				),
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9834,13 +9890,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0081 /* 1*ownedBinding=TemplateBindingCS */,
 						_Steps.Step0004 /* 1*')' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments02 /* «! » + «value» + «! » */,
+						null,
+						_Segments.Segments05 /* «! » + «value» */
+					}
 				),
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9851,13 +9907,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0081 /* 1*ownedBinding=TemplateBindingCS */,
 						_Steps.Step0015 /* 1*'>' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -9872,9 +9928,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step0005 /* 1*'*' */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						_Segments.Segments08 /* «? » + «value» + «? » */
+					}
 				)
 			), 0);
 		}
@@ -9891,15 +9947,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0074 /* 1*name=UnrestrictedName */,
 						_Steps.Step0169 /* V00*next-2-steps */,
 						_Steps.Step0009 /* 1*':' */,
-						_Steps.Step0138 /* 1*ownedType=TypeExpCS */
+						_Steps.Step0140 /* 1*ownedType=TypeExpCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}
@@ -9918,13 +9974,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0035 /* 1*'extends' */,
 						_Steps.Step0096 /* 1*ownedExtends=TypedRefCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				),
 				// { '?' { 'extends' ownedExtends=TypedRefCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
@@ -9935,13 +9991,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step0035 /* 1*'extends' */,
 						_Steps.Step0096 /* 1*ownedExtends=TypedRefCS */
 					},
-					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom /*@NonNull*/ []{/*
-						// null
-						// null
-						// null
-						// null
-						// null
-					*/}
+					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null,
+						_Segments.Segments08 /* «? » + «value» + «? » */,
+						null
+					}
 				)
 			), 0);
 		}

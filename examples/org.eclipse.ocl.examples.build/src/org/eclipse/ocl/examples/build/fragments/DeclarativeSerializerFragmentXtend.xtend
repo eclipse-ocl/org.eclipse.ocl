@@ -30,6 +30,20 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCal
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationCrossReferenceStep
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
+import java.util.List
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsFactory
+import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils
+import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -61,6 +75,14 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 					= «generateSerializationStep(step)»;
 				«ENDFOR»
 			}
+			
+			private static class _Segments
+			{
+				«FOR segments : getSortedSegments(grammarAnalysis)»
+				private static final /* @@NonNull*/ «new TypeReference(Segment)» [] «getSegmentsId(segments)» // «segments»
+					= «generateSegments(segments)»;
+				«ENDFOR»
+			}
 						
 			private static class _Rules
 			{
@@ -87,8 +109,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis) {
 		'''
-			«FOR eClass : grammarAnalysis.getSortedProducedEClasses()»
-
+			«FOR eClass : grammarAnalysis.getSortedProducedEClasses() SEPARATOR '\n'»
 			«generateSerializationRules(grammarAnalysis, eClass)»
 			«ENDFOR»
 		'''
@@ -103,12 +124,18 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				_Steps.«getSerializationStepId(serializationStep)» /* «serializationStep.toString()» */
 				«ENDFOR»
 			}, 
-			«IF serializationRule.getStaticSubIdioms() != null»
-			new /*@NonNull*/ «new TypeReference(SubIdiom)» /*@NonNull*/ []{/*
-				«FOR subIdiom : serializationRule.getStaticSubIdioms()»
-				«generateSubIdiom(subIdiom)»
+			«IF serializationRule.getStaticSegments() != null»
+			new /*@NonNull*/ «new TypeReference(Segment)» /*@NonNull*/ [] []{
+				«IF serializationRule.getStaticSegments() != null»
+				«FOR segments : serializationRule.getStaticSegments() SEPARATOR ','»
+				«IF segments != null»
+				_Segments.«getSegmentsId(segments)» /* «FOR segment : segments SEPARATOR ' + '»«segment.toString()»«ENDFOR» */
+				«ELSE»
+				null
+				«ENDIF»
 				«ENDFOR»
-			*/}
+				«ENDIF»
+			}
 			«ELSE»
 			null
 			«ENDIF»
@@ -116,10 +143,67 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 	}
 	
-	protected def generateSubIdiom(SubIdiom subIdiom) {
+	protected def generateSegments(List<Segment> segments) {
 		'''
-		// «subIdiom != null ? subIdiom.toString() : "null"»
+		new «new TypeReference(Segment)» /*@NonNull*/ [] {
+			«FOR segment : segments SEPARATOR ',\n'»«generateSegment(segment)» /* «segment.toString()» */«ENDFOR»};
 		'''
+	}
+	
+	protected def generateSegment(Segment segment) {
+		switch segment {
+		CustomSegment: return generateCustomSegment(segment)
+		HalfNewLineSegment: return generateHalfNewLineSegment(segment)
+		NewLineSegment: return generateNewLineSegment(segment)
+		NoSpaceSegment: return generateNoSpaceSegment(segment)
+		PopSegment: return generatePopSegment(segment)
+		PushSegment: return generatePushSegment(segment)
+		SoftNewLineSegment: return generateSoftNewLineSegment(segment)
+		SoftSpaceSegment: return generateSoftSpaceSegment(segment)
+		StringSegment: return generateStringSegment(segment)
+		ValueSegment: return generateValueSegment(segment)
+		default: segment.getClass().getName() //throw new UnsupportedOperationException()
+		}
+	}
+	
+	protected def generateCustomSegment(CustomSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».createCustomSegment(null, «new TypeReference(segment.getSupportClassName())».class)'''
+	}
+	
+	protected def generateHalfNewLineSegment(HalfNewLineSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».HALF_NEW_LINE'''
+	}
+	
+	protected def generateNewLineSegment(NewLineSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».NEW_LINE'''
+	}
+	
+	protected def generateNoSpaceSegment(NoSpaceSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».NO_SPACE'''
+	}
+	
+	protected def generatePopSegment(PopSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».POP'''
+	}
+	
+	protected def generatePushSegment(PushSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».PUSH'''
+	}
+	
+	protected def generateSoftNewLineSegment(SoftNewLineSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».SOFT_NEW_LINE'''
+	}
+	
+	protected def generateSoftSpaceSegment(SoftSpaceSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».SOFT_SPACE'''
+	}
+	
+	protected def generateStringSegment(StringSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».createStringSegment(«segment.getString()»)'''
+	}
+	
+	protected def generateValueSegment(ValueSegment segment) {
+		'''«new TypeReference(IdiomsUtils)».VALUE'''
 	}
 	
 	protected def generateSerializationStep(RTSerializationStep serializationStep) {
@@ -135,32 +219,26 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateSerializationAssignStep(RTSerializationAssignStep serializationStep) {
-		'''
-		new «new TypeReference(RTSerializationAssignStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»)'''
+		'''new «new TypeReference(RTSerializationAssignStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»)'''
 	}
 	
 	protected def generateSerializationAssignedRuleCallStep(RTSerializationAssignedRuleCallStep serializationStep) {
-		'''
-		new «new TypeReference(RTSerializationAssignedRuleCallStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», "«serializationStep.getCalledRuleKey()»")'''
+		'''new «new TypeReference(RTSerializationAssignedRuleCallStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», "«serializationStep.getCalledRuleKey()»")'''
 	}
 	
 	protected def generateSerializationAssignedRuleCallsStep(RTSerializationAssignedRuleCallsStep serializationStep) {
-		'''
-		new «new TypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())» «FOR calledRuleKey : serializationStep.getCalledRuleKeys()», "«calledRuleKey»"«ENDFOR»)'''
+		'''new «new TypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())» «FOR calledRuleKey : serializationStep.getCalledRuleKeys()», "«calledRuleKey»"«ENDFOR»)'''
 	}
 	
 	protected def generateSerializationCrossReferenceStep(RTSerializationCrossReferenceStep serializationStep) {
-		'''
-		new «new TypeReference(RTSerializationCrossReferenceStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»)'''
+		'''new «new TypeReference(RTSerializationCrossReferenceStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»)'''
 	}
 	
 	protected def generateSerializationLiteralStep(RTSerializationLiteralStep serializationStep) {
-		'''
-		new «new TypeReference(RTSerializationLiteralStep)»(«serializationStep.getVariableIndex()», "«Strings.convertToJavaString(serializationStep.getString())»")'''
+		'''new «new TypeReference(RTSerializationLiteralStep)»(«serializationStep.getVariableIndex()», "«Strings.convertToJavaString(serializationStep.getString())»")'''
 	}
 	
 	protected def generateSerializationSequenceStep(RTSerializationSequenceStep serializationStep) {
-		'''
-		new «new TypeReference(RTSerializationSequenceStep)»(«serializationStep.getVariableIndex()», «serializationStep.getStartIndex()», «serializationStep.getEndIndex()»)'''
+		'''new «new TypeReference(RTSerializationSequenceStep)»(«serializationStep.getVariableIndex()», «serializationStep.getStartIndex()», «serializationStep.getEndIndex()»)'''
 	}
 }

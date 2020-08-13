@@ -47,6 +47,10 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 			}
 		}
 		URI uri = URI.createFileURI(url.getPath());
+		return getIdiomModel(uri);
+	}
+
+	public @NonNull IdiomModel getIdiomModel(@NonNull URI uri) {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		IdiomsPackage.eINSTANCE.getClass();
 	//	Resource resource = resourceSet.getResource(uri, true);

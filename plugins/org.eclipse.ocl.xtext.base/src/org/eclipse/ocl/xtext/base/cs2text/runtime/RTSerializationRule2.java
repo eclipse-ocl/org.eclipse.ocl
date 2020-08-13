@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
@@ -33,14 +34,20 @@ public class RTSerializationRule2 extends RTSerializationRule
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
 		@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
-		@Nullable SubIdiom @NonNull [] staticSubIdioms = subIdiomsList.toArray(new @Nullable SubIdiom[size]);
-		return new RTSerializationRule2(basicSerializationRule, serializationSteps, staticSubIdioms);
+	//	@Nullable SubIdiom @NonNull [] staticSubIdioms = subIdiomsList.toArray(new @Nullable SubIdiom[size]);
+		@Nullable Segment @NonNull [] @Nullable [] staticSegments = new @Nullable Segment [size] [];
+		for (int i = 0; i < size; i++) {
+			SubIdiom subIdiom = subIdiomsList.get(i);
+			List<Segment> segments = subIdiom != null ? subIdiom.getSegments() : null;
+			staticSegments[i] = segments != null ? segments.toArray(new @Nullable Segment [segments.size()]) : null;
+		}
+		return new RTSerializationRule2(basicSerializationRule, serializationSteps, staticSegments);
 	}
 
 	private final @NonNull BasicSerializationRule basicSerializationRule;
 
-	private RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable SubIdiom @NonNull [] staticSubIdioms) {
-		super(serializationSteps, staticSubIdioms);
+	private RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
+		super(serializationSteps, staticSegments);
 		this.basicSerializationRule = basicSerializationRule;
 	}
 

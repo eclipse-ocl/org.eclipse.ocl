@@ -32,6 +32,9 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
@@ -205,6 +208,35 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected @NonNull String getSerializationStepId(@NonNull RTSerializationStep step) {
 		assert serializationStep2id != null;
 		String id = serializationStep2id.get(step);
+		assert id != null;
+		return id;
+	}
+
+	private @Nullable Map<@NonNull List<Segment>, @NonNull String> segments2id = null;
+
+	protected @NonNull Iterable<@NonNull List<Segment>> getSortedSegments(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull List<Segment>, @NonNull String> segments2id2 = segments2id;
+		if (segments2id2 == null) {
+			segments2id = segments2id2 = new HashMap<>();
+		}
+		for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
+			List<SubIdiom> staticSubIdioms = idiom.getOwnedSubIdioms();
+			for(@NonNull SubIdiom subIdiom : staticSubIdioms) {
+				segments2id2.put(subIdiom.getSegments(), "");
+			}
+		}
+		List<@NonNull List<Segment>> segmentLists = new ArrayList<>(segments2id2.keySet());
+		Collections.sort(segmentLists, NameUtil.TO_STRING_COMPARATOR);
+		int i = 0;
+		for (@NonNull List<Segment> segmentList : segmentLists) {
+			segments2id2.put(segmentList, String.format("Segments%02d", i++));
+		}
+		return segmentLists;
+	}
+
+	protected @NonNull String getSegmentsId(@NonNull List<Segment> segments) {
+		assert segments2id != null;
+		String id = segments2id.get(segments);
 		assert id != null;
 		return id;
 	}

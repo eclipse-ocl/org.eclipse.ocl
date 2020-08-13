@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -38,6 +39,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -446,8 +448,10 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 				@Override
 				public Iterable<Idiom> getIdioms() {
 					if (idioms == null) {
-					//	IdiomModel idiomModel = getIdiomModel(getGrammar().getClass(), getGrammar().getName().replace(".", "/") + ".idioms");
-					//	idioms = getIdioms(idiomModel);
+						URI xtextURI = getGrammar().eResource().getURI();
+						URI idiomsURI = xtextURI.trimFileExtension().appendFileExtension("idioms");
+						IdiomModel idiomModel = getIdiomModel(idiomsURI);
+						idioms = getIdioms(idiomModel);
 					}
 					return idioms;
 				}

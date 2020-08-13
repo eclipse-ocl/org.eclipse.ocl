@@ -19,15 +19,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
  * <!-- begin-user-doc -->
@@ -306,22 +303,15 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 	}
 
 	@Override
-	public void serialize(RTSerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
-		for (Segment segment : segments) {
-			segment.serialize(serializationStep, serializer, serializationBuilder);
-		}
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("@");
 		s.append(locator != null ? locator.toString() : "«null»");
-		s.append("|");
+		s.append(" ! ");
 		boolean isFirst = true;
 		for (Segment segment : segments) {
 			if (!isFirst) {
-				s.append("+");
+				s.append(" + ");
 			}
 			s.append(segment.toString());
 			isFirst = false;

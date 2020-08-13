@@ -20,7 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -28,11 +28,11 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 public class RTSerializationRule implements SerializationRule
 {
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
-	private final @Nullable SubIdiom @NonNull [] staticSubIdioms;
+	private final @Nullable Segment @NonNull [] @NonNull [] staticSegments;
 
-	public RTSerializationRule(/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps, /*@Nullable*/ SubIdiom /*@NonNull*/ [] staticSubIdioms) {
+	public RTSerializationRule(/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps, /*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments) {
 		this.serializationSteps = serializationSteps;
-		this.staticSubIdioms = staticSubIdioms;
+		this.staticSegments = staticSegments;
 	}
 	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
@@ -42,20 +42,26 @@ public class RTSerializationRule implements SerializationRule
 		return serializationSteps;
 	}
 
-	public @Nullable SubIdiom @NonNull [] getStaticSubIdioms() {
-		return staticSubIdioms;
+//	public @Nullable SubIdiom @NonNull [] getStaticSubIdioms() {
+//		return staticSubIdioms;
+//	}
+
+	public @Nullable Segment @NonNull [] @NonNull [] getStaticSegments() {
+		return staticSegments;
 	}
 
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (int index = startIndex; index < endIndex; ) {
-			SubIdiom subIdiom = staticSubIdioms[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
+			Segment[] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
 			RTSerializationStep serializationStep = serializationSteps[index++];
 			CardinalityVariable cardinalityVariable = serializationStep.getCardinalityVariable();
 			int stepLoopCount = cardinalityVariable != null ? serializer.getValue(cardinalityVariable) : 1;
 			if (serializationStep instanceof RTSerializationSequenceStep) {
 				int stepsRange = ((RTSerializationSequenceStep)serializationStep).getStepsRange();
-				if (subIdiom != null) {
-					subIdiom.serialize(serializationStep, serializer, serializationBuilder);
+				if (segments != null) {
+					for (Segment segment : segments) {
+						segment.serialize(serializationStep, serializer, serializationBuilder);
+					}
 				}
 				else {
 					for (int i = 0; i < stepLoopCount; i++) {
@@ -66,8 +72,10 @@ public class RTSerializationRule implements SerializationRule
 			}
 			else {
 				for (int i = 0; i < stepLoopCount; i++) {
-					if (subIdiom != null) {
-						subIdiom.serialize(serializationStep, serializer, serializationBuilder);
+					if (segments != null) {
+						for (Segment segment : segments) {
+							segment.serialize(serializationStep, serializer, serializationBuilder);
+						}
 					}
 					else {
 						serializationStep.serialize(serializer, serializationBuilder);
@@ -94,13 +102,13 @@ public class RTSerializationRule implements SerializationRule
 	public void toString(@NonNull StringBuilder s, int depth) {
 		StringUtil.appendIndentation(s, depth);
 		s.append("Serialization Steps");
-		for (int i = 0; i < serializationSteps.length; i++) {
-			StringUtil.appendIndentation(s, depth+1);
-			SubIdiom subIdiom = staticSubIdioms[i];
-			s.append(subIdiom != null ? subIdiom.getName() : "null");
-			s.append(" == ");
-			serializationSteps[i].toString(s, depth+1);
-		}
+	//	for (int i = 0; i < serializationSteps.length; i++) {
+	//		StringUtil.appendIndentation(s, depth+1);
+		//	SubIdiom subIdiom = staticSegments[i];
+		//	s.append(subIdiom != null ? subIdiom.getName() : "null");
+		//	s.append(" == ");
+		//	serializationSteps[i].toString(s, depth+1);
+	//	}
 	}
 
 	@Override
