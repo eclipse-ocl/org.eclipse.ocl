@@ -23,17 +23,20 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 public class RTSerializationRule2 extends RTSerializationRule
 {
 	public static @NonNull RTSerializationRule2 create(@NonNull BasicSerializationRule basicSerializationRule, @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms) {
+		List<@NonNull CardinalitySolutionStep> solutionStepsList = basicSerializationRule.getStaticRuleMatch().getSteps();
+		@NonNull CardinalitySolutionStep @NonNull [] solutionSteps = solutionStepsList.toArray(new @NonNull CardinalitySolutionStep[solutionStepsList.size()]);
 		List<@NonNull RTSerializationStep> stepsList = new ArrayList<>();
 		List<@Nullable SubIdiom> subIdiomsList = new ArrayList<>();
 		basicSerializationRule.getRootSerializationNode().gatherRuntime(basicSerializationRule.getStaticRuleMatch(), stepsList, serializationNode2subIdioms, subIdiomsList);
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
-		@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
+			@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
 	//	@Nullable SubIdiom @NonNull [] staticSubIdioms = subIdiomsList.toArray(new @Nullable SubIdiom[size]);
 		@Nullable Segment @NonNull [] @Nullable [] staticSegments = new @Nullable Segment [size] [];
 		for (int i = 0; i < size; i++) {
@@ -41,13 +44,13 @@ public class RTSerializationRule2 extends RTSerializationRule
 			List<Segment> segments = subIdiom != null ? subIdiom.getSegments() : null;
 			staticSegments[i] = segments != null ? segments.toArray(new @Nullable Segment [segments.size()]) : null;
 		}
-		return new RTSerializationRule2(basicSerializationRule, serializationSteps, staticSegments);
+		return new RTSerializationRule2(basicSerializationRule, solutionSteps, serializationSteps, staticSegments);
 	}
 
 	private final @NonNull BasicSerializationRule basicSerializationRule;
 
-	private RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
-		super(serializationSteps, staticSegments);
+	private RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
+		super(solutionSteps, serializationSteps, staticSegments);
 		this.basicSerializationRule = basicSerializationRule;
 	}
 

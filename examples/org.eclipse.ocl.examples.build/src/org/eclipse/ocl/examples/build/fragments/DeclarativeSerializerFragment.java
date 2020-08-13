@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.build.fragments;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
@@ -167,6 +169,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return new TypeReference(AbstractAnalysisProvider.class);
 	}
 
+	/**
+	 * Return the formString that encodes a fixed width zero padded element of domain.
+	 */
+	protected @NonNull String getDigitsFormatString(@NonNull Collection<?> domain) {
+		int digits = domain.size() > 0 ? (int)Math.ceil(Math.log10(domain.size())) : 1;
+		return "%0" + digits + "d";
+	}
+
 	@Override
 	protected String getGrammarConstraintsPath(final Grammar grammar) {
 		throw new UnsupportedOperationException();
@@ -198,9 +208,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull RTSerializationStep> steps = new ArrayList<>(serializationStep2id2.keySet());
 		Collections.sort(steps, NameUtil.TO_STRING_COMPARATOR);
+		String formatString = "Step" + getDigitsFormatString(steps);
 		int i = 0;
 		for (@NonNull RTSerializationStep step : steps) {
-			serializationStep2id2.put(step, String.format("Step%04d", i++));
+			serializationStep2id2.put(step, String.format(formatString, i++));
 		}
 		return steps;
 	}
@@ -227,9 +238,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull List<Segment>> segmentLists = new ArrayList<>(segments2id2.keySet());
 		Collections.sort(segmentLists, NameUtil.TO_STRING_COMPARATOR);
+		String formatString = getDigitsFormatString(segmentLists);
 		int i = 0;
 		for (@NonNull List<Segment> segmentList : segmentLists) {
-			segments2id2.put(segmentList, String.format("Segments%02d", i++));
+			segments2id2.put(segmentList, String.format("Segments" + formatString, i++));
 		}
 		return segmentLists;
 	}
@@ -237,6 +249,37 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected @NonNull String getSegmentsId(@NonNull List<Segment> segments) {
 		assert segments2id != null;
 		String id = segments2id.get(segments);
+		assert id != null;
+		return id;
+	}
+
+	private @Nullable Map<@NonNull CardinalitySolutionStep, @NonNull String> solutionStep2id = null;
+
+	protected @NonNull Iterable<@NonNull CardinalitySolutionStep> getSortedSolutionSteps(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull CardinalitySolutionStep, @NonNull String> solutionStep2id2 = solutionStep2id;
+		if (solutionStep2id2 == null) {
+			solutionStep2id = solutionStep2id2 = new HashMap<>();
+		}
+		for (@NonNull EClass eClass : grammarAnalysis.getSortedProducedEClasses()) {
+			for(@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules()) {
+				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps()) {
+					solutionStep2id2.put(solutionStep, "");
+				}
+			}
+		}
+		List<@NonNull CardinalitySolutionStep> solutionSteps = new ArrayList<>(solutionStep2id2.keySet());
+		Collections.sort(solutionSteps, NameUtil.TO_STRING_COMPARATOR);
+		String formatString = getDigitsFormatString(solutionSteps);
+		int i = 0;
+		for (@NonNull CardinalitySolutionStep solutionStep : solutionSteps) {
+			solutionStep2id2.put(solutionStep, String.format("Solve" + formatString, i++));
+		}
+		return solutionSteps;
+	}
+
+	protected @NonNull String getSolutionStepId(@NonNull CardinalitySolutionStep solutionStep) {
+		assert solutionStep2id != null;
+		String id = solutionStep2id.get(solutionStep);
 		assert id != null;
 		return id;
 	}

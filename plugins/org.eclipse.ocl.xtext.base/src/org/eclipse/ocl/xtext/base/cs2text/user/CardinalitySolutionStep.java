@@ -40,6 +40,18 @@ public abstract class CardinalitySolutionStep
 		}
 
 		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+			if (!(obj instanceof Assert)) {
+				return false;
+			}
+			Assert that = (Assert)obj;
+			return this.cardinalitySolution.equals(that.cardinalitySolution);
+		}
+
+		@Override
 		public boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 			Integer newIntegerSolution = cardinalitySolution.basicGetIntegerSolution(dynamicRuleMatch);
 			if (newIntegerSolution == null) {
@@ -47,6 +59,11 @@ public abstract class CardinalitySolutionStep
 				return false;
 			}
 			return newIntegerSolution.equals(0);
+		}
+
+		@Override
+		public int hashCode() {
+			return getClass().hashCode() + 5 * cardinalitySolution.hashCode();
 		}
 
 		@Override
@@ -71,6 +88,19 @@ public abstract class CardinalitySolutionStep
 		}
 
 		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+			if (!(obj instanceof Assign)) {
+				return false;
+			}
+			Assign that = (Assign)obj;
+			return this.cardinalitySolution.equals(that.cardinalitySolution)
+				&& (this.cardinalityVariable.getIndex() == that.cardinalityVariable.getIndex());
+		}
+
+		@Override
 		public boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 			Integer newIntegerSolution = cardinalitySolution.basicGetIntegerSolution(dynamicRuleMatch);
 			if (newIntegerSolution == null) {
@@ -80,6 +110,11 @@ public abstract class CardinalitySolutionStep
 			assert cardinalityVariable != null;
 			dynamicRuleMatch.putValue(cardinalityVariable, newIntegerSolution);
 			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariable.getIndex();
 		}
 
 		@Override
@@ -115,6 +150,19 @@ public abstract class CardinalitySolutionStep
 		}
 
 		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+			if (!(obj instanceof RuleCheck)) {
+				return false;
+			}
+			RuleCheck that = (RuleCheck)obj;
+			return (this.eReference == that.eReference)
+				&& this.ruleAnalyses.equals(that.ruleAnalyses);
+		}
+
+		@Override
 		public boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 			UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
 			EObject eObject = slotsAnalysis.getEObject();
@@ -139,6 +187,15 @@ public abstract class CardinalitySolutionStep
 			}
 			else {}				// Null is never actually serialized, */
 			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = getClass().hashCode() + 5 * eReference.hashCode();
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
+				hashCode += 7 * ruleAnalysis.hashCode();
+			}
+			return hashCode;
 		}
 
 		protected boolean isInstance(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull EObject slotContent) {
@@ -265,6 +322,19 @@ public abstract class CardinalitySolutionStep
 		}
 
 		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+			if (!(obj instanceof ValueCheck)) {
+				return false;
+			}
+			ValueCheck that = (ValueCheck)obj;
+			return this.cardinalitySolution.equals(that.cardinalitySolution)
+				&& (this.cardinalityVariable.getIndex() == that.cardinalityVariable.getIndex());
+		}
+
+		@Override
 		public boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 			Integer newIntegerSolution = cardinalitySolution.basicGetIntegerSolution(dynamicRuleMatch);
 			if (newIntegerSolution == null) {
@@ -273,6 +343,11 @@ public abstract class CardinalitySolutionStep
 			}
 			Integer integer = dynamicRuleMatch.getValue(cardinalityVariable);
 			return newIntegerSolution.equals(integer);
+		}
+
+		@Override
+		public int hashCode() {
+			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariable.getIndex();
 		}
 
 		@Override

@@ -668,7 +668,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return null;
 	}
 
-	public @NonNull Iterable<@NonNull CardinalitySolutionStep> getSteps() {
+	public @NonNull List<@NonNull CardinalitySolutionStep> getSteps() {
 		return steps;
 	}
 

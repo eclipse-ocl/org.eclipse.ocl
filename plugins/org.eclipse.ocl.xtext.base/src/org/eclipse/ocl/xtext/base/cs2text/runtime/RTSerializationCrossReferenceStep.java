@@ -30,7 +30,7 @@ public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFe
 		this.crossReference = crossReference;
 	}
 
-	public RTSerializationCrossReferenceStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature) {
+	public RTSerializationCrossReferenceStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
 		super(variableIndex, eStructuralFeature);
 		this.crossReference = (CrossReference)eStructuralFeature;			// XXX
 	}

@@ -24,7 +24,7 @@ public class RTSerializationAssignStep extends RTSerializationAbstractFeatureSte
 		super(variable, eStructuralFeature);
 	}
 
-	public RTSerializationAssignStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature) {
+	public RTSerializationAssignStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
 		super(variableIndex, eStructuralFeature);
 	}
 

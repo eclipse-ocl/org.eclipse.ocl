@@ -22,6 +22,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
@@ -30,7 +31,10 @@ public class RTSerializationRule implements SerializationRule
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @Nullable Segment @NonNull [] @NonNull [] staticSegments;
 
-	public RTSerializationRule(/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps, /*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments) {
+	public RTSerializationRule(
+			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
+			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
+			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments) {
 		this.serializationSteps = serializationSteps;
 		this.staticSegments = staticSegments;
 	}
