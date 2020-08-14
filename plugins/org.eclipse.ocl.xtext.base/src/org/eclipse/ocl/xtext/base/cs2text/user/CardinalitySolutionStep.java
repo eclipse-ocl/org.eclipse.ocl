@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -62,6 +63,15 @@ public abstract class CardinalitySolutionStep
 		}
 
 		@Override
+		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
+			cardinalitySolution.gatherSolutions(solution2id);
+		}
+
+		public @NonNull CardinalitySolution getCardinalitySolution() {
+			return cardinalitySolution;
+		}
+
+		@Override
 		public int hashCode() {
 			return getClass().hashCode() + 5 * cardinalitySolution.hashCode();
 		}
@@ -79,11 +89,11 @@ public abstract class CardinalitySolutionStep
 	 */
 	public static class Assign extends CardinalitySolutionStep
 	{
-		protected final @NonNull CardinalityVariable cardinalityVariable;
+		protected final int cardinalityVariableIndex;
 		protected final @NonNull CardinalitySolution cardinalitySolution;
 
-		public Assign(@NonNull CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
-			this.cardinalityVariable = cardinalityVariable;
+		public Assign(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
+			this.cardinalityVariableIndex = cardinalityVariableIndex;
 			this.cardinalitySolution = cardinalitySolution;
 		}
 
@@ -97,7 +107,7 @@ public abstract class CardinalitySolutionStep
 			}
 			Assign that = (Assign)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution)
-				&& (this.cardinalityVariable.getIndex() == that.cardinalityVariable.getIndex());
+				&& (this.cardinalityVariableIndex == that.cardinalityVariableIndex);
 		}
 
 		@Override
@@ -107,25 +117,38 @@ public abstract class CardinalitySolutionStep
 				// throw new UnsupportedOperationException();
 				return false;
 			}
-			assert cardinalityVariable != null;
-			dynamicRuleMatch.putValue(cardinalityVariable, newIntegerSolution);
+			assert cardinalityVariableIndex >= 0;
+			dynamicRuleMatch.putValue(cardinalityVariableIndex, newIntegerSolution);
 			return true;
 		}
 
 		@Override
+		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
+			cardinalitySolution.gatherSolutions(solution2id);
+		}
+
+		public @NonNull CardinalitySolution getCardinalitySolution() {
+			return cardinalitySolution;
+		}
+
+		public int getVariableIndex() {
+			return cardinalityVariableIndex;
+		}
+
+		@Override
 		public int hashCode() {
-			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariable.getIndex();
+			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariableIndex;
 		}
 
 		@Override
 		public boolean isAssignTo(@NonNull CardinalityVariable cardinalityVariable) {
-			return this.cardinalityVariable == cardinalityVariable;
+			return this.cardinalityVariableIndex == cardinalityVariable.getIndex();
 		}
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
-			s.append("assign ");
-			s.append(cardinalityVariable);
+			s.append("assign V");
+			s.append(cardinalityVariableIndex);
 			s.append(" = ");
 			s.append(cardinalitySolution);
 		}
@@ -187,6 +210,18 @@ public abstract class CardinalitySolutionStep
 			}
 			else {}				// Null is never actually serialized, */
 			return true;
+		}
+
+		@Override
+		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
+		}
+
+		public @NonNull EReference getEReference() {
+			return eReference;
+		}
+
+		public @NonNull Iterable<@NonNull ParserRuleAnalysis> getRuleAnalyses() {
+			return ruleAnalyses;
 		}
 
 		@Override
@@ -313,11 +348,11 @@ public abstract class CardinalitySolutionStep
 	 */
 	public static class ValueCheck extends CardinalitySolutionStep
 	{
-		protected final @NonNull CardinalityVariable cardinalityVariable;
+		protected final int cardinalityVariableIndex;
 		protected final @NonNull CardinalitySolution cardinalitySolution;
 
-		public ValueCheck(@NonNull CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
-			this.cardinalityVariable = cardinalityVariable;
+		public ValueCheck(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
+			this.cardinalityVariableIndex = cardinalityVariableIndex;
 			this.cardinalitySolution = cardinalitySolution;
 		}
 
@@ -331,7 +366,7 @@ public abstract class CardinalitySolutionStep
 			}
 			ValueCheck that = (ValueCheck)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution)
-				&& (this.cardinalityVariable.getIndex() == that.cardinalityVariable.getIndex());
+				&& (this.cardinalityVariableIndex == that.cardinalityVariableIndex);
 		}
 
 		@Override
@@ -341,19 +376,32 @@ public abstract class CardinalitySolutionStep
 				// throw new UnsupportedOperationException();
 				return false;
 			}
-			Integer integer = dynamicRuleMatch.getValue(cardinalityVariable);
+			Integer integer = dynamicRuleMatch.getValue(cardinalityVariableIndex);
 			return newIntegerSolution.equals(integer);
 		}
 
 		@Override
+		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
+			cardinalitySolution.gatherSolutions(solution2id);
+		}
+
+		public @NonNull CardinalitySolution getCardinalitySolution() {
+			return cardinalitySolution;
+		}
+
+		public int getVariableIndex() {
+			return cardinalityVariableIndex;
+		}
+
+		@Override
 		public int hashCode() {
-			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariable.getIndex();
+			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariableIndex;
 		}
 
 		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
-			s.append("check-value ");
-			s.append(cardinalityVariable);
+			s.append("check-value V");
+			s.append(cardinalityVariableIndex);
 			s.append(" = ");
 			s.append(cardinalitySolution);
 		}
@@ -365,6 +413,11 @@ public abstract class CardinalitySolutionStep
 	 * Returns true if the executi  is successful, false if the dynamicRuleMatch is to fail.
 	 */
 	public abstract boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch);
+
+	/**
+	 * Traverse the solution tree adding a blank entry for each colution term to solution2id.
+	 */
+	public abstract void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id);
 
 	/**
 	 * Return true if this is an assignment step to cardinalityVariable.

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -22,6 +24,11 @@ public abstract class AbstractCardinalitySolution implements CardinalitySolution
 
 	@Override
 	public abstract boolean equals(Object obj);
+
+	@Override
+	public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
+		solution2id.put(this, "");
+	}
 
 	@Override
 	public abstract int hashCode();

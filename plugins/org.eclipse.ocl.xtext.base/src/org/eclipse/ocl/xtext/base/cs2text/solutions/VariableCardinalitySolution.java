@@ -20,9 +20,11 @@ import org.eclipse.jdt.annotation.Nullable;
 public class VariableCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull CardinalityVariable cardinalityVariable;
+	protected final int cardinalityVariableIndex;
 
 	public VariableCardinalitySolution(@NonNull CardinalityVariable cardinalityVariable) {
 		this.cardinalityVariable = cardinalityVariable;
+		this.cardinalityVariableIndex = cardinalityVariable.getIndex();
 	}
 
 	@Override
@@ -43,9 +45,13 @@ public class VariableCardinalitySolution extends AbstractCardinalitySolution
 		return true;
 	}
 
+	public int getVariableIndex() {
+		return cardinalityVariableIndex;
+	}
+
 	@Override
 	public int hashCode() {
-		return getClass().hashCode() + cardinalityVariable.hashCode();
+		return getClass().hashCode() + cardinalityVariableIndex;
 	}
 
 	@Override

@@ -45,6 +45,17 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.AddCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.DivideCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.MultiplyCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceSizeCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -71,6 +82,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			
 			private static class _Solutions
 			{
+				«FOR solution : getSortedSolutions(grammarAnalysis)»
+				private static final /* @@NonNull*/ «new TypeReference(CardinalitySolution)» «getSolutionId(solution)» // «solution.toString()»
+					= «generateSolution(solution)»;
+				«ENDFOR»
+
 				«FOR step : getSortedSolutionSteps(grammarAnalysis)»
 				private static final /* @@NonNull*/ «new TypeReference(CardinalitySolutionStep)» «getSolutionStepId(step)» // «step.toString()»
 					= «generateSolutionStep(step)»;
@@ -262,6 +278,64 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	/* ************************************************************************************************************************** */
 	
+	protected def generateSolution(CardinalitySolution solution) {
+		switch solution {
+		AddCardinalitySolution: return generateSolution_AddCardinalitySolution(solution)
+		DivideCardinalitySolution: return generateSolution_DivideCardinalitySolution(solution)
+		EAttributeSizeCardinalitySolution: return generateSolution_EAttributeSizeCardinalitySolution(solution)
+		EReferenceSizeCardinalitySolution: return generateSolution_EReferenceSizeCardinalitySolution(solution)
+		EStructuralFeatureSizeCardinalitySolution: return generateSolution_EStructuralFeatureSizeCardinalitySolution(solution)
+		GreaterThanCardinalitySolution: return generateSolution_GreaterThanCardinalitySolution(solution)
+		IntegerCardinalitySolution: return generateSolution_IntegerSolution(solution)
+		MultiplyCardinalitySolution: return generateSolution_MultiplyCardinalitySolution(solution)
+		SubtractCardinalitySolution: return generateSolution_SubtractCardinalitySolution(solution)
+		VariableCardinalitySolution: return generateSolution_VariableCardinalitySolution(solution)
+		default: throw new UnsupportedOperationException()
+		}
+	}
+	
+	protected def generateSolution_AddCardinalitySolution(AddCardinalitySolution solution) {
+		'''new «new TypeReference(AddCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+	}
+	
+	protected def generateSolution_DivideCardinalitySolution(DivideCardinalitySolution solution) {
+		'''new «new TypeReference(DivideCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+	}
+	
+	protected def generateSolution_EAttributeSizeCardinalitySolution(EAttributeSizeCardinalitySolution solution) {
+		'''new «new TypeReference(EAttributeSizeCardinalitySolution)»(«emitLiteral(solution.getEAttribute())», «solution.getEnumerationValue()»)'''
+	}
+	
+	protected def generateSolution_EReferenceSizeCardinalitySolution(EReferenceSizeCardinalitySolution solution) {
+		'''new «new TypeReference(EReferenceSizeCardinalitySolution)»(«emitLiteral(solution.getEReference())», «solution.getRuleAnalysis()»)'''
+	}
+	
+	protected def generateSolution_EStructuralFeatureSizeCardinalitySolution(EStructuralFeatureSizeCardinalitySolution solution) {
+		'''new «new TypeReference(EStructuralFeatureSizeCardinalitySolution)»(«emitLiteral(solution.getEStructuralFeature())»)'''
+	}
+	
+	protected def generateSolution_GreaterThanCardinalitySolution(GreaterThanCardinalitySolution solution) {
+		'''new «new TypeReference(GreaterThanCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+	}
+	
+	protected def generateSolution_IntegerSolution(IntegerCardinalitySolution solution) {
+		'''new «new TypeReference(IntegerCardinalitySolution)»(«solution.getValue()»)'''
+	}
+	
+	protected def generateSolution_MultiplyCardinalitySolution(MultiplyCardinalitySolution solution) {
+		'''new «new TypeReference(MultiplyCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+	}
+	
+	protected def generateSolution_SubtractCardinalitySolution(SubtractCardinalitySolution solution) {
+		'''new «new TypeReference(SubtractCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+	}
+	
+	protected def generateSolution_VariableCardinalitySolution(VariableCardinalitySolution solution) {
+		'''new «new TypeReference(VariableCardinalitySolution)»(«solution.getVariableIndex()»)'''
+	}
+	
+	/* ************************************************************************************************************************** */
+	
 	protected def generateSolutionStep(CardinalitySolutionStep solutionStep) {
 		switch solutionStep {
 		CardinalitySolutionStep.Assert: return generateSolutionStep_Assert(solutionStep)
@@ -272,19 +346,19 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		}
 	}
 	
-	protected def generateSolutionStep_Assert(CardinalitySolutionStep solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.Assert)»(null)'''
+	protected def generateSolutionStep_Assert(CardinalitySolutionStep.Assert solutionStep) {
+		'''new «new TypeReference(CardinalitySolutionStep.Assert)»(«getSolutionId(solutionStep.getCardinalitySolution())»)'''
 	}
 	
-	protected def generateSolutionStep_Assign(CardinalitySolutionStep solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.Assign)»(null)'''
+	protected def generateSolutionStep_Assign(CardinalitySolutionStep.Assign solutionStep) {
+		'''new «new TypeReference(CardinalitySolutionStep.Assign)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution())»)'''
 	}
 	
-	protected def generateSolutionStep_RuleCheck(CardinalitySolutionStep solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(null)'''
+	protected def generateSolutionStep_RuleCheck(CardinalitySolutionStep.RuleCheck solutionStep) {
+		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», «solutionStep.getRuleAnalyses()»)'''
 	}
 	
-	protected def generateSolutionStep_ValueCheck(CardinalitySolutionStep solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.ValueCheck)»(null)'''
+	protected def generateSolutionStep_ValueCheck(CardinalitySolutionStep.ValueCheck solutionStep) {
+		'''new «new TypeReference(CardinalitySolutionStep.ValueCheck)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution())»)'''
 	}
 }

@@ -44,6 +44,10 @@ public class EStructuralFeatureSizeCardinalitySolution extends AbstractCardinali
 		return true;
 	}
 
+	public @NonNull EStructuralFeature getEStructuralFeature() {
+		return eStructuralFeature;
+	}
+
 	@Override
 	public int hashCode() {
 		return getClass().hashCode() + eStructuralFeature.hashCode();

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -25,6 +27,11 @@ public interface CardinalitySolution
 	 * Returns null if evaluation fails.
 	 */
 	@Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch);
+
+	/**
+	 * Traverse the solution tree adding a blank entry for each colution term to solution2id.
+	 */
+	void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id);
 
 	/**
 	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.

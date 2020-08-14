@@ -48,6 +48,14 @@ public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySoluti
 		return true;
 	}
 
+	public @NonNull EAttribute getEAttribute() {
+		return eAttribute;
+	}
+
+	public @NonNull EnumerationValue getEnumerationValue() {
+		return enumerationValue;
+	}
+
 	@Override
 	public int hashCode() {
 		return getClass().hashCode() + eAttribute.hashCode() + enumerationValue.hashCode() * 7;

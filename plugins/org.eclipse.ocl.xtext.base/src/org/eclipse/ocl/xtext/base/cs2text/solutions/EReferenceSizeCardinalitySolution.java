@@ -48,6 +48,14 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 		return true;
 	}
 
+	public @NonNull EReference getEReference() {
+		return eReference;
+	}
+
+	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
+		return ruleAnalysis;
+	}
+
 	@Override
 	public int hashCode() {
 		return getClass().hashCode() + eReference.hashCode() + ruleAnalysis.hashCode() * 7;

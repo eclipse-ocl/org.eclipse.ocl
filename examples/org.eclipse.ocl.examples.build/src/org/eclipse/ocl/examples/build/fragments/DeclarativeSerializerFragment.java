@@ -37,6 +37,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
@@ -280,6 +281,37 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected @NonNull String getSolutionStepId(@NonNull CardinalitySolutionStep solutionStep) {
 		assert solutionStep2id != null;
 		String id = solutionStep2id.get(solutionStep);
+		assert id != null;
+		return id;
+	}
+
+	private @Nullable Map<@NonNull CardinalitySolution, @NonNull String> solution2id = null;
+
+	protected @NonNull Iterable<@NonNull CardinalitySolution> getSortedSolutions(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull CardinalitySolution, @NonNull String> solution2id2 = solution2id;
+		if (solution2id2 == null) {
+			solution2id = solution2id2 = new HashMap<>();
+		}
+		for (@NonNull EClass eClass : grammarAnalysis.getSortedProducedEClasses()) {
+			for(@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules()) {
+				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps()) {
+					solutionStep.gatherSolutions(solution2id2);
+				}
+			}
+		}
+		List<@NonNull CardinalitySolution> solutions = new ArrayList<>(solution2id2.keySet());
+		Collections.sort(solutions, NameUtil.TO_STRING_COMPARATOR);
+		String formatString = getDigitsFormatString(solutions);
+		int i = 0;
+		for (@NonNull CardinalitySolution solution : solutions) {
+			solution2id2.put(solution, String.format("Solution" + formatString, i++));
+		}
+		return solutions;
+	}
+
+	protected @NonNull String getSolutionId(@NonNull CardinalitySolution solutionStep) {
+		assert solution2id != null;
+		String id = solution2id.get(solutionStep);
 		assert id != null;
 		return id;
 	}

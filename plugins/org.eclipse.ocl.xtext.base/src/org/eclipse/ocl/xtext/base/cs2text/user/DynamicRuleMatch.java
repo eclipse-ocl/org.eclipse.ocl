@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -40,7 +39,7 @@ public class DynamicRuleMatch implements RuleMatch
 {
 	protected final @NonNull StaticRuleMatch staticRuleMatch;
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
-	protected final @NonNull Map<@NonNull CardinalityVariable, @NonNull Integer> variable2value = new HashMap<>();
+	protected final @NonNull Map<@NonNull Integer, @NonNull Integer> variableIndex2value = new HashMap<>();
 	private boolean checked = false;
 
 	public DynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch, @NonNull UserSlotsAnalysis slotsAnalysis) {
@@ -63,7 +62,7 @@ public class DynamicRuleMatch implements RuleMatch
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		return variable2value.get(cardinalityVariable);
+		return variableIndex2value.get(cardinalityVariable.getIndex());
 	}
 
 	@Override
@@ -72,7 +71,7 @@ public class DynamicRuleMatch implements RuleMatch
 	}
 
 	public @NonNull Integer getIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		return ClassUtil.nonNullState(variable2value.get(cardinalityVariable));
+		return ClassUtil.nonNullState(variableIndex2value.get(cardinalityVariable.getIndex()));
 	}
 
 	@Override
@@ -104,7 +103,11 @@ public class DynamicRuleMatch implements RuleMatch
 	}
 
 	public @NonNull Integer getValue(@Nullable CardinalityVariable cardinalityVariable) {
-		return ClassUtil.nonNullState(variable2value.get(cardinalityVariable));
+		return ClassUtil.nonNullState(cardinalityVariable != null ? variableIndex2value.get(cardinalityVariable.getIndex()): null);
+	}
+
+	public @NonNull Integer getValue(int cardinalityVariableIndex) {
+		return ClassUtil.nonNullState(cardinalityVariableIndex >= 0 ? variableIndex2value.get(cardinalityVariableIndex): null);
 	}
 
 	public boolean isChecked() {
@@ -112,7 +115,10 @@ public class DynamicRuleMatch implements RuleMatch
 	}
 
 	public void putValue(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer integerSolution) {
-		variable2value.put(cardinalityVariable, integerSolution);
+		variableIndex2value.put(cardinalityVariable.getIndex(), integerSolution);
+	}
+	public void putValue(@NonNull Integer cardinalityVariableIndex, @NonNull Integer integerSolution) {
+		variableIndex2value.put(cardinalityVariableIndex, integerSolution);
 	}
 
 	public void setChecked() {
@@ -128,12 +134,13 @@ public class DynamicRuleMatch implements RuleMatch
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		slotsAnalysis.toString(s, depth);
-		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2value.keySet());
-		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull CardinalityVariable variable : variables) {
-			Integer value = variable2value.get(variable);
+		List<@NonNull Integer> variableIndexes = new ArrayList<>(variableIndex2value.keySet());
+		Collections.sort(variableIndexes);
+		for (@NonNull Integer variableIndex : variableIndexes) {
+			Integer value = variableIndex2value.get(variableIndex);
 			StringUtil.appendIndentation(s, depth);
-			s.append(variable.getName());
+			s.append("V");
+			s.append(variableIndex);
 			s.append(" = ");
 			s.append(value);
 		}

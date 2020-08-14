@@ -123,11 +123,11 @@ public class StaticRuleMatch implements RuleMatch
 				}
 			}
 			if (isAssigned) {
-				newStep = new CardinalitySolutionStep.Assign(cardinalityVariable, cardinalitySolution);
+				newStep = new CardinalitySolutionStep.Assign(cardinalityVariable.getIndex(), cardinalitySolution);
 				variable2solution.put(cardinalityVariable, cardinalitySolution);
 			}
 			else {
-				newStep = new CardinalitySolutionStep.ValueCheck(cardinalityVariable, cardinalitySolution);
+				newStep = new CardinalitySolutionStep.ValueCheck(cardinalityVariable.getIndex(), cardinalitySolution);
 			}
 		}
 		else {

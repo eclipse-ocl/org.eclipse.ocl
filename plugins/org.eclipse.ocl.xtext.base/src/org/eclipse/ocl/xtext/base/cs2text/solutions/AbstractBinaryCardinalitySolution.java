@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class AbstractBinaryCardinalitySolution extends AbstractCardinalitySolution
@@ -20,6 +22,21 @@ public abstract class AbstractBinaryCardinalitySolution extends AbstractCardinal
 	public AbstractBinaryCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
 		this.left = left;
 		this.right = right;
+	}
+
+	@Override
+	public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
+		super.gatherSolutions(solution2id);
+		left.gatherSolutions(solution2id);
+		right.gatherSolutions(solution2id);
+	}
+
+	public @NonNull CardinalitySolution getLeft() {
+		return left;
+	}
+
+	public @NonNull CardinalitySolution getRight() {
+		return right;
 	}
 
 	@Override

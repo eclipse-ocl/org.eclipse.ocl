@@ -15,6 +15,7 @@ package org.eclipse.ocl.xtext.oclinecore.serializer;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 
@@ -102,664 +103,1143 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 
 	private static class _Solutions
 	{
+		private static final /* @@NonNull*/ CardinalitySolution Solution000 // (|exprString| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution106, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution001 // (|isInterface.'interface'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution111, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution002 // (|isSerializable.'serializable'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution115, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution003 // (|isSerializable.'serializable'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution116, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution004 // (|lowerBound| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution118, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution005 // (|name.'Map'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution119, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution006 // (|name.'Tuple'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution120, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution007 // (|name| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution123, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution008 // (|name| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution121, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution009 // (|name| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution122, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution010 // (|ownedActualParameter| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution126, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution011 // (|ownedAnnotations| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution127, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution012 // (|ownedArguments| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution128, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution013 // (|ownedArguments| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution128, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution014 // (|ownedBinding| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution129, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution015 // (|ownedBodyExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution130, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution016 // (|ownedCoIterator| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution132, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution017 // (|ownedCondition| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution134, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution018 // (|ownedCondition| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution135, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution019 // (|ownedDefaultExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution140, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution020 // (|ownedDetails| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution141, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution021 // (|ownedDetails| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution141, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution022 // (|ownedElseExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution142, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution023 // (|ownedExceptions| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution143, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution024 // (|ownedExceptions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution143, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution025 // (|ownedExpressionCS| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution144, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution026 // (|ownedExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution147, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution027 // (|ownedExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution146, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution028 // (|ownedExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution145, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution029 // (|ownedExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution148, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution030 // (|ownedExtends| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution149, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution031 // (|ownedExtends| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution149, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution032 // (|ownedInExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution154, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution033 // (|ownedInitExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution156, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution034 // (|ownedInitExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution155, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution035 // (|ownedInitExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution157, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution036 // (|ownedKeyType| - C00)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution158, Solution100);
+		private static final /* @@NonNull*/ CardinalitySolution Solution037 // (|ownedKeyType| - C00)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution158, Solution101);
+		private static final /* @@NonNull*/ CardinalitySolution Solution038 // (|ownedKeyType| - C00)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution158, Solution102);
+		private static final /* @@NonNull*/ CardinalitySolution Solution039 // (|ownedKeyType| - C00)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution158, Solution103);
+		private static final /* @@NonNull*/ CardinalitySolution Solution040 // (|ownedKeyType| - C00)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution158, Solution104);
+		private static final /* @@NonNull*/ CardinalitySolution Solution041 // (|ownedKey| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution159, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution042 // (|ownedLeft| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution161, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution043 // (|ownedNameExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution166, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution044 // (|ownedParameters| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution169, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution045 // (|ownedParameters| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution170, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution046 // (|ownedParameters| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution170, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution047 // (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution173, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution048 // (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution171, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution049 // (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution174, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution050 // (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution175, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution051 // (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution172, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution052 // (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution176, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution053 // (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution172, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution054 // (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution176, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution055 // (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution174, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution056 // (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution171, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution057 // (|ownedPathElements| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution177, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution058 // (|ownedPathName| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution180, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution059 // (|ownedPathName| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution182, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution060 // (|ownedPathName| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution178, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution061 // (|ownedPathName| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution179, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution062 // (|ownedPathName| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution181, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution063 // (|ownedPatternType| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution184, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution064 // (|ownedRight| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution189, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution065 // (|ownedSubstitutions| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution195, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution066 // (|ownedSuperTypes| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution196, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution067 // (|ownedSuperTypes| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution196, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution068 // (|ownedTerms| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution197, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution069 // (|ownedThenExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution199, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution070 // (|ownedThenExpression| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution198, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution071 // (|ownedType| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution204, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution072 // (|ownedType| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution202, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution073 // (|ownedType| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution201, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution074 // (|ownedType| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution203, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution075 // (|ownedType| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution200, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution076 // (|ownedType| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution205, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution077 // (|ownedValue| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution209, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution078 // (|ownedVariables| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution210, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution079 // (|prefix.','| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution212, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution080 // (|prefix.';'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution213, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution081 // (|prefix.'|'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution214, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution082 // (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution215, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution083 // (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution216, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution084 // (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution217, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution085 // (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution218, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution086 // (|qualifiers.'definition'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution219, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution087 // (|qualifiers.'static'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution220, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution088 // (|referredElement| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution221, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution089 // (|referredKeys| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution222, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution090 // (|referredKeys| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(Solution222, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolution Solution091 // (|referredProperty| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution224, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution092 // (|stereotype.'invariant'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution227, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution093 // (|stereotype.'postcondition'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution228, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution094 // (|stereotype.'precondition'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution229, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution095 // (|stringBounds.'*|+|?'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution230, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution096 // (|symbol.'false|true'| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution231, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution097 // (|symbol| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(Solution232, Solution099);
+		private static final /* @@NonNull*/ CardinalitySolution Solution098 // 0
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution(0);
+		private static final /* @@NonNull*/ CardinalitySolution Solution099 // 1
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution(1);
+		private static final /* @@NonNull*/ CardinalitySolution Solution100 // C00
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution(0);
+		private static final /* @@NonNull*/ CardinalitySolution Solution101 // C00
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution(0);
+		private static final /* @@NonNull*/ CardinalitySolution Solution102 // C00
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution(0);
+		private static final /* @@NonNull*/ CardinalitySolution Solution103 // C00
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution(0);
+		private static final /* @@NonNull*/ CardinalitySolution Solution104 // C00
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution(0);
+		private static final /* @@NonNull*/ CardinalitySolution Solution105 // |default|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT);
+		private static final /* @@NonNull*/ CardinalitySolution Solution106 // |exprString|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING);
+		private static final /* @@NonNull*/ CardinalitySolution Solution107 // |instanceClassName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution108 // |isAbstract.'abstract'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, 'abstract');
+		private static final /* @@NonNull*/ CardinalitySolution Solution109 // |isAll.'::*'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPORT_CS__IS_ALL, '::*');
+		private static final /* @@NonNull*/ CardinalitySolution Solution110 // |isCallable.'callable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage.Literals.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE, 'callable');
+		private static final /* @@NonNull*/ CardinalitySolution Solution111 // |isInterface.'interface'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE, 'interface');
+		private static final /* @@NonNull*/ CardinalitySolution Solution112 // |isNullFree.'|1'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, '|1');
+		private static final /* @@NonNull*/ CardinalitySolution Solution113 // |isPre.'@'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, '@');
+		private static final /* @@NonNull*/ CardinalitySolution Solution114 // |isPrimitive.'primitive'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, 'primitive');
+		private static final /* @@NonNull*/ CardinalitySolution Solution115 // |isSerializable.'serializable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, 'serializable');
+		private static final /* @@NonNull*/ CardinalitySolution Solution116 // |isSerializable.'serializable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, 'serializable');
+		private static final /* @@NonNull*/ CardinalitySolution Solution117 // |literal|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL);
+		private static final /* @@NonNull*/ CardinalitySolution Solution118 // |lowerBound|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
+		private static final /* @@NonNull*/ CardinalitySolution Solution119 // |name.'Map'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, 'Map');
+		private static final /* @@NonNull*/ CardinalitySolution Solution120 // |name.'Tuple'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, 'Tuple');
+		private static final /* @@NonNull*/ CardinalitySolution Solution121 // |name|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution122 // |name|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution123 // |name|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution124 // |nsPrefix|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX);
+		private static final /* @@NonNull*/ CardinalitySolution Solution125 // |nsURI|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PACKAGE_CS__NS_URI);
+		private static final /* @@NonNull*/ CardinalitySolution Solution126 // |ownedActualParameter|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
+		private static final /* @@NonNull*/ CardinalitySolution Solution127 // |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution128 // |ownedArguments|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution129 // |ownedBinding|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
+		private static final /* @@NonNull*/ CardinalitySolution Solution130 // |ownedBodyExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution131 // |ownedClasses|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution132 // |ownedCoIterator|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR);
+		private static final /* @@NonNull*/ CardinalitySolution Solution133 // |ownedCollectionMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY);
+		private static final /* @@NonNull*/ CardinalitySolution Solution134 // |ownedCondition|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution135 // |ownedCondition|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution136 // |ownedConstraints|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution137 // |ownedContents|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution138 // |ownedCurlyBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution139 // |ownedCurlyBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution140 // |ownedDefaultExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution141 // |ownedDetails|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution142 // |ownedElseExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution143 // |ownedExceptions|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution144 // |ownedExpressionCS|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution145 // |ownedExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution146 // |ownedExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution147 // |ownedExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution148 // |ownedExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution149 // |ownedExtends|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution150 // |ownedExtends|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution151 // |ownedIfThenExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution152 // |ownedImplicitOpposites|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution153 // |ownedImports|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution154 // |ownedInExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution155 // |ownedInitExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution156 // |ownedInitExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution157 // |ownedInitExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution158 // |ownedKeyType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution159 // |ownedKey|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY);
+		private static final /* @@NonNull*/ CardinalitySolution Solution160 // |ownedLastExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution161 // |ownedLeft|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT);
+		private static final /* @@NonNull*/ CardinalitySolution Solution162 // |ownedLiterals|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution163 // |ownedMessageSpecification|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution164 // |ownedMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		private static final /* @@NonNull*/ CardinalitySolution Solution165 // |ownedMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
+		private static final /* @@NonNull*/ CardinalitySolution Solution166 // |ownedNameExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution167 // |ownedOperations|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution168 // |ownedPackages|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution169 // |ownedParameters|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution170 // |ownedParameters|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution171 // |ownedParts|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution172 // |ownedParts|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution173 // |ownedParts|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution174 // |ownedParts|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution175 // |ownedParts|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution176 // |ownedParts|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution177 // |ownedPathElements|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution178 // |ownedPathName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution179 // |ownedPathName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution180 // |ownedPathName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution181 // |ownedPathName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution182 // |ownedPathName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution183 // |ownedPatternGuard|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
+		private static final /* @@NonNull*/ CardinalitySolution Solution184 // |ownedPatternType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution185 // |ownedPostconditions|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution186 // |ownedPreconditions|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution187 // |ownedProperties|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution188 // |ownedReferences|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution189 // |ownedRight|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
+		private static final /* @@NonNull*/ CardinalitySolution Solution190 // |ownedRoundBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution191 // |ownedRoundBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution192 // |ownedSignature|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution193 // |ownedSpecification|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution194 // |ownedSquareBracketedClauses|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution195 // |ownedSubstitutions|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution196 // |ownedSuperTypes|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution197 // |ownedTerms|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution198 // |ownedThenExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution199 // |ownedThenExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION);
+		private static final /* @@NonNull*/ CardinalitySolution Solution200 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution201 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution202 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution203 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution204 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution205 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution206 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution207 // |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution208 // |ownedValueType|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution209 // |ownedValue|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution210 // |ownedVariables|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution211 // |patternVariableName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution212 // |prefix.','|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ',');
+		private static final /* @@NonNull*/ CardinalitySolution Solution213 // |prefix.';'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ';');
+		private static final /* @@NonNull*/ CardinalitySolution Solution214 // |prefix.'|'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, '|');
+		private static final /* @@NonNull*/ CardinalitySolution Solution215 // |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, '!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile');
+		private static final /* @@NonNull*/ CardinalitySolution Solution216 // |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, '!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile');
+		private static final /* @@NonNull*/ CardinalitySolution Solution217 // |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, '!derived|!ordered|!transient|!unique|derived|ordered|transient|unique');
+		private static final /* @@NonNull*/ CardinalitySolution Solution218 // |qualifiers.'!ordered|!unique|ordered|unique'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, '!ordered|!unique|ordered|unique');
+		private static final /* @@NonNull*/ CardinalitySolution Solution219 // |qualifiers.'definition'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 'definition');
+		private static final /* @@NonNull*/ CardinalitySolution Solution220 // |qualifiers.'static'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, 'static');
+		private static final /* @@NonNull*/ CardinalitySolution Solution221 // |referredElement|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
+		private static final /* @@NonNull*/ CardinalitySolution Solution222 // |referredKeys|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution223 // |referredOpposite|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution224 // |referredProperty|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY);
+		private static final /* @@NonNull*/ CardinalitySolution Solution225 // |restVariableName|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME);
+		private static final /* @@NonNull*/ CardinalitySolution Solution226 // |segments|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS);
+		private static final /* @@NonNull*/ CardinalitySolution Solution227 // |stereotype.'invariant'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, 'invariant');
+		private static final /* @@NonNull*/ CardinalitySolution Solution228 // |stereotype.'postcondition'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, 'postcondition');
+		private static final /* @@NonNull*/ CardinalitySolution Solution229 // |stereotype.'precondition'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, 'precondition');
+		private static final /* @@NonNull*/ CardinalitySolution Solution230 // |stringBounds.'*|+|?'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, '*|+|?');
+		private static final /* @@NonNull*/ CardinalitySolution Solution231 // |symbol.'false|true'|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, 'false|true');
+		private static final /* @@NonNull*/ CardinalitySolution Solution232 // |symbol|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL);
+		private static final /* @@NonNull*/ CardinalitySolution Solution233 // |upperBound|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
+		private static final /* @@NonNull*/ CardinalitySolution Solution234 // |values|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DETAIL_CS__VALUES);
+		private static final /* @@NonNull*/ CardinalitySolution Solution235 // |value|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE);
+		private static final /* @@NonNull*/ CardinalitySolution Solution236 // |value|
+			= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE);
+
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve000 // assert (|exprString| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution000);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve001 // assert (|lowerBound| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution004);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve002 // assert (|name.'Map'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution005);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve003 // assert (|name.'Tuple'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution006);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve004 // assert (|name| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution007);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve005 // assert (|name| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution008);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve006 // assert (|name| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution009);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve007 // assert (|ownedActualParameter| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution010);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve008 // assert (|ownedBinding| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution014);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve009 // assert (|ownedCoIterator| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution016);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve010 // assert (|ownedCondition| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution018);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve011 // assert (|ownedCondition| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution017);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve012 // assert (|ownedDetails| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution020);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve013 // assert (|ownedElseExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution022);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve014 // assert (|ownedExpressionCS| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution025);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve015 // assert (|ownedExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution026);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve016 // assert (|ownedExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution029);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve017 // assert (|ownedExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution027);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve018 // assert (|ownedExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution028);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve019 // assert (|ownedInExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution032);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve020 // assert (|ownedInitExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution034);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve021 // assert (|ownedInitExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution033);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve022 // assert (|ownedInitExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution035);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve023 // assert (|ownedKeyType| - C00) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution036);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve024 // assert (|ownedKeyType| - C00) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution037);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve025 // assert (|ownedKeyType| - C00) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution038);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve026 // assert (|ownedKeyType| - C00) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution039);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve027 // assert (|ownedKeyType| - C00) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution040);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve028 // assert (|ownedKey| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution041);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve029 // assert (|ownedLeft| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution042);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve030 // assert (|ownedNameExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution043);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve031 // assert (|ownedPathElements| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution057);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve032 // assert (|ownedPathName| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution062);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve033 // assert (|ownedPathName| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution058);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve034 // assert (|ownedPathName| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution059);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve035 // assert (|ownedPathName| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution060);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve036 // assert (|ownedPathName| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution061);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve037 // assert (|ownedPatternType| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution063);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve038 // assert (|ownedRight| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution064);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve039 // assert (|ownedThenExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution069);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve040 // assert (|ownedThenExpression| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution070);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve041 // assert (|ownedType| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution076);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve042 // assert (|ownedType| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution074);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve043 // assert (|ownedType| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution075);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve044 // assert (|ownedType| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution073);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve045 // assert (|ownedType| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution071);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve046 // assert (|ownedType| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution072);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve047 // assert (|ownedValue| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution077);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve048 // assert (|prefix.','| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution079);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve049 // assert (|prefix.';'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution080);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve050 // assert (|prefix.'|'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution081);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve051 // assert (|qualifiers.'definition'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution086);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve052 // assert (|qualifiers.'static'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution087);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve053 // assert (|referredElement| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution088);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve054 // assert (|referredProperty| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution091);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve055 // assert (|stereotype.'invariant'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution092);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve056 // assert (|stereotype.'postcondition'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution093);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve057 // assert (|stereotype.'precondition'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution094);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve058 // assert (|stringBounds.'*|+|?'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution095);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve059 // assert (|symbol.'false|true'| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution096);
 		private static final /* @@NonNull*/ CardinalitySolutionStep Solve060 // assert (|symbol| - 1) == 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve061 // assign C00:ElseIfThenExpCS[*] = |ownedIfThenExpressions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve062 // assign C00:MultiplicityCS[?] = |ownedMultiplicity|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve063 // assign C00:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve064 // assign C00:SINGLE_QUOTED_STRING[?] = |value|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve065 // assign C00:SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING[*] = |values|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve066 // assign C00:SquareBracketedClauseCS[*] = |ownedSquareBracketedClauses|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve067 // assign C00:StringLiteral[+] = |segments|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve068 // assign C00:TemplateSignatureCS[?] = |ownedSignature|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve069 // assign C00:UnrestrictedName[?] = |patternVariableName|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve070 // assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve071 // assign C00[*] = (|ownedParameters| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve072 // assign C00[*] = (|ownedParts| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve073 // assign C00[*] = (|ownedPathElements| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve074 // assign C00[*] = (|ownedSubstitutions| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve075 // assign C00[*] = (|ownedTerms| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve076 // assign C00[*] = (|ownedVariables| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve077 // assign C00[*] = |ownedDetails|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve078 // assign C00[?] = (|ownedArguments| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve079 // assign C00[?] = (|ownedExtends| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve080 // assign C00[?] = (|ownedParts| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve081 // assign C00[?] = (|ownedParts| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve082 // assign C00[?] = (|ownedParts| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve083 // assign C00[?] = (|ownedParts| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve084 // assign C00[?] = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve085 // assign C00[?] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve086 // assign C00[?] = |isAbstract.'abstract'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve087 // assign C00[?] = |isCallable.'callable'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve088 // assign C00[?] = |isNullFree.'|1'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve089 // assign C00[?] = |isPrimitive.'primitive'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve090 // assign C00[?] = |literal|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve091 // assign C00[?] = |nsPrefix|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve092 // assign C00[?] = |ownedCoIterator|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve093 // assign C00[?] = |ownedCurlyBracketedClause|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve094 // assign C00[?] = |ownedExtends|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve095 // assign C00[?] = |ownedInitExpression|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve096 // assign C00[?] = |ownedLastExpression|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve097 // assign C00[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve098 // assign C00[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve099 // assign C00[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve100 // assign C00[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve101 // assign C00[?] = |ownedValueType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve102 // assign C00[?] = |qualifiers.'definition'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve103 // assign C00[?] = |qualifiers.'static'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve104 // assign C00[?] = |referredOpposite|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve105 // assign C00[?] = |restVariableName|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve106 // assign C00[?] = |upperBound|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve107 // assign C01:ImportCS[*] = |ownedImports|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve108 // assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve109 // assign C01:MultiplicityCS[?] = |ownedMultiplicity|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve110 // assign C01:MultiplicityCS[?] = |ownedMultiplicity|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve111 // assign C01:NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS[*] = (|ownedArguments| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve112 // assign C01:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve113 // assign C01:TemplateSignatureCS[?] = |ownedSignature|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve114 // assign C01[*] = (|ownedExtends| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve115 // assign C01[*] = (|ownedParts| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve116 // assign C01[*] = (|ownedParts| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve117 // assign C01[*] = (|ownedParts| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve118 // assign C01[*] = (|ownedParts| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve119 // assign C01[+] = |qualifiers.'!ordered|!unique|ordered|unique'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve120 // assign C01[?] = (|ownedDetails| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve121 // assign C01[?] = (|ownedParameters| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve122 // assign C01[?] = (|ownedParts| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve123 // assign C01[?] = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve124 // assign C01[?] = |default|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve125 // assign C01[?] = |instanceClassName|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve126 // assign C01[?] = |isAll.'::*'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve127 // assign C01[?] = |isNullFree.'|1'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve128 // assign C01[?] = |name|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve129 // assign C01[?] = |nsURI|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve130 // assign C01[?] = |ownedCoIterator|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve131 // assign C01[?] = |ownedInitExpression|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve132 // assign C01[?] = |ownedMessageSpecification|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve133 // assign C01[?] = |ownedPatternGuard|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve134 // assign C01[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve135 // assign C01[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve136 // assign C01[?] = |referredOpposite|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve137 // assign C01[?] = |value|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve138 // assign C02:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve139 // assign C02:CurlyBracketedClauseCS[?] = |ownedCurlyBracketedClause|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve140 // assign C02:MultiplicityCS[?] = |ownedMultiplicity|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve141 // assign C02:PackageCS[*] = |ownedPackages|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve142 // assign C02:SpecificationCS[?] = |ownedSpecification|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve143 // assign C02[*] = (|ownedDetails| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve144 // assign C02[*] = (|ownedParameters| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve145 // assign C02[*] = (|ownedParts| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve146 // assign C02[+] = |qualifiers.'!ordered|!unique|ordered|unique'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve147 // assign C02[?] = (|isSerializable.'serializable'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve148 // assign C02[?] = (|ownedParameters| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve149 // assign C02[?] = (|ownedSuperTypes| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve150 // assign C02[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve151 // assign C02[?] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve152 // assign C02[?] = |default|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve153 // assign C02[?] = |instanceClassName|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve154 // assign C02[?] = |isSerializable.'serializable'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve155 // assign C02[?] = |ownedMessageSpecification|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve156 // assign C02[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve157 // assign C03:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve158 // assign C03:MultiplicityCS[?] = |ownedMultiplicity|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve159 // assign C03:PackageCS[*] = |ownedPackages|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve160 // assign C03:SpecificationCS[?] = |ownedSpecification|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve161 // assign C03[*] = (|ownedParameters| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve162 // assign C03[*] = (|ownedSuperTypes| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve163 // assign C03[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve164 // assign C03[?] = (|isSerializable.'serializable'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve165 // assign C03[?] = (|isSerializable.'serializable'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve166 // assign C03[?] = (|ownedAnnotations| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve167 // assign C03[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve168 // assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve169 // assign C03[?] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve170 // assign C03[?] = |default|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve171 // assign C03[?] = |isPre.'@'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve172 // assign C03[?] = |isSerializable.'serializable'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve173 // assign C03[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve174 // assign C04:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve175 // assign C04:ClassCS[*] = |ownedClasses|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve176 // assign C04:EnumerationLiteralCS[*] = |ownedLiterals|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve177 // assign C04:ModelElementCS[*] = |ownedContents|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve178 // assign C04[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve179 // assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve180 // assign C04[?] = (|ownedExceptions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve181 // assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve182 // assign C04[?] = |instanceClassName|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve183 // assign C04[?] = |isSerializable.'serializable'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve184 // assign C04[?] = |ownedType|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve185 // assign C05:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve186 // assign C05:EnumerationLiteralCS[*] = |ownedLiterals|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve187 // assign C05:InvariantConstraintCS[*] = |ownedConstraints|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve188 // assign C05:ModelElementRefCS[+] = |ownedReferences|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve189 // assign C05[*] = (|ownedExceptions| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve190 // assign C05[*] = |ownedDefaultExpressions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve191 // assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve192 // assign C05[?] = (|isInterface.'interface'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve193 // assign C05[?] = (|ownedExceptions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve194 // assign C05[?] = |isInterface.'interface'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve195 // assign C06:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve196 // assign C06:InvariantConstraintCS[*] = |ownedConstraints|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve197 // assign C06:SpecificationCS[?] = (|ownedDefaultExpressions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve198 // assign C06[*] = (|ownedExceptions| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve199 // assign C06[*] = (|referredKeys| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve200 // assign C06[*] = |ownedDefaultExpressions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve201 // assign C06[?] = (|isInterface.'interface'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve202 // assign C06[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve203 // assign C06[?] = |isInterface.'interface'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve204 // assign C07:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve205 // assign C07:SpecificationCS[?] = (|ownedDefaultExpressions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve206 // assign C07[*] = (|referredKeys| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve207 // assign C07[*] = (|referredKeys| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve208 // assign C07[*] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve209 // assign C07[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve210 // assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve211 // assign C08:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve212 // assign C08:OperationCS[*] = |ownedOperations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve213 // assign C08:SpecificationCS[?] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve214 // assign C08[*] = (|referredKeys| - 1)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve215 // assign C08[*] = |ownedDefaultExpressions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve216 // assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve217 // assign C09:AnnotationElementCS[*] = |ownedAnnotations|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve218 // assign C09:PreconditionConstraintCS[*] = |ownedPreconditions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve219 // assign C09:SpecificationCS[?] = (|ownedDefaultExpressions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve220 // assign C09:SpecificationCS[?] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve221 // assign C09:StructuralFeatureCS[*] = |ownedProperties|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve222 // assign C09[*] = |ownedDefaultExpressions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve223 // assign C10:InvariantConstraintCS[*] = |ownedConstraints|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve224 // assign C10:PreconditionConstraintCS[*] = |ownedPreconditions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve225 // assign C10:SpecificationCS[?] = (|ownedDefaultExpressions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve226 // assign C10[*] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve227 // assign C10[*] = |ownedBodyExpressions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve228 // assign C11:SpecificationCS[?] = (|ownedBodyExpressions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve229 // assign C11:SpecificationCS[?] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve230 // assign C11[*] = |ownedBodyExpressions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve231 // assign C12:PostconditionConstraintCS[*] = |ownedPostconditions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve232 // assign C12:SpecificationCS[?] = (|ownedBodyExpressions| > 0)
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve233 // assign C12:SpecificationCS[?] = 0
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve234 // assign C12[*] = |ownedImplicitOpposites|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve235 // assign C13:PostconditionConstraintCS[*] = |ownedPostconditions|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve236 // assign C13[*] = |ownedImplicitOpposites|
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve237 // check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve238 // check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve239 // check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve240 // check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve241 // check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve242 // check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve243 // check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve244 // check-rule basecs::ImportCS.ownedPathName : EssentialOCL::URIPathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve245 // check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve246 // check-rule basecs::ModelElementRefCS.ownedPathName : Base::PathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve247 // check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve248 // check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve249 // check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve250 // check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve251 // check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve252 // check-rule basecs::PackageCS.ownedClasses : OCLinEcore::ClassCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve253 // check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve254 // check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve255 // check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS|Base::NextPathElementCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve256 // check-rule basecs::PathNameCS.ownedPathElements : EssentialOCL::URIFirstPathElementCS|Base::NextPathElementCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve257 // check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve258 // check-rule basecs::RootCS.ownedImports : OCLinEcore::ImportCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve259 // check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve260 // check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve261 // check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve262 // check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve263 // check-rule basecs::TemplateBindingCS.ownedMultiplicity : Base::MultiplicityCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve264 // check-rule basecs::TemplateBindingCS.ownedSubstitutions : Base::TemplateParameterSubstitutionCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve265 // check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : Base::TypeRefCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve266 // check-rule basecs::TemplateSignatureCS.ownedParameters : Base::TypeParameterCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve267 // check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve268 // check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve269 // check-rule basecs::TypeParameterCS.ownedExtends : OCLinEcore::TypedRefCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve270 // check-rule basecs::TypedElementCS.ownedType : EssentialOCL::TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve271 // check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve272 // check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve273 // check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve274 // check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve275 // check-rule basecs::WildcardTypeRefCS.ownedExtends : OCLinEcore::TypedRefCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve276 // check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve277 // check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve278 // check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve279 // check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve280 // check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve281 // check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve282 // check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve283 // check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::PatternExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve284 // check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve285 // check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve286 // check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve287 // check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve288 // check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve289 // check-rule essentialoclcs::ContextCS.ownedExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve290 // check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : EssentialOCL::ShadowPartCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve291 // check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve292 // check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve293 // check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve294 // check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve295 // check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve296 // check-rule essentialoclcs::IfThenExpCS.ownedCondition : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve297 // check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve298 // check-rule essentialoclcs::InfixExpCS.ownedLeft : EssentialOCL::PrefixedPrimaryExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve299 // check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve300 // check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve301 // check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve302 // check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve303 // check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve304 // check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve305 // check-rule essentialoclcs::MapLiteralPartCS.ownedKey : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve306 // check-rule essentialoclcs::MapLiteralPartCS.ownedValue : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve307 // check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve308 // check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve309 // check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve310 // check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve311 // check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve312 // check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve313 // check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve314 // check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve315 // check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve316 // check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve317 // check-rule essentialoclcs::PatternExpCS.ownedPatternType : EssentialOCL::TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve318 // check-rule essentialoclcs::RoundBracketedClauseCS.ownedArguments : EssentialOCL::NavigatingCommaArgCS|EssentialOCL::NavigatingArgCS|EssentialOCL::NavigatingSemiArgCS|EssentialOCL::NavigatingBarArgCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve319 // check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve320 // check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::StringLiteralExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve321 // check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve322 // check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve323 // check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve324 // check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve325 // check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve326 // check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve327 // check-rule essentialoclcs::VariableCS.ownedInitExpression : EssentialOCL::ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
-		private static final /* @@NonNull*/ CardinalitySolutionStep Solve328 // check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(null);
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(Solution097);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve061 // assign V0 = (|ownedArguments| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution013);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve062 // assign V0 = (|ownedExtends| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution031);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve063 // assign V0 = (|ownedParameters| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution044);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve064 // assign V0 = (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution047);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve065 // assign V0 = (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution054);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve066 // assign V0 = (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution053);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve067 // assign V0 = (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution055);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve068 // assign V0 = (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution056);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve069 // assign V0 = (|ownedPathElements| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution057);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve070 // assign V0 = (|ownedSubstitutions| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution065);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve071 // assign V0 = (|ownedTerms| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution068);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve072 // assign V0 = (|ownedVariables| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution078);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve073 // assign V0 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution085);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve074 // assign V0 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve075 // assign V0 = |isAbstract.'abstract'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution108);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve076 // assign V0 = |isCallable.'callable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution110);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve077 // assign V0 = |isNullFree.'|1'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution112);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve078 // assign V0 = |isPrimitive.'primitive'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution114);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve079 // assign V0 = |literal|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution117);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve080 // assign V0 = |name|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution122);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve081 // assign V0 = |nsPrefix|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution124);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve082 // assign V0 = |ownedCoIterator|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution132);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve083 // assign V0 = |ownedCurlyBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution138);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve084 // assign V0 = |ownedDetails|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution141);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve085 // assign V0 = |ownedExtends|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution150);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve086 // assign V0 = |ownedIfThenExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution151);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve087 // assign V0 = |ownedInitExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution156);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve088 // assign V0 = |ownedLastExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution160);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve089 // assign V0 = |ownedMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution164);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve090 // assign V0 = |ownedRoundBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution190);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve091 // assign V0 = |ownedSignature|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution192);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve092 // assign V0 = |ownedSquareBracketedClauses|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution194);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve093 // assign V0 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution207);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve094 // assign V0 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution206);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve095 // assign V0 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution202);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve096 // assign V0 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution204);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve097 // assign V0 = |ownedValueType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution208);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve098 // assign V0 = |patternVariableName|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution211);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve099 // assign V0 = |qualifiers.'definition'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution219);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve100 // assign V0 = |qualifiers.'static'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution220);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve101 // assign V0 = |referredOpposite|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution223);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve102 // assign V0 = |restVariableName|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution225);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve103 // assign V0 = |segments|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution226);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve104 // assign V0 = |upperBound|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution233);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve105 // assign V0 = |values|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution234);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve106 // assign V0 = |value|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, Solution235);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve107 // assign V1 = (|ownedArguments| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution012);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve108 // assign V1 = (|ownedDetails| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution021);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve109 // assign V1 = (|ownedExtends| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution030);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve110 // assign V1 = (|ownedParameters| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution046);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve111 // assign V1 = (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution050);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve112 // assign V1 = (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution051);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve113 // assign V1 = (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution052);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve114 // assign V1 = (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution049);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve115 // assign V1 = (|ownedParts| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution056);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve116 // assign V1 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution085);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve117 // assign V1 = |default|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution105);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve118 // assign V1 = |instanceClassName|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution107);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve119 // assign V1 = |isAll.'::*'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution109);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve120 // assign V1 = |isNullFree.'|1'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution112);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve121 // assign V1 = |name|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution122);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve122 // assign V1 = |nsURI|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution125);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve123 // assign V1 = |ownedCoIterator|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution132);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve124 // assign V1 = |ownedCollectionMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution133);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve125 // assign V1 = |ownedImports|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution153);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve126 // assign V1 = |ownedInitExpression|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution156);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve127 // assign V1 = |ownedMessageSpecification|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution163);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve128 // assign V1 = |ownedMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution165);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve129 // assign V1 = |ownedMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution164);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve130 // assign V1 = |ownedPatternGuard|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution183);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve131 // assign V1 = |ownedRoundBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution191);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve132 // assign V1 = |ownedSignature|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution192);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve133 // assign V1 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution207);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve134 // assign V1 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution204);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve135 // assign V1 = |qualifiers.'!ordered|!unique|ordered|unique'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution218);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve136 // assign V1 = |referredOpposite|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution223);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve137 // assign V1 = |value|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, Solution236);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve138 // assign V10 = (|ownedDefaultExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(10, Solution019);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve139 // assign V10 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(10, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve140 // assign V10 = |ownedBodyExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(10, Solution130);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve141 // assign V10 = |ownedConstraints|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(10, Solution136);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve142 // assign V10 = |ownedPreconditions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(10, Solution186);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve143 // assign V11 = (|ownedBodyExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(11, Solution015);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve144 // assign V11 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(11, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve145 // assign V11 = |ownedBodyExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(11, Solution130);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve146 // assign V12 = (|ownedBodyExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(12, Solution015);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve147 // assign V12 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(12, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve148 // assign V12 = |ownedImplicitOpposites|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(12, Solution152);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve149 // assign V12 = |ownedPostconditions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(12, Solution185);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve150 // assign V13 = |ownedImplicitOpposites|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(13, Solution152);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve151 // assign V13 = |ownedPostconditions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(13, Solution185);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve152 // assign V2 = (|isSerializable.'serializable'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution003);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve153 // assign V2 = (|ownedDetails| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution020);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve154 // assign V2 = (|ownedParameters| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution045);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve155 // assign V2 = (|ownedParameters| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution046);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve156 // assign V2 = (|ownedParts| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution048);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve157 // assign V2 = (|ownedSuperTypes| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution067);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve158 // assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution083);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve159 // assign V2 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve160 // assign V2 = |default|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution105);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve161 // assign V2 = |instanceClassName|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution107);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve162 // assign V2 = |isSerializable.'serializable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution116);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve163 // assign V2 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve164 // assign V2 = |ownedCurlyBracketedClause|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution139);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve165 // assign V2 = |ownedMessageSpecification|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution163);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve166 // assign V2 = |ownedMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution164);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve167 // assign V2 = |ownedPackages|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution168);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve168 // assign V2 = |ownedSpecification|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution193);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve169 // assign V2 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution204);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve170 // assign V2 = |qualifiers.'!ordered|!unique|ordered|unique'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, Solution218);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve171 // assign V3 = (|isSerializable.'serializable'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution002);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve172 // assign V3 = (|isSerializable.'serializable'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution003);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve173 // assign V3 = (|ownedAnnotations| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution011);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve174 // assign V3 = (|ownedParameters| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution045);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve175 // assign V3 = (|ownedSuperTypes| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution066);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve176 // assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution082);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve177 // assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution083);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve178 // assign V3 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve179 // assign V3 = |default|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution105);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve180 // assign V3 = |isPre.'@'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution113);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve181 // assign V3 = |isSerializable.'serializable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution115);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve182 // assign V3 = |isSerializable.'serializable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution116);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve183 // assign V3 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve184 // assign V3 = |ownedMultiplicity|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution164);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve185 // assign V3 = |ownedPackages|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution168);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve186 // assign V3 = |ownedSpecification|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution193);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve187 // assign V3 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution204);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve188 // assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, Solution216);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve189 // assign V4 = (|isSerializable.'serializable'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution002);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve190 // assign V4 = (|ownedExceptions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution024);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve191 // assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution082);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve192 // assign V4 = |instanceClassName|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution107);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve193 // assign V4 = |isSerializable.'serializable'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution115);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve194 // assign V4 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve195 // assign V4 = |ownedClasses|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution131);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve196 // assign V4 = |ownedContents|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution137);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve197 // assign V4 = |ownedLiterals|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution162);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve198 // assign V4 = |ownedType|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution204);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve199 // assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution215);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve200 // assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, Solution216);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve201 // assign V5 = (|isInterface.'interface'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution001);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve202 // assign V5 = (|ownedExceptions| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution023);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve203 // assign V5 = (|ownedExceptions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution024);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve204 // assign V5 = |isInterface.'interface'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution111);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve205 // assign V5 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve206 // assign V5 = |ownedConstraints|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution136);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve207 // assign V5 = |ownedDefaultExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution140);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve208 // assign V5 = |ownedLiterals|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution162);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve209 // assign V5 = |ownedReferences|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution188);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve210 // assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(5, Solution215);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve211 // assign V6 = (|isInterface.'interface'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution001);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve212 // assign V6 = (|ownedDefaultExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution019);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve213 // assign V6 = (|ownedExceptions| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution023);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve214 // assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution084);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve215 // assign V6 = (|referredKeys| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution090);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve216 // assign V6 = |isInterface.'interface'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution111);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve217 // assign V6 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve218 // assign V6 = |ownedConstraints|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution136);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve219 // assign V6 = |ownedDefaultExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(6, Solution140);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve220 // assign V7 = (|ownedDefaultExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(7, Solution019);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve221 // assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(7, Solution084);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve222 // assign V7 = (|referredKeys| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(7, Solution089);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve223 // assign V7 = (|referredKeys| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(7, Solution090);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve224 // assign V7 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(7, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve225 // assign V7 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(7, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve226 // assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(7, Solution217);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve227 // assign V8 = (|referredKeys| - 1)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(8, Solution089);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve228 // assign V8 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(8, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve229 // assign V8 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(8, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve230 // assign V8 = |ownedDefaultExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(8, Solution140);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve231 // assign V8 = |ownedOperations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(8, Solution167);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve232 // assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(8, Solution217);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve233 // assign V9 = (|ownedDefaultExpressions| > 0)
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(9, Solution019);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve234 // assign V9 = 0
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(9, Solution098);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve235 // assign V9 = |ownedAnnotations|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(9, Solution127);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve236 // assign V9 = |ownedDefaultExpressions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(9, Solution140);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve237 // assign V9 = |ownedPreconditions|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(9, Solution186);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve238 // assign V9 = |ownedProperties|
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(9, Solution187);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve239 // check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS, [ModelElementCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve240 // check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES, [ModelElementRefCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve241 // check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, [DetailCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve242 // check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, [InvariantConstraintCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve243 // check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, [SpecificationCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve244 // check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, [SpecificationCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve245 // check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, [EnumerationLiteralCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve246 // check-rule basecs::ImportCS.ownedPathName : EssentialOCL::URIPathNameCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, [URIPathNameCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve247 // check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, [AnnotationElementCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve248 // check-rule basecs::ModelElementRefCS.ownedPathName : Base::PathNameCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, [PathNameCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve249 // check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, [SpecificationCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve250 // check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, [TypedRefCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve251 // check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, [ParameterCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve252 // check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, [PostconditionConstraintCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve253 // check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, [PreconditionConstraintCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve254 // check-rule basecs::PackageCS.ownedClasses : OCLinEcore::ClassCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES, [ClassCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve255 // check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES, [PackageCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve256 // check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, [FirstPathElementCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve257 // check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS|Base::NextPathElementCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, [FirstPathElementCS, NextPathElementCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve258 // check-rule basecs::PathNameCS.ownedPathElements : EssentialOCL::URIFirstPathElementCS|Base::NextPathElementCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, [URIFirstPathElementCS, NextPathElementCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve259 // check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, [ImplicitOppositeCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve260 // check-rule basecs::RootCS.ownedImports : OCLinEcore::ImportCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, [ImportCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve261 // check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, [SpecificationCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve262 // check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS, [OperationCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve263 // check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES, [StructuralFeatureCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve264 // check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES, [TypedRefCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve265 // check-rule basecs::TemplateBindingCS.ownedMultiplicity : Base::MultiplicityCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, [MultiplicityCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve266 // check-rule basecs::TemplateBindingCS.ownedSubstitutions : Base::TemplateParameterSubstitutionCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, [TemplateParameterSubstitutionCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve267 // check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : Base::TypeRefCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, [TypeRefCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve268 // check-rule basecs::TemplateSignatureCS.ownedParameters : Base::TypeParameterCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, [TypeParameterCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve269 // check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, [TemplateSignatureCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve270 // check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, [TuplePartCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve271 // check-rule basecs::TypeParameterCS.ownedExtends : OCLinEcore::TypedRefCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, [TypedRefCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve272 // check-rule basecs::TypedElementCS.ownedType : EssentialOCL::TypeExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, [TypeExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve273 // check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, [TypedMultiplicityRefCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve274 // check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, [MultiplicityCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve275 // check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, [TemplateBindingCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve276 // check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, [PathNameCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve277 // check-rule basecs::WildcardTypeRefCS.ownedExtends : OCLinEcore::TypedRefCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, [TypedRefCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve278 // check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, [CurlyBracketedClauseCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve279 // check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, [PathNameCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve280 // check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, [RoundBracketedClauseCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve281 // check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, [SquareBracketedClauseCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve282 // check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, [CollectionLiteralPartCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve283 // check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, [CollectionTypeCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve284 // check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve285 // check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::PatternExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, [PatternExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve286 // check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve287 // check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, [PatternExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve288 // check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, [CollectionTypeCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve289 // check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, [MultiplicityCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve290 // check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, [TypeExpWithoutMultiplicityCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve291 // check-rule essentialoclcs::ContextCS.ownedExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve292 // check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : EssentialOCL::ShadowPartCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, [ShadowPartCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve293 // check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve294 // check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, [ExpCS, PatternExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve295 // check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve296 // check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, [ElseIfThenExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve297 // check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve298 // check-rule essentialoclcs::IfThenExpCS.ownedCondition : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve299 // check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve300 // check-rule essentialoclcs::InfixExpCS.ownedLeft : EssentialOCL::PrefixedPrimaryExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, [PrefixedPrimaryExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve301 // check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve302 // check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve303 // check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, [LetVariableCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve304 // check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, [RoundBracketedClauseCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve305 // check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, [MapLiteralPartCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve306 // check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, [MapTypeCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve307 // check-rule essentialoclcs::MapLiteralPartCS.ownedKey : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve308 // check-rule essentialoclcs::MapLiteralPartCS.ownedValue : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve309 // check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, [TypeExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve310 // check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, [TypeExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve311 // check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, [CoIteratorVariableCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve312 // check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve313 // check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, [NavigatingArgExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve314 // check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, [TypeExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve315 // check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve316 // check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve317 // check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, [PrefixedLetExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve318 // check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, [PrefixedPrimaryExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve319 // check-rule essentialoclcs::PatternExpCS.ownedPatternType : EssentialOCL::TypeExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, [TypeExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve320 // check-rule essentialoclcs::RoundBracketedClauseCS.ownedArguments : EssentialOCL::NavigatingArgCS|EssentialOCL::NavigatingBarArgCS|EssentialOCL::NavigatingSemiArgCS|EssentialOCL::NavigatingCommaArgCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, [NavigatingArgCS, NavigatingBarArgCS, NavigatingSemiArgCS, NavigatingCommaArgCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve321 // check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, [ExpCS, PatternExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve322 // check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::StringLiteralExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, [StringLiteralExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve323 // check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve324 // check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, [TupleLiteralPartCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve325 // check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, [TypeLiteralWithMultiplicityCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve326 // check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, [CurlyBracketedClauseCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve327 // check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, [PathNameCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve328 // check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve329 // check-rule essentialoclcs::VariableCS.ownedInitExpression : EssentialOCL::ExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, [ExpCS]);
+		private static final /* @@NonNull*/ CardinalitySolutionStep Solve330 // check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS
+			= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, [TypeExpCS]);
 	}
 
 	private static class _Steps
@@ -943,13 +1423,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private static final /* @@NonNull*/ RTSerializationStep Step088 // 1*ownedExceptions+=TypedRefCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, "OCLinEcore::TypedRefCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step089 // 1*ownedExpression=ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step090 // 1*ownedExpression=ExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step091 // 1*ownedExpression=ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step092 // 1*ownedExpression=ExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step093 // 1*ownedExpression=PatternExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, "EssentialOCL::PatternExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step094 // 1*ownedExpressionCS=ExpCS
@@ -1005,9 +1485,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private static final /* @@NonNull*/ RTSerializationStep Step119 // 1*ownedPathElements+=URIFirstPathElementCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, "EssentialOCL::URIFirstPathElementCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step120 // 1*ownedPathName=PathNameCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, "Base::PathNameCS");
-		private static final /* @@NonNull*/ RTSerializationStep Step121 // 1*ownedPathName=PathNameCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, "Base::PathNameCS");
+		private static final /* @@NonNull*/ RTSerializationStep Step121 // 1*ownedPathName=PathNameCS
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, "Base::PathNameCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step122 // 1*ownedPathName=PathNameCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, "Base::PathNameCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step123 // 1*ownedPathName=PathNameCS
@@ -1035,17 +1515,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private static final /* @@NonNull*/ RTSerializationStep Step134 // 1*ownedThenExpression=ExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, "EssentialOCL::ExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step135 // 1*ownedType=CollectionTypeCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, "EssentialOCL::CollectionTypeCS");
-		private static final /* @@NonNull*/ RTSerializationStep Step136 // 1*ownedType=CollectionTypeCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, "EssentialOCL::CollectionTypeCS");
+		private static final /* @@NonNull*/ RTSerializationStep Step136 // 1*ownedType=CollectionTypeCS
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, "EssentialOCL::CollectionTypeCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step137 // 1*ownedType=MapTypeCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, "EssentialOCL::MapTypeCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step138 // 1*ownedType=TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step139 // 1*ownedType=TypeExpCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step140 // 1*ownedType=TypeExpCS
-			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
+			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, "EssentialOCL::TypeExpCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step141 // 1*ownedType=TypeExpWithoutMultiplicityCS
 			= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, "EssentialOCL::TypeExpWithoutMultiplicityCS");
 		private static final /* @@NonNull*/ RTSerializationStep Step142 // 1*ownedType=TypeLiteralWithMultiplicityCS
@@ -1307,10 +1787,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -1342,16 +1822,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve237 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
-						_Steps.Solve238 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve188 /* assign C05:ModelElementRefCS[+] = |ownedReferences| */,
-						_Steps.Solve177 /* assign C04:ModelElementCS[*] = |ownedContents| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve239 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
+						_Steps.Solve240 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve209 /* assign V5 = |ownedReferences| */,
+						_Steps.Solve196 /* assign V4 = |ownedContents| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -1391,16 +1871,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve237 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
-						_Steps.Solve238 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve188 /* assign C05:ModelElementRefCS[*] = |ownedReferences| */,
-						_Steps.Solve177 /* assign C04:ModelElementCS[+] = |ownedContents| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve239 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
+						_Steps.Solve240 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve209 /* assign V5 = |ownedReferences| */,
+						_Steps.Solve196 /* assign V4 = |ownedContents| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -1440,16 +1920,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve237 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
-						_Steps.Solve238 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve188 /* assign C05:ModelElementRefCS[*] = |ownedReferences| */,
-						_Steps.Solve177 /* assign C04:ModelElementCS[*] = |ownedContents| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[+] = |ownedAnnotations| */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve239 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
+						_Steps.Solve240 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve209 /* assign V5 = |ownedReferences| */,
+						_Steps.Solve196 /* assign V4 = |ownedContents| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -1489,10 +1969,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -1524,16 +2004,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve237 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
-						_Steps.Solve238 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve188 /* assign C05:ModelElementRefCS[+] = |ownedReferences| */,
-						_Steps.Solve177 /* assign C04:ModelElementCS[*] = |ownedContents| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve239 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
+						_Steps.Solve240 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve209 /* assign V5 = |ownedReferences| */,
+						_Steps.Solve196 /* assign V4 = |ownedContents| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -1573,16 +2053,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve237 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
-						_Steps.Solve238 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve188 /* assign C05:ModelElementRefCS[*] = |ownedReferences| */,
-						_Steps.Solve177 /* assign C04:ModelElementCS[+] = |ownedContents| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve239 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
+						_Steps.Solve240 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve209 /* assign V5 = |ownedReferences| */,
+						_Steps.Solve196 /* assign V4 = |ownedContents| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -1622,16 +2102,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve237 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
-						_Steps.Solve238 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve188 /* assign C05:ModelElementRefCS[*] = |ownedReferences| */,
-						_Steps.Solve177 /* assign C04:ModelElementCS[*] = |ownedContents| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[+] = |ownedAnnotations| */,
-						_Steps.Solve070 /* assign C00:UnrestrictedName|SINGLE_QUOTED_STRING[?] = |name| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve239 /* check-rule basecs::AnnotationCS.ownedContents : OCLinEcore::ModelElementCS */,
+						_Steps.Solve240 /* check-rule basecs::AnnotationCS.ownedReferences : OCLinEcore::ModelElementRefCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve209 /* assign V5 = |ownedReferences| */,
+						_Steps.Solve196 /* assign V4 = |ownedContents| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -1679,12 +2159,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve124 /* assign C01[?] = |default| */,
-						_Steps.Solve100 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve150 /* assign C02[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve163 /* assign C03[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve117 /* assign V1 = |default| */,
+						_Steps.Solve096 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve158 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve188 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -1724,14 +2204,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-16-steps */,
@@ -1775,14 +2255,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-16-steps */,
@@ -1826,19 +2306,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve124 /* assign C01[?] = |default| */,
-						_Steps.Solve100 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve150 /* assign C02[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve163 /* assign C03[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve190 /* assign C05[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve197 /* assign C06:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve208 /* assign C07[*] = 0 */,
-						_Steps.Solve213 /* assign C08:SpecificationCS[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve117 /* assign V1 = |default| */,
+						_Steps.Solve096 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve158 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve188 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve207 /* assign V5 = |ownedDefaultExpressions| */,
+						_Steps.Solve212 /* assign V6 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve224 /* assign V7 = 0 */,
+						_Steps.Solve228 /* assign V8 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-26-steps */,
@@ -1902,21 +2382,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve200 /* assign C06[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve205 /* assign C07:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve213 /* assign C08[*] = 0 */,
-						_Steps.Solve220 /* assign C09:SpecificationCS[?] = 0 */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve219 /* assign V6 = |ownedDefaultExpressions| */,
+						_Steps.Solve220 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve228 /* assign V8 = 0 */,
+						_Steps.Solve234 /* assign V9 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-28-steps */,
@@ -1984,21 +2464,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve200 /* assign C06[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve205 /* assign C07:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve213 /* assign C08[*] = 0 */,
-						_Steps.Solve220 /* assign C09:SpecificationCS[?] = 0 */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve219 /* assign V6 = |ownedDefaultExpressions| */,
+						_Steps.Solve220 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve228 /* assign V8 = 0 */,
+						_Steps.Solve234 /* assign V9 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-28-steps */,
@@ -2066,12 +2546,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve124 /* assign C01[?] = |default| */,
-						_Steps.Solve100 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve150 /* assign C02[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve163 /* assign C03[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve117 /* assign V1 = |default| */,
+						_Steps.Solve096 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve158 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve188 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -2111,14 +2591,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-16-steps */,
@@ -2162,14 +2642,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-16-steps */,
@@ -2213,19 +2693,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve124 /* assign C01[?] = |default| */,
-						_Steps.Solve100 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve150 /* assign C02[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve163 /* assign C03[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve190 /* assign C05[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve197 /* assign C06:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve208 /* assign C07[*] = 0 */,
-						_Steps.Solve213 /* assign C08:SpecificationCS[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve117 /* assign V1 = |default| */,
+						_Steps.Solve096 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve158 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve188 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve207 /* assign V5 = |ownedDefaultExpressions| */,
+						_Steps.Solve212 /* assign V6 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve224 /* assign V7 = 0 */,
+						_Steps.Solve228 /* assign V8 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-26-steps */,
@@ -2289,21 +2769,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve200 /* assign C06[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve205 /* assign C07:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve213 /* assign C08[*] = 0 */,
-						_Steps.Solve220 /* assign C09:SpecificationCS[?] = 0 */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve219 /* assign V6 = |ownedDefaultExpressions| */,
+						_Steps.Solve220 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve228 /* assign V8 = 0 */,
+						_Steps.Solve234 /* assign V9 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-28-steps */,
@@ -2371,21 +2851,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve200 /* assign C06[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve205 /* assign C07:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve213 /* assign C08[*] = 0 */,
-						_Steps.Solve220 /* assign C09:SpecificationCS[?] = 0 */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve219 /* assign V6 = |ownedDefaultExpressions| */,
+						_Steps.Solve220 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve228 /* assign V8 = 0 */,
+						_Steps.Solve234 /* assign V9 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-28-steps */,
@@ -2453,12 +2933,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve124 /* assign C01[?] = |default| */,
-						_Steps.Solve100 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve150 /* assign C02[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve163 /* assign C03[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve117 /* assign V1 = |default| */,
+						_Steps.Solve096 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve158 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve188 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -2498,14 +2978,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-16-steps */,
@@ -2549,14 +3029,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-16-steps */,
@@ -2600,19 +3080,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve124 /* assign C01[?] = |default| */,
-						_Steps.Solve100 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve150 /* assign C02[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve163 /* assign C03[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve190 /* assign C05[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve197 /* assign C06:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve208 /* assign C07[*] = 0 */,
-						_Steps.Solve213 /* assign C08:SpecificationCS[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve117 /* assign V1 = |default| */,
+						_Steps.Solve096 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve158 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve188 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve207 /* assign V5 = |ownedDefaultExpressions| */,
+						_Steps.Solve212 /* assign V6 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve224 /* assign V7 = 0 */,
+						_Steps.Solve228 /* assign V8 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-26-steps */,
@@ -2676,21 +3156,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve200 /* assign C06[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve205 /* assign C07:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve213 /* assign C08[*] = 0 */,
-						_Steps.Solve220 /* assign C09:SpecificationCS[?] = 0 */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve219 /* assign V6 = |ownedDefaultExpressions| */,
+						_Steps.Solve220 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve228 /* assign V8 = 0 */,
+						_Steps.Solve234 /* assign V9 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-28-steps */,
@@ -2758,21 +3238,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve168 /* assign C03[?] = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve179 /* assign C04[+] = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve200 /* assign C06[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve205 /* assign C07:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve213 /* assign C08[*] = 0 */,
-						_Steps.Solve220 /* assign C09:SpecificationCS[?] = 0 */
+						_Steps.Solve177 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve200 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve219 /* assign V6 = |ownedDefaultExpressions| */,
+						_Steps.Solve220 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve228 /* assign V8 = 0 */,
+						_Steps.Solve234 /* assign V9 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-28-steps */,
@@ -2928,15 +3408,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve281 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve280 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
-						_Steps.Solve045 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve082 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve117 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve283 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve282 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
+						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve067 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve114 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
-						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-4-steps */,
 						_Steps.Step111 /* 1*ownedParts+=CollectionLiteralPartCS */,
@@ -2960,15 +3440,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve281 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve280 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
-						_Steps.Solve045 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve082 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve117 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve283 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve282 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
+						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve067 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve114 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
-						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-4-steps */,
 						_Steps.Step111 /* 1*ownedParts+=CollectionLiteralPartCS */,
@@ -2992,15 +3472,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve281 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve280 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
-						_Steps.Solve045 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve082 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve117 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve283 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve282 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
+						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve067 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve114 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
-						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-4-steps */,
 						_Steps.Step111 /* 1*ownedParts+=CollectionLiteralPartCS */,
@@ -3024,15 +3504,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve281 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve280 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
-						_Steps.Solve045 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve082 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve117 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve283 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve282 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
+						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve067 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve114 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
-						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-4-steps */,
 						_Steps.Step111 /* 1*ownedParts+=CollectionLiteralPartCS */,
@@ -3056,15 +3536,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve281 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve280 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
-						_Steps.Solve045 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve082 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve117 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve283 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve282 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : EssentialOCL::CollectionLiteralPartCS */,
+						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve067 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve114 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
-						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-4-steps */,
 						_Steps.Step111 /* 1*ownedParts+=CollectionLiteralPartCS */,
@@ -3096,7 +3576,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedExpression=PatternExpCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve283 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::PatternExpCS */,
+						_Steps.Solve285 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::PatternExpCS */,
 						_Steps.Solve017 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -3109,14 +3589,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve284 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve282 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve096 /* assign C00[?] = |ownedLastExpression| */,
+						_Steps.Solve286 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve284 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve088 /* assign V0 = |ownedLastExpression| */,
 						_Steps.Solve017 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
-						_Steps.Step092 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step089 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step169 /* V00*next-2-steps */,
 						_Steps.Step008 /* 1*'..' */,
 						_Steps.Step105 /* 1*ownedLastExpression=ExpCS */
@@ -3140,15 +3620,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve286 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve285 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS */,
-						_Steps.Solve105 /* assign C00[?] = |restVariableName| */,
-						_Steps.Solve118 /* assign C01[*] = (|ownedParts| - 1) */,
-						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve288 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve287 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS */,
+						_Steps.Solve102 /* assign V0 = |restVariableName| */,
+						_Steps.Solve111 /* assign V1 = (|ownedParts| - 1) */,
+						_Steps.Solve043 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
-						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-6-steps */,
 						_Steps.Step113 /* 1*ownedParts+=PatternExpCS */,
@@ -3176,17 +3656,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve286 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve285 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve140 /* assign C02:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve105 /* assign C00[?] = |restVariableName| */,
-						_Steps.Solve118 /* assign C01[*] = (|ownedParts| - 1) */,
-						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve288 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve287 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve166 /* assign V2 = |ownedMultiplicity| */,
+						_Steps.Solve102 /* assign V0 = |restVariableName| */,
+						_Steps.Solve111 /* assign V1 = (|ownedParts| - 1) */,
+						_Steps.Solve043 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
-						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-6-steps */,
 						_Steps.Step113 /* 1*ownedParts+=PatternExpCS */,
@@ -3216,15 +3696,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve286 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS */,
-						_Steps.Solve285 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS */,
-						_Steps.Solve105 /* assign C00[?] = |restVariableName| */,
-						_Steps.Solve118 /* assign C01[*] = (|ownedParts| - 1) */,
-						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve288 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : EssentialOCL::CollectionTypeCS */,
+						_Steps.Solve287 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : EssentialOCL::PatternExpCS */,
+						_Steps.Solve102 /* assign V0 = |restVariableName| */,
+						_Steps.Solve111 /* assign V1 = (|ownedParts| - 1) */,
+						_Steps.Solve043 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
-						_Steps.Step135 /* 1*ownedType=CollectionTypeCS */,
+						_Steps.Step136 /* 1*ownedType=CollectionTypeCS */,
 						_Steps.Step060 /* 1*'{' */,
 						_Steps.Step169 /* V00*next-6-steps */,
 						_Steps.Step113 /* 1*ownedParts+=PatternExpCS */,
@@ -3260,11 +3740,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -3288,11 +3768,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -3316,13 +3796,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve140 /* assign C02:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve166 /* assign V2 = |ownedMultiplicity| */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -3348,11 +3828,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -3376,11 +3856,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -3404,13 +3884,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve140 /* assign C02:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve166 /* assign V2 = |ownedMultiplicity| */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -3436,13 +3916,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve140 /* assign C02:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve166 /* assign V2 = |ownedMultiplicity| */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -3468,11 +3948,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve287 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve288 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
-						_Steps.Solve098 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve005 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve108 /* assign C01:MultiplicityCS[?] = |ownedCollectionMultiplicity| */
+						_Steps.Solve289 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve290 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : EssentialOCL::TypeExpWithoutMultiplicityCS */,
+						_Steps.Solve094 /* assign V0 = |ownedType| */,
+						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve124 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -3504,11 +3984,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedExpression=ExpCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve289 /* check-rule essentialoclcs::ContextCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve291 /* check-rule essentialoclcs::ContextCS.ownedExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve015 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
-						_Steps.Step091 /* 1*ownedExpression=ExpCS */
+						_Steps.Step092 /* 1*ownedExpression=ExpCS */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
 						null
@@ -3525,9 +4005,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '{' { ownedParts+=ShadowPartCS { ',' ownedParts+=ShadowPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve290 /* check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : EssentialOCL::ShadowPartCS */,
-						_Steps.Solve080 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve116 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve292 /* check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : EssentialOCL::ShadowPartCS */,
+						_Steps.Solve065 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve113 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -3561,12 +4041,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -3600,12 +4080,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-12-steps */,
@@ -3641,13 +4121,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve164 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve183 /* assign C04[?] = |isSerializable.'serializable'| */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve189 /* assign V4 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve181 /* assign V3 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-12-steps */,
@@ -3683,16 +4163,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -3732,16 +4212,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -3783,17 +4263,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve196 /* assign C06:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve164 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve183 /* assign C04[?] = |isSerializable.'serializable'| */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve218 /* assign V6 = |ownedConstraints| */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve171 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve193 /* assign V4 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -3835,12 +4315,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -3874,12 +4354,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-12-steps */,
@@ -3915,13 +4395,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve164 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve183 /* assign C04[?] = |isSerializable.'serializable'| */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve171 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve193 /* assign V4 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-12-steps */,
@@ -3957,16 +4437,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -4006,16 +4486,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -4057,17 +4537,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve196 /* assign C06:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve164 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve183 /* assign C04[?] = |isSerializable.'serializable'| */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve218 /* assign V6 = |ownedConstraints| */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve189 /* assign V4 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve181 /* assign V3 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -4109,12 +4589,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -4148,12 +4628,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-12-steps */,
@@ -4189,13 +4669,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve164 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve183 /* assign C04[?] = |isSerializable.'serializable'| */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve189 /* assign V4 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve181 /* assign V3 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-12-steps */,
@@ -4231,16 +4711,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -4280,16 +4760,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve169 /* assign C03[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve178 /* assign V3 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -4331,17 +4811,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve196 /* assign C06:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve153 /* assign C02[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve089 /* assign C00[?] = |isPrimitive.'primitive'| */,
-						_Steps.Solve164 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve183 /* assign C04[?] = |isSerializable.'serializable'| */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve218 /* assign V6 = |ownedConstraints| */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve161 /* assign V2 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve078 /* assign V0 = |isPrimitive.'primitive'| */,
+						_Steps.Solve171 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve193 /* assign V4 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -4391,8 +4871,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=(UnrestrictedName|SINGLE_QUOTED_STRING) '=' values+=(SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING)[*] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve065 /* assign C00:SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING[*] = |values| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve105 /* assign V0 = |values| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
@@ -4418,10 +4898,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve064 /* assign C00:SINGLE_QUOTED_STRING[?] = |value| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve106 /* assign V0 = |value| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -4453,10 +4933,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve064 /* assign C00:SINGLE_QUOTED_STRING[?] = |value| */,
-						_Steps.Solve120 /* assign C01[?] = (|ownedDetails| > 0) */,
-						_Steps.Solve143 /* assign C02[*] = (|ownedDetails| - 1) */
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve106 /* assign V0 = |value| */,
+						_Steps.Solve108 /* assign V1 = (|ownedDetails| > 0) */,
+						_Steps.Solve153 /* assign V2 = (|ownedDetails| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -4496,11 +4976,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -4532,11 +5012,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -4570,12 +5050,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve147 /* assign C02[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve172 /* assign C03[?] = |isSerializable.'serializable'| */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve172 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve162 /* assign V2 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -4609,17 +5089,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve176 /* assign C04:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve197 /* assign V4 = |ownedLiterals| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -4659,17 +5139,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve176 /* assign C04:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve197 /* assign V4 = |ownedLiterals| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -4711,18 +5191,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve196 /* assign C06:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve186 /* assign C05:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve165 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve154 /* assign C02[?] = |isSerializable.'serializable'| */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve218 /* assign V6 = |ownedConstraints| */,
+						_Steps.Solve208 /* assign V5 = |ownedLiterals| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve172 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve162 /* assign V2 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -4764,11 +5244,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -4800,11 +5280,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -4838,12 +5318,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve165 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve154 /* assign C02[?] = |isSerializable.'serializable'| */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve172 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve162 /* assign V2 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -4877,17 +5357,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve176 /* assign C04:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve197 /* assign V4 = |ownedLiterals| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -4927,17 +5407,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve176 /* assign C04:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve197 /* assign V4 = |ownedLiterals| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -4979,18 +5459,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve196 /* assign C06:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve186 /* assign C05:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve165 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve154 /* assign C02[?] = |isSerializable.'serializable'| */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve218 /* assign V6 = |ownedConstraints| */,
+						_Steps.Solve208 /* assign V5 = |ownedLiterals| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve152 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve182 /* assign V3 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -5032,11 +5512,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -5068,11 +5548,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -5106,12 +5586,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve147 /* assign C02[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve172 /* assign C03[?] = |isSerializable.'serializable'| */
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve172 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve162 /* assign V2 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -5145,17 +5625,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve176 /* assign C04:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve197 /* assign V4 = |ownedLiterals| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-14-steps */,
@@ -5195,17 +5675,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve187 /* assign C05:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve176 /* assign C04:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve157 /* assign C03:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve151 /* assign C02[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve206 /* assign V5 = |ownedConstraints| */,
+						_Steps.Solve197 /* assign V4 = |ownedLiterals| */,
+						_Steps.Solve183 /* assign V3 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve159 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -5247,18 +5727,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve243 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve196 /* assign C06:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve186 /* assign C05:EnumerationLiteralCS[*] = |ownedLiterals| */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve125 /* assign C01[?] = |instanceClassName| */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve165 /* assign C03[?] = (|isSerializable.'serializable'| > 0) */,
-						_Steps.Solve154 /* assign C02[?] = |isSerializable.'serializable'| */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve245 /* check-rule basecs::EnumerationCS.ownedLiterals : OCLinEcore::EnumerationLiteralCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve218 /* assign V6 = |ownedConstraints| */,
+						_Steps.Solve208 /* assign V5 = |ownedLiterals| */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve118 /* assign V1 = |instanceClassName| */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve172 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
+						_Steps.Solve162 /* assign V2 = |isSerializable.'serializable'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-15-steps */,
@@ -5308,9 +5788,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -5338,9 +5818,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -5370,11 +5850,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve138 /* assign C02:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve163 /* assign V2 = |ownedAnnotations| */,
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -5406,11 +5886,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve138 /* assign C02:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve163 /* assign V2 = |ownedAnnotations| */,
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -5444,9 +5924,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -5474,9 +5954,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -5506,11 +5986,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve138 /* assign C02:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve163 /* assign V2 = |ownedAnnotations| */,
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -5542,11 +6022,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve138 /* assign C02:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve137 /* assign C01[?] = |value| */,
-						_Steps.Solve090 /* assign C00[?] = |literal| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve163 /* assign V2 = |ownedAnnotations| */,
+						_Steps.Solve137 /* assign V1 = |value| */,
+						_Steps.Solve079 /* assign V0 = |literal| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -5784,8 +6264,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedExpression=ExpCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve291 /* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve016 /* assert (|ownedExpression| - 1) == 0 */
+						_Steps.Solve293 /* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve018 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step090 /* 1*ownedExpression=ExpCS */
@@ -5805,14 +6285,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
-						_Steps.Solve292 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
-						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve293 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve296 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
+						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
+						_Steps.Solve297 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve013 /* assert (|ownedElseExpression| - 1) == 0 */,
-						_Steps.Solve061 /* assign C00:ElseIfThenExpCS[*] = |ownedIfThenExpressions| */,
-						_Steps.Solve040 /* assert (|ownedThenExpression| - 1) == 0 */,
-						_Steps.Solve011 /* assert (|ownedCondition| - 1) == 0 */
+						_Steps.Solve086 /* assign V0 = |ownedIfThenExpressions| */,
+						_Steps.Solve039 /* assert (|ownedThenExpression| - 1) == 0 */,
+						_Steps.Solve010 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -5840,14 +6320,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
-						_Steps.Solve292 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
-						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve293 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve296 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
+						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
+						_Steps.Solve297 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve013 /* assert (|ownedElseExpression| - 1) == 0 */,
-						_Steps.Solve061 /* assign C00:ElseIfThenExpCS[*] = |ownedIfThenExpressions| */,
-						_Steps.Solve040 /* assert (|ownedThenExpression| - 1) == 0 */,
-						_Steps.Solve011 /* assert (|ownedCondition| - 1) == 0 */
+						_Steps.Solve086 /* assign V0 = |ownedIfThenExpressions| */,
+						_Steps.Solve039 /* assert (|ownedThenExpression| - 1) == 0 */,
+						_Steps.Solve010 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -5875,14 +6355,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
-						_Steps.Solve292 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
-						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve293 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve296 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
+						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
+						_Steps.Solve297 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve013 /* assert (|ownedElseExpression| - 1) == 0 */,
-						_Steps.Solve061 /* assign C00:ElseIfThenExpCS[*] = |ownedIfThenExpressions| */,
-						_Steps.Solve040 /* assert (|ownedThenExpression| - 1) == 0 */,
-						_Steps.Solve011 /* assert (|ownedCondition| - 1) == 0 */
+						_Steps.Solve086 /* assign V0 = |ownedIfThenExpressions| */,
+						_Steps.Solve039 /* assert (|ownedThenExpression| - 1) == 0 */,
+						_Steps.Solve010 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -5910,14 +6390,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
-						_Steps.Solve292 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
-						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve293 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve296 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
+						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
+						_Steps.Solve297 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve013 /* assert (|ownedElseExpression| - 1) == 0 */,
-						_Steps.Solve061 /* assign C00:ElseIfThenExpCS[*] = |ownedIfThenExpressions| */,
-						_Steps.Solve040 /* assert (|ownedThenExpression| - 1) == 0 */,
-						_Steps.Solve011 /* assert (|ownedCondition| - 1) == 0 */
+						_Steps.Solve086 /* assign V0 = |ownedIfThenExpressions| */,
+						_Steps.Solve039 /* assert (|ownedThenExpression| - 1) == 0 */,
+						_Steps.Solve010 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -5945,14 +6425,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
-						_Steps.Solve292 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
-						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve293 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve296 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : EssentialOCL::ElseIfThenExpCS */,
+						_Steps.Solve294 /* check-rule essentialoclcs::IfExpCS.ownedCondition : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
+						_Steps.Solve297 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve295 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve013 /* assert (|ownedElseExpression| - 1) == 0 */,
-						_Steps.Solve061 /* assign C00:ElseIfThenExpCS[*] = |ownedIfThenExpressions| */,
-						_Steps.Solve040 /* assert (|ownedThenExpression| - 1) == 0 */,
-						_Steps.Solve011 /* assert (|ownedCondition| - 1) == 0 */
+						_Steps.Solve086 /* assign V0 = |ownedIfThenExpressions| */,
+						_Steps.Solve039 /* assert (|ownedThenExpression| - 1) == 0 */,
+						_Steps.Solve010 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -5988,10 +6468,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve296 /* check-rule essentialoclcs::IfThenExpCS.ownedCondition : EssentialOCL::ExpCS */,
-						_Steps.Solve297 /* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve039 /* assert (|ownedThenExpression| - 1) == 0 */,
-						_Steps.Solve010 /* assert (|ownedCondition| - 1) == 0 */
+						_Steps.Solve298 /* check-rule essentialoclcs::IfThenExpCS.ownedCondition : EssentialOCL::ExpCS */,
+						_Steps.Solve299 /* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve040 /* assert (|ownedThenExpression| - 1) == 0 */,
+						_Steps.Solve011 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -6019,11 +6499,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'opposite' name=UnrestrictedName ':' ownedType=TypedMultiplicityRefCS { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve044 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve084 /* assign C00[?] = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
-						_Steps.Solve119 /* assign C01[+] = |qualifiers.'!ordered|!unique|ordered|unique'| */
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve045 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve073 /* assign V0 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
+						_Steps.Solve135 /* assign V1 = |qualifiers.'!ordered|!unique|ordered|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -6061,10 +6541,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { {'import'|'library'} { name=UnrestrictedName ':' }[?] ownedPathName=URIPathNameCS isAll='::*'[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve244 /* check-rule basecs::ImportCS.ownedPathName : EssentialOCL::URIPathNameCS */,
-						_Steps.Solve126 /* assign C01[?] = |isAll.'::*'| */,
-						_Steps.Solve033 /* assert (|ownedPathName| - 1) == 0 */,
-						_Steps.Solve070 /* assign C00[?] = |name| */
+						_Steps.Solve246 /* check-rule basecs::ImportCS.ownedPathName : EssentialOCL::URIPathNameCS */,
+						_Steps.Solve119 /* assign V1 = |isAll.'::*'| */,
+						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */,
+						_Steps.Solve080 /* assign V0 = |name| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -6098,10 +6578,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve298 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : EssentialOCL::PrefixedPrimaryExpCS */,
-						_Steps.Solve314 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::ExpCS */,
+						_Steps.Solve300 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : EssentialOCL::PrefixedPrimaryExpCS */,
+						_Steps.Solve316 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::ExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
 						_Steps.Solve029 /* assert (|ownedLeft| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6120,10 +6600,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve298 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : EssentialOCL::PrefixedPrimaryExpCS */,
-						_Steps.Solve314 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::ExpCS */,
+						_Steps.Solve300 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : EssentialOCL::PrefixedPrimaryExpCS */,
+						_Steps.Solve316 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::ExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
 						_Steps.Solve029 /* assert (|ownedLeft| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6169,7 +6649,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve299 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
+						_Steps.Solve301 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
 						_Steps.Solve014 /* assert (|ownedExpressionCS| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6190,7 +6670,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve299 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
+						_Steps.Solve301 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
 						_Steps.Solve014 /* assert (|ownedExpressionCS| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6211,7 +6691,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve299 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
+						_Steps.Solve301 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
 						_Steps.Solve014 /* assert (|ownedExpressionCS| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6232,7 +6712,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve299 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
+						_Steps.Solve301 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
 						_Steps.Solve014 /* assert (|ownedExpressionCS| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6253,7 +6733,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve299 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
+						_Steps.Solve301 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : EssentialOCL::ExpCS */,
 						_Steps.Solve014 /* assert (|ownedExpressionCS| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6282,10 +6762,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve301 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
-						_Steps.Solve300 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve303 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
+						_Steps.Solve302 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve019 /* assert (|ownedInExpression| - 1) == 0 */,
-						_Steps.Solve076 /* assign C00[*] = (|ownedVariables| - 1) */
+						_Steps.Solve072 /* assign V0 = (|ownedVariables| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -6311,10 +6791,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve301 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
-						_Steps.Solve300 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve303 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
+						_Steps.Solve302 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve019 /* assert (|ownedInExpression| - 1) == 0 */,
-						_Steps.Solve076 /* assign C00[*] = (|ownedVariables| - 1) */
+						_Steps.Solve072 /* assign V0 = (|ownedVariables| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -6340,10 +6820,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve301 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
-						_Steps.Solve300 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve303 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
+						_Steps.Solve302 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve019 /* assert (|ownedInExpression| - 1) == 0 */,
-						_Steps.Solve076 /* assign C00[*] = (|ownedVariables| - 1) */
+						_Steps.Solve072 /* assign V0 = (|ownedVariables| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -6369,10 +6849,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve301 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
-						_Steps.Solve300 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve303 /* check-rule essentialoclcs::LetExpCS.ownedVariables : EssentialOCL::LetVariableCS */,
+						_Steps.Solve302 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : EssentialOCL::ExpCS */,
 						_Steps.Solve019 /* assert (|ownedInExpression| - 1) == 0 */,
-						_Steps.Solve076 /* assign C00[*] = (|ownedVariables| - 1) */
+						_Steps.Solve072 /* assign V0 = (|ownedVariables| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -6406,13 +6886,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve302 /* check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
-						_Steps.Solve328 /* check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve327 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve021 /* assert (|ownedInitExpression| - 1) == 0 */,
-						_Steps.Solve134 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve063 /* assign C00:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve304 /* check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
+						_Steps.Solve330 /* check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve329 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve022 /* assert (|ownedInitExpression| - 1) == 0 */,
+						_Steps.Solve133 /* assign V1 = |ownedType| */,
+						_Steps.Solve090 /* assign V0 = |ownedRoundBracketedClause| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -6420,7 +6900,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step172 /* V00*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step181 /* V01*next-2-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step014 /* 1*'=' */,
 						_Steps.Step099 /* 1*ownedInitExpression=ExpCS */
 					},
@@ -6446,11 +6926,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve303 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
-						_Steps.Solve304 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
-						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve081 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve115 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve305 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
+						_Steps.Solve306 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
+						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve066 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve112 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -6478,11 +6958,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve303 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
-						_Steps.Solve304 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
-						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve081 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve115 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve305 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
+						_Steps.Solve306 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
+						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve066 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve112 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -6510,11 +6990,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve303 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
-						_Steps.Solve304 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
-						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve081 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve115 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve305 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
+						_Steps.Solve306 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
+						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve066 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve112 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -6542,11 +7022,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve303 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
-						_Steps.Solve304 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
-						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve081 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve115 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve305 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
+						_Steps.Solve306 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
+						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve066 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve112 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -6574,11 +7054,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve303 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
-						_Steps.Solve304 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
-						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve081 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve115 /* assign C01[*] = (|ownedParts| - 1) */
+						_Steps.Solve305 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : EssentialOCL::MapLiteralPartCS */,
+						_Steps.Solve306 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : EssentialOCL::MapTypeCS */,
+						_Steps.Solve042 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve066 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve112 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -6614,8 +7094,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedKey=ExpCS '<-' ownedValue=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve305 /* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : EssentialOCL::ExpCS */,
-						_Steps.Solve306 /* check-rule essentialoclcs::MapLiteralPartCS.ownedValue : EssentialOCL::ExpCS */,
+						_Steps.Solve307 /* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : EssentialOCL::ExpCS */,
+						_Steps.Solve308 /* check-rule essentialoclcs::MapLiteralPartCS.ownedValue : EssentialOCL::ExpCS */,
 						_Steps.Solve047 /* assert (|ownedValue| - 1) == 0 */,
 						_Steps.Solve028 /* assert (|ownedKey| - 1) == 0 */
 					},
@@ -6643,10 +7123,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
-						_Steps.Solve026 /* assert (|ownedKeyType| - C00) == 0 */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
+						_Steps.Solve023 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6673,9 +7153,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
 						_Steps.Solve024 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
@@ -6703,11 +7183,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve110 /* assign C01:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve129 /* assign V1 = |ownedMultiplicity| */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
 						_Steps.Solve025 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
@@ -6737,10 +7217,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
-						_Steps.Solve026 /* assert (|ownedKeyType| - C00) == 0 */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
+						_Steps.Solve023 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6767,9 +7247,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
 						_Steps.Solve024 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
@@ -6797,12 +7277,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve110 /* assign C01:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
-						_Steps.Solve027 /* assert (|ownedKeyType| - C00) == 0 */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve129 /* assign V1 = |ownedMultiplicity| */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
+						_Steps.Solve026 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6831,12 +7311,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve110 /* assign C01:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
-						_Steps.Solve023 /* assert (|ownedKeyType| - C00) == 0 */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve129 /* assign V1 = |ownedMultiplicity| */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
+						_Steps.Solve027 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6865,9 +7345,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve307 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve308 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve101 /* assign C00[?] = |ownedValueType| */,
+						_Steps.Solve309 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve310 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve097 /* assign V0 = |ownedValueType| */,
 						_Steps.Solve024 /* assert (|ownedKeyType| - C00) == 0 */,
 						_Steps.Solve002 /* assert (|name.'Map'| - 1) == 0 */
 					},
@@ -6903,13 +7383,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'reference' ownedPathName=PathNameCS ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve246 /* check-rule basecs::ModelElementRefCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve248 /* check-rule basecs::ModelElementRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve034 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
 						_Steps.Step054 /* 1*'reference' */,
-						_Steps.Step121 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step120 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step011 /* 1*';' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -6930,7 +7410,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { lowerBound=LOWER { '..' upperBound=UPPER }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve106 /* assign C00[?] = |upperBound| */,
+						_Steps.Solve104 /* assign V0 = |upperBound| */,
 						_Steps.Solve001 /* assert (|lowerBound| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6951,7 +7431,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve106 /* assign C00[?] = |upperBound| */,
+						_Steps.Solve104 /* assign V0 = |upperBound| */,
 						_Steps.Solve001 /* assert (|lowerBound| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6976,7 +7456,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve106 /* assign C00[?] = |upperBound| */,
+						_Steps.Solve104 /* assign V0 = |upperBound| */,
 						_Steps.Solve001 /* assert (|lowerBound| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7003,8 +7483,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] isNullFree='|1'[?] ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve127 /* assign C01[?] = |isNullFree.'|1'| */,
-						_Steps.Solve106 /* assign C00[?] = |upperBound| */,
+						_Steps.Solve120 /* assign V1 = |isNullFree.'|1'| */,
+						_Steps.Solve104 /* assign V0 = |upperBound| */,
 						_Steps.Solve001 /* assert (|lowerBound| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7077,7 +7557,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve088 /* assign C00[?] = |isNullFree.'|1'| */,
+						_Steps.Solve077 /* assign V0 = |isNullFree.'|1'| */,
 						_Steps.Solve058 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7118,19 +7598,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
-						_Steps.Solve276 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
-						_Steps.Solve277 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve171 /* assign C03[?] = |isPre.'@'| */,
-						_Steps.Solve139 /* assign C02:CurlyBracketedClauseCS[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve112 /* assign C01:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause| */,
-						_Steps.Solve066 /* assign C00:SquareBracketedClauseCS[*] = |ownedSquareBracketedClauses| */,
-						_Steps.Solve034 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve281 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
+						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve280 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
+						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve180 /* assign V3 = |isPre.'@'| */,
+						_Steps.Solve164 /* assign V2 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve131 /* assign V1 = |ownedRoundBracketedClause| */,
+						_Steps.Solve092 /* assign V0 = |ownedSquareBracketedClauses| */,
+						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
-						_Steps.Step120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step121 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -7152,19 +7632,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
-						_Steps.Solve276 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
-						_Steps.Solve277 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve171 /* assign C03[?] = |isPre.'@'| */,
-						_Steps.Solve139 /* assign C02:CurlyBracketedClauseCS[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve112 /* assign C01:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause| */,
-						_Steps.Solve066 /* assign C00:SquareBracketedClauseCS[*] = |ownedSquareBracketedClauses| */,
-						_Steps.Solve034 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve281 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
+						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve280 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
+						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve180 /* assign V3 = |isPre.'@'| */,
+						_Steps.Solve164 /* assign V2 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve131 /* assign V1 = |ownedRoundBracketedClause| */,
+						_Steps.Solve092 /* assign V0 = |ownedSquareBracketedClauses| */,
+						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
-						_Steps.Step120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step121 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -7186,19 +7666,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
-						_Steps.Solve276 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
-						_Steps.Solve277 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve171 /* assign C03[?] = |isPre.'@'| */,
-						_Steps.Solve139 /* assign C02:CurlyBracketedClauseCS[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve112 /* assign C01:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause| */,
-						_Steps.Solve066 /* assign C00:SquareBracketedClauseCS[*] = |ownedSquareBracketedClauses| */,
-						_Steps.Solve034 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve281 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
+						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve280 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
+						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve180 /* assign V3 = |isPre.'@'| */,
+						_Steps.Solve164 /* assign V2 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve131 /* assign V1 = |ownedRoundBracketedClause| */,
+						_Steps.Solve092 /* assign V0 = |ownedSquareBracketedClauses| */,
+						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
-						_Steps.Step120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step121 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -7220,19 +7700,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
-						_Steps.Solve276 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
-						_Steps.Solve277 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve171 /* assign C03[?] = |isPre.'@'| */,
-						_Steps.Solve139 /* assign C02:CurlyBracketedClauseCS[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve112 /* assign C01:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause| */,
-						_Steps.Solve066 /* assign C00:SquareBracketedClauseCS[*] = |ownedSquareBracketedClauses| */,
-						_Steps.Solve034 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve281 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
+						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve280 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
+						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve180 /* assign V3 = |isPre.'@'| */,
+						_Steps.Solve164 /* assign V2 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve131 /* assign V1 = |ownedRoundBracketedClause| */,
+						_Steps.Solve092 /* assign V0 = |ownedSquareBracketedClauses| */,
+						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
-						_Steps.Step120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step121 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -7254,19 +7734,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
-						_Steps.Solve276 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
-						_Steps.Solve277 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve171 /* assign C03[?] = |isPre.'@'| */,
-						_Steps.Solve139 /* assign C02:CurlyBracketedClauseCS[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve112 /* assign C01:RoundBracketedClauseCS[?] = |ownedRoundBracketedClause| */,
-						_Steps.Solve066 /* assign C00:SquareBracketedClauseCS[*] = |ownedSquareBracketedClauses| */,
-						_Steps.Solve034 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve281 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : EssentialOCL::SquareBracketedClauseCS */,
+						_Steps.Solve278 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve280 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : EssentialOCL::RoundBracketedClauseCS */,
+						_Steps.Solve279 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve180 /* assign V3 = |isPre.'@'| */,
+						_Steps.Solve164 /* assign V2 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve131 /* assign V1 = |ownedRoundBracketedClause| */,
+						_Steps.Solve092 /* assign V0 = |ownedSquareBracketedClauses| */,
+						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
-						_Steps.Step120 /* 1*ownedPathName=PathNameCS */,
+						_Steps.Step121 /* 1*ownedPathName=PathNameCS */,
 						_Steps.Step174 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
 						_Steps.Step187 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
 						_Steps.Step191 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
@@ -7296,7 +7776,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedNameExpression=NavigatingArgExpCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7309,13 +7789,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ':' ownedType=TypeExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve043 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve314 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step138 /* 1*ownedType=TypeExpCS */
+						_Steps.Step140 /* 1*ownedType=TypeExpCS */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
 						null,
@@ -7326,10 +7806,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve309 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve095 /* assign C00[?] = |ownedInitExpression| */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve087 /* assign V0 = |ownedInitExpression| */,
 						_Steps.Solve009 /* assert (|ownedCoIterator| - 1) == 0 */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */
 					},
@@ -7355,20 +7835,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve309 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
-						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve131 /* assign C01[?] = |ownedInitExpression| */,
-						_Steps.Solve092 /* assign C00[?] = |ownedCoIterator| */,
-						_Steps.Solve043 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
+						_Steps.Solve314 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve126 /* assign V1 = |ownedInitExpression| */,
+						_Steps.Solve082 /* assign V0 = |ownedCoIterator| */,
+						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
 						_Steps.Step108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step169 /* V00*next-2-steps */,
 						_Steps.Step013 /* 1*'<-' */,
 						_Steps.Step082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
@@ -7392,13 +7872,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve309 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
-						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve022 /* assert (|ownedInitExpression| - 1) == 0 */,
-						_Steps.Solve130 /* assign C01[?] = |ownedCoIterator| */,
-						_Steps.Solve099 /* assign C00[?] = |ownedType| */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
+						_Steps.Solve314 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve021 /* assert (|ownedInitExpression| - 1) == 0 */,
+						_Steps.Solve123 /* assign V1 = |ownedCoIterator| */,
+						_Steps.Solve095 /* assign V0 = |ownedType| */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7406,7 +7886,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step169 /* V00*next-2-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step181 /* V01*next-2-steps */,
 						_Steps.Step013 /* 1*'<-' */,
 						_Steps.Step082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
@@ -7429,13 +7909,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve099 /* assign C00[?] = |ownedType| */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve314 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve095 /* assign V0 = |ownedType| */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */,
 						_Steps.Solve050 /* assert (|prefix.'|'| - 1) == 0 */,
-						_Steps.Solve131 /* assign C01[?] = |ownedInitExpression| */
+						_Steps.Solve126 /* assign V1 = |ownedInitExpression| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -7443,7 +7923,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step169 /* V00*next-5-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step181 /* V01*next-2-steps */,
 						_Steps.Step014 /* 1*'=' */,
 						_Steps.Step100 /* 1*ownedInitExpression=ExpCS */
@@ -7463,7 +7943,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */,
 						_Steps.Solve048 /* assert (|prefix.','| - 1) == 0 */
 					},
@@ -7481,10 +7961,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve309 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve095 /* assign C00[?] = |ownedInitExpression| */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve087 /* assign V0 = |ownedInitExpression| */,
 						_Steps.Solve009 /* assert (|ownedCoIterator| - 1) == 0 */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */,
 						_Steps.Solve048 /* assert (|prefix.','| - 1) == 0 */
@@ -7513,13 +7993,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve309 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
-						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve131 /* assign C01[?] = |ownedInitExpression| */,
-						_Steps.Solve092 /* assign C00[?] = |ownedCoIterator| */,
-						_Steps.Solve043 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
+						_Steps.Solve314 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve126 /* assign V1 = |ownedInitExpression| */,
+						_Steps.Solve082 /* assign V0 = |ownedCoIterator| */,
+						_Steps.Solve046 /* assert (|ownedType| - 1) == 0 */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */,
 						_Steps.Solve048 /* assert (|prefix.','| - 1) == 0 */
 					},
@@ -7528,7 +8008,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step007 /* 1*',' */,
 						_Steps.Step108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step169 /* V00*next-2-steps */,
 						_Steps.Step013 /* 1*'<-' */,
 						_Steps.Step082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
@@ -7553,13 +8033,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { prefix=',' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve309 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
-						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve022 /* assert (|ownedInitExpression| - 1) == 0 */,
-						_Steps.Solve130 /* assign C01[?] = |ownedCoIterator| */,
-						_Steps.Solve099 /* assign C00[?] = |ownedType| */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : EssentialOCL::CoIteratorVariableCS */,
+						_Steps.Solve314 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve021 /* assert (|ownedInitExpression| - 1) == 0 */,
+						_Steps.Solve123 /* assign V1 = |ownedCoIterator| */,
+						_Steps.Solve095 /* assign V0 = |ownedType| */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */,
 						_Steps.Solve048 /* assert (|prefix.','| - 1) == 0 */
 					},
@@ -7569,7 +8049,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step169 /* V00*next-2-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step181 /* V01*next-2-steps */,
 						_Steps.Step013 /* 1*'<-' */,
 						_Steps.Step082 /* 1*ownedCoIterator=CoIteratorVariableCS */,
@@ -7593,13 +8073,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve311 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
-						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve310 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve099 /* assign C00[?] = |ownedType| */,
+						_Steps.Solve313 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : EssentialOCL::NavigatingArgExpCS */,
+						_Steps.Solve314 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve312 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve095 /* assign V0 = |ownedType| */,
 						_Steps.Solve030 /* assert (|ownedNameExpression| - 1) == 0 */,
 						_Steps.Solve049 /* assert (|prefix.';'| - 1) == 0 */,
-						_Steps.Solve131 /* assign C01[?] = |ownedInitExpression| */
+						_Steps.Solve126 /* assign V1 = |ownedInitExpression| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -7607,7 +8087,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Step108 /* 1*ownedNameExpression=NavigatingArgExpCS */,
 						_Steps.Step169 /* V00*next-5-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step181 /* V01*next-2-steps */,
 						_Steps.Step014 /* 1*'=' */,
 						_Steps.Step100 /* 1*ownedInitExpression=ExpCS */
@@ -7635,13 +8115,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve313 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve018 /* assert (|ownedExpression| - 1) == 0 */
+						_Steps.Solve315 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve016 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
 						_Steps.Step003 /* 1*'(' */,
-						_Steps.Step089 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step091 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -7654,13 +8134,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve313 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve018 /* assert (|ownedExpression| - 1) == 0 */
+						_Steps.Solve315 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve016 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
 						_Steps.Step003 /* 1*'(' */,
-						_Steps.Step089 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step091 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -7673,13 +8153,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve313 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve018 /* assert (|ownedExpression| - 1) == 0 */
+						_Steps.Solve315 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve016 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
 						_Steps.Step003 /* 1*'(' */,
-						_Steps.Step089 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step091 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -7692,13 +8172,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve313 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve018 /* assert (|ownedExpression| - 1) == 0 */
+						_Steps.Solve315 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve016 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
 						_Steps.Step003 /* 1*'(' */,
-						_Steps.Step089 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step091 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -7711,13 +8191,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '(' ownedExpression=ExpCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve313 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve018 /* assert (|ownedExpression| - 1) == 0 */
+						_Steps.Solve315 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve016 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
 						_Steps.Step003 /* 1*'(' */,
-						_Steps.Step089 /* 1*ownedExpression=ExpCS */,
+						_Steps.Step091 /* 1*ownedExpression=ExpCS */,
 						_Steps.Step004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -7837,11 +8317,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve241 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
-						_Steps.Solve128 /* assign C01[?] = |name| */,
+						_Steps.Solve243 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
+						_Steps.Solve121 /* assign V1 = |name| */,
 						_Steps.Solve055 /* assert (|stereotype.'invariant'| - 1) == 0 */,
-						_Steps.Solve087 /* assign C00[?] = |isCallable.'callable'| */,
-						_Steps.Solve155 /* assign C02[?] = |ownedMessageSpecification| */
+						_Steps.Solve076 /* assign V0 = |isCallable.'callable'| */,
+						_Steps.Solve165 /* assign V2 = |ownedMessageSpecification| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -7871,13 +8351,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve241 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
-						_Steps.Solve242 /* check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS */,
-						_Steps.Solve160 /* assign C03:SpecificationCS[?] = |ownedSpecification| */,
-						_Steps.Solve128 /* assign C01[?] = |name| */,
+						_Steps.Solve243 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
+						_Steps.Solve244 /* check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS */,
+						_Steps.Solve186 /* assign V3 = |ownedSpecification| */,
+						_Steps.Solve121 /* assign V1 = |name| */,
 						_Steps.Solve055 /* assert (|stereotype.'invariant'| - 1) == 0 */,
-						_Steps.Solve087 /* assign C00[?] = |isCallable.'callable'| */,
-						_Steps.Solve155 /* assign C02[?] = |ownedMessageSpecification| */
+						_Steps.Solve076 /* assign V0 = |isCallable.'callable'| */,
+						_Steps.Solve165 /* assign V2 = |ownedMessageSpecification| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-11-steps */,
@@ -7911,12 +8391,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve241 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
-						_Steps.Solve242 /* check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS */,
-						_Steps.Solve142 /* assign C02:SpecificationCS[?] = |ownedSpecification| */,
-						_Steps.Solve070 /* assign C00[?] = |name| */,
+						_Steps.Solve243 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
+						_Steps.Solve244 /* check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS */,
+						_Steps.Solve168 /* assign V2 = |ownedSpecification| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
 						_Steps.Solve056 /* assert (|stereotype.'postcondition'| - 1) == 0 */,
-						_Steps.Solve132 /* assign C01[?] = |ownedMessageSpecification| */
+						_Steps.Solve127 /* assign V1 = |ownedMessageSpecification| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -7948,12 +8428,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { stereotype='precondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve241 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
-						_Steps.Solve242 /* check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS */,
-						_Steps.Solve142 /* assign C02:SpecificationCS[?] = |ownedSpecification| */,
-						_Steps.Solve070 /* assign C00[?] = |name| */,
+						_Steps.Solve243 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : OCLinEcore::SpecificationCS */,
+						_Steps.Solve244 /* check-rule basecs::ConstraintCS.ownedSpecification : OCLinEcore::SpecificationCS */,
+						_Steps.Solve168 /* assign V2 = |ownedSpecification| */,
+						_Steps.Solve080 /* assign V0 = |name| */,
 						_Steps.Solve057 /* assert (|stereotype.'precondition'| - 1) == 0 */,
-						_Steps.Solve132 /* assign C01[?] = |ownedMessageSpecification| */
+						_Steps.Solve127 /* assign V1 = |ownedMessageSpecification| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -7993,19 +8473,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve173 /* assign C03[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve202 /* assign C06[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve209 /* assign C07[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-						_Steps.Solve180 /* assign C04[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve189 /* assign C05[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve121 /* assign C01[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve144 /* assign C02[*] = (|ownedParameters| - 1) */
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve187 /* assign V3 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve214 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve226 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+						_Steps.Solve190 /* assign V4 = (|ownedExceptions| > 0) */,
+						_Steps.Solve202 /* assign V5 = (|ownedExceptions| - 1) */,
+						_Steps.Solve110 /* assign V1 = (|ownedParameters| > 0) */,
+						_Steps.Solve154 /* assign V2 = (|ownedParameters| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-25-steps */,
@@ -8067,21 +8547,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-27-steps */,
@@ -8147,21 +8627,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-27-steps */,
@@ -8227,28 +8707,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
-						_Steps.Solve247 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve231 /* assign C12:PostconditionConstraintCS[*] = |ownedPostconditions| */,
-						_Steps.Solve218 /* assign C09:PreconditionConstraintCS[*] = |ownedPreconditions| */,
-						_Steps.Solve211 /* assign C08:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve173 /* assign C03[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve228 /* assign C11:SpecificationCS[?] = (|ownedBodyExpressions| > 0) */,
-						_Steps.Solve227 /* assign C10[*] = |ownedBodyExpressions| */,
-						_Steps.Solve202 /* assign C06[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve209 /* assign C07[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-						_Steps.Solve180 /* assign C04[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve189 /* assign C05[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve121 /* assign C01[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve144 /* assign C02[*] = (|ownedParameters| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve253 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
+						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve252 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve149 /* assign V12 = |ownedPostconditions| */,
+						_Steps.Solve237 /* assign V9 = |ownedPreconditions| */,
+						_Steps.Solve229 /* assign V8 = |ownedAnnotations| */,
+						_Steps.Solve187 /* assign V3 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve143 /* assign V11 = (|ownedBodyExpressions| > 0) */,
+						_Steps.Solve140 /* assign V10 = |ownedBodyExpressions| */,
+						_Steps.Solve214 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve226 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+						_Steps.Solve190 /* assign V4 = (|ownedExceptions| > 0) */,
+						_Steps.Solve202 /* assign V5 = (|ownedExceptions| - 1) */,
+						_Steps.Solve110 /* assign V1 = (|ownedParameters| > 0) */,
+						_Steps.Solve154 /* assign V2 = (|ownedParameters| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-34-steps */,
@@ -8328,30 +8808,30 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
-						_Steps.Solve247 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve235 /* assign C13:PostconditionConstraintCS[*] = |ownedPostconditions| */,
-						_Steps.Solve224 /* assign C10:PreconditionConstraintCS[*] = |ownedPreconditions| */,
-						_Steps.Solve217 /* assign C09:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve253 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
+						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve252 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve151 /* assign V13 = |ownedPostconditions| */,
+						_Steps.Solve142 /* assign V10 = |ownedPreconditions| */,
+						_Steps.Solve235 /* assign V9 = |ownedAnnotations| */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve232 /* assign C12:SpecificationCS[?] = (|ownedBodyExpressions| > 0) */,
-						_Steps.Solve230 /* assign C11[*] = |ownedBodyExpressions| */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve146 /* assign V12 = (|ownedBodyExpressions| > 0) */,
+						_Steps.Solve145 /* assign V11 = |ownedBodyExpressions| */,
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-36-steps */,
@@ -8435,30 +8915,30 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
-						_Steps.Solve247 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve235 /* assign C13:PostconditionConstraintCS[*] = |ownedPostconditions| */,
-						_Steps.Solve224 /* assign C10:PreconditionConstraintCS[*] = |ownedPreconditions| */,
-						_Steps.Solve217 /* assign C09:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve253 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
+						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve252 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve151 /* assign V13 = |ownedPostconditions| */,
+						_Steps.Solve142 /* assign V10 = |ownedPreconditions| */,
+						_Steps.Solve235 /* assign V9 = |ownedAnnotations| */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve232 /* assign C12:SpecificationCS[?] = (|ownedBodyExpressions| > 0) */,
-						_Steps.Solve230 /* assign C11[*] = |ownedBodyExpressions| */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve146 /* assign V12 = (|ownedBodyExpressions| > 0) */,
+						_Steps.Solve145 /* assign V11 = |ownedBodyExpressions| */,
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-36-steps */,
@@ -8542,19 +9022,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve173 /* assign C03[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve202 /* assign C06[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve209 /* assign C07[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-						_Steps.Solve180 /* assign C04[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve189 /* assign C05[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve121 /* assign C01[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve144 /* assign C02[*] = (|ownedParameters| - 1) */
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve187 /* assign V3 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve214 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve226 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+						_Steps.Solve190 /* assign V4 = (|ownedExceptions| > 0) */,
+						_Steps.Solve202 /* assign V5 = (|ownedExceptions| - 1) */,
+						_Steps.Solve110 /* assign V1 = (|ownedParameters| > 0) */,
+						_Steps.Solve154 /* assign V2 = (|ownedParameters| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-25-steps */,
@@ -8616,21 +9096,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-27-steps */,
@@ -8696,21 +9176,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-27-steps */,
@@ -8776,28 +9256,28 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
-						_Steps.Solve247 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve231 /* assign C12:PostconditionConstraintCS[*] = |ownedPostconditions| */,
-						_Steps.Solve218 /* assign C09:PreconditionConstraintCS[*] = |ownedPreconditions| */,
-						_Steps.Solve211 /* assign C08:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve173 /* assign C03[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve068 /* assign C00:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve228 /* assign C11:SpecificationCS[?] = (|ownedBodyExpressions| > 0) */,
-						_Steps.Solve227 /* assign C10[*] = |ownedBodyExpressions| */,
-						_Steps.Solve202 /* assign C06[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve209 /* assign C07[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-						_Steps.Solve180 /* assign C04[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve189 /* assign C05[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve121 /* assign C01[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve144 /* assign C02[*] = (|ownedParameters| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve253 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
+						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve252 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve149 /* assign V12 = |ownedPostconditions| */,
+						_Steps.Solve237 /* assign V9 = |ownedPreconditions| */,
+						_Steps.Solve229 /* assign V8 = |ownedAnnotations| */,
+						_Steps.Solve187 /* assign V3 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve091 /* assign V0 = |ownedSignature| */,
+						_Steps.Solve143 /* assign V11 = (|ownedBodyExpressions| > 0) */,
+						_Steps.Solve140 /* assign V10 = |ownedBodyExpressions| */,
+						_Steps.Solve214 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve226 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+						_Steps.Solve190 /* assign V4 = (|ownedExceptions| > 0) */,
+						_Steps.Solve202 /* assign V5 = (|ownedExceptions| - 1) */,
+						_Steps.Solve110 /* assign V1 = (|ownedParameters| > 0) */,
+						_Steps.Solve154 /* assign V2 = (|ownedParameters| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-34-steps */,
@@ -8877,30 +9357,30 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
-						_Steps.Solve247 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve235 /* assign C13:PostconditionConstraintCS[*] = |ownedPostconditions| */,
-						_Steps.Solve224 /* assign C10:PreconditionConstraintCS[*] = |ownedPreconditions| */,
-						_Steps.Solve217 /* assign C09:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve253 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
+						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve252 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve151 /* assign V13 = |ownedPostconditions| */,
+						_Steps.Solve142 /* assign V10 = |ownedPreconditions| */,
+						_Steps.Solve235 /* assign V9 = |ownedAnnotations| */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve232 /* assign C12:SpecificationCS[?] = (|ownedBodyExpressions| > 0) */,
-						_Steps.Solve230 /* assign C11[*] = |ownedBodyExpressions| */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve146 /* assign V12 = (|ownedBodyExpressions| > 0) */,
+						_Steps.Solve145 /* assign V11 = |ownedBodyExpressions| */,
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-36-steps */,
@@ -8984,30 +9464,30 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
-						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
-						_Steps.Solve247 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve248 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve235 /* assign C13:PostconditionConstraintCS[*] = |ownedPostconditions| */,
-						_Steps.Solve224 /* assign C10:PreconditionConstraintCS[*] = |ownedPreconditions| */,
-						_Steps.Solve217 /* assign C09:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve184 /* assign C04[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve251 /* check-rule basecs::OperationCS.ownedParameters : OCLinEcore::ParameterCS */,
+						_Steps.Solve253 /* check-rule basecs::OperationCS.ownedPreconditions : OCLinEcore::PreconditionConstraintCS */,
+						_Steps.Solve249 /* check-rule basecs::OperationCS.ownedBodyExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve252 /* check-rule basecs::OperationCS.ownedPostconditions : OCLinEcore::PostconditionConstraintCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve250 /* check-rule basecs::OperationCS.ownedExceptions : OCLinEcore::TypedRefCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve151 /* assign V13 = |ownedPostconditions| */,
+						_Steps.Solve142 /* assign V10 = |ownedPreconditions| */,
+						_Steps.Solve235 /* assign V9 = |ownedAnnotations| */,
+						_Steps.Solve198 /* assign V4 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve232 /* assign C12:SpecificationCS[?] = (|ownedBodyExpressions| > 0) */,
-						_Steps.Solve230 /* assign C11[*] = |ownedBodyExpressions| */,
-						_Steps.Solve193 /* assign C05[?] = (|ownedExceptions| > 0) */,
-						_Steps.Solve198 /* assign C06[*] = (|ownedExceptions| - 1) */,
-						_Steps.Solve148 /* assign C02[?] = (|ownedParameters| > 0) */,
-						_Steps.Solve161 /* assign C03[*] = (|ownedParameters| - 1) */,
-						_Steps.Solve210 /* assign C07[?] = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-						_Steps.Solve216 /* assign C08[+] = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+						_Steps.Solve146 /* assign V12 = (|ownedBodyExpressions| > 0) */,
+						_Steps.Solve145 /* assign V11 = |ownedBodyExpressions| */,
+						_Steps.Solve203 /* assign V5 = (|ownedExceptions| > 0) */,
+						_Steps.Solve213 /* assign V6 = (|ownedExceptions| - 1) */,
+						_Steps.Solve155 /* assign V2 = (|ownedParameters| > 0) */,
+						_Steps.Solve174 /* assign V3 = (|ownedParameters| - 1) */,
+						_Steps.Solve221 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+						_Steps.Solve232 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-36-steps */,
@@ -9099,9 +9579,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve129 /* assign C01[?] = |nsURI| */,
-						_Steps.Solve091 /* assign C00[?] = |nsPrefix| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve122 /* assign V1 = |nsURI| */,
+						_Steps.Solve081 /* assign V0 = |nsPrefix| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -9131,15 +9611,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve253 /* check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS */,
-						_Steps.Solve252 /* check-rule basecs::PackageCS.ownedClasses : OCLinEcore::ClassCS */,
-						_Steps.Solve175 /* assign C04:ClassCS[*] = |ownedClasses| */,
-						_Steps.Solve159 /* assign C03:PackageCS[*] = |ownedPackages| */,
-						_Steps.Solve138 /* assign C02:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve129 /* assign C01[?] = |nsURI| */,
-						_Steps.Solve091 /* assign C00[?] = |nsPrefix| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve255 /* check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS */,
+						_Steps.Solve254 /* check-rule basecs::PackageCS.ownedClasses : OCLinEcore::ClassCS */,
+						_Steps.Solve195 /* assign V4 = |ownedClasses| */,
+						_Steps.Solve185 /* assign V3 = |ownedPackages| */,
+						_Steps.Solve163 /* assign V2 = |ownedAnnotations| */,
+						_Steps.Solve122 /* assign V1 = |nsURI| */,
+						_Steps.Solve081 /* assign V0 = |nsPrefix| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-13-steps */,
@@ -9177,9 +9657,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve129 /* assign C01[?] = |nsURI| */,
-						_Steps.Solve091 /* assign C00[?] = |nsPrefix| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve122 /* assign V1 = |nsURI| */,
+						_Steps.Solve081 /* assign V0 = |nsPrefix| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -9209,15 +9689,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve253 /* check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS */,
-						_Steps.Solve252 /* check-rule basecs::PackageCS.ownedClasses : OCLinEcore::ClassCS */,
-						_Steps.Solve175 /* assign C04:ClassCS[*] = |ownedClasses| */,
-						_Steps.Solve159 /* assign C03:PackageCS[*] = |ownedPackages| */,
-						_Steps.Solve138 /* assign C02:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve129 /* assign C01[?] = |nsURI| */,
-						_Steps.Solve091 /* assign C00[?] = |nsPrefix| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve255 /* check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS */,
+						_Steps.Solve254 /* check-rule basecs::PackageCS.ownedClasses : OCLinEcore::ClassCS */,
+						_Steps.Solve195 /* assign V4 = |ownedClasses| */,
+						_Steps.Solve185 /* assign V3 = |ownedPackages| */,
+						_Steps.Solve163 /* assign V2 = |ownedAnnotations| */,
+						_Steps.Solve122 /* assign V1 = |nsURI| */,
+						_Steps.Solve081 /* assign V0 = |nsPrefix| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-13-steps */,
@@ -9263,14 +9743,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] { '{' ownedAnnotations+=AnnotationElementCS[*] '}' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve100 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve166 /* assign C03[?] = (|ownedAnnotations| > 0) */,
-						_Steps.Solve174 /* assign C04:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve123 /* assign C01[?] = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
-						_Steps.Solve146 /* assign C02[+] = |qualifiers.'!ordered|!unique|ordered|unique'| */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve096 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve173 /* assign V3 = (|ownedAnnotations| > 0) */,
+						_Steps.Solve194 /* assign V4 = |ownedAnnotations| */,
+						_Steps.Solve116 /* assign V1 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
+						_Steps.Solve170 /* assign V2 = |qualifiers.'!ordered|!unique|ordered|unique'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-13-steps */,
@@ -9319,7 +9799,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Solve053 /* assert (|referredElement| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
-						_Steps.Step150 /* 1*referredElement=UnrestrictedName */
+						_Steps.Step151 /* 1*referredElement=UnrestrictedName */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
 						_Segments.Segments8 /* «? » + «value» + «? » */
@@ -9343,7 +9823,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 						_Steps.Solve053 /* assert (|referredElement| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
-						_Steps.Step151 /* 1*referredElement=UnrestrictedName */
+						_Steps.Step150 /* 1*referredElement=UnrestrictedName */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
 						_Segments.Segments8 /* «? » + «value» + «? » */
@@ -9380,8 +9860,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathElements+=FirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve255 /* check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS|Base::NextPathElementCS */,
-						_Steps.Solve073 /* assign C00[*] = (|ownedPathElements| - 1) */
+						_Steps.Solve257 /* check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS|Base::NextPathElementCS */,
+						_Steps.Solve069 /* assign V0 = (|ownedPathElements| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -9401,7 +9881,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedPathElements+=FirstPathElementCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve254 /* check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS */,
+						_Steps.Solve256 /* check-rule basecs::PathNameCS.ownedPathElements : Base::FirstPathElementCS */,
 						_Steps.Solve031 /* assert (|ownedPathElements| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9414,8 +9894,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathElements+=URIFirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve256 /* check-rule basecs::PathNameCS.ownedPathElements : EssentialOCL::URIFirstPathElementCS|Base::NextPathElementCS */,
-						_Steps.Solve073 /* assign C00[*] = (|ownedPathElements| - 1) */
+						_Steps.Solve258 /* check-rule basecs::PathNameCS.ownedPathElements : EssentialOCL::URIFirstPathElementCS|Base::NextPathElementCS */,
+						_Steps.Solve069 /* assign V0 = (|ownedPathElements| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -9443,9 +9923,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { patternVariableName=UnrestrictedName[?] ':' ownedPatternType=TypeExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve317 /* check-rule essentialoclcs::PatternExpCS.ownedPatternType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve319 /* check-rule essentialoclcs::PatternExpCS.ownedPatternType : EssentialOCL::TypeExpCS */,
 						_Steps.Solve037 /* assert (|ownedPatternType| - 1) == 0 */,
-						_Steps.Solve069 /* assign C00:UnrestrictedName[?] = |patternVariableName| */
+						_Steps.Solve098 /* assign V0 = |patternVariableName| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
@@ -9471,9 +9951,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve316 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS */,
+						_Steps.Solve318 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9489,9 +9969,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnaryOperatorName ownedRight=PrefixedLetExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve315 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS */,
+						_Steps.Solve317 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9507,9 +9987,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve316 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS */,
+						_Steps.Solve318 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9525,9 +10005,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnaryOperatorName ownedRight=PrefixedLetExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve315 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS */,
+						_Steps.Solve317 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9543,9 +10023,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnaryOperatorName ownedRight=PrefixedLetExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve315 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS */,
+						_Steps.Solve317 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedLetExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9561,9 +10041,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve316 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS */,
+						_Steps.Solve318 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : EssentialOCL::PrefixedPrimaryExpCS */,
 						_Steps.Solve038 /* assert (|ownedRight| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9628,7 +10108,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step072 /* 1*name=PrimitiveTypeIdentifier */
@@ -9640,7 +10120,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step072 /* 1*name=PrimitiveTypeIdentifier */
@@ -9652,9 +10132,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve062 /* assign C00:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve089 /* assign V0 = |ownedMultiplicity| */,
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9670,7 +10150,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step072 /* 1*name=PrimitiveTypeIdentifier */
@@ -9682,7 +10162,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step072 /* 1*name=PrimitiveTypeIdentifier */
@@ -9694,9 +10174,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve062 /* assign C00:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve089 /* assign V0 = |ownedMultiplicity| */,
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9712,9 +10192,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve062 /* assign C00:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve089 /* assign V0 = |ownedMultiplicity| */,
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -9730,7 +10210,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// name=PrimitiveTypeIdentifier
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve006 /* assert (|name| - 1) == 0 */
+						_Steps.Solve005 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step072 /* 1*name=PrimitiveTypeIdentifier */
@@ -9750,13 +10230,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve104 /* assign C00[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve167 /* assign C03[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve178 /* assign C04[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve101 /* assign V0 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve176 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve199 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-17-steps */,
@@ -9802,15 +10282,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-19-steps */,
@@ -9860,15 +10340,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-19-steps */,
@@ -9918,24 +10398,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve234 /* assign C12[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve104 /* assign C00[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve167 /* assign C03[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve178 /* assign C04[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve199 /* assign C06[*] = (|referredKeys| > 0) */,
-						_Steps.Solve206 /* assign C07[*] = (|referredKeys| - 1) */,
-						_Steps.Solve215 /* assign C08[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve219 /* assign C09:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve226 /* assign C10[*] = 0 */,
-						_Steps.Solve229 /* assign C11:SpecificationCS[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve148 /* assign V12 = |ownedImplicitOpposites| */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve101 /* assign V0 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve176 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve199 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve215 /* assign V6 = (|referredKeys| > 0) */,
+						_Steps.Solve222 /* assign V7 = (|referredKeys| - 1) */,
+						_Steps.Solve230 /* assign V8 = |ownedDefaultExpressions| */,
+						_Steps.Solve233 /* assign V9 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve139 /* assign V10 = 0 */,
+						_Steps.Solve144 /* assign V11 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-39-steps */,
@@ -10025,26 +10505,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve236 /* assign C13[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve195 /* assign C06:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve150 /* assign V13 = |ownedImplicitOpposites| */,
+						_Steps.Solve217 /* assign V6 = |ownedAnnotations| */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve207 /* assign C07[*] = (|referredKeys| > 0) */,
-						_Steps.Solve214 /* assign C08[*] = (|referredKeys| - 1) */,
-						_Steps.Solve222 /* assign C09[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve225 /* assign C10:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve229 /* assign C11[*] = 0 */,
-						_Steps.Solve233 /* assign C12:SpecificationCS[?] = 0 */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve223 /* assign V7 = (|referredKeys| > 0) */,
+						_Steps.Solve227 /* assign V8 = (|referredKeys| - 1) */,
+						_Steps.Solve236 /* assign V9 = |ownedDefaultExpressions| */,
+						_Steps.Solve138 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve144 /* assign V11 = 0 */,
+						_Steps.Solve147 /* assign V12 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-41-steps */,
@@ -10138,26 +10618,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve236 /* assign C13[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve195 /* assign C06:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve150 /* assign V13 = |ownedImplicitOpposites| */,
+						_Steps.Solve217 /* assign V6 = |ownedAnnotations| */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve207 /* assign C07[*] = (|referredKeys| > 0) */,
-						_Steps.Solve214 /* assign C08[*] = (|referredKeys| - 1) */,
-						_Steps.Solve222 /* assign C09[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve225 /* assign C10:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve229 /* assign C11[*] = 0 */,
-						_Steps.Solve233 /* assign C12:SpecificationCS[?] = 0 */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve223 /* assign V7 = (|referredKeys| > 0) */,
+						_Steps.Solve227 /* assign V8 = (|referredKeys| - 1) */,
+						_Steps.Solve236 /* assign V9 = |ownedDefaultExpressions| */,
+						_Steps.Solve138 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve144 /* assign V11 = 0 */,
+						_Steps.Solve147 /* assign V12 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-41-steps */,
@@ -10251,13 +10731,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve104 /* assign C00[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve167 /* assign C03[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve178 /* assign C04[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve101 /* assign V0 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve176 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve199 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-17-steps */,
@@ -10303,15 +10783,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-19-steps */,
@@ -10361,15 +10841,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-19-steps */,
@@ -10419,24 +10899,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve234 /* assign C12[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve104 /* assign C00[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve167 /* assign C03[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve178 /* assign C04[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve199 /* assign C06[*] = (|referredKeys| > 0) */,
-						_Steps.Solve206 /* assign C07[*] = (|referredKeys| - 1) */,
-						_Steps.Solve215 /* assign C08[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve219 /* assign C09:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve226 /* assign C10[*] = 0 */,
-						_Steps.Solve229 /* assign C11:SpecificationCS[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve148 /* assign V12 = |ownedImplicitOpposites| */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve101 /* assign V0 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve176 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve199 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve215 /* assign V6 = (|referredKeys| > 0) */,
+						_Steps.Solve222 /* assign V7 = (|referredKeys| - 1) */,
+						_Steps.Solve230 /* assign V8 = |ownedDefaultExpressions| */,
+						_Steps.Solve233 /* assign V9 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve139 /* assign V10 = 0 */,
+						_Steps.Solve144 /* assign V11 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-39-steps */,
@@ -10526,26 +11006,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve236 /* assign C13[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve195 /* assign C06:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve150 /* assign V13 = |ownedImplicitOpposites| */,
+						_Steps.Solve217 /* assign V6 = |ownedAnnotations| */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve207 /* assign C07[*] = (|referredKeys| > 0) */,
-						_Steps.Solve214 /* assign C08[*] = (|referredKeys| - 1) */,
-						_Steps.Solve222 /* assign C09[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve225 /* assign C10:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve229 /* assign C11[*] = 0 */,
-						_Steps.Solve233 /* assign C12:SpecificationCS[?] = 0 */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve223 /* assign V7 = (|referredKeys| > 0) */,
+						_Steps.Solve227 /* assign V8 = (|referredKeys| - 1) */,
+						_Steps.Solve236 /* assign V9 = |ownedDefaultExpressions| */,
+						_Steps.Solve138 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve144 /* assign V11 = 0 */,
+						_Steps.Solve147 /* assign V12 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-41-steps */,
@@ -10639,26 +11119,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve236 /* assign C13[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve195 /* assign C06:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve150 /* assign V13 = |ownedImplicitOpposites| */,
+						_Steps.Solve217 /* assign V6 = |ownedAnnotations| */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve207 /* assign C07[*] = (|referredKeys| > 0) */,
-						_Steps.Solve214 /* assign C08[*] = (|referredKeys| - 1) */,
-						_Steps.Solve222 /* assign C09[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve225 /* assign C10:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve229 /* assign C11[*] = 0 */,
-						_Steps.Solve233 /* assign C12:SpecificationCS[?] = 0 */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve223 /* assign V7 = (|referredKeys| > 0) */,
+						_Steps.Solve227 /* assign V8 = (|referredKeys| - 1) */,
+						_Steps.Solve236 /* assign V9 = |ownedDefaultExpressions| */,
+						_Steps.Solve138 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve144 /* assign V11 = 0 */,
+						_Steps.Solve147 /* assign V12 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-41-steps */,
@@ -10752,13 +11232,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve104 /* assign C00[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve167 /* assign C03[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve178 /* assign C04[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve101 /* assign V0 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve176 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve199 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-17-steps */,
@@ -10804,15 +11284,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-19-steps */,
@@ -10862,15 +11342,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-19-steps */,
@@ -10920,24 +11400,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve234 /* assign C12[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve185 /* assign C05:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve152 /* assign C02[?] = |default| */,
-						_Steps.Solve135 /* assign C01[?] = |ownedType| */,
-						_Steps.Solve104 /* assign C00[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve167 /* assign C03[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve178 /* assign C04[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve199 /* assign C06[*] = (|referredKeys| > 0) */,
-						_Steps.Solve206 /* assign C07[*] = (|referredKeys| - 1) */,
-						_Steps.Solve215 /* assign C08[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve219 /* assign C09:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve226 /* assign C10[*] = 0 */,
-						_Steps.Solve229 /* assign C11:SpecificationCS[?] = 0 */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve148 /* assign V12 = |ownedImplicitOpposites| */,
+						_Steps.Solve205 /* assign V5 = |ownedAnnotations| */,
+						_Steps.Solve160 /* assign V2 = |default| */,
+						_Steps.Solve134 /* assign V1 = |ownedType| */,
+						_Steps.Solve101 /* assign V0 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve176 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve199 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve215 /* assign V6 = (|referredKeys| > 0) */,
+						_Steps.Solve222 /* assign V7 = (|referredKeys| - 1) */,
+						_Steps.Solve230 /* assign V8 = |ownedDefaultExpressions| */,
+						_Steps.Solve233 /* assign V9 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve139 /* assign V10 = 0 */,
+						_Steps.Solve144 /* assign V11 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-39-steps */,
@@ -11027,26 +11507,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve236 /* assign C13[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve195 /* assign C06:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve103 /* assign C00[?] = |qualifiers.'static'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve150 /* assign V13 = |ownedImplicitOpposites| */,
+						_Steps.Solve217 /* assign V6 = |ownedAnnotations| */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve100 /* assign V0 = |qualifiers.'static'| */,
 						_Steps.Solve051 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve207 /* assign C07[*] = (|referredKeys| > 0) */,
-						_Steps.Solve214 /* assign C08[*] = (|referredKeys| - 1) */,
-						_Steps.Solve222 /* assign C09[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve225 /* assign C10:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve229 /* assign C11[*] = 0 */,
-						_Steps.Solve233 /* assign C12:SpecificationCS[?] = 0 */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve223 /* assign V7 = (|referredKeys| > 0) */,
+						_Steps.Solve227 /* assign V8 = (|referredKeys| - 1) */,
+						_Steps.Solve236 /* assign V9 = |ownedDefaultExpressions| */,
+						_Steps.Solve138 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve144 /* assign V11 = 0 */,
+						_Steps.Solve147 /* assign V12 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-41-steps */,
@@ -11140,26 +11620,26 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve257 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
-						_Steps.Solve259 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
-						_Steps.Solve271 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
-						_Steps.Solve236 /* assign C13[*] = |ownedImplicitOpposites| */,
-						_Steps.Solve195 /* assign C06:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve170 /* assign C03[?] = |default| */,
-						_Steps.Solve156 /* assign C02[?] = |ownedType| */,
-						_Steps.Solve136 /* assign C01[?] = |referredOpposite| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve102 /* assign C00[?] = |qualifiers.'definition'| */,
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve259 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : OCLinEcore::ImplicitOppositeCS */,
+						_Steps.Solve261 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : OCLinEcore::SpecificationCS */,
+						_Steps.Solve273 /* check-rule basecs::TypedElementCS.ownedType : OCLinEcore::TypedMultiplicityRefCS */,
+						_Steps.Solve150 /* assign V13 = |ownedImplicitOpposites| */,
+						_Steps.Solve217 /* assign V6 = |ownedAnnotations| */,
+						_Steps.Solve179 /* assign V3 = |default| */,
+						_Steps.Solve169 /* assign V2 = |ownedType| */,
+						_Steps.Solve136 /* assign V1 = |referredOpposite| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve099 /* assign V0 = |qualifiers.'definition'| */,
 						_Steps.Solve052 /* assert (|qualifiers.'static'| - 1) == 0 */,
-						_Steps.Solve181 /* assign C04[?] = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-						_Steps.Solve191 /* assign C05[+] = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-						_Steps.Solve207 /* assign C07[*] = (|referredKeys| > 0) */,
-						_Steps.Solve214 /* assign C08[*] = (|referredKeys| - 1) */,
-						_Steps.Solve222 /* assign C09[*] = |ownedDefaultExpressions| */,
-						_Steps.Solve225 /* assign C10:SpecificationCS[?] = (|ownedDefaultExpressions| > 0) */,
-						_Steps.Solve229 /* assign C11[*] = 0 */,
-						_Steps.Solve233 /* assign C12:SpecificationCS[?] = 0 */
+						_Steps.Solve191 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+						_Steps.Solve210 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+						_Steps.Solve223 /* assign V7 = (|referredKeys| > 0) */,
+						_Steps.Solve227 /* assign V8 = (|referredKeys| - 1) */,
+						_Steps.Solve236 /* assign V9 = |ownedDefaultExpressions| */,
+						_Steps.Solve138 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+						_Steps.Solve144 /* assign V11 = 0 */,
+						_Steps.Solve147 /* assign V12 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-41-steps */,
@@ -11261,9 +11741,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '(' { ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS)[*] }[?] ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve318 /* check-rule essentialoclcs::RoundBracketedClauseCS.ownedArguments : EssentialOCL::NavigatingCommaArgCS|EssentialOCL::NavigatingArgCS|EssentialOCL::NavigatingSemiArgCS|EssentialOCL::NavigatingBarArgCS */,
-						_Steps.Solve078 /* assign C00[?] = (|ownedArguments| > 0) */,
-						_Steps.Solve111 /* assign C01:NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS[*] = (|ownedArguments| - 1) */
+						_Steps.Solve320 /* check-rule essentialoclcs::RoundBracketedClauseCS.ownedArguments : EssentialOCL::NavigatingArgCS|EssentialOCL::NavigatingBarArgCS|EssentialOCL::NavigatingSemiArgCS|EssentialOCL::NavigatingCommaArgCS */,
+						_Steps.Solve061 /* assign V0 = (|ownedArguments| > 0) */,
+						_Steps.Solve107 /* assign V1 = (|ownedArguments| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-5-steps */,
@@ -11312,7 +11792,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedInitExpression=StringLiteralExpCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve320 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::StringLiteralExpCS */,
+						_Steps.Solve322 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::StringLiteralExpCS */,
 						_Steps.Solve020 /* assert (|ownedInitExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -11325,7 +11805,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve319 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
+						_Steps.Solve321 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : EssentialOCL::ExpCS|EssentialOCL::PatternExpCS */,
 						_Steps.Solve020 /* assert (|ownedInitExpression| - 1) == 0 */,
 						_Steps.Solve054 /* assert (|referredProperty| - 1) == 0 */
 					},
@@ -11353,8 +11833,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '[' ownedTerms+=ExpCS { ',' ownedTerms+=ExpCS }[*] ']' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve321 /* check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : EssentialOCL::ExpCS */,
-						_Steps.Solve075 /* assign C00[*] = (|ownedTerms| - 1) */
+						_Steps.Solve323 /* check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : EssentialOCL::ExpCS */,
+						_Steps.Solve071 /* assign V0 = (|ownedTerms| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -11386,7 +11866,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve067 /* assign C00:StringLiteral[+] = |segments| */
+						_Steps.Solve103 /* assign V0 = |segments| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step176 /* V00*segments+=StringLiteral */
@@ -11398,7 +11878,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve067 /* assign C00:StringLiteral[+] = |segments| */
+						_Steps.Solve103 /* assign V0 = |segments| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step176 /* V00*segments+=StringLiteral */
@@ -11410,7 +11890,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve067 /* assign C00:StringLiteral[+] = |segments| */
+						_Steps.Solve103 /* assign V0 = |segments| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step176 /* V00*segments+=StringLiteral */
@@ -11422,7 +11902,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve067 /* assign C00:StringLiteral[+] = |segments| */
+						_Steps.Solve103 /* assign V0 = |segments| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step176 /* V00*segments+=StringLiteral */
@@ -11434,7 +11914,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve067 /* assign C00:StringLiteral[+] = |segments| */
+						_Steps.Solve103 /* assign V0 = |segments| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step176 /* V00*segments+=StringLiteral */
@@ -11446,7 +11926,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// segments+=StringLiteral[+]
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve067 /* assign C00:StringLiteral[+] = |segments| */
+						_Steps.Solve103 /* assign V0 = |segments| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step176 /* V00*segments+=StringLiteral */
@@ -11466,16 +11946,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve182 /* assign C04[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve086 /* assign C00[?] = |isAbstract.'abstract'| */,
-						_Steps.Solve201 /* assign C06[?] = (|isInterface.'interface'| > 0) */,
-						_Steps.Solve194 /* assign C05[?] = |isInterface.'interface'| */,
-						_Steps.Solve149 /* assign C02[?] = (|ownedSuperTypes| > 0) */,
-						_Steps.Solve162 /* assign C03[*] = (|ownedSuperTypes| - 1) */
+						_Steps.Solve264 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve192 /* assign V4 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve075 /* assign V0 = |isAbstract.'abstract'| */,
+						_Steps.Solve201 /* assign V5 = (|isInterface.'interface'| > 0) */,
+						_Steps.Solve216 /* assign V6 = |isInterface.'interface'| */,
+						_Steps.Solve157 /* assign V2 = (|ownedSuperTypes| > 0) */,
+						_Steps.Solve175 /* assign V3 = (|ownedSuperTypes| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-18-steps */,
@@ -11523,24 +12003,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
-						_Steps.Solve260 /* check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve261 /* check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS */,
-						_Steps.Solve223 /* assign C10:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve221 /* assign C09:StructuralFeatureCS[*] = |ownedProperties| */,
-						_Steps.Solve212 /* assign C08:OperationCS[*] = |ownedOperations| */,
-						_Steps.Solve204 /* assign C07:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve182 /* assign C04[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve086 /* assign C00[?] = |isAbstract.'abstract'| */,
-						_Steps.Solve201 /* assign C06[?] = (|isInterface.'interface'| > 0) */,
-						_Steps.Solve194 /* assign C05[?] = |isInterface.'interface'| */,
-						_Steps.Solve149 /* assign C02[?] = (|ownedSuperTypes| > 0) */,
-						_Steps.Solve162 /* assign C03[*] = (|ownedSuperTypes| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve264 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
+						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve263 /* check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS */,
+						_Steps.Solve141 /* assign V10 = |ownedConstraints| */,
+						_Steps.Solve238 /* assign V9 = |ownedProperties| */,
+						_Steps.Solve231 /* assign V8 = |ownedOperations| */,
+						_Steps.Solve225 /* assign V7 = |ownedAnnotations| */,
+						_Steps.Solve192 /* assign V4 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve075 /* assign V0 = |isAbstract.'abstract'| */,
+						_Steps.Solve211 /* assign V6 = (|isInterface.'interface'| > 0) */,
+						_Steps.Solve204 /* assign V5 = |isInterface.'interface'| */,
+						_Steps.Solve157 /* assign V2 = (|ownedSuperTypes| > 0) */,
+						_Steps.Solve175 /* assign V3 = (|ownedSuperTypes| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-23-steps */,
@@ -11598,16 +12078,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve182 /* assign C04[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve086 /* assign C00[?] = |isAbstract.'abstract'| */,
-						_Steps.Solve201 /* assign C06[?] = (|isInterface.'interface'| > 0) */,
-						_Steps.Solve194 /* assign C05[?] = |isInterface.'interface'| */,
-						_Steps.Solve149 /* assign C02[?] = (|ownedSuperTypes| > 0) */,
-						_Steps.Solve162 /* assign C03[*] = (|ownedSuperTypes| - 1) */
+						_Steps.Solve264 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve192 /* assign V4 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve075 /* assign V0 = |isAbstract.'abstract'| */,
+						_Steps.Solve201 /* assign V5 = (|isInterface.'interface'| > 0) */,
+						_Steps.Solve216 /* assign V6 = |isInterface.'interface'| */,
+						_Steps.Solve157 /* assign V2 = (|ownedSuperTypes| > 0) */,
+						_Steps.Solve175 /* assign V3 = (|ownedSuperTypes| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-18-steps */,
@@ -11655,24 +12135,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
-						_Steps.Solve260 /* check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve261 /* check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS */,
-						_Steps.Solve223 /* assign C10:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve221 /* assign C09:StructuralFeatureCS[*] = |ownedProperties| */,
-						_Steps.Solve212 /* assign C08:OperationCS[*] = |ownedOperations| */,
-						_Steps.Solve204 /* assign C07:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve182 /* assign C04[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve086 /* assign C00[?] = |isAbstract.'abstract'| */,
-						_Steps.Solve201 /* assign C06[?] = (|isInterface.'interface'| > 0) */,
-						_Steps.Solve194 /* assign C05[?] = |isInterface.'interface'| */,
-						_Steps.Solve149 /* assign C02[?] = (|ownedSuperTypes| > 0) */,
-						_Steps.Solve162 /* assign C03[*] = (|ownedSuperTypes| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve264 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
+						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve263 /* check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS */,
+						_Steps.Solve141 /* assign V10 = |ownedConstraints| */,
+						_Steps.Solve238 /* assign V9 = |ownedProperties| */,
+						_Steps.Solve231 /* assign V8 = |ownedOperations| */,
+						_Steps.Solve225 /* assign V7 = |ownedAnnotations| */,
+						_Steps.Solve192 /* assign V4 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve075 /* assign V0 = |isAbstract.'abstract'| */,
+						_Steps.Solve211 /* assign V6 = (|isInterface.'interface'| > 0) */,
+						_Steps.Solve204 /* assign V5 = |isInterface.'interface'| */,
+						_Steps.Solve157 /* assign V2 = (|ownedSuperTypes| > 0) */,
+						_Steps.Solve175 /* assign V3 = (|ownedSuperTypes| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-23-steps */,
@@ -11730,16 +12210,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve182 /* assign C04[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve086 /* assign C00[?] = |isAbstract.'abstract'| */,
-						_Steps.Solve201 /* assign C06[?] = (|isInterface.'interface'| > 0) */,
-						_Steps.Solve194 /* assign C05[?] = |isInterface.'interface'| */,
-						_Steps.Solve149 /* assign C02[?] = (|ownedSuperTypes| > 0) */,
-						_Steps.Solve162 /* assign C03[*] = (|ownedSuperTypes| - 1) */
+						_Steps.Solve264 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve192 /* assign V4 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve075 /* assign V0 = |isAbstract.'abstract'| */,
+						_Steps.Solve201 /* assign V5 = (|isInterface.'interface'| > 0) */,
+						_Steps.Solve216 /* assign V6 = |isInterface.'interface'| */,
+						_Steps.Solve157 /* assign V2 = (|ownedSuperTypes| > 0) */,
+						_Steps.Solve175 /* assign V3 = (|ownedSuperTypes| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-18-steps */,
@@ -11787,24 +12267,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve245 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
-						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
-						_Steps.Solve260 /* check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS */,
-						_Steps.Solve267 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
-						_Steps.Solve240 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
-						_Steps.Solve261 /* check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS */,
-						_Steps.Solve223 /* assign C10:InvariantConstraintCS[*] = |ownedConstraints| */,
-						_Steps.Solve221 /* assign C09:StructuralFeatureCS[*] = |ownedProperties| */,
-						_Steps.Solve212 /* assign C08:OperationCS[*] = |ownedOperations| */,
-						_Steps.Solve204 /* assign C07:AnnotationElementCS[*] = |ownedAnnotations| */,
-						_Steps.Solve182 /* assign C04[?] = |instanceClassName| */,
-						_Steps.Solve113 /* assign C01:TemplateSignatureCS[?] = |ownedSignature| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve086 /* assign C00[?] = |isAbstract.'abstract'| */,
-						_Steps.Solve192 /* assign C05[?] = (|isInterface.'interface'| > 0) */,
-						_Steps.Solve203 /* assign C06[?] = |isInterface.'interface'| */,
-						_Steps.Solve149 /* assign C02[?] = (|ownedSuperTypes| > 0) */,
-						_Steps.Solve162 /* assign C03[*] = (|ownedSuperTypes| - 1) */
+						_Steps.Solve247 /* check-rule basecs::ModelElementCS.ownedAnnotations : OCLinEcore::AnnotationElementCS */,
+						_Steps.Solve264 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : OCLinEcore::TypedRefCS */,
+						_Steps.Solve262 /* check-rule basecs::StructuredClassCS.ownedOperations : OCLinEcore::OperationCS */,
+						_Steps.Solve269 /* check-rule basecs::TemplateableElementCS.ownedSignature : OCLinEcore::TemplateSignatureCS */,
+						_Steps.Solve242 /* check-rule basecs::ClassCS.ownedConstraints : OCLinEcore::InvariantConstraintCS */,
+						_Steps.Solve263 /* check-rule basecs::StructuredClassCS.ownedProperties : OCLinEcore::StructuralFeatureCS */,
+						_Steps.Solve141 /* assign V10 = |ownedConstraints| */,
+						_Steps.Solve238 /* assign V9 = |ownedProperties| */,
+						_Steps.Solve231 /* assign V8 = |ownedOperations| */,
+						_Steps.Solve225 /* assign V7 = |ownedAnnotations| */,
+						_Steps.Solve192 /* assign V4 = |instanceClassName| */,
+						_Steps.Solve132 /* assign V1 = |ownedSignature| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve075 /* assign V0 = |isAbstract.'abstract'| */,
+						_Steps.Solve211 /* assign V6 = (|isInterface.'interface'| > 0) */,
+						_Steps.Solve204 /* assign V5 = |isInterface.'interface'| */,
+						_Steps.Solve157 /* assign V2 = (|ownedSuperTypes| > 0) */,
+						_Steps.Solve175 /* assign V3 = (|ownedSuperTypes| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-23-steps */,
@@ -11870,7 +12350,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'sysml' ownedDetails+=DetailCS ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
 						_Steps.Solve012 /* assert (|ownedDetails| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -11889,8 +12369,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve077 /* assign C00[*] = |ownedDetails| */
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve084 /* assign V0 = |ownedDetails| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -11914,7 +12394,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'sysml' ownedDetails+=DetailCS ';' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
 						_Steps.Solve012 /* assert (|ownedDetails| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -11933,8 +12413,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve239 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
-						_Steps.Solve077 /* assign C00[*] = |ownedDetails| */
+						_Steps.Solve241 /* check-rule basecs::AnnotationElementCS.ownedDetails : OCLinEcore::DetailCS */,
+						_Steps.Solve084 /* assign V0 = |ownedDetails| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -11966,10 +12446,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve263 /* check-rule basecs::TemplateBindingCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve264 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : Base::TemplateParameterSubstitutionCS */,
-						_Steps.Solve109 /* assign C01:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve074 /* assign C00[*] = (|ownedSubstitutions| - 1) */
+						_Steps.Solve265 /* check-rule basecs::TemplateBindingCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve266 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : Base::TemplateParameterSubstitutionCS */,
+						_Steps.Solve128 /* assign V1 = |ownedMultiplicity| */,
+						_Steps.Solve070 /* assign V0 = (|ownedSubstitutions| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-5-steps */,
@@ -11999,7 +12479,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedActualParameter=TypeRefCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve265 /* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : Base::TypeRefCS */,
+						_Steps.Solve267 /* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : Base::TypeRefCS */,
 						_Steps.Solve007 /* assert (|ownedActualParameter| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -12020,8 +12500,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '(' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve266 /* check-rule basecs::TemplateSignatureCS.ownedParameters : Base::TypeParameterCS */,
-						_Steps.Solve071 /* assign C00[*] = (|ownedParameters| - 1) */
+						_Steps.Solve268 /* check-rule basecs::TemplateSignatureCS.ownedParameters : Base::TypeParameterCS */,
+						_Steps.Solve063 /* assign V0 = (|ownedParameters| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -12045,8 +12525,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '<' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve266 /* check-rule basecs::TemplateSignatureCS.ownedParameters : Base::TypeParameterCS */,
-						_Steps.Solve071 /* assign C00[*] = (|ownedParameters| - 1) */
+						_Steps.Solve268 /* check-rule basecs::TemplateSignatureCS.ownedParameters : Base::TypeParameterCS */,
+						_Steps.Solve063 /* assign V0 = (|ownedParameters| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
@@ -12078,11 +12558,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { { 'module' }[?] ownedImports+=ImportCS[*] ownedPackages+=PackageCS[*] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve258 /* check-rule basecs::RootCS.ownedImports : OCLinEcore::ImportCS */,
-						_Steps.Solve253 /* check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS */,
-						_Steps.Solve141 /* assign C02:PackageCS[*] = |ownedPackages| */,
-						_Steps.Solve107 /* assign C01:ImportCS[*] = |ownedImports| */,
-						_Steps.Solve085 /* assign C00[?] = 0 */
+						_Steps.Solve260 /* check-rule basecs::RootCS.ownedImports : OCLinEcore::ImportCS */,
+						_Steps.Solve255 /* check-rule basecs::PackageOwnerCS.ownedPackages : OCLinEcore::PackageCS */,
+						_Steps.Solve167 /* assign V2 = |ownedPackages| */,
+						_Steps.Solve125 /* assign V1 = |ownedImports| */,
+						_Steps.Solve074 /* assign V0 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -12110,8 +12590,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve322 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
-						_Steps.Solve072 /* assign C00[*] = (|ownedParts| - 1) */
+						_Steps.Solve324 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
+						_Steps.Solve064 /* assign V0 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12137,8 +12617,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve322 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
-						_Steps.Solve072 /* assign C00[*] = (|ownedParts| - 1) */
+						_Steps.Solve324 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
+						_Steps.Solve064 /* assign V0 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12164,8 +12644,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve322 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
-						_Steps.Solve072 /* assign C00[*] = (|ownedParts| - 1) */
+						_Steps.Solve324 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
+						_Steps.Solve064 /* assign V0 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12191,8 +12671,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve322 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
-						_Steps.Solve072 /* assign C00[*] = (|ownedParts| - 1) */
+						_Steps.Solve324 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
+						_Steps.Solve064 /* assign V0 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12218,8 +12698,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve322 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
-						_Steps.Solve072 /* assign C00[*] = (|ownedParts| - 1) */
+						_Steps.Solve324 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : EssentialOCL::TupleLiteralPartCS */,
+						_Steps.Solve064 /* assign V0 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12253,18 +12733,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve328 /* check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve327 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : EssentialOCL::ExpCS */,
-						_Steps.Solve021 /* assert (|ownedInitExpression| - 1) == 0 */,
-						_Steps.Solve097 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve330 /* check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve329 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : EssentialOCL::ExpCS */,
+						_Steps.Solve022 /* assert (|ownedInitExpression| - 1) == 0 */,
+						_Steps.Solve093 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-6-steps */,
 						_Steps.Step074 /* 1*name=UnrestrictedName */,
 						_Steps.Step169 /* V00*next-2-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step140 /* 1*ownedType=TypeExpCS */,
+						_Steps.Step138 /* 1*ownedType=TypeExpCS */,
 						_Steps.Step014 /* 1*'=' */,
 						_Steps.Step099 /* 1*ownedInitExpression=ExpCS */
 					},
@@ -12289,9 +12769,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnrestrictedName ':' ownedType=TypeExpCS }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve270 /* check-rule basecs::TypedElementCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve044 /* assert (|ownedType| - 1) == 0 */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve272 /* check-rule basecs::TypedElementCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve045 /* assert (|ownedType| - 1) == 0 */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-3-steps */,
@@ -12317,11 +12797,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -12351,11 +12831,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -12385,13 +12865,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve158 /* assign C03:MultiplicityCS[?] = |ownedMultiplicity| */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve184 /* assign V3 = |ownedMultiplicity| */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -12423,11 +12903,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -12457,11 +12937,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -12491,13 +12971,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve158 /* assign C03:MultiplicityCS[?] = |ownedMultiplicity| */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve184 /* assign V3 = |ownedMultiplicity| */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -12529,13 +13009,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve158 /* assign C03:MultiplicityCS[?] = |ownedMultiplicity| */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve184 /* assign V3 = |ownedMultiplicity| */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-10-steps */,
@@ -12567,11 +13047,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve268 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
+						_Steps.Solve270 /* check-rule basecs::TupleTypeCS.ownedParts : EssentialOCL::TuplePartCS */,
 						_Steps.Solve003 /* assert (|name.'Tuple'| - 1) == 0 */,
-						_Steps.Solve122 /* assign C01[?] = (|ownedParts| > 0) */,
-						_Steps.Solve083 /* assign C00[?] = (|ownedParts| > 0) */,
-						_Steps.Solve145 /* assign C02[*] = (|ownedParts| - 1) */
+						_Steps.Solve115 /* assign V1 = (|ownedParts| > 0) */,
+						_Steps.Solve068 /* assign V0 = (|ownedParts| > 0) */,
+						_Steps.Solve156 /* assign V2 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-9-steps */,
@@ -12609,8 +13089,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve323 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
-						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve325 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
+						_Steps.Solve044 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -12622,8 +13102,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve323 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
-						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve325 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
+						_Steps.Solve044 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -12635,8 +13115,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve323 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
-						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve325 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
+						_Steps.Solve044 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -12648,8 +13128,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve323 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
-						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve325 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
+						_Steps.Solve044 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -12661,8 +13141,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedType=TypeLiteralWithMultiplicityCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve323 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
-						_Steps.Solve041 /* assert (|ownedType| - 1) == 0 */
+						_Steps.Solve325 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : EssentialOCL::TypeLiteralWithMultiplicityCS */,
+						_Steps.Solve044 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -12682,14 +13162,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve325 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve324 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve326 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve140 /* assign C02:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve093 /* assign C00[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */,
-						_Steps.Solve133 /* assign C01[?] = |ownedPatternGuard| */
+						_Steps.Solve327 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve326 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve328 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve166 /* assign V2 = |ownedMultiplicity| */,
+						_Steps.Solve083 /* assign V0 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve033 /* assert (|ownedPathName| - 1) == 0 */,
+						_Steps.Solve130 /* assign V1 = |ownedPatternGuard| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-8-steps */,
@@ -12717,12 +13197,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve325 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve324 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve326 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS */,
-						_Steps.Solve093 /* assign C00[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */,
-						_Steps.Solve133 /* assign C01[?] = |ownedPatternGuard| */
+						_Steps.Solve327 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve326 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve328 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS */,
+						_Steps.Solve083 /* assign V0 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve033 /* assert (|ownedPathName| - 1) == 0 */,
+						_Steps.Solve130 /* assign V1 = |ownedPatternGuard| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12748,12 +13228,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve325 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve324 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
-						_Steps.Solve326 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS */,
-						_Steps.Solve093 /* assign C00[?] = |ownedCurlyBracketedClause| */,
-						_Steps.Solve035 /* assert (|ownedPathName| - 1) == 0 */,
-						_Steps.Solve133 /* assign C01[?] = |ownedPatternGuard| */
+						_Steps.Solve327 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve326 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : EssentialOCL::CurlyBracketedClauseCS */,
+						_Steps.Solve328 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : EssentialOCL::ExpCS */,
+						_Steps.Solve083 /* assign V0 = |ownedCurlyBracketedClause| */,
+						_Steps.Solve033 /* assert (|ownedPathName| - 1) == 0 */,
+						_Steps.Solve130 /* assign V1 = |ownedPatternGuard| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12787,10 +13267,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnrestrictedName { 'extends' ownedExtends+=TypedRefCS { '&&' ownedExtends+=TypedRefCS }[*] }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve269 /* check-rule basecs::TypeParameterCS.ownedExtends : OCLinEcore::TypedRefCS */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */,
-						_Steps.Solve079 /* assign C00[?] = (|ownedExtends| > 0) */,
-						_Steps.Solve114 /* assign C01[*] = (|ownedExtends| - 1) */
+						_Steps.Solve271 /* check-rule basecs::TypeParameterCS.ownedExtends : OCLinEcore::TypedRefCS */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */,
+						_Steps.Solve062 /* assign V0 = (|ownedExtends| > 0) */,
+						_Steps.Solve109 /* assign V1 = (|ownedExtends| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-7-steps */,
@@ -12824,8 +13304,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedPathName=PathNameCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step123 /* 1*ownedPathName=PathNameCS */
@@ -12837,10 +13317,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -12860,10 +13340,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -12883,10 +13363,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve062 /* assign C00:MultiplicityCS[?] = |ownedMultiplicity| */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve089 /* assign V0 = |ownedMultiplicity| */,
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-2-steps */,
@@ -12902,12 +13382,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve062 /* assign C00:MultiplicityCS[?] = |ownedMultiplicity| */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve089 /* assign V0 = |ownedMultiplicity| */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-5-steps */,
@@ -12929,12 +13409,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' ownedMultiplicity=MultiplicityCS[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve272 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
-						_Steps.Solve062 /* assign C00:MultiplicityCS[?] = |ownedMultiplicity| */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve274 /* check-rule basecs::TypedRefCS.ownedMultiplicity : Base::MultiplicityCS */,
+						_Steps.Solve089 /* assign V0 = |ownedMultiplicity| */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-5-steps */,
@@ -12956,8 +13436,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedPathName=PathNameCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step123 /* 1*ownedPathName=PathNameCS */
@@ -12969,10 +13449,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -12992,10 +13472,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -13015,8 +13495,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// ownedPathName=PathNameCS
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step123 /* 1*ownedPathName=PathNameCS */
@@ -13028,10 +13508,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -13051,10 +13531,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve273 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
-						_Steps.Solve274 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
+						_Steps.Solve275 /* check-rule basecs::TypedTypeRefCS.ownedBinding : Base::TemplateBindingCS */,
+						_Steps.Solve276 /* check-rule basecs::TypedTypeRefCS.ownedPathName : Base::PathNameCS */,
 						_Steps.Solve008 /* assert (|ownedBinding| - 1) == 0 */,
-						_Steps.Solve032 /* assert (|ownedPathName| - 1) == 0 */
+						_Steps.Solve036 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -13101,16 +13581,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve328 /* check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS */,
-						_Steps.Solve097 /* assign C00[?] = |ownedType| */,
-						_Steps.Solve004 /* assert (|name| - 1) == 0 */
+						_Steps.Solve330 /* check-rule essentialoclcs::VariableCS.ownedType : EssentialOCL::TypeExpCS */,
+						_Steps.Solve093 /* assign V0 = |ownedType| */,
+						_Steps.Solve006 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
 						_Steps.Step074 /* 1*name=UnrestrictedName */,
 						_Steps.Step169 /* V00*next-2-steps */,
 						_Steps.Step009 /* 1*':' */,
-						_Steps.Step140 /* 1*ownedType=TypeExpCS */
+						_Steps.Step138 /* 1*ownedType=TypeExpCS */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
 						null,
@@ -13131,8 +13611,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '?' { 'extends' ownedExtends=TypedRefCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve275 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : OCLinEcore::TypedRefCS */,
-						_Steps.Solve094 /* assign C00[?] = |ownedExtends| */
+						_Steps.Solve277 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : OCLinEcore::TypedRefCS */,
+						_Steps.Solve085 /* assign V0 = |ownedExtends| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
@@ -13152,8 +13632,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				// { '?' { 'extends' ownedExtends=TypedRefCS }[?] }
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
-						_Steps.Solve275 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : OCLinEcore::TypedRefCS */,
-						_Steps.Solve094 /* assign C00[?] = |ownedExtends| */
+						_Steps.Solve277 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : OCLinEcore::TypedRefCS */,
+						_Steps.Solve085 /* assign V0 = |ownedExtends| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						_Steps.Step076 /* 1*next-4-steps */,
