@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
@@ -66,20 +65,10 @@ public class DynamicRuleMatch implements RuleMatch
 	}
 
 	@Override
-	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		return basicGetSolution(cardinalityVariable.getIndex());
-	}
-
-	@Override
 	public @Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex) {
 		throw new IllegalStateException();		// run-time shoild use known values
 	}
 
-	public @NonNull Integer getIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		return ClassUtil.nonNullState(variableIndex2value.get(cardinalityVariable.getIndex()));
-	}
-
-//	@Override
 	public @NonNull RTSerializationRule getSerializationRule() {
 		return staticRuleMatch.getSerializationRule().getRuntime();
 	}
@@ -107,10 +96,6 @@ public class DynamicRuleMatch implements RuleMatch
 		return staticRuleMatch;
 	}
 
-	public @NonNull Integer getValue(@Nullable CardinalityVariable cardinalityVariable) {
-		return ClassUtil.nonNullState(cardinalityVariable != null ? variableIndex2value.get(cardinalityVariable.getIndex()): null);
-	}
-
 	public @NonNull Integer getValue(int cardinalityVariableIndex) {
 		return ClassUtil.nonNullState(cardinalityVariableIndex >= 0 ? variableIndex2value.get(cardinalityVariableIndex): null);
 	}
@@ -119,9 +104,6 @@ public class DynamicRuleMatch implements RuleMatch
 		return checked;
 	}
 
-	public void putValue(@NonNull CardinalityVariable cardinalityVariable, @NonNull Integer integerSolution) {
-		variableIndex2value.put(cardinalityVariable.getIndex(), integerSolution);
-	}
 	public void putValue(@NonNull Integer cardinalityVariableIndex, @NonNull Integer integerSolution) {
 		variableIndex2value.put(cardinalityVariableIndex, integerSolution);
 	}

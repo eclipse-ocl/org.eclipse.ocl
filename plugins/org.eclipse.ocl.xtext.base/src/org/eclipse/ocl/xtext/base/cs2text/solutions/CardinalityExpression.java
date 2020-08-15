@@ -34,8 +34,8 @@ public interface CardinalityExpression extends Nameable
 	boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch);
 	CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue);
 	@Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions();
-	@Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch);
-	@Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product);
+	@Nullable List<@NonNull Integer> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch);
+	@Nullable List<@NonNull Integer> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product);
 	boolean isOne();
 	int solve(@NonNull DynamicRuleMatch dynamicRuleMatch);
 	void toString(@NonNull StringBuilder s, int depth);

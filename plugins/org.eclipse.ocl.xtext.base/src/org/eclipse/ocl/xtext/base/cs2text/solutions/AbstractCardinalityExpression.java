@@ -60,10 +60,10 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	//
 	@Override
 	public boolean analyzeMayBeZeroCommonFactors(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany) {
-		Set<@NonNull CardinalityVariable> intersection = getUnknownCommonVariables(ruleMatch, sumOfProducts);
+		Set<@NonNull Integer> intersection = getUnknownCommonVariables(ruleMatch, sumOfProducts);
 		if (intersection  != null) {
-			for (@NonNull CardinalityVariable cardinalityVariable : intersection) {
-				if (mayBeMany || !cardinalityVariable.mayBeMany()) {
+			for (@NonNull Integer cardinalityVariable : intersection) {
+				if (mayBeMany /*|| !cardinalityVariable.mayBeMany()*/) {
 				//	assert cardinalityVariable.mayBeNone();
 					CardinalitySolution solution = createSizeCardinalitySolution();
 					solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
@@ -249,16 +249,16 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 			for (@NonNull CardinalityVariable variable : products) {
 				if (ruleMatch.basicGetSolution(variable) == null) {
 					if (products != manyProducts) {
-						ruleMatch.addSolution(variable, new IntegerCardinalitySolution(0));
+						ruleMatch.addSolution(variable.getIndex(), new IntegerCardinalitySolution(0));
 					}
 					else if (variable == manyVariable) {
 						CardinalitySolution solution = createSizeCardinalitySolution();
-						ruleMatch.addSolution(variable, solution);
+						ruleMatch.addSolution(variable.getIndex(), solution);
 					}
 					else {
 						CardinalitySolution solution = createSizeCardinalitySolution();
 						solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
-						ruleMatch.addSolution(variable, solution);
+						ruleMatch.addSolution(variable.getIndex(), solution);
 					}
 				}
 			}
@@ -333,9 +333,9 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	//
 	@Override
 	public boolean analyzeTrivial(@NonNull StaticRuleMatch ruleMatch, boolean mayBeMany) {
-		CardinalityVariable trivialVariable = null;
+		Integer trivialVariable = null;
 		for (@NonNull List<@NonNull CardinalityVariable> product : sumOfProducts) {
-			List<@NonNull CardinalityVariable> unknownVariables = getUnknownVariables(ruleMatch, product);
+			List<@NonNull Integer> unknownVariables = getUnknownVariables(ruleMatch, product);
 			if (unknownVariables == null) {
 				// constant is easy
 			}
@@ -343,7 +343,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 				return false;		// Two variables is not trivial
 			}
 			else {
-				CardinalityVariable unknownVariable = unknownVariables.get(0);
+				Integer unknownVariable = unknownVariables.get(0);
 				if (trivialVariable == null) {
 					trivialVariable = unknownVariable;
 				}
@@ -459,7 +459,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	 *
 	 * If solved varable is null everything is known.
 	 */
-	public @NonNull CardinalitySolution createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable CardinalityVariable solvedVariable, boolean mayBeMany) {
+	public @NonNull CardinalitySolution createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable Integer solvedVariable, boolean mayBeMany) {
 		//
 		// Determine slots = constantSumOfProducts + factorSumOfProducts * solvedVariable
 		//
@@ -469,7 +469,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 			boolean isFactor = false;
 			List<@NonNull CardinalityVariable> residualProducts = new ArrayList<>();
 			for (@NonNull CardinalityVariable term : product) {
-				if (term == solvedVariable) {
+				if ((solvedVariable != null) && (term.getIndex() == solvedVariable)) {
 					assert !isFactor;		// Quadratic doesn't happen
 					isFactor = true;
 				}
@@ -571,10 +571,10 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		return knownVariables;
 	}
 
-	protected @Nullable Set<@NonNull CardinalityVariable> getUnknownCommonVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<? extends @NonNull Iterable<@NonNull CardinalityVariable>> sumOfProducts2) {
-		Set<@NonNull CardinalityVariable> intersection = null;
+	protected @Nullable Set<@NonNull Integer> getUnknownCommonVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<? extends @NonNull Iterable<@NonNull CardinalityVariable>> sumOfProducts2) {
+		Set<@NonNull Integer> intersection = null;
 		for (@NonNull Iterable<@NonNull CardinalityVariable> product : sumOfProducts2) {
-			List<@NonNull CardinalityVariable> unknownVariables = getUnknownVariables(ruleMatch, product);
+			List<@NonNull Integer> unknownVariables = getUnknownVariables(ruleMatch, product);
 			if (unknownVariables == null) {
 				return null;		// No variables to be common factors
 			}
@@ -597,8 +597,8 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	 * Returns null if no variable has no solution, or if a variable is used in an (impossible) non-linear fashion.
 	 */
 	@Override
-	public @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch) {
-		List<@NonNull CardinalityVariable> unknownVariables = null;
+	public @Nullable List<@NonNull Integer> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch) {
+		List<@NonNull Integer> unknownVariables = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
 				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
@@ -609,7 +609,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 					if (unknownVariables.contains(variable)) {
 						return null;		// Quadratic cannot happen.
 					}
-					unknownVariables.add(variable);
+					unknownVariables.add(variable.getIndex());
 				}
 			}
 		}
@@ -617,8 +617,8 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	}
 
 	@Override
-	public @Nullable List<@NonNull CardinalityVariable> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
-		List<@NonNull CardinalityVariable> unknownVariables = null;
+	public @Nullable List<@NonNull Integer> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
+		List<@NonNull Integer> unknownVariables = null;
 		for (@NonNull CardinalityVariable variable : product) {
 			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
 			if (solution == null) {
@@ -628,7 +628,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 				if (unknownVariables.contains(variable)) {
 					return null;		// Quadratic cannot happen.
 				}
-				unknownVariables.add(variable);
+				unknownVariables.add(variable.getIndex());
 			}
 		}
 		return unknownVariables;

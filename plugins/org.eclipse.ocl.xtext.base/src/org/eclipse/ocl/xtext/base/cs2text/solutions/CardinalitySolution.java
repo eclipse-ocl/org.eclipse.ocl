@@ -43,11 +43,6 @@ public interface CardinalitySolution
 	 */
 	boolean isKnown(@NonNull StaticRuleMatch ruleMatch);
 
-	/**
-	 * Return true if this expression is a two-valued optional cardinality.
-	 */
-//	boolean isOptional();
-
 	boolean isRuntime();
 	void toString(@NonNull StringBuilder s, int depth);
 }

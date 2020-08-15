@@ -16,7 +16,7 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 {
 //	protected final @NonNull CardinalityExpression cardinalityExpression;
 //	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
-	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
+	protected final @NonNull Iterable<@NonNull Integer> unresolvedVariables;
 	protected final @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions;
 
 //	public RuntimeSolution(@NonNull CardinalityExpression cardinalityExpression, @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables) {
@@ -24,7 +24,7 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 //		this.unresolvedVariables = unresolvedVariables;
 //	}
 
-	public RuntimeCardinalitySolution(@NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
+	public RuntimeCardinalitySolution(@NonNull Iterable<@NonNull Integer> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
 		this.unresolvedVariables = unresolvedVariables;
 		this.unresolvedExpressions = unresolvedExpressions;
 	}
@@ -44,7 +44,7 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 	@Override
 	public int hashCode() {
 		int hashCode = 0;
-		for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
+		for (@NonNull Integer unresolvedVariable : unresolvedVariables) {
 			hashCode += 3 + unresolvedVariable.hashCode();
 		}
 		for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
@@ -71,7 +71,7 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		boolean isFirst = true;
-		for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
+		for (@NonNull Integer unresolvedVariable : unresolvedVariables) {
 			if (!isFirst) {
 				s.append(",");
 			}

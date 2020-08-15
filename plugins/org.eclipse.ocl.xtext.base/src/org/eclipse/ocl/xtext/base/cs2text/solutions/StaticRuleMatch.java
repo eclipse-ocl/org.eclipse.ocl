@@ -77,6 +77,7 @@ public class StaticRuleMatch implements RuleMatch
 	 *
 	 * ?? Only used as a debugging convenience ??
 	 */
+	private final @NonNull Map<@NonNull Integer, @NonNull SerializationNode> variableIndex2node = new HashMap<>();
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull SerializationNode> variable2node = new HashMap<>();
 
 	/**
@@ -97,7 +98,7 @@ public class StaticRuleMatch implements RuleMatch
 	 *
 	 * Lazily populated as solutions found.
 	 */
-	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = new HashMap<>();
+//	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> zvariable2solution = new HashMap<>();
 	private final @NonNull Map<@NonNull Integer, @NonNull CardinalitySolution> variableIndex2solution = new HashMap<>();
 
 	/**
@@ -113,24 +114,24 @@ public class StaticRuleMatch implements RuleMatch
 	/**
 	 * Accumulate an additional cardinalitySolution expression for a cardinalityVariable.
 	 */
-	public void addSolution(@Nullable CardinalityVariable cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
+	public void addSolution(@Nullable Integer cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
 		CardinalitySolutionStep newStep;
 		if (cardinalityVariable != null) {
-			assert !cardinalityVariable.isOne();
+		//	assert !cardinalityVariable.isOne();
 			boolean isAssigned = true;
 			for (@NonNull CardinalitySolutionStep step : steps) {
-				if (step.isAssignTo(cardinalityVariable.getIndex())) {
+				if (step.isAssignTo(cardinalityVariable)) {
 					isAssigned = false;
 					break;
 				}
 			}
 			if (isAssigned) {
-				newStep = new CardinalitySolutionStep.Assign(cardinalityVariable.getIndex(), cardinalitySolution);
-				variable2solution.put(cardinalityVariable, cardinalitySolution);
-				variableIndex2solution.put(cardinalityVariable.getIndex(), cardinalitySolution);
+				newStep = new CardinalitySolutionStep.Assign(cardinalityVariable, cardinalitySolution);
+			//	variable2solution.put(cardinalityVariable, cardinalitySolution);
+				variableIndex2solution.put(cardinalityVariable, cardinalitySolution);
 			}
 			else {
-				newStep = new CardinalitySolutionStep.ValueCheck(cardinalityVariable.getIndex(), cardinalitySolution);
+				newStep = new CardinalitySolutionStep.ValueCheck(cardinalityVariable, cardinalitySolution);
 			}
 		}
 		else {
@@ -254,6 +255,8 @@ public class StaticRuleMatch implements RuleMatch
 				assert old2 == null;
 				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
 				assert old3 == null;
+				SerializationNode old4 = variableIndex2node.put(cardinalityVariable.getIndex(), serializationNode);
+				assert old4 == null;
 			}
 		}
 		MultiplicativeCardinality innerMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
@@ -434,14 +437,14 @@ public class StaticRuleMatch implements RuleMatch
 			}
 		} while (residualExpressions.size() < oldSize); */
 		if (residualExpressions.size() > 0) {
-			Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables =
+			Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull Integer>> expression2unsolvedVariables =
 					computeExpression2unsolvedVariables(residualExpressions);
-			Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> unsolvedVariable2expressions =
+			Map<@NonNull Integer, @NonNull Set<@NonNull CardinalityExpression>> unsolvedVariable2expressions =
 					computeVariable2expressions(expression2unsolvedVariables);
-			Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityVariable>> unsolvedVariable2unsolvedVariableGroups =
+			Map<@NonNull Integer, @NonNull Set<@NonNull Integer>> unsolvedVariable2unsolvedVariableGroups =
 					computeUnsolvedVariableGroups(unsolvedVariable2expressions, expression2unsolvedVariables);
 
-			for (@NonNull Set<@NonNull CardinalityVariable> unsolvedVariableGroup : new HashSet<>(unsolvedVariable2unsolvedVariableGroups.values())) {
+			for (@NonNull Set<@NonNull Integer> unsolvedVariableGroup : new HashSet<>(unsolvedVariable2unsolvedVariableGroups.values())) {
 				Iterable<@NonNull CardinalityExpression> unresolvedExpressions = computeExpressions(unsolvedVariableGroup, unsolvedVariable2expressions);
 				int size = Iterables.size(unresolvedExpressions);
 				if (size == 1) {
@@ -454,7 +457,7 @@ public class StaticRuleMatch implements RuleMatch
 					}
 					else {
 						RuntimeCardinalitySolution runtimeSolution = new RuntimeCardinalitySolution(unsolvedVariableGroup, unresolvedExpressions);
-						for (@NonNull CardinalityVariable unresolvedVariable : unsolvedVariableGroup) {
+						for (@NonNull Integer unresolvedVariable : unsolvedVariableGroup) {
 							addSolution(unresolvedVariable, runtimeSolution);
 						}
 					}
@@ -464,7 +467,7 @@ public class StaticRuleMatch implements RuleMatch
 					//	assign run-time search solution to remaining expressions.
 					//
 					RuntimeCardinalitySolution runtimeSolution = new RuntimeCardinalitySolution(unsolvedVariableGroup, unresolvedExpressions);
-					for (@NonNull CardinalityVariable unresolvedVariable : unsolvedVariableGroup) {
+					for (@NonNull Integer unresolvedVariable : unsolvedVariableGroup) {
 						addSolution(unresolvedVariable, runtimeSolution);
 					}
 				}
@@ -478,10 +481,10 @@ public class StaticRuleMatch implements RuleMatch
 			assert !variable.isOne();
 			if (basicGetSolution(variable) == null) {
 				if (residualExpressions.isEmpty()) {
-					addSolution(variable, new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
+					addSolution(variable.getIndex(), new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
 				}
 				else {
-					addSolution(variable, new UnsupportedCardinalitySolution());
+					addSolution(variable.getIndex(), new UnsupportedCardinalitySolution());
 				}
 			}
 		}
@@ -493,18 +496,17 @@ public class StaticRuleMatch implements RuleMatch
 		return solution != null ? solution.basicGetIntegerSolution(this) : null;
 	}
 
-	@Override
 	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		return variable2solution.get(cardinalityVariable);
+		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
 
 	/**
  * Return all the expressions that use any of variableGroup.
  */
-protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@NonNull Set<@NonNull CardinalityVariable> variableGroup,
-		@NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions) {
+protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@NonNull Set<@NonNull Integer> variableGroup,
+		@NonNull Map<@NonNull Integer, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions) {
 	Set<@NonNull CardinalityExpression> unresolvedExpressions = new HashSet<>();
-	for (@NonNull CardinalityVariable variable : variableGroup) {
+	for (@NonNull Integer variable : variableGroup) {
 		Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
 		assert expressions != null;
 		unresolvedExpressions.addAll(expressions);
@@ -515,14 +517,14 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	/**
 	 * Return the Map from each of expressions to its variables that lack a solution.
 	 */
-	protected @NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> computeExpression2unsolvedVariables(
+	protected @NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull Integer>> computeExpression2unsolvedVariables(
 			@NonNull Iterable<@NonNull CardinalityExpression> expressions) {
-		Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables = new HashMap<>();
+		Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull Integer>> expression2unsolvedVariables = new HashMap<>();
 		for (@NonNull CardinalityExpression expression : expressions) {
-			Iterable<@NonNull CardinalityVariable> unsolvedVariables = expression.getUnknownVariables(this);
+			Iterable<@NonNull Integer> unsolvedVariables = expression.getUnknownVariables(this);
 			if (unsolvedVariables != null) {
-				for (@NonNull CardinalityVariable variable : unsolvedVariables) {
-					Set<@NonNull CardinalityVariable> variables = expression2unsolvedVariables.get(expression);
+				for (@NonNull Integer variable : unsolvedVariables) {
+					Set<@NonNull Integer> variables = expression2unsolvedVariables.get(expression);
 					if (variables == null) {
 						variables = new HashSet<>();
 						expression2unsolvedVariables.put(expression, variables);
@@ -537,13 +539,13 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	/**
 	 * Return a Map from each variable to the set of variables that participate in non-independent expressions.
 	 */
-	protected @NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityVariable>> computeUnsolvedVariableGroups(
-			@NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> unsolvedVariable2expressions,
-			@NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2unsolvedVariables) {
-		Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityVariable>> unsolvedVariable2unresolvedVariables = new HashMap<>();
-		List<@NonNull CardinalityVariable> workVariables = new ArrayList<>(unsolvedVariable2expressions.keySet());
-		for (@NonNull CardinalityVariable workVariable : workVariables) {
-			Set<@NonNull CardinalityVariable> unsolvedVariables = unsolvedVariable2unresolvedVariables.get(workVariable);
+	protected @NonNull Map<@NonNull Integer, @NonNull Set<@NonNull Integer>> computeUnsolvedVariableGroups(
+			@NonNull Map<@NonNull Integer, @NonNull Set<@NonNull CardinalityExpression>> unsolvedVariable2expressions,
+			@NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull Integer>> expression2unsolvedVariables) {
+		Map<@NonNull Integer, @NonNull Set<@NonNull Integer>> unsolvedVariable2unresolvedVariables = new HashMap<>();
+		List<@NonNull Integer> workVariables = new ArrayList<>(unsolvedVariable2expressions.keySet());
+		for (@NonNull Integer workVariable : workVariables) {
+			Set<@NonNull Integer> unsolvedVariables = unsolvedVariable2unresolvedVariables.get(workVariable);
 			if (unsolvedVariables == null) {
 				unsolvedVariables = new HashSet<>();
 				unsolvedVariable2unresolvedVariables.put(workVariable, unsolvedVariables);
@@ -551,10 +553,10 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 				Set<@NonNull CardinalityExpression> expressions = unsolvedVariable2expressions.get(workVariable);
 				assert expressions != null;
 				for (@NonNull CardinalityExpression expression : expressions) {
-					Set<@NonNull CardinalityVariable> moreUnsolvedVariables = expression2unsolvedVariables.get(expression);
+					Set<@NonNull Integer> moreUnsolvedVariables = expression2unsolvedVariables.get(expression);
 					assert moreUnsolvedVariables != null;
 					moreUnsolvedVariables.removeAll(unsolvedVariables);
-					for (@NonNull CardinalityVariable anotherUnsolvedVariable : moreUnsolvedVariables) {
+					for (@NonNull Integer anotherUnsolvedVariable : moreUnsolvedVariables) {
 						unsolvedVariables.add(anotherUnsolvedVariable);
 						unsolvedVariable2unresolvedVariables.put(anotherUnsolvedVariable, unsolvedVariables);
 					}
@@ -567,13 +569,13 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	/**
 	 * Return the inverse of the Map from expressions to variables.
 	 */
-	protected @NonNull Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> computeVariable2expressions(
-			@NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull CardinalityVariable>> expression2variables) {
-		Map<@NonNull CardinalityVariable, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions = new HashMap<>();
+	protected @NonNull Map<@NonNull Integer, @NonNull Set<@NonNull CardinalityExpression>> computeVariable2expressions(
+			@NonNull Map<@NonNull CardinalityExpression, @NonNull Set<@NonNull Integer>> expression2variables) {
+		Map<@NonNull Integer, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions = new HashMap<>();
 		for (@NonNull CardinalityExpression expression : expression2variables.keySet()) {
-			Set<@NonNull CardinalityVariable> variables = expression2variables.get(expression);
+			Set<@NonNull Integer> variables = expression2variables.get(expression);
 			assert variables != null;
-			for (@NonNull CardinalityVariable variable : variables) {
+			for (@NonNull Integer variable : variables) {
 				Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
 				if (expressions == null) {
 					expressions = new HashSet<>();
@@ -722,10 +724,10 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
-		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2node.keySet());
-		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull CardinalityVariable variable : variables) {
-			SerializationNode serializationNode = variable2node.get(variable);
+		List<@NonNull Integer> variables = new ArrayList<>(variableIndex2node.keySet());
+		Collections.sort(variables);
+		for (@NonNull Integer variable : variables) {
+			SerializationNode serializationNode = variableIndex2node.get(variable);
 			assert serializationNode != null;
 			StringUtil.appendIndentation(s, depth);
 			s.append(variable);
@@ -755,10 +757,10 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			StringUtil.appendIndentation(s, depth);
 			expression.toString(s, depth);
 		}
-		List<@NonNull CardinalityVariable> variables = new ArrayList<>(variable2solution.keySet());
-		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull CardinalityVariable variable : variables) {
-			SerializationNode serializationNode = variable2node.get(variable);
+		List<@NonNull Integer> variables = new ArrayList<>(variableIndex2solution.keySet());
+		Collections.sort(variables);
+		for (@NonNull Integer variable : variables) {
+			SerializationNode serializationNode = variableIndex2node.get(variable);
 			assert serializationNode != null;
 			StringUtil.appendIndentation(s, depth);
 			s.append(variable);

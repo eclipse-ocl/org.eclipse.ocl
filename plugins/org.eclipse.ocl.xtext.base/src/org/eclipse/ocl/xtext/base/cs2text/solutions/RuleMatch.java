@@ -32,13 +32,7 @@ public interface RuleMatch
 	/**#
 	 * Return thevalue of ca rdinalityVariable which may be null if no solution approach resolved so far..
 	 */
-	@Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable);
 	@Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex);
-
-	/**
-	 * Return the SerializationRule that this RuleMatch elaborates.
-	 */
-//	@NonNull BasicSerializationRule getSerializationRule();
 
 	/**
 	 * Return the number of eAttribute slot elements in the user model element. For a non-NullEnumerationValue, the

@@ -26,7 +26,6 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -94,34 +93,6 @@ public class UserElementSerializer
 		return modelAnalysis;
 	}
 
-	/*	public @NonNull SubIdiom zz/getKeywordIdiom(@NonNull SerializationNode serializationNode, @NonNull String value) {
-		if ("}".equals(value)) {
-			return SubIdiom.CLOSE_BRACE;
-		}
-		else if ("]".equals(value)) {
-			return SubIdiom.CLOSE_SQUARE;
-		}
-		else if (",".equals(value)) {
-			return SubIdiom.COMMA;
-		}
-		else if ("::".equals(value)) {
-			return SubIdiom.DOUBLE_COLON;
-		}
-		else if ("..".equals(value)) {
-			return SubIdiom.DOT_DOT;
-		}
-		else if ("{".equals(value)) {
-			return SubIdiom.OPEN_BRACE;
-		}
-		else if ("[".equals(value)) {
-			return SubIdiom.OPEN_SQUARE;
-		}
-		else if (";".equals(value)) {
-			return SubIdiom.SEMI_COLON;
-		}
-		return SubIdiom.DEFAULT;
-	} */
-
 	public @NonNull RTSerializationRule getSerializationRule() {
 		return serializationRule;
 	}
@@ -130,9 +101,6 @@ public class UserElementSerializer
 		return serializationRule.getBasicSerializationRule().getSubIdiom(serializationNode);
 	}
 
-	public int getValue(@NonNull CardinalityVariable cardinalityVariable) {
-		return ClassUtil.nonNullState(dynamicRuleMatch.getValue(cardinalityVariable)).intValue();
-	}
 	public int getValue(int cardinalityVariableIndex) {
 		return ClassUtil.nonNullState(dynamicRuleMatch.getValue(cardinalityVariableIndex)).intValue();
 	}
@@ -142,7 +110,6 @@ public class UserElementSerializer
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
 		serializationRule.serializeRule(this, serializationBuilder);
-//		serializeNode(serializationBuilder, serializationRule.getRootSerializationNode());
 	}
 
 	/**
@@ -151,42 +118,6 @@ public class UserElementSerializer
 	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleValue targetRuleValue) {
 		modelAnalysis.serialize(serializationBuilder, element, targetRuleValue);
 	}
-
-	/**
-	 * Serialize a serializationNode to the serializationBuilder.
-	 *
-	public void serializeNode(@NonNull SerializationBuilder serializationBuilder, @NonNull SerializationNode serializationNode) {
-		SubIdiom subIdiom = getSubIdiom(serializationNode);
-		if (serializationNode.getMultiplicativeCardinality().isOne()) {
-			if (subIdiom != null) {
-				subIdiom.serialize(serializationNode, this, serializationBuilder);
-			}
-			else {
-				serializationNode.serialize(this, serializationBuilder);
-			}
-		}
-		else {
-			CardinalityVariable variable = serializationRule.getVariable(serializationNode);
-			Integer value = dynamicRuleMatch.getIntegerSolution(variable);
-			for (int i = 0; i < value.intValue(); i++) {
-				if (subIdiom != null) {
-					subIdiom.serialize(serializationNode, this, serializationBuilder);
-				}
-				else {
-					serializationNode.serialize(this, serializationBuilder);
-				}
-			}
-		}
-	} */
-
-	/**
-	 * Serialize a sequence of serializationNodes to the serializationBuilder.
-	 *
-	public void serializeNodes(@NonNull SerializationBuilder serializationBuilder, @NonNull Iterable<@NonNull SerializationNode> serializationNodes) {
-		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			serializeNode(serializationBuilder, serializationNode);
-		}
-	} */
 
 	@Override
 	public @NonNull String toString() {
@@ -211,32 +142,4 @@ public class UserElementSerializer
 		}
 		return  s.toString();
 	}
-
-/*	public @NonNull SubIdiom zz/getKeywordIdiom(@NonNull SerializationNode serializationNode, @NonNull String value) {
-		if ("}".equals(value)) {
-			return SubIdiom.CLOSE_BRACE;
-		}
-		else if ("]".equals(value)) {
-			return SubIdiom.CLOSE_SQUARE;
-		}
-		else if (",".equals(value)) {
-			return SubIdiom.COMMA;
-		}
-		else if ("::".equals(value)) {
-			return SubIdiom.DOUBLE_COLON;
-		}
-		else if ("..".equals(value)) {
-			return SubIdiom.DOT_DOT;
-		}
-		else if ("{".equals(value)) {
-			return SubIdiom.OPEN_BRACE;
-		}
-		else if ("[".equals(value)) {
-			return SubIdiom.OPEN_SQUARE;
-		}
-		else if (";".equals(value)) {
-			return SubIdiom.SEMI_COLON;
-		}
-		return SubIdiom.DEFAULT;
-	} */
 }
