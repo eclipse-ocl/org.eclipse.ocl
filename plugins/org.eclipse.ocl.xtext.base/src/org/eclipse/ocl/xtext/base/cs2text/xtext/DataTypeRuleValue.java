@@ -27,6 +27,6 @@ public class DataTypeRuleValue extends AbstractRuleValue
 			return false;
 		}
 		DataTypeRuleValue that = (DataTypeRuleValue)obj;
-		return this.name.equals(that.name);
+		return (this.index == that.index) && this.name.equals(that.name);
 	}
 }

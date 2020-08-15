@@ -27,6 +27,6 @@ public class TerminalRuleValue extends AbstractRuleValue
 			return false;
 		}
 		TerminalRuleValue that = (TerminalRuleValue)obj;
-		return this.name.equals(that.name);
+		return (this.index == that.index) && this.name.equals(that.name);
 	}
 }

@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class ParserRuleValue extends AbstractRuleValue
 {
@@ -31,7 +32,7 @@ public class ParserRuleValue extends AbstractRuleValue
 			return false;
 		}
 		ParserRuleValue that = (ParserRuleValue)obj;
-		return this.name.equals(that.name);
+		return (this.index == that.index) && this.name.equals(that.name) && ClassUtil.safeEquals(this.subParserRuleValueIndexes, that.subParserRuleValueIndexes);
 	}
 
 	public @Nullable IndexVector getSubParserRuleValueIndexes() {
