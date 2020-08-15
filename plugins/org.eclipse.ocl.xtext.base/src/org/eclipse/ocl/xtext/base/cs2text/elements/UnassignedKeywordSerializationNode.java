@@ -44,7 +44,7 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 	@Override
 	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		stepsList.add(new RTSerializationLiteralStep(staticRuleMatch.basicGetCardinalityVariableIndex(this), value));
+		stepsList.add(new RTSerializationLiteralStep(staticRuleMatch.getCardinalityVariableIndex(this), value));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 

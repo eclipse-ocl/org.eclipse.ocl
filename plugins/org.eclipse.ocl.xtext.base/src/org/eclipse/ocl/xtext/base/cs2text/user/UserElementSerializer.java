@@ -51,10 +51,6 @@ public class UserElementSerializer
 		this.element = element;
 	}
 
-	public @Nullable CardinalityVariable basicGetVariable(@NonNull SerializationNode serializationNode) {
-		return dynamicRuleMatch.getStaticRuleMatch().basicGetCardinalityVariable(serializationNode);
-	}
-
 	/**
 	 * Return the next eStructuralFeature child object of this serializer's element.
 	 */

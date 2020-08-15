@@ -58,7 +58,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	@Override
 	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		stepsList.add(new RTSerializationCrossReferenceStep(staticRuleMatch.basicGetCardinalityVariableIndex(this), eStructuralFeature, crossReference));
+		stepsList.add(new RTSerializationCrossReferenceStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, crossReference));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 

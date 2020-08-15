@@ -27,7 +27,6 @@ public interface RuleMatch
 	/**#
 	 * Return the known integer value of cardinalityVariable if known, or null if not yet knowable.
 	 */
-	@Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable);
 	@Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex);
 
 	/**#

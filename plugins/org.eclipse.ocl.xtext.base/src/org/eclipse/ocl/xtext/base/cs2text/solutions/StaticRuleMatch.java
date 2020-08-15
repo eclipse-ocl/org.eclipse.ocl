@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
@@ -120,7 +119,7 @@ public class StaticRuleMatch implements RuleMatch
 			assert !cardinalityVariable.isOne();
 			boolean isAssigned = true;
 			for (@NonNull CardinalitySolutionStep step : steps) {
-				if (step.isAssignTo(cardinalityVariable)) {
+				if (step.isAssignTo(cardinalityVariable.getIndex())) {
 					isAssigned = false;
 					break;
 				}
@@ -488,43 +487,10 @@ public class StaticRuleMatch implements RuleMatch
 		}
 	}
 
-	public@Nullable CardinalityVariable basicGetCardinalityVariable(@NonNull SerializationNode serializationNode) {
-		return node2variable.get(serializationNode);
-	}
-
-	public int basicGetCardinalityVariableIndex(@NonNull SerializationNode serializationNode) {
-		CardinalityVariable cardinalityVariable = basicGetCardinalityVariable(serializationNode);
-		return cardinalityVariable != null ? cardinalityVariable.getIndex() : -1;
-	}
-
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
 		CardinalitySolution solution = variableIndex2solution.get(cardinalityVariableIndex);
 		return solution != null ? solution.basicGetIntegerSolution(this) : null;
-	}
-
-	@Override
-	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		// throw new IllegalStateException();		// move to caller
-		CardinalitySolution solution = variable2solution.get(cardinalityVariable);
-		return solution != null ? solution.basicGetIntegerSolution(this) : null;
-/*		if (solution instanceof IntegerCardinalitySolution) {
-			return ((IntegerCardinalitySolution)solution).getValue();
-		}
-		if (solution instanceof BooleanCommonFactorCardinalitySolution) {
-			return 1;
-		}
-		if (solution instanceof Iterable) {
-			for (Object solutionElement : ((Iterable<?>)solution) ) {
-				if (solutionElement instanceof Integer) {
-					return ((Integer)solutionElement).intValue();
-				}
-				if (solutionElement instanceof BooleanCommonFactorCardinalitySolution) {
-					return 1;
-				}
-			}
-		}
-		return null; */
 	}
 
 	@Override
@@ -619,8 +585,9 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return variable2expressions;
 	}
 
-	public @NonNull CardinalityVariable getCardinalityVariable(@NonNull SerializationNode serializationNode) {
-		return ClassUtil.nonNullState(node2variable.get(serializationNode));
+	public int getCardinalityVariableIndex(@NonNull SerializationNode serializationNode) {
+		CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
+		return cardinalityVariable != null ? cardinalityVariable.getIndex() : -1;
 	}
 
 	public @NonNull Iterable<@NonNull CardinalityVariable> getCardinalityVariables() {

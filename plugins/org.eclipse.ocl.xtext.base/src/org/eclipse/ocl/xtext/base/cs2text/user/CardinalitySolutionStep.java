@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
@@ -141,8 +140,8 @@ public abstract class CardinalitySolutionStep
 		}
 
 		@Override
-		public boolean isAssignTo(@NonNull CardinalityVariable cardinalityVariable) {
-			return this.cardinalityVariableIndex == cardinalityVariable.getIndex();
+		public boolean isAssignTo(int cardinalityVariableIndex) {
+			return this.cardinalityVariableIndex == cardinalityVariableIndex;
 		}
 
 		@Override
@@ -438,7 +437,7 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * Return true if this is an assignment step to cardinalityVariable.
 	 */
-	public boolean isAssignTo(@NonNull CardinalityVariable cardinalityVariable) {
+	public boolean isAssignTo(int variableIndex) {
 		return false;
 	}
 

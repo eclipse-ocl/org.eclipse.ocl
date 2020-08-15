@@ -650,7 +650,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		Set<@NonNull CardinalityVariable> productVariables = null;
 		int constantProduct = 1;
 		for (@NonNull CardinalityVariable variable : product) {
-			Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable);		// FIXME constants
+			Integer integerSolution = ruleMatch.basicGetIntegerSolution(variable.getIndex());		// FIXME constants
 		//	Integer integer = zzgetIntegerSolution(solution);
 			if (integerSolution != null) {
 				constantProduct *= integerSolution;
@@ -676,7 +676,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			int product = 1;
 			for (@NonNull CardinalityVariable variable : products) {
-				Integer value = dynamicRuleMatch.basicGetIntegerSolution(variable);
+				Integer value = dynamicRuleMatch.basicGetIntegerSolution(variable.getIndex());
 				int intValue = value != null ? value.intValue() : 1;
 				product *= intValue;
 			}

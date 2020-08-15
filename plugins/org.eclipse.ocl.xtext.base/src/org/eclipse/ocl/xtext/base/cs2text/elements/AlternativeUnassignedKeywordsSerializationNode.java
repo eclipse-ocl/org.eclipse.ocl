@@ -57,7 +57,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	@Override
 	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		stepsList.add(new RTSerializationLiteralStep(staticRuleMatch.basicGetCardinalityVariableIndex(this), values.get(0)));
+		stepsList.add(new RTSerializationLiteralStep(staticRuleMatch.getCardinalityVariableIndex(this), values.get(0)));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 

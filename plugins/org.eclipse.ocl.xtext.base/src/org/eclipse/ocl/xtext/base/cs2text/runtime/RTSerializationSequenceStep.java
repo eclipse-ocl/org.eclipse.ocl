@@ -11,9 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public class RTSerializationSequenceStep extends RTAbstractSerializationStep
@@ -23,10 +21,6 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 	 */
 	private int startIndex = 0;
 	private int endIndex = 0;
-
-	public RTSerializationSequenceStep(@Nullable CardinalityVariable cardinalityVariable) {
-		super(cardinalityVariable != null ? cardinalityVariable.getIndex() : -1);		// Default unit sequence wraps the whole rule and may have a comment idiom
-	}
 
 	public RTSerializationSequenceStep(int variableIndex, int startIndex, int endIndex) {
 		super(variableIndex);

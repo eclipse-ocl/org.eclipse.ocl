@@ -152,12 +152,6 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		return serializationNode2subIdiom2;
 	}
 
-	public @NonNull CardinalityVariable getVariable(@NonNull SerializationNode serializationNode) {
-		getStaticRuleMatch();
-		assert staticRuleMatch != null;
-		return staticRuleMatch.getCardinalityVariable(serializationNode);
-	}
-
 	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.getCardinalityVariables();
