@@ -657,7 +657,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return null;
 	}
 
-	@Override
 	public @NonNull BasicSerializationRule getSerializationRule() {
 		return serializationRule;
 	}

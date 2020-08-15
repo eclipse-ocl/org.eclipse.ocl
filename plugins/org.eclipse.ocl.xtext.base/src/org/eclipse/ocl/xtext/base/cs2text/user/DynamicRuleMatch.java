@@ -23,8 +23,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
@@ -84,9 +84,9 @@ public class DynamicRuleMatch implements RuleMatch
 		return ClassUtil.nonNullState(variableIndex2value.get(cardinalityVariable.getIndex()));
 	}
 
-	@Override
-	public @NonNull BasicSerializationRule getSerializationRule() {
-		return staticRuleMatch.getSerializationRule();
+//	@Override
+	public @NonNull RTSerializationRule getSerializationRule() {
+		return staticRuleMatch.getSerializationRule().getRuntime();
 	}
 
 	@Override

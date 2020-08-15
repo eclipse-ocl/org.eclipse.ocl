@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
@@ -38,11 +37,11 @@ public interface RuleMatch
 	@Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex);
 
 	/**
-	 * Rerturn the SerializationRule that this RuleMatch elaborates.
+	 * Return the SerializationRule that this RuleMatch elaborates.
 	 */
-	@NonNull BasicSerializationRule getSerializationRule();
+//	@NonNull BasicSerializationRule getSerializationRule();
 
-	/**#
+	/**
 	 * Return the number of eAttribute slot elements in the user model element. For a non-NullEnumerationValue, the
 	 * number of slot elements that match known enumerationValue elements is returned. Returns null if not yet computable.
 	 */

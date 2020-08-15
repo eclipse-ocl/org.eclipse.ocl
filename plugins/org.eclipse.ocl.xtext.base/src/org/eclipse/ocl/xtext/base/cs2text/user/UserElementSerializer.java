@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
@@ -38,7 +37,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 public class UserElementSerializer
 {
 	protected final @NonNull DynamicRuleMatch dynamicRuleMatch;
-	protected final @NonNull BasicSerializationRule serializationRule;
+	protected final @NonNull RTSerializationRule serializationRule;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 
 	protected final @NonNull EObject element;
@@ -128,7 +127,7 @@ public class UserElementSerializer
 	} */
 
 	public @NonNull RTSerializationRule getSerializationRule() {
-		return serializationRule.getRuntime();
+		return serializationRule;
 	}
 
 	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
@@ -143,8 +142,7 @@ public class UserElementSerializer
 	 * Serialize this serializer's configured element to the serializationBuilder.
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder) {
-		RTSerializationRule runtime = serializationRule.getRuntime();
-		runtime.serializeRule(this, serializationBuilder);
+		serializationRule.serializeRule(this, serializationBuilder);
 //		serializeNode(serializationBuilder, serializationRule.getRootSerializationNode());
 	}
 
