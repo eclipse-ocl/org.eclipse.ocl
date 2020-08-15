@@ -46,6 +46,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -375,29 +376,31 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "ev." + id : id;
 	}
 
-	private @Nullable Map<@NonNull AbstractRuleAnalysis, @NonNull String> ruleAnalysis2id = null;
+	private @Nullable Map<@NonNull ParserRuleValue, @NonNull String> parserRuleValue2id = null;
 
-	protected @NonNull Iterable<@NonNull AbstractRuleAnalysis> getSortedRuleAnalyses(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull AbstractRuleAnalysis, @NonNull String> ruleAnalysis2id2 = ruleAnalysis2id;
-		if (ruleAnalysis2id2 == null) {
-			ruleAnalysis2id = ruleAnalysis2id2 = new HashMap<>();
+	protected @NonNull Iterable<@NonNull ParserRuleValue> getSortedParserRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull ParserRuleValue, @NonNull String> parserRuleValue2id2 = parserRuleValue2id;
+		if (parserRuleValue2id2 == null) {
+			parserRuleValue2id = parserRuleValue2id2 = new HashMap<>();
 		}
 		for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
-			ruleAnalysis2id2.put(ruleAnalysis, "");
+			if (ruleAnalysis instanceof ParserRuleAnalysis) {
+				parserRuleValue2id2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue(), "");
+			}
 		}
-		List<@NonNull AbstractRuleAnalysis> ruleAnalyses = new ArrayList<>(ruleAnalysis2id2.keySet());
-		Collections.sort(ruleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(ruleAnalyses);
+		List<@NonNull ParserRuleValue> parserRuleValues = new ArrayList<>(parserRuleValue2id2.keySet());
+		Collections.sort(parserRuleValues, NameUtil.NAMEABLE_COMPARATOR);
+		String formatString = "_" + getDigitsFormatString(parserRuleValues);
 		int i = 0;
-		for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			ruleAnalysis2id2.put(ruleAnalysis, String.format(formatString, i++));
+		for (@NonNull ParserRuleValue parserRuleValue : parserRuleValues) {
+			parserRuleValue2id2.put(parserRuleValue, String.format(formatString, i++));
 		}
-		return ruleAnalyses;
+		return parserRuleValues;
 	}
 
-	protected @NonNull String getRuleAnalysisId(@NonNull AbstractRuleAnalysis ruleAnalysis, boolean addQualifier) {
-		assert ruleAnalysis2id != null;
-		String id = ruleAnalysis2id.get(ruleAnalysis);
+	protected @NonNull String getParserRuleValueId(@NonNull ParserRuleValue parserRuleValue, boolean addQualifier) {
+		assert parserRuleValue2id != null;
+		String id = parserRuleValue2id.get(parserRuleValue);
 		assert id != null;
 		return addQualifier ? "pr." + id : id;
 	}

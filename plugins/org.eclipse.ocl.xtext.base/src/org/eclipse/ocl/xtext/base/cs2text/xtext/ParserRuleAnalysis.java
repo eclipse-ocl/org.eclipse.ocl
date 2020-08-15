@@ -80,6 +80,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	 */
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
 
+	private @Nullable ParserRuleValue parserRuleValue = null;
+
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
 		this.eClass = eClass;
@@ -366,6 +368,14 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 
 	public @NonNull ParserRule getParserRule() {
 		return (ParserRule) abstractRule;
+	}
+
+	public @NonNull ParserRuleValue getParserRuleValue() {
+		ParserRuleValue parserRuleValue2 = parserRuleValue;
+		if (parserRuleValue2 == null) {
+			parserRuleValue = parserRuleValue2 = new ParserRuleValue(name);
+		}
+		return parserRuleValue2;
 	}
 
 	public @NonNull EClass getReturnedEClass() {

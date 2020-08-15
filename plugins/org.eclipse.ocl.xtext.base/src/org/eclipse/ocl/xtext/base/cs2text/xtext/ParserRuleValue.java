@@ -13,11 +13,11 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
-public class ParserRuleData implements Nameable
+public class ParserRuleValue implements Nameable
 {
 	protected final @NonNull String name;
 
-	public ParserRuleData(@NonNull String name) {
+	public ParserRuleValue(@NonNull String name) {
 		this.name = name;
 	}
 

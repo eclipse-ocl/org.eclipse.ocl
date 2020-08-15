@@ -54,12 +54,12 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleData
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -127,9 +127,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 						
 			private class _ParserRuleData
 			{
-				«FOR ruleAnalysis : getSortedRuleAnalyses(grammarAnalysis)»
-				private final /*@NonNull*/ «new TypeReference(ParserRuleData)» «getRuleAnalysisId(ruleAnalysis, false)» // «ruleAnalysis»
-					= «generateRuleAnalysis(ruleAnalysis)»;
+				«FOR parserRuleValue : getSortedParserRuleValues(grammarAnalysis)»
+				private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getParserRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
+					= «generateParserRuleValue(parserRuleValue)»;
 				«ENDFOR»
 			}
 						
@@ -429,26 +429,26 @@ new «new TypeReference(RTSerializationRule)»(
 	
 	/* ************************************************************************************************************************** */
 	
-	protected def generateRuleAnalysis(AbstractRuleAnalysis ruleAnalysis) {
-		switch ruleAnalysis {
-		DataTypeRuleAnalysis: return generateRuleAnalysis_DataTypeRuleAnalysis(ruleAnalysis)
-		ParserRuleAnalysis: return generateRuleAnalysis_ParserRuleAnalysis(ruleAnalysis)
-		TerminalRuleAnalysis: return generateRuleAnalysis_TerminalRuleAnalysis(ruleAnalysis)
+	protected def generateParserRuleValue(ParserRuleValue parserRuleValue) {
+		switch parserRuleValue {
+	//	DataTypeRuleAnalysis: return generateParserRuleValue_DataTypeRuleAnalysis(parserRuleValue)
+		ParserRuleValue: return generateParserRuleValue_ParserRuleValue(parserRuleValue)
+	//	TerminalRuleAnalysis: return generateParserRuleValue_TerminalRuleAnalysis(parserRuleValue)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateRuleAnalysis_DataTypeRuleAnalysis(DataTypeRuleAnalysis ruleAnalysis) {
-		'''new «new TypeReference(ParserRuleData)»("«ruleAnalysis.getName()»")'''
+//	protected def generateParserRuleValue_DataTypeRuleAnalysis(DataTypeRuleAnalysis ruleAnalysis) {
+//		'''new «new TypeReference(ParserRuleValue)»("«ruleAnalysis.getName()»")'''
+//	}
+	
+	protected def generateParserRuleValue_ParserRuleValue(ParserRuleValue parserRuleValue) {
+		'''new «new TypeReference(ParserRuleValue)»("«parserRuleValue.getName()»")'''
 	}
 	
-	protected def generateRuleAnalysis_ParserRuleAnalysis(ParserRuleAnalysis ruleAnalysis) {
-		'''new «new TypeReference(ParserRuleData)»("«ruleAnalysis.getName()»")'''
-	}
-	
-	protected def generateRuleAnalysis_TerminalRuleAnalysis(TerminalRuleAnalysis ruleAnalysis) {
-		'''new «new TypeReference(ParserRuleData)»("«ruleAnalysis.getName()»")'''
-	}
+//	protected def generateParserRuleValue_TerminalRuleAnalysis(TerminalRuleAnalysis ruleAnalysis) {
+//		'''new «new TypeReference(ParserRuleValue)»("«ruleAnalysis.getName()»")'''
+//	}
 	
 	/* ************************************************************************************************************************** */
 	
