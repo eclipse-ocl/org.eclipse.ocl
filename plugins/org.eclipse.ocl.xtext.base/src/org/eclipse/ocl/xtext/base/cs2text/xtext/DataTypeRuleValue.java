@@ -11,15 +11,11 @@
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
-public class ParserRuleValue extends AbstractRuleValue
+public class DataTypeRuleValue extends AbstractRuleValue
 {
-	protected final @Nullable IndexVector subParserRuleValueIndexes;	// Includes this if non-null
-
-	public ParserRuleValue(int index, @NonNull String name, @Nullable IndexVector subParserRuleValueIndexes) {
+	public DataTypeRuleValue(int index, @NonNull String name) {
 		super(index, name);
-		this.subParserRuleValueIndexes = subParserRuleValueIndexes;
 	}
 
 	@Override
@@ -27,18 +23,10 @@ public class ParserRuleValue extends AbstractRuleValue
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof ParserRuleValue)) {
+		if (!(obj instanceof DataTypeRuleValue)) {
 			return false;
 		}
-		ParserRuleValue that = (ParserRuleValue)obj;
+		DataTypeRuleValue that = (DataTypeRuleValue)obj;
 		return this.name.equals(that.name);
-	}
-
-	public @Nullable IndexVector getSubParserRuleValueIndexes() {
-		return subParserRuleValueIndexes;
-	}
-
-	public boolean subParserRuleValueClosureContains(@NonNull ParserRuleValue parserRuleValue) {
-		return (subParserRuleValueIndexes != null) ? subParserRuleValueIndexes.test(parserRuleValue.getIndex()) : (parserRuleValue == this);
 	}
 }

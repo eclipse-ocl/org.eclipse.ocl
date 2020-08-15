@@ -44,9 +44,9 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -376,44 +376,44 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "ev." + id : id;
 	}
 
-	private @Nullable Map<@NonNull ParserRuleValue, @NonNull String> parserRuleValue2id = null;
-	private @Nullable Map<@NonNull Integer, @NonNull String> parserRuleValueIndex2parserRuleName = null;
+	private @Nullable Map<@NonNull AbstractRuleValue, @NonNull String> ruleValue2id = null;
+	private @Nullable Map<@NonNull Integer, @NonNull String> ruleValueIndex2parserRuleName = null;
 
-	protected @NonNull Iterable<@NonNull ParserRuleValue> getSortedParserRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull ParserRuleValue, @NonNull String> parserRuleValue2id2 = parserRuleValue2id;
-		Map<@NonNull Integer, @NonNull String> parserRuleValueIndex2parserRuleName2 = parserRuleValueIndex2parserRuleName;
+	protected @NonNull Iterable<@NonNull AbstractRuleValue> getSortedRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull AbstractRuleValue, @NonNull String> parserRuleValue2id2 = ruleValue2id;
+		Map<@NonNull Integer, @NonNull String> ruleValueIndex2parserRuleName2 = ruleValueIndex2parserRuleName;
 		if (parserRuleValue2id2 == null) {
-			parserRuleValue2id = parserRuleValue2id2 = new HashMap<>();
+			ruleValue2id = parserRuleValue2id2 = new HashMap<>();
 		}
-		if (parserRuleValueIndex2parserRuleName2 == null) {
-			parserRuleValueIndex2parserRuleName = parserRuleValueIndex2parserRuleName2 = new HashMap<>();
+		if (ruleValueIndex2parserRuleName2 == null) {
+			ruleValueIndex2parserRuleName = ruleValueIndex2parserRuleName2 = new HashMap<>();
 		}
 		for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 			if (ruleAnalysis instanceof ParserRuleAnalysis) {
 				parserRuleValue2id2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue(), "");
-				parserRuleValueIndex2parserRuleName2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue().getIndex(), ruleAnalysis.getRuleName());
+				ruleValueIndex2parserRuleName2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue().getIndex(), ruleAnalysis.getRuleName());
 			}
 		}
-		List<@NonNull ParserRuleValue> parserRuleValues = new ArrayList<>(parserRuleValue2id2.keySet());
-		Collections.sort(parserRuleValues, NameUtil.NAMEABLE_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(parserRuleValues);
+		List<@NonNull AbstractRuleValue> ruleValues = new ArrayList<>(parserRuleValue2id2.keySet());
+		Collections.sort(ruleValues, NameUtil.NAMEABLE_COMPARATOR);
+		String formatString = "_" + getDigitsFormatString(ruleValues);
 		int i = 0;
-		for (@NonNull ParserRuleValue parserRuleValue : parserRuleValues) {
-			parserRuleValue2id2.put(parserRuleValue, String.format(formatString, i++));
+		for (@NonNull AbstractRuleValue ruleValue : ruleValues) {
+			parserRuleValue2id2.put(ruleValue, String.format(formatString, i++));
 		}
-		return parserRuleValues;
+		return ruleValues;
 	}
 
-	protected @NonNull String getParserRuleValueId(@NonNull ParserRuleValue parserRuleValue, boolean addQualifier) {
-		assert parserRuleValue2id != null;
-		String id = parserRuleValue2id.get(parserRuleValue);
+	protected @NonNull String getRuleValueId(@NonNull AbstractRuleValue ruleValue, boolean addQualifier) {
+		assert ruleValue2id != null;
+		String id = ruleValue2id.get(ruleValue);
 		assert id != null;
 		return addQualifier ? "pr." + id : id;
 	}
 
-	protected @NonNull String getParserRuleName(@NonNull Integer parserRuleValueIndex) {
-		assert parserRuleValueIndex2parserRuleName != null;
-		String id = parserRuleValueIndex2parserRuleName.get(parserRuleValueIndex);
+	protected @NonNull String getRuleName(@NonNull Integer parserRuleValueIndex) {
+		assert ruleValueIndex2parserRuleName != null;
+		String id = ruleValueIndex2parserRuleName.get(parserRuleValueIndex);
 		assert id != null;
 		return id;
 	}
