@@ -65,7 +65,7 @@ public class DynamicSerializationRules
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable ParserRuleValue targetParserRuleValue) {
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			ParserRuleValue serializationParserRuleValue = serializationRule.getRuleAnalysis().getParserRuleValue();
+			ParserRuleValue serializationParserRuleValue = serializationRule.getRuleAnalysis().getRuleValue();
 			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationParserRuleValue)) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
@@ -132,7 +132,7 @@ public class DynamicSerializationRules
 					List<@NonNull ParserRuleAnalysis> sortedRuleAnalyses = Lists.newArrayList(assignedRuleAnalyses);
 					Collections.sort(sortedRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull ParserRuleAnalysis ruleAnalysis : sortedRuleAnalyses) {
-						int size2 = slotsAnalysis.getSize(eReference, ruleAnalysis.getParserRuleValue());
+						int size2 = slotsAnalysis.getSize(eReference, ruleAnalysis.getRuleValue());
 						s.append(String.format("\n %-29.29s%8d", "'" + ruleAnalysis.getName() + "'", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();

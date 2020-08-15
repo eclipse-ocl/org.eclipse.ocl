@@ -103,7 +103,7 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 					DynamicRuleMatch match = serializationRule.getBasicSerializationRule().getStaticRuleMatch().match(slotsAnalysis);
 					if (match != null) {
 						// XXX we could mark the serializationBuilder context and catch a backtracking exception/null return if needed here
-						serializer.serializeElement(serializationBuilder, eObject, calledRuleAnalysis);
+						serializer.serializeElement(serializationBuilder, eObject, calledRuleAnalysis.getRuleValue());
 						return;
 					}
 				}

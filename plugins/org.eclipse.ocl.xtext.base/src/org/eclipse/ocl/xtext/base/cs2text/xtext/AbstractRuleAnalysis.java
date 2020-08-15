@@ -19,12 +19,14 @@ import org.eclipse.xtext.AbstractRule;
 /**
  * An XtextAbstractRuleAnalysis provides the extended analysis of an Xtext AbstractRule
  */
-public class AbstractRuleAnalysis implements Nameable, ToDebugStringable
+public abstract class AbstractRuleAnalysis implements Nameable, ToDebugStringable
 {
 	/**#
 	 * The overall (multi-)grammar analysis.
 	 */
 	protected final @NonNull GrammarAnalysis grammarAnalysis;
+
+	protected final int index;
 
 	/**
 	 * The analyzed Xtext rule.
@@ -54,13 +56,14 @@ public class AbstractRuleAnalysis implements Nameable, ToDebugStringable
 	@SuppressWarnings("unused")			// Used in the debugger
 	private final @NonNull ToDebugString toDebugSring = new ToDebugString(this){};
 
-	public AbstractRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull AbstractRule abstractRule) {
+	public AbstractRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, int index, @NonNull AbstractRule abstractRule) {
 		this.grammarAnalysis = grammarAnalysis;
+		this.index = index;
 		this.abstractRule = abstractRule;
 		String grammarName = XtextGrammarUtil.getEContainingGrammar(abstractRule).getName();
-		int index = grammarName.lastIndexOf('.');
-		if (index >= 0) {
-			grammarName = grammarName.substring(index+1);
+		int dotIndex = grammarName.lastIndexOf('.');
+		if (dotIndex >= 0) {
+			grammarName = grammarName.substring(dotIndex+1);
 		}
 		this.name = grammarName + "::" + XtextGrammarUtil.getName(abstractRule);
 	}
@@ -123,6 +126,8 @@ public class AbstractRuleAnalysis implements Nameable, ToDebugStringable
 		return XtextGrammarUtil.getName(abstractRule);
 	}
 
+	public abstract @NonNull AbstractRuleValue getRuleValue();
+
 //	public @NonNull List<@NonNull XtextTermsAnalysis> getTermsAnalyses() {
 //		assert termsAnalyses != null;
 //		return termsAnalyses;
@@ -158,4 +163,5 @@ public class AbstractRuleAnalysis implements Nameable, ToDebugStringable
 	public @NonNull String toString() {
 		return getRuleName();
 	}
+
 }

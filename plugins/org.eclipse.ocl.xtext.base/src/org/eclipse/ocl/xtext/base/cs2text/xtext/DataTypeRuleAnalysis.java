@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.ParserRule;
 
 /**
@@ -20,9 +21,19 @@ import org.eclipse.xtext.ParserRule;
 public class DataTypeRuleAnalysis extends AbstractRuleAnalysis
 {
 	protected final @NonNull EDataType eDataType;
+	private @Nullable DataTypeRuleValue dataTypeRuleValue = null;
 
-	public DataTypeRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EDataType eDataType) {
-		super(grammarAnalysis, parserRule);
+	public DataTypeRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, int index, @NonNull ParserRule parserRule, @NonNull EDataType eDataType) {
+		super(grammarAnalysis, index, parserRule);
 		this.eDataType = eDataType;
+	}
+
+	@Override
+	public @NonNull DataTypeRuleValue getRuleValue() {
+		DataTypeRuleValue dataTypeRuleValue2 = dataTypeRuleValue;
+		if (dataTypeRuleValue2 == null) {
+			dataTypeRuleValue = dataTypeRuleValue2 = new DataTypeRuleValue(index, getRuleName());
+		}
+		return dataTypeRuleValue2;
 	}
 }

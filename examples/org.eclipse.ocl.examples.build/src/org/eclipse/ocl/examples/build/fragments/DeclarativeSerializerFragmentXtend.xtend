@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue
+import org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -438,7 +439,7 @@ new «new TypeReference(RTSerializationRule)»(
 		switch ruleValue {
 		DataTypeRuleValue: return generateRuleValue_DataTypeRule(ruleValue)
 		ParserRuleValue: return generateRuleValue_ParserRuleValue(ruleValue)
-	//	TerminalRuleAnalysis: return generateRuleValue_TerminalRuleAnalysis(ruleValue)
+		TerminalRuleValue: return generateRuleValue_TerminalRuleValue(ruleValue)
 		default: throw new UnsupportedOperationException()
 		}
 	}
@@ -459,9 +460,9 @@ new «new TypeReference(RTSerializationRule)»(
 		}
 	}
 	
-//	protected def generateRuleValue_TerminalRuleAnalysis(TerminalRuleAnalysis ruleAnalysis) {
-//		'''new «new TypeReference(ParserRuleValue)»("«ruleAnalysis.getName()»")'''
-//	}
+	protected def generateRuleValue_TerminalRuleValue(TerminalRuleValue ruleValue) {
+		'''new «new TypeReference(TerminalRuleValue)»("«ruleValue.getName()»")'''
+	}
 	
 	/* ************************************************************************************************************************** */
 	

@@ -390,8 +390,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 			if (ruleAnalysis instanceof ParserRuleAnalysis) {
-				parserRuleValue2id2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue(), "");
-				ruleValueIndex2parserRuleName2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue().getIndex(), ruleAnalysis.getRuleName());
+				parserRuleValue2id2.put(((ParserRuleAnalysis)ruleAnalysis).getRuleValue(), "");
+				ruleValueIndex2parserRuleName2.put(((ParserRuleAnalysis)ruleAnalysis).getRuleValue().getIndex(), ruleAnalysis.getRuleName());
 			}
 		}
 		List<@NonNull AbstractRuleValue> ruleValues = new ArrayList<>(parserRuleValue2id2.keySet());

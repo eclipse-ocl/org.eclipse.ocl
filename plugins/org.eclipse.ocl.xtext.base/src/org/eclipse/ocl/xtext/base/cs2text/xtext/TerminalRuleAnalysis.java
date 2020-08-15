@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.TerminalRule;
 
 /**
@@ -20,10 +21,20 @@ import org.eclipse.xtext.TerminalRule;
 public class TerminalRuleAnalysis extends AbstractRuleAnalysis
 {
 	protected final @NonNull EDataType eDataType;
+	private @Nullable TerminalRuleValue terminalRuleValue = null;
 
-	public TerminalRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull TerminalRule terminalRule) {
-		super(grammarAnalysis, terminalRule);
+	public TerminalRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, int index, @NonNull TerminalRule terminalRule) {
+		super(grammarAnalysis, index, terminalRule);
 		this.eDataType = (EDataType)XtextGrammarUtil.getClassifier(terminalRule.getType());
+	}
+
+	@Override
+	public @NonNull TerminalRuleValue getRuleValue() {
+		TerminalRuleValue terminalRuleValue2 = terminalRuleValue;
+		if (terminalRuleValue2 == null) {
+			terminalRuleValue = terminalRuleValue2 = new TerminalRuleValue(index, getRuleName());
+		}
+		return terminalRuleValue2;
 	}
 
 	public @NonNull TerminalRule getTerminalRule() {

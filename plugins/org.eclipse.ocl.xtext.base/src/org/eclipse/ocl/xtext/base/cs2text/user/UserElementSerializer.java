@@ -27,7 +27,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 /**
@@ -149,8 +149,8 @@ public class UserElementSerializer
 	/**
 	 * Create and use a new serilaizer to to serialize element to the serializationBuilder.
 	 */
-	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
-		modelAnalysis.serialize(serializationBuilder, element, targetRuleAnalysis);
+	public void serializeElement(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject element, @Nullable AbstractRuleValue targetRuleValue) {
+		modelAnalysis.serialize(serializationBuilder, element, targetRuleValue);
 	}
 
 	/**

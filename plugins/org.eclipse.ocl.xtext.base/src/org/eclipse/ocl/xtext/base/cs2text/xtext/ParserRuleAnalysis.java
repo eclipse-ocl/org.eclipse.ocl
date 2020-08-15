@@ -53,7 +53,6 @@ import org.eclipse.xtext.RuleCall;
  */
 public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 {
-	protected final int index;
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
@@ -84,8 +83,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	private @Nullable ParserRuleValue parserRuleValue = null;
 
 	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, int index, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
-		super(grammarAnalysis, parserRule);
-		this.index = index;
+		super(grammarAnalysis, index, parserRule);
 		this.eClass = eClass;
 	}
 
@@ -377,7 +375,12 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return (ParserRule) abstractRule;
 	}
 
-	public @NonNull ParserRuleValue getParserRuleValue() {
+	public @NonNull EClass getReturnedEClass() {
+		return eClass;
+	}
+
+	@Override
+	public @NonNull ParserRuleValue getRuleValue() {
 		ParserRuleValue parserRuleValue2 = parserRuleValue;
 		if (parserRuleValue2 == null) {
 			Collection<@NonNull ParserRuleValue> subParserRuleValueClosure = null;
@@ -386,7 +389,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					if (subParserRuleValueClosure == null) {
 						subParserRuleValueClosure = new ArrayList<>();
 					}
-					subParserRuleValueClosure.add(subParserRuleAnalysis.getParserRuleValue());
+					subParserRuleValueClosure.add(subParserRuleAnalysis.getRuleValue());
 				}
 			}
 			IndexVector subParserRuleValueIndexes = null;
@@ -400,10 +403,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getRuleName(), subParserRuleValueIndexes);
 		}
 		return parserRuleValue2;
-	}
-
-	public @NonNull EClass getReturnedEClass() {
-		return eClass;
 	}
 
 	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {

@@ -25,9 +25,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 
@@ -156,19 +156,19 @@ public class UserModelAnalysis
 	 * Create a Serializer for the appropriate configuration of element, then use it to serialize it and its descendants
 	 * to the serializationBuilder.
 	 */
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable AbstractRuleValue targetRuleValue) {
 		debugSerializeCount++;
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
 		if ("PrefixExpCS".equals(eObject.eClass().getName())) {
 			getClass();	// XXX
 		}
-		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis != null ? ((ParserRuleAnalysis)targetRuleAnalysis).getParserRuleValue() : null);
+		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);
 		if (dynamicRuleMatch != null) {
 			UserElementSerializer serializer = new UserElementSerializer(dynamicRuleMatch, this, eObject);
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis != null ? ((ParserRuleAnalysis)targetRuleAnalysis).getParserRuleValue() : null);		// XXX debugging
+			userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);		// XXX debugging
 			StringBuilder s = new StringBuilder();
 			s.append("\n\n«incompatible '" + eObject.eClass().getName() + "'");
 			userElementAnalysis.getSlotsAnalysis().diagnose(s);

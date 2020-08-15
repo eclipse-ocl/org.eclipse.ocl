@@ -350,7 +350,7 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 			@NonNull Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls) {
 		List<@NonNull String> ruleNames = new ArrayList<>(ruleName2rules.keySet());
 		Collections.sort(ruleNames);
-		int parserRuleIndex = 0;
+		int ruleIndex = 0;
 		for (@NonNull String ruleName : ruleNames) {
 			List<@NonNull AbstractRule> rules = ruleName2rules.get(ruleName);
 			assert rules != null;
@@ -376,14 +376,14 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 			if (activeRule instanceof ParserRule) {
 				EClassifier eClassifier = XtextGrammarUtil.getClassifier(activeRule.getType());
 				if (eClassifier instanceof EClass) {
-					ruleAnalysis = new ParserRuleAnalysis(this, parserRuleIndex++, (ParserRule)activeRule, (EClass)eClassifier);
+					ruleAnalysis = new ParserRuleAnalysis(this, ruleIndex++, (ParserRule)activeRule, (EClass)eClassifier);
 				}
 				else {
-					ruleAnalysis = new DataTypeRuleAnalysis(this, (ParserRule)activeRule, (EDataType)eClassifier);
+					ruleAnalysis = new DataTypeRuleAnalysis(this, ruleIndex++, (ParserRule)activeRule, (EDataType)eClassifier);
 				}
 			}
 			else if (activeRule instanceof TerminalRule) {
-				ruleAnalysis = new TerminalRuleAnalysis(this, (TerminalRule)activeRule);
+				ruleAnalysis = new TerminalRuleAnalysis(this, ruleIndex++, (TerminalRule)activeRule);
 			}
 			else {
 				throw new UnsupportedOperationException();
