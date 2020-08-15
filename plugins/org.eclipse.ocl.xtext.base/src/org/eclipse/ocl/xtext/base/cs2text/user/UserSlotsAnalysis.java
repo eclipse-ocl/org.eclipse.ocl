@@ -29,6 +29,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class UserSlotsAnalysis
 {
@@ -47,7 +48,7 @@ public class UserSlotsAnalysis
 		/**
 		 * Return the number of ruleAnalysis slot elements for an DiscriminatedSlotAnalysis or throw an IllegalStateException otherwose.
 		 */
-		int asDiscriminated(/* XXX @Nullable*/ ParserRuleAnalysis ruleAnalysis);
+		int asDiscriminated(/* XXX @Nullable*/ ParserRuleValue parserRuleValue);
 
 		/**
 		 * Return the number of enumerationValue slot elements for an EnmeratedSlotAnalysis or throw an IllegalStateException otherwose.
@@ -99,7 +100,7 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleAnalysis ruleAnalysis) {
+		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleValue parserRuleValue) {
 			throw new IllegalStateException();
 		}
 
@@ -137,7 +138,7 @@ public class UserSlotsAnalysis
 	{
 		protected final @NonNull List<@NonNull ParserRuleAnalysis> ruleAnalyses;
 		protected final int count;
-		private final @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull Integer> ruleAnalysis2count = new HashMap<>();
+		private final @NonNull Map<@NonNull ParserRuleValue, @NonNull Integer> parserRuleValue2count = new HashMap<>();
 
 		public DiscriminatedSlotAnalysis(@NonNull List<@NonNull ParserRuleAnalysis> ruleAnalyses, int count) {
 			this.ruleAnalyses = ruleAnalyses;
@@ -148,14 +149,14 @@ public class UserSlotsAnalysis
 			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
 				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleAnalysis);
 				if (dynamicRuleMatch != null) {
-					Integer oldCount = ruleAnalysis2count.get(ruleAnalysis);
-					ruleAnalysis2count.put(ruleAnalysis, oldCount != null ? oldCount+1 : 1);
+					Integer oldCount = parserRuleValue2count.get(ruleAnalysis.getParserRuleValue());
+					parserRuleValue2count.put(ruleAnalysis.getParserRuleValue(), oldCount != null ? oldCount+1 : 1);
 				}
 			}
 		}
 
 		public @Nullable Integer basicGet(@NonNull ParserRuleAnalysis ruleAnalysis) {
-			return ruleAnalysis2count.get(ruleAnalysis);
+			return parserRuleValue2count.get(ruleAnalysis.getParserRuleValue());
 		}
 
 		@Override
@@ -164,8 +165,8 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleAnalysis ruleAnalysis) {
-			Integer value = ruleAnalysis2count.get(ruleAnalysis);
+		public int asDiscriminated(/* XXX @Nullable*/ ParserRuleValue parserRuleValue) {
+			Integer value = parserRuleValue2count.get(parserRuleValue);
 		//	return value != null ? value.intValue() : 0;			// XXX
 			return count;
 		}
@@ -202,7 +203,7 @@ public class UserSlotsAnalysis
 				}
 				s.append(ruleAnalysis.getRuleName());
 				s.append("(");
-				Integer count = ruleAnalysis2count.get(ruleAnalysis);
+				Integer count = parserRuleValue2count.get(ruleAnalysis);
 				s.append(count != null ? count.intValue() : 0);
 				s.append(")");
 				isFirst = false;
@@ -230,7 +231,7 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleAnalysis ruleAnalysis) {
+		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleValue parserRuleValue) {
 			throw new IllegalStateException();
 		}
 
@@ -515,7 +516,7 @@ public class UserSlotsAnalysis
 		}
 	}
 
-	public int getSize(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
+	public int getSize(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
 		UserSlotAnalysis slotAnalysis = basicGetSlotAnalysis(eReference);
 		if (slotAnalysis == null) {
 			return 0;
@@ -527,7 +528,7 @@ public class UserSlotsAnalysis
 			return slotAnalysis.asEnumerated(enumerationValue);
 		}
 		else */if (slotAnalysis.isDiscriminated()) {
-			return slotAnalysis.asDiscriminated(ruleAnalysis);		// XXX
+			return slotAnalysis.asDiscriminated(parserRuleValue);		// XXX
 		}
 		else {
 			throw new UnsupportedOperationException();

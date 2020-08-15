@@ -13,7 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
  * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
@@ -22,16 +22,16 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull EReference eReference;
-	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull ParserRuleValue parserRuleValue;
 
-	public EReferenceSizeCardinalitySolution(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
+	public EReferenceSizeCardinalitySolution(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
 		this.eReference = eReference;
-		this.ruleAnalysis = ruleAnalysis;
+		this.parserRuleValue = parserRuleValue;
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		return ruleMatch.getSize(eReference, ruleAnalysis);
+		return ruleMatch.getSize(eReference, parserRuleValue);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 		}
 		EReferenceSizeCardinalitySolution that = (EReferenceSizeCardinalitySolution) obj;
 		if (this.eReference != that.eReference) return false;
-		if (!this.ruleAnalysis.equals(that.ruleAnalysis)) return false;
+		if (!this.parserRuleValue.equals(that.parserRuleValue)) return false;
 		return true;
 	}
 
@@ -52,13 +52,13 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 		return eReference;
 	}
 
-	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
-		return ruleAnalysis;
+	public @NonNull ParserRuleValue getParserRuleValue() {
+		return parserRuleValue;
 	}
 
 	@Override
 	public int hashCode() {
-		return getClass().hashCode() + eReference.hashCode() + ruleAnalysis.hashCode() * 7;
+		return getClass().hashCode() + eReference.hashCode() + parserRuleValue.hashCode() * 7;
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 		s.append("|");
 		s.append(eReference.getName());
 		s.append(".'");
-		s.append(ruleAnalysis.getRuleName());
+		s.append(parserRuleValue.getRuleName());
 		s.append("'|");
 	}
 }

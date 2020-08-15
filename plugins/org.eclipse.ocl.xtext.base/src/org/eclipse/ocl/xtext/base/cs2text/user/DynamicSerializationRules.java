@@ -133,7 +133,7 @@ public class DynamicSerializationRules
 					List<@NonNull ParserRuleAnalysis> sortedRuleAnalyses = Lists.newArrayList(assignedRuleAnalyses);
 					Collections.sort(sortedRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull ParserRuleAnalysis ruleAnalysis : sortedRuleAnalyses) {
-						int size2 = slotsAnalysis.getSize(eReference, ruleAnalysis);
+						int size2 = slotsAnalysis.getSize(eReference, ruleAnalysis.getParserRuleValue());
 						s.append(String.format("\n %-29.29s%8d", "'" + ruleAnalysis.getName() + "'", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();

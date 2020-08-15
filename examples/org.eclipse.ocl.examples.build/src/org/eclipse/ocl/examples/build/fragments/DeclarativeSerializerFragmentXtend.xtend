@@ -349,7 +349,7 @@ new «new TypeReference(RTSerializationRule)»(
 	}
 	
 	protected def generateSolution_EReferenceSizeCardinalitySolution(EReferenceSizeCardinalitySolution solution) {
-		'''new «new TypeReference(EReferenceSizeCardinalitySolution)»(«emitLiteral(solution.getEReference())», "«solution.getRuleAnalysis().getName()»")'''
+		'''new «new TypeReference(EReferenceSizeCardinalitySolution)»(«emitLiteral(solution.getEReference())», "«solution.getParserRuleValue().getName()»")'''
 	}
 	
 	protected def generateSolution_EStructuralFeatureSizeCardinalitySolution(EStructuralFeatureSizeCardinalitySolution solution) {

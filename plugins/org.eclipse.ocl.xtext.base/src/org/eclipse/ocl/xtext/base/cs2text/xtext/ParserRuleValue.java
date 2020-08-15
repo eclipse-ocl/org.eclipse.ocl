@@ -22,8 +22,34 @@ public class ParserRuleValue implements Nameable
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof ParserRuleValue)) {
+			return false;
+		}
+		ParserRuleValue that = (ParserRuleValue)obj;
+		return this.name.equals(that.name);
+	}
+
+	@Override
 	public @NonNull String getName() {
 		return name;
+	}
+
+//	public @NonNull Collection<@NonNull ParserRuleValue> getSubRuleAnalysesClosure() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	public @NonNull String getRuleName() {		// XXX not distinct
+		return name;
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode() + name.hashCode();
 	}
 
 	@Override

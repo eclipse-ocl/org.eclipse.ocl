@@ -29,7 +29,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
  * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule
@@ -100,8 +100,8 @@ public class DynamicRuleMatch implements RuleMatch
 	}
 
 	@Override
-	public @NonNull Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
-		return slotsAnalysis.getSize(eReference, ruleAnalysis);
+	public @Nullable Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
+		return slotsAnalysis.getSize(eReference, parserRuleValue);
 	}
 
 	public @NonNull UserSlotsAnalysis getSlotsAnalysis() {

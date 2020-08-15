@@ -26,7 +26,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
  * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
@@ -37,20 +37,20 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 public class EReferenceCardinalityExpression extends AbstractCardinalityExpression
 {
 	protected final @NonNull EReference eReference;
-	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
-	private @NonNull Map<@NonNull ParserRuleAnalysis, @NonNull CardinalityExpression> ruleAnalysis2cardinalityExpression = new HashMap<>();
+	protected final @NonNull ParserRuleValue parserRuleValue;
+	private @NonNull Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> parserRuleValue2cardinalityExpression = new HashMap<>();
 
-	public EReferenceCardinalityExpression(@NonNull String name, @NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
+	public EReferenceCardinalityExpression(@NonNull String name, @NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
 		super(name);
 		this.eReference = eReference;
-		this.ruleAnalysis = ruleAnalysis;
+		this.parserRuleValue = parserRuleValue;
 	}
 
 	@Override
 	public boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
-		for (Entry<@NonNull ParserRuleAnalysis, @NonNull CardinalityExpression> entry : ruleAnalysis2cardinalityExpression.entrySet()) {
-			ParserRuleAnalysis value = entry.getKey();
+		for (Entry<@NonNull ParserRuleValue, @NonNull CardinalityExpression> entry : parserRuleValue2cardinalityExpression.entrySet()) {
+			ParserRuleValue value = entry.getKey();
 			CardinalityExpression nestedExpression = entry.getValue();
 			int requiredCount = nestedExpression.solve(dynamicRuleMatch);
 			int actualCount = slotsAnalysis.getSize(eReference, value);
@@ -63,31 +63,31 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 
 	@Override
 	protected @NonNull EReferenceSizeCardinalitySolution createSizeCardinalitySolution() {
-		return new EReferenceSizeCardinalitySolution(eReference, ruleAnalysis);
+		return new EReferenceSizeCardinalitySolution(eReference, parserRuleValue);
 	}
 
 	@Override
 	public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
-		CardinalityExpression cardinalityExpression = ruleAnalysis2cardinalityExpression.get(ruleAnalysis);
+		CardinalityExpression cardinalityExpression = parserRuleValue2cardinalityExpression.get(parserRuleValue);
 		if (cardinalityExpression == null) {
-			String subName = name + "." + ruleAnalysis2cardinalityExpression.size();
-			cardinalityExpression = new EReferenceCardinalityExpression(subName, eReference, ruleAnalysis);
-			ruleAnalysis2cardinalityExpression.put(ruleAnalysis, cardinalityExpression);
+			String subName = name + "." + parserRuleValue2cardinalityExpression.size();
+			cardinalityExpression = new EReferenceCardinalityExpression(subName, eReference, parserRuleValue);
+			parserRuleValue2cardinalityExpression.put(parserRuleValue, cardinalityExpression);
 		}
 		return cardinalityExpression;
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions() {
-		return ruleAnalysis2cardinalityExpression.values();
+		return parserRuleValue2cardinalityExpression.values();
 	}
 
-	public @Nullable ParserRuleAnalysis getRuleAnalysis() {
-		return ruleAnalysis;
+	public @Nullable ParserRuleValue getParserRuleValue() {
+		return parserRuleValue;
 	}
 
-	public @Nullable Map<@NonNull ParserRuleAnalysis, @NonNull CardinalityExpression> getRuleAnalysis2cardinalityExpression() {
-		return ruleAnalysis2cardinalityExpression;
+	public @Nullable Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> getParserRuleValue2cardinalityExpression() {
+		return parserRuleValue2cardinalityExpression;
 	}
 
 	@Override
@@ -96,10 +96,10 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		s.append(": |");
 		s.append(eReference.getName());
 		s.append(".'");
-		s.append(ruleAnalysis.getRuleName());
+		s.append(parserRuleValue.getRuleName());
 		s.append("'| = ");
 		appendSumOfProducts(s);
-		List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(ruleAnalysis2cardinalityExpression.values());
+		List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(parserRuleValue2cardinalityExpression.values());
 		Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
 			StringUtil.appendIndentation(s, depth);
