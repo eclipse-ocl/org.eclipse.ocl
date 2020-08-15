@@ -51,8 +51,9 @@ import org.eclipse.xtext.RuleCall;
 /**
  * An XtextParserRuleAnalysis provides the extended analysis of an Xtext ParserRule
  */
-public class ParserRuleAnalysis extends AbstractRuleAnalysis
+public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 {
+	protected final int index;
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
 	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
@@ -82,8 +83,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 
 	private @Nullable ParserRuleValue parserRuleValue = null;
 
-	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
+	public ParserRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, int index, @NonNull ParserRule parserRule, @NonNull EClass eClass) {
 		super(grammarAnalysis, parserRule);
+		this.index = index;
 		this.eClass = eClass;
 	}
 
@@ -366,6 +368,11 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 		return eReference2disciminatingRuleAnalyses;
 	}
 
+	@Override
+	public int getIndex() {
+		return index;
+	}
+
 	public @NonNull ParserRule getParserRule() {
 		return (ParserRule) abstractRule;
 	}
@@ -373,7 +380,22 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis
 	public @NonNull ParserRuleValue getParserRuleValue() {
 		ParserRuleValue parserRuleValue2 = parserRuleValue;
 		if (parserRuleValue2 == null) {
-			parserRuleValue = parserRuleValue2 = new ParserRuleValue(name);
+			Collection<@NonNull ParserRuleValue> subParserRuleValueClosure = null;
+			for (@NonNull ParserRuleAnalysis subParserRuleAnalysis : getSubRuleAnalysesClosure()) {
+				if (subParserRuleAnalysis != this) {
+					if (subParserRuleValueClosure == null) {
+						subParserRuleValueClosure = new ArrayList<>();
+					}
+					subParserRuleValueClosure.add(subParserRuleAnalysis.getParserRuleValue());
+				}
+			}
+			if (subParserRuleValueClosure == null) {
+				parserRuleValue2 = new ParserRuleValue(index, getRuleName(), null);
+			}
+			else {
+				parserRuleValue2 = new ParserRuleValue(index, getRuleName(), subParserRuleValueClosure.toArray(new @NonNull ParserRuleValue [subParserRuleValueClosure.size()]));
+			}
+			parserRuleValue = parserRuleValue2;
 		}
 		return parserRuleValue2;
 	}

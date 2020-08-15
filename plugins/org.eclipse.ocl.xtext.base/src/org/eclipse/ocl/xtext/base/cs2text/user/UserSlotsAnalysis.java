@@ -136,27 +136,27 @@ public class UserSlotsAnalysis
 	 */
 	public static class DiscriminatedSlotAnalysis implements UserSlotAnalysis
 	{
-		protected final @NonNull List<@NonNull ParserRuleAnalysis> ruleAnalyses;
+		protected final @NonNull List<@NonNull ParserRuleValue> parserRuleValues;
 		protected final int count;
 		private final @NonNull Map<@NonNull ParserRuleValue, @NonNull Integer> parserRuleValue2count = new HashMap<>();
 
-		public DiscriminatedSlotAnalysis(@NonNull List<@NonNull ParserRuleAnalysis> ruleAnalyses, int count) {
-			this.ruleAnalyses = ruleAnalyses;
+		public DiscriminatedSlotAnalysis(@NonNull List<@NonNull ParserRuleValue> parserRuleValues, int count) {
+			this.parserRuleValues = parserRuleValues;
 			this.count = count;
 		}
 
 		public void analyzeEReference(@NonNull UserElementAnalysis elementAnalysis) {
-			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleAnalysis);
+			for (@NonNull ParserRuleValue parserRuleValue : parserRuleValues) {
+				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(parserRuleValue);
 				if (dynamicRuleMatch != null) {
-					Integer oldCount = parserRuleValue2count.get(ruleAnalysis.getParserRuleValue());
-					parserRuleValue2count.put(ruleAnalysis.getParserRuleValue(), oldCount != null ? oldCount+1 : 1);
+					Integer oldCount = parserRuleValue2count.get(parserRuleValue);
+					parserRuleValue2count.put(parserRuleValue, oldCount != null ? oldCount+1 : 1);
 				}
 			}
 		}
 
-		public @Nullable Integer basicGet(@NonNull ParserRuleAnalysis ruleAnalysis) {
-			return parserRuleValue2count.get(ruleAnalysis.getParserRuleValue());
+		public @Nullable Integer basicGet(@NonNull ParserRuleValue parserRuleValue) {
+			return parserRuleValue2count.get(parserRuleValue);
 		}
 
 		@Override
@@ -194,16 +194,16 @@ public class UserSlotsAnalysis
 		@Override
 		public @NonNull String toString() {
 			StringBuilder s = new StringBuilder();
-			List<@NonNull ParserRuleAnalysis> ruleAnalyses = new ArrayList<>(this.ruleAnalyses);
-			Collections.sort(ruleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
+			List<@NonNull ParserRuleValue> parserRuleValues = new ArrayList<>(this.parserRuleValues);
+			Collections.sort(parserRuleValues, NameUtil.NAMEABLE_COMPARATOR);
 			boolean isFirst = true;
-			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
+			for (@NonNull ParserRuleValue parserRuleValue : parserRuleValues) {
 				if (!isFirst) {
 					s.append("+");
 				}
-				s.append(ruleAnalysis.getRuleName());
+				s.append(parserRuleValue.getRuleName());
 				s.append("(");
-				Integer count = parserRuleValue2count.get(ruleAnalysis);
+				Integer count = parserRuleValue2count.get(parserRuleValue);
 				s.append(count != null ? count.intValue() : 0);
 				s.append(")");
 				isFirst = false;

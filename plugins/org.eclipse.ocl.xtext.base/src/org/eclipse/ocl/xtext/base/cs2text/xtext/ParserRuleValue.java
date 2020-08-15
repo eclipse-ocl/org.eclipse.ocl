@@ -11,14 +11,21 @@
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.xtext.util.Arrays;
 
-public class ParserRuleValue implements Nameable
+public class ParserRuleValue implements Indexed,Nameable
 {
+	protected final int index;
 	protected final @NonNull String name;
+	protected final @NonNull ParserRuleValue @Nullable [] subParserRuleValueClosure;	// Excludes this
 
-	public ParserRuleValue(@NonNull String name) {
+	public ParserRuleValue(int index, @NonNull String name, @NonNull ParserRuleValue @Nullable [] subParserRuleValueClosure) {
+		this.index = index;
 		this.name = name;
+		this.subParserRuleValueClosure = subParserRuleValueClosure;
+		assert (subParserRuleValueClosure == null) || (subParserRuleValueClosure.length > 0) || !Arrays.contains(subParserRuleValueClosure, this);
 	}
 
 	@Override
@@ -34,22 +41,37 @@ public class ParserRuleValue implements Nameable
 	}
 
 	@Override
+	public int getIndex() {
+		return index;
+	}
+
+	@Override
 	public @NonNull String getName() {
 		return name;
 	}
-
-//	public @NonNull Collection<@NonNull ParserRuleValue> getSubRuleAnalysesClosure() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	public @NonNull String getRuleName() {		// XXX not distinct
 		return name;
 	}
 
+	public @NonNull ParserRuleValue @Nullable [] getSubParserRuleValueClosure() {
+		return subParserRuleValueClosure;
+	}
+
 	@Override
 	public int hashCode() {
 		return getClass().hashCode() + name.hashCode();
+	}
+
+	public boolean subParserRuleValueClosureContains(@NonNull ParserRuleValue parserRuleValue) {
+		if (parserRuleValue == this) {
+			return true;
+		}
+		if (subParserRuleValueClosure == null) {
+			return false;
+		}
+		assert subParserRuleValueClosure != null;
+		return Arrays.contains(subParserRuleValueClosure, parserRuleValue);	// Might be worth a classifierId-based bsearch
 	}
 
 	@Override

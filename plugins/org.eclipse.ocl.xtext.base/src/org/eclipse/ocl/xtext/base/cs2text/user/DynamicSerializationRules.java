@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +36,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 import com.google.common.collect.Lists;
 
@@ -63,11 +63,10 @@ public class DynamicSerializationRules
 		return true;
 	}
 
-	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable AbstractRuleAnalysis targetRuleAnalysis) {
-		Collection<@NonNull ParserRuleAnalysis> targetSubRuleAnalysesClosure = targetRuleAnalysis != null ? ((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure() : null;
+	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable ParserRuleValue targetParserRuleValue) {
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			ParserRuleAnalysis serializationRuleAnalysis = serializationRule.getRuleAnalysis();
-			if ((targetSubRuleAnalysesClosure == null) || targetSubRuleAnalysesClosure.contains(serializationRuleAnalysis)) {
+			ParserRuleValue serializationParserRuleValue = serializationRule.getRuleAnalysis().getParserRuleValue();
+			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationParserRuleValue)) {
 				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {

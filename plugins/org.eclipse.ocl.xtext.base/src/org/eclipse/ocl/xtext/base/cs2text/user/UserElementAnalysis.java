@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
 /**
@@ -84,9 +85,9 @@ public class UserElementAnalysis implements Nameable
 		return dynamicSerializationRules;
 	}
 
-	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@Nullable AbstractRuleAnalysis targetRuleAnalysis) {
+	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@Nullable ParserRuleValue targetParserRuleValue) {
 		UserSlotsAnalysis slotsAnalysis = getSlotsAnalysis();
-		return serializationRules.createDynamicRuleMatch(slotsAnalysis, targetRuleAnalysis);
+		return serializationRules.createDynamicRuleMatch(slotsAnalysis, targetParserRuleValue);
 	}
 
 	public @Nullable UserElementAnalysis getContainingElementAnalysis() {

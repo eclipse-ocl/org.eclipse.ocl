@@ -100,7 +100,7 @@ public class DynamicRuleMatch implements RuleMatch
 	}
 
 	@Override
-	public @Nullable Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
+	public @NonNull Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
 		return slotsAnalysis.getSize(eReference, parserRuleValue);
 	}
 

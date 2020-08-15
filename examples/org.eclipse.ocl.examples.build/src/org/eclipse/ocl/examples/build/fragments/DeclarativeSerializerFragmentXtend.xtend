@@ -60,6 +60,8 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue
+import java.util.ArrayList
+import org.eclipse.ocl.pivot.utilities.ClassUtil
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -443,7 +445,14 @@ new «new TypeReference(RTSerializationRule)»(
 //	}
 	
 	protected def generateParserRuleValue_ParserRuleValue(ParserRuleValue parserRuleValue) {
-		'''new «new TypeReference(ParserRuleValue)»("«parserRuleValue.getName()»")'''
+		var subParserRuleValueClosure = parserRuleValue.getSubParserRuleValueClosure();
+		if (subParserRuleValueClosure !== null) {
+		'''new «new TypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", new «new TypeReference(ParserRuleValue)» [] {«FOR subParserRuleValue : subParserRuleValueClosure SEPARATOR ','»
+			«getParserRuleValueId(subParserRuleValue, true)» /* «subParserRuleValue.getName()» */«ENDFOR»})'''
+		}
+		else {
+		'''new «new TypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", null)'''
+		}
 	}
 	
 //	protected def generateParserRuleValue_TerminalRuleAnalysis(TerminalRuleAnalysis ruleAnalysis) {

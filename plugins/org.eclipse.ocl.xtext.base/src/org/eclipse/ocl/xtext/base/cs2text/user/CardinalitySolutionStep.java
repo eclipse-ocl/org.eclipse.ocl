@@ -252,13 +252,13 @@ public abstract class CardinalitySolutionStep
 		protected boolean isInstance(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull EObject slotContent) {
 			UserElementAnalysis elementAnalysis = slotsAnalysis.getModelAnalysis().getElementAnalysis(slotContent);
 			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleAnalysis);
+				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleAnalysis.getParserRuleValue());
 				if (dynamicRuleMatch != null) {
 					return true;
 				}
 			}
 			for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {		// XXX debugging
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleAnalysis);
+				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleAnalysis.getParserRuleValue());
 				if (dynamicRuleMatch != null) {
 					return true;
 				}

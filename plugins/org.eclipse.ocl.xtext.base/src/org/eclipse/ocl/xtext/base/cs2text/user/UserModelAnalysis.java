@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 
@@ -161,13 +162,13 @@ public class UserModelAnalysis
 		if ("PrefixExpCS".equals(eObject.eClass().getName())) {
 			getClass();	// XXX
 		}
-		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis);
+		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis != null ? ((ParserRuleAnalysis)targetRuleAnalysis).getParserRuleValue() : null);
 		if (dynamicRuleMatch != null) {
 			UserElementSerializer serializer = new UserElementSerializer(dynamicRuleMatch, this, eObject);
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis);		// XXX debugging
+			userElementAnalysis.createDynamicRuleMatch(targetRuleAnalysis != null ? ((ParserRuleAnalysis)targetRuleAnalysis).getParserRuleValue() : null);		// XXX debugging
 			StringBuilder s = new StringBuilder();
 			s.append("\n\n«incompatible '" + eObject.eClass().getName() + "'");
 			userElementAnalysis.getSlotsAnalysis().diagnose(s);
