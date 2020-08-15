@@ -48,7 +48,7 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 	@Override
 	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		stepsList.add(new RTSerializationAssignedRuleCallsStep(staticRuleMatch.basicGetCardinalityVariable(this), eStructuralFeature, calledRuleAnalyses));
+		stepsList.add(new RTSerializationAssignedRuleCallsStep(staticRuleMatch.basicGetCardinalityVariableIndex(this), eStructuralFeature, calledRuleAnalyses));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 

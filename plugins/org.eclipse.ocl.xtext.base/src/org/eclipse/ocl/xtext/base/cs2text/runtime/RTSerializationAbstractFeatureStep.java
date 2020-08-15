@@ -12,17 +12,10 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 public abstract class RTSerializationAbstractFeatureStep extends RTAbstractSerializationStep
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
-
-	protected RTSerializationAbstractFeatureStep(@Nullable CardinalityVariable variable, @NonNull EStructuralFeature eStructuralFeature) {
-		super(variable);
-		this.eStructuralFeature = eStructuralFeature;
-	}
 
 	protected RTSerializationAbstractFeatureStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature) {
 		super(variableIndex);

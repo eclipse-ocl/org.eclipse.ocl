@@ -16,7 +16,6 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public interface RTSerializationStep
 {
-//	@Nullable CardinalityVariable getCardinalityVariable();
 	int getVariableIndex();
 
 	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) ;

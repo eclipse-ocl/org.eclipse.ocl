@@ -11,22 +11,13 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 
 public abstract class RTAbstractSerializationStep implements RTSerializationStep
 {
 	protected final int variableIndex;		// -ve not used
-	protected final @Nullable CardinalityVariable cardinalityVariable;
-
-	protected RTAbstractSerializationStep(@Nullable CardinalityVariable cardinalityVariable) {
-		this.variableIndex = cardinalityVariable != null ? cardinalityVariable.getIndex() : -1;
-		this.cardinalityVariable = cardinalityVariable;
-	}
 
 	protected RTAbstractSerializationStep(int variableIndex) {
 		this.variableIndex = variableIndex;
-		this.cardinalityVariable = null;
 	}
 
 	@Override
@@ -35,11 +26,6 @@ public abstract class RTAbstractSerializationStep implements RTSerializationStep
 	protected boolean equalTo(@NonNull RTAbstractSerializationStep that) {
 		return this.variableIndex == that.variableIndex;
 	}
-
-//	@Override
-//	public @Nullable CardinalityVariable getCardinalityVariable() {
-//		return cardinalityVariable;
-//	}
 
 	@Override
 	public int getVariableIndex() {

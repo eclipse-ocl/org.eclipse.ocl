@@ -13,9 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.CrossReference;
@@ -25,8 +23,8 @@ public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFe
 {
 	protected final @NonNull CrossReference crossReference;
 
-	public RTSerializationCrossReferenceStep(@Nullable CardinalityVariable variable, @NonNull EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
-		super(variable, eStructuralFeature);
+	public RTSerializationCrossReferenceStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
+		super(variableIndex, eStructuralFeature);
 		this.crossReference = crossReference;
 	}
 

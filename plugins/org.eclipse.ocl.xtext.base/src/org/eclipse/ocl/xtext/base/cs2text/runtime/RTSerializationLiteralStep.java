@@ -11,20 +11,13 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.xtext.util.Strings;
 
 public class RTSerializationLiteralStep extends RTAbstractSerializationStep
 {
 	protected final @NonNull String string;
-
-	public RTSerializationLiteralStep(@Nullable CardinalityVariable variable, @NonNull String string) {
-		super(variable);
-		this.string = string;
-	}
 
 	public RTSerializationLiteralStep(int variableIndex,  @NonNull String string) {
 		super(variableIndex);

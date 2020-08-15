@@ -25,7 +25,7 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 	private int endIndex = 0;
 
 	public RTSerializationSequenceStep(@Nullable CardinalityVariable cardinalityVariable) {
-		super(cardinalityVariable);		// Default unit sequence wraps the whole rule and may have a comment idiom
+		super(cardinalityVariable != null ? cardinalityVariable.getIndex() : -1);		// Default unit sequence wraps the whole rule and may have a comment idiom
 	}
 
 	public RTSerializationSequenceStep(int variableIndex, int startIndex, int endIndex) {
