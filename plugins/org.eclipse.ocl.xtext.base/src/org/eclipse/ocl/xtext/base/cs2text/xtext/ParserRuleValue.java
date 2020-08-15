@@ -19,13 +19,23 @@ public class ParserRuleValue implements Indexed,Nameable
 {
 	protected final int index;
 	protected final @NonNull String name;
-	protected final @NonNull ParserRuleValue @Nullable [] subParserRuleValueClosure;	// Excludes this
+	protected final @Nullable IndexVector subParserRuleValueIndexes;	// Includes this if non-null
 
 	public ParserRuleValue(int index, @NonNull String name, @NonNull ParserRuleValue @Nullable [] subParserRuleValueClosure) {
 		this.index = index;
 		this.name = name;
-		this.subParserRuleValueClosure = subParserRuleValueClosure;
 		assert (subParserRuleValueClosure == null) || (subParserRuleValueClosure.length > 0) || !Arrays.contains(subParserRuleValueClosure, this);
+		if (subParserRuleValueClosure == null) {
+			subParserRuleValueIndexes =  null;
+		}
+		else {
+			IndexVector subParserRuleValueIndexes = new IndexVector();
+			subParserRuleValueIndexes.set(index);
+			for (@NonNull ParserRuleValue parserRuleValue : subParserRuleValueClosure) {
+				subParserRuleValueIndexes.set(parserRuleValue.getIndex());
+			}
+			this.subParserRuleValueIndexes = subParserRuleValueIndexes;
+		}
 	}
 
 	@Override
@@ -54,8 +64,8 @@ public class ParserRuleValue implements Indexed,Nameable
 		return name;
 	}
 
-	public @NonNull ParserRuleValue @Nullable [] getSubParserRuleValueClosure() {
-		return subParserRuleValueClosure;
+	public @Nullable IndexVector getSubParserRuleValueIndexes() {
+		return subParserRuleValueIndexes;
 	}
 
 	@Override
@@ -64,14 +74,7 @@ public class ParserRuleValue implements Indexed,Nameable
 	}
 
 	public boolean subParserRuleValueClosureContains(@NonNull ParserRuleValue parserRuleValue) {
-		if (parserRuleValue == this) {
-			return true;
-		}
-		if (subParserRuleValueClosure == null) {
-			return false;
-		}
-		assert subParserRuleValueClosure != null;
-		return Arrays.contains(subParserRuleValueClosure, parserRuleValue);	// Might be worth a classifierId-based bsearch
+		return (subParserRuleValueIndexes != null) ? subParserRuleValueIndexes.test(parserRuleValue.getIndex()) : (parserRuleValue == this);
 	}
 
 	@Override

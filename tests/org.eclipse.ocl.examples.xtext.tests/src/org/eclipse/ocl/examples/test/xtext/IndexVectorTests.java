@@ -10,54 +10,57 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.test.xtext;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
-/**
- * Tests.
- */
+import com.google.common.collect.Sets;
+
 public class IndexVectorTests extends XtextTestCase
 {
-	/**
-	 * Checks that the local *.xtextbin is the same as the pre-compiled Java implementation.
-	 *
-	 * FIXME check the library/model version instead.
-	 */
-	public void testStringUtil_OCLconvert() throws Exception {
-		doEncodeDecode(null, null);
-		doEncodeDecode("", "");
-		doEncodeDecode("a", "a");
-		doEncodeDecode("\'", "\\'");
-		doEncodeDecode("\'\r\n\t\b\f\"", "\\'\\r\\n\\t\\b\\f\"");		// " is not encoded
-		doEncodeDecode("\u1234", "\\u1234");
-		doEncodeDecode("no change needed\noops", "no change needed\\noops");
-		doBadDecode("\\u123", "Malformed Unicode escape: \\u123.");
-		doBadDecode("ab\\u12fghi", "Malformed Unicode escape: \\u12.");
-		doBadDecode("ab\\u'", "Malformed Unicode escape: \\u.");
+	public void testIndexVector_Ctor() throws Exception {
+		assertEquals(new IndexVector().toString(), "[]");
+		assertEquals(new IndexVector(5).toString(), "[]");
+		assertEquals(new IndexVector().set(5).toString(), "[5]");
+		assertEquals(new IndexVector().set(63).toString(), "[63]");
+		assertEquals(new IndexVector().set(32).toString(), "[32]");
+		assertEquals(new IndexVector().set(63).getCapacity(), 64);
+		assertEquals(new IndexVector().set(64).getCapacity(), 128);
+		assertEquals(new IndexVector().set(63).set(62).toString(), "[62,63]");
+		assertEquals(new IndexVector().set(62).set(63).toString(), "[62,63]");
+		assertEquals(new IndexVector().set(62).set(63).getCapacity(), 64);
+		assertEquals(new IndexVector().set(62).set(63).set(64).toString(), "[62,63,64]");
+		assertEquals(new IndexVector().set(62).set(63).set(64).getCapacity(), 128);
+		assertEquals(new IndexVector(200).set(62).set(63).getCapacity(), 256);
+		assertEquals(new IndexVector().set(62).set(63).setAll(new IndexVector(200).set(64).set(62)).toString(), "[62,63,64]");
 	}
 
-	private void doBadDecode(@NonNull String encodedString, String expectedMessage) {
-		try {
-			StringUtil.convertFromOCLString(encodedString);
-		}
-		catch (IllegalArgumentException e) {
-			assertEquals(expectedMessage, e.getMessage());
-		}
+	public void testIndexVector_Equals() throws Exception {
+		assertTrue(new IndexVector().set(63).equals(new IndexVector().set(63)));
+		assertFalse(new IndexVector().set(63).set(64).equals(new IndexVector().set(64)));
+		assertTrue(new IndexVector().set(63).set(64).equals(new IndexVector().set(64).set(63)));
+		assertTrue(new IndexVector().set(63).set(64).equals(new IndexVector(256).set(64).set(63)));
+		assertTrue(new IndexVector(256).set(63).set(64).equals(new IndexVector().set(64).set(63)));
 	}
 
-	private void doEncodeDecode(String unencodedString, String expectedEncodedString) {
-		String encodedString = StringUtil.convertToOCLString(unencodedString);
-		assertEquals(expectedEncodedString, encodedString);
-		if (expectedEncodedString != null) {
-			if (expectedEncodedString.equals(unencodedString)) {
-				assertSame(unencodedString, encodedString);
-			}
-			String decodedString = StringUtil.convertFromOCLString(expectedEncodedString);
-			assertEquals(unencodedString, decodedString);
-			if (expectedEncodedString.equals(unencodedString)) {
-				assertSame(expectedEncodedString, decodedString);
-			}
-		}
+	public void testIndexVector_HashCode() throws Exception {
+		assertEquals(Sets.newHashSet(new IndexVector().set(63).set(64), new IndexVector(256).set(64).set(63)).size(), 1);
+	}
+
+	public void testIndexVector_Test() throws Exception {
+		IndexVector testValue = new IndexVector().set(62).set(63).setAll(new IndexVector(200).set(64).set(62));
+		assertFalse(testValue.test(0));
+		assertFalse(testValue.test(1));
+		assertFalse(testValue.test(61));
+		assertTrue(testValue.test(62));
+		assertTrue(testValue.test(63));
+		assertTrue(testValue.test(64));
+		assertFalse(testValue.test(65));
+		assertFalse(testValue.test(127));
+		assertFalse(testValue.test(128));
+		assertFalse(testValue.test(192));
+		assertFalse(testValue.test(255));
+		assertFalse(testValue.test(256));			// Checks inclusive index is not out of bounds
+		assertFalse(testValue.test(257));
+		assertFalse(testValue.test(1110));
 	}
 }

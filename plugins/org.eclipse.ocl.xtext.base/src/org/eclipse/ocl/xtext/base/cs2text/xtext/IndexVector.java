@@ -9,8 +9,8 @@ public class IndexVector
 
 	public IndexVector() {}
 
-	public IndexVector(int capacity) {
-		setCapacity(capacity);
+	public IndexVector(int bitCapacity) {
+		setCapacity(bitCapacity);
 	}
 
 	@Override
@@ -44,6 +44,10 @@ public class IndexVector
 		return true;
 	}
 
+	public int getCapacity() {
+		return Long.SIZE * getLength();
+	}
+
 	private int getLength() {
 		return longs != null ? longs.length : 0;
 	}
@@ -61,19 +65,21 @@ public class IndexVector
 		return hashCode;
 	}
 
-	public void set(int bitIndex) {
-		setCapacity(bitIndex);
+	public @NonNull IndexVector set(int bitIndex) {
+		setCapacity(bitIndex+1);
 		long mask = 1L << (bitIndex % Long.SIZE);
 		longs[bitIndex / Long.SIZE] |= mask;
+		return this;
 	}
 
-	public void setAll(@NonNull IndexVector bits) {
+	public @NonNull IndexVector setAll(@NonNull IndexVector bits) {
 		if (bits.longs != null) {
 			setCapacity(Long.SIZE * bits.longs.length);
 			for (int i = 0; i < bits.longs.length; i++) {
 				longs[i] |= bits.longs[i];
 			}
 		}
+		return this;
 	}
 
 	private void setCapacity(int capacity) {
@@ -91,11 +97,8 @@ public class IndexVector
 	}
 
 	public boolean test(int bitIndex) {
-		if (longs == null) {
-			return false;
-		}
-		int newLength = (bitIndex + Long.SIZE - 1)/Long.SIZE;
-		if (newLength > longs.length) {
+		int newLength = (bitIndex + Long.SIZE)/Long.SIZE;		// No -1 since inclusive
+		if (newLength > getLength()) {
 			return false;
 		}
 		long mask = 1L << (bitIndex % Long.SIZE);
@@ -107,7 +110,7 @@ public class IndexVector
 		StringBuilder s = new StringBuilder();
 		s.append("[");
 		boolean isFirst = true;
-		for (int i = 0; i < longs.length; i++) {
+		for (int i = 0; i < getLength(); i++) {
 			long word = longs[i];
 			long mask = 1L;
 			for (int j = 0; j < Long.SIZE; j++, mask <<= 1) {
