@@ -215,7 +215,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull RTSerializationStep> steps = new ArrayList<>(serializationStep2id2.keySet());
 		Collections.sort(steps, NameUtil.TO_STRING_COMPARATOR);
-		String formatString = "Step" + getDigitsFormatString(steps);
+		String formatString = "_" + getDigitsFormatString(steps);
 		int i = 0;
 		for (@NonNull RTSerializationStep step : steps) {
 			serializationStep2id2.put(step, String.format(formatString, i++));
@@ -227,7 +227,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert serializationStep2id != null;
 		String id = serializationStep2id.get(step);
 		assert id != null;
-		return addQualifier ? "_SerializationSteps." + id : id;
+		return addQualifier ? "st." + id : id;
 	}
 
 	private @Nullable Map<@NonNull List<Segment>, @NonNull String> segments2id = null;
@@ -245,10 +245,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull List<Segment>> segmentLists = new ArrayList<>(segments2id2.keySet());
 		Collections.sort(segmentLists, NameUtil.TO_STRING_COMPARATOR);
-		String formatString = getDigitsFormatString(segmentLists);
+		String formatString = "_" + getDigitsFormatString(segmentLists);
 		int i = 0;
 		for (@NonNull List<Segment> segmentList : segmentLists) {
-			segments2id2.put(segmentList, String.format("Segments" + formatString, i++));
+			segments2id2.put(segmentList, String.format(formatString, i++));
 		}
 		return segmentLists;
 	}
@@ -257,7 +257,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert segments2id != null;
 		String id = segments2id.get(segments);
 		assert id != null;
-		return addQualifier ? "_Segments." + id : id;
+		return addQualifier ? "ss." + id : id;
 	}
 
 	private @Nullable Map<@NonNull CardinalitySolutionStep, @NonNull String> solutionStep2id = null;
@@ -276,10 +276,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull CardinalitySolutionStep> solutionSteps = new ArrayList<>(solutionStep2id2.keySet());
 		Collections.sort(solutionSteps, NameUtil.TO_STRING_COMPARATOR);
-		String formatString = getDigitsFormatString(solutionSteps);
+		String formatString = "_" + getDigitsFormatString(solutionSteps);
 		int i = 0;
 		for (@NonNull CardinalitySolutionStep solutionStep : solutionSteps) {
-			solutionStep2id2.put(solutionStep, String.format("Solve" + formatString, i++));
+			solutionStep2id2.put(solutionStep, String.format(formatString, i++));
 		}
 		return solutionSteps;
 	}
@@ -288,7 +288,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert solutionStep2id != null;
 		String id = solutionStep2id.get(solutionStep);
 		assert id != null;
-		return addQualifier ? "_CardinalitySolutionSteps." + id : id;
+		return addQualifier ? "ms." + id : id;
 	}
 
 	private @Nullable Map<@NonNull CardinalitySolution, @NonNull String> solution2id = null;
@@ -320,10 +320,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				return o1.toString().compareTo(o2.toString());
 			}
 		});
-		String formatString = getDigitsFormatString(solutions);
+		String formatString = "_" + getDigitsFormatString(solutions);
 		int i = 0;
 		for (@NonNull CardinalitySolution solution : solutions) {
-			solution2id2.put(solution, String.format("Solution" + formatString, i++));
+			solution2id2.put(solution, String.format(formatString, i++));
 		}
 		return solutions;
 	}
@@ -332,7 +332,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert solution2id != null;
 		String id = solution2id.get(solutionStep);
 		assert id != null;
-		return addQualifier ? "_CardinalitySolutions." + id : id;
+		return addQualifier ? "mt." + id : id;
 	}
 
 	private @Nullable Map<@NonNull EnumerationValue, @NonNull String> enumValue2id = null;
@@ -360,10 +360,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull EnumerationValue> enumValues = new ArrayList<>(enumValue2id2.keySet());
 		Collections.sort(enumValues, NameUtil.NAMEABLE_COMPARATOR);
-		String formatString = getDigitsFormatString(enumValues);
+		String formatString = "_" + getDigitsFormatString(enumValues);
 		int i = 0;
 		for (@NonNull EnumerationValue enumValue : enumValues) {
-			enumValue2id2.put(enumValue, String.format("Enum" + formatString, i++));
+			enumValue2id2.put(enumValue, String.format(formatString, i++));
 		}
 		return enumValues;
 	}
@@ -372,7 +372,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert enumValue2id != null;
 		String id = enumValue2id.get(enumValue);
 		assert id != null;
-		return addQualifier ? "_EnumValues." + id : id;
+		return addQualifier ? "ev." + id : id;
 	}
 
 	private @Nullable Map<@NonNull AbstractRuleAnalysis, @NonNull String> ruleAnalysis2id = null;
@@ -387,10 +387,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull AbstractRuleAnalysis> ruleAnalyses = new ArrayList<>(ruleAnalysis2id2.keySet());
 		Collections.sort(ruleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
-		String formatString = getDigitsFormatString(ruleAnalyses);
+		String formatString = "_" + getDigitsFormatString(ruleAnalyses);
 		int i = 0;
 		for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			ruleAnalysis2id2.put(ruleAnalysis, String.format("ParserRule" + formatString, i++));
+			ruleAnalysis2id2.put(ruleAnalysis, String.format(formatString, i++));
 		}
 		return ruleAnalyses;
 	}
@@ -399,7 +399,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert ruleAnalysis2id != null;
 		String id = ruleAnalysis2id.get(ruleAnalysis);
 		assert id != null;
-		return addQualifier ? "_ParserRuleData." + id : id;
+		return addQualifier ? "pr." + id : id;
 	}
 
 	private @Nullable Map<@NonNull RTSerializationRule, @NonNull String> serializationRule2id = null;
@@ -418,10 +418,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			}
 			List<@NonNull RTSerializationRule> serializationRules = new ArrayList<>(serializationRule2id2.keySet());
 			Collections.sort(serializationRules, NameUtil.NAMEABLE_COMPARATOR);
-			String formatString = getDigitsFormatString(serializationRules);
+			String formatString = "_" + getDigitsFormatString(serializationRules);
 			int i = 0;
 			for (@NonNull RTSerializationRule serializationRule : serializationRules) {
-				serializationRule2id2.put(serializationRule, String.format("SerializationRule" + formatString, i++));
+				serializationRule2id2.put(serializationRule, String.format(formatString, i++));
 			}
 			this.serializationRules = serializationRules;
 		}
@@ -436,7 +436,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert serializationRule2id != null;
 		String id = serializationRule2id.get(serializationRule);
 		assert id != null;
-		return addQualifier ? "_SerializationRules." + id : id;
+		return addQualifier ? "sr." + id : id;
 	}
 
 	private @Nullable Map<@NonNull EClass, @NonNull String> eClass2id = null;
@@ -451,10 +451,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2id2.keySet());
 		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-		String formatString = getDigitsFormatString(eClasses);
+		String formatString = "_" + getDigitsFormatString(eClasses);
 		int i = 0;
 		for (@NonNull EClass eClass : eClasses) {
-			eClass2id2.put(eClass, String.format("EClass" + formatString, i++));
+			eClass2id2.put(eClass, String.format(formatString, i++));
 		}
 		return eClasses;
 	}
@@ -463,7 +463,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert eClass2id != null;
 		String id = eClass2id.get(eClass);
 		assert id != null;
-		return addQualifier ? "_EClassData." + id : id;
+		return addQualifier ? "ec." + id : id;
 	}
 
 	@Override

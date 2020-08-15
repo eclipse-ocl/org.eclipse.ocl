@@ -85,102 +85,111 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				return analysis;
 			}
 			
-			private static class _EnumValues
+			private class _EnumValues
 			{
 				«FOR enumValue : getSortedEnumValues(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(EnumerationValue)» «getEnumValueId(enumValue, false)» // «enumValue.toString()»
+				private final /*@NonNull*/ «new TypeReference(EnumerationValue)» «getEnumValueId(enumValue, false)» // «enumValue.toString()»
 					= «generateEnumValue(enumValue)»;
 				«ENDFOR»
 			}
 			
-			private static class _CardinalitySolutions
+			private class _MatchTerms
 			{
 				«FOR solution : getSortedSolutions(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(CardinalitySolution)» «getSolutionId(solution, false)» // «solution.toString()»
+				private final /*@NonNull*/ «new TypeReference(CardinalitySolution)» «getSolutionId(solution, false)» // «solution.toString()»
 					= «generateSolution(solution)»;
 				«ENDFOR»
 			}
 			
-			private static class _CardinalitySolutionSteps
+			private class _MatchSteps
 			{
 				«FOR step : getSortedSolutionSteps(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» «getSolutionStepId(step, false)» // «step.toString()»
+				private final /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» «getSolutionStepId(step, false)» // «step.toString()»
 					= «generateSolutionStep(step)»;
 				«ENDFOR»
 			}
 			
-			private static class _SerializationSteps
+			private class _SerializationTerms
 			{
 				«FOR step : getSortedSerializationSteps(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(RTSerializationStep)» «getSerializationStepId(step, false)» // «step.toString()»
+				private final /*@NonNull*/ «new TypeReference(RTSerializationStep)» «getSerializationStepId(step, false)» // «step.toString()»
 					= «generateSerializationStep(step)»;
 				«ENDFOR»
 			}
 			
-			private static class _Segments
+			private class _SerializationSegments
 			{
 				«FOR segments : getSortedSegments(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(Segment)» [] «getSegmentsId(segments, false)» // «segments»
+				private final /*@NonNull*/ «new TypeReference(Segment)» [] «getSegmentsId(segments, false)» // «segments»
 					= «generateSegments(segments)»;
 				«ENDFOR»
 			}
 						
-			private static class _ParserRuleData
+			private class _ParserRuleData
 			{
 				«FOR ruleAnalysis : getSortedRuleAnalyses(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(ParserRuleData)» «getRuleAnalysisId(ruleAnalysis, false)» // «ruleAnalysis»
+				private final /*@NonNull*/ «new TypeReference(ParserRuleData)» «getRuleAnalysisId(ruleAnalysis, false)» // «ruleAnalysis»
 					= «generateRuleAnalysis(ruleAnalysis)»;
 				«ENDFOR»
 			}
 						
-			private static class _EClassData
+			private class _EClassData
 			{
 				«FOR eClass : getSortedEClasses(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(EClassData)» «getEClassId(eClass, false)» // «eClass.getName()»
+				private final /*@NonNull*/ «new TypeReference(EClassData)» «getEClassId(eClass, false)» // «eClass.getName()»
 					= «generateEClassData(grammarAnalysis, eClass)»;
 				«ENDFOR»
 			}
 						
-			private static class _SerializationRules
+			private class _SerializationRules
 			{
 				«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
-				private static final /*@NonNull*/ «new TypeReference(RTSerializationRule)» «getSerializationRuleId(serializationRule, false)» /* «serializationRule» */
+				private final /*@NonNull*/ «new TypeReference(RTSerializationRule)» «getSerializationRuleId(serializationRule, false)»
 					= «generateSerializationRule(serializationRule)»;
 				«ENDFOR»
 			}
+			
+			private final _EClassData ec = new _EClassData();
+			private final _EnumValues ev = new _EnumValues();
+			private final _MatchSteps ms = new _MatchSteps();
+			private final _MatchTerms mt = new _MatchTerms();
+			private final _ParserRuleData pr = new _ParserRuleData();
+			private final _SerializationRules sr = new _SerializationRules();
+			private final _SerializationSegments ss = new _SerializationSegments();
+			private final _SerializationTerms st = new _SerializationTerms();
 		}
 		'''
 	}
 	
 	protected def generateSerializationRule(RTSerializationRule serializationRule) {
-		'''/* «serializationRule.toRuleString()» */
-		new «new TypeReference(RTSerializationRule)»(
-			new /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» /*@NonNull*/ []{
-				«FOR solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps() SEPARATOR ','»
-				«getSolutionStepId(solutionStep, true)» /* «solutionStep.toString()» */
-				«ENDFOR»
-			}, 
-			new /*@NonNull*/ «new TypeReference(RTSerializationStep)» /*@NonNull*/ []{
-				«FOR serializationStep : serializationRule.getSerializationSteps() SEPARATOR ','»
-				«getSerializationStepId(serializationStep, true)» /* «serializationStep.toString()» */
-				«ENDFOR»
-			}, 
-			«IF serializationRule.getStaticSegments() != null»
-			new /*@NonNull*/ «new TypeReference(Segment)» /*@NonNull*/ [] []{
-				«IF serializationRule.getStaticSegments() != null»
-				«FOR segments : serializationRule.getStaticSegments() SEPARATOR ','»
-				«IF segments != null»
-				«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' + '»«segment.toString()»«ENDFOR» */
-				«ELSE»
-				null
-				«ENDIF»
-				«ENDFOR»
-				«ENDIF»
-			}
-			«ELSE»
-			null
-			«ENDIF»
-		)'''
+'''/* «serializationRule.toRuleString()» */
+new «new TypeReference(RTSerializationRule)»(
+	new /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» /*@NonNull*/ []{
+		«FOR solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps() SEPARATOR ','»
+		«getSolutionStepId(solutionStep, true)» /* «solutionStep.toString()» */
+		«ENDFOR»
+	}, 
+	new /*@NonNull*/ «new TypeReference(RTSerializationStep)» /*@NonNull*/ []{
+		«FOR serializationStep : serializationRule.getSerializationSteps() SEPARATOR ','»
+		«getSerializationStepId(serializationStep, true)» /* «serializationStep.toString()» */
+		«ENDFOR»
+	}, 
+	«IF serializationRule.getStaticSegments() != null»
+	new /*@NonNull*/ «new TypeReference(Segment)» /*@NonNull*/ [] []{
+		«IF serializationRule.getStaticSegments() != null»
+		«FOR segments : serializationRule.getStaticSegments() SEPARATOR ','»
+		«IF segments != null»
+		«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' + '»«segment.toString()»«ENDFOR» */
+		«ELSE»
+		null
+		«ENDIF»
+		«ENDFOR»
+		«ENDIF»
+	}
+	«ELSE»
+	null
+	«ENDIF»
+)'''
 	}
 	
 /*	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis, EClass eClass) {
