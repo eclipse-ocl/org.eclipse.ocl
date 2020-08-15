@@ -21,7 +21,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -58,8 +57,8 @@ public class RTSerializationRule implements SerializationRule
 		for (int index = startIndex; index < endIndex; ) {
 			Segment[] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
 			RTSerializationStep serializationStep = serializationSteps[index++];
-			CardinalityVariable cardinalityVariable = serializationStep.getCardinalityVariable();
-			int stepLoopCount = cardinalityVariable != null ? serializer.getValue(cardinalityVariable) : 1;
+			int cardinalityVariableIndex = serializationStep.getVariableIndex();
+			int stepLoopCount = cardinalityVariableIndex >= 0 ? serializer.getValue(cardinalityVariableIndex) : 1;
 			if (serializationStep instanceof RTSerializationSequenceStep) {
 				int stepsRange = ((RTSerializationSequenceStep)serializationStep).getStepsRange();
 				if (segments != null) {

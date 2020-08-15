@@ -11,14 +11,13 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 public interface RTSerializationStep
 {
-	@Nullable CardinalityVariable getCardinalityVariable();
+//	@Nullable CardinalityVariable getCardinalityVariable();
+	int getVariableIndex();
 
 	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) ;
 

@@ -137,6 +137,9 @@ public class UserElementSerializer
 	public int getValue(@NonNull CardinalityVariable cardinalityVariable) {
 		return ClassUtil.nonNullState(dynamicRuleMatch.getValue(cardinalityVariable)).intValue();
 	}
+	public int getValue(int cardinalityVariableIndex) {
+		return ClassUtil.nonNullState(dynamicRuleMatch.getValue(cardinalityVariableIndex)).intValue();
+	}
 
 	/**
 	 * Serialize this serializer's configured element to the serializationBuilder.

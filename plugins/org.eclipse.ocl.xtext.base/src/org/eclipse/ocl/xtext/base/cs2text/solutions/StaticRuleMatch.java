@@ -492,6 +492,11 @@ public class StaticRuleMatch implements RuleMatch
 		return node2variable.get(serializationNode);
 	}
 
+	public int basicGetCardinalityVariableIndex(@NonNull SerializationNode serializationNode) {
+		CardinalityVariable cardinalityVariable = basicGetCardinalityVariable(serializationNode);
+		return cardinalityVariable != null ? cardinalityVariable.getIndex() : -1;
+	}
+
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
 		CardinalitySolution solution = variableIndex2solution.get(cardinalityVariableIndex);

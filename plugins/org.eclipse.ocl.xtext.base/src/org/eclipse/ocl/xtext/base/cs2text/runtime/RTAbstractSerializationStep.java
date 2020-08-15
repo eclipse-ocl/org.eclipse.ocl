@@ -36,11 +36,12 @@ public abstract class RTAbstractSerializationStep implements RTSerializationStep
 		return this.variableIndex == that.variableIndex;
 	}
 
-	@Override
-	public @Nullable CardinalityVariable getCardinalityVariable() {
-		return cardinalityVariable;
-	}
+//	@Override
+//	public @Nullable CardinalityVariable getCardinalityVariable() {
+//		return cardinalityVariable;
+//	}
 
+	@Override
 	public int getVariableIndex() {
 		return variableIndex;
 	}
