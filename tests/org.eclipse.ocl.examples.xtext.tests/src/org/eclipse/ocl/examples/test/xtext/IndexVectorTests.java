@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.test.xtext;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class IndexVectorTests extends XtextTestCase
@@ -44,6 +45,10 @@ public class IndexVectorTests extends XtextTestCase
 
 	public void testIndexVector_HashCode() throws Exception {
 		assertEquals(Sets.newHashSet(new IndexVector().set(63).set(64), new IndexVector(256).set(64).set(63)).size(), 1);
+	}
+
+	public void testIndexVector_Iterable() throws Exception {
+		assertEquals(Lists.newArrayList(new IndexVector().set(63).set(64)), Lists.newArrayList(63, 64));
 	}
 
 	public void testIndexVector_Test() throws Exception {

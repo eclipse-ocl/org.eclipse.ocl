@@ -1,9 +1,44 @@
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 
-public class IndexVector
+public class IndexVector implements Iterable<@NonNull Integer>
 {
+	protected class IndexIterator implements Iterator<@NonNull Integer>
+	{
+		private int cursor;
+
+		public IndexIterator() {
+			cursor = doNext(-1);
+		}
+
+		public int doNext(int cursor) {
+			while (++cursor < getCapacity()) {
+				if (test(cursor)) {			// Faster in words
+					return cursor;
+				}
+			}
+			return -1;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return cursor >= 0;
+		}
+
+		@Override
+		public @NonNull Integer next() {
+			try {
+				return cursor;
+			}
+			finally {
+				cursor = doNext(cursor);
+			}
+		}
+	}
+
 	private long longs[] = null;
 	private int hashCode;
 
@@ -11,6 +46,10 @@ public class IndexVector
 
 	public IndexVector(int bitCapacity) {
 		setCapacity(bitCapacity);
+	}
+
+	public IndexVector(long[] longs) {
+		this.longs = longs;
 	}
 
 	@Override
@@ -63,6 +102,11 @@ public class IndexVector
 			this.hashCode = hashCode != 0 ? hashCode : 1;
 		}
 		return hashCode;
+	}
+
+	@Override
+	public @NonNull Iterator<@NonNull Integer> iterator() {
+		return new IndexIterator();
 	}
 
 	public @NonNull IndexVector set(int bitIndex) {
@@ -124,6 +168,21 @@ public class IndexVector
 			}
 		}
 		s.append("]");
+		return s.toString();
+	}
+
+	public @NonNull String toWordsString() {
+		StringBuilder s = new StringBuilder();
+		boolean isFirst = true;
+		for (int i = 0; i < getLength(); i++) {
+			if (!isFirst) {
+				s.append(",");
+			}
+			s.append("0x");
+			s.append(Long.toHexString(longs[i]));
+			s.append("L");
+			isFirst = false;
+		}
 		return s.toString();
 	}
 }

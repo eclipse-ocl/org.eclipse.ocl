@@ -377,15 +377,21 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	private @Nullable Map<@NonNull ParserRuleValue, @NonNull String> parserRuleValue2id = null;
+	private @Nullable Map<@NonNull Integer, @NonNull String> parserRuleValueIndex2parserRuleName = null;
 
 	protected @NonNull Iterable<@NonNull ParserRuleValue> getSortedParserRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull ParserRuleValue, @NonNull String> parserRuleValue2id2 = parserRuleValue2id;
+		Map<@NonNull Integer, @NonNull String> parserRuleValueIndex2parserRuleName2 = parserRuleValueIndex2parserRuleName;
 		if (parserRuleValue2id2 == null) {
 			parserRuleValue2id = parserRuleValue2id2 = new HashMap<>();
+		}
+		if (parserRuleValueIndex2parserRuleName2 == null) {
+			parserRuleValueIndex2parserRuleName = parserRuleValueIndex2parserRuleName2 = new HashMap<>();
 		}
 		for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 			if (ruleAnalysis instanceof ParserRuleAnalysis) {
 				parserRuleValue2id2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue(), "");
+				parserRuleValueIndex2parserRuleName2.put(((ParserRuleAnalysis)ruleAnalysis).getParserRuleValue().getIndex(), ruleAnalysis.getRuleName());
 			}
 		}
 		List<@NonNull ParserRuleValue> parserRuleValues = new ArrayList<>(parserRuleValue2id2.keySet());
@@ -403,6 +409,13 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		String id = parserRuleValue2id.get(parserRuleValue);
 		assert id != null;
 		return addQualifier ? "pr." + id : id;
+	}
+
+	protected @NonNull String getParserRuleName(@NonNull Integer parserRuleValueIndex) {
+		assert parserRuleValueIndex2parserRuleName != null;
+		String id = parserRuleValueIndex2parserRuleName.get(parserRuleValueIndex);
+		assert id != null;
+		return id;
 	}
 
 	private @Nullable Map<@NonNull RTSerializationRule, @NonNull String> serializationRule2id = null;

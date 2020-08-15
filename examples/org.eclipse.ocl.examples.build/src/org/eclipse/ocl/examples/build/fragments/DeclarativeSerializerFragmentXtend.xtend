@@ -62,6 +62,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue
 import java.util.ArrayList
 import org.eclipse.ocl.pivot.utilities.ClassUtil
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -131,7 +132,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			{
 				«FOR parserRuleValue : getSortedParserRuleValues(grammarAnalysis)»
 				private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getParserRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
-					= «generateParserRuleValue(parserRuleValue)»;
+					= «generateParserRuleValue(parserRuleValue)»
 				«ENDFOR»
 			}
 						
@@ -445,13 +446,14 @@ new «new TypeReference(RTSerializationRule)»(
 //	}
 	
 	protected def generateParserRuleValue_ParserRuleValue(ParserRuleValue parserRuleValue) {
-		var subParserRuleValueClosure = parserRuleValue.getSubParserRuleValueClosure();
-		if (subParserRuleValueClosure !== null) {
-		'''new «new TypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", new «new TypeReference(ParserRuleValue)» [] {«FOR subParserRuleValue : subParserRuleValueClosure SEPARATOR ','»
-			«getParserRuleValueId(subParserRuleValue, true)» /* «subParserRuleValue.getName()» */«ENDFOR»})'''
+			// «FOR subParserRuleValue : subParserRuleValueClosure SEPARATOR ','» «getParserRuleValueId(subParserRuleValue, true)» /* «subParserRuleValue.getName()» */«ENDFOR» */'''
+		var subParserRuleValueIndexes = parserRuleValue.getSubParserRuleValueIndexes();
+		if (subParserRuleValueIndexes !== null) {
+		'''new «new TypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", new «new TypeReference(IndexVector)»(new long[]{
+	«subParserRuleValueIndexes.toWordsString()»})); // «FOR index : subParserRuleValueIndexes SEPARATOR ','»«getParserRuleName(index)»«ENDFOR»'''
 		}
 		else {
-		'''new «new TypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", null)'''
+		'''new «new TypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", («new TypeReference(IndexVector)»)null);'''
 		}
 	}
 	

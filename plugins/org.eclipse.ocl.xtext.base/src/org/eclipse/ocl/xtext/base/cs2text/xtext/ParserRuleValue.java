@@ -38,6 +38,12 @@ public class ParserRuleValue implements Indexed,Nameable
 		}
 	}
 
+	public ParserRuleValue(int index, @NonNull String name, @Nullable IndexVector subParserRuleValueIndexes) {
+		this.index = index;
+		this.name = name;
+		this.subParserRuleValueIndexes = subParserRuleValueIndexes;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
