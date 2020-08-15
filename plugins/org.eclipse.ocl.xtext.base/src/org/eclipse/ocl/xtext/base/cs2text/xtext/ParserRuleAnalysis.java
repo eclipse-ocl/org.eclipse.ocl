@@ -389,13 +389,15 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					subParserRuleValueClosure.add(subParserRuleAnalysis.getParserRuleValue());
 				}
 			}
-			if (subParserRuleValueClosure == null) {
-				parserRuleValue2 = new ParserRuleValue(index, getRuleName(), (IndexVector)null);
+			IndexVector subParserRuleValueIndexes = null;
+			if (subParserRuleValueClosure != null) {
+				subParserRuleValueIndexes = new IndexVector();
+				subParserRuleValueIndexes.set(index);
+				for (@NonNull ParserRuleValue parserRuleValue : subParserRuleValueClosure) {
+					subParserRuleValueIndexes.set(parserRuleValue.getIndex());
+				}
 			}
-			else {
-				parserRuleValue2 = new ParserRuleValue(index, getRuleName(), subParserRuleValueClosure.toArray(new @NonNull ParserRuleValue [subParserRuleValueClosure.size()]));
-			}
-			parserRuleValue = parserRuleValue2;
+			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getRuleName(), subParserRuleValueIndexes);
 		}
 		return parserRuleValue2;
 	}

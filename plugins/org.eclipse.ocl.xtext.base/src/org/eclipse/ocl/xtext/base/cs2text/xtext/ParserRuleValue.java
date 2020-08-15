@@ -13,30 +13,12 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.xtext.util.Arrays;
 
 public class ParserRuleValue implements Indexed,Nameable
 {
 	protected final int index;
 	protected final @NonNull String name;
 	protected final @Nullable IndexVector subParserRuleValueIndexes;	// Includes this if non-null
-
-	public ParserRuleValue(int index, @NonNull String name, @NonNull ParserRuleValue @Nullable [] subParserRuleValueClosure) {
-		this.index = index;
-		this.name = name;
-		assert (subParserRuleValueClosure == null) || (subParserRuleValueClosure.length > 0) || !Arrays.contains(subParserRuleValueClosure, this);
-		if (subParserRuleValueClosure == null) {
-			subParserRuleValueIndexes =  null;
-		}
-		else {
-			IndexVector subParserRuleValueIndexes = new IndexVector();
-			subParserRuleValueIndexes.set(index);
-			for (@NonNull ParserRuleValue parserRuleValue : subParserRuleValueClosure) {
-				subParserRuleValueIndexes.set(parserRuleValue.getIndex());
-			}
-			this.subParserRuleValueIndexes = subParserRuleValueIndexes;
-		}
-	}
 
 	public ParserRuleValue(int index, @NonNull String name, @Nullable IndexVector subParserRuleValueIndexes) {
 		this.index = index;
