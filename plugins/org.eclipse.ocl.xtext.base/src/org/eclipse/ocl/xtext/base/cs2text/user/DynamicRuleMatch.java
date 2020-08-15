@@ -62,11 +62,21 @@ public class DynamicRuleMatch implements RuleMatch
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable) {
-		return variableIndex2value.get(cardinalityVariable.getIndex());
+		return basicGetIntegerSolution(cardinalityVariable.getIndex());
+	}
+
+	@Override
+	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
+		return variableIndex2value.get(cardinalityVariableIndex);
 	}
 
 	@Override
 	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
+		return basicGetSolution(cardinalityVariable.getIndex());
+	}
+
+	@Override
+	public @Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex) {
 		throw new IllegalStateException();		// run-time shoild use known values
 	}
 

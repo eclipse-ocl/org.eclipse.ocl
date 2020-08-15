@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -29,9 +29,9 @@ public interface CardinalitySolution
 	@Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch);
 
 	/**
-	 * Traverse the solution tree adding a blank entry for each colution term to solution2id.
+	 * Return the closure of this and all child solutions.
 	 */
-	void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id);
+	@NonNull Set<@NonNull CardinalitySolution> getChildClosure();
 
 	/**
 	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.
@@ -46,7 +46,7 @@ public interface CardinalitySolution
 	/**
 	 * Return true if this expression is a two-valued optional cardinality.
 	 */
-	boolean isOptional();
+//	boolean isOptional();
 
 	boolean isRuntime();
 	void toString(@NonNull StringBuilder s, int depth);

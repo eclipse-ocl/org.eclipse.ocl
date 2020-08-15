@@ -29,11 +29,13 @@ public interface RuleMatch
 	 * Return the known integer value of cardinalityVariable if known, or null if not yet knowable.
 	 */
 	@Nullable Integer basicGetIntegerSolution(@NonNull CardinalityVariable cardinalityVariable);
+	@Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex);
 
 	/**#
 	 * Return thevalue of ca rdinalityVariable which may be null if no solution approach resolved so far..
 	 */
 	@Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable);
+	@Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex);
 
 	/**
 	 * Rerturn the SerializationRule that this RuleMatch elaborates.

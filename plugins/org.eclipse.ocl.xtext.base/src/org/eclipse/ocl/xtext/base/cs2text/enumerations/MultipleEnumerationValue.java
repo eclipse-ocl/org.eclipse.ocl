@@ -10,23 +10,25 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.enumerations;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.util.Strings;
 
-import com.google.common.collect.Lists;
-
 public class MultipleEnumerationValue extends AbstractEnumerationValue
 {
-	protected final @NonNull List<@NonNull String> values;
+	protected final @NonNull String @NonNull [] values;
 	protected final @NonNull String name;
 
-	public MultipleEnumerationValue(@NonNull Iterable<@NonNull String> values) {
-		this.values = Lists.newArrayList(values);
-		assert !this.values.isEmpty();
-		Collections.sort(this.values);
+	public MultipleEnumerationValue(@NonNull List<@NonNull String> values) {
+		this(values.toArray(new @NonNull String [values.size()]));
+	}
+
+	public MultipleEnumerationValue(@NonNull String @NonNull [] values) {
+		this.values = values;
+		assert values.length > 0;
+		Arrays.sort(this.values);
 	//	this.name = this.values.get(0) + "...";
 		StringBuilder s = new StringBuilder();
 		boolean isFirst = true;
@@ -54,6 +56,10 @@ public class MultipleEnumerationValue extends AbstractEnumerationValue
 	@Override
 	public @NonNull String getName() {
 		return name;
+	}
+
+	public @NonNull String @NonNull [] getValues() {
+		return values;
 	}
 
 	@Override

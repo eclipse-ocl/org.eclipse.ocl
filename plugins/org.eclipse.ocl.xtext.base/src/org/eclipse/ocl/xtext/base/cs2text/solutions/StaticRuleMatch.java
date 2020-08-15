@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,6 +98,7 @@ public class StaticRuleMatch implements RuleMatch
 	 * Lazily populated as solutions found.
 	 */
 	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution = new HashMap<>();
+	private final @NonNull Map<@NonNull Integer, @NonNull CardinalitySolution> variableIndex2solution = new HashMap<>();
 
 	/**
 	 * The ordered sequence of assign/check instructions to evaluate at run-time to realize the computation of
@@ -125,6 +127,7 @@ public class StaticRuleMatch implements RuleMatch
 			if (isAssigned) {
 				newStep = new CardinalitySolutionStep.Assign(cardinalityVariable.getIndex(), cardinalitySolution);
 				variable2solution.put(cardinalityVariable, cardinalitySolution);
+				variableIndex2solution.put(cardinalityVariable.getIndex(), cardinalitySolution);
 			}
 			else {
 				newStep = new CardinalitySolutionStep.ValueCheck(cardinalityVariable.getIndex(), cardinalitySolution);
@@ -298,7 +301,7 @@ public class StaticRuleMatch implements RuleMatch
 			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
 				EReference eReference = entry.getKey();
 				if (eReference.isContainment()) {
-					Iterable<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();		// XXX exclude null
+					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();		// XXX exclude null
 					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleAnalyses));
 				}
 			}
@@ -486,6 +489,12 @@ public class StaticRuleMatch implements RuleMatch
 
 	public@Nullable CardinalityVariable basicGetCardinalityVariable(@NonNull SerializationNode serializationNode) {
 		return node2variable.get(serializationNode);
+	}
+
+	@Override
+	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
+		CardinalitySolution solution = variableIndex2solution.get(cardinalityVariableIndex);
+		return solution != null ? solution.basicGetIntegerSolution(this) : null;
 	}
 
 	@Override
@@ -789,5 +798,12 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			step.toString(s, depth+1);
 			s.append(";");
 		}
+	}
+
+	@Override
+	public @Nullable CardinalitySolution basicGetSolution(
+			int cardinalityVariableIndex) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

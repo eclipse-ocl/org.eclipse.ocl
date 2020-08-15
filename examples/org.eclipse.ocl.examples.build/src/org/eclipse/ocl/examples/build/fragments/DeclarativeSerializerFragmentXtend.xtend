@@ -10,52 +10,56 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.fragments;
 
-import java.util.ArrayList
-import org.eclipse.emf.ecore.EClass
-import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules
-import org.eclipse.xtext.xtext.generator.model.TypeReference
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep
-import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules
 import com.google.common.collect.Lists
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep
-import org.eclipse.xtext.util.Strings
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationCrossReferenceStep
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
 import java.util.List
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsFactory
-import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils
-import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment
+import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationCrossReferenceStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep
 import org.eclipse.ocl.xtext.base.cs2text.solutions.AddCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.DivideCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.MultiplyCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceSizeCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.MultiplyCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
+import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules
+import org.eclipse.xtext.util.Strings
+import org.eclipse.xtext.xtext.generator.model.TypeReference
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleData
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -64,6 +68,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution
 class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 {
 	protected override doGetAnalysisProviderContent(GrammarAnalysis grammarAnalysis) {
+		initAnalysisProviderContent(grammarAnalysis);
 		'''
 		public class «getAnalysisProviderClass(grammar).simpleName» extends «getAnalysisProviderSuperClass(grammar)»
 		{
@@ -74,29 +79,40 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				if (analysis == null) {
 					analysis = new «new TypeReference(RTGrammarAnalysis)»();
 				}
-				«FOR eClass : grammarAnalysis.getSortedProducedEClasses()»
-				analysis.addSerializationRules(_Rules.create_«eClass.getName()»_Rules());
+				«FOR eClass : getSortedEClasses(grammarAnalysis)»
+					analysis.addEClassData(«getEClassId(eClass, true)»);
 				«ENDFOR»
 				return analysis;
 			}
 			
-			private static class _Solutions
+			private static class _EnumValues
+			{
+				«FOR enumValue : getSortedEnumValues(grammarAnalysis)»
+				private static final /*@NonNull*/ «new TypeReference(EnumerationValue)» «getEnumValueId(enumValue, false)» // «enumValue.toString()»
+					= «generateEnumValue(enumValue)»;
+				«ENDFOR»
+			}
+			
+			private static class _CardinalitySolutions
 			{
 				«FOR solution : getSortedSolutions(grammarAnalysis)»
-				private static final /* @@NonNull*/ «new TypeReference(CardinalitySolution)» «getSolutionId(solution)» // «solution.toString()»
+				private static final /*@NonNull*/ «new TypeReference(CardinalitySolution)» «getSolutionId(solution, false)» // «solution.toString()»
 					= «generateSolution(solution)»;
 				«ENDFOR»
-
+			}
+			
+			private static class _CardinalitySolutionSteps
+			{
 				«FOR step : getSortedSolutionSteps(grammarAnalysis)»
-				private static final /* @@NonNull*/ «new TypeReference(CardinalitySolutionStep)» «getSolutionStepId(step)» // «step.toString()»
+				private static final /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» «getSolutionStepId(step, false)» // «step.toString()»
 					= «generateSolutionStep(step)»;
 				«ENDFOR»
 			}
 			
-			private static class _Steps
+			private static class _SerializationSteps
 			{
 				«FOR step : getSortedSerializationSteps(grammarAnalysis)»
-				private static final /* @@NonNull*/ «new TypeReference(RTSerializationStep)» «getSerializationStepId(step)» // «step.toString()»
+				private static final /*@NonNull*/ «new TypeReference(RTSerializationStep)» «getSerializationStepId(step, false)» // «step.toString()»
 					= «generateSerializationStep(step)»;
 				«ENDFOR»
 			}
@@ -104,31 +120,49 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private static class _Segments
 			{
 				«FOR segments : getSortedSegments(grammarAnalysis)»
-				private static final /* @@NonNull*/ «new TypeReference(Segment)» [] «getSegmentsId(segments)» // «segments»
-					= «generateSegments(segments)»
+				private static final /*@NonNull*/ «new TypeReference(Segment)» [] «getSegmentsId(segments, false)» // «segments»
+					= «generateSegments(segments)»;
 				«ENDFOR»
 			}
 						
-			private static class _Rules
+			private static class _ParserRuleData
 			{
-				«generateSerializationRules(grammarAnalysis)»
+				«FOR ruleAnalysis : getSortedRuleAnalyses(grammarAnalysis)»
+				private static final /*@NonNull*/ «new TypeReference(ParserRuleData)» «getRuleAnalysisId(ruleAnalysis, false)» // «ruleAnalysis»
+					= «generateRuleAnalysis(ruleAnalysis)»;
+				«ENDFOR»
+			}
+						
+			private static class _EClassData
+			{
+				«FOR eClass : getSortedEClasses(grammarAnalysis)»
+				private static final /*@NonNull*/ «new TypeReference(EClassData)» «getEClassId(eClass, false)» // «eClass.getName()»
+					= «generateEClassData(grammarAnalysis, eClass)»;
+				«ENDFOR»
+			}
+						
+			private static class _SerializationRules
+			{
+				«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
+				private static final /*@NonNull*/ «new TypeReference(RTSerializationRule)» «getSerializationRuleId(serializationRule, false)» /* «serializationRule» */
+					= «generateSerializationRule(serializationRule)»;
+				«ENDFOR»
 			}
 		}
 		'''
 	}
 	
 	protected def generateSerializationRule(RTSerializationRule serializationRule) {
-		'''
-		// «serializationRule.toRuleString()»
+		'''/* «serializationRule.toRuleString()» */
 		new «new TypeReference(RTSerializationRule)»(
 			new /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» /*@NonNull*/ []{
 				«FOR solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps() SEPARATOR ','»
-				_Steps.«getSolutionStepId(solutionStep)» /* «solutionStep.toString()» */
+				«getSolutionStepId(solutionStep, true)» /* «solutionStep.toString()» */
 				«ENDFOR»
 			}, 
 			new /*@NonNull*/ «new TypeReference(RTSerializationStep)» /*@NonNull*/ []{
 				«FOR serializationStep : serializationRule.getSerializationSteps() SEPARATOR ','»
-				_Steps.«getSerializationStepId(serializationStep)» /* «serializationStep.toString()» */
+				«getSerializationStepId(serializationStep, true)» /* «serializationStep.toString()» */
 				«ENDFOR»
 			}, 
 			«IF serializationRule.getStaticSegments() != null»
@@ -136,7 +170,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«IF serializationRule.getStaticSegments() != null»
 				«FOR segments : serializationRule.getStaticSegments() SEPARATOR ','»
 				«IF segments != null»
-				_Segments.«getSegmentsId(segments)» /* «FOR segment : segments SEPARATOR ' + '»«segment.toString()»«ENDFOR» */
+				«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' + '»«segment.toString()»«ENDFOR» */
 				«ELSE»
 				null
 				«ENDIF»
@@ -146,15 +180,14 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ELSE»
 			null
 			«ENDIF»
-		)
-		'''
+		)'''
 	}
 	
-	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis, EClass eClass) {
+/*	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis, EClass eClass) {
 		'''
 		/**
 		 * «eClass.getName()»
-		 */
+		 * /
 		private static «new TypeReference(RTSerializationRules)» create_«eClass.getName()»_Rules() {
 			return new «new TypeReference(RTSerializationRules)»(«emitLiteral(eClass)», «new TypeReference(Lists)».newArrayList(
 				«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules() SEPARATOR ','»
@@ -163,15 +196,15 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			), 0);
 		}
 		'''
-	}
+	} */
 	
-	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis) {
+/*	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis) {
 		'''
 			«FOR eClass : grammarAnalysis.getSortedProducedEClasses() SEPARATOR '\n'»
 			«generateSerializationRules(grammarAnalysis, eClass)»
 			«ENDFOR»
 		'''
-	}
+	} */
 	
 	/* ************************************************************************************************************************** */
 	
@@ -194,7 +227,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	protected def generateSegments(List<Segment> segments) {
 		'''
 		new «new TypeReference(Segment)» /*@NonNull*/ [] {
-			«FOR segment : segments SEPARATOR ',\n'»«generateSegment(segment)» /* «segment.toString()» */«ENDFOR»};
+			«FOR segment : segments SEPARATOR ',\n'»«generateSegment(segment)» /* «segment.toString()» */«ENDFOR»}
 		'''
 	}
 	
@@ -295,19 +328,19 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateSolution_AddCardinalitySolution(AddCardinalitySolution solution) {
-		'''new «new TypeReference(AddCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+		'''new «new TypeReference(AddCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
 	}
 	
 	protected def generateSolution_DivideCardinalitySolution(DivideCardinalitySolution solution) {
-		'''new «new TypeReference(DivideCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+		'''new «new TypeReference(DivideCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
 	}
 	
 	protected def generateSolution_EAttributeSizeCardinalitySolution(EAttributeSizeCardinalitySolution solution) {
-		'''new «new TypeReference(EAttributeSizeCardinalitySolution)»(«emitLiteral(solution.getEAttribute())», «solution.getEnumerationValue()»)'''
+		'''new «new TypeReference(EAttributeSizeCardinalitySolution)»(«emitLiteral(solution.getEAttribute())», «getEnumValueId(solution.getEnumerationValue(), true)»)'''
 	}
 	
 	protected def generateSolution_EReferenceSizeCardinalitySolution(EReferenceSizeCardinalitySolution solution) {
-		'''new «new TypeReference(EReferenceSizeCardinalitySolution)»(«emitLiteral(solution.getEReference())», «solution.getRuleAnalysis()»)'''
+		'''new «new TypeReference(EReferenceSizeCardinalitySolution)»(«emitLiteral(solution.getEReference())», "«solution.getRuleAnalysis().getName()»")'''
 	}
 	
 	protected def generateSolution_EStructuralFeatureSizeCardinalitySolution(EStructuralFeatureSizeCardinalitySolution solution) {
@@ -315,7 +348,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateSolution_GreaterThanCardinalitySolution(GreaterThanCardinalitySolution solution) {
-		'''new «new TypeReference(GreaterThanCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+		'''new «new TypeReference(GreaterThanCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
 	}
 	
 	protected def generateSolution_IntegerSolution(IntegerCardinalitySolution solution) {
@@ -323,11 +356,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateSolution_MultiplyCardinalitySolution(MultiplyCardinalitySolution solution) {
-		'''new «new TypeReference(MultiplyCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+		'''new «new TypeReference(MultiplyCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
 	}
 	
 	protected def generateSolution_SubtractCardinalitySolution(SubtractCardinalitySolution solution) {
-		'''new «new TypeReference(SubtractCardinalitySolution)»(«getSolutionId(solution.getLeft())», «getSolutionId(solution.getRight())»)'''
+		'''new «new TypeReference(SubtractCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
 	}
 	
 	protected def generateSolution_VariableCardinalitySolution(VariableCardinalitySolution solution) {
@@ -347,18 +380,81 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateSolutionStep_Assert(CardinalitySolutionStep.Assert solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.Assert)»(«getSolutionId(solutionStep.getCardinalitySolution())»)'''
+		'''new «new TypeReference(CardinalitySolutionStep.Assert)»(«getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
 	}
 	
 	protected def generateSolutionStep_Assign(CardinalitySolutionStep.Assign solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.Assign)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution())»)'''
+		'''new «new TypeReference(CardinalitySolutionStep.Assign)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
 	}
 	
 	protected def generateSolutionStep_RuleCheck(CardinalitySolutionStep.RuleCheck solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», «solutionStep.getRuleAnalyses()»)'''
+		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», new String[]{«FOR ruleAnalysis : solutionStep.getRuleAnalyses() SEPARATOR ', '»"«ruleAnalysis»"«ENDFOR»})'''
 	}
 	
 	protected def generateSolutionStep_ValueCheck(CardinalitySolutionStep.ValueCheck solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.ValueCheck)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution())»)'''
+		'''new «new TypeReference(CardinalitySolutionStep.ValueCheck)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
+	}
+	
+	/* ************************************************************************************************************************** */
+	
+	protected def generateEnumValue(EnumerationValue enumValue) {
+		switch enumValue {
+		MultipleEnumerationValue: return generateEnumValue_MultipleEnumerationValue(enumValue)
+		OthersEnumerationValue: return generateEnumValue_OthersEnumerationValue(enumValue)
+		SingleEnumerationValue: return generateEnumValue_SingleEnumerationValue(enumValue)
+		default: throw new UnsupportedOperationException()
+		}
+	}
+	
+	protected def generateEnumValue_MultipleEnumerationValue(MultipleEnumerationValue enumValue) {
+		'''new «new TypeReference(MultipleEnumerationValue)»(new String[]{«FOR value : enumValue.getValues() SEPARATOR ', '»"«value»"«ENDFOR»})'''
+	}
+	
+	protected def generateEnumValue_OthersEnumerationValue(OthersEnumerationValue enumValue) {
+		'''new «new TypeReference(OthersEnumerationValue)»()'''
+	}
+	
+	protected def generateEnumValue_SingleEnumerationValue(SingleEnumerationValue enumValue) {
+		'''new «new TypeReference(SingleEnumerationValue)»("«enumValue.getName()»")'''
+	}
+	
+	/* ************************************************************************************************************************** */
+	
+	protected def generateRuleAnalysis(AbstractRuleAnalysis ruleAnalysis) {
+		switch ruleAnalysis {
+		DataTypeRuleAnalysis: return generateRuleAnalysis_DataTypeRuleAnalysis(ruleAnalysis)
+		ParserRuleAnalysis: return generateRuleAnalysis_ParserRuleAnalysis(ruleAnalysis)
+		TerminalRuleAnalysis: return generateRuleAnalysis_TerminalRuleAnalysis(ruleAnalysis)
+		default: throw new UnsupportedOperationException()
+		}
+	}
+	
+	protected def generateRuleAnalysis_DataTypeRuleAnalysis(DataTypeRuleAnalysis ruleAnalysis) {
+		'''new «new TypeReference(ParserRuleData)»("«ruleAnalysis.getName()»")'''
+	}
+	
+	protected def generateRuleAnalysis_ParserRuleAnalysis(ParserRuleAnalysis ruleAnalysis) {
+		'''new «new TypeReference(ParserRuleData)»("«ruleAnalysis.getName()»")'''
+	}
+	
+	protected def generateRuleAnalysis_TerminalRuleAnalysis(TerminalRuleAnalysis ruleAnalysis) {
+		'''new «new TypeReference(ParserRuleData)»("«ruleAnalysis.getName()»")'''
+	}
+	
+	/* ************************************************************************************************************************** */
+	
+	protected def generateEClassData(GrammarAnalysis grammarAnalysis, EClass eClass) {
+		switch eClass {
+		EClass: return generateEClassData_EClass(grammarAnalysis, eClass)
+		default: throw new UnsupportedOperationException()
+		}
+	}
+	
+	protected def generateEClassData_EClass(GrammarAnalysis grammarAnalysis, EClass eClass) {
+		'''
+		new «new TypeReference(EClassData)»("«eClass.getName()»", «emitLiteral(eClass)»,
+		new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules() SEPARATOR ','»
+		«getSerializationRuleId(serializationRule.getBasicSerializationRule().getRuntime(), true)» /* «serializationRule.toString()» */
+		«ENDFOR»})'''
 	}
 }

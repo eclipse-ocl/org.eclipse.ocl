@@ -19,17 +19,15 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class VariableCardinalitySolution extends AbstractCardinalitySolution
 {
-	protected final @NonNull CardinalityVariable cardinalityVariable;
 	protected final int cardinalityVariableIndex;
 
-	public VariableCardinalitySolution(@NonNull CardinalityVariable cardinalityVariable) {
-		this.cardinalityVariable = cardinalityVariable;
-		this.cardinalityVariableIndex = cardinalityVariable.getIndex();
+	public VariableCardinalitySolution(int cardinalityVariableIndex) {
+		this.cardinalityVariableIndex = cardinalityVariableIndex;
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		return ruleMatch.basicGetIntegerSolution(cardinalityVariable);
+		return ruleMatch.basicGetIntegerSolution(cardinalityVariableIndex);
 	}
 
 	@Override
@@ -41,8 +39,7 @@ public class VariableCardinalitySolution extends AbstractCardinalitySolution
 			return false;
 		}
 		VariableCardinalitySolution that = (VariableCardinalitySolution) obj;
-		if (!this.cardinalityVariable.equals(that.cardinalityVariable)) return false;
-		return true;
+		return this.cardinalityVariableIndex == that.cardinalityVariableIndex;
 	}
 
 	public int getVariableIndex() {
@@ -56,23 +53,23 @@ public class VariableCardinalitySolution extends AbstractCardinalitySolution
 
 	@Override
 	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
-		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariable);
+		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
 		return solution != null ? solution.isConstant(ruleMatch) : false;
 	}
 
 	@Override
 	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
-		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariable);
+		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
 		return solution != null ? solution.isKnown(ruleMatch) : false;
 	}
 
-	@Override
-	public boolean isOptional() {
-		return cardinalityVariable.mayBeNone() && !cardinalityVariable.mayBeMany();
-	}
+//	@Override
+//	public boolean isOptional() {
+//		return cardinalityVariable.mayBeNone() && !cardinalityVariable.mayBeMany();
+//	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(cardinalityVariable.getName());
+		s.append("V" + cardinalityVariableIndex);
 	}
 }

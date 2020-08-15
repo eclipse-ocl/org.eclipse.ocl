@@ -10,14 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 public abstract class AbstractBinaryCardinalitySolution extends AbstractCardinalitySolution
 {
 	protected final @NonNull CardinalitySolution left;
 	protected final @NonNull CardinalitySolution right;
+	private @Nullable Set<@NonNull CardinalitySolution> childClosure = null;
 
 	public AbstractBinaryCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
 		this.left = left;
@@ -25,10 +28,15 @@ public abstract class AbstractBinaryCardinalitySolution extends AbstractCardinal
 	}
 
 	@Override
-	public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
-		super.gatherSolutions(solution2id);
-		left.gatherSolutions(solution2id);
-		right.gatherSolutions(solution2id);
+	public @NonNull Set<@NonNull CardinalitySolution> getChildClosure() {
+		Set<@NonNull CardinalitySolution> childClosure2 = childClosure;
+		if (childClosure2 == null) {
+			childClosure = childClosure2 = new HashSet<>();
+			childClosure2.add(this);
+			childClosure2.addAll(left.getChildClosure());
+			childClosure2.addAll(right.getChildClosure());
+		}
+		return childClosure2;
 	}
 
 	public @NonNull CardinalitySolution getLeft() {

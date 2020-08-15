@@ -429,6 +429,10 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		return enumerationValue;
 	}
 
+	public @NonNull Iterable<@NonNull EnumerationValue> getEnumerationValues() {
+		return new HashSet<>(values2enumerationValue.values());
+	}
+
 	public @NonNull Grammar getGrammar() {
 		Grammar grammar2 = grammar;
 		if (grammar2 == null) {
@@ -466,6 +470,11 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		Collections.sort(list, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		return list;
 	} */
+
+	public @NonNull Iterable<@NonNull AbstractRuleAnalysis> getRuleAnalyses() {
+		assert eClass2ruleAnalyses != null;
+		return ClassUtil.nonNullState(rule2ruleAnalysis.values());
+	}
 
 	public @NonNull List<@NonNull ParserRuleAnalysis> getProducingRuleAnalyses(@NonNull EClass eClass) {
 		assert eClass2ruleAnalyses != null;

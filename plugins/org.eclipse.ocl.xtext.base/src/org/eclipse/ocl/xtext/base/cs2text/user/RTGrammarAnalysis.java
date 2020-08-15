@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
@@ -39,6 +40,13 @@ public class RTGrammarAnalysis
 //	public RTGrammarAnalysis(@NonNull GrammarAnalysis grammarAnalysis) {
 //		this.grammarAnalysis = grammarAnalysis;
 //	}
+
+	public void addEClassData(/*@NonNull*/ EClassData eClassData) {
+		throw new UnsupportedOperationException();			// XXX
+	//	assert serializationRules != null;
+	//	SerializationRules old = eClass2serializationRules.put(serializationRules.getEClass(), serializationRules);
+	//	assert old == null;
+	}
 
 	public void addSerializationRules(/*@NonNull*/ SerializationRules serializationRules) {
 		assert serializationRules != null;

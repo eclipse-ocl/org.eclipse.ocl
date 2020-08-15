@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -20,8 +22,6 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
-
-import com.google.common.collect.Iterables;
 
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.
@@ -62,13 +62,13 @@ public abstract class CardinalitySolutionStep
 			return newIntegerSolution.equals(0);
 		}
 
-		@Override
-		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
-			cardinalitySolution.gatherSolutions(solution2id);
-		}
-
 		public @NonNull CardinalitySolution getCardinalitySolution() {
 			return cardinalitySolution;
+		}
+
+		@Override
+		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+			return cardinalitySolution.getChildClosure();
 		}
 
 		@Override
@@ -122,13 +122,13 @@ public abstract class CardinalitySolutionStep
 			return true;
 		}
 
-		@Override
-		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
-			cardinalitySolution.gatherSolutions(solution2id);
-		}
-
 		public @NonNull CardinalitySolution getCardinalitySolution() {
 			return cardinalitySolution;
+		}
+
+		@Override
+		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+			return cardinalitySolution.getChildClosure();
 		}
 
 		public int getVariableIndex() {
@@ -160,13 +160,28 @@ public abstract class CardinalitySolutionStep
 	public static class RuleCheck extends CardinalitySolutionStep
 	{
 		protected final @NonNull EReference eReference;
-		protected final @NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses;
+//		protected final @NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses;
+		protected final @NonNull ParserRuleAnalysis @NonNull [] ruleAnalyses;
 
-		public RuleCheck(@NonNull EReference eReference, @NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+		public RuleCheck(@NonNull EReference eReference, @NonNull Collection<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+			this(eReference, ruleAnalyses.toArray(new @NonNull ParserRuleAnalysis @NonNull [ruleAnalyses.size()]));
+		}
+
+		public RuleCheck(@NonNull EReference eReference, @NonNull ParserRuleAnalysis @NonNull [] ruleAnalyses) {
 			this.eReference = eReference;
 			this.ruleAnalyses = ruleAnalyses;
-			assert Iterables.size(ruleAnalyses) >= 1;
+			assert ruleAnalyses.length >= 1;
 			assert eReference.isContainment();
+		//	if ("ownedType".equals(eReference.getName())) {
+		//		getClass();			// XXX debugging
+		//	}
+		}
+
+		public RuleCheck(@NonNull EReference eReference, @NonNull String @NonNull [] ruleAnalyses) {
+			this.eReference = eReference;
+			this.ruleAnalyses = new ParserRuleAnalysis[] {};
+		//	assert ruleAnalyses.length >= 1;
+		//	assert eReference.isContainment();
 		//	if ("ownedType".equals(eReference.getName())) {
 		//		getClass();			// XXX debugging
 		//	}
@@ -212,16 +227,17 @@ public abstract class CardinalitySolutionStep
 			return true;
 		}
 
-		@Override
-		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
-		}
-
 		public @NonNull EReference getEReference() {
 			return eReference;
 		}
 
-		public @NonNull Iterable<@NonNull ParserRuleAnalysis> getRuleAnalyses() {
+		public @NonNull ParserRuleAnalysis  [] getRuleAnalyses() {
 			return ruleAnalyses;
+		}
+
+		@Override
+		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+			return Collections.emptySet();
 		}
 
 		@Override
@@ -380,13 +396,13 @@ public abstract class CardinalitySolutionStep
 			return newIntegerSolution.equals(integer);
 		}
 
-		@Override
-		public void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id) {
-			cardinalitySolution.gatherSolutions(solution2id);
-		}
-
 		public @NonNull CardinalitySolution getCardinalitySolution() {
 			return cardinalitySolution;
+		}
+
+		@Override
+		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+			return cardinalitySolution.getChildClosure();
 		}
 
 		public int getVariableIndex() {
@@ -415,9 +431,9 @@ public abstract class CardinalitySolutionStep
 	public abstract boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch);
 
 	/**
-	 * Traverse the solution tree adding a blank entry for each colution term to solution2id.
+	 * Return all solutions to be evaluated.
 	 */
-	public abstract void gatherSolutions(@NonNull Map<@NonNull CardinalitySolution, @NonNull String> solution2id);
+	public abstract @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure();
 
 	/**
 	 * Return true if this is an assignment step to cardinalityVariable.

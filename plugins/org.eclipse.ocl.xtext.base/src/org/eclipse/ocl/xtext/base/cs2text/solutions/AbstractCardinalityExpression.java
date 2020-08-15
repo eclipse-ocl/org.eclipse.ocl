@@ -511,7 +511,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		for (@NonNull Iterable<@NonNull CardinalityVariable> constantProduct : constantSumOfProducts) {
 			CardinalitySolution sumSolution = null;
 			for (@NonNull CardinalityVariable constantTerm : constantProduct) {
-				CardinalitySolution termSolution = new VariableCardinalitySolution(constantTerm);
+				CardinalitySolution termSolution = new VariableCardinalitySolution(constantTerm.getIndex());
 				sumSolution = sumSolution != null ? new MultiplyCardinalitySolution(sumSolution, termSolution) : termSolution;
 			}
 			resultSolution = new SubtractCardinalitySolution(resultSolution, sumSolution != null ? sumSolution : new IntegerCardinalitySolution(1));
@@ -519,7 +519,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		for (@NonNull Iterable<@NonNull CardinalityVariable> factorProduct : factorSumOfProducts) {
 			CardinalitySolution sumSolution = null;
 			for (@NonNull CardinalityVariable factorTerm : factorProduct) {
-				CardinalitySolution termSolution = new VariableCardinalitySolution(factorTerm);
+				CardinalitySolution termSolution = new VariableCardinalitySolution(factorTerm.getIndex());
 				sumSolution = sumSolution != null ? new MultiplyCardinalitySolution(sumSolution, termSolution) : termSolution;
 			}
 			if (sumSolution != null) {
