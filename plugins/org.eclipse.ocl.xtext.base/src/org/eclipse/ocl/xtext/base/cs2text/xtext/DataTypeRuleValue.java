@@ -14,8 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public class DataTypeRuleValue extends AbstractRuleValue
 {
-	public DataTypeRuleValue(int index, @NonNull String name) {
-		super(index, name);
+	public DataTypeRuleValue(int ruleIndex, @NonNull String name) {
+		super(ruleIndex, name);
 	}
 
 	@Override
@@ -27,6 +27,6 @@ public class DataTypeRuleValue extends AbstractRuleValue
 			return false;
 		}
 		DataTypeRuleValue that = (DataTypeRuleValue)obj;
-		return (this.index == that.index) && this.name.equals(that.name);
+		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name);
 	}
 }

@@ -14,8 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public class TerminalRuleValue extends AbstractRuleValue
 {
-	public TerminalRuleValue(int index, @NonNull String name) {
-		super(index, name);
+	public TerminalRuleValue(int ruleIndex, @NonNull String name) {
+		super(ruleIndex, name);
 	}
 
 	@Override
@@ -27,6 +27,6 @@ public class TerminalRuleValue extends AbstractRuleValue
 			return false;
 		}
 		TerminalRuleValue that = (TerminalRuleValue)obj;
-		return (this.index == that.index) && this.name.equals(that.name);
+		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name);
 	}
 }

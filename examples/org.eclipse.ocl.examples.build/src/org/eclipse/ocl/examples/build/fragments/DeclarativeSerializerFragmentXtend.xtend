@@ -131,11 +131,10 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 						
-			private class _ParserRuleData
+			private class _RuleValues
 			{
-				«FOR parserRuleValue : getSortedRuleValues(grammarAnalysis)»
-				private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
-					= «generateRuleValue(parserRuleValue)»
+				«FOR ruleValue : getSortedRuleValues(grammarAnalysis)»
+				«generateRuleValue(grammarAnalysis, ruleValue)»
 				«ENDFOR»
 			}
 						
@@ -159,7 +158,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private final _EnumValues ev = new _EnumValues();
 			private final _MatchSteps ms = new _MatchSteps();
 			private final _MatchTerms mt = new _MatchTerms();
-			private final _ParserRuleData pr = new _ParserRuleData();
+			private final _RuleValues rv = new _RuleValues();
 			private final _SerializationRules sr = new _SerializationRules();
 			private final _SerializationSegments ss = new _SerializationSegments();
 			private final _SerializationTerms st = new _SerializationTerms();
@@ -305,11 +304,13 @@ new «new TypeReference(RTSerializationRule)»(
 	}
 	
 	protected def generateSerializationStep_AssignedRuleCall(RTSerializationAssignedRuleCallStep serializationStep) {
-		'''new «new TypeReference(RTSerializationAssignedRuleCallStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», "«serializationStep.getCalledRuleKey()»")'''
+		'''new «new TypeReference(RTSerializationAssignedRuleCallStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»,
+		«getRuleValueId(serializationStep.getCalledRuleValue(), true)/*«serializationStep.getCalledRuleValue().getName()»*/») '''
 	}
 	
 	protected def generateSerializationStep_AssignedRuleCalls(RTSerializationAssignedRuleCallsStep serializationStep) {
-		'''new «new TypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())» «FOR calledRuleKey : serializationStep.getCalledRuleKeys()», "«calledRuleKey»"«ENDFOR»)'''
+		'''new «new TypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»,
+		 new «new TypeReference(AbstractRuleValue)» [] {«FOR calledRuleValue : serializationStep.getCalledRuleValues() SEPARATOR ', '»«getRuleValueId(calledRuleValue, true)»/*«calledRuleValue.getName()»*/«ENDFOR»})'''
 	}
 	
 	protected def generateSerializationStep_CrossReference(RTSerializationCrossReferenceStep serializationStep) {
@@ -435,33 +436,44 @@ new «new TypeReference(RTSerializationRule)»(
 	
 	/* ************************************************************************************************************************** */
 	
-	protected def generateRuleValue(AbstractRuleValue ruleValue) {
+	protected def generateRuleValue(GrammarAnalysis grammarAnalysis, AbstractRuleValue ruleValue) {
 		switch ruleValue {
-		DataTypeRuleValue: return generateRuleValue_DataTypeRule(ruleValue)
-		ParserRuleValue: return generateRuleValue_ParserRuleValue(ruleValue)
-		TerminalRuleValue: return generateRuleValue_TerminalRuleValue(ruleValue)
+		DataTypeRuleValue: return generateRuleValue_DataTypeRule(grammarAnalysis, ruleValue)
+		ParserRuleValue: return generateRuleValue_ParserRuleValue(grammarAnalysis, ruleValue)
+		TerminalRuleValue: return generateRuleValue_TerminalRuleValue(grammarAnalysis, ruleValue)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateRuleValue_DataTypeRule(DataTypeRuleValue ruleValue) {
-		'''new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»")'''
+	protected def generateRuleValue_DataTypeRule(GrammarAnalysis grammarAnalysis, DataTypeRuleValue ruleValue) {
+		'''private final /*@NonNull*/ «new TypeReference(DataTypeRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
+	= new «new TypeReference(DataTypeRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»");'''
 	}
 	
-	protected def generateRuleValue_ParserRuleValue(ParserRuleValue ruleValue) {
+	protected def generateRuleValue_ParserRuleValue(GrammarAnalysis grammarAnalysis, ParserRuleValue ruleValue) {
 			// «FOR subParserRuleValue : subParserRuleValueClosure SEPARATOR ','» «getParserRuleValueId(subParserRuleValue, true)» /* «subParserRuleValue.getName()» */«ENDFOR» */'''
 		var subParserRuleValueIndexes = ruleValue.getSubParserRuleValueIndexes();
 		if (subParserRuleValueIndexes !== null) {
-		'''new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»", new «new TypeReference(IndexVector)»(new long[]{
+		'''private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
+	= new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»",
+	new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
+			«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+			«ENDFOR»},
+			new «new TypeReference(IndexVector)»(new long[]{
 	«subParserRuleValueIndexes.toWordsString()»})); // «FOR index : subParserRuleValueIndexes SEPARATOR ','»«getRuleName(index)»«ENDFOR»'''
 		}
 		else {
-		'''new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»", («new TypeReference(IndexVector)»)null);'''
+		'''private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
+	= new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»", 
+	new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
+			«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+			«ENDFOR»}, («new TypeReference(IndexVector)»)null);'''
 		}
 	}
 	
-	protected def generateRuleValue_TerminalRuleValue(TerminalRuleValue ruleValue) {
-		'''new «new TypeReference(TerminalRuleValue)»("«ruleValue.getName()»")'''
+	protected def generateRuleValue_TerminalRuleValue(GrammarAnalysis grammarAnalysis, TerminalRuleValue ruleValue) {
+		'''private final /*@NonNull*/ «new TypeReference(TerminalRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
+	= new «new TypeReference(TerminalRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»");'''
 	}
 	
 	/* ************************************************************************************************************************** */

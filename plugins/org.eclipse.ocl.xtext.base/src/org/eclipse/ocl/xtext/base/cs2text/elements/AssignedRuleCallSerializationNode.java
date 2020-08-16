@@ -42,7 +42,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	@Override
 	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
-		stepsList.add(new RTSerializationAssignedRuleCallStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, calledRuleAnalysis.getRuleValue()));
+		int cardinalityVariableIndex = staticRuleMatch.getCardinalityVariableIndex(this);
+		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature, new ProxyRuleValue(calledRuleAnalysis)));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 

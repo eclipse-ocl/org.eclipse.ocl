@@ -15,17 +15,17 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 
 public abstract class AbstractRuleValue implements Indexed,Nameable
 {
-	protected final int index;
+	protected final int ruleIndex;
 	protected final @NonNull String name;
 
-	protected AbstractRuleValue(int index, @NonNull String name) {
-		this.index = index;
+	protected AbstractRuleValue(int ruleIndex, @NonNull String name) {
+		this.ruleIndex = ruleIndex;
 		this.name = name;
 	}
 
 	@Override
 	public int getIndex() {
-		return index;
+		return ruleIndex;
 	}
 
 	@Override

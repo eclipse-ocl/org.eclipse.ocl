@@ -377,30 +377,36 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	private @Nullable Map<@NonNull AbstractRuleValue, @NonNull String> ruleValue2id = null;
-	private @Nullable Map<@NonNull Integer, @NonNull String> ruleValueIndex2parserRuleName = null;
+	private @Nullable Map<@NonNull Integer, @NonNull String> ruleValueIndex2ruleName = null;
 
-	protected @NonNull Iterable<@NonNull AbstractRuleValue> getSortedRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull AbstractRuleValue, @NonNull String> parserRuleValue2id2 = ruleValue2id;
-		Map<@NonNull Integer, @NonNull String> ruleValueIndex2parserRuleName2 = ruleValueIndex2parserRuleName;
-		if (parserRuleValue2id2 == null) {
-			ruleValue2id = parserRuleValue2id2 = new HashMap<>();
+	protected void initRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull AbstractRuleValue, @NonNull String> ruleValue2id2 = ruleValue2id;
+		Map<@NonNull Integer, @NonNull String> ruleValueIndex2ruleName2 = ruleValueIndex2ruleName;
+		if (ruleValue2id2 == null) {
+			ruleValue2id = ruleValue2id2 = new HashMap<>();
 		}
-		if (ruleValueIndex2parserRuleName2 == null) {
-			ruleValueIndex2parserRuleName = ruleValueIndex2parserRuleName2 = new HashMap<>();
+		if (ruleValueIndex2ruleName2 == null) {
+			ruleValueIndex2ruleName = ruleValueIndex2ruleName2 = new HashMap<>();
 		}
 		for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
-			if (ruleAnalysis instanceof ParserRuleAnalysis) {
-				parserRuleValue2id2.put(((ParserRuleAnalysis)ruleAnalysis).getRuleValue(), "");
-				ruleValueIndex2parserRuleName2.put(((ParserRuleAnalysis)ruleAnalysis).getRuleValue().getIndex(), ruleAnalysis.getRuleName());
-			}
+		//	if (ruleAnalysis instanceof ParserRuleAnalysis) {
+			ruleValue2id2.put(ruleAnalysis.getRuleValue(), "");
+			ruleValueIndex2ruleName2.put(ruleAnalysis.getRuleValue().getIndex(), ruleAnalysis.getRuleName());
+		//	}
 		}
-		List<@NonNull AbstractRuleValue> ruleValues = new ArrayList<>(parserRuleValue2id2.keySet());
+		List<@NonNull AbstractRuleValue> ruleValues = new ArrayList<>(ruleValue2id2.keySet());
 		Collections.sort(ruleValues, NameUtil.NAMEABLE_COMPARATOR);
 		String formatString = "_" + getDigitsFormatString(ruleValues);
 		int i = 0;
 		for (@NonNull AbstractRuleValue ruleValue : ruleValues) {
-			parserRuleValue2id2.put(ruleValue, String.format(formatString, i++));
+			ruleValue2id2.put(ruleValue, String.format(formatString, i++));
 		}
+	}
+
+	protected @NonNull Iterable<@NonNull AbstractRuleValue> getSortedRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
+		assert ruleValue2id != null;
+		List<@NonNull AbstractRuleValue> ruleValues = new ArrayList<>(ruleValue2id.keySet());
+		Collections.sort(ruleValues, NameUtil.NAMEABLE_COMPARATOR);
 		return ruleValues;
 	}
 
@@ -408,12 +414,12 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		assert ruleValue2id != null;
 		String id = ruleValue2id.get(ruleValue);
 		assert id != null;
-		return addQualifier ? "pr." + id : id;
+		return addQualifier ? "rv." + id : id;
 	}
 
-	protected @NonNull String getRuleName(@NonNull Integer parserRuleValueIndex) {
-		assert ruleValueIndex2parserRuleName != null;
-		String id = ruleValueIndex2parserRuleName.get(parserRuleValueIndex);
+	protected @NonNull String getRuleName(@NonNull Integer ruleValueIndex) {
+		assert ruleValueIndex2ruleName != null;
+		String id = ruleValueIndex2ruleName.get(ruleValueIndex);
 		assert id != null;
 		return id;
 	}
@@ -428,6 +434,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 				if (ruleAnalysis instanceof ParserRuleAnalysis) {
 					for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
+					//	System.out.println(NameUtil.debugSimpleName(serializationRule) + " => " + NameUtil.debugSimpleName(serializationRule.getBasicSerializationRule()) + " => " + NameUtil.debugSimpleName(serializationRule.getBasicSerializationRule().getRuntime()) + " : " + serializationRule.toString());
 						serializationRule2id2.put(serializationRule.getBasicSerializationRule().getRuntime(), "");
 					}
 				}
@@ -451,6 +458,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected @NonNull String getSerializationRuleId(@NonNull RTSerializationRule serializationRule, boolean addQualifier) {
 		assert serializationRule2id != null;
 		String id = serializationRule2id.get(serializationRule);
+	//	System.out.println("?? " + NameUtil.debugSimpleName(serializationRule) + " => " + id  + " : " + serializationRule.toRuleString());
 		assert id != null;
 		return addQualifier ? "sr." + id : id;
 	}
@@ -488,6 +496,13 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	protected void initAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis) {
+		getSortedEnumValues(grammarAnalysis);
+		getSortedSegments(grammarAnalysis);
+		getSortedSerializationSteps(grammarAnalysis);
+		getSortedSolutions(grammarAnalysis);
+		getSortedSolutionSteps(grammarAnalysis);
+		initRuleValues(grammarAnalysis);
+		getSortedEClasses(grammarAnalysis);
 		initSerializationRule2id(grammarAnalysis);
 	}
 }

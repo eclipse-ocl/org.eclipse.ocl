@@ -13,14 +13,17 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 
 public class ParserRuleValue extends AbstractRuleValue
 {
 	protected final @Nullable IndexVector subParserRuleValueIndexes;	// Includes this if non-null
+	protected final @NonNull RTSerializationRule @NonNull [] rtSerializationRules;
 
-	public ParserRuleValue(int index, @NonNull String name, @Nullable IndexVector subParserRuleValueIndexes) {
-		super(index, name);
+	public ParserRuleValue(int ruleIndex, @NonNull String name, @NonNull RTSerializationRule @NonNull[] rtSerializationRules, @Nullable IndexVector subParserRuleValueIndexes) {
+		super(ruleIndex, name);
 		this.subParserRuleValueIndexes = subParserRuleValueIndexes;
+		this.rtSerializationRules = rtSerializationRules;
 	}
 
 	@Override
@@ -32,7 +35,11 @@ public class ParserRuleValue extends AbstractRuleValue
 			return false;
 		}
 		ParserRuleValue that = (ParserRuleValue)obj;
-		return (this.index == that.index) && this.name.equals(that.name) && ClassUtil.safeEquals(this.subParserRuleValueIndexes, that.subParserRuleValueIndexes);
+		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name) && ClassUtil.safeEquals(this.subParserRuleValueIndexes, that.subParserRuleValueIndexes);
+	}
+
+	public @NonNull RTSerializationRule @NonNull[] getSerializationRules() {
+		return rtSerializationRules;
 	}
 
 	public @Nullable IndexVector getSubParserRuleValueIndexes() {

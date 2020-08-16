@@ -38,6 +38,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleComparator;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedRuleCallSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -47,6 +48,8 @@ import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.Group;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
+
+import com.google.common.collect.Iterables;
 
 /**
  * An XtextParserRuleAnalysis provides the extended analysis of an Xtext ParserRule
@@ -400,7 +403,16 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					subParserRuleValueIndexes.set(parserRuleValue.getIndex());
 				}
 			}
-			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getRuleName(), subParserRuleValueIndexes);
+			Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
+			@NonNull RTSerializationRule @NonNull [] rtSerializationRules = new @NonNull RTSerializationRule [Iterables.size(serializationRules)];
+			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getRuleName(), rtSerializationRules, subParserRuleValueIndexes);
+			//
+			// rtSerializationRules content defined after construction to allow recursive references
+			//
+			int i = 0;
+			for (@NonNull SerializationRule serializationRule : serializationRules) {
+				rtSerializationRules[i++] = serializationRule.getBasicSerializationRule().getRuntime();
+			}
 		}
 		return parserRuleValue2;
 	}

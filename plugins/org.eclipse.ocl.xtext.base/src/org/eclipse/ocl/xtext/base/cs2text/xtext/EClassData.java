@@ -19,13 +19,13 @@ public class EClassData implements Nameable
 {
 	protected final @NonNull String name;
 	protected final @NonNull EClass eClass;
-	protected final @NonNull RTSerializationRule @NonNull[] rtSerializationRules;
+//	protected final @NonNull RTSerializationRule @NonNull[] rtSerializationRules;
 
 	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull RTSerializationRule @NonNull[] rtSerializationRules) {
 		assert eClass != null;
 		this.name = name;
 		this.eClass = eClass;
-		this.rtSerializationRules = rtSerializationRules;
+//		this.rtSerializationRules = rtSerializationRules;
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -504,6 +505,10 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		}
 	//	assert eClass2serializationRules != null;
 		return super.getSerializationRules(eClass);
+	}
+
+	public @NonNull RTSerializationRule @NonNull [] getSerializationRules(@NonNull ParserRuleValue ruleValue) {
+		return ruleValue.getSerializationRules();
 	}
 
 	@Override

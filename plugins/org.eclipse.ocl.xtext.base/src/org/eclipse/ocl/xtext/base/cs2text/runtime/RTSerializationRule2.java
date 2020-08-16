@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,11 +48,14 @@ public class RTSerializationRule2 extends RTSerializationRule
 		return new RTSerializationRule2(basicSerializationRule, solutionSteps, serializationSteps, staticSegments);
 	}
 
+	private static final @NonNull Map<@NonNull BasicSerializationRule, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
 	private final @NonNull BasicSerializationRule basicSerializationRule;
 
 	private RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
 		super(solutionSteps, serializationSteps, staticSegments);
 		this.basicSerializationRule = basicSerializationRule;
+		RTSerializationRule2 old = debugMap.put(basicSerializationRule, this);		// XXX debugging
+		assert old == null;
 	}
 
 	@Override
