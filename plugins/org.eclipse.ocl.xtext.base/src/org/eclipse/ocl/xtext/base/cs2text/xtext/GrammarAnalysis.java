@@ -98,7 +98,9 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 
 //	private @Nullable RTGrammarAnalysis runtime = null;
 
-	public GrammarAnalysis() {}
+	public GrammarAnalysis() {
+		this.grammar = null;
+	}
 
 	public GrammarAnalysis(@NonNull Grammar grammar) {
 		this.grammar = grammar;

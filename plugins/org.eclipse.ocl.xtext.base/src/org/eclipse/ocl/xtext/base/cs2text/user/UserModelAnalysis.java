@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -42,14 +43,17 @@ public class UserModelAnalysis
 	/**
 	 * The overall (multi-)grammar analysis.
 	 */
-	@Inject
-	private @NonNull GrammarAnalysis grammarAnalysis;
+//	@Inject
+//	private @NonNull GrammarAnalysis grammarAnalysis;
 
 	@Inject
 	private @NonNull IValueConverterService valueConverterService;
 
 	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
+
+	@Inject
+	private @NonNull AbstractAnalysisProvider analysisProvider;
 
 
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
@@ -140,12 +144,14 @@ public class UserModelAnalysis
 	}
 
 	public @NonNull RTGrammarAnalysis getGrammarAnalysis() {
-		return grammarAnalysis.getRuntime();
+//		return grammarAnalysis.getRuntime();
+		return analysisProvider.getAnalysis();
 	}
 
 	@Deprecated
 	public @NonNull GrammarAnalysis getInjectedGrammarAnalysis() {
-		return grammarAnalysis;
+//		return grammarAnalysis;
+		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull IValueConverterService getValueConverterService() {

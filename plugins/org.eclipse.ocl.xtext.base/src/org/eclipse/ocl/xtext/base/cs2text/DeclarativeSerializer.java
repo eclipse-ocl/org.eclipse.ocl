@@ -36,7 +36,7 @@ public class DeclarativeSerializer extends Serializer
 		checkNotNull(obj, "obj must not be null.");
 		checkNotNull(writer, "writer must not be null.");
 		checkNotNull(options, "options must not be null.");
-		modelAnalysis.getInjectedGrammarAnalysis().analyze();
+	//	modelAnalysis.getInjectedGrammarAnalysis().analyze();
 	//	String s1 = grammarAnalysis.toString();
 	//	System.out.println(s1);
 	//	System.out.println("\n");

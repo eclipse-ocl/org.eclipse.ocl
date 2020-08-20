@@ -154,10 +154,10 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 			
-			private final _EClassData ec = new _EClassData();
 			private final _EnumValues ev = new _EnumValues();
-			private final _MatchSteps ms = new _MatchSteps();
 			private final _MatchTerms mt = new _MatchTerms();
+			private final _MatchSteps ms = new _MatchSteps();
+			private final _EClassData ec = new _EClassData();
 			private final _RuleValues rv = new _RuleValues();
 			private final _SerializationRules sr = new _SerializationRules();
 			private final _SerializationSegments ss = new _SerializationSegments();
@@ -344,15 +344,15 @@ new «new TypeReference(RTSerializationRule)»(
 	}
 	
 	protected def generateSolution_AddCardinalitySolution(AddCardinalitySolution solution) {
-		'''new «new TypeReference(AddCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
+		'''new «new TypeReference(AddCardinalitySolution)»(«getSolutionId(solution.getLeft(), false)», «getSolutionId(solution.getRight(), false)»)'''
 	}
 	
 	protected def generateSolution_DivideCardinalitySolution(DivideCardinalitySolution solution) {
-		'''new «new TypeReference(DivideCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
+		'''new «new TypeReference(DivideCardinalitySolution)»(«getSolutionId(solution.getLeft(), false)», «getSolutionId(solution.getRight(), false)»)'''
 	}
 	
 	protected def generateSolution_EAttributeSizeCardinalitySolution(EAttributeSizeCardinalitySolution solution) {
-		'''new «new TypeReference(EAttributeSizeCardinalitySolution)»(«emitLiteral(solution.getEAttribute())», «getEnumValueId(solution.getEnumerationValue(), true)»)'''
+		'''new «new TypeReference(EAttributeSizeCardinalitySolution)»(«emitLiteral(solution.getEAttribute())», «getEnumValueId(solution.getEnumerationValue(), false)»)'''
 	}
 	
 	protected def generateSolution_EReferenceSizeCardinalitySolution(EReferenceSizeCardinalitySolution solution) {
@@ -364,7 +364,7 @@ new «new TypeReference(RTSerializationRule)»(
 	}
 	
 	protected def generateSolution_GreaterThanCardinalitySolution(GreaterThanCardinalitySolution solution) {
-		'''new «new TypeReference(GreaterThanCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
+		'''new «new TypeReference(GreaterThanCardinalitySolution)»(«getSolutionId(solution.getLeft(), false)», «getSolutionId(solution.getRight(), false)»)'''
 	}
 	
 	protected def generateSolution_IntegerSolution(IntegerCardinalitySolution solution) {
@@ -372,11 +372,11 @@ new «new TypeReference(RTSerializationRule)»(
 	}
 	
 	protected def generateSolution_MultiplyCardinalitySolution(MultiplyCardinalitySolution solution) {
-		'''new «new TypeReference(MultiplyCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
+		'''new «new TypeReference(MultiplyCardinalitySolution)»(«getSolutionId(solution.getLeft(), false)», «getSolutionId(solution.getRight(), false)»)'''
 	}
 	
 	protected def generateSolution_SubtractCardinalitySolution(SubtractCardinalitySolution solution) {
-		'''new «new TypeReference(SubtractCardinalitySolution)»(«getSolutionId(solution.getLeft(), true)», «getSolutionId(solution.getRight(), true)»)'''
+		'''new «new TypeReference(SubtractCardinalitySolution)»(«getSolutionId(solution.getLeft(), false)», «getSolutionId(solution.getRight(), false)»)'''
 	}
 	
 	protected def generateSolution_VariableCardinalitySolution(VariableCardinalitySolution solution) {
