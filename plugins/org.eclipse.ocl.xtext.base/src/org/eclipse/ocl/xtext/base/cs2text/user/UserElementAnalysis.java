@@ -73,7 +73,6 @@ public class UserElementAnalysis implements Nameable
 		if (eContainmentFeature2 != null) {
 			UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
 			assert containingElementAnalysis2 != null;
-		//	SerializationRules parentSerializationRules = grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass());
 			EClassData parentEClassData = grammarAnalysis.getEClassData(containingElementAnalysis2.getEClass());
 			targetRuleAnalyses = parentEClassData.getAssignedTargetRuleAnalyses(eContainmentFeature2);
 			for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : new ArrayList<>(targetRuleAnalyses)) {
@@ -82,9 +81,8 @@ public class UserElementAnalysis implements Nameable
 				}
 			}
 		}
-	//	SerializationRules serializationRules2 = grammarAnalysis.getSerializationRules(eClass);
-		EClassData parentEClassData2 = grammarAnalysis.getEClassData(eClass);
-		DynamicSerializationRules dynamicSerializationRules = parentEClassData2.createDynamicSerializationRules(targetRuleAnalyses);
+		EClassData parentEClassData = grammarAnalysis.getEClassData(eClass);
+		DynamicSerializationRules dynamicSerializationRules = parentEClassData.createDynamicSerializationRules(targetRuleAnalyses);
 		modelAnalysis.debugAddDynamicSerializationRules(dynamicSerializationRules);
 		return dynamicSerializationRules;
 	}

@@ -35,6 +35,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -46,11 +47,11 @@ import com.google.common.collect.Lists;
  */
 public class DynamicSerializationRules
 {
-	protected final @NonNull EClass eClass;
-	protected final @NonNull Iterable<@NonNull SerializationRule> serializationRules;
+	protected final @NonNull EClassData eClassData;
+	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 
-	public DynamicSerializationRules(@NonNull EClass eClass, @NonNull Iterable<@NonNull SerializationRule> serializationRules) {
-		this.eClass = eClass;
+	public DynamicSerializationRules(@NonNull EClassData eClassData, @NonNull SerializationRule @NonNull [] serializationRules) {
+		this.eClassData = eClassData;
 		this.serializationRules = serializationRules;
 	}
 
@@ -173,7 +174,6 @@ public class DynamicSerializationRules
 		}
 		return assignedRuleAnalyses;
 	}
-
 	private @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
 		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
@@ -258,6 +258,7 @@ public class DynamicSerializationRules
 	} */
 
 	public void toString(@NonNull StringBuilder s, int depth) {
+		EClass eClass = eClassData.getEClass();
 		s.append(eClass.getEPackage().getName());
 		s.append("::");
 		s.append(eClass.getName());

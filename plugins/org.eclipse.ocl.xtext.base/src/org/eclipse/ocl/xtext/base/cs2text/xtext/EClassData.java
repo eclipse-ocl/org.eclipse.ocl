@@ -26,8 +26,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
-import com.google.common.collect.Lists;
-
 public class EClassData implements Nameable
 {
 	protected final @NonNull String name;
@@ -44,7 +42,7 @@ public class EClassData implements Nameable
 
 	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses) {
 		if (targetRuleAnalyses == null)  {
-			return new DynamicSerializationRules(eClass, Lists.newArrayList(serializationRules));
+			return new DynamicSerializationRules(this, serializationRules);
 		}
 		List<@NonNull SerializationRule> newSerializationRules = new ArrayList<>();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
@@ -74,7 +72,7 @@ public class EClassData implements Nameable
 				}
 			}
 		}
-		return new DynamicSerializationRules(eClass, newSerializationRules);
+		return new DynamicSerializationRules(this, newSerializationRules.toArray(new @NonNull SerializationRule[newSerializationRules.size()]));
 	}
 
 	/**
