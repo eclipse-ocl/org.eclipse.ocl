@@ -54,6 +54,11 @@ public class DynamicSerializationRules
 		this.serializationRules = serializationRules;
 	}
 
+//	public DynamicSerializationRules(@NonNull EClass eClass2,
+//			@NonNull SerializationRule @NonNull [] serializationRules2) {
+		// TODO Auto-generated constructor stub
+//	}
+
 	public boolean allRulesNeedDefault(@NonNull EAttribute eAttribute) {
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			if (!serializationRule.getBasicSerializationRule().needsDefault(eAttribute)) {

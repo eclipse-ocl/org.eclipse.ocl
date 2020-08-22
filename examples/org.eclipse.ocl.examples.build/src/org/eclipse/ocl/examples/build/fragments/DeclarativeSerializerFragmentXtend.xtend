@@ -260,7 +260,7 @@ new «new TypeReference(RTSerializationRule)»(
 	protected def generateEClassData_EClass(GrammarAnalysis grammarAnalysis, EClass eClass) {
 		'''
 		new «new TypeReference(EClassData)»("«eClass.getName()»", «emitLiteral(eClass)»,
-		new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass).getSerializationRules() SEPARATOR ','»
+		new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass) SEPARATOR ','»
 		«getSerializationRuleId(serializationRule.getBasicSerializationRule().getRuntime(), true)» /* «serializationRule.toString()» */
 		«ENDFOR»})'''
 	}

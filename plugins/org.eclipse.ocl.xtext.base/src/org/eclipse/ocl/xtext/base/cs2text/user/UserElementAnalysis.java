@@ -21,9 +21,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -39,6 +39,7 @@ public class UserElementAnalysis implements Nameable
 	protected final @Nullable EReference eContainmentFeature;
 	protected final @NonNull EObject eObject;
 	protected final @NonNull EClass eClass;
+	protected final @NonNull EClassData eClassData;
 	protected final @NonNull String name;
 	protected final @NonNull DynamicSerializationRules serializationRules;
 	private @Nullable UserSlotsAnalysis slotsAnalysis = null;
@@ -53,6 +54,7 @@ public class UserElementAnalysis implements Nameable
 		this.eContainmentFeature = eContainmentFeature;
 		this.eObject = eObject;
 		this.eClass = UserModelAnalysis.eClass(eObject);
+		this.eClassData = grammarAnalysis.getEClassData(eClass);
 		this.name = eClass.getName() + "@" + ++count;
 		this.serializationRules = analyzeSerializationRules();
 		modelAnalysis.debugAddUserElementAnalysis(this);
@@ -71,16 +73,18 @@ public class UserElementAnalysis implements Nameable
 		if (eContainmentFeature2 != null) {
 			UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
 			assert containingElementAnalysis2 != null;
-			SerializationRules parentSerializationRules = grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass());
-			targetRuleAnalyses = parentSerializationRules.getAssignedTargetRuleAnalyses(eContainmentFeature2);
+		//	SerializationRules parentSerializationRules = grammarAnalysis.getSerializationRules(containingElementAnalysis2.getEClass());
+			EClassData parentEClassData = grammarAnalysis.getEClassData(containingElementAnalysis2.getEClass());
+			targetRuleAnalyses = parentEClassData.getAssignedTargetRuleAnalyses(eContainmentFeature2);
 			for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : new ArrayList<>(targetRuleAnalyses)) {
 				if (targetRuleAnalysis instanceof ParserRuleAnalysis) {
 					targetRuleAnalyses.addAll(((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure());
 				}
 			}
 		}
-		SerializationRules serializationRules2 = grammarAnalysis.getSerializationRules(eClass);
-		DynamicSerializationRules dynamicSerializationRules = serializationRules2.createDynamicSerializationRules(targetRuleAnalyses);
+	//	SerializationRules serializationRules2 = grammarAnalysis.getSerializationRules(eClass);
+		EClassData parentEClassData2 = grammarAnalysis.getEClassData(eClass);
+		DynamicSerializationRules dynamicSerializationRules = parentEClassData2.createDynamicSerializationRules(targetRuleAnalyses);
 		modelAnalysis.debugAddDynamicSerializationRules(dynamicSerializationRules);
 		return dynamicSerializationRules;
 	}

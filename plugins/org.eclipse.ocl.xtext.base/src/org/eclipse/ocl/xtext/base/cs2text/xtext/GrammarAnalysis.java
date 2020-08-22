@@ -334,9 +334,13 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 				serializationRules.add(serializationRule);
 			}
 		}
+		int i = 0;
 		Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = new HashMap<>();
 		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> entry : eClass2serializationRuleList.entrySet()) {
-			addSerializationRules(new SerializationRules(entry.getKey(), entry.getValue()));
+			EClass eClass = entry.getKey();
+			List<@NonNull SerializationRule> serializationRules = entry.getValue();
+			addEClassData(new EClassData("_" + i++, eClass, serializationRules.toArray(new SerializationRule[serializationRules.size()])));
+			//	addSerializationRules(new SerializationRules(entry.getKey(), entry.getValue()));
 		}
 	}
 
@@ -500,13 +504,13 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		return this;
 	}
 
-	@Override
-	public @NonNull SerializationRules getSerializationRules(@NonNull EClass eClass) {
+//	@Override
+	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull EClass eClass) {
 		if ("PathElementWithURICS".equals(eClass.getName())) {
 			getClass(); // XXX
 		}
 	//	assert eClass2serializationRules != null;
-		return super.getSerializationRules(eClass);
+		return getEClassData(eClass).getSerializationRules();
 	}
 
 	public @NonNull RTSerializationRule @NonNull [] getSerializationRules(@NonNull ParserRuleValue ruleValue) {

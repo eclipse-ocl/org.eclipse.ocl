@@ -20,9 +20,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRules;
 
 public class RTGrammarAnalysis
 {
@@ -31,7 +32,7 @@ public class RTGrammarAnalysis
 	/**
 	 * The prioritized serialization rules for each EClass.
 	 */
-	private final @NonNull Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = new HashMap<>();
+//	private final @NonNull Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = new HashMap<>();
 
 	private final @NonNull Map<@NonNull EClass, @NonNull EClassData> eClass2eClassData = new HashMap<>();
 
@@ -49,24 +50,30 @@ public class RTGrammarAnalysis
 		assert old == null;
 	}
 
-	public void addSerializationRules(/*@NonNull*/ SerializationRules serializationRules) {
-		assert serializationRules != null;
-		SerializationRules old = eClass2serializationRules.put(serializationRules.getEClass(), serializationRules);
-		assert old == null;
-	}
+//	public void addSerializationRules(/*@NonNull*/ SerializationRules serializationRules) {
+//		assert serializationRules != null;
+//		SerializationRules old = eClass2serializationRules.put(serializationRules.getEClass(), serializationRules);
+//		assert old == null;
+//	}
 
 	public void addSerializationRules(/*@NonNull*/ RTSerializationRules create_AttributeCS_Rules) {
 		throw new UnsupportedOperationException("Migration to RT pending");
 	}
 
-	public @NonNull SerializationRules getSerializationRules(@NonNull EClass eClass) {
-		assert eClass2serializationRules.size() > 0;
-		return ClassUtil.nonNullState(eClass2serializationRules.get(eClass));
+	public @NonNull EClassData getEClassData(@NonNull EClass eClass) {
+		assert eClass2eClassData.size() > 0;
+		return ClassUtil.nonNullState(eClass2eClassData.get(eClass));
 	}
 
+/*	public @NonNull RTSerializationRules getSerializationRules(@NonNull EClass eClass) {
+		assert eClass2eClassData.size() > 0;
+		EClassData eClassData = ClassUtil.nonNullState(eClass2eClassData.get(eClass));
+		return eClassData.getSerializationRules();
+	} */
+
 	public @NonNull Iterable<@NonNull EClass> getSortedProducedEClasses() {
-		assert eClass2serializationRules.size() > 0;
-		List<@NonNull EClass> list = new ArrayList<>(ClassUtil.nonNullState(eClass2serializationRules.keySet()));
+		assert eClass2eClassData.size() > 0;
+		List<@NonNull EClass> list = new ArrayList<>(ClassUtil.nonNullState(eClass2eClassData.keySet()));
 		Collections.sort(list, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		return list;
 	}
@@ -75,7 +82,7 @@ public class RTGrammarAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		for (@NonNull EClass eClass : getSortedProducedEClasses()) {
-			SerializationRules serializationRules = getSerializationRules(eClass);
+			@NonNull SerializationRule[] serializationRules = getEClassData(eClass).getSerializationRules();
 			assert serializationRules != null;
 			s.append("\n  ");;
 			s.append(eClass.getEPackage(). getName());
@@ -85,7 +92,25 @@ public class RTGrammarAnalysis
 				getClass(); // XXX debugging
 			}
 			s.append(" <=>");;
-			serializationRules.toString(s, 2);
+			int depth = 2;
+//			serializationRules.toString(s, depth);
+			s.append(eClass.getEPackage().getName());
+			s.append("::");
+			s.append(eClass.getName());
+		//	boolean isMany = Iterables.size(serializationRules) > 1;
+			for (@NonNull SerializationRule serializationRule : serializationRules) {
+				SerializationRule basicSerializationRule = serializationRule;//.getBasicSerializationRule();
+		//		if (isMany) {
+					StringUtil.appendIndentation(s, depth+1);
+		//		}
+		//		else {
+		//			s.append(" ");
+		//		}
+				s.append(serializationRule.getName());
+				s.append(" - ");
+			//	basicSerializationRule.toRuleString(s);
+				basicSerializationRule.toSolutionString(s, depth+2);
+			}
 		}
 		return s.toString();
 	}
