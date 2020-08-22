@@ -305,7 +305,14 @@ public class StaticRuleMatch implements RuleMatch
 				EReference eReference = entry.getKey();
 				if (eReference.isContainment()) {
 					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();		// XXX exclude null
-					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleAnalyses));
+					@NonNull ParserRuleValue[] assignedRuleValues = new @NonNull ParserRuleValue[assignedRuleAnalyses.size()];
+					int i = 0;
+					for (@Nullable ParserRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
+						if (assignedRuleAnalysis != null) {
+							assignedRuleValues[i++] = assignedRuleAnalysis.getRuleValue();		// XXX exclude null
+						}
+					}
+					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleValues));
 				}
 			}
 		}
