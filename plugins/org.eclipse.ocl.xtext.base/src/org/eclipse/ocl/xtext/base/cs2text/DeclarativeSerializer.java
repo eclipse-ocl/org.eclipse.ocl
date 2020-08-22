@@ -18,6 +18,7 @@ import java.io.Writer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
+import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.serializer.impl.Serializer;
 
@@ -30,6 +31,9 @@ public class DeclarativeSerializer extends Serializer
 
 	@Inject
 	private @NonNull SerializationBuilder serializationBuilder;
+
+	@Inject
+	private IGrammarAccess grammarAccess;
 
 	@Override
 	public void serialize(EObject obj, Writer writer, SaveOptions options) throws IOException {

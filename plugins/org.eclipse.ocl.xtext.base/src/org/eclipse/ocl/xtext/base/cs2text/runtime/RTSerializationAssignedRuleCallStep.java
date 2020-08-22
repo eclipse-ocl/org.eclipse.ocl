@@ -22,7 +22,55 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstractFeatureStep
 {
+	private static class NullRuleValue extends AbstractRuleValue
+	{
+		private static final @NonNull NullRuleValue INSTANCE = new NullRuleValue();
+
+		private NullRuleValue() {
+			super(-999, "null");			// Index (and name) should never be used.
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			throw new IllegalStateException();		// Null should have been replaced.
+		}
+
+		public @NonNull AbstractRuleValue getRuleValue() {
+			throw new IllegalStateException();		// Null should have been replaced.
+		}
+
+		@Override
+		public int getIndex() {
+			throw new IllegalStateException();		// Null should have been replaced.
+		}
+
+		@Override
+		public @NonNull String getName() {
+			throw new IllegalStateException();		// Null should have been replaced.
+		}
+
+		@Override
+		public @NonNull String getRuleName() {
+			throw new IllegalStateException();		// Null should have been replaced.
+		}
+
+		@Override
+		public int hashCode() {
+			throw new IllegalStateException();		// Null should have been replaced.
+		}
+
+		@Override
+		public @NonNull String toString() {
+			throw new IllegalStateException();		// Null should have been replaced.
+		}
+	}
+
 	private @NonNull AbstractRuleValue calledRuleValue;
+
+	public RTSerializationAssignedRuleCallStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature) {
+		super(variableIndex, eStructuralFeature);
+		this.calledRuleValue = NullRuleValue.INSTANCE;
+	}
 
 	public RTSerializationAssignedRuleCallStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature, @NonNull AbstractRuleValue calledRuleValue) {
 		super(variableIndex, eStructuralFeature);
@@ -54,6 +102,11 @@ public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstract
 	@Override
 	public int hashCode() {
 		return super.hashCode() + 5 * getCalledRuleValue().hashCode();
+	}
+
+	public void init(@NonNull AbstractRuleValue calledRuleValue) {
+		assert this.calledRuleValue == NullRuleValue.INSTANCE;
+		this.calledRuleValue = calledRuleValue;
 	}
 
 	@Override

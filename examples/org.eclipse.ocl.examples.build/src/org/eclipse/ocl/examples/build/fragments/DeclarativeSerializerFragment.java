@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -47,9 +48,13 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.serializer.ISerializer;
 import org.eclipse.xtext.xtext.generator.IXtextGeneratorLanguage;
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming;
@@ -80,6 +85,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @NonNull OCL ocl = OCL.newInstance();
 	private @NonNull MetamodelManager metamodelManager = ocl.getMetamodelManager();
 	private @NonNull GenModelHelper genModelHelper = new AbstractGenModelHelper((PivotMetamodelManager)metamodelManager);
+	private @Nullable GrammarAnalysis grammarAnalysis;
 
 	protected abstract StringConcatenationClient doGetAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis);
 
@@ -106,22 +112,28 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		TypeReference analysisProviderStub = getAnalysisProviderClass(grammar);
 		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(analysisProviderStub);
 		javaFile.setResourceSet(language.getResourceSet());
-		GrammarAnalysis grammarAnalysis = new GrammarAnalysis(grammar);
-		grammarAnalysis.analyze();
+		GrammarAnalysis grammarAnalysis = getGrammarAnalysis();
 		javaFile.setContent(doGetAnalysisProviderContent(grammarAnalysis));
 		return javaFile;
 	}
 
-	protected String emitLiteral(@NonNull EClassifier eClassifier) {
+	protected @NonNull String emitCalledRule(@NonNull CrossReference crossReference) {
+		RuleCall ruleCall = (RuleCall)XtextGrammarUtil.getTerminal(crossReference);
+		AbstractRule abstractRule = XtextGrammarUtil.getRule(ruleCall);
+		AbstractRuleAnalysis ruleAnalysis = getGrammarAnalysis().getRuleAnalysis(abstractRule);
+		return getRuleValueId(ruleAnalysis.getRuleValue(), true);
+	}
+
+	protected @NonNull String emitLiteral(@NonNull EClassifier eClassifier) {
 		return new TypeReference(genModelHelper.getQualifiedPackageInterfaceName(eClassifier.getEPackage())) + ".Literals." + genModelHelper.getLiteralName(eClassifier);
 	}
 
-	protected String emitLiteral(@NonNull EStructuralFeature eStructuralFeature) {
+	protected @NonNull String emitLiteral(@NonNull EStructuralFeature eStructuralFeature) {
 		return new TypeReference(genModelHelper.getQualifiedPackageInterfaceName(eStructuralFeature.getEContainingClass().getEPackage())) + ".Literals." + genModelHelper.getEcoreLiteralName(eStructuralFeature);
 	}
 
-	protected String emitQualifiedLiteral(@NonNull EPackage ePackage) {
-		return genModelHelper.getQualifiedPackageInterfaceName(ePackage);
+	protected @NonNull String emitQualifiedLiteral(@NonNull EPackage ePackage) {
+		return ClassUtil.nonNullState(genModelHelper.getQualifiedPackageInterfaceName(ePackage));
 	}
 
 	@Override
@@ -183,6 +195,17 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected @NonNull String getDigitsFormatString(@NonNull Collection<?> domain) {
 		int digits = domain.size() > 0 ? (int)Math.ceil(Math.log10(domain.size())) : 1;
 		return "%0" + digits + "d";
+	}
+
+	protected @NonNull GrammarAnalysis getGrammarAnalysis() {
+		GrammarAnalysis grammarAnalysis2 = grammarAnalysis;
+		if (grammarAnalysis2 == null) {
+			Grammar grammar = getGrammar();
+			assert grammar != null;
+			GrammarAnalysis grammarAnalysis = grammarAnalysis2 = new GrammarAnalysis(grammar);
+			grammarAnalysis.analyze();
+		}
+		return grammarAnalysis2;
 	}
 
 	@Override

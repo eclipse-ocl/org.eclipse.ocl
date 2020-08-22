@@ -82,6 +82,14 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 		return hashCode;
 	}
 
+	public void init(@NonNull AbstractRuleValue @NonNull [] calledRuleValues) {
+		assert this.calledRuleValues.length == calledRuleValues.length;
+		for (int i = 0; i < calledRuleValues.length; i++) {
+			assert this.calledRuleValues[i] == null;
+			this.calledRuleValues[i] = calledRuleValues[i];
+		}
+	}
+
 	@Override
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		Object object = serializer.consumeNext(eStructuralFeature);

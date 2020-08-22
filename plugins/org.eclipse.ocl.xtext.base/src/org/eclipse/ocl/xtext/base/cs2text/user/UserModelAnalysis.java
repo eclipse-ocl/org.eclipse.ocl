@@ -29,8 +29,10 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
+import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
+import org.eclipse.xtext.service.GrammarProvider;
 
 import com.google.inject.Inject;
 
@@ -51,6 +53,12 @@ public class UserModelAnalysis
 
 	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
+
+	@Inject
+	private IGrammarAccess grammarAccess;
+
+	@Inject
+	private @NonNull GrammarProvider grammarProvider;
 
 	@Inject
 	private @NonNull AbstractAnalysisProvider analysisProvider;
@@ -82,6 +90,10 @@ public class UserModelAnalysis
 	private int debugSerializeCount = 0;
 	private int debugDynamicRuleMatchCount = 0;
 	private int debugDynamicSerializationRules = 0;
+
+	public UserModelAnalysis() {
+		super();
+	}
 
 	/**
 	 * Perform analysis of each user model element.

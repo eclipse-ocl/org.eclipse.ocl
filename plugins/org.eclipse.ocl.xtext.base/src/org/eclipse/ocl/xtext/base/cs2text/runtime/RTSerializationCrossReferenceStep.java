@@ -21,16 +21,16 @@ import org.eclipse.xtext.RuleCall;
 
 public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFeatureStep
 {
-	protected final @NonNull CrossReference crossReference;
+	protected /*final @NonNull*/ CrossReference crossReference;
 
 	public RTSerializationCrossReferenceStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
 		super(variableIndex, eStructuralFeature);
 		this.crossReference = crossReference;
 	}
 
-	public RTSerializationCrossReferenceStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
+	public RTSerializationCrossReferenceStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, String xref) {
 		super(variableIndex, eStructuralFeature);
-		this.crossReference = (CrossReference)eStructuralFeature;			// XXX
+	//	this.crossReference = (CrossReference)eStructuralFeature;			// XXX
 	}
 
 	@Override
@@ -46,6 +46,10 @@ public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFe
 
 	protected boolean equalTo(@NonNull RTSerializationCrossReferenceStep that) {
 		return super.equalTo(that) && crossReference.equals(that.crossReference);
+	}
+
+	public @NonNull CrossReference getCrossReference() {
+		return crossReference;
 	}
 
 	@Override

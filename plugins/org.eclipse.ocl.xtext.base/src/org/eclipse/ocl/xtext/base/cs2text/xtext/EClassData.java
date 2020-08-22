@@ -13,24 +13,34 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 
 public class EClassData implements Nameable
 {
 	protected final @NonNull String name;
 	protected final @NonNull EClass eClass;
-//	protected final @NonNull RTSerializationRule @NonNull[] rtSerializationRules;
+	protected final @NonNull RTSerializationRule @NonNull [] rtSerializationRules;
 
-	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull RTSerializationRule @NonNull[] rtSerializationRules) {
+
+	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull RTSerializationRule @NonNull [] rtSerializationRules) {
 		assert eClass != null;
 		this.name = name;
 		this.eClass = eClass;
-//		this.rtSerializationRules = rtSerializationRules;
+		this.rtSerializationRules = rtSerializationRules;
+	}
+
+	public @NonNull EClass getEClass() {
+		return eClass;
 	}
 
 	@Override
 	public @NonNull String getName() {
 		return name;
+	}
+
+	public @NonNull SerializationRule @NonNull [] getRtSerializationRules() {
+		return rtSerializationRules;
 	}
 
 	@Override

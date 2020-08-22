@@ -33,6 +33,8 @@ public class RTGrammarAnalysis
 	 */
 	private final @NonNull Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = new HashMap<>();
 
+	private final @NonNull Map<@NonNull EClass, @NonNull EClassData> eClass2eClassData = new HashMap<>();
+
 	public RTGrammarAnalysis() {
 //		this.grammarAnalysis = null;
 	}
@@ -42,10 +44,9 @@ public class RTGrammarAnalysis
 //	}
 
 	public void addEClassData(/*@NonNull*/ EClassData eClassData) {
-		throw new UnsupportedOperationException();			// XXX
-	//	assert serializationRules != null;
-	//	SerializationRules old = eClass2serializationRules.put(serializationRules.getEClass(), serializationRules);
-	//	assert old == null;
+		assert eClassData != null;
+		EClassData old = eClass2eClassData.put(eClassData.getEClass(), eClassData);
+		assert old == null;
 	}
 
 	public void addSerializationRules(/*@NonNull*/ SerializationRules serializationRules) {

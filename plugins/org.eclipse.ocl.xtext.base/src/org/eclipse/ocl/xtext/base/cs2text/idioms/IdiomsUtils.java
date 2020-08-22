@@ -13,25 +13,22 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl;
 
 public class IdiomsUtils
 {
 	public static @NonNull IdiomModel IDIOM_MODEL = getIdiomModel(URI.createPlatformResourceURI("org.eclipse.ocl.xtext.base/model/BaseIdioms.xmi", true));
 
 	public static @NonNull IdiomModel getIdiomModel(@NonNull URI idiomURI) {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		IdiomsPackageImpl.eINSTANCE.getClass();
-		Resource resource = resourceSet.getResource(idiomURI, true);
-		return (IdiomModel) resource.getContents().get(0);
+	//	ResourceSet resourceSet = new ResourceSetImpl();
+	//	IdiomsPackageImpl.eINSTANCE.getClass();
+	//	Resource resource = resourceSet.getResource(idiomURI, true);
+	//	return (IdiomModel) resource.getContents().get(0);
+		return createIdiomModel();
 	}
 
 	public static final @NonNull StringSegment HALF_NEW_LINE = createStringSegment(IDIOM_MODEL, SerializationBuilder.HALF_NEW_LINE);
