@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -59,6 +62,11 @@ public class RTSerializationRule2 extends RTSerializationRule
 	}
 
 	@Override
+	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
+		return basicSerializationRule.getAssignedRuleAnalyses(eReference, assignedRuleAnalyses);
+	}
+
+	@Override
 	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
 		return basicSerializationRule.getAssignedSerializationNodes(eReference);
 	}
@@ -66,6 +74,11 @@ public class RTSerializationRule2 extends RTSerializationRule
 	@Override
 	public @NonNull BasicSerializationRule getBasicSerializationRule() {
 		return basicSerializationRule;
+	}
+
+	@Override
+	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute, @Nullable Set<@NonNull EnumerationValue> enumerationValues) {
+		return basicSerializationRule.getEnumerationValues(eAttribute, enumerationValues);
 	}
 
 	@Override

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
+import java.util.Set;
+
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -20,6 +23,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
@@ -115,16 +119,30 @@ public class RTSerializationRule implements SerializationRule
 	}
 
 	@Override
+	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(
 			@NonNull EReference eReference) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
+
 	@Override
 	public @NonNull BasicSerializationRule getBasicSerializationRule() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute, @Nullable Set<@NonNull EnumerationValue> enumerationValues) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public @NonNull String getName() {
 		// TODO Auto-generated method stub
