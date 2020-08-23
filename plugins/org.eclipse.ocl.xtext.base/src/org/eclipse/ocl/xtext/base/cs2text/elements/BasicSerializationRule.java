@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -19,6 +21,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
+import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
@@ -33,8 +37,15 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Iterables;
 
-public class BasicSerializationRule extends AbstractSerializationRule
+public class BasicSerializationRule implements SerializationRule, ToDebugStringable
 {
+	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull SerializationNode rootSerializationNode;
+	private @Nullable EClass producedEClass = null;
+
+	@SuppressWarnings("unused")			// Used in the debugger
+	private final @NonNull ToDebugString toDebugSring = new ToDebugString(this){};
+
 	/**
 	 * The variables, expressions and solutions to determine if an actual user element matches.
 	 */
@@ -48,7 +59,31 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	private @Nullable RTSerializationRule2 runtime = null;
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
-		super(ruleAnalysis, rootSerializationNode);
+		this.ruleAnalysis = ruleAnalysis;
+		this.rootSerializationNode = rootSerializationNode;
+	}
+
+	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {
+		if (serializationNode instanceof AssignedSerializationNode) {
+			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
+			if (assignedSerializationNode.getEStructuralFeature() == eReference) {
+				if (assignedSerializationNodes == null) {
+					assignedSerializationNodes = new ArrayList<>();
+				}
+				assignedSerializationNodes.add(assignedSerializationNode);
+			}
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				assignedSerializationNodes = gatherAssignedSerializationNodes(eReference, nestedSerializationNode, assignedSerializationNodes);
+			}
+		}
+		return assignedSerializationNodes;
+	}
+
+	@Override
+	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
+		return gatherAssignedSerializationNodes(eReference, rootSerializationNode, null);
 	}
 
 	@Override
@@ -93,6 +128,35 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.getMultiplicativeCardinality(eReference, ruleAnalysis);
+	}
+
+	@Override
+	public @NonNull String getName() {
+		return ruleAnalysis.getName();
+	}
+
+	@Override
+	public @NonNull EClass getProducedEClass() {
+		EClass producedEClass2 = producedEClass;
+		if (producedEClass2 == null) {
+			EClass returnedEClass = ruleAnalysis.getReturnedEClass();
+			producedEClass = producedEClass2 = refineProducedEClass(rootSerializationNode, returnedEClass);
+			if ("EnumerationCS".equals(producedEClass2.getName())) {		// XXX debugging
+				refineProducedEClass(rootSerializationNode, returnedEClass);
+				getClass();
+			}
+		}
+		return producedEClass2;
+	}
+
+	@Override
+	public @NonNull SerializationNode getRootSerializationNode() {
+		return rootSerializationNode;
+	}
+
+	@Override
+	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
+		return ruleAnalysis;
 	}
 
 	public @NonNull RTSerializationRule getRuntime() {
@@ -171,12 +235,47 @@ public class BasicSerializationRule extends AbstractSerializationRule
 		return staticRuleMatch.needsDefault(eStructuralFeature);
 	}
 
+	protected @NonNull EClass refineProducedEClass(@NonNull SerializationNode serializationNode, @NonNull EClass producedEClass) {
+		if (serializationNode instanceof AssignedSerializationNode) {
+			EClass assignedEClass = ((AssignedSerializationNode)serializationNode).getAssignedEClass();
+			if (producedEClass.isSuperTypeOf(assignedEClass)) {
+				producedEClass = assignedEClass;
+			}
+			else {
+				assert assignedEClass.isSuperTypeOf(producedEClass);
+			}
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				producedEClass = refineProducedEClass(nestedSerializationNode, producedEClass);
+			}
+		}
+		return producedEClass;
+	}
+
+	@Override
+	public void toDebugString(@NonNull StringBuilder s, int depth) {
+		rootSerializationNode.toString(s, -1);
+	}
+
+	@Override
+	public void toRuleString(@NonNull StringBuilder s) {
+		rootSerializationNode.toString(s, -1);
+	}
+
 	@Override
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
 		StaticRuleMatch staticRuleMatch2 = staticRuleMatch;
 		if (staticRuleMatch2 != null) {
 			staticRuleMatch2.toSolutionString(s, depth);
 		}
+	}
+
+	@Override
+	public final @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s, -1);
+		return String.valueOf(s);
 	}
 
 	@Override

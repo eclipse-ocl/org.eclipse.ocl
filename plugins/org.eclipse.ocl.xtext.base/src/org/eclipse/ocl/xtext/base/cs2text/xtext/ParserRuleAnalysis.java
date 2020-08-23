@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.elements.DelegateSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationElement;
@@ -351,8 +350,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis)unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
 			for (@NonNull SerializationRule calledSerializationRule : calledRuleAnalysis.getSerializationRules()) {
 				BasicSerializationRule delegateSerializationRule = calledSerializationRule.getBasicSerializationRule();
-				DelegateSerializationRule delegatingSerializationRule = new DelegateSerializationRule(this, delegateSerializationRule);
-				serializationRules.add(delegatingSerializationRule);
+				assert delegateSerializationRule == calledSerializationRule;
+				serializationRules.add(delegateSerializationRule);
 			}
 		}
 		else {
