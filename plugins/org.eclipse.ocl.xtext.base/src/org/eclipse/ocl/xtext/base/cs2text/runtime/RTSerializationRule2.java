@@ -62,8 +62,8 @@ public class RTSerializationRule2 extends RTSerializationRule
 	}
 
 	@Override
-	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
-		return basicSerializationRule.getAssignedRuleAnalyses(eReference, assignedRuleAnalyses);
+	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
+		return basicSerializationRule.getAssignedRuleAnalyses(eReference);
 	}
 
 	@Override
@@ -77,8 +77,8 @@ public class RTSerializationRule2 extends RTSerializationRule
 	}
 
 	@Override
-	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute, @Nullable Set<@NonNull EnumerationValue> enumerationValues) {
-		return basicSerializationRule.getEnumerationValues(eAttribute, enumerationValues);
+	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+		return basicSerializationRule.getEnumerationValues(eAttribute);
 	}
 
 	@Override

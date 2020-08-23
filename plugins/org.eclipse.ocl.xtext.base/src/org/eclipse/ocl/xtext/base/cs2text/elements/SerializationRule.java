@@ -24,9 +24,9 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 public interface SerializationRule extends Nameable
 {
 	@Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference);
-	@Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses);
+	@Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference);
 	@NonNull BasicSerializationRule getBasicSerializationRule();
-	@Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute, @Nullable Set<@NonNull EnumerationValue> enumerationValues);
+	@Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute);
 	@Override
 	@NonNull String getName();
 	@NonNull EClass getProducedEClass();

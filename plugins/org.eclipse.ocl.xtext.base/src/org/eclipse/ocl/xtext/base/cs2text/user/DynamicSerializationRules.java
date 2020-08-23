@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -144,19 +145,31 @@ public class DynamicSerializationRules
 	}
 
 	public @Nullable Iterable<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
-		Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = null;
+		Set<@NonNull ParserRuleAnalysis> allAssignedRuleAnalyses = null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			assignedRuleAnalyses = serializationRule.getAssignedRuleAnalyses(eReference, assignedRuleAnalyses);
+			Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = serializationRule.getAssignedRuleAnalyses(eReference);
+			if (assignedRuleAnalyses != null) {
+				if (allAssignedRuleAnalyses == null) {
+					allAssignedRuleAnalyses = new HashSet<>();
+				}
+				allAssignedRuleAnalyses.addAll(assignedRuleAnalyses);
+			}
 		}
-		return assignedRuleAnalyses;
+		return allAssignedRuleAnalyses;
 	}
 
 	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		Set<@NonNull EnumerationValue> enumerationValues = null;
+		Set<@NonNull EnumerationValue> allEnumerationValues = null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			enumerationValues = serializationRule.getEnumerationValues(eAttribute, enumerationValues);
+			Set<@NonNull EnumerationValue> enumerationValues = serializationRule.getEnumerationValues(eAttribute);
+			if (enumerationValues != null) {
+				if (allEnumerationValues == null) {
+					allEnumerationValues = new HashSet<>();
+				}
+				allEnumerationValues.addAll(enumerationValues);
+			}
 		}
-		return enumerationValues;
+		return allEnumerationValues;
 	}
 
 	@Override

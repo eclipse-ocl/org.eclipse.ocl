@@ -59,26 +59,14 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	 */
 	private @Nullable Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = null;
 
+	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = null;
+	private @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2assignedRuleAnalyses = null;
+
 	private @Nullable RTSerializationRule runtime = null;
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.rootSerializationNode = rootSerializationNode;
-	}
-
-	private @Nullable Set<@NonNull ParserRuleAnalysis> gatherAssignedRuleAnalyses(@Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses,
-			@Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
-		if (ruleAnalyses != null) {
-			for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					if (assignedRuleAnalyses == null) {
-						assignedRuleAnalyses = new HashSet<>();
-					}
-					assignedRuleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
-				}
-			}
-		}
-		return assignedRuleAnalyses;
 	}
 
 	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {
@@ -100,32 +88,8 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	}
 
 	@Override
-	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
-		return getAssignedRuleAnalyses(eReference, getRootSerializationNode(), assignedRuleAnalyses);
-	}
-	private @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
-		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
-			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
-			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eReference) {
-				ParserRuleAnalysis enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
-				if (!enumerationValue.isNull()) {
-					ruleAnalyses.add(enumerationValue);
-				}
-			}
-		}
-		else*/ if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)) {
-			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-			if (assignedSerializationNode.getEStructuralFeature() == eReference) {
-				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-				assignedRuleAnalyses = gatherAssignedRuleAnalyses(ruleAnalyses, assignedRuleAnalyses);
-			}
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				assignedRuleAnalyses = getAssignedRuleAnalyses(eReference, nestedSerializationNode, assignedRuleAnalyses);
-			}
-		}
-		return assignedRuleAnalyses;
+	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
+		return getEReference2AssignedRuleAnalyses().get(eReference);
 	}
 
 	@Override
@@ -138,40 +102,91 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 		return this;
 	}
 
-	@Override
-	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute, @Nullable Set<@NonNull EnumerationValue> enumerationValues) {
-		return getEnumerationValues(eAttribute, getRootSerializationNode(), enumerationValues);
+	protected @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> getEAttribute2EnumerationValues() {
+		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
+		if (eAttribute2enumerationValues2 == null) {
+			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
+			getEAttribute2EnumerationValues(getRootSerializationNode(), eAttribute2enumerationValues2);
+		}
+		return eAttribute2enumerationValues2;
 	}
-	private @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute, @NonNull SerializationNode serializationNode, @Nullable Set<@NonNull EnumerationValue> enumerationValues) {
+	private void getEAttribute2EnumerationValues(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues) {
 		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
-			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eAttribute) {
-				EnumerationValue enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
-				if (enumerationValues == null) {
-					enumerationValues = new HashSet<>();
-				}
-				enumerationValues.add(enumerationValue);
+			EAttribute eAttribute = (EAttribute)assignedKeywordsSerializationNode.getEStructuralFeature();
+			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+			if (enumerationValues == null) {
+				enumerationValues = new HashSet<>();
+				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
 			}
+			EnumerationValue enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
+			enumerationValues.add(enumerationValue);
 		}
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
-			if (assignedKeywordSerializationNode.getEStructuralFeature() == eAttribute) {
-				EnumerationValue enumerationValue = assignedKeywordSerializationNode.getEnumerationValue();
-				if (enumerationValues == null) {
-					enumerationValues = new HashSet<>();
+			EAttribute eAttribute = (EAttribute)assignedKeywordSerializationNode.getEStructuralFeature();
+			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+			if (enumerationValues == null) {
+				enumerationValues = new HashSet<>();
+				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
+			}
+			EnumerationValue enumerationValue = assignedKeywordSerializationNode.getEnumerationValue();
+			enumerationValues.add(enumerationValue);
+		}
+		else if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				getEAttribute2EnumerationValues(nestedSerializationNode, eAttribute2enumerationValues);
+			}
+		}
+	}
+
+	protected @NonNull Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> getEReference2AssignedRuleAnalyses() {
+		Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2assignedRuleAnalyses2 = eReference2assignedRuleAnalyses;
+		if (eReference2assignedRuleAnalyses2 == null) {
+			eReference2assignedRuleAnalyses = eReference2assignedRuleAnalyses2 = new HashMap<>();
+			getEReference2AssignedRuleAnalyses(getRootSerializationNode(), eReference2assignedRuleAnalyses2);
+		}
+		return eReference2assignedRuleAnalyses2;
+	}
+	private void getEReference2AssignedRuleAnalyses(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2assignedRuleAnalyses) {
+		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
+			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
+			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eReference) {
+				ParserRuleAnalysis enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
+				if (!enumerationValue.isNull()) {
+					ruleAnalyses.add(enumerationValue);
 				}
-				enumerationValues.add(enumerationValue);
+			}
+		}
+		else*/ if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)) {
+			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
+			EReference eReference = (EReference)assignedSerializationNode.getEStructuralFeature();
+			Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = eReference2assignedRuleAnalyses.get(eReference);
+			if (assignedRuleAnalyses == null) {
+				assignedRuleAnalyses = new HashSet<>();
+				eReference2assignedRuleAnalyses.put(eReference, assignedRuleAnalyses);
+			}
+			Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
+			if (ruleAnalyses != null) {
+				for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+					if (ruleAnalysis instanceof ParserRuleAnalysis) {
+						assignedRuleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
+					}
+				}
 			}
 		}
 		else if (serializationNode instanceof SequenceSerializationNode) {
 			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				enumerationValues = getEnumerationValues(eAttribute, nestedSerializationNode, enumerationValues);
+				getEReference2AssignedRuleAnalyses(nestedSerializationNode, eReference2assignedRuleAnalyses);
 			}
 		}
-		return enumerationValues;
 	}
 
-
+	@Override
+	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+		Set<@NonNull EnumerationValue> enumerationValues1 = getEAttribute2EnumerationValues().get(eAttribute);
+		return enumerationValues1;
+	}
 
 	private void getIdiomMatches(@NonNull SerializationNode serializationNode, @NonNull Iterable<@NonNull Idiom> idioms,
 			@Nullable IdiomMatch @NonNull [] idiomMatches) {

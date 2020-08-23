@@ -119,7 +119,7 @@ public class RTSerializationRule implements SerializationRule
 	}
 
 	@Override
-	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference, @Nullable Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses) {
+	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
@@ -138,7 +138,7 @@ public class RTSerializationRule implements SerializationRule
 	}
 
 	@Override
-	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute, @Nullable Set<@NonNull EnumerationValue> enumerationValues) {
+	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
