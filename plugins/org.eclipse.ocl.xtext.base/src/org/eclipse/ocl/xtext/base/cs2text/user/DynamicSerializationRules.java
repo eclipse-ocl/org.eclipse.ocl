@@ -133,7 +133,7 @@ public class DynamicSerializationRules
 						s.append(String.format("\n %-29.29s%8d", "'" + ruleValue.getName() + "'", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eReference, ruleAnalysis);
+							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eReference, ruleValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 						}
 					}

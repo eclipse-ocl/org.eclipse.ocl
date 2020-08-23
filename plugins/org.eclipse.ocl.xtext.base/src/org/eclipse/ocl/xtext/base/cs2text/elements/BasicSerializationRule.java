@@ -157,7 +157,15 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 
 	@Override
 	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
-		return getEReference2AssignedRuleAnalyses().get(eReference);
+		Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = getEReference2AssignedRuleAnalyses().get(eReference);
+		if (assignedRuleAnalyses == null) {
+			return null;
+		}
+		Set<@NonNull ParserRuleValue> assignedRuleValues = new HashSet<>();
+		for (@NonNull ParserRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
+			assignedRuleValues.add(assignedRuleAnalysis.getRuleValue());
+		}
+		return assignedRuleValues;
 	}
 
 	@Override
@@ -310,6 +318,21 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
 			if (ruleAnalysis2multiplicativeCardinality != null) {
 				return ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
+			}
+		}
+		return null;
+	}
+
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
+		assert staticRuleMatch != null;
+		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
+			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
+			if (ruleAnalysis2multiplicativeCardinality != null) {
+				for (@Nullable ParserRuleAnalysis parserRuleAnalysis : ruleAnalysis2multiplicativeCardinality.keySet()) {
+					if ((parserRuleAnalysis != null) && (parserRuleAnalysis.getRuleValue() == ruleValue)) {
+						return ruleAnalysis2multiplicativeCardinality.get(parserRuleAnalysis);
+					}
+				}
 			}
 		}
 		return null;
