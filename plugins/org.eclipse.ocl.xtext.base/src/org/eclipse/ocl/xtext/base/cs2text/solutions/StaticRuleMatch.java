@@ -86,7 +86,6 @@ public class StaticRuleMatch implements RuleMatch
 	 *
 	 * Lazily populated as solutions found.
 	 */
-//	private final @NonNull Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> zvariable2solution = new HashMap<>();
 	private final @NonNull Map<@NonNull Integer, @NonNull CardinalitySolution> variableIndex2solution = new HashMap<>();
 
 	/**
