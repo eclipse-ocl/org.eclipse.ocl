@@ -12,8 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -28,16 +26,20 @@ public class EClassData implements Nameable
 	protected final @NonNull String name;
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
-	private final @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues;
+	protected final @NonNull EReferenceData @Nullable [] eReferenceDatas;
 //	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
 
 	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
-			@Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues) {
+			@NonNull EReferenceData @Nullable [] eReferenceDatas) {
 		assert eClass != null;
 		this.name = name;
 		this.eClass = eClass;
 		this.serializationRules = serializationRules;
-		this.eContainmentFeature2assignedTargetRuleValues = eContainmentFeature2assignedTargetRuleValues;
+		this.eReferenceDatas = eReferenceDatas;
+	}
+
+	public @NonNull EReferenceData @Nullable [] basicGetEReferenceDatas() {
+		return eReferenceDatas;
 	}
 
 	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable IndexVector targetRuleValueIndexes) {
@@ -74,7 +76,7 @@ public class EClassData implements Nameable
 	/**
 	 * Return the rule analyses assigned by one or more of the serialization rules that can assign eContainmentFeature.
 	 */
-	public @Nullable Set<@NonNull AbstractRuleValue> getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
+	public @NonNull ParserRuleValue @Nullable [] getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
 	/*	Set<@NonNull AbstractRuleValue> targetRuleValues = new HashSet<>();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
@@ -87,7 +89,14 @@ public class EClassData implements Nameable
 			}
 		}
 		return targetRuleValues; */
-		return eContainmentFeature2assignedTargetRuleValues != null ? eContainmentFeature2assignedTargetRuleValues.get(eContainmentFeature) : null;
+		if (eReferenceDatas != null) {
+			for (@NonNull EReferenceData eReferenceData : eReferenceDatas) {
+				if (eReferenceData.getEReference() == eContainmentFeature) {
+					return eReferenceData.getAssignedTargetRuleValues();
+				}
+			}
+		}
+		return null;
 	}
 /*	public @NonNull IndexVector getAssignedTargetRuleValueIndexes(@NonNull EReference eContainmentFeature) {
 		IndexVector targetRuleValueIndexes = new IndexVector();

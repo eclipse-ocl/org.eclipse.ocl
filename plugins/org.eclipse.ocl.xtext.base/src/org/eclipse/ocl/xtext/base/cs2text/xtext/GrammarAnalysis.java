@@ -342,13 +342,21 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 			List<@NonNull SerializationRule> serializationRules = entry.getValue();
 
 			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues( serializationRules);
-
-
-
-
-
-
-			addEClassData(new EClassData("_" + i++, eClass, serializationRules.toArray(new SerializationRule[serializationRules.size()]), eContainmentFeature2assignedTargetRuleValues));
+			EReferenceData[] eReferenceData = null;
+			if (eContainmentFeature2assignedTargetRuleValues != null) {
+				eReferenceData = new EReferenceData[eContainmentFeature2assignedTargetRuleValues.size()];
+				int i2 = 0;
+				for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> entry2 : eContainmentFeature2assignedTargetRuleValues.entrySet()) {
+					Set<@NonNull AbstractRuleValue> values = entry2.getValue();
+					ParserRuleValue[] parserRuleValues = new ParserRuleValue[values.size()];
+					int i3 = 0;
+					for (AbstractRuleValue value : values) {
+						parserRuleValues[i3++] = (ParserRuleValue) value;
+					}
+					eReferenceData[i2++] = new EReferenceData(entry2.getKey(), parserRuleValues);
+				}
+			}
+			addEClassData(new EClassData("_" + i++, eClass, serializationRules.toArray(new SerializationRule[serializationRules.size()]), eReferenceData));
 			//	addSerializationRules(new SerializationRules(entry.getKey(), entry.getValue()));
 		}
 	}
@@ -422,16 +430,18 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
 	}
 
-	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> basicGetEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
-//		List<@NonNull SerializationRule> serializationRules = eClass2serializationRuleList.get(eClass);
-//		return getEContainmentFeature2assignedTargetRuleValues(serializationRules);
-		return null;
+//	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> basicGetEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
+//		EClassData eClassData = getEClassData(eClass);
+//		return eClassData.basicGetEContainmentFeature2assignedTargetRuleValues();
+//	}
+
+	public @NonNull EReferenceData @Nullable [] basicGetEReferenceDatas(@NonNull EClass eClass) {
+		EClassData eClassData = getEClassData(eClass);
+		return eClassData.basicGetEReferenceDatas();
 	}
 
-	public @NonNull Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> getEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
-//		List<@NonNull SerializationRule> serializationRules = eClass2serializationRuleList.get(eClass);
-//		return getEContainmentFeature2assignedTargetRuleValues(serializationRules);
-		return ClassUtil.nonNullState(null);
+	public @NonNull EReferenceData @NonNull [] getEReferenceDatas(@NonNull EClass eClass) {
+		return ClassUtil.nonNullState(basicGetEReferenceDatas(eClass));
 	}
 
 	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> getEContainmentFeature2assignedTargetRuleValues(

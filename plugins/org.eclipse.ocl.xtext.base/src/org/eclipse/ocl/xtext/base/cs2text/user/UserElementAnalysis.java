@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
-import java.util.Set;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -73,7 +71,7 @@ public class UserElementAnalysis implements Nameable
 			UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
 			assert containingElementAnalysis2 != null;
 			EClassData parentEClassData = grammarAnalysis.getEClassData(containingElementAnalysis2.getEClass());
-			Set<@NonNull AbstractRuleValue> targetRuleValues = parentEClassData.getAssignedTargetRuleValues(eContainmentFeature2);
+			@NonNull ParserRuleValue [] targetRuleValues = parentEClassData.getAssignedTargetRuleValues(eContainmentFeature2);
 			if (targetRuleValues != null) {
 				targetRuleValueIndexes = new IndexVector();
 				for (@NonNull AbstractRuleValue targetRuleValue : targetRuleValues) {
