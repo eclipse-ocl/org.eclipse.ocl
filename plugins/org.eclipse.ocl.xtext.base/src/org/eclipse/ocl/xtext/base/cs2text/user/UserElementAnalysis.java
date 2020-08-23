@@ -74,13 +74,15 @@ public class UserElementAnalysis implements Nameable
 			assert containingElementAnalysis2 != null;
 			EClassData parentEClassData = grammarAnalysis.getEClassData(containingElementAnalysis2.getEClass());
 			Set<@NonNull AbstractRuleValue> targetRuleValues = parentEClassData.getAssignedTargetRuleValues(eContainmentFeature2);
-			targetRuleValueIndexes = new IndexVector();
-			for (@NonNull AbstractRuleValue targetRuleValue : targetRuleValues) {
-				if (targetRuleValue instanceof ParserRuleValue) {
-					targetRuleValueIndexes.set(targetRuleValue.getIndex());
-					IndexVector subParserRuleValueIndexes = ((ParserRuleValue)targetRuleValue).getSubParserRuleValueIndexes();
-					if (subParserRuleValueIndexes != null) {
-						targetRuleValueIndexes.setAll(subParserRuleValueIndexes);
+			if (targetRuleValues != null) {
+				targetRuleValueIndexes = new IndexVector();
+				for (@NonNull AbstractRuleValue targetRuleValue : targetRuleValues) {
+					if (targetRuleValue instanceof ParserRuleValue) {
+						targetRuleValueIndexes.set(targetRuleValue.getIndex());
+						IndexVector subParserRuleValueIndexes = ((ParserRuleValue)targetRuleValue).getSubParserRuleValueIndexes();
+						if (subParserRuleValueIndexes != null) {
+							targetRuleValueIndexes.setAll(subParserRuleValueIndexes);
+						}
 					}
 				}
 			}

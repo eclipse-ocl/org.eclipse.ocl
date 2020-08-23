@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
@@ -339,7 +340,37 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> entry : eClass2serializationRuleList.entrySet()) {
 			EClass eClass = entry.getKey();
 			List<@NonNull SerializationRule> serializationRules = entry.getValue();
-			addEClassData(new EClassData("_" + i++, eClass, serializationRules.toArray(new SerializationRule[serializationRules.size()])));
+
+			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = null;
+			for (EReference eContainmentFeature : containment2assignmentAnalyses.keySet()) {	// FIXME this is needlessly broad
+				Set<@NonNull AbstractRuleValue> targetRuleValues = null;
+				for (@NonNull SerializationRule serializationRule : serializationRules) {
+					Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
+					if (assignedSerializationNodes != null) {
+						for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+							for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
+								if (targetRuleValues == null) {
+									targetRuleValues = new HashSet<>();
+								}
+								targetRuleValues.add(targetRuleAnalysis.getRuleValue());
+							}
+						}
+					}
+				}
+				if (targetRuleValues != null) {
+					if (eContainmentFeature2assignedTargetRuleValues == null) {
+						eContainmentFeature2assignedTargetRuleValues = new HashMap<>();
+					}
+					eContainmentFeature2assignedTargetRuleValues.put(eContainmentFeature, targetRuleValues);
+				}
+			}
+
+
+
+
+
+
+			addEClassData(new EClassData("_" + i++, eClass, serializationRules.toArray(new SerializationRule[serializationRules.size()]), eContainmentFeature2assignedTargetRuleValues));
 			//	addSerializationRules(new SerializationRules(entry.getKey(), entry.getValue()));
 		}
 	}

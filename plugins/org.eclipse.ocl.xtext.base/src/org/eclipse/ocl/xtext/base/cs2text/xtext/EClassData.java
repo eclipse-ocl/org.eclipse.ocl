@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +21,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
@@ -32,12 +30,15 @@ public class EClassData implements Nameable
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleValue>> eReference2disciminatingRuleValues = null;
+	private final @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues;
 
-	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules) {
+	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
+			@Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues) {
 		assert eClass != null;
 		this.name = name;
 		this.eClass = eClass;
 		this.serializationRules = serializationRules;
+		this.eContainmentFeature2assignedTargetRuleValues = eContainmentFeature2assignedTargetRuleValues;
 	}
 
 	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable IndexVector targetRuleValueIndexes) {
@@ -79,8 +80,8 @@ public class EClassData implements Nameable
 	/**
 	 * Return the rule analyses assigned by one or more of the serialization rules that can assign eContainmentFeature.
 	 */
-	public @NonNull Set<@NonNull AbstractRuleValue> getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
-		Set<@NonNull AbstractRuleValue> targetRuleValues = new HashSet<>();
+	public @Nullable Set<@NonNull AbstractRuleValue> getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
+	/*	Set<@NonNull AbstractRuleValue> targetRuleValues = new HashSet<>();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
 			if (assignedSerializationNodes != null) {
@@ -91,7 +92,8 @@ public class EClassData implements Nameable
 				}
 			}
 		}
-		return targetRuleValues;
+		return targetRuleValues; */
+		return eContainmentFeature2assignedTargetRuleValues != null ? eContainmentFeature2assignedTargetRuleValues.get(eContainmentFeature) : null;
 	}
 /*	public @NonNull IndexVector getAssignedTargetRuleValueIndexes(@NonNull EReference eContainmentFeature) {
 		IndexVector targetRuleValueIndexes = new IndexVector();

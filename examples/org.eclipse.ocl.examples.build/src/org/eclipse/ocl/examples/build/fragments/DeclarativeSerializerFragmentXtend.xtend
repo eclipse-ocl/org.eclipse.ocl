@@ -262,7 +262,7 @@ new «new TypeReference(RTSerializationRule)»(
 		new «new TypeReference(EClassData)»("«eClass.getName()»", «emitLiteral(eClass)»,
 		new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass) SEPARATOR ','»
 		«getSerializationRuleId(serializationRule.getBasicSerializationRule().getRuntime(), true)» /* «serializationRule.toString()» */
-		«ENDFOR»})'''
+		«ENDFOR»}, null)'''
 	}
 	
 	/* ************************************************************************************************************************** */
