@@ -18,7 +18,6 @@ import java.io.Writer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
-import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.serializer.impl.Serializer;
 
@@ -32,15 +31,15 @@ public class DeclarativeSerializer extends Serializer
 	@Inject
 	private @NonNull SerializationBuilder serializationBuilder;
 
-	@Inject
-	private IGrammarAccess grammarAccess;
+//	@Inject
+//	private IGrammarAccess grammarAccess;
 
 	@Override
 	public void serialize(EObject obj, Writer writer, SaveOptions options) throws IOException {
 		checkNotNull(obj, "obj must not be null.");
 		checkNotNull(writer, "writer must not be null.");
 		checkNotNull(options, "options must not be null.");
-	//	modelAnalysis.getInjectedGrammarAnalysis().analyze();
+		modelAnalysis.getInjectedGrammarAnalysis().analyze();
 	//	String s1 = grammarAnalysis.toString();
 	//	System.out.println(s1);
 	//	System.out.println("\n");
