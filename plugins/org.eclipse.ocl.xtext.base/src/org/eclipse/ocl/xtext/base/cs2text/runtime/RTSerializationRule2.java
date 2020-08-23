@@ -29,6 +29,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class RTSerializationRule2 extends RTSerializationRule
 {
@@ -62,8 +63,8 @@ public class RTSerializationRule2 extends RTSerializationRule
 	}
 
 	@Override
-	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
-		return basicSerializationRule.getAssignedRuleAnalyses(eReference);
+	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
+		return basicSerializationRule.getAssignedRuleValues(eReference);
 	}
 
 	@Override

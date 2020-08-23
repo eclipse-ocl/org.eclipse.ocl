@@ -28,6 +28,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class RTSerializationRule implements SerializationRule
 {
@@ -119,7 +120,7 @@ public class RTSerializationRule implements SerializationRule
 	}
 
 	@Override
-	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
+	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}

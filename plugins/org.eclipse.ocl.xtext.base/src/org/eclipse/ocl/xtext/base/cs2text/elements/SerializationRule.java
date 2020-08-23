@@ -20,11 +20,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public interface SerializationRule extends Nameable
 {
 	@Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference);
-	@Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference);
+	@Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference);
 	@NonNull BasicSerializationRule getBasicSerializationRule();
 	@Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute);
 	@Override

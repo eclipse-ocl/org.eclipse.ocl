@@ -28,7 +28,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 import com.google.common.collect.Lists;
@@ -125,13 +124,13 @@ public class DynamicSerializationRules
 			}
 			else {
 				EReference eReference = (EReference)eStructuralFeature;
-				Iterable<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = getAssignedRuleAnalyses(eReference);
-				if (assignedRuleAnalyses != null) {
-					List<@NonNull ParserRuleAnalysis> sortedRuleAnalyses = Lists.newArrayList(assignedRuleAnalyses);
-					Collections.sort(sortedRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
-					for (@NonNull ParserRuleAnalysis ruleAnalysis : sortedRuleAnalyses) {
-						int size2 = slotsAnalysis.getSize(eReference, ruleAnalysis.getRuleValue());
-						s.append(String.format("\n %-29.29s%8d", "'" + ruleAnalysis.getName() + "'", size2));
+				Iterable<@NonNull ParserRuleValue> assignedRuleValues = getAssignedRuleValues(eReference);
+				if (assignedRuleValues != null) {
+					List<@NonNull ParserRuleValue> sortedRuleValues = Lists.newArrayList(assignedRuleValues);
+					Collections.sort(sortedRuleValues, NameUtil.NAMEABLE_COMPARATOR);
+					for (@NonNull ParserRuleValue ruleValue : sortedRuleValues) {
+						int size2 = slotsAnalysis.getSize(eReference, ruleValue);
+						s.append(String.format("\n %-29.29s%8d", "'" + ruleValue.getName() + "'", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules) {
 							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eReference, ruleAnalysis);
@@ -144,18 +143,18 @@ public class DynamicSerializationRules
 		s.append("\n");
 	}
 
-	public @Nullable Iterable<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
-		Set<@NonNull ParserRuleAnalysis> allAssignedRuleAnalyses = null;
+	public @Nullable Iterable<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
+		Set<@NonNull ParserRuleValue> allAssignedRuleValues = null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = serializationRule.getAssignedRuleAnalyses(eReference);
-			if (assignedRuleAnalyses != null) {
-				if (allAssignedRuleAnalyses == null) {
-					allAssignedRuleAnalyses = new HashSet<>();
+			Set<@NonNull ParserRuleValue> assignedRuleValues = serializationRule.getAssignedRuleValues(eReference);
+			if (assignedRuleValues != null) {
+				if (allAssignedRuleValues == null) {
+					allAssignedRuleValues = new HashSet<>();
 				}
-				allAssignedRuleAnalyses.addAll(assignedRuleAnalyses);
+				allAssignedRuleValues.addAll(assignedRuleValues);
 			}
 		}
-		return allAssignedRuleAnalyses;
+		return allAssignedRuleValues;
 	}
 
 	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {

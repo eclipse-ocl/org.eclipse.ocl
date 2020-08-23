@@ -156,7 +156,7 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	}
 
 	@Override
-	public @Nullable Set<@NonNull ParserRuleAnalysis> getAssignedRuleAnalyses(@NonNull EReference eReference) {
+	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
 		return getEReference2AssignedRuleAnalyses().get(eReference);
 	}
 
