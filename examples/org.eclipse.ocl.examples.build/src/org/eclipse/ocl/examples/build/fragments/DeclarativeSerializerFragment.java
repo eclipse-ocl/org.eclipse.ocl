@@ -82,7 +82,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	@Inject
 	private  FileAccessFactory fileAccessFactory;
 
-	private @NonNull OCL ocl = OCL.newInstance();
+	private @NonNull OCL ocl = OCL.newInstance(OCL.NO_PROJECTS);
 	private @NonNull MetamodelManager metamodelManager = ocl.getMetamodelManager();
 	private @NonNull GenModelHelper genModelHelper = new AbstractGenModelHelper((PivotMetamodelManager)metamodelManager);
 	private @Nullable GrammarAnalysis grammarAnalysis;

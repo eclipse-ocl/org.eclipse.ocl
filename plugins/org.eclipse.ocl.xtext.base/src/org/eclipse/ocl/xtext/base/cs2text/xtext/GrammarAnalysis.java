@@ -341,29 +341,7 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 			EClass eClass = entry.getKey();
 			List<@NonNull SerializationRule> serializationRules = entry.getValue();
 
-			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = null;
-			for (EReference eContainmentFeature : containment2assignmentAnalyses.keySet()) {	// FIXME this is needlessly broad
-				Set<@NonNull AbstractRuleValue> targetRuleValues = null;
-				for (@NonNull SerializationRule serializationRule : serializationRules) {
-					Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
-					if (assignedSerializationNodes != null) {
-						for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
-							for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
-								if (targetRuleValues == null) {
-									targetRuleValues = new HashSet<>();
-								}
-								targetRuleValues.add(targetRuleAnalysis.getRuleValue());
-							}
-						}
-					}
-				}
-				if (targetRuleValues != null) {
-					if (eContainmentFeature2assignedTargetRuleValues == null) {
-						eContainmentFeature2assignedTargetRuleValues = new HashMap<>();
-					}
-					eContainmentFeature2assignedTargetRuleValues.put(eContainmentFeature, targetRuleValues);
-				}
-			}
+			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues( serializationRules);
 
 
 
@@ -442,6 +420,46 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 	public @NonNull List<@NonNull AssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {
 		assert containment2assignmentAnalyses != null;
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
+	}
+
+	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> basicGetEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
+//		List<@NonNull SerializationRule> serializationRules = eClass2serializationRuleList.get(eClass);
+//		return getEContainmentFeature2assignedTargetRuleValues(serializationRules);
+		return null;
+	}
+
+	public @NonNull Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> getEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
+//		List<@NonNull SerializationRule> serializationRules = eClass2serializationRuleList.get(eClass);
+//		return getEContainmentFeature2assignedTargetRuleValues(serializationRules);
+		return ClassUtil.nonNullState(null);
+	}
+
+	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> getEContainmentFeature2assignedTargetRuleValues(
+			@NonNull Iterable<@NonNull SerializationRule> serializationRules) {
+		Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = null;
+		for (EReference eContainmentFeature : containment2assignmentAnalyses.keySet()) {	// FIXME this is needlessly broad
+			Set<@NonNull AbstractRuleValue> targetRuleValues = null;
+			for (@NonNull SerializationRule serializationRule : serializationRules) {
+				Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
+				if (assignedSerializationNodes != null) {
+					for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+						for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
+							if (targetRuleValues == null) {
+								targetRuleValues = new HashSet<>();
+							}
+							targetRuleValues.add(targetRuleAnalysis.getRuleValue());
+						}
+					}
+				}
+			}
+			if (targetRuleValues != null) {
+				if (eContainmentFeature2assignedTargetRuleValues == null) {
+					eContainmentFeature2assignedTargetRuleValues = new HashMap<>();
+				}
+				eContainmentFeature2assignedTargetRuleValues.put(eContainmentFeature, targetRuleValues);
+			}
+		}
+		return eContainmentFeature2assignedTargetRuleValues;
 	}
 
 	public @NonNull EnumerationValue getEnumerationValue(@NonNull Keyword keyword) {

@@ -262,7 +262,10 @@ new «new TypeReference(RTSerializationRule)»(«serializationRule.getRuleValueI
 		new «new TypeReference(EClassData)»("«eClass.getName()»", «emitLiteral(eClass)»,
 		new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass) SEPARATOR ','»
 		«getSerializationRuleId(serializationRule.getBasicSerializationRule().getRuntime(), true)» /* «serializationRule.toString()» */
-		«ENDFOR»}, null)'''
+		«ENDFOR»}, «IF grammarAnalysis.basicGetEContainmentFeature2assignedTargetRuleValues(eClass) == null»null«ELSE»
+			new «new TypeReference(Object)»[] {«FOR entry : grammarAnalysis.getEContainmentFeature2assignedTargetRuleValues(eClass).entrySet()»
+				«entry.getKey()» /* «entry.getValue().toString()» */
+				«ENDFOR»«ENDIF»)'''
 	}
 	
 	/* ************************************************************************************************************************** */
