@@ -98,7 +98,11 @@ public class BasicSerializationRule extends AbstractSerializationRule
 	public @NonNull RTSerializationRule getRuntime() {
 		RTSerializationRule2 runtime2 = runtime;
 		if (runtime2 == null) {
-			runtime = runtime2 = RTSerializationRule2.create(this, getSerializationNode2subIdioms());
+			getStaticRuleMatch();
+			runtime2 = runtime;
+			if (runtime2 == null) {
+				runtime = runtime2 = RTSerializationRule2.create(this, getSerializationNode2subIdioms());
+			}
 		}
 		return runtime2;
 	}
