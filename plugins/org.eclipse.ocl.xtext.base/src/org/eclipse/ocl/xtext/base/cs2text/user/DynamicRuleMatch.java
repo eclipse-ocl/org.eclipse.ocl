@@ -27,7 +27,6 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
@@ -36,22 +35,28 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
  */
 public class DynamicRuleMatch implements RuleMatch
 {
-	protected final @NonNull StaticRuleMatch staticRuleMatch;
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
-	protected final @NonNull Map<@NonNull Integer, @NonNull Integer> variableIndex2value = new HashMap<>();
+	protected final @NonNull RTSerializationRule serializationRule;
+	protected final @NonNull Iterable<@NonNull CardinalitySolutionStep> steps;
+	private final @NonNull Object debugStaticRuleMatch;
+	private final @NonNull Map<@NonNull Integer, @NonNull Integer> variableIndex2value = new HashMap<>();
 	private boolean checked = false;
 
-	public DynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch, @NonNull UserSlotsAnalysis slotsAnalysis) {
-		this.staticRuleMatch = staticRuleMatch;
+	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull RTSerializationRule serializationRule, @NonNull Iterable<@NonNull CardinalitySolutionStep> steps, @NonNull Object debugStaticRuleMatch) {
 		this.slotsAnalysis = slotsAnalysis;
+		this.serializationRule = serializationRule;
+		this.steps = steps;
+		this.debugStaticRuleMatch = debugStaticRuleMatch;
 		slotsAnalysis.getModelAnalysis().debugAddDynamicRuleMatch(this);
 	}
 
 	/**
 	 * Analyze the actual slots to compute the value of each cardinality variable.
+	 *
+	 * Returns false if analysis fails.
 	 */
 	public boolean analyze() {
-		for (@NonNull CardinalitySolutionStep step : staticRuleMatch.getSteps()) {
+		for (@NonNull CardinalitySolutionStep step : steps) {
 			if (!step.execute(this)) {
 				return false;
 			}
@@ -66,11 +71,15 @@ public class DynamicRuleMatch implements RuleMatch
 
 	@Override
 	public @Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex) {
-		throw new IllegalStateException();		// run-time shoild use known values
+		throw new IllegalStateException();		// run-time should use known values
+	}
+
+	public @NonNull Object getDebugStaticRuleMatch() {
+		return debugStaticRuleMatch;
 	}
 
 	public @NonNull RTSerializationRule getSerializationRule() {
-		return staticRuleMatch.getSerializationRule().getRuntime();
+		return serializationRule;
 	}
 
 	@Override
@@ -90,10 +99,6 @@ public class DynamicRuleMatch implements RuleMatch
 
 	public @NonNull UserSlotsAnalysis getSlotsAnalysis() {
 		return slotsAnalysis;
-	}
-
-	public @NonNull StaticRuleMatch getStaticRuleMatch() {
-		return staticRuleMatch;
 	}
 
 	public @NonNull Integer getValue(int cardinalityVariableIndex) {

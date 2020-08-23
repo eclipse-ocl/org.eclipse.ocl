@@ -436,9 +436,9 @@ public class UserSlotsAnalysis
 	}
 
 	public @Nullable DynamicRuleMatch basicGetDynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch) {
-		// Typically one or perhaps two entries; npt worth  a Map.
+		// Typically one or perhaps two entries; not worth a Map.
 		for (@NonNull DynamicRuleMatch dynamicRuleMatch : dynamicRuleMatches) {
-			if (dynamicRuleMatch.getStaticRuleMatch() == staticRuleMatch) {
+			if (dynamicRuleMatch.getDebugStaticRuleMatch() == staticRuleMatch) {
 				return dynamicRuleMatch;
 			}
 		}
@@ -451,7 +451,7 @@ public class UserSlotsAnalysis
 
 	public @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch) {
 		assert basicGetDynamicRuleMatch(staticRuleMatch) == null;
-		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(staticRuleMatch, this);
+		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(this, staticRuleMatch.getSerializationRule().getRuntime(), staticRuleMatch.getSteps(), staticRuleMatch);
 		dynamicRuleMatches.add(dynamicRuleMatch);
 		return dynamicRuleMatch;
 	}
