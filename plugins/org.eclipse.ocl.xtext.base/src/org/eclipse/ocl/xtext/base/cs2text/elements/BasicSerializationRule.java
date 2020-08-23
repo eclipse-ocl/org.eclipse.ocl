@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,10 +34,12 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 import com.google.common.collect.Iterables;
 
@@ -62,11 +65,76 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = null;
 	private @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2assignedRuleAnalyses = null;
 
+	/**
+	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
+	 */
+	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
+
+	/**
+	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
+	 */
+	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
+
 	private @Nullable RTSerializationRule runtime = null;
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.rootSerializationNode = rootSerializationNode;
+	}
+
+	public void analyzeAssignment(@NonNull EAttribute eAttribute, @Nullable EnumerationValue enumerationValue, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
+		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+		if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
+			eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
+		}
+		Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
+		if (enumerationValue2multiplicativeCardinality == null) {
+			enumerationValue2multiplicativeCardinality = new HashMap<>();
+			eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
+		}
+		MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
+		MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
+		enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
+	}
+
+	public void analyzeAssignment(@NonNull EReference eReference, @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
+		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
+		if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
+			eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
+		}
+		Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2.get(eReference);
+		if (ruleAnalysis2multiplicativeCardinality == null) {
+			ruleAnalysis2multiplicativeCardinality = new HashMap<>();
+			eReference2ruleAnalysis2multiplicativeCardinality2.put(eReference, ruleAnalysis2multiplicativeCardinality);
+		}
+		if (ruleAnalyses != null) {
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+				if (ruleAnalysis instanceof ParserRuleAnalysis) {
+					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
+					MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
+					ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis, newMultiplicativeCardinality);
+				}
+			}
+		}
+	}
+
+	public void analyzeSolution(@NonNull List<@NonNull CardinalitySolutionStep> steps) {
+		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
+			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
+				EReference eReference = entry.getKey();
+				if (eReference.isContainment()) {
+					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();		// XXX exclude null
+					@NonNull ParserRuleValue[] assignedRuleValues = new @NonNull ParserRuleValue[assignedRuleAnalyses.size()];
+					int i = 0;
+					for (@Nullable ParserRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
+						if (assignedRuleAnalysis != null) {
+							assignedRuleValues[i++] = assignedRuleAnalysis.getRuleValue();		// XXX exclude null
+						}
+					}
+					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleValues));
+				}
+			}
+		}
 	}
 
 	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {
@@ -210,17 +278,41 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		assert staticRuleMatch != null;
-		return staticRuleMatch.getMultiplicativeCardinality(eStructuralFeature);
+		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
+			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
+			if (enumerationValue2multiplicativeCardinality != null) {
+				return enumerationValue2multiplicativeCardinality.get(null);
+			}
+		}
+		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
+			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
+			if (ruleAnalysis2multiplicativeCardinality != null) {
+				return ruleAnalysis2multiplicativeCardinality.get(null);
+			}
+		}
+		return null;
 	}
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		assert staticRuleMatch != null;
-		return staticRuleMatch.getMultiplicativeCardinality(eAttribute, enumerationValue);
+		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
+			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
+			if (enumerationValue2multiplicativeCardinality != null) {
+				return enumerationValue2multiplicativeCardinality.get(enumerationValue);
+			}
+		}
+		return null;
 	}
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		assert staticRuleMatch != null;
-		return staticRuleMatch.getMultiplicativeCardinality(eReference, ruleAnalysis);
+		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
+			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
+			if (ruleAnalysis2multiplicativeCardinality != null) {
+				return ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -326,6 +418,25 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.needsDefault(eStructuralFeature);
+	}
+
+	private @NonNull MultiplicativeCardinality refineMultiplicativeCardinality(@NonNull MultiplicativeCardinality netMultiplicativeCardinality, @Nullable MultiplicativeCardinality oldMultiplicativeCardinality) {
+		if (oldMultiplicativeCardinality == null) {
+			return netMultiplicativeCardinality;
+		}
+		boolean newMayBeMany = netMultiplicativeCardinality.mayBeMany();
+		boolean newMayBeZero = netMultiplicativeCardinality.mayBeZero();
+		boolean oldMayBeMany = oldMultiplicativeCardinality.mayBeMany();
+		boolean oldMayBeZero = oldMultiplicativeCardinality.mayBeZero();
+		if (!oldMayBeZero) {
+			newMayBeZero = false;
+		}
+		if (oldMayBeMany) {
+			newMayBeMany = true;
+		}
+		return newMayBeMany
+			? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
+			: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
 	}
 
 	protected @NonNull EClass refineProducedEClass(@NonNull SerializationNode serializationNode, @NonNull EClass producedEClass) {
