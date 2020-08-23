@@ -31,7 +31,7 @@ public class EClassData implements Nameable
 	protected final @NonNull String name;
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
-	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
+	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleValue>> eReference2disciminatingRuleValues = null;
 
 	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules) {
 		assert eClass != null;
@@ -51,21 +51,22 @@ public class EClassData implements Nameable
 				newSerializationRules.add(serializationRule);
 				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
 				if (ruleDiscriminatingEReferences != null) {
-					Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses2 = eReference2disciminatingRuleAnalyses;
-					if (eReference2disciminatingRuleAnalyses2 == null) {
-						eReference2disciminatingRuleAnalyses = eReference2disciminatingRuleAnalyses2 = new HashMap<>();
+					Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleValue>> eReference2disciminatingRuleValues2 = eReference2disciminatingRuleValues;
+					if (eReference2disciminatingRuleValues2 == null) {
+						eReference2disciminatingRuleValues = eReference2disciminatingRuleValues2 = new HashMap<>();
 					}
 					for (Map.Entry<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> entry : ruleDiscriminatingEReferences.entrySet()) {
 						EReference eReference = entry.getKey();
-						List<@NonNull ParserRuleAnalysis> list = eReference2disciminatingRuleAnalyses2.get(eReference);
-						if (list == null) {
-							list = new ArrayList<>();
+						List<@NonNull ParserRuleValue> disciminatingRuleValues = eReference2disciminatingRuleValues2.get(eReference);
+						if (disciminatingRuleValues == null) {
+							disciminatingRuleValues = new ArrayList<>();
 							assert eReference.isOrdered();
-							eReference2disciminatingRuleAnalyses2.put(eReference, list);
+							eReference2disciminatingRuleValues2.put(eReference, disciminatingRuleValues);
 						}
 						for (@NonNull ParserRuleAnalysis ruleAnalysis2 : entry.getValue()) {
-							if (!list.contains(ruleAnalysis2)) {
-								list.add(ruleAnalysis2);
+							ParserRuleValue ruleValue = ruleAnalysis2.getRuleValue();
+							if (!disciminatingRuleValues.contains(ruleValue)) {
+								disciminatingRuleValues.add(ruleValue);
 							}
 						}
 					}
