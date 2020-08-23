@@ -52,6 +52,13 @@ public class IndexVector implements Iterable<@NonNull Integer>
 		this.longs = longs;
 	}
 
+	public IndexVector(@NonNull Iterable<@NonNull ? extends Indexed> indexes) {
+		this.longs = null;
+		for (@NonNull Indexed index : indexes) {
+			set(index.getIndex());
+		}
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {

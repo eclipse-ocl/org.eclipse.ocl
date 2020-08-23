@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -20,9 +19,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
@@ -68,21 +67,26 @@ public class UserElementAnalysis implements Nameable
 		if ("SelfExpCS".equals(eClassName)) {
 			getClass();				// XXX
 		}
-		Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = null;
+		IndexVector targetRuleValueIndexes = null;
 		EReference eContainmentFeature2 = eContainmentFeature;
 		if (eContainmentFeature2 != null) {
 			UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
 			assert containingElementAnalysis2 != null;
 			EClassData parentEClassData = grammarAnalysis.getEClassData(containingElementAnalysis2.getEClass());
-			targetRuleAnalyses = parentEClassData.getAssignedTargetRuleAnalyses(eContainmentFeature2);
-			for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : new ArrayList<>(targetRuleAnalyses)) {
-				if (targetRuleAnalysis instanceof ParserRuleAnalysis) {
-					targetRuleAnalyses.addAll(((ParserRuleAnalysis)targetRuleAnalysis).getSubRuleAnalysesClosure());
+			Set<@NonNull AbstractRuleValue> targetRuleValues = parentEClassData.getAssignedTargetRuleValues(eContainmentFeature2);
+			targetRuleValueIndexes = new IndexVector();
+			for (@NonNull AbstractRuleValue targetRuleValue : targetRuleValues) {
+				if (targetRuleValue instanceof ParserRuleValue) {
+					targetRuleValueIndexes.set(targetRuleValue.getIndex());
+					IndexVector subParserRuleValueIndexes = ((ParserRuleValue)targetRuleValue).getSubParserRuleValueIndexes();
+					if (subParserRuleValueIndexes != null) {
+						targetRuleValueIndexes.setAll(subParserRuleValueIndexes);
+					}
 				}
 			}
 		}
 		EClassData parentEClassData = grammarAnalysis.getEClassData(eClass);
-		DynamicSerializationRules dynamicSerializationRules = parentEClassData.createDynamicSerializationRules(targetRuleAnalyses);
+		DynamicSerializationRules dynamicSerializationRules = parentEClassData.createDynamicSerializationRules(targetRuleValueIndexes);
 		modelAnalysis.debugAddDynamicSerializationRules(dynamicSerializationRules);
 		return dynamicSerializationRules;
 	}

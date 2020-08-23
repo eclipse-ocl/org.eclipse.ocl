@@ -19,7 +19,7 @@ import org.eclipse.xtext.AbstractRule;
 /**
  * An XtextAbstractRuleAnalysis provides the extended analysis of an Xtext AbstractRule
  */
-public abstract class AbstractRuleAnalysis implements Nameable, ToDebugStringable
+public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebugStringable
 {
 	/**#
 	 * The overall (multi-)grammar analysis.
@@ -111,6 +111,11 @@ public abstract class AbstractRuleAnalysis implements Nameable, ToDebugStringabl
 
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
+	}
+
+	@Override
+	public int getIndex() {
+		return index;
 	}
 
 	@Override

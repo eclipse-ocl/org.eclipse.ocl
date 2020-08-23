@@ -40,14 +40,14 @@ public class EClassData implements Nameable
 		this.serializationRules = serializationRules;
 	}
 
-	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses) {
-		if (targetRuleAnalyses == null)  {
+	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable IndexVector targetRuleValueIndexes) {
+		if (targetRuleValueIndexes == null)  {
 			return new DynamicSerializationRules(this, serializationRules);
 		}
 		List<@NonNull SerializationRule> newSerializationRules = new ArrayList<>();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			ParserRuleAnalysis ruleAnalysis = serializationRule.getRuleAnalysis();
-			if (targetRuleAnalyses.contains(ruleAnalysis)) {
+			if (targetRuleValueIndexes.test(ruleAnalysis.getRuleValue().getIndex())) {
 				newSerializationRules.add(serializationRule);
 				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
 				if (ruleDiscriminatingEReferences != null) {
@@ -79,20 +79,34 @@ public class EClassData implements Nameable
 	/**
 	 * Return the rule analyses assigned by one or more of the serialization rules that can assign eContainmentFeature.
 	 */
-	public @NonNull Set<@NonNull AbstractRuleAnalysis> getAssignedTargetRuleAnalyses(@NonNull EReference eContainmentFeature) {
-		Set<@NonNull AbstractRuleAnalysis> targetRuleAnalyses = new HashSet<>();
+	public @NonNull Set<@NonNull AbstractRuleValue> getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
+		Set<@NonNull AbstractRuleValue> targetRuleValues = new HashSet<>();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
 			if (assignedSerializationNodes != null) {
 				for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
 					for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
-						targetRuleAnalyses.add(targetRuleAnalysis);
+						targetRuleValues.add(targetRuleAnalysis.getRuleValue());
 					}
 				}
 			}
 		}
-		return targetRuleAnalyses;
+		return targetRuleValues;
 	}
+/*	public @NonNull IndexVector getAssignedTargetRuleValueIndexes(@NonNull EReference eContainmentFeature) {
+		IndexVector targetRuleValueIndexes = new IndexVector();
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
+			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
+			if (assignedSerializationNodes != null) {
+				for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
+					for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
+						targetRuleValueIndexes.set(targetRuleAnalysis.getIndex());
+					}
+				}
+			}
+		}
+		return targetRuleValueIndexes;
+	} */
 
 	public @NonNull EClass getEClass() {
 		return eClass;
