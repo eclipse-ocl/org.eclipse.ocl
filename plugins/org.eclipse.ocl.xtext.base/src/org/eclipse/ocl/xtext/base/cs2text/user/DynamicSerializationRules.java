@@ -43,7 +43,7 @@ import com.google.common.collect.Lists;
 
 /**
  * The DynamicSerializationRules identify the subset of the static SerializationRules that are compatiible with
- * the containment ancestry of an actual EObject instance of EClassfoor the static rules.
+ * the containment ancestry of an actual EObject instance of EClass for the static rules.
  */
 public class DynamicSerializationRules
 {

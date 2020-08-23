@@ -56,7 +56,7 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	 */
 	private @Nullable Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = null;
 
-	private @Nullable RTSerializationRule2 runtime = null;
+	private @Nullable RTSerializationRule runtime = null;
 
 	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
@@ -90,10 +90,6 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	public @NonNull BasicSerializationRule getBasicSerializationRule() {
 		return this;
 	}
-
-//	public @NonNull Iterable<@NonNull EAttribute> getEStructuralFeatures() {
-//		return eAttribute2enumerationValue2multiplicativeCardinality.keySet();
-//	}
 
 	private void getIdiomMatches(@NonNull SerializationNode serializationNode, @NonNull Iterable<@NonNull Idiom> idioms,
 			@Nullable IdiomMatch @NonNull [] idiomMatches) {
@@ -149,7 +145,6 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 		return producedEClass2;
 	}
 
-	@Override
 	public @NonNull SerializationNode getRootSerializationNode() {
 		return rootSerializationNode;
 	}
@@ -160,7 +155,7 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 	}
 
 	public @NonNull RTSerializationRule getRuntime() {
-		RTSerializationRule2 runtime2 = runtime;
+		RTSerializationRule runtime2 = runtime;
 		if (runtime2 == null) {
 			getStaticRuleMatch();
 			runtime2 = runtime;

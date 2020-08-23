@@ -57,7 +57,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 {
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
-	private @Nullable List<@NonNull SerializationRule> serializationRules = null;
+	private @Nullable List<@NonNull BasicSerializationRule> serializationRules = null;
 
 	/**
 	 * The super rules directly call this rule as an undecorated unassigned alterative.
@@ -129,7 +129,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		//
 		//	Convert the disjunction of conjunctions of nodes to one or more rules.
 		//
-		List<@NonNull SerializationRule> serializationRules = new ArrayList<>();
+		List<@NonNull BasicSerializationRule> serializationRules = new ArrayList<>();
 		if (serializationResult.isListOfList()) {
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationResult.asListOfList().getLists()) {
 				SerializationNode serializationNode;
@@ -248,7 +248,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return firstUnassignedRuleCall;
 	}
 
-	private void analyzeSerializations(@NonNull Iterable<@NonNull SerializationRule> serializationRules) {
+	private void analyzeSerializations(@NonNull Iterable<@NonNull BasicSerializationRule> serializationRules) {
 		/**
 		 * Determine the ParserRuleAnalyses for each distinct EReference assignment.
 		 */
@@ -344,7 +344,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		}
 	}
 
-	protected void createSerializationRules(@NonNull List<@NonNull SerializationRule> serializationRules, @NonNull SerializationNode serializationNode) {
+	protected void createSerializationRules(@NonNull List<@NonNull BasicSerializationRule> serializationRules, @NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
 			UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = (UnassignedRuleCallSerializationNode)serializationNode;
 			ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis)unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
@@ -402,7 +402,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					subParserRuleValueIndexes.set(parserRuleValue.getIndex());
 				}
 			}
-			Iterable<@NonNull SerializationRule> serializationRules = getSerializationRules();
+			Iterable<@NonNull BasicSerializationRule> serializationRules = getSerializationRules();
 			@NonNull RTSerializationRule @NonNull [] rtSerializationRules = new @NonNull RTSerializationRule [Iterables.size(serializationRules)];
 			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getRuleName(), rtSerializationRules, subParserRuleValueIndexes);
 			//
@@ -416,7 +416,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return parserRuleValue2;
 	}
 
-	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
+	public @NonNull Iterable<@NonNull BasicSerializationRule> getSerializationRules() {
 		if (serializationRules == null) {
 			analyze();
 		}

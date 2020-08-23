@@ -79,11 +79,6 @@ public class RTSerializationRule2 extends RTSerializationRule
 	}
 
 	@Override
-	public @NonNull SerializationNode getRootSerializationNode() {
-		return basicSerializationRule.getRootSerializationNode();
-	}
-
-	@Override
 	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
 		return basicSerializationRule.getRuleAnalysis();
 	}

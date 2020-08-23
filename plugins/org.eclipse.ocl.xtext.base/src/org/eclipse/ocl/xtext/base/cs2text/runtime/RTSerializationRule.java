@@ -135,6 +135,7 @@ public class RTSerializationRule implements SerializationRule
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
+
 	@Override
 	public @NonNull SerializationNode getRootSerializationNode() {
 		// TODO Auto-generated method stub
