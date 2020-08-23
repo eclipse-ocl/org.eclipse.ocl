@@ -35,6 +35,8 @@ Export-Package: org.eclipse.ocl.xtext.oclinecore.ui,
  org.eclipse.ocl.xtext.oclinecore.ui.outline,
  org.eclipse.ocl.xtext.oclinecore.ui.preferences,
  org.eclipse.ocl.xtext.oclinecore.ui.quickfix,
- org.eclipse.ocl.xtext.oclinecore.ui.wizards
+ org.eclipse.ocl.xtext.oclinecore.ui.wizards,
+ org.eclipse.ocl.xtext.oclinecore.ide.contentassist.antlr,
+ org.eclipse.ocl.xtext.oclinecore.ide.contentassist.antlr.internal
 Bundle-Activator: org.eclipse.ocl.xtext.oclinecore.ui.internal.OCLinEcoreActivator
 Automatic-Module-Name: org.eclipse.ocl.xtext.oclinecore.ui
