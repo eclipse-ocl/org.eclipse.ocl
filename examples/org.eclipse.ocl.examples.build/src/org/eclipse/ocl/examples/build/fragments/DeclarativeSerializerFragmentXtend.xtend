@@ -92,13 +92,13 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			public «new TypeReference(RTGrammarAnalysis)» getAnalysis() {
 				if (analysis == null) {
 					analysis = new «new TypeReference(RTGrammarAnalysis)»();
+					«FOR eClass : getSortedEClasses(grammarAnalysis)»
+						analysis.addEClassData(«getEClassId(eClass, true)»);
+					«ENDFOR»
+					«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
+					//	analysis.addSerializationRule(«getSerializationRuleId(serializationRule, true)»);
+					«ENDFOR»
 				}
-				«FOR eClass : getSortedEClasses(grammarAnalysis)»
-					analysis.addEClassData(«getEClassId(eClass, true)»);
-				«ENDFOR»
-				«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
-				//	analysis.addSerializationRule(«getSerializationRuleId(serializationRule, true)»);
-				«ENDFOR»
 				return analysis;
 			}
 			
