@@ -62,10 +62,8 @@ public class DynamicSerializationRules
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable ParserRuleValue targetParserRuleValue) {
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			ParserRuleValue serializationParserRuleValue = serializationRule.getRuleAnalysis().getRuleValue();
-			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationParserRuleValue)) {
-				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-				DynamicRuleMatch dynamicRuleMatch = basicSerializationRule.match(slotsAnalysis);
+			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationRule.getRuleValueIndex())) {
+				DynamicRuleMatch dynamicRuleMatch = serializationRule.match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {
 					return dynamicRuleMatch;
 				}
@@ -194,7 +192,6 @@ public class DynamicSerializationRules
 		s.append(eClass.getName());
 	//	boolean isMany = Iterables.size(serializationRules) > 1;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
 	//		if (isMany) {
 				StringUtil.appendIndentation(s, depth+1);
 	//		}
@@ -204,7 +201,7 @@ public class DynamicSerializationRules
 			s.append(serializationRule.getName());
 			s.append(" - ");
 		//	basicSerializationRule.toRuleString(s);
-			basicSerializationRule.toSolutionString(s, depth+2);
+			serializationRule.toSolutionString(s, depth+2);
 		}
 	}
 }

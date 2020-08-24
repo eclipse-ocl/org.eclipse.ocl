@@ -19,6 +19,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -35,6 +37,7 @@ public interface SerializationRule extends Nameable
 	@NonNull SerializationNode getRootSerializationNode();
 	@NonNull ParserRuleAnalysis getRuleAnalysis();
 	int getRuleValueIndex();
+	@Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis);
 	void toRuleString(@NonNull StringBuilder s);
 	void toSolutionString(@NonNull StringBuilder s, int depth);
 	void toString(@NonNull StringBuilder s, int depth);

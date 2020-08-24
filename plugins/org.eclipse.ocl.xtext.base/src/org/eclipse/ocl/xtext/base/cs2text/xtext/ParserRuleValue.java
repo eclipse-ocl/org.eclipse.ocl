@@ -46,7 +46,7 @@ public class ParserRuleValue extends AbstractRuleValue
 		return subParserRuleValueIndexes;
 	}
 
-	public boolean subParserRuleValueClosureContains(@NonNull ParserRuleValue parserRuleValue) {
-		return (subParserRuleValueIndexes != null) ? subParserRuleValueIndexes.test(parserRuleValue.getIndex()) : (parserRuleValue == this);
+	public boolean subParserRuleValueClosureContains(int ruleValueIndex) {
+		return (subParserRuleValueIndexes != null) ? subParserRuleValueIndexes.test(ruleValueIndex) : ruleValueIndex == ruleIndex;
 	}
 }

@@ -26,7 +26,9 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -61,6 +63,14 @@ public class RTSerializationRule implements SerializationRule
 
 	public @Nullable Segment @NonNull [] @NonNull [] getStaticSegments() {
 		return staticSegments;
+	}
+
+	@Override
+	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
+//		assert staticRuleMatch != null;
+//		return staticRuleMatch.match(slotsAnalysis);
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {

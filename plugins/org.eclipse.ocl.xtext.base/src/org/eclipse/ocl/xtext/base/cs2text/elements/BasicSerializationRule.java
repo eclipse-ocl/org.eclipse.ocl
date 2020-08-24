@@ -452,6 +452,7 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 		return staticRuleMatch.getCardinalityVariables();
 	}
 
+	@Override
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.match(slotsAnalysis);
