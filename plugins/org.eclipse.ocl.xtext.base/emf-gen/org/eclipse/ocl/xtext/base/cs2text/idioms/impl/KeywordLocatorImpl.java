@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
@@ -247,7 +247,7 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 	}
 
 	@Override
-	public boolean matches(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 		String value = null;
 		if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			value = ((AssignedKeywordSerializationNode)serializationNode).getValue();

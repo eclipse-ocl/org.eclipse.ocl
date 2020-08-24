@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -36,7 +36,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 public class UserElementSerializer
 {
 	protected final @NonNull DynamicRuleMatch dynamicRuleMatch;
-	protected final @NonNull RTSerializationRule serializationRule;
+	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
 
 	protected final @NonNull EObject element;
@@ -93,12 +93,12 @@ public class UserElementSerializer
 		return modelAnalysis;
 	}
 
-	public @NonNull RTSerializationRule getSerializationRule() {
+	public @NonNull SerializationRule getSerializationRule() {
 		return serializationRule;
 	}
 
 	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
-		return serializationRule.getBasicSerializationRule().getSubIdiom(serializationNode);
+		return serializationRule.getSerializationRuleAnalysis().getSubIdiom(serializationNode);
 	}
 
 	public int getValue(int cardinalityVariableIndex) {

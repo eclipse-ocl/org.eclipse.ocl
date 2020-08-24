@@ -17,17 +17,17 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
 public class EClassData
 {
 	protected final @NonNull EClass eClass;
-	protected final @NonNull RTSerializationRule @NonNull [] serializationRules;
+	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 	protected final @NonNull EReferenceData @Nullable [] eReferenceDatas;
 //	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
 
-	public EClassData(/*@NonNull*/ EClass eClass, @NonNull RTSerializationRule @NonNull [] serializationRules,
+	public EClassData(/*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
 			@NonNull EReferenceData @Nullable [] eReferenceDatas) {
 		assert eClass != null;
 		this.eClass = eClass;
@@ -43,8 +43,8 @@ public class EClassData
 		if (targetRuleValueIndexes == null)  {
 			return new DynamicSerializationRules(this, serializationRules);
 		}
-		List<@NonNull RTSerializationRule> newSerializationRules = new ArrayList<>();
-		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
+		List<@NonNull SerializationRule> newSerializationRules = new ArrayList<>();
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			int ruleValueIndex = serializationRule.getRuleValueIndex();
 			if (targetRuleValueIndexes.test(ruleValueIndex)) {
 				newSerializationRules.add(serializationRule);
@@ -67,7 +67,7 @@ public class EClassData
 				} */
 			}
 		}
-		return new DynamicSerializationRules(this, newSerializationRules.toArray(new @NonNull RTSerializationRule[newSerializationRules.size()]));
+		return new DynamicSerializationRules(this, newSerializationRules.toArray(new @NonNull SerializationRule[newSerializationRules.size()]));
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class EClassData
 		return eClass;
 	}
 
-	public @NonNull RTSerializationRule @NonNull [] getSerializationRules() {
+	public @NonNull SerializationRule @NonNull [] getSerializationRules() {
 		return serializationRules;
 	}
 

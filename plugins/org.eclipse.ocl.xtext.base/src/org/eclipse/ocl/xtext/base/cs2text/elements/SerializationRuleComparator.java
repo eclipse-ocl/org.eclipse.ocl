@@ -21,12 +21,12 @@ import org.eclipse.jdt.annotation.NonNull;
  * prioritize simpler rules first. This avoids gratuittous punctuation around optional
  * sequences of elements.
  */
-public class SerializationRuleComparator implements Comparator<@NonNull BasicSerializationRule>
+public class SerializationRuleComparator implements Comparator<@NonNull SerializationRuleAnalysis>
 {
-	private Map<@NonNull BasicSerializationRule, @NonNull Integer> rule2size = new HashMap<>();
+	private Map<@NonNull SerializationRuleAnalysis, @NonNull Integer> rule2size = new HashMap<>();
 
 	@Override
-	public int compare(@NonNull BasicSerializationRule rule1, @NonNull BasicSerializationRule rule2) {
+	public int compare(@NonNull SerializationRuleAnalysis rule1, @NonNull SerializationRuleAnalysis rule2) {
 		int size1 = getSize(rule1);
 		int size2 = getSize(rule2);
 		if (size1 != size2) {
@@ -37,7 +37,7 @@ public class SerializationRuleComparator implements Comparator<@NonNull BasicSer
 		return string1.compareTo(string2);
 	}
 
-	private int getSize(@NonNull BasicSerializationRule serializationRule) {
+	private int getSize(@NonNull SerializationRuleAnalysis serializationRule) {
 		Integer size = rule2size.get(serializationRule);
 		if (size == null) {
 			size = getSize(serializationRule.getRootSerializationNode());

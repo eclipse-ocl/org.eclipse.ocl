@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
@@ -119,7 +119,7 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 	 * @generated
 	 */
 	@Override
-	public boolean matches(SerializationNode serializationNode, BasicSerializationRule serializationRule)
+	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule)
 	{
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT

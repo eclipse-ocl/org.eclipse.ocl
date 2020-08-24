@@ -194,7 +194,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 				if (calledRuleAnalysis instanceof ParserRuleAnalysis) {
 					ParserRuleAnalysis calledParserRuleAnalysis = (ParserRuleAnalysis) calledRuleAnalysis;
 					calledDisjunction = new ListOfListOfSerializationNode();
-					for (@NonNull BasicSerializationRule serializationRule : calledParserRuleAnalysis.getSerializationRules()) {
+					for (@NonNull SerializationRuleAnalysis serializationRule : calledParserRuleAnalysis.getSerializationRules()) {
 						SerializationNode deepClone = serializationRule.getRootSerializationNode().clone(null);
 						calledDisjunction = calledDisjunction.addConjunction(deepClone);
 					}

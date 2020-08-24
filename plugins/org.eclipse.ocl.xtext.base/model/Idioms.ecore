@@ -38,7 +38,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Idiom">
     <eOperations name="firstMatch" lowerBound="1" eType="#//IdiomMatch">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
-      <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
+      <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubIdioms" upperBound="-1"
@@ -58,7 +58,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Locator" abstract="true">
     <eOperations name="matches" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
-      <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
+      <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -94,7 +94,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="SubIdiom">
     <eOperations name="matches" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
-      <eParameters name="serializationRule" lowerBound="1" eType="#//BasicSerializationRule"/>
+      <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
     </eOperations>
     <eOperations name="serialize">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
@@ -107,7 +107,7 @@
         upperBound="-1" eType="#//Segment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValueSegment" eSuperTypes="#//Segment"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="BasicSerializationRule" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule"
+  <eClassifiers xsi:type="ecore:EDataType" name="SerializationRuleAnalysis" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IdiomMatch" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch"
       serializable="false"/>

@@ -14,7 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator;
@@ -189,7 +189,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 
 
 	@Override
-	public boolean matches(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 		if (serializationNode == serializationRule.getRootSerializationNode()) {
 			EClass producedEClass = serializationRule.getProducedEClass();
 			if (eClass.isSuperTypeOf(producedEClass)) {

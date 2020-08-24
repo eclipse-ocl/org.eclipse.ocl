@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
@@ -258,7 +258,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 	} */
 
 	@Override
-	public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+	public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 		if (!ownedSubIdioms.get(0).matches(serializationNode, serializationRule)) {
 			return null;
 		}
@@ -295,7 +295,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 				}
 
 				@Override
-				public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull BasicSerializationRule serializationRule) {
+				public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRule) {
 					return super.nextMatch(serializationNode, serializationRule);
 				}
 
@@ -303,7 +303,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		}
 
 		@Override
-		public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+		public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 			IdiomMatch firstMatch = super.firstMatch(serializationNode, serializationRule);
 			if (firstMatch != null) {
 				getClass(); 		// XXX debugging

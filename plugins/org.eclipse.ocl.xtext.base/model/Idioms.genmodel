@@ -16,7 +16,7 @@
   <foreignModel>Idioms.ecore</foreignModel>
   <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base.cs2text" disposableProviderFactory="true"
       generateExampleClass="false" ecorePackage="Idioms.ecore#/" publicationLocation="">
-    <genDataTypes ecoreDataType="Idioms.ecore#//BasicSerializationRule"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationRuleAnalysis"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//IdiomMatch"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationNode"/>

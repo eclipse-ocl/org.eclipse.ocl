@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
@@ -207,7 +207,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType basicSerializationRuleEDataType = null;
+	private EDataType serializationRuleAnalysisEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -790,9 +790,9 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EDataType getBasicSerializationRule()
+	public EDataType getSerializationRuleAnalysis()
 	{
-		return basicSerializationRuleEDataType;
+		return serializationRuleAnalysisEDataType;
 	}
 
 	/**
@@ -936,7 +936,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		valueSegmentEClass = createEClass(20);
 
 		// Create data types
-		basicSerializationRuleEDataType = createEDataType(21);
+		serializationRuleAnalysisEDataType = createEDataType(21);
 		idiomMatchEDataType = createEDataType(22);
 		serializationBuilderEDataType = createEDataType(23);
 		serializationNodeEDataType = createEDataType(24);
@@ -1024,7 +1024,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 
 		op = addEOperation(idiomEClass, this.getIdiomMatch(), "firstMatch", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getSerializationNode(), "serializationNode", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getBasicSerializationRule(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getSerializationRuleAnalysis(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(idiomModelEClass, IdiomModel.class, "IdiomModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getIdiomModel_Imports(), this.getIdiomModel(), null, "imports", null, 0, -1, IdiomModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -1038,7 +1038,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 
 		op = addEOperation(locatorEClass, ecorePackage.getEBoolean(), "matches", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getSerializationNode(), "serializationNode", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getBasicSerializationRule(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getSerializationRuleAnalysis(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(keywordLocatorEClass, KeywordLocator.class, "KeywordLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getKeywordLocator_String(), ecorePackage.getEString(), "string", null, 1, 1, KeywordLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -1078,7 +1078,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 
 		op = addEOperation(subIdiomEClass, ecorePackage.getEBoolean(), "matches", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getSerializationNode(), "serializationNode", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getBasicSerializationRule(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getSerializationRuleAnalysis(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(subIdiomEClass, null, "serialize", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getSerializationNode(), "serializationNode", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -1088,7 +1088,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		initEClass(valueSegmentEClass, ValueSegment.class, "ValueSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Initialize data types
-		initEDataType(basicSerializationRuleEDataType, BasicSerializationRule.class, "BasicSerializationRule", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(serializationRuleAnalysisEDataType, SerializationRuleAnalysis.class, "SerializationRuleAnalysis", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(idiomMatchEDataType, IdiomMatch.class, "IdiomMatch", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(serializationBuilderEDataType, SerializationBuilder.class, "SerializationBuilder", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(serializationNodeEDataType, SerializationNode.class, "SerializationNode", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

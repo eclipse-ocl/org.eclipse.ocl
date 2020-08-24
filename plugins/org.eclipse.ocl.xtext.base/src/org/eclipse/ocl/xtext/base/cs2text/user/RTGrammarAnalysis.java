@@ -21,9 +21,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules;
 
 public class RTGrammarAnalysis
 {
@@ -50,26 +49,10 @@ public class RTGrammarAnalysis
 		assert old == null;
 	}
 
-//	public void addSerializationRules(/*@NonNull*/ SerializationRules serializationRules) {
-//		assert serializationRules != null;
-//		SerializationRules old = eClass2serializationRules.put(serializationRules.getEClass(), serializationRules);
-//		assert old == null;
-//	}
-
-	public void addSerializationRules(/*@NonNull*/ RTSerializationRules create_AttributeCS_Rules) {
-		throw new UnsupportedOperationException("Migration to RT pending");
-	}
-
 	public @NonNull EClassData getEClassData(@NonNull EClass eClass) {
 		assert eClass2eClassData.size() > 0;
 		return ClassUtil.nonNullState(eClass2eClassData.get(eClass));
 	}
-
-/*	public @NonNull RTSerializationRules getSerializationRules(@NonNull EClass eClass) {
-		assert eClass2eClassData.size() > 0;
-		EClassData eClassData = ClassUtil.nonNullState(eClass2eClassData.get(eClass));
-		return eClassData.getSerializationRules();
-	} */
 
 	public @NonNull Iterable<@NonNull EClass> getSortedProducedEClasses() {
 		assert eClass2eClassData.size() > 0;
@@ -82,7 +65,7 @@ public class RTGrammarAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		for (@NonNull EClass eClass : getSortedProducedEClasses()) {
-			@NonNull RTSerializationRule[] serializationRules = getEClassData(eClass).getSerializationRules();
+			@NonNull SerializationRule[] serializationRules = getEClassData(eClass).getSerializationRules();
 			assert serializationRules != null;
 			s.append("\n  ");;
 			s.append(eClass.getEPackage(). getName());
@@ -98,8 +81,8 @@ public class RTGrammarAnalysis
 			s.append("::");
 			s.append(eClass.getName());
 		//	boolean isMany = Iterables.size(serializationRules) > 1;
-			for (@NonNull RTSerializationRule serializationRule : serializationRules) {
-		//		SerializationRule basicSerializationRule = serializationRule;//.getBasicSerializationRule();
+			for (@NonNull SerializationRule serializationRule : serializationRules) {
+		//		SerializationRule serializationRuleAnalysis = serializationRule;//.getSerializationRuleAnalysis();
 		//		if (isMany) {
 					StringUtil.appendIndentation(s, depth+1);
 		//		}
@@ -108,7 +91,7 @@ public class RTGrammarAnalysis
 		//		}
 	//			s.append(serializationRule.getName());
 	//			s.append(" - ");
-			//	basicSerializationRule.toRuleString(s);
+			//	serializationRuleAnalysis.toRuleString(s);
 				serializationRule.toSolutionString(s, depth+2);
 			}
 		}

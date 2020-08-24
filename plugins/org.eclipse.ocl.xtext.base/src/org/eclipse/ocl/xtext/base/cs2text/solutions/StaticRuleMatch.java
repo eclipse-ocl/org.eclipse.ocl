@@ -26,7 +26,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
@@ -46,7 +46,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	/**
 	 * The rule for which this is the static analysis.
 	 */
-	protected final @NonNull BasicSerializationRule serializationRule;
+	protected final @NonNull SerializationRuleAnalysis serializationRule;
 
 	/**
 	 * The CardinalityVariable for each node, unless always exactly 1.
@@ -70,7 +70,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	 */
 	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
 
-	public StaticRuleMatch(@NonNull BasicSerializationRule serializationRule) {
+	public StaticRuleMatch(@NonNull SerializationRuleAnalysis serializationRule) {
 		this.serializationRule = serializationRule;
 	}
 
@@ -533,7 +533,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 //	@Override
-	public @NonNull BasicSerializationRule getSerializationRule() {
+	public @NonNull SerializationRuleAnalysis getSerializationRule() {
 		return serializationRule;
 	}
 

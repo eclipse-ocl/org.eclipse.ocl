@@ -29,14 +29,14 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationElement;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleComparator;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedRuleCallSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -56,7 +56,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 {
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
-	private @Nullable List<@NonNull BasicSerializationRule> serializationRules = null;
+	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRules = null;
 
 	/**
 	 * The super rules directly call this rule as an undecorated unassigned alterative.
@@ -128,7 +128,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		//
 		//	Convert the disjunction of conjunctions of nodes to one or more rules.
 		//
-		List<@NonNull BasicSerializationRule> serializationRules = new ArrayList<>();
+		List<@NonNull SerializationRuleAnalysis> serializationRules = new ArrayList<>();
 		if (serializationResult.isListOfList()) {
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationResult.asListOfList().getLists()) {
 				SerializationNode serializationNode;
@@ -247,12 +247,12 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return firstUnassignedRuleCall;
 	}
 
-	private void analyzeSerializations(@NonNull Iterable<@NonNull BasicSerializationRule> serializationRules) {
+	private void analyzeSerializations(@NonNull Iterable<@NonNull SerializationRuleAnalysis> serializationRules) {
 		/**
 		 * Determine the ParserRuleAnalyses for each distinct EReference assignment.
 		 */
 		Map<@NonNull EReference, @NonNull Object> eReference2ruleAnalysisOrAnalyses = new HashMap<>();
-		for (@NonNull BasicSerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
 			SerializationNode rootSerializationNode = serializationRule.getRootSerializationNode();
 			analyzeSerializations(rootSerializationNode, eReference2ruleAnalysisOrAnalyses);
 		}
@@ -343,16 +343,16 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		}
 	}
 
-	protected void createSerializationRules(@NonNull List<@NonNull BasicSerializationRule> serializationRules, @NonNull SerializationNode serializationNode) {
+	protected void createSerializationRules(@NonNull List<@NonNull SerializationRuleAnalysis> serializationRules, @NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
 			UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = (UnassignedRuleCallSerializationNode)serializationNode;
 			ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis)unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
-			for (@NonNull BasicSerializationRule calledSerializationRule : calledRuleAnalysis.getSerializationRules()) {
+			for (@NonNull SerializationRuleAnalysis calledSerializationRule : calledRuleAnalysis.getSerializationRules()) {
 				serializationRules.add(calledSerializationRule);
 			}
 		}
 		else {
-			BasicSerializationRule serializationRule = new BasicSerializationRule(this, serializationNode);
+			SerializationRuleAnalysis serializationRule = new SerializationRuleAnalysis(this, serializationNode);
 			serializationRules.add(serializationRule);
 		}
 	}
@@ -399,21 +399,21 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					subParserRuleValueIndexes.set(parserRuleValue.getIndex());
 				}
 			}
-			Iterable<@NonNull BasicSerializationRule> serializationRules = getSerializationRules();
-			@NonNull RTSerializationRule @NonNull [] rtSerializationRules = new @NonNull RTSerializationRule [Iterables.size(serializationRules)];
+			Iterable<@NonNull SerializationRuleAnalysis> serializationRules = getSerializationRules();
+			@NonNull SerializationRule @NonNull [] rtSerializationRules = new @NonNull SerializationRule [Iterables.size(serializationRules)];
 			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getRuleName(), rtSerializationRules, subParserRuleValueIndexes);
 			//
 			// rtSerializationRules content defined after construction to allow recursive references
 			//
 			int i = 0;
-			for (@NonNull BasicSerializationRule serializationRule : serializationRules) {
+			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
 				rtSerializationRules[i++] = serializationRule.getRuntime();
 			}
 		}
 		return parserRuleValue2;
 	}
 
-	public @NonNull Iterable<@NonNull BasicSerializationRule> getSerializationRules() {
+	public @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSerializationRules() {
 		if (serializationRules == null) {
 			analyze();
 		}
@@ -426,7 +426,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			getClass();		// XXX
 		}
 		assert serializationRules != null;
-		for (@NonNull BasicSerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
 			serializationRule.getStaticRuleMatch();
 		}
 	}
@@ -491,7 +491,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			}
 		}
 		if (serializationRules != null) {
-			for (@NonNull BasicSerializationRule serializationRule : serializationRules) {
+			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
 				StringUtil.appendIndentation(s, depth+1);
 				s.append(serializationRule);
 			}

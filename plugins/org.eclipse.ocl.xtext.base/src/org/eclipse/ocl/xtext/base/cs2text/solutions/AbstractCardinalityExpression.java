@@ -17,7 +17,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 
 /**
@@ -685,7 +685,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		return sum;
 	}
 
-	public void solveAtRuntime(@NonNull RTSerializationRule serializationRule) {
+	public void solveAtRuntime(@NonNull SerializationRule serializationRule) {
 	//	Solution runtimeSolution = new RuntimeSolution(this, unresolvedVariables);
 	//	for (@NonNull CardinalityVariable variable : unresolvedVariables) {
 	//		preSerializer.addSolution(variable, runtimeSolution);

@@ -16,7 +16,7 @@ import com.google.inject.Inject;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
@@ -2836,7 +2836,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(0, "ANY_OTHER");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _001 // AnnotationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(1, "AnnotationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._119 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
 				sr._120 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */,
 				sr._117 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */,
@@ -2844,7 +2844,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _002 // AnnotationElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(2, "AnnotationElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._201 /* { 'sysml' ownedDetails+=DetailCS ';' } */,
 				sr._200 /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */,
 				sr._119 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
@@ -2857,7 +2857,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x20006L,0x400000000L})); // AnnotationCS,AnnotationElementCS,DocumentationCS,SysMLCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _003 // AttributeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(3, "AttributeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._125 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._124 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
@@ -2869,12 +2869,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(4, "BinaryOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _005 // BooleanLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(5, "BooleanLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._016 /* symbol={'false|true'} */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _006 // ClassCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(6, "ClassCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._151 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
 				sr._133 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
 				sr._146 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
@@ -2894,42 +2894,42 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x208040L,0x200000000L})); // ClassCS,DataTypeCS,EnumerationCS,StructuredClassCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _007 // CoIteratorVariableCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(7, "CoIteratorVariableCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._017 /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _008 // CollectionLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(8, "CollectionLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._018 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _009 // CollectionLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(9, "CollectionLiteralPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._020 /* ownedExpression=PatternExpCS */,
 				sr._019 /* { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _010 // CollectionPatternCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(10, "CollectionPatternCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._021 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _011 // CollectionTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(11, "CollectionTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _012 // CollectionTypeIdentifier
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(12, "CollectionTypeIdentifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _013 // CurlyBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(13, "CurlyBracketedClauseCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._024 /* { '{' { ownedParts+=ShadowPartCS { ',' ownedParts+=ShadowPartCS }[*] }[?] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _014 // DOUBLE_QUOTED_STRING
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(14, "DOUBLE_QUOTED_STRING");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _015 // DataTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(15, "DataTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._130 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
 				sr._138 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
 				sr._127 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
@@ -2939,12 +2939,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _016 // DetailCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(16, "DetailCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._139 /* { name=(UnrestrictedName|SINGLE_QUOTED_STRING) '=' values+=(SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING)[*] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _017 // DocumentationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(17, "DocumentationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._140 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _018 // ESCAPED_CHARACTER
@@ -2953,12 +2953,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(19, "ESCAPED_ID");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _020 // ElseIfThenExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(20, "ElseIfThenExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._025 /* { 'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _021 // EnumerationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(21, "EnumerationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._148 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
 				sr._142 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
 				sr._147 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
@@ -2968,7 +2968,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _022 // EnumerationLiteralCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(22, "EnumerationLiteralCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._155 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
 				sr._154 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
 				sr._156 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
@@ -2990,7 +2990,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(29, "EssentialOCLUnrestrictedName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _030 // ExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(30, "ExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._039 /* symbol={'false|true'} */,
 				sr._036 /* '*' */,
 				sr._040 /* 'invalid' */,
@@ -3015,7 +3015,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x802311040000120L,0x200080808201e034L})); // BooleanLiteralExpCS,CollectionLiteralExpCS,ExpCS,IfExpCS,InvalidLiteralExpCS,LambdaLiteralExpCS,LetExpCS,MapLiteralExpCS,NameExpCS,NestedExpCS,NullLiteralExpCS,NumberLiteralExpCS,PrefixedLetExpCS,PrefixedPrimaryExpCS,PrimaryExpCS,PrimitiveLiteralExpCS,SelfExpCS,StringLiteralExpCS,TupleLiteralExpCS,TypeLiteralExpCS,UnlimitedNaturalLiteralExpCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _031 // FirstPathElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(31, "FirstPathElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._000 /* referredElement=UnrestrictedName */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _032 // ID
@@ -3028,29 +3028,29 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(35, "Identifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _036 // IfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(36, "IfExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._044 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _037 // ImplicitOppositeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(37, "ImplicitOppositeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._158 /* { 'opposite' name=UnrestrictedName ':' ownedType=TypedMultiplicityRefCS { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _038 // ImportCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(38, "ImportCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._159 /* { {'import'|'library'} { name=UnrestrictedName ':' }[?] ownedPathName=URIPathNameCS isAll='::*'[?] ';' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _039 // InfixOperatorName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(39, "InfixOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _040 // InvalidLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(40, "InvalidLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._045 /* 'invalid' */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _041 // InvariantConstraintCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(41, "InvariantConstraintCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._161 /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ';' } */,
 				sr._160 /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
@@ -3060,17 +3060,17 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(43, "LOWER");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _044 // LambdaLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(44, "LambdaLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._047 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _045 // LetExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(45, "LetExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._050 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _046 // LetVariableCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(46, "LetVariableCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._051 /* { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _047 // ML_COMMENT
@@ -3079,27 +3079,27 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(48, "ML_SINGLE_QUOTED_STRING");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _049 // MapLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(49, "MapLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._052 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _050 // MapLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(50, "MapLiteralPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._054 /* { ownedKey=ExpCS '<-' ownedValue=ExpCS } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _051 // MapTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(51, "MapTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._056 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _052 // Model
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(52, "Model",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._057 /* ownedExpression=ExpCS */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _053 // ModelElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(53, "ModelElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._155 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
 				sr._154 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
 				sr._177 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
@@ -3143,17 +3143,17 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x20000000608048L,0x3000800c0L})); // AttributeCS,ClassCS,DataTypeCS,EnumerationCS,EnumerationLiteralCS,ModelElementCS,OperationCS,PackageCS,ReferenceCS,StructuralFeatureCS,StructuredClassCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _054 // ModelElementRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(54, "ModelElementRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._162 /* { 'reference' ownedPathName=PathNameCS ';' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _055 // MultiplicityBoundsCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(55, "MultiplicityBoundsCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._001 /* { lowerBound=LOWER { '..' upperBound=UPPER }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _056 // MultiplicityCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(56, "MultiplicityCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._005 /* { '[' stringBounds={'*|+|?'} ']' } */,
 				sr._006 /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
 				sr._004 /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */,
@@ -3163,19 +3163,19 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _057 // MultiplicityStringCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(57, "MultiplicityStringCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._008 /* stringBounds={'*|+|?'} */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _058 // NUMBER_LITERAL
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(58, "NUMBER_LITERAL");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _059 // NameExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(59, "NameExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._059 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _060 // NavigatingArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(60, "NavigatingArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._064 /* ownedNameExpression=NavigatingArgExpCS */,
 				sr._062 /* { ':' ownedType=TypeExpCS } */,
 				sr._060 /* { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */,
@@ -3184,7 +3184,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _061 // NavigatingArgExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(61, "NavigatingArgExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._039 /* symbol={'false|true'} */,
 				sr._036 /* '*' */,
 				sr._040 /* 'invalid' */,
@@ -3209,12 +3209,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x2802311040000120L,0x200080808201e034L})); // BooleanLiteralExpCS,CollectionLiteralExpCS,ExpCS,IfExpCS,InvalidLiteralExpCS,LambdaLiteralExpCS,LetExpCS,MapLiteralExpCS,NameExpCS,NavigatingArgExpCS,NestedExpCS,NullLiteralExpCS,NumberLiteralExpCS,PrefixedLetExpCS,PrefixedPrimaryExpCS,PrimaryExpCS,PrimitiveLiteralExpCS,SelfExpCS,StringLiteralExpCS,TupleLiteralExpCS,TypeLiteralExpCS,UnlimitedNaturalLiteralExpCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _062 // NavigatingBarArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(62, "NavigatingBarArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._065 /* { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _063 // NavigatingCommaArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(63, "NavigatingCommaArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._067 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS } */,
 				sr._066 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */,
 				sr._068 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] } */,
@@ -3222,34 +3222,34 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _064 // NavigatingSemiArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(64, "NavigatingSemiArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._070 /* { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _065 // NavigationOperatorName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(65, "NavigationOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _066 // NestedExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(66, "NestedExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._071 /* { '(' ownedExpression=ExpCS ')' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _067 // NextPathElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(67, "NextPathElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._009 /* referredElement=UnreservedName */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _068 // NullLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(68, "NullLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._074 /* 'null' */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _069 // NumberLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(69, "NumberLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._076 /* symbol=NUMBER_LITERAL */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _070 // OperationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(70, "OperationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._169 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
 				sr._164 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
 				sr._166 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
@@ -3259,38 +3259,38 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _071 // PackageCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(71, "PackageCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._175 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
 				sr._178 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _072 // ParameterCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(72, "ParameterCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._179 /* { name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] { '{' ownedAnnotations+=AnnotationElementCS[*] '}' }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _073 // PathNameCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(73, "PathNameCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._010 /* { ownedPathElements+=FirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _074 // PatternExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(74, "PatternExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._077 /* { patternVariableName=UnrestrictedName[?] ':' ownedPatternType=TypeExpCS } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _075 // PostconditionConstraintCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(75, "PostconditionConstraintCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._180 /* { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _076 // PreconditionConstraintCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(76, "PreconditionConstraintCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._181 /* { stereotype='precondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _077 // PrefixedLetExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(77, "PrefixedLetExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._079 /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
 				sr._050 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
 				},
@@ -3298,7 +3298,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x200000000000L,0x2000L})); // LetExpCS,PrefixedLetExpCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _078 // PrefixedPrimaryExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(78, "PrefixedPrimaryExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._016 /* symbol={'false|true'} */,
 				sr._046 /* 'invalid' */,
 				sr._073 /* 'null' */,
@@ -3320,7 +3320,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x802111000000120L,0x200080808201c034L})); // BooleanLiteralExpCS,CollectionLiteralExpCS,IfExpCS,InvalidLiteralExpCS,LambdaLiteralExpCS,MapLiteralExpCS,NameExpCS,NestedExpCS,NullLiteralExpCS,NumberLiteralExpCS,PrefixedPrimaryExpCS,PrimaryExpCS,PrimitiveLiteralExpCS,SelfExpCS,StringLiteralExpCS,TupleLiteralExpCS,TypeLiteralExpCS,UnlimitedNaturalLiteralExpCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _079 // PrimaryExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(79, "PrimaryExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._016 /* symbol={'false|true'} */,
 				sr._046 /* 'invalid' */,
 				sr._073 /* 'null' */,
@@ -3341,7 +3341,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x802111000000120L,0x2000808082018034L})); // BooleanLiteralExpCS,CollectionLiteralExpCS,IfExpCS,InvalidLiteralExpCS,LambdaLiteralExpCS,MapLiteralExpCS,NameExpCS,NestedExpCS,NullLiteralExpCS,NumberLiteralExpCS,PrimaryExpCS,PrimitiveLiteralExpCS,SelfExpCS,StringLiteralExpCS,TupleLiteralExpCS,TypeLiteralExpCS,UnlimitedNaturalLiteralExpCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _080 // PrimitiveLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(80, "PrimitiveLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._016 /* symbol={'false|true'} */,
 				sr._045 /* 'invalid' */,
 				sr._074 /* 'null' */,
@@ -3353,14 +3353,14 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x10000000020L,0x2000000080010030L})); // BooleanLiteralExpCS,InvalidLiteralExpCS,NullLiteralExpCS,NumberLiteralExpCS,PrimitiveLiteralExpCS,StringLiteralExpCS,UnlimitedNaturalLiteralExpCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _081 // PrimitiveTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(81, "PrimitiveTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._081 /* name=PrimitiveTypeIdentifier */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _082 // PrimitiveTypeIdentifier
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(82, "PrimitiveTypeIdentifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _083 // ReferenceCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(83, "ReferenceCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._191 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._183 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._184 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
@@ -3370,7 +3370,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _084 // RoundBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(84, "RoundBracketedClauseCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._083 /* { '(' { ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS)[*] }[?] ')' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _085 // SIGNED
@@ -3383,41 +3383,41 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(88, "SL_COMMENT");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _089 // SelfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(89, "SelfExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._084 /* 'self' */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _090 // ShadowPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(90, "ShadowPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._087 /* ownedInitExpression=StringLiteralExpCS */,
 				sr._086 /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _091 // SimplePathNameCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(91, "SimplePathNameCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._088 /* ownedPathElements+=FirstPathElementCS */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _092 // SpecificationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(92, "SpecificationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._195 /* exprString=UNQUOTED_STRING */,
 				sr._194 /* ownedExpression=ExpCS */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _093 // SquareBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(93, "SquareBracketedClauseCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._089 /* { '[' ownedTerms+=ExpCS { ',' ownedTerms+=ExpCS }[*] ']' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _094 // StringLiteral
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(94, "StringLiteral");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _095 // StringLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(95, "StringLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._091 /* segments+=StringLiteral[+] */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _096 // StructuralFeatureCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(96, "StructuralFeatureCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._125 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._124 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
@@ -3435,60 +3435,60 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x8L,0x100080000L})); // AttributeCS,ReferenceCS,StructuralFeatureCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _097 // StructuredClassCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(97, "StructuredClassCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._197 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
 				sr._199 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _098 // SysMLCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(98, "SysMLCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._203 /* { 'sysml' ownedDetails+=DetailCS ';' } */,
 				sr._202 /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _099 // TemplateBindingCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(99, "TemplateBindingCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._011 /* { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _100 // TemplateParameterSubstitutionCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(100, "TemplateParameterSubstitutionCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._012 /* ownedActualParameter=TypeRefCS */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _101 // TemplateSignatureCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(101, "TemplateSignatureCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._205 /* { '(' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] ')' } */,
 				sr._204 /* { '<' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] '>' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _102 // TopLevelCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(102, "TopLevelCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._206 /* { { 'module' }[?] ownedImports+=ImportCS[*] ownedPackages+=PackageCS[*] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _103 // TupleLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(103, "TupleLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._092 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _104 // TupleLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(104, "TupleLiteralPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._094 /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _105 // TuplePartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(105, "TuplePartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._095 /* { name=UnrestrictedName ':' ownedType=TypeExpCS } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _106 // TupleTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(106, "TupleTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._097 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _107 // TypeExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(107, "TypeExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._099 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._103 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._101 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
@@ -3500,7 +3500,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x8000000000c00L,0x25c0000020000L})); // CollectionPatternCS,CollectionTypeCS,MapTypeCS,PrimitiveTypeCS,TupleTypeCS,TypeExpCS,TypeExpWithoutMultiplicityCS,TypeLiteralCS,TypeNameExpCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _108 // TypeExpWithoutMultiplicityCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(108, "TypeExpWithoutMultiplicityCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._082 /* name=PrimitiveTypeIdentifier */,
 				sr._022 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
 				sr._055 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
@@ -3514,7 +3514,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(109, "TypeIdentifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _110 // TypeLiteralCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(110, "TypeLiteralCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._081 /* name=PrimitiveTypeIdentifier */,
 				sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
 				sr._056 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
@@ -3524,12 +3524,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x8000000000800L,0x440000020000L})); // CollectionTypeCS,MapTypeCS,PrimitiveTypeCS,TupleTypeCS,TypeLiteralCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _111 // TypeLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(111, "TypeLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._104 /* ownedType=TypeLiteralWithMultiplicityCS */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _112 // TypeLiteralWithMultiplicityCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(112, "TypeLiteralWithMultiplicityCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._109 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._108 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._106 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
@@ -3539,17 +3539,17 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x8000000000800L,0x1440000020000L})); // CollectionTypeCS,MapTypeCS,PrimitiveTypeCS,TupleTypeCS,TypeLiteralCS,TypeLiteralWithMultiplicityCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _113 // TypeNameExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(113, "TypeNameExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._110 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _114 // TypeParameterCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(114, "TypeParameterCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._013 /* { name=UnrestrictedName { 'extends' ownedExtends+=TypedRefCS { '&&' ownedExtends+=TypedRefCS }[*] }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _115 // TypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(115, "TypeRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._082 /* name=PrimitiveTypeIdentifier */,
 				sr._217 /* ownedPathName=PathNameCS */,
 				sr._215 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
@@ -3563,7 +3563,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x8000000000800L,0x68440000020000L,0x2L})); // CollectionTypeCS,MapTypeCS,PrimitiveTypeCS,TupleTypeCS,TypeLiteralCS,TypeRefCS,TypedRefCS,TypedTypeRefCS,WildcardTypeRefCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _116 // TypedMultiplicityRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(116, "TypedMultiplicityRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._213 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._207 /* { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._208 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' ownedMultiplicity=MultiplicityCS[?] } */,
@@ -3576,7 +3576,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x8000000000800L,0x70440000020000L})); // CollectionTypeCS,MapTypeCS,PrimitiveTypeCS,TupleTypeCS,TypeLiteralCS,TypedMultiplicityRefCS,TypedRefCS,TypedTypeRefCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _117 // TypedRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(117, "TypedRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._081 /* name=PrimitiveTypeIdentifier */,
 				sr._217 /* ownedPathName=PathNameCS */,
 				sr._215 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
@@ -3589,7 +3589,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				0x8000000000800L,0x60440000020000L})); // CollectionTypeCS,MapTypeCS,PrimitiveTypeCS,TupleTypeCS,TypeLiteralCS,TypedRefCS,TypedTypeRefCS
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _118 // TypedTypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(118, "TypedTypeRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._216 /* ownedPathName=PathNameCS */,
 				sr._214 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
 				sr._218 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */
@@ -3602,20 +3602,20 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(121, "URI");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _122 // URIFirstPathElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(122, "URIFirstPathElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._113 /* referredElement=UnrestrictedName */,
 				sr._112 /* referredElement=URI */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _123 // URIPathNameCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(123, "URIPathNameCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._114 /* { ownedPathElements+=URIFirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _124 // UnaryOperatorName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(124, "UnaryOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _125 // UnlimitedNaturalLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(125, "UnlimitedNaturalLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._115 /* '*' */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _126 // UnreservedName
@@ -3626,7 +3626,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(128, "WS");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _129 // WildcardTypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(129, "WildcardTypeRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._014 /* { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */
 				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 		}
@@ -3635,7 +3635,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 		{
 			private final /*@NonNull*/ EClassData _00 // AnnotationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._119 /* OCLinEcore::AnnotationCS(basecs::AnnotationCS): { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
 				sr._120 /* OCLinEcore::AnnotationCS(basecs::AnnotationCS): { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */,
 				sr._117 /* OCLinEcore::AnnotationCS(basecs::AnnotationCS): { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */,
@@ -3675,7 +3675,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _01 // AttributeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ATTRIBUTE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._125 /* OCLinEcore::AttributeCS(basecs::AttributeCS): { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._122 /* OCLinEcore::AttributeCS(basecs::AttributeCS): { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._124 /* OCLinEcore::AttributeCS(basecs::AttributeCS): { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
@@ -3719,7 +3719,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _02 // BooleanLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._016 /* EssentialOCL::BooleanLiteralExpCS(essentialoclcs::BooleanLiteralExpCS): symbol={'false|true'} */,
 				sr._039 /* EssentialOCL::ExpCS(essentialoclcs::BooleanLiteralExpCS): symbol={'false|true'} */,
 				sr._039 /* EssentialOCL::ExpCS(essentialoclcs::BooleanLiteralExpCS): symbol={'false|true'} */,
@@ -3731,7 +3731,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _03 // CollectionLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._018 /* EssentialOCL::CollectionLiteralExpCS(essentialoclcs::CollectionLiteralExpCS): { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
 				sr._035 /* EssentialOCL::ExpCS(essentialoclcs::CollectionLiteralExpCS): { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
 				sr._035 /* EssentialOCL::ExpCS(essentialoclcs::CollectionLiteralExpCS): { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
@@ -3749,7 +3749,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _04 // CollectionLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._020 /* EssentialOCL::CollectionLiteralPartCS(essentialoclcs::CollectionLiteralPartCS): ownedExpression=PatternExpCS */,
 				sr._019 /* EssentialOCL::CollectionLiteralPartCS(essentialoclcs::CollectionLiteralPartCS): { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] } */
 				},
@@ -3805,7 +3805,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _05 // CollectionPatternCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._021 /* EssentialOCL::CollectionPatternCS(essentialoclcs::CollectionPatternCS): { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */,
 				sr._100 /* EssentialOCL::TypeExpCS(essentialoclcs::CollectionPatternCS): { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._021 /* EssentialOCL::CollectionPatternCS(essentialoclcs::CollectionPatternCS): { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */
@@ -3824,7 +3824,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _06 // CollectionTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._022 /* EssentialOCL::CollectionTypeCS(essentialoclcs::CollectionTypeCS): { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
 				sr._023 /* EssentialOCL::CollectionTypeCS(essentialoclcs::CollectionTypeCS): { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
 				sr._103 /* EssentialOCL::TypeExpCS(essentialoclcs::CollectionTypeCS): { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
@@ -3855,7 +3855,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _07 // ContextCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._057 /* EssentialOCL::Model(essentialoclcs::ContextCS): ownedExpression=ExpCS */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -3886,7 +3886,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _08 // CurlyBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._024 /* EssentialOCL::CurlyBracketedClauseCS(essentialoclcs::CurlyBracketedClauseCS): { '{' { ownedParts+=ShadowPartCS { ',' ownedParts+=ShadowPartCS }[*] }[?] '}' } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -3897,7 +3897,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _09 // DataTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DATA_TYPE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._133 /* OCLinEcore::DataTypeCS(basecs::DataTypeCS): { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
 				sr._135 /* OCLinEcore::DataTypeCS(basecs::DataTypeCS): { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
 				sr._129 /* OCLinEcore::DataTypeCS(basecs::DataTypeCS): { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
@@ -3934,14 +3934,14 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _10 // DetailCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DETAIL_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._139 /* OCLinEcore::DetailCS(basecs::DetailCS): { name=(UnrestrictedName|SINGLE_QUOTED_STRING) '=' values+=(SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING)[*] } */
 				},
 				null
 				);
 			private final /*@NonNull*/ EClassData _11 // DocumentationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DOCUMENTATION_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._141 /* OCLinEcore::DocumentationCS(basecs::DocumentationCS): { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
 				sr._140 /* OCLinEcore::DocumentationCS(basecs::DocumentationCS): { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
 				},
@@ -3953,7 +3953,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _12 // EnumerationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._151 /* OCLinEcore::EnumerationCS(basecs::EnumerationCS): { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
 				sr._146 /* OCLinEcore::EnumerationCS(basecs::EnumerationCS): { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
 				sr._143 /* OCLinEcore::EnumerationCS(basecs::EnumerationCS): { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
@@ -3993,7 +3993,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _13 // EnumerationLiteralCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_LITERAL_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._155 /* OCLinEcore::EnumerationLiteralCS(basecs::EnumerationLiteralCS): { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
 				sr._154 /* OCLinEcore::EnumerationLiteralCS(basecs::EnumerationLiteralCS): { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
 				sr._156 /* OCLinEcore::EnumerationLiteralCS(basecs::EnumerationLiteralCS): { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
@@ -4014,7 +4014,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _14 // ExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._036 /* EssentialOCL::ExpCS(essentialoclcs::ExpCS): '*' */,
 				sr._040 /* EssentialOCL::ExpCS(essentialoclcs::ExpCS): 'invalid' */,
 				sr._028 /* EssentialOCL::ExpCS(essentialoclcs::ExpCS): 'null' */,
@@ -4028,7 +4028,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _15 // ExpSpecificationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._195 /* OCLinEcore::SpecificationCS(essentialoclcs::ExpSpecificationCS): exprString=UNQUOTED_STRING */,
 				sr._194 /* OCLinEcore::SpecificationCS(essentialoclcs::ExpSpecificationCS): ownedExpression=ExpCS */
 				},
@@ -4060,7 +4060,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _16 // IfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._029 /* EssentialOCL::ExpCS(essentialoclcs::IfExpCS): { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
 				sr._044 /* EssentialOCL::IfExpCS(essentialoclcs::IfExpCS): { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
 				sr._029 /* EssentialOCL::ExpCS(essentialoclcs::IfExpCS): { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
@@ -4145,7 +4145,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _17 // IfThenExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._025 /* EssentialOCL::ElseIfThenExpCS(essentialoclcs::IfThenExpCS): { 'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4199,7 +4199,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _18 // ImplicitOppositeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPLICIT_OPPOSITE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._158 /* OCLinEcore::ImplicitOppositeCS(basecs::ImplicitOppositeCS): { 'opposite' name=UnrestrictedName ':' ownedType=TypedMultiplicityRefCS { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4217,7 +4217,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _19 // ImportCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPORT_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._159 /* OCLinEcore::ImportCS(basecs::ImportCS): { {'import'|'library'} { name=UnrestrictedName ':' }[?] ownedPathName=URIPathNameCS isAll='::*'[?] ';' } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4228,7 +4228,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _20 // InfixExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.INFIX_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._032 /* EssentialOCL::ExpCS(essentialoclcs::InfixExpCS): { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS } */,
 				sr._032 /* EssentialOCL::ExpCS(essentialoclcs::InfixExpCS): { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS } */
 				},
@@ -4280,7 +4280,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _21 // InvalidLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.INVALID_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._045 /* EssentialOCL::InvalidLiteralExpCS(essentialoclcs::InvalidLiteralExpCS): 'invalid' */,
 				sr._046 /* EssentialOCL::InvalidLiteralExpCS(essentialoclcs::InvalidLiteralExpCS): 'invalid' */,
 				sr._046 /* EssentialOCL::InvalidLiteralExpCS(essentialoclcs::InvalidLiteralExpCS): 'invalid' */,
@@ -4290,7 +4290,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _22 // LambdaLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._027 /* EssentialOCL::ExpCS(essentialoclcs::LambdaLiteralExpCS): { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
 				sr._047 /* EssentialOCL::LambdaLiteralExpCS(essentialoclcs::LambdaLiteralExpCS): { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
 				sr._027 /* EssentialOCL::ExpCS(essentialoclcs::LambdaLiteralExpCS): { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
@@ -4325,7 +4325,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _23 // LetExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._049 /* EssentialOCL::LetExpCS(essentialoclcs::LetExpCS): { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */,
 				sr._050 /* EssentialOCL::LetExpCS(essentialoclcs::LetExpCS): { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */,
 				sr._049 /* EssentialOCL::LetExpCS(essentialoclcs::LetExpCS): { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */,
@@ -4362,7 +4362,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _24 // LetVariableCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_VARIABLE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._051 /* EssentialOCL::LetVariableCS(essentialoclcs::LetVariableCS): { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4407,7 +4407,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _25 // MapLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._030 /* EssentialOCL::ExpCS(essentialoclcs::MapLiteralExpCS): { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */,
 				sr._052 /* EssentialOCL::MapLiteralExpCS(essentialoclcs::MapLiteralExpCS): { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */,
 				sr._030 /* EssentialOCL::ExpCS(essentialoclcs::MapLiteralExpCS): { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */,
@@ -4425,7 +4425,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _26 // MapLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._054 /* EssentialOCL::MapLiteralPartCS(essentialoclcs::MapLiteralPartCS): { ownedKey=ExpCS '<-' ownedValue=ExpCS } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4479,7 +4479,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _27 // MapTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_TYPE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._055 /* EssentialOCL::MapTypeCS(essentialoclcs::MapTypeCS): { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
 				sr._056 /* EssentialOCL::MapTypeCS(essentialoclcs::MapTypeCS): { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
 				sr._101 /* EssentialOCL::TypeExpCS(essentialoclcs::MapTypeCS): { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
@@ -4519,7 +4519,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _28 // ModelElementRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._162 /* OCLinEcore::ModelElementRefCS(basecs::ModelElementRefCS): { 'reference' ownedPathName=PathNameCS ';' } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4530,7 +4530,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _29 // MultiplicityBoundsCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._001 /* Base::MultiplicityBoundsCS(basecs::MultiplicityBoundsCS): { lowerBound=LOWER { '..' upperBound=UPPER }[?] } */,
 				sr._002 /* Base::MultiplicityCS(basecs::MultiplicityBoundsCS): { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' } */,
 				sr._003 /* Base::MultiplicityCS(basecs::MultiplicityBoundsCS): { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' } */,
@@ -4540,7 +4540,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _30 // MultiplicityStringCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MULTIPLICITY_STRING_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._005 /* Base::MultiplicityCS(basecs::MultiplicityStringCS): { '[' stringBounds={'*|+|?'} ']' } */,
 				sr._006 /* Base::MultiplicityCS(basecs::MultiplicityStringCS): { '[' stringBounds={'*|+|?'} '|?' ']' } */,
 				sr._004 /* Base::MultiplicityCS(basecs::MultiplicityStringCS): { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */,
@@ -4550,7 +4550,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _31 // NameExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAME_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._037 /* EssentialOCL::ExpCS(essentialoclcs::NameExpCS): { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
 				sr._059 /* EssentialOCL::NameExpCS(essentialoclcs::NameExpCS): { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
 				sr._037 /* EssentialOCL::ExpCS(essentialoclcs::NameExpCS): { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
@@ -4574,7 +4574,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _32 // NavigatingArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._064 /* EssentialOCL::NavigatingArgCS(essentialoclcs::NavigatingArgCS): ownedNameExpression=NavigatingArgExpCS */,
 				sr._062 /* EssentialOCL::NavigatingArgCS(essentialoclcs::NavigatingArgCS): { ':' ownedType=TypeExpCS } */,
 				sr._060 /* EssentialOCL::NavigatingArgCS(essentialoclcs::NavigatingArgCS): { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */,
@@ -4653,7 +4653,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _33 // NestedExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._033 /* EssentialOCL::ExpCS(essentialoclcs::NestedExpCS): { '(' ownedExpression=ExpCS ')' } */,
 				sr._033 /* EssentialOCL::ExpCS(essentialoclcs::NestedExpCS): { '(' ownedExpression=ExpCS ')' } */,
 				sr._071 /* EssentialOCL::NestedExpCS(essentialoclcs::NestedExpCS): { '(' ownedExpression=ExpCS ')' } */,
@@ -4688,7 +4688,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _34 // NullLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NULL_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._074 /* EssentialOCL::NullLiteralExpCS(essentialoclcs::NullLiteralExpCS): 'null' */,
 				sr._073 /* EssentialOCL::NullLiteralExpCS(essentialoclcs::NullLiteralExpCS): 'null' */,
 				sr._073 /* EssentialOCL::NullLiteralExpCS(essentialoclcs::NullLiteralExpCS): 'null' */,
@@ -4698,7 +4698,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _35 // NumberLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._031 /* EssentialOCL::ExpCS(essentialoclcs::NumberLiteralExpCS): symbol=NUMBER_LITERAL */,
 				sr._031 /* EssentialOCL::ExpCS(essentialoclcs::NumberLiteralExpCS): symbol=NUMBER_LITERAL */,
 				sr._076 /* EssentialOCL::NumberLiteralExpCS(essentialoclcs::NumberLiteralExpCS): symbol=NUMBER_LITERAL */,
@@ -4710,7 +4710,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _36 // OCLinEcoreConstraintCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage.Literals.OC_LIN_ECORE_CONSTRAINT_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._161 /* OCLinEcore::InvariantConstraintCS(oclinecorecs::OCLinEcoreConstraintCS): { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ';' } */,
 				sr._160 /* OCLinEcore::InvariantConstraintCS(oclinecorecs::OCLinEcoreConstraintCS): { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */,
 				sr._180 /* OCLinEcore::PostconditionConstraintCS(oclinecorecs::OCLinEcoreConstraintCS): { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */,
@@ -4727,7 +4727,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _37 // OperationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._163 /* OCLinEcore::OperationCS(basecs::OperationCS): { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
 				sr._171 /* OCLinEcore::OperationCS(basecs::OperationCS): { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
 				sr._174 /* OCLinEcore::OperationCS(basecs::OperationCS): { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
@@ -4786,7 +4786,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _38 // PackageCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PACKAGE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._177 /* OCLinEcore::PackageCS(basecs::PackageCS): { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
 				sr._176 /* OCLinEcore::PackageCS(basecs::PackageCS): { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */,
 				sr._175 /* OCLinEcore::PackageCS(basecs::PackageCS): { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
@@ -4812,7 +4812,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _39 // ParameterCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PARAMETER_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._179 /* OCLinEcore::ParameterCS(basecs::ParameterCS): { name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] { '{' ownedAnnotations+=AnnotationElementCS[*] '}' }[?] } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4836,7 +4836,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _40 // PathElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_ELEMENT_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._000 /* Base::FirstPathElementCS(basecs::PathElementCS): referredElement=UnrestrictedName */,
 				sr._009 /* Base::NextPathElementCS(basecs::PathElementCS): referredElement=UnreservedName */,
 				sr._113 /* EssentialOCL::URIFirstPathElementCS(basecs::PathElementCS): referredElement=UnrestrictedName */
@@ -4845,14 +4845,14 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _41 // PathElementWithURICS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_ELEMENT_WITH_URICS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._112 /* EssentialOCL::URIFirstPathElementCS(basecs::PathElementWithURICS): referredElement=URI */
 				},
 				null
 				);
 			private final /*@NonNull*/ EClassData _42 // PathNameCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._010 /* Base::PathNameCS(basecs::PathNameCS): { ownedPathElements+=FirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */,
 				sr._088 /* EssentialOCL::SimplePathNameCS(basecs::PathNameCS): ownedPathElements+=FirstPathElementCS */,
 				sr._114 /* EssentialOCL::URIPathNameCS(basecs::PathNameCS): { ownedPathElements+=URIFirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
@@ -4867,7 +4867,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _43 // PatternExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.PATTERN_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._077 /* EssentialOCL::PatternExpCS(essentialoclcs::PatternExpCS): { patternVariableName=UnrestrictedName[?] ':' ownedPatternType=TypeExpCS } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -4886,7 +4886,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _44 // PrefixExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.PREFIX_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._026 /* EssentialOCL::ExpCS(essentialoclcs::PrefixExpCS): { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
 				sr._078 /* EssentialOCL::PrefixedLetExpCS(essentialoclcs::PrefixExpCS): { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
 				sr._026 /* EssentialOCL::ExpCS(essentialoclcs::PrefixExpCS): { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
@@ -4921,7 +4921,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _45 // PrimitiveTypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._082 /* EssentialOCL::PrimitiveTypeCS(basecs::PrimitiveTypeRefCS): name=PrimitiveTypeIdentifier */,
 				sr._081 /* EssentialOCL::PrimitiveTypeCS(basecs::PrimitiveTypeRefCS): name=PrimitiveTypeIdentifier */,
 				sr._099 /* EssentialOCL::TypeExpCS(basecs::PrimitiveTypeRefCS): { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
@@ -4939,7 +4939,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _46 // ReferenceCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.REFERENCE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._188 /* OCLinEcore::ReferenceCS(basecs::ReferenceCS): { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._193 /* OCLinEcore::ReferenceCS(basecs::ReferenceCS): { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
 				sr._190 /* OCLinEcore::ReferenceCS(basecs::ReferenceCS): { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
@@ -4986,7 +4986,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _47 // RoundBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._083 /* EssentialOCL::RoundBracketedClauseCS(essentialoclcs::RoundBracketedClauseCS): { '(' { ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS)[*] }[?] ')' } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5000,7 +5000,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _48 // SelfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SELF_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._085 /* EssentialOCL::SelfExpCS(essentialoclcs::SelfExpCS): 'self' */,
 				sr._085 /* EssentialOCL::SelfExpCS(essentialoclcs::SelfExpCS): 'self' */,
 				sr._084 /* EssentialOCL::SelfExpCS(essentialoclcs::SelfExpCS): 'self' */
@@ -5009,7 +5009,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _49 // ShadowPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SHADOW_PART_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._087 /* EssentialOCL::ShadowPartCS(essentialoclcs::ShadowPartCS): ownedInitExpression=StringLiteralExpCS */,
 				sr._086 /* EssentialOCL::ShadowPartCS(essentialoclcs::ShadowPartCS): { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) } */
 				},
@@ -5042,7 +5042,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _50 // SquareBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._089 /* EssentialOCL::SquareBracketedClauseCS(essentialoclcs::SquareBracketedClauseCS): { '[' ownedTerms+=ExpCS { ',' ownedTerms+=ExpCS }[*] ']' } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5073,7 +5073,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _51 // StringLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._041 /* EssentialOCL::ExpCS(essentialoclcs::StringLiteralExpCS): segments+=StringLiteral[+] */,
 				sr._041 /* EssentialOCL::ExpCS(essentialoclcs::StringLiteralExpCS): segments+=StringLiteral[+] */,
 				sr._090 /* EssentialOCL::StringLiteralExpCS(essentialoclcs::StringLiteralExpCS): segments+=StringLiteral[+] */,
@@ -5085,7 +5085,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _52 // StructuredClassCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURED_CLASS_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._198 /* OCLinEcore::StructuredClassCS(basecs::StructuredClassCS): { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
 				sr._196 /* OCLinEcore::StructuredClassCS(basecs::StructuredClassCS): { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
 				sr._198 /* OCLinEcore::StructuredClassCS(basecs::StructuredClassCS): { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
@@ -5127,7 +5127,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _53 // SysMLCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage.Literals.SYS_MLCS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._201 /* OCLinEcore::SysMLCS(oclinecorecs::SysMLCS): { 'sysml' ownedDetails+=DetailCS ';' } */,
 				sr._200 /* OCLinEcore::SysMLCS(oclinecorecs::SysMLCS): { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */,
 				sr._203 /* OCLinEcore::SysMLCS(oclinecorecs::SysMLCS): { 'sysml' ownedDetails+=DetailCS ';' } */,
@@ -5141,7 +5141,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _54 // TemplateBindingCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_BINDING_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._011 /* Base::TemplateBindingCS(basecs::TemplateBindingCS): { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5155,7 +5155,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _55 // TemplateParameterSubstitutionCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._012 /* Base::TemplateParameterSubstitutionCS(basecs::TemplateParameterSubstitutionCS): ownedActualParameter=TypeRefCS */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5174,7 +5174,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _56 // TemplateSignatureCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._205 /* OCLinEcore::TemplateSignatureCS(basecs::TemplateSignatureCS): { '(' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] ')' } */,
 				sr._204 /* OCLinEcore::TemplateSignatureCS(basecs::TemplateSignatureCS): { '<' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] '>' } */
 				},
@@ -5186,7 +5186,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _57 // TopLevelCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage.Literals.TOP_LEVEL_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._206 /* OCLinEcore::TopLevelCS(oclinecorecs::TopLevelCS): { { 'module' }[?] ownedImports+=ImportCS[*] ownedPackages+=PackageCS[*] } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5200,7 +5200,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _58 // TupleLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._042 /* EssentialOCL::ExpCS(essentialoclcs::TupleLiteralExpCS): { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
 				sr._042 /* EssentialOCL::ExpCS(essentialoclcs::TupleLiteralExpCS): { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
 				sr._093 /* EssentialOCL::TupleLiteralExpCS(essentialoclcs::TupleLiteralExpCS): { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
@@ -5215,7 +5215,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _59 // TupleLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TUPLE_LITERAL_PART_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._094 /* EssentialOCL::TupleLiteralPartCS(essentialoclcs::TupleLiteralPartCS): { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5257,7 +5257,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _60 // TuplePartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TUPLE_PART_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._095 /* EssentialOCL::TuplePartCS(basecs::TuplePartCS): { name=UnrestrictedName ':' ownedType=TypeExpCS } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5276,7 +5276,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _61 // TupleTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TUPLE_TYPE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._096 /* EssentialOCL::TupleTypeCS(basecs::TupleTypeCS): { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */,
 				sr._097 /* EssentialOCL::TupleTypeCS(basecs::TupleTypeCS): { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */,
 				sr._098 /* EssentialOCL::TypeExpCS(basecs::TupleTypeCS): { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
@@ -5297,7 +5297,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _62 // TypeLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._038 /* EssentialOCL::ExpCS(essentialoclcs::TypeLiteralExpCS): ownedType=TypeLiteralWithMultiplicityCS */,
 				sr._038 /* EssentialOCL::ExpCS(essentialoclcs::TypeLiteralExpCS): ownedType=TypeLiteralWithMultiplicityCS */,
 				sr._105 /* EssentialOCL::TypeLiteralExpCS(essentialoclcs::TypeLiteralExpCS): ownedType=TypeLiteralWithMultiplicityCS */,
@@ -5317,7 +5317,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _63 // TypeNameExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._102 /* EssentialOCL::TypeExpCS(essentialoclcs::TypeNameExpCS): { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] } */,
 				sr._111 /* EssentialOCL::TypeNameExpCS(essentialoclcs::TypeNameExpCS): { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */,
 				sr._110 /* EssentialOCL::TypeNameExpCS(essentialoclcs::TypeNameExpCS): { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
@@ -5359,7 +5359,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _64 // TypeParameterCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPE_PARAMETER_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._013 /* Base::TypeParameterCS(basecs::TypeParameterCS): { name=UnrestrictedName { 'extends' ownedExtends+=TypedRefCS { '&&' ownedExtends+=TypedRefCS }[*] }[?] } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5376,7 +5376,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _65 // TypedTypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._217 /* OCLinEcore::TypedTypeRefCS(basecs::TypedTypeRefCS): ownedPathName=PathNameCS */,
 				sr._215 /* OCLinEcore::TypedTypeRefCS(basecs::TypedTypeRefCS): { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
 				sr._219 /* OCLinEcore::TypedTypeRefCS(basecs::TypedTypeRefCS): { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */,
@@ -5404,7 +5404,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _66 // UnlimitedNaturalLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._116 /* EssentialOCL::UnlimitedNaturalLiteralExpCS(essentialoclcs::UnlimitedNaturalLiteralExpCS): '*' */,
 				sr._116 /* EssentialOCL::UnlimitedNaturalLiteralExpCS(essentialoclcs::UnlimitedNaturalLiteralExpCS): '*' */,
 				sr._116 /* EssentialOCL::UnlimitedNaturalLiteralExpCS(essentialoclcs::UnlimitedNaturalLiteralExpCS): '*' */,
@@ -5414,7 +5414,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 			private final /*@NonNull*/ EClassData _67 // VariableCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._017 /* EssentialOCL::CoIteratorVariableCS(essentialoclcs::VariableCS): { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] } */
 				},
 				new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData[] {
@@ -5433,7 +5433,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						);
 			private final /*@NonNull*/ EClassData _68 // WildcardTypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS,
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule [] {
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 				sr._015 /* Base::WildcardTypeRefCS(basecs::WildcardTypeRefCS): { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */,
 				sr._014 /* Base::WildcardTypeRefCS(basecs::WildcardTypeRefCS): { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */
 				},
@@ -5453,9 +5453,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 
 		private class _SerializationRules
 		{
-			private final /*@NonNull*/ RTSerializationRule _000
+			private final /*@NonNull*/ SerializationRule _000
 				= /* referredElement=UnrestrictedName */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(31, /* Base::FirstPathElementCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(31, /* Base::FirstPathElementCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._049 /* assert (|referredElement| - 1) == 0 */
 					},
@@ -5466,9 +5466,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _001
+			private final /*@NonNull*/ SerializationRule _001
 				= /* { lowerBound=LOWER { '..' upperBound=UPPER }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(55, /* Base::MultiplicityBoundsCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(55, /* Base::MultiplicityBoundsCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._100 /* assign V0 = |upperBound| */,
 						ms._001 /* assert (|lowerBound| - 1) == 0 */
@@ -5488,9 +5488,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _002
+			private final /*@NonNull*/ SerializationRule _002
 				= /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(56, /* Base::MultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(56, /* Base::MultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._100 /* assign V0 = |upperBound| */,
 						ms._001 /* assert (|lowerBound| - 1) == 0 */
@@ -5514,9 +5514,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _003
+			private final /*@NonNull*/ SerializationRule _003
 				= /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(56, /* Base::MultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(56, /* Base::MultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._100 /* assign V0 = |upperBound| */,
 						ms._001 /* assert (|lowerBound| - 1) == 0 */
@@ -5542,9 +5542,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _004
+			private final /*@NonNull*/ SerializationRule _004
 				= /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(56, /* Base::MultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(56, /* Base::MultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._073 /* assign V0 = |isNullFree.'|1'| */,
 						ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
@@ -5564,9 +5564,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _005
+			private final /*@NonNull*/ SerializationRule _005
 				= /* { '[' stringBounds={'*|+|?'} ']' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(56, /* Base::MultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(56, /* Base::MultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
 					},
@@ -5583,9 +5583,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _006
+			private final /*@NonNull*/ SerializationRule _006
 				= /* { '[' stringBounds={'*|+|?'} '|?' ']' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(56, /* Base::MultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(56, /* Base::MultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
 					},
@@ -5604,9 +5604,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _007
+			private final /*@NonNull*/ SerializationRule _007
 				= /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] isNullFree='|1'[?] ']' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(56, /* Base::MultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(56, /* Base::MultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._116 /* assign V1 = |isNullFree.'|1'| */,
 						ms._100 /* assign V0 = |upperBound| */,
@@ -5633,9 +5633,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _008
+			private final /*@NonNull*/ SerializationRule _008
 				= /* stringBounds={'*|+|?'} */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(57, /* Base::MultiplicityStringCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(57, /* Base::MultiplicityStringCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
 					},
@@ -5646,9 +5646,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _009
+			private final /*@NonNull*/ SerializationRule _009
 				= /* referredElement=UnreservedName */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(67, /* Base::NextPathElementCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(67, /* Base::NextPathElementCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._049 /* assert (|referredElement| - 1) == 0 */
 					},
@@ -5659,9 +5659,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _010
+			private final /*@NonNull*/ SerializationRule _010
 				= /* { ownedPathElements+=FirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(73, /* Base::PathNameCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(73, /* Base::PathNameCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._359 /* check-rule basecs::PathNameCS.ownedPathElements : NextPathElementCS|FirstPathElementCS */,
 						ms._065 /* assign V0 = (|ownedPathElements| - 1) */
@@ -5681,9 +5681,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _011
+			private final /*@NonNull*/ SerializationRule _011
 				= /* { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(99, /* Base::TemplateBindingCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(99, /* Base::TemplateBindingCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._386 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : TemplateParameterSubstitutionCS */,
 						ms._385 /* check-rule basecs::TemplateBindingCS.ownedMultiplicity : MultiplicityCS */,
@@ -5707,9 +5707,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _012
+			private final /*@NonNull*/ SerializationRule _012
 				= /* ownedActualParameter=TypeRefCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(100, /* Base::TemplateParameterSubstitutionCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(100, /* Base::TemplateParameterSubstitutionCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._387 /* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : TypeRefCS */,
 						ms._007 /* assert (|ownedActualParameter| - 1) == 0 */
@@ -5721,9 +5721,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _013
+			private final /*@NonNull*/ SerializationRule _013
 				= /* { name=UnrestrictedName { 'extends' ownedExtends+=TypedRefCS { '&&' ownedExtends+=TypedRefCS }[*] }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(114, /* Base::TypeParameterCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(114, /* Base::TypeParameterCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._435 /* check-rule basecs::TypeParameterCS.ownedExtends : TypedRefCS */,
 						ms._004 /* assert (|name| - 1) == 0 */,
@@ -5751,9 +5751,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _014
+			private final /*@NonNull*/ SerializationRule _014
 				= /* { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(129, /* Base::WildcardTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(129, /* Base::WildcardTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._502 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : TypedRefCS */,
 						ms._081 /* assign V0 = |ownedExtends| */
@@ -5773,9 +5773,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _015
+			private final /*@NonNull*/ SerializationRule _015
 				= /* { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(129, /* Base::WildcardTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(129, /* Base::WildcardTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._501 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : TypedRefCS */,
 						ms._081 /* assign V0 = |ownedExtends| */
@@ -5795,9 +5795,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _016
+			private final /*@NonNull*/ SerializationRule _016
 				= /* symbol={'false|true'} */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(5, /* EssentialOCL::BooleanLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(5, /* EssentialOCL::BooleanLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._055 /* assert (|symbol.'false|true'| - 1) == 0 */
 					},
@@ -5808,9 +5808,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _017
+			private final /*@NonNull*/ SerializationRule _017
 				= /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(7, /* EssentialOCL::CoIteratorVariableCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(7, /* EssentialOCL::CoIteratorVariableCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._643 /* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
 						ms._089 /* assign V0 = |ownedType| */,
@@ -5831,9 +5831,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _018
+			private final /*@NonNull*/ SerializationRule _018
 				= /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(8, /* EssentialOCL::CollectionLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(8, /* EssentialOCL::CollectionLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._515 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : CollectionLiteralPartCS */,
 						ms._517 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : CollectionTypeCS */,
@@ -5864,9 +5864,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _019
+			private final /*@NonNull*/ SerializationRule _019
 				= /* { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(9, /* EssentialOCL::CollectionLiteralPartCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(9, /* EssentialOCL::CollectionLiteralPartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._521 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : ExpCS */,
 						ms._519 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : ExpCS */,
@@ -5888,9 +5888,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _020
+			private final /*@NonNull*/ SerializationRule _020
 				= /* ownedExpression=PatternExpCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(9, /* EssentialOCL::CollectionLiteralPartCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(9, /* EssentialOCL::CollectionLiteralPartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._520 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : PatternExpCS */,
 						ms._017 /* assert (|ownedExpression| - 1) == 0 */
@@ -5902,9 +5902,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _021
+			private final /*@NonNull*/ SerializationRule _021
 				= /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(10, /* EssentialOCL::CollectionPatternCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(10, /* EssentialOCL::CollectionPatternCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._522 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : PatternExpCS */,
 						ms._524 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : CollectionTypeCS */,
@@ -5939,9 +5939,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _022
+			private final /*@NonNull*/ SerializationRule _022
 				= /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(11, /* EssentialOCL::CollectionTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(11, /* EssentialOCL::CollectionTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._531 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : TypeExpWithoutMultiplicityCS */,
 						ms._526 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
@@ -5968,9 +5968,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _023
+			private final /*@NonNull*/ SerializationRule _023
 				= /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(11, /* EssentialOCL::CollectionTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(11, /* EssentialOCL::CollectionTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._532 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : TypeExpWithoutMultiplicityCS */,
 						ms._527 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
@@ -5997,9 +5997,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _024
+			private final /*@NonNull*/ SerializationRule _024
 				= /* { '{' { ownedParts+=ShadowPartCS { ',' ownedParts+=ShadowPartCS }[*] }[?] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(13, /* EssentialOCL::CurlyBracketedClauseCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(13, /* EssentialOCL::CurlyBracketedClauseCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._537 /* check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : ShadowPartCS */,
 						ms._062 /* assign V0 = (|ownedParts| > 0) */,
@@ -6026,9 +6026,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _025
+			private final /*@NonNull*/ SerializationRule _025
 				= /* { 'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(20, /* EssentialOCL::ElseIfThenExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(20, /* EssentialOCL::ElseIfThenExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._552 /* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : ExpCS */,
 						ms._551 /* check-rule essentialoclcs::IfThenExpCS.ownedCondition : ExpCS */,
@@ -6050,9 +6050,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _026
+			private final /*@NonNull*/ SerializationRule _026
 				= /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._617 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : PrefixedPrimaryExpCS */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
@@ -6069,9 +6069,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _027
+			private final /*@NonNull*/ SerializationRule _027
 				= /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._554 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : ExpCS */,
 						ms._014 /* assert (|ownedExpressionCS| - 1) == 0 */
@@ -6091,9 +6091,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _028
+			private final /*@NonNull*/ SerializationRule _028
 				= /* 'null' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6103,9 +6103,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _029
+			private final /*@NonNull*/ SerializationRule _029
 				= /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._548 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : ExpCS */,
 						ms._542 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : ExpCS */,
@@ -6139,9 +6139,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _030
+			private final /*@NonNull*/ SerializationRule _030
 				= /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._565 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : MapTypeCS */,
 						ms._562 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : MapLiteralPartCS */,
@@ -6172,9 +6172,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _031
+			private final /*@NonNull*/ SerializationRule _031
 				= /* symbol=NUMBER_LITERAL */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._056 /* assert (|symbol| - 1) == 0 */
 					},
@@ -6185,9 +6185,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _032
+			private final /*@NonNull*/ SerializationRule _032
 				= /* { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._553 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : PrefixedPrimaryExpCS */,
 						ms._614 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : ExpCS */,
@@ -6208,9 +6208,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _033
+			private final /*@NonNull*/ SerializationRule _033
 				= /* { '(' ownedExpression=ExpCS ')' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._611 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : ExpCS */,
 						ms._015 /* assert (|ownedExpression| - 1) == 0 */
@@ -6228,9 +6228,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _034
+			private final /*@NonNull*/ SerializationRule _034
 				= /* 'self' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6240,9 +6240,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _035
+			private final /*@NonNull*/ SerializationRule _035
 				= /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._516 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : CollectionLiteralPartCS */,
 						ms._518 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : CollectionTypeCS */,
@@ -6273,9 +6273,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _036
+			private final /*@NonNull*/ SerializationRule _036
 				= /* '*' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6285,9 +6285,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _037
+			private final /*@NonNull*/ SerializationRule _037
 				= /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._506 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : PathNameCS */,
 						ms._503 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
@@ -6320,9 +6320,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _038
+			private final /*@NonNull*/ SerializationRule _038
 				= /* ownedType=TypeLiteralWithMultiplicityCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._627 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : TypeLiteralWithMultiplicityCS */,
 						ms._040 /* assert (|ownedType| - 1) == 0 */
@@ -6334,9 +6334,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _039
+			private final /*@NonNull*/ SerializationRule _039
 				= /* symbol={'false|true'} */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._055 /* assert (|symbol.'false|true'| - 1) == 0 */
 					},
@@ -6347,9 +6347,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _040
+			private final /*@NonNull*/ SerializationRule _040
 				= /* 'invalid' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6359,9 +6359,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _041
+			private final /*@NonNull*/ SerializationRule _041
 				= /* segments+=StringLiteral[+] */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._099 /* assign V0 = |segments| */
 					},
@@ -6372,9 +6372,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _042
+			private final /*@NonNull*/ SerializationRule _042
 				= /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(30, /* EssentialOCL::ExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._624 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : TupleLiteralPartCS */,
 						ms._060 /* assign V0 = (|ownedParts| - 1) */
@@ -6400,9 +6400,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _043
+			private final /*@NonNull*/ SerializationRule _043
 				= /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(36, /* EssentialOCL::IfExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(36, /* EssentialOCL::IfExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._550 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : ExpCS */,
 						ms._544 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : ExpCS */,
@@ -6436,9 +6436,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _044
+			private final /*@NonNull*/ SerializationRule _044
 				= /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(36, /* EssentialOCL::IfExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(36, /* EssentialOCL::IfExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._549 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : ExpCS */,
 						ms._543 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : ExpCS */,
@@ -6472,9 +6472,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _045
+			private final /*@NonNull*/ SerializationRule _045
 				= /* 'invalid' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(40, /* EssentialOCL::InvalidLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(40, /* EssentialOCL::InvalidLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6484,9 +6484,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _046
+			private final /*@NonNull*/ SerializationRule _046
 				= /* 'invalid' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(40, /* EssentialOCL::InvalidLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(40, /* EssentialOCL::InvalidLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6496,9 +6496,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _047
+			private final /*@NonNull*/ SerializationRule _047
 				= /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(44, /* EssentialOCL::LambdaLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(44, /* EssentialOCL::LambdaLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._555 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : ExpCS */,
 						ms._014 /* assert (|ownedExpressionCS| - 1) == 0 */
@@ -6518,9 +6518,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _048
+			private final /*@NonNull*/ SerializationRule _048
 				= /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(44, /* EssentialOCL::LambdaLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(44, /* EssentialOCL::LambdaLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._556 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : ExpCS */,
 						ms._014 /* assert (|ownedExpressionCS| - 1) == 0 */
@@ -6540,9 +6540,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _049
+			private final /*@NonNull*/ SerializationRule _049
 				= /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(45, /* EssentialOCL::LetExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(45, /* EssentialOCL::LetExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._557 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : ExpCS */,
 						ms._559 /* check-rule essentialoclcs::LetExpCS.ownedVariables : LetVariableCS */,
@@ -6570,9 +6570,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _050
+			private final /*@NonNull*/ SerializationRule _050
 				= /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(45, /* EssentialOCL::LetExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(45, /* EssentialOCL::LetExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._558 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : ExpCS */,
 						ms._560 /* check-rule essentialoclcs::LetExpCS.ownedVariables : LetVariableCS */,
@@ -6600,9 +6600,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _051
+			private final /*@NonNull*/ SerializationRule _051
 				= /* { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(46, /* EssentialOCL::LetVariableCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(46, /* EssentialOCL::LetVariableCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._641 /* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
 						ms._639 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : ExpCS */,
@@ -6633,9 +6633,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _052
+			private final /*@NonNull*/ SerializationRule _052
 				= /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(49, /* EssentialOCL::MapLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(49, /* EssentialOCL::MapLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._566 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : MapTypeCS */,
 						ms._563 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : MapLiteralPartCS */,
@@ -6666,9 +6666,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _053
+			private final /*@NonNull*/ SerializationRule _053
 				= /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(49, /* EssentialOCL::MapLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(49, /* EssentialOCL::MapLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._567 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : MapTypeCS */,
 						ms._564 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : MapLiteralPartCS */,
@@ -6699,9 +6699,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _054
+			private final /*@NonNull*/ SerializationRule _054
 				= /* { ownedKey=ExpCS '<-' ownedValue=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(50, /* EssentialOCL::MapLiteralPartCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(50, /* EssentialOCL::MapLiteralPartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._568 /* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : ExpCS */,
 						ms._569 /* check-rule essentialoclcs::MapLiteralPartCS.ownedValue : ExpCS */,
@@ -6721,9 +6721,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _055
+			private final /*@NonNull*/ SerializationRule _055
 				= /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(51, /* EssentialOCL::MapTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(51, /* EssentialOCL::MapTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._575 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
 						ms._570 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
@@ -6752,9 +6752,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _056
+			private final /*@NonNull*/ SerializationRule _056
 				= /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(51, /* EssentialOCL::MapTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(51, /* EssentialOCL::MapTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._576 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
 						ms._571 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
@@ -6783,9 +6783,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _057
+			private final /*@NonNull*/ SerializationRule _057
 				= /* ownedExpression=ExpCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(52, /* EssentialOCL::Model */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(52, /* EssentialOCL::Model */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._536 /* check-rule essentialoclcs::ContextCS.ownedExpression : ExpCS */,
 						ms._016 /* assert (|ownedExpression| - 1) == 0 */
@@ -6797,9 +6797,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _058
+			private final /*@NonNull*/ SerializationRule _058
 				= /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(59, /* EssentialOCL::NameExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(59, /* EssentialOCL::NameExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._508 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : PathNameCS */,
 						ms._505 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
@@ -6832,9 +6832,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _059
+			private final /*@NonNull*/ SerializationRule _059
 				= /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(59, /* EssentialOCL::NameExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(59, /* EssentialOCL::NameExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._507 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : PathNameCS */,
 						ms._504 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : CurlyBracketedClauseCS */,
@@ -6867,9 +6867,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _060
+			private final /*@NonNull*/ SerializationRule _060
 				= /* { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(60, /* EssentialOCL::NavigatingArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(60, /* EssentialOCL::NavigatingArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._580 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
 						ms._594 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : NavigatingArgExpCS */,
@@ -6897,9 +6897,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _061
+			private final /*@NonNull*/ SerializationRule _061
 				= /* { ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(60, /* EssentialOCL::NavigatingArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(60, /* EssentialOCL::NavigatingArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._606 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 						ms._582 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
@@ -6935,9 +6935,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _062
+			private final /*@NonNull*/ SerializationRule _062
 				= /* { ':' ownedType=TypeExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(60, /* EssentialOCL::NavigatingArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(60, /* EssentialOCL::NavigatingArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._604 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 						ms._041 /* assert (|ownedType| - 1) == 0 */
@@ -6953,9 +6953,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _063
+			private final /*@NonNull*/ SerializationRule _063
 				= /* { ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(60, /* EssentialOCL::NavigatingArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(60, /* EssentialOCL::NavigatingArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._605 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 						ms._581 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
@@ -6991,9 +6991,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _064
+			private final /*@NonNull*/ SerializationRule _064
 				= /* ownedNameExpression=NavigatingArgExpCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(60, /* EssentialOCL::NavigatingArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(60, /* EssentialOCL::NavigatingArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._595 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : NavigatingArgExpCS */,
 						ms._026 /* assert (|ownedNameExpression| - 1) == 0 */
@@ -7005,9 +7005,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _065
+			private final /*@NonNull*/ SerializationRule _065
 				= /* { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(62, /* EssentialOCL::NavigatingBarArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(62, /* EssentialOCL::NavigatingBarArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._607 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 						ms._598 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : NavigatingArgExpCS */,
@@ -7040,9 +7040,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _066
+			private final /*@NonNull*/ SerializationRule _066
 				= /* { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._583 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
 						ms._600 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : NavigatingArgExpCS */,
@@ -7073,9 +7073,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _067
+			private final /*@NonNull*/ SerializationRule _067
 				= /* { prefix=',' ownedNameExpression=NavigatingArgExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._599 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : NavigatingArgExpCS */,
 						ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
@@ -7092,9 +7092,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _068
+			private final /*@NonNull*/ SerializationRule _068
 				= /* { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._608 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 						ms._584 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
@@ -7133,9 +7133,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _069
+			private final /*@NonNull*/ SerializationRule _069
 				= /* { prefix=',' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(63, /* EssentialOCL::NavigatingCommaArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._609 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 						ms._585 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : CoIteratorVariableCS */,
@@ -7174,9 +7174,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _070
+			private final /*@NonNull*/ SerializationRule _070
 				= /* { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(64, /* EssentialOCL::NavigatingSemiArgCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(64, /* EssentialOCL::NavigatingSemiArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._610 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : TypeExpCS */,
 						ms._601 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : NavigatingArgExpCS */,
@@ -7209,9 +7209,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _071
+			private final /*@NonNull*/ SerializationRule _071
 				= /* { '(' ownedExpression=ExpCS ')' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(66, /* EssentialOCL::NestedExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(66, /* EssentialOCL::NestedExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._612 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : ExpCS */,
 						ms._015 /* assert (|ownedExpression| - 1) == 0 */
@@ -7229,9 +7229,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _072
+			private final /*@NonNull*/ SerializationRule _072
 				= /* { '(' ownedExpression=ExpCS ')' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(66, /* EssentialOCL::NestedExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(66, /* EssentialOCL::NestedExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._613 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : ExpCS */,
 						ms._015 /* assert (|ownedExpression| - 1) == 0 */
@@ -7249,9 +7249,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _073
+			private final /*@NonNull*/ SerializationRule _073
 				= /* 'null' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(68, /* EssentialOCL::NullLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(68, /* EssentialOCL::NullLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7261,9 +7261,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _074
+			private final /*@NonNull*/ SerializationRule _074
 				= /* 'null' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(68, /* EssentialOCL::NullLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(68, /* EssentialOCL::NullLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7273,9 +7273,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _075
+			private final /*@NonNull*/ SerializationRule _075
 				= /* symbol=NUMBER_LITERAL */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(69, /* EssentialOCL::NumberLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(69, /* EssentialOCL::NumberLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._056 /* assert (|symbol| - 1) == 0 */
 					},
@@ -7286,9 +7286,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _076
+			private final /*@NonNull*/ SerializationRule _076
 				= /* symbol=NUMBER_LITERAL */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(69, /* EssentialOCL::NumberLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(69, /* EssentialOCL::NumberLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._056 /* assert (|symbol| - 1) == 0 */
 					},
@@ -7299,9 +7299,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _077
+			private final /*@NonNull*/ SerializationRule _077
 				= /* { patternVariableName=UnrestrictedName[?] ':' ownedPatternType=TypeExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(74, /* EssentialOCL::PatternExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(74, /* EssentialOCL::PatternExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._619 /* check-rule essentialoclcs::PatternExpCS.ownedPatternType : TypeExpCS */,
 						ms._033 /* assert (|ownedPatternType| - 1) == 0 */,
@@ -7320,9 +7320,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _078
+			private final /*@NonNull*/ SerializationRule _078
 				= /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(77, /* EssentialOCL::PrefixedLetExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(77, /* EssentialOCL::PrefixedLetExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._615 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : PrefixedLetExpCS */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
@@ -7339,9 +7339,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _079
+			private final /*@NonNull*/ SerializationRule _079
 				= /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(77, /* EssentialOCL::PrefixedLetExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(77, /* EssentialOCL::PrefixedLetExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._616 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : PrefixedLetExpCS */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
@@ -7358,9 +7358,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _080
+			private final /*@NonNull*/ SerializationRule _080
 				= /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(78, /* EssentialOCL::PrefixedPrimaryExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(78, /* EssentialOCL::PrefixedPrimaryExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._618 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : PrefixedPrimaryExpCS */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
@@ -7377,9 +7377,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _081
+			private final /*@NonNull*/ SerializationRule _081
 				= /* name=PrimitiveTypeIdentifier */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(81, /* EssentialOCL::PrimitiveTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(81, /* EssentialOCL::PrimitiveTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._005 /* assert (|name| - 1) == 0 */
 					},
@@ -7390,9 +7390,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _082
+			private final /*@NonNull*/ SerializationRule _082
 				= /* name=PrimitiveTypeIdentifier */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(81, /* EssentialOCL::PrimitiveTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(81, /* EssentialOCL::PrimitiveTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._005 /* assert (|name| - 1) == 0 */
 					},
@@ -7403,9 +7403,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _083
+			private final /*@NonNull*/ SerializationRule _083
 				= /* { '(' { ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS)[*] }[?] ')' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(84, /* EssentialOCL::RoundBracketedClauseCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(84, /* EssentialOCL::RoundBracketedClauseCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._620 /* check-rule essentialoclcs::RoundBracketedClauseCS.ownedArguments : NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingArgCS */,
 						ms._057 /* assign V0 = (|ownedArguments| > 0) */,
@@ -7428,9 +7428,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _084
+			private final /*@NonNull*/ SerializationRule _084
 				= /* 'self' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(89, /* EssentialOCL::SelfExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(89, /* EssentialOCL::SelfExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7440,9 +7440,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _085
+			private final /*@NonNull*/ SerializationRule _085
 				= /* 'self' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(89, /* EssentialOCL::SelfExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(89, /* EssentialOCL::SelfExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7452,9 +7452,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _086
+			private final /*@NonNull*/ SerializationRule _086
 				= /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(90, /* EssentialOCL::ShadowPartCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(90, /* EssentialOCL::ShadowPartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._621 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : ExpCS|PatternExpCS */,
 						ms._020 /* assert (|ownedInitExpression| - 1) == 0 */,
@@ -7473,9 +7473,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _087
+			private final /*@NonNull*/ SerializationRule _087
 				= /* ownedInitExpression=StringLiteralExpCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(90, /* EssentialOCL::ShadowPartCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(90, /* EssentialOCL::ShadowPartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._622 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : StringLiteralExpCS */,
 						ms._020 /* assert (|ownedInitExpression| - 1) == 0 */
@@ -7487,9 +7487,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _088
+			private final /*@NonNull*/ SerializationRule _088
 				= /* ownedPathElements+=FirstPathElementCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(91, /* EssentialOCL::SimplePathNameCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(91, /* EssentialOCL::SimplePathNameCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._358 /* check-rule basecs::PathNameCS.ownedPathElements : FirstPathElementCS */,
 						ms._027 /* assert (|ownedPathElements| - 1) == 0 */
@@ -7501,9 +7501,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _089
+			private final /*@NonNull*/ SerializationRule _089
 				= /* { '[' ownedTerms+=ExpCS { ',' ownedTerms+=ExpCS }[*] ']' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(93, /* EssentialOCL::SquareBracketedClauseCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(93, /* EssentialOCL::SquareBracketedClauseCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._623 /* check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : ExpCS */,
 						ms._067 /* assign V0 = (|ownedTerms| - 1) */
@@ -7527,9 +7527,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _090
+			private final /*@NonNull*/ SerializationRule _090
 				= /* segments+=StringLiteral[+] */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(95, /* EssentialOCL::StringLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(95, /* EssentialOCL::StringLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._099 /* assign V0 = |segments| */
 					},
@@ -7540,9 +7540,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _091
+			private final /*@NonNull*/ SerializationRule _091
 				= /* segments+=StringLiteral[+] */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(95, /* EssentialOCL::StringLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(95, /* EssentialOCL::StringLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._099 /* assign V0 = |segments| */
 					},
@@ -7553,9 +7553,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _092
+			private final /*@NonNull*/ SerializationRule _092
 				= /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(103, /* EssentialOCL::TupleLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(103, /* EssentialOCL::TupleLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._626 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : TupleLiteralPartCS */,
 						ms._060 /* assign V0 = (|ownedParts| - 1) */
@@ -7581,9 +7581,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _093
+			private final /*@NonNull*/ SerializationRule _093
 				= /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(103, /* EssentialOCL::TupleLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(103, /* EssentialOCL::TupleLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._625 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : TupleLiteralPartCS */,
 						ms._060 /* assign V0 = (|ownedParts| - 1) */
@@ -7609,9 +7609,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _094
+			private final /*@NonNull*/ SerializationRule _094
 				= /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(104, /* EssentialOCL::TupleLiteralPartCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(104, /* EssentialOCL::TupleLiteralPartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._642 /* check-rule essentialoclcs::VariableCS.ownedType : TypeExpCS */,
 						ms._640 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : ExpCS */,
@@ -7638,9 +7638,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _095
+			private final /*@NonNull*/ SerializationRule _095
 				= /* { name=UnrestrictedName ':' ownedType=TypeExpCS } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(105, /* EssentialOCL::TuplePartCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(105, /* EssentialOCL::TuplePartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._436 /* check-rule basecs::TypedElementCS.ownedType : TypeExpCS */,
 						ms._038 /* assert (|ownedType| - 1) == 0 */,
@@ -7659,9 +7659,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _096
+			private final /*@NonNull*/ SerializationRule _096
 				= /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(106, /* EssentialOCL::TupleTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(106, /* EssentialOCL::TupleTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._430 /* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
 						ms._003 /* assert (|name.'Tuple'| - 1) == 0 */,
@@ -7694,9 +7694,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _097
+			private final /*@NonNull*/ SerializationRule _097
 				= /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(106, /* EssentialOCL::TupleTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(106, /* EssentialOCL::TupleTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._431 /* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
 						ms._003 /* assert (|name.'Tuple'| - 1) == 0 */,
@@ -7729,9 +7729,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _098
+			private final /*@NonNull*/ SerializationRule _098
 				= /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(107, /* EssentialOCL::TypeExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(107, /* EssentialOCL::TypeExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._432 /* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
 						ms._482 /* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
@@ -7768,9 +7768,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _099
+			private final /*@NonNull*/ SerializationRule _099
 				= /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(107, /* EssentialOCL::TypeExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(107, /* EssentialOCL::TypeExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._484 /* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
 						ms._085 /* assign V0 = |ownedMultiplicity| */,
@@ -7787,9 +7787,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _100
+			private final /*@NonNull*/ SerializationRule _100
 				= /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(107, /* EssentialOCL::TypeExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(107, /* EssentialOCL::TypeExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._523 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : PatternExpCS */,
 						ms._525 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : CollectionTypeCS */,
@@ -7828,9 +7828,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _101
+			private final /*@NonNull*/ SerializationRule _101
 				= /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(107, /* EssentialOCL::TypeExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(107, /* EssentialOCL::TypeExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._577 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
 						ms._572 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
@@ -7863,9 +7863,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _102
+			private final /*@NonNull*/ SerializationRule _102
 				= /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(107, /* EssentialOCL::TypeExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(107, /* EssentialOCL::TypeExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._633 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : PathNameCS */,
 						ms._636 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : ExpCS */,
@@ -7899,9 +7899,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _103
+			private final /*@NonNull*/ SerializationRule _103
 				= /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(107, /* EssentialOCL::TypeExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(107, /* EssentialOCL::TypeExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._533 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : TypeExpWithoutMultiplicityCS */,
 						ms._528 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
@@ -7932,9 +7932,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _104
+			private final /*@NonNull*/ SerializationRule _104
 				= /* ownedType=TypeLiteralWithMultiplicityCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(111, /* EssentialOCL::TypeLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(111, /* EssentialOCL::TypeLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._629 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : TypeLiteralWithMultiplicityCS */,
 						ms._040 /* assert (|ownedType| - 1) == 0 */
@@ -7946,9 +7946,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _105
+			private final /*@NonNull*/ SerializationRule _105
 				= /* ownedType=TypeLiteralWithMultiplicityCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(111, /* EssentialOCL::TypeLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(111, /* EssentialOCL::TypeLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._628 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : TypeLiteralWithMultiplicityCS */,
 						ms._040 /* assert (|ownedType| - 1) == 0 */
@@ -7960,9 +7960,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _106
+			private final /*@NonNull*/ SerializationRule _106
 				= /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._578 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
 						ms._573 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
@@ -7995,9 +7995,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _107
+			private final /*@NonNull*/ SerializationRule _107
 				= /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._433 /* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
 						ms._476 /* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
@@ -8034,9 +8034,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _108
+			private final /*@NonNull*/ SerializationRule _108
 				= /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._534 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : TypeExpWithoutMultiplicityCS */,
 						ms._529 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
@@ -8067,9 +8067,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _109
+			private final /*@NonNull*/ SerializationRule _109
 				= /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(112, /* EssentialOCL::TypeLiteralWithMultiplicityCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._485 /* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
 						ms._085 /* assign V0 = |ownedMultiplicity| */,
@@ -8086,9 +8086,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _110
+			private final /*@NonNull*/ SerializationRule _110
 				= /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(113, /* EssentialOCL::TypeNameExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(113, /* EssentialOCL::TypeNameExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._635 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : PathNameCS */,
 						ms._638 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : ExpCS */,
@@ -8118,9 +8118,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _111
+			private final /*@NonNull*/ SerializationRule _111
 				= /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(113, /* EssentialOCL::TypeNameExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(113, /* EssentialOCL::TypeNameExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._634 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : PathNameCS */,
 						ms._637 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : ExpCS */,
@@ -8150,9 +8150,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _112
+			private final /*@NonNull*/ SerializationRule _112
 				= /* referredElement=URI */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(122, /* EssentialOCL::URIFirstPathElementCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(122, /* EssentialOCL::URIFirstPathElementCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._049 /* assert (|referredElement| - 1) == 0 */
 					},
@@ -8163,9 +8163,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _113
+			private final /*@NonNull*/ SerializationRule _113
 				= /* referredElement=UnrestrictedName */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(122, /* EssentialOCL::URIFirstPathElementCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(122, /* EssentialOCL::URIFirstPathElementCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._049 /* assert (|referredElement| - 1) == 0 */
 					},
@@ -8176,9 +8176,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _114
+			private final /*@NonNull*/ SerializationRule _114
 				= /* { ownedPathElements+=URIFirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(123, /* EssentialOCL::URIPathNameCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(123, /* EssentialOCL::URIPathNameCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._360 /* check-rule basecs::PathNameCS.ownedPathElements : NextPathElementCS|URIFirstPathElementCS */,
 						ms._065 /* assign V0 = (|ownedPathElements| - 1) */
@@ -8198,9 +8198,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _115
+			private final /*@NonNull*/ SerializationRule _115
 				= /* '*' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(125, /* EssentialOCL::UnlimitedNaturalLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(125, /* EssentialOCL::UnlimitedNaturalLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -8210,9 +8210,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _116
+			private final /*@NonNull*/ SerializationRule _116
 				= /* '*' */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(125, /* EssentialOCL::UnlimitedNaturalLiteralExpCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(125, /* EssentialOCL::UnlimitedNaturalLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -8222,9 +8222,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _117
+			private final /*@NonNull*/ SerializationRule _117
 				= /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(1, /* OCLinEcore::AnnotationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(1, /* OCLinEcore::AnnotationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._230 /* check-rule basecs::AnnotationCS.ownedContents : ModelElementCS */,
 						ms._233 /* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
@@ -8272,9 +8272,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _118
+			private final /*@NonNull*/ SerializationRule _118
 				= /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(1, /* OCLinEcore::AnnotationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(1, /* OCLinEcore::AnnotationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._231 /* check-rule basecs::AnnotationCS.ownedContents : ModelElementCS */,
 						ms._234 /* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
@@ -8322,9 +8322,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _119
+			private final /*@NonNull*/ SerializationRule _119
 				= /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(1, /* OCLinEcore::AnnotationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(1, /* OCLinEcore::AnnotationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._237 /* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 						ms._076 /* assign V0 = |name| */,
@@ -8358,9 +8358,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _120
+			private final /*@NonNull*/ SerializationRule _120
 				= /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(1, /* OCLinEcore::AnnotationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(1, /* OCLinEcore::AnnotationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._229 /* check-rule basecs::AnnotationCS.ownedContents : ModelElementCS */,
 						ms._232 /* check-rule basecs::AnnotationCS.ownedReferences : ModelElementRefCS */,
@@ -8408,9 +8408,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _121
+			private final /*@NonNull*/ SerializationRule _121
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(3, /* OCLinEcore::AttributeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(3, /* OCLinEcore::AttributeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._289 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._369 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -8491,9 +8491,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _122
+			private final /*@NonNull*/ SerializationRule _122
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(3, /* OCLinEcore::AttributeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(3, /* OCLinEcore::AttributeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._438 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._156 /* assign V2 = |default| */,
@@ -8543,9 +8543,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _123
+			private final /*@NonNull*/ SerializationRule _123
 				= /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(3, /* OCLinEcore::AttributeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(3, /* OCLinEcore::AttributeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._279 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._368 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -8620,9 +8620,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _124
+			private final /*@NonNull*/ SerializationRule _124
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(3, /* OCLinEcore::AttributeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(3, /* OCLinEcore::AttributeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._441 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._156 /* assign V2 = |default| */,
@@ -8672,9 +8672,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _125
+			private final /*@NonNull*/ SerializationRule _125
 				= /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(3, /* OCLinEcore::AttributeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(3, /* OCLinEcore::AttributeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._439 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._113 /* assign V1 = |default| */,
@@ -8718,9 +8718,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _126
+			private final /*@NonNull*/ SerializationRule _126
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(3, /* OCLinEcore::AttributeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(3, /* OCLinEcore::AttributeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._274 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._370 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -8801,9 +8801,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _127
+			private final /*@NonNull*/ SerializationRule _127
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._427 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._157 /* assign V2 = |instanceClassName| */,
@@ -8844,9 +8844,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _128
+			private final /*@NonNull*/ SerializationRule _128
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._254 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._411 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -8897,9 +8897,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _129
+			private final /*@NonNull*/ SerializationRule _129
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._392 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._157 /* assign V2 = |instanceClassName| */,
@@ -8940,9 +8940,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _130
+			private final /*@NonNull*/ SerializationRule _130
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._421 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._157 /* assign V2 = |instanceClassName| */,
@@ -8980,9 +8980,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _131
+			private final /*@NonNull*/ SerializationRule _131
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._245 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._413 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -9032,9 +9032,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _132
+			private final /*@NonNull*/ SerializationRule _132
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._246 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._399 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -9082,9 +9082,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _133
+			private final /*@NonNull*/ SerializationRule _133
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._391 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._157 /* assign V2 = |instanceClassName| */,
@@ -9122,9 +9122,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _134
+			private final /*@NonNull*/ SerializationRule _134
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._251 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._412 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -9172,9 +9172,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _135
+			private final /*@NonNull*/ SerializationRule _135
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._390 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._157 /* assign V2 = |instanceClassName| */,
@@ -9214,9 +9214,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _136
+			private final /*@NonNull*/ SerializationRule _136
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._249 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._420 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -9267,9 +9267,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _137
+			private final /*@NonNull*/ SerializationRule _137
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._252 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._405 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -9319,9 +9319,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _138
+			private final /*@NonNull*/ SerializationRule _138
 				= /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(15, /* OCLinEcore::DataTypeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(15, /* OCLinEcore::DataTypeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._424 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._157 /* assign V2 = |instanceClassName| */,
@@ -9361,9 +9361,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _139
+			private final /*@NonNull*/ SerializationRule _139
 				= /* { name=(UnrestrictedName|SINGLE_QUOTED_STRING) '=' values+=(SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING)[*] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(16, /* OCLinEcore::DetailCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(16, /* OCLinEcore::DetailCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._101 /* assign V0 = |values| */,
 						ms._004 /* assert (|name| - 1) == 0 */
@@ -9381,9 +9381,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _140
+			private final /*@NonNull*/ SerializationRule _140
 				= /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(17, /* OCLinEcore::DocumentationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(17, /* OCLinEcore::DocumentationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._235 /* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 						ms._102 /* assign V0 = |value| */,
@@ -9417,9 +9417,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _141
+			private final /*@NonNull*/ SerializationRule _141
 				= /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(17, /* OCLinEcore::DocumentationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(17, /* OCLinEcore::DocumentationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._241 /* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 						ms._102 /* assign V0 = |value| */,
@@ -9453,9 +9453,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _142
+			private final /*@NonNull*/ SerializationRule _142
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._409 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._114 /* assign V1 = |instanceClassName| */,
@@ -9492,9 +9492,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _143
+			private final /*@NonNull*/ SerializationRule _143
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._414 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._114 /* assign V1 = |instanceClassName| */,
@@ -9532,9 +9532,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _144
+			private final /*@NonNull*/ SerializationRule _144
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._266 /* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
 						ms._255 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
@@ -9583,9 +9583,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _145
+			private final /*@NonNull*/ SerializationRule _145
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._269 /* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
 						ms._248 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
@@ -9634,9 +9634,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _146
+			private final /*@NonNull*/ SerializationRule _146
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._425 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._114 /* assign V1 = |instanceClassName| */,
@@ -9673,9 +9673,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _147
+			private final /*@NonNull*/ SerializationRule _147
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._417 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._114 /* assign V1 = |instanceClassName| */,
@@ -9713,9 +9713,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _148
+			private final /*@NonNull*/ SerializationRule _148
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._401 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._114 /* assign V1 = |instanceClassName| */,
@@ -9750,9 +9750,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _149
+			private final /*@NonNull*/ SerializationRule _149
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._271 /* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
 						ms._258 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
@@ -9804,9 +9804,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _150
+			private final /*@NonNull*/ SerializationRule _150
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._268 /* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
 						ms._257 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
@@ -9858,9 +9858,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _151
+			private final /*@NonNull*/ SerializationRule _151
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._422 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
 						ms._114 /* assign V1 = |instanceClassName| */,
@@ -9895,9 +9895,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _152
+			private final /*@NonNull*/ SerializationRule _152
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._270 /* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
 						ms._250 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
@@ -9948,9 +9948,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _153
+			private final /*@NonNull*/ SerializationRule _153
 				= /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(21, /* OCLinEcore::EnumerationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(21, /* OCLinEcore::EnumerationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._267 /* check-rule basecs::EnumerationCS.ownedLiterals : EnumerationLiteralCS */,
 						ms._256 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
@@ -10001,9 +10001,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _154
+			private final /*@NonNull*/ SerializationRule _154
 				= /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._133 /* assign V1 = |value| */,
 						ms._075 /* assign V0 = |literal| */,
@@ -10034,9 +10034,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _155
+			private final /*@NonNull*/ SerializationRule _155
 				= /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._133 /* assign V1 = |value| */,
 						ms._075 /* assign V0 = |literal| */,
@@ -10065,9 +10065,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _156
+			private final /*@NonNull*/ SerializationRule _156
 				= /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._283 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._158 /* assign V2 = |ownedAnnotations| */,
@@ -10102,9 +10102,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _157
+			private final /*@NonNull*/ SerializationRule _157
 				= /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(22, /* OCLinEcore::EnumerationLiteralCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._281 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._158 /* assign V2 = |ownedAnnotations| */,
@@ -10141,9 +10141,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _158
+			private final /*@NonNull*/ SerializationRule _158
 				= /* { 'opposite' name=UnrestrictedName ':' ownedType=TypedMultiplicityRefCS { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(37, /* OCLinEcore::ImplicitOppositeCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(37, /* OCLinEcore::ImplicitOppositeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._454 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._038 /* assert (|ownedType| - 1) == 0 */,
@@ -10176,9 +10176,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _159
+			private final /*@NonNull*/ SerializationRule _159
 				= /* { {'import'|'library'} { name=UnrestrictedName ':' }[?] ownedPathName=URIPathNameCS isAll='::*'[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(38, /* OCLinEcore::ImportCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(38, /* OCLinEcore::ImportCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._272 /* check-rule basecs::ImportCS.ownedPathName : URIPathNameCS */,
 						ms._115 /* assign V1 = |isAll.'::*'| */,
@@ -10206,9 +10206,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _160
+			private final /*@NonNull*/ SerializationRule _160
 				= /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(41, /* OCLinEcore::InvariantConstraintCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(41, /* OCLinEcore::InvariantConstraintCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._263 /* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
 						ms._260 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
@@ -10247,9 +10247,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _161
+			private final /*@NonNull*/ SerializationRule _161
 				= /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(41, /* OCLinEcore::InvariantConstraintCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(41, /* OCLinEcore::InvariantConstraintCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._259 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
 						ms._117 /* assign V1 = |name| */,
@@ -10282,9 +10282,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _162
+			private final /*@NonNull*/ SerializationRule _162
 				= /* { 'reference' ownedPathName=PathNameCS ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(54, /* OCLinEcore::ModelElementRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(54, /* OCLinEcore::ModelElementRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._310 /* check-rule basecs::ModelElementRefCS.ownedPathName : PathNameCS */,
 						ms._029 /* assert (|ownedPathName| - 1) == 0 */
@@ -10302,9 +10302,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _163
+			private final /*@NonNull*/ SerializationRule _163
 				= /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._330 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
 						ms._318 /* check-rule basecs::OperationCS.ownedExceptions : TypedRefCS */,
@@ -10377,9 +10377,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _164
+			private final /*@NonNull*/ SerializationRule _164
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._329 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
 						ms._327 /* check-rule basecs::OperationCS.ownedExceptions : TypedRefCS */,
@@ -10458,9 +10458,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _165
+			private final /*@NonNull*/ SerializationRule _165
 				= /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._347 /* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
 						ms._333 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
@@ -10560,9 +10560,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _166
+			private final /*@NonNull*/ SerializationRule _166
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._338 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
 						ms._328 /* check-rule basecs::OperationCS.ownedExceptions : TypedRefCS */,
@@ -10641,9 +10641,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _167
+			private final /*@NonNull*/ SerializationRule _167
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._352 /* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
 						ms._339 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
@@ -10749,9 +10749,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _168
+			private final /*@NonNull*/ SerializationRule _168
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._348 /* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
 						ms._335 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
@@ -10857,9 +10857,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _169
+			private final /*@NonNull*/ SerializationRule _169
 				= /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._337 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
 						ms._326 /* check-rule basecs::OperationCS.ownedExceptions : TypedRefCS */,
@@ -10932,9 +10932,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _170
+			private final /*@NonNull*/ SerializationRule _170
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._351 /* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
 						ms._334 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
@@ -11040,9 +11040,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _171
+			private final /*@NonNull*/ SerializationRule _171
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._331 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
 						ms._317 /* check-rule basecs::OperationCS.ownedExceptions : TypedRefCS */,
@@ -11121,9 +11121,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _172
+			private final /*@NonNull*/ SerializationRule _172
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._349 /* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
 						ms._336 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
@@ -11229,9 +11229,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _173
+			private final /*@NonNull*/ SerializationRule _173
 				= /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._350 /* check-rule basecs::OperationCS.ownedPreconditions : PreconditionConstraintCS */,
 						ms._340 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
@@ -11331,9 +11331,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _174
+			private final /*@NonNull*/ SerializationRule _174
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(70, /* OCLinEcore::OperationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(70, /* OCLinEcore::OperationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._332 /* check-rule basecs::OperationCS.ownedParameters : ParameterCS */,
 						ms._320 /* check-rule basecs::OperationCS.ownedExceptions : TypedRefCS */,
@@ -11412,9 +11412,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _175
+			private final /*@NonNull*/ SerializationRule _175
 				= /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(71, /* OCLinEcore::PackageCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(71, /* OCLinEcore::PackageCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._118 /* assign V1 = |nsURI| */,
 						ms._077 /* assign V0 = |nsPrefix| */,
@@ -11445,9 +11445,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _176
+			private final /*@NonNull*/ SerializationRule _176
 				= /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(71, /* OCLinEcore::PackageCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(71, /* OCLinEcore::PackageCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._355 /* check-rule basecs::PackageOwnerCS.ownedPackages : PackageCS */,
 						ms._353 /* check-rule basecs::PackageCS.ownedClasses : ClassCS */,
@@ -11492,9 +11492,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _177
+			private final /*@NonNull*/ SerializationRule _177
 				= /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(71, /* OCLinEcore::PackageCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(71, /* OCLinEcore::PackageCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._118 /* assign V1 = |nsURI| */,
 						ms._077 /* assign V0 = |nsPrefix| */,
@@ -11525,9 +11525,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _178
+			private final /*@NonNull*/ SerializationRule _178
 				= /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(71, /* OCLinEcore::PackageCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(71, /* OCLinEcore::PackageCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._356 /* check-rule basecs::PackageOwnerCS.ownedPackages : PackageCS */,
 						ms._354 /* check-rule basecs::PackageCS.ownedClasses : ClassCS */,
@@ -11572,9 +11572,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _179
+			private final /*@NonNull*/ SerializationRule _179
 				= /* { name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] { '{' ownedAnnotations+=AnnotationElementCS[*] '}' }[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(72, /* OCLinEcore::ParameterCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(72, /* OCLinEcore::ParameterCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._303 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._451 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
@@ -11618,9 +11618,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _180
+			private final /*@NonNull*/ SerializationRule _180
 				= /* { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(75, /* OCLinEcore::PostconditionConstraintCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(75, /* OCLinEcore::PostconditionConstraintCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._264 /* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
 						ms._261 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
@@ -11656,9 +11656,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _181
+			private final /*@NonNull*/ SerializationRule _181
 				= /* { stereotype='precondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(76, /* OCLinEcore::PreconditionConstraintCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(76, /* OCLinEcore::PreconditionConstraintCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._265 /* check-rule basecs::ConstraintCS.ownedSpecification : SpecificationCS */,
 						ms._262 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : SpecificationCS */,
@@ -11694,9 +11694,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _182
+			private final /*@NonNull*/ SerializationRule _182
 				= /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._296 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._376 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -11802,9 +11802,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _183
+			private final /*@NonNull*/ SerializationRule _183
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._444 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._173 /* assign V3 = |default| */,
@@ -11861,9 +11861,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _184
+			private final /*@NonNull*/ SerializationRule _184
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._462 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._173 /* assign V3 = |default| */,
@@ -11920,9 +11920,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _185
+			private final /*@NonNull*/ SerializationRule _185
 				= /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._309 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._371 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -12028,9 +12028,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _186
+			private final /*@NonNull*/ SerializationRule _186
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._304 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._374 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -12142,9 +12142,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _187
+			private final /*@NonNull*/ SerializationRule _187
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._290 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._373 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -12256,9 +12256,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _188
+			private final /*@NonNull*/ SerializationRule _188
 				= /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._457 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._156 /* assign V2 = |default| */,
@@ -12309,9 +12309,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _189
+			private final /*@NonNull*/ SerializationRule _189
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._293 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._375 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -12423,9 +12423,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _190
+			private final /*@NonNull*/ SerializationRule _190
 				= /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._459 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._173 /* assign V3 = |default| */,
@@ -12482,9 +12482,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _191
+			private final /*@NonNull*/ SerializationRule _191
 				= /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._452 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._156 /* assign V2 = |default| */,
@@ -12535,9 +12535,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _192
+			private final /*@NonNull*/ SerializationRule _192
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._277 /* check-rule basecs::ModelElementCS.ownedAnnotations : AnnotationElementCS */,
 						ms._372 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : SpecificationCS */,
@@ -12649,9 +12649,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _193
+			private final /*@NonNull*/ SerializationRule _193
 				= /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(83, /* OCLinEcore::ReferenceCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(83, /* OCLinEcore::ReferenceCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._442 /* check-rule basecs::TypedElementCS.ownedType : TypedMultiplicityRefCS */,
 						ms._173 /* assign V3 = |default| */,
@@ -12708,9 +12708,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _194
+			private final /*@NonNull*/ SerializationRule _194
 				= /* ownedExpression=ExpCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(92, /* OCLinEcore::SpecificationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(92, /* OCLinEcore::SpecificationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._538 /* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : ExpCS */,
 						ms._018 /* assert (|ownedExpression| - 1) == 0 */
@@ -12722,9 +12722,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _195
+			private final /*@NonNull*/ SerializationRule _195
 				= /* exprString=UNQUOTED_STRING */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(92, /* OCLinEcore::SpecificationCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(92, /* OCLinEcore::SpecificationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._000 /* assert (|exprString| - 1) == 0 */
 					},
@@ -12735,9 +12735,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _196
+			private final /*@NonNull*/ SerializationRule _196
 				= /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(97, /* OCLinEcore::StructuredClassCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(97, /* OCLinEcore::StructuredClassCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._247 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._382 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : TypedRefCS */,
@@ -12811,9 +12811,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _197
+			private final /*@NonNull*/ SerializationRule _197
 				= /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(97, /* OCLinEcore::StructuredClassCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(97, /* OCLinEcore::StructuredClassCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._383 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : TypedRefCS */,
 						ms._400 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -12869,9 +12869,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _198
+			private final /*@NonNull*/ SerializationRule _198
 				= /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(97, /* OCLinEcore::StructuredClassCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(97, /* OCLinEcore::StructuredClassCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._381 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : TypedRefCS */,
 						ms._426 /* check-rule basecs::TemplateableElementCS.ownedSignature : TemplateSignatureCS */,
@@ -12927,9 +12927,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _199
+			private final /*@NonNull*/ SerializationRule _199
 				= /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(97, /* OCLinEcore::StructuredClassCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(97, /* OCLinEcore::StructuredClassCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._253 /* check-rule basecs::ClassCS.ownedConstraints : InvariantConstraintCS */,
 						ms._384 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : TypedRefCS */,
@@ -13003,9 +13003,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _200
+			private final /*@NonNull*/ SerializationRule _200
 				= /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(98, /* OCLinEcore::SysMLCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(98, /* OCLinEcore::SysMLCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._243 /* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 						ms._080 /* assign V0 = |ownedDetails| */
@@ -13029,9 +13029,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _201
+			private final /*@NonNull*/ SerializationRule _201
 				= /* { 'sysml' ownedDetails+=DetailCS ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(98, /* OCLinEcore::SysMLCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(98, /* OCLinEcore::SysMLCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._242 /* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 						ms._012 /* assert (|ownedDetails| - 1) == 0 */
@@ -13049,9 +13049,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _202
+			private final /*@NonNull*/ SerializationRule _202
 				= /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(98, /* OCLinEcore::SysMLCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(98, /* OCLinEcore::SysMLCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._239 /* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 						ms._080 /* assign V0 = |ownedDetails| */
@@ -13075,9 +13075,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._6 /* «-» + «? » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _203
+			private final /*@NonNull*/ SerializationRule _203
 				= /* { 'sysml' ownedDetails+=DetailCS ';' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(98, /* OCLinEcore::SysMLCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(98, /* OCLinEcore::SysMLCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._244 /* check-rule basecs::AnnotationElementCS.ownedDetails : DetailCS */,
 						ms._012 /* assert (|ownedDetails| - 1) == 0 */
@@ -13095,9 +13095,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._4 /* «! » + «value» + «?\n» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _204
+			private final /*@NonNull*/ SerializationRule _204
 				= /* { '<' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] '>' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(101, /* OCLinEcore::TemplateSignatureCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(101, /* OCLinEcore::TemplateSignatureCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._389 /* check-rule basecs::TemplateSignatureCS.ownedParameters : TypeParameterCS */,
 						ms._059 /* assign V0 = (|ownedParameters| - 1) */
@@ -13121,9 +13121,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _205
+			private final /*@NonNull*/ SerializationRule _205
 				= /* { '(' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] ')' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(101, /* OCLinEcore::TemplateSignatureCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(101, /* OCLinEcore::TemplateSignatureCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._388 /* check-rule basecs::TemplateSignatureCS.ownedParameters : TypeParameterCS */,
 						ms._059 /* assign V0 = (|ownedParameters| - 1) */
@@ -13147,9 +13147,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _206
+			private final /*@NonNull*/ SerializationRule _206
 				= /* { { 'module' }[?] ownedImports+=ImportCS[*] ownedPackages+=PackageCS[*] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(102, /* OCLinEcore::TopLevelCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(102, /* OCLinEcore::TopLevelCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._357 /* check-rule basecs::PackageOwnerCS.ownedPackages : PackageCS */,
 						ms._367 /* check-rule basecs::RootCS.ownedImports : ImportCS */,
@@ -13172,9 +13172,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _207
+			private final /*@NonNull*/ SerializationRule _207
 				= /* { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._495 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._481 /* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
@@ -13192,9 +13192,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _208
+			private final /*@NonNull*/ SerializationRule _208
 				= /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._496 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._488 /* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
@@ -13220,9 +13220,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _209
+			private final /*@NonNull*/ SerializationRule _209
 				= /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._579 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : TypeExpCS */,
 						ms._574 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : TypeExpCS */,
@@ -13255,9 +13255,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _210
+			private final /*@NonNull*/ SerializationRule _210
 				= /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._434 /* check-rule basecs::TupleTypeCS.ownedParts : TuplePartCS */,
 						ms._483 /* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
@@ -13294,9 +13294,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _211
+			private final /*@NonNull*/ SerializationRule _211
 				= /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._535 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : TypeExpWithoutMultiplicityCS */,
 						ms._530 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : MultiplicityCS */,
@@ -13327,9 +13327,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _212
+			private final /*@NonNull*/ SerializationRule _212
 				= /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._497 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._489 /* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
@@ -13355,9 +13355,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _213
+			private final /*@NonNull*/ SerializationRule _213
 				= /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(116, /* OCLinEcore::TypedMultiplicityRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._475 /* check-rule basecs::TypedRefCS.ownedMultiplicity : MultiplicityCS */,
 						ms._085 /* assign V0 = |ownedMultiplicity| */,
@@ -13374,9 +13374,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _214
+			private final /*@NonNull*/ SerializationRule _214
 				= /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._499 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._490 /* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
@@ -13398,9 +13398,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _215
+			private final /*@NonNull*/ SerializationRule _215
 				= /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._494 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._486 /* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
@@ -13422,9 +13422,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._5 /* «! » + «value» */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _216
+			private final /*@NonNull*/ SerializationRule _216
 				= /* ownedPathName=PathNameCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._498 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._030 /* assert (|ownedPathName| - 1) == 0 */
@@ -13436,9 +13436,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _217
+			private final /*@NonNull*/ SerializationRule _217
 				= /* ownedPathName=PathNameCS */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._493 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._030 /* assert (|ownedPathName| - 1) == 0 */
@@ -13450,9 +13450,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						null
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _218
+			private final /*@NonNull*/ SerializationRule _218
 				= /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._500 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._491 /* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
@@ -13474,9 +13474,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ss._8 /* «? » + «value» + «? » */
 					}
 				);
-			private final /*@NonNull*/ RTSerializationRule _219
+			private final /*@NonNull*/ SerializationRule _219
 				= /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
+				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._492 /* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
 						ms._487 /* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,

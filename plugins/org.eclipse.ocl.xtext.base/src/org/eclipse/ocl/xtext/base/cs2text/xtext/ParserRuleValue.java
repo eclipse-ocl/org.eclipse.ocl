@@ -13,14 +13,14 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 
 public class ParserRuleValue extends AbstractRuleValue
 {
 	protected final @Nullable IndexVector subParserRuleValueIndexes;	// Includes this if non-null
-	protected final @NonNull RTSerializationRule @NonNull [] rtSerializationRules;
+	protected final @NonNull SerializationRule @NonNull [] rtSerializationRules;
 
-	public ParserRuleValue(int ruleIndex, @NonNull String name, @NonNull RTSerializationRule @NonNull[] rtSerializationRules, @Nullable IndexVector subParserRuleValueIndexes) {
+	public ParserRuleValue(int ruleIndex, @NonNull String name, @NonNull SerializationRule @NonNull[] rtSerializationRules, @Nullable IndexVector subParserRuleValueIndexes) {
 		super(ruleIndex, name);
 		this.subParserRuleValueIndexes = subParserRuleValueIndexes;
 		this.rtSerializationRules = rtSerializationRules;
@@ -38,7 +38,7 @@ public class ParserRuleValue extends AbstractRuleValue
 		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name) && ClassUtil.safeEquals(this.subParserRuleValueIndexes, that.subParserRuleValueIndexes);
 	}
 
-	public @NonNull RTSerializationRule @NonNull[] getSerializationRules() {
+	public @NonNull SerializationRule @NonNull[] getSerializationRules() {
 		return rtSerializationRules;
 	}
 

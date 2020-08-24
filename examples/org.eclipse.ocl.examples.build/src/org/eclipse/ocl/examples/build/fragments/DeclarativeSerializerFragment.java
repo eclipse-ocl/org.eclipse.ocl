@@ -36,13 +36,13 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -233,8 +233,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			serializationStep2id = serializationStep2id2 = new HashMap<>();
 		}
 		for (@NonNull EClass eClass : grammarAnalysis.getSortedProducedEClasses()) {
-			for(@NonNull RTSerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
-				for(@NonNull RTSerializationStep serializationStep : serializationRule.getBasicSerializationRule().getRuntime().getSerializationSteps()) {
+			for(@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationRuleAnalysis().getRuntime().getSerializationSteps()) {
 					serializationStep2id2.put(serializationStep, "");
 				}
 			}
@@ -294,8 +294,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			solutionStep2id = solutionStep2id2 = new HashMap<>();
 		}
 		for (@NonNull EClass eClass : grammarAnalysis.getSortedProducedEClasses()) {
-			for(@NonNull RTSerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
-				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps()) {
+			for(@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getSerializationRuleAnalysis().getStaticRuleMatch().getSteps()) {
 					solutionStep2id2.put(solutionStep, "");
 				}
 			}
@@ -325,8 +325,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			solution2id = solution2id2 = new HashMap<>();
 		}
 		for (@NonNull EClass eClass : grammarAnalysis.getSortedProducedEClasses()) {
-			for(@NonNull RTSerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
-				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps()) {
+			for(@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getSerializationRuleAnalysis().getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
 						solution2id2.put(solution, "");
 					}
@@ -374,8 +374,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			}
 		}
 		for (@NonNull EClass eClass : grammarAnalysis.getSortedProducedEClasses()) {
-			for (@NonNull RTSerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
-				for (@NonNull CardinalitySolutionStep solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps()) {
+			for (@NonNull SerializationRule serializationRule : grammarAnalysis.getSerializationRules(eClass)) {
+				for (@NonNull CardinalitySolutionStep solutionStep : serializationRule.getSerializationRuleAnalysis().getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
 						if (solution instanceof EAttributeSizeCardinalitySolution) {
 							enumValue2id2.put(((EAttributeSizeCardinalitySolution)solution).getEnumerationValue(), "");
@@ -449,39 +449,39 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return id;
 	}
 
-	private @Nullable Map<@NonNull RTSerializationRule, @NonNull String> serializationRule2id = null;
-	private @Nullable List<@NonNull BasicSerializationRule> serializationRules = null;
+	private @Nullable Map<@NonNull SerializationRule, @NonNull String> serializationRule2id = null;
+	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRules = null;
 
 	protected void initSerializationRule2id(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull RTSerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
+		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
 		if (serializationRule2id2 == null) {
-			Set<@NonNull BasicSerializationRule> basicSerializationRules = new HashSet<>();
+			Set<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = new HashSet<>();
 			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					for (@NonNull BasicSerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
-					//	System.out.println(NameUtil.debugSimpleName(serializationRule) + " => " + NameUtil.debugSimpleName(serializationRule.getBasicSerializationRule()) + " => " + NameUtil.debugSimpleName(serializationRule.getBasicSerializationRule().getRuntime()) + " : " + serializationRule.toString());
-						basicSerializationRules.add(serializationRule);
+					for (@NonNull SerializationRuleAnalysis serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
+					//	System.out.println(NameUtil.debugSimpleName(serializationRule) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis()) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis().getRuntime()) + " : " + serializationRule.toString());
+						serializationRuleAnalyses.add(serializationRule);
 					}
 				}
 			}
-			List<@NonNull BasicSerializationRule> serializationRules = new ArrayList<>(basicSerializationRules);
+			List<@NonNull SerializationRuleAnalysis> serializationRules = new ArrayList<>(serializationRuleAnalyses);
 			Collections.sort(serializationRules, NameUtil.NAMEABLE_COMPARATOR);
 			serializationRule2id = serializationRule2id2 = new HashMap<>();
 			String formatString = "_" + getDigitsFormatString(serializationRules);
 			int i = 0;
-			for (@NonNull BasicSerializationRule serializationRule : serializationRules) {
+			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
 				serializationRule2id2.put(serializationRule.getRuntime(), String.format(formatString, i++));
 			}
 			this.serializationRules = serializationRules;
 		}
 	}
 
-	protected @NonNull Iterable<@NonNull BasicSerializationRule> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
 		assert serializationRules != null;
 		return serializationRules;
 	}
 
-	protected @NonNull String getSerializationRuleId(@NonNull RTSerializationRule serializationRule, boolean addQualifier) {
+	protected @NonNull String getSerializationRuleId(@NonNull SerializationRule serializationRule, boolean addQualifier) {
 		assert serializationRule2id != null;
 		String id = serializationRule2id.get(serializationRule);
 	//	System.out.println("?? " + NameUtil.debugSimpleName(serializationRule) + " => " + id  + " : " + serializationRule.toRuleString());

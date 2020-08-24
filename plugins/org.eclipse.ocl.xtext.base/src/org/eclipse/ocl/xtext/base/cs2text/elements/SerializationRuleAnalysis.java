@@ -31,7 +31,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
@@ -44,7 +44,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 import com.google.common.collect.Iterables;
 
-public class BasicSerializationRule implements Nameable, ToDebugStringable
+public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 {
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
@@ -76,9 +76,9 @@ public class BasicSerializationRule implements Nameable, ToDebugStringable
 	 */
 	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
 
-	private @Nullable RTSerializationRule runtime = null;
+	private @Nullable SerializationRule runtime = null;
 
-	public BasicSerializationRule(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
+	public SerializationRuleAnalysis(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.rootSerializationNode = rootSerializationNode;
 	}
@@ -374,8 +374,8 @@ public class BasicSerializationRule implements Nameable, ToDebugStringable
 		return ruleAnalysis.getIndex();
 	}
 
-	public @NonNull RTSerializationRule getRuntime() {
-		RTSerializationRule runtime2 = runtime;
+	public @NonNull SerializationRule getRuntime() {
+		SerializationRule runtime2 = runtime;
 		if (runtime2 == null) {
 			getStaticRuleMatch();
 			runtime2 = runtime;

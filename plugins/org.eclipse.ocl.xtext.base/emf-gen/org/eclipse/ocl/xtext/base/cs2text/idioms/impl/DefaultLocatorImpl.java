@@ -18,7 +18,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSeriali
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
@@ -67,7 +67,7 @@ public class DefaultLocatorImpl extends LocatorImpl implements DefaultLocator
 	}
 
 	@Override
-	public boolean matches(SerializationNode serializationNode, BasicSerializationRule serializationRule) {
+	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			return true;
 		}

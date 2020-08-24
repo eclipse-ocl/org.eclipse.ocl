@@ -267,8 +267,8 @@ public interface IdiomsPackage extends EPackage
 	 * The meta object id for the '<em>Basic Serialization Rule</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getBasicSerializationRule()
+	 * @see org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationRuleAnalysis()
 	 * @generated
 	 */
 	int BASIC_SERIALIZATION_RULE = 21;
@@ -774,15 +774,15 @@ public interface IdiomsPackage extends EPackage
 	EClass getValueSegment();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule <em>Basic Serialization Rule</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis <em>Basic Serialization Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Basic Serialization Rule</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule" serializeable="false"
+	 * @see org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
+	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis" serializeable="false"
 	 * @generated
 	 */
-	EDataType getBasicSerializationRule();
+	EDataType getSerializationRuleAnalysis();
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch <em>Idiom Match</em>}'.
@@ -1249,11 +1249,11 @@ public interface IdiomsPackage extends EPackage
 		 * The meta object literal for the '<em>Basic Serialization Rule</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getBasicSerializationRule()
+		 * @see org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationRuleAnalysis()
 		 * @generated
 		 */
-		EDataType BASIC_SERIALIZATION_RULE = eINSTANCE.getBasicSerializationRule();
+		EDataType BASIC_SERIALIZATION_RULE = eINSTANCE.getSerializationRuleAnalysis();
 
 		/**
 		 * The meta object literal for the '<em>Idiom Match</em>' data type.

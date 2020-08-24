@@ -23,10 +23,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -39,9 +39,9 @@ import com.google.common.collect.Lists;
 public class DynamicSerializationRules
 {
 	protected final @NonNull EClassData eClassData;
-	protected final @NonNull RTSerializationRule @NonNull [] serializationRules;
+	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 
-	public DynamicSerializationRules(@NonNull EClassData eClassData, @NonNull RTSerializationRule @NonNull [] serializationRules) {
+	public DynamicSerializationRules(@NonNull EClassData eClassData, @NonNull SerializationRule @NonNull [] serializationRules) {
 		this.eClassData = eClassData;
 		this.serializationRules = serializationRules;
 	}
@@ -52,8 +52,8 @@ public class DynamicSerializationRules
 //	}
 
 	public boolean allRulesNeedDefault(@NonNull EAttribute eAttribute) {
-		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
-			if (!serializationRule.getBasicSerializationRule().needsDefault(eAttribute)) {
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
+			if (!serializationRule.getSerializationRuleAnalysis().needsDefault(eAttribute)) {
 				return false;
 			}
 		}
@@ -61,9 +61,9 @@ public class DynamicSerializationRules
 	}
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable ParserRuleValue targetParserRuleValue) {
-		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationRule.getRuleValueIndex())) {
-				DynamicRuleMatch dynamicRuleMatch = serializationRule.getBasicSerializationRule().match(slotsAnalysis);
+				DynamicRuleMatch dynamicRuleMatch = serializationRule.getSerializationRuleAnalysis().match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {
 					return dynamicRuleMatch;
 				}
@@ -74,7 +74,7 @@ public class DynamicSerializationRules
 
 	public void diagnose(@NonNull StringBuilder s, @NonNull UserSlotsAnalysis slotsAnalysis) {
 		char c = 'A';
-		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			s.append("\n  [");
 			s.append(c++);
 			s.append("] ");
@@ -84,7 +84,7 @@ public class DynamicSerializationRules
 		c = 'A';
 		s.append(String.format("%-30.30s%9s", "feature", "actual"));
 	//	Set<@NonNull EStructuralFeature> allFeatures = new HashSet<>();
-		for (@SuppressWarnings("unused") @NonNull RTSerializationRule serializationRule : serializationRules) {
+		for (@SuppressWarnings("unused") @NonNull SerializationRule serializationRule : serializationRules) {
 			s.append(" [");
 			s.append(c++);
 			s.append("]");
@@ -98,9 +98,9 @@ public class DynamicSerializationRules
 			s.append("\n");
 			int size = slotsAnalysis.getSize(eStructuralFeature);
 			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
-			for (@NonNull RTSerializationRule serializationRule : serializationRules) {
-				BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-				MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eStructuralFeature);
+			for (@NonNull SerializationRule serializationRule : serializationRules) {
+				SerializationRuleAnalysis serializationRuleAnalysis = serializationRule.getSerializationRuleAnalysis();
+				MultiplicativeCardinality multiplicativeCardinality = serializationRuleAnalysis.getMultiplicativeCardinality(eStructuralFeature);
 				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 			}
 			if (eStructuralFeature instanceof EAttribute) {
@@ -112,9 +112,9 @@ public class DynamicSerializationRules
 					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
 						int size2 = slotsAnalysis.getSize(eAttribute, enumerationValue);
 						s.append(String.format("\n %-29.29s%8d", "'" + enumerationValue.getName() + "'", size2));
-						for (@NonNull RTSerializationRule serializationRule : serializationRules) {
-							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eAttribute, enumerationValue);
+						for (@NonNull SerializationRule serializationRule : serializationRules) {
+							SerializationRuleAnalysis serializationRuleAnalysis = serializationRule.getSerializationRuleAnalysis();
+							MultiplicativeCardinality multiplicativeCardinality = serializationRuleAnalysis.getMultiplicativeCardinality(eAttribute, enumerationValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 						}
 					}
@@ -129,9 +129,9 @@ public class DynamicSerializationRules
 					for (@NonNull ParserRuleValue ruleValue : sortedRuleValues) {
 						int size2 = slotsAnalysis.getSize(eReference, ruleValue);
 						s.append(String.format("\n %-29.29s%8d", "'" + ruleValue.getName() + "'", size2));
-						for (@NonNull RTSerializationRule serializationRule : serializationRules) {
-							BasicSerializationRule basicSerializationRule = serializationRule.getBasicSerializationRule();
-							MultiplicativeCardinality multiplicativeCardinality = basicSerializationRule.getMultiplicativeCardinality(eReference, ruleValue);
+						for (@NonNull SerializationRule serializationRule : serializationRules) {
+							SerializationRuleAnalysis serializationRuleAnalysis = serializationRule.getSerializationRuleAnalysis();
+							MultiplicativeCardinality multiplicativeCardinality = serializationRuleAnalysis.getMultiplicativeCardinality(eReference, ruleValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 						}
 					}
@@ -143,7 +143,7 @@ public class DynamicSerializationRules
 
 	public @Nullable Iterable<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
 		Set<@NonNull ParserRuleValue> allAssignedRuleValues = null;
-		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Set<@NonNull ParserRuleValue> assignedRuleValues = serializationRule.getAssignedRuleValues(eReference);
 			if (assignedRuleValues != null) {
 				if (allAssignedRuleValues == null) {
@@ -157,7 +157,7 @@ public class DynamicSerializationRules
 
 	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		Set<@NonNull EnumerationValue> allEnumerationValues = null;
-		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Set<@NonNull EnumerationValue> enumerationValues = serializationRule.getEnumerationValues(eAttribute);
 			if (enumerationValues != null) {
 				if (allEnumerationValues == null) {
@@ -191,7 +191,7 @@ public class DynamicSerializationRules
 		s.append("::");
 		s.append(eClass.getName());
 	//	boolean isMany = Iterables.size(serializationRules) > 1;
-		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
 	//		if (isMany) {
 				StringUtil.appendIndentation(s, depth+1);
 	//		}
@@ -200,7 +200,7 @@ public class DynamicSerializationRules
 	//		}
 	//		s.append(serializationRule.getName());
 	//		s.append(" - ");
-		//	basicSerializationRule.toRuleString(s);
+		//	serializationRuleAnalysis.toRuleString(s);
 			serializationRule.toSolutionString(s, depth+2);
 		}
 	}

@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -27,13 +27,13 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
-public class RTSerializationRule
+public class SerializationRule
 {
 	private final int ruleValueIndex;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @Nullable Segment @NonNull [] @NonNull [] staticSegments;
 
-	public RTSerializationRule(int ruleValueIndex,
+	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments) {
@@ -136,11 +136,6 @@ public class RTSerializationRule
 		throw new UnsupportedOperationException();
 	}
 
-	public @NonNull BasicSerializationRule getBasicSerializationRule() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
-
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
@@ -148,6 +143,11 @@ public class RTSerializationRule
 
 	public int getRuleValueIndex() {
 		return ruleValueIndex;
+	}
+
+	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 	public void toRuleString(@NonNull StringBuilder s) {
