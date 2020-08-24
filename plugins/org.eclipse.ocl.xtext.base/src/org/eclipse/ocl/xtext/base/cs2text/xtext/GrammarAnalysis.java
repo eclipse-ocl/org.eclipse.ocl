@@ -451,7 +451,7 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 		Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = null;
 		for (EReference eContainmentFeature : containment2assignmentAnalyses.keySet()) {	// FIXME this is needlessly broad
 			Set<@NonNull AbstractRuleValue> targetRuleValues = null;
-			for (@NonNull SerializationRule serializationRule : serializationRules) {
+			for (@NonNull BasicSerializationRule serializationRule : serializationRules) {
 				Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
 				if (assignedSerializationNodes != null) {
 					for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {

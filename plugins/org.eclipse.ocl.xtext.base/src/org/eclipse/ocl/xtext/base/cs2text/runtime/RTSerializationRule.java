@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -144,19 +143,11 @@ public class RTSerializationRule implements SerializationRule
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(
-			@NonNull EReference eReference) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public @NonNull BasicSerializationRule getBasicSerializationRule() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();

@@ -12,12 +12,10 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -25,10 +23,8 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public interface SerializationRule
 {
-	@Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference);
 	@Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference);
 	@NonNull BasicSerializationRule getBasicSerializationRule();
-	@Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute);
 	int getRuleValueIndex();
 	@Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis);
 	void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);

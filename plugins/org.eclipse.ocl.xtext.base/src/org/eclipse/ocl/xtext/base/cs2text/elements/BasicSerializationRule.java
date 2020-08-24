@@ -171,7 +171,6 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		return assignedRuleValues;
 	}
 
-	@Override
 	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
 		return gatherAssignedSerializationNodes(eReference, rootSerializationNode, null);
 	}
@@ -275,10 +274,8 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		return eReference2discriminatingRuleValueIndexes;
 	} */
 
-	@Override
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		Set<@NonNull EnumerationValue> enumerationValues1 = getEAttribute2EnumerationValues().get(eAttribute);
-		return enumerationValues1;
+		return getEAttribute2EnumerationValues().get(eAttribute);
 	}
 
 	private void getIdiomMatches(@NonNull SerializationNode serializationNode, @NonNull Iterable<@NonNull Idiom> idioms,
