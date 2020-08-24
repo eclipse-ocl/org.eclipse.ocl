@@ -32,18 +32,17 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class RTSerializationRule implements SerializationRule
 {
+	private final int ruleValueIndex;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @Nullable Segment @NonNull [] @NonNull [] staticSegments;
 
-	public RTSerializationRule(
+	public RTSerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments) {
+		this.ruleValueIndex = ruleValueIndex;
 		this.serializationSteps = serializationSteps;
 		this.staticSegments = staticSegments;
-	}
-	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
 	}
 
 	public @NonNull RTSerializationStep @NonNull [] getSerializationSteps() {
@@ -165,6 +164,16 @@ public class RTSerializationRule implements SerializationRule
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public int getRuleValueIndex() {
+		return ruleValueIndex;
+	}
+
+	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
+	}
+
 	@Override
 	public void toRuleString(@NonNull StringBuilder s) {
 		// TODO Auto-generated method stub

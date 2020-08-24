@@ -33,6 +33,7 @@ public interface SerializationRule extends Nameable
 	@NonNull EClass getProducedEClass();
 	@NonNull SerializationNode getRootSerializationNode();
 	@NonNull ParserRuleAnalysis getRuleAnalysis();
+	int getRuleValueIndex();
 	void toRuleString(@NonNull StringBuilder s);
 	void toSolutionString(@NonNull StringBuilder s, int depth);
 	void toString(@NonNull StringBuilder s, int depth);

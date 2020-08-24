@@ -56,7 +56,7 @@ public class RTSerializationRule2 extends RTSerializationRule
 	private final @NonNull BasicSerializationRule basicSerializationRule;
 
 	private RTSerializationRule2(@NonNull BasicSerializationRule basicSerializationRule, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
-		super(solutionSteps, serializationSteps, staticSegments);
+		super(basicSerializationRule.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments);
 		this.basicSerializationRule = basicSerializationRule;
 		RTSerializationRule2 old = debugMap.put(basicSerializationRule, this);		// XXX debugging
 		assert old == null;

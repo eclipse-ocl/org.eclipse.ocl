@@ -367,6 +367,11 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 		return ruleAnalysis;
 	}
 
+	@Override
+	public int getRuleValueIndex() {
+		return ruleAnalysis.getIndex();
+	}
+
 	public @NonNull RTSerializationRule getRuntime() {
 		RTSerializationRule runtime2 = runtime;
 		if (runtime2 == null) {

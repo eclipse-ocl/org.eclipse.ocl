@@ -196,7 +196,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSerializationRule(RTSerializationRule serializationRule) {
 '''/* «serializationRule.toRuleString()» */
-new «new TypeReference(RTSerializationRule)»(
+new «new TypeReference(RTSerializationRule)»(«serializationRule.getRuleValueIndex()», /* «serializationRule.getName()» */
 	new /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» /*@NonNull*/ []{
 		«FOR solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps() SEPARATOR ','»
 		«getSolutionStepId(solutionStep, true)» /* «solutionStep.toString()» */
