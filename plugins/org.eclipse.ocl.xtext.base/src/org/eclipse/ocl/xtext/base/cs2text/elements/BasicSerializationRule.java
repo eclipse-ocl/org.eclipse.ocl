@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
@@ -45,7 +46,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 import com.google.common.collect.Iterables;
 
-public class BasicSerializationRule implements SerializationRule, ToDebugStringable
+public class BasicSerializationRule implements Nameable, SerializationRule, ToDebugStringable
 {
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
@@ -359,7 +360,6 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 		return ruleAnalysis.getName();
 	}
 
-	@Override
 	public @NonNull EClass getProducedEClass() {
 		EClass producedEClass2 = producedEClass;
 		if (producedEClass2 == null) {
@@ -373,12 +373,10 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 		return producedEClass2;
 	}
 
-	@Override
 	public @NonNull SerializationNode getRootSerializationNode() {
 		return rootSerializationNode;
 	}
 
-	@Override
 	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
 		return ruleAnalysis;
 	}

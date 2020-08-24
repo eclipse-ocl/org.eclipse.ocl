@@ -118,7 +118,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			//	Add cardinalityVariables as a further product term to the sum of products.
 			//
 			if (enumerationValue != null) {
-				GrammarAnalysis grammarAnalysis = serializationRule.getRuleAnalysis().getGrammarAnalysis();
+				GrammarAnalysis grammarAnalysis = getSerializationRule().getRuleAnalysis().getGrammarAnalysis();
 				cardinalityExpression = cardinalityExpression.getCardinalityExpression(grammarAnalysis, enumerationValue);
 			}
 		}
@@ -166,10 +166,10 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSerialization() {
-		if ("EnumerationCS".equals(serializationRule.getRuleAnalysis().getRuleName())) {
+		if ("EnumerationCS".equals(getSerializationRule().getRuleAnalysis().getRuleName())) {
 			getClass();	// XXX
 		}
-		analyzeSerialization(serializationRule.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
+		analyzeSerialization(getSerializationRule().getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
 	}
 	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
 		//
@@ -220,7 +220,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSolution() {
-		if ("EssentialOCL::ExpCS".equals(serializationRule.getName())) {
+		if ("EssentialOCL::ExpCS".equals(getSerializationRule().getName())) {
 			getClass();		// XXX debugging
 		}
 	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : feature2expression.entrySet()) {
@@ -565,7 +565,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(serializationRule.getName());
+		s.append(getSerializationRule().getName());
 		s.append(" : ");
 		serializationRule.toRuleString(s);
 		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());

@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -28,7 +27,6 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class RTSerializationRule2 extends RTSerializationRule
@@ -80,21 +78,6 @@ public class RTSerializationRule2 extends RTSerializationRule
 	@Override
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		return basicSerializationRule.getEnumerationValues(eAttribute);
-	}
-
-	@Override
-	public @NonNull String getName() {
-		return basicSerializationRule.getName();
-	}
-
-	@Override
-	public @NonNull EClass getProducedEClass() {
-		return basicSerializationRule.getProducedEClass();
-	}
-
-	@Override
-	public @NonNull ParserRuleAnalysis getRuleAnalysis() {
-		return basicSerializationRule.getRuleAnalysis();
 	}
 
 	@Override

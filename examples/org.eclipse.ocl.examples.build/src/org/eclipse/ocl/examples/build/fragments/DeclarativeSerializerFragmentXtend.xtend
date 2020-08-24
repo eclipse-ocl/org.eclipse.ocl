@@ -70,6 +70,7 @@ import org.eclipse.xtext.service.GrammarProvider
 import com.google.inject.Inject
 import org.eclipse.xtext.Grammar
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData
+import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -97,7 +98,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 						analysis.addEClassData(«getEClassId(eClass, true)»);
 					«ENDFOR»
 					«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
-					//	analysis.addSerializationRule(«getSerializationRuleId(serializationRule, true)»);
+					//	analysis.addSerializationRule(«getSerializationRuleId(serializationRule.getRuntime(), true)»);
 					«ENDFOR»
 				}
 				return analysis;
@@ -164,7 +165,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private class _SerializationRules
 			{
 				«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
-				private final /*@NonNull*/ «new TypeReference(RTSerializationRule)» «getSerializationRuleId(serializationRule, false)»
+				private final /*@NonNull*/ «new TypeReference(RTSerializationRule)» «getSerializationRuleId(serializationRule.getRuntime(), false)»
 					= «generateSerializationRule(serializationRule)»;
 				«ENDFOR»
 			}
@@ -195,8 +196,8 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 	}
 	
-	protected def generateSerializationRule(RTSerializationRule serializationRule) {
-'''/* «serializationRule.toRuleString()» */
+	protected def generateSerializationRule(BasicSerializationRule serializationRule) {
+'''/* «serializationRule.getRuntime().toRuleString()» */
 new «new TypeReference(RTSerializationRule)»(«serializationRule.getRuleValueIndex()», /* «serializationRule.getName()» */
 	new /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» /*@NonNull*/ []{
 		«FOR solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps() SEPARATOR ','»
@@ -204,14 +205,14 @@ new «new TypeReference(RTSerializationRule)»(«serializationRule.getRuleValueI
 		«ENDFOR»
 	}, 
 	new /*@NonNull*/ «new TypeReference(RTSerializationStep)» /*@NonNull*/ []{
-		«FOR serializationStep : serializationRule.getSerializationSteps() SEPARATOR ','»
+		«FOR serializationStep : serializationRule.getRuntime().getSerializationSteps() SEPARATOR ','»
 		«getSerializationStepId(serializationStep, true)» /* «serializationStep.toString()» */
 		«ENDFOR»
 	}, 
-	«IF serializationRule.getStaticSegments() != null»
+	«IF serializationRule.getRuntime().getStaticSegments() != null»
 	new /*@NonNull*/ «new TypeReference(Segment)» /*@NonNull*/ [] []{
-		«IF serializationRule.getStaticSegments() != null»
-		«FOR segments : serializationRule.getStaticSegments() SEPARATOR ','»
+		«IF serializationRule.getRuntime().getStaticSegments() != null»
+		«FOR segments : serializationRule.getRuntime().getStaticSegments() SEPARATOR ','»
 		«IF segments != null»
 		«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' + '»«segment.toString()»«ENDFOR» */
 		«ELSE»
@@ -262,7 +263,7 @@ new «new TypeReference(RTSerializationRule)»(«serializationRule.getRuleValueI
 		'''
 		new «new TypeReference(EClassData)»(«emitLiteral(eClass)»,
 		new «new TypeReference(RTSerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass) SEPARATOR ','»
-		«getSerializationRuleId(serializationRule.getBasicSerializationRule().getRuntime(), true)» /* «serializationRule.toString()» */
+		«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toString()» */
 		«ENDFOR»},
 		«IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null
 		«ELSE»

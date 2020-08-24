@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules;
 
@@ -82,7 +83,7 @@ public class RTGrammarAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		for (@NonNull EClass eClass : getSortedProducedEClasses()) {
-			@NonNull SerializationRule[] serializationRules = getEClassData(eClass).getSerializationRules();
+			@NonNull RTSerializationRule[] serializationRules = getEClassData(eClass).getSerializationRules();
 			assert serializationRules != null;
 			s.append("\n  ");;
 			s.append(eClass.getEPackage(). getName());
@@ -106,8 +107,8 @@ public class RTGrammarAnalysis
 		//		else {
 		//			s.append(" ");
 		//		}
-				s.append(serializationRule.getName());
-				s.append(" - ");
+	//			s.append(serializationRule.getName());
+	//			s.append(" - ");
 			//	basicSerializationRule.toRuleString(s);
 				basicSerializationRule.toSolutionString(s, depth+2);
 			}

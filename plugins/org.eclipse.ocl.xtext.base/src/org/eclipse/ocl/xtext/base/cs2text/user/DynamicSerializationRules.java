@@ -27,6 +27,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -39,9 +40,9 @@ import com.google.common.collect.Lists;
 public class DynamicSerializationRules
 {
 	protected final @NonNull EClassData eClassData;
-	protected final @NonNull SerializationRule @NonNull [] serializationRules;
+	protected final @NonNull RTSerializationRule @NonNull [] serializationRules;
 
-	public DynamicSerializationRules(@NonNull EClassData eClassData, @NonNull SerializationRule @NonNull [] serializationRules) {
+	public DynamicSerializationRules(@NonNull EClassData eClassData, @NonNull RTSerializationRule @NonNull [] serializationRules) {
 		this.eClassData = eClassData;
 		this.serializationRules = serializationRules;
 	}
@@ -61,9 +62,9 @@ public class DynamicSerializationRules
 	}
 
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable ParserRuleValue targetParserRuleValue) {
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
 			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationRule.getRuleValueIndex())) {
-				DynamicRuleMatch dynamicRuleMatch = serializationRule.match(slotsAnalysis);
+				DynamicRuleMatch dynamicRuleMatch = serializationRule.getBasicSerializationRule().match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {
 					return dynamicRuleMatch;
 				}
@@ -198,8 +199,8 @@ public class DynamicSerializationRules
 	//		else {
 	//			s.append(" ");
 	//		}
-			s.append(serializationRule.getName());
-			s.append(" - ");
+	//		s.append(serializationRule.getName());
+	//		s.append(" - ");
 		//	basicSerializationRule.toRuleString(s);
 			serializationRule.toSolutionString(s, depth+2);
 		}

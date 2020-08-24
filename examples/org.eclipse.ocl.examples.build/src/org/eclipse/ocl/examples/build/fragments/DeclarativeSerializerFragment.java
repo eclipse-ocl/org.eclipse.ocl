@@ -15,8 +15,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
@@ -34,6 +36,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
@@ -448,32 +451,33 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	private @Nullable Map<@NonNull RTSerializationRule, @NonNull String> serializationRule2id = null;
-	private @Nullable List<@NonNull RTSerializationRule> serializationRules = null;
+	private @Nullable List<@NonNull BasicSerializationRule> serializationRules = null;
 
 	protected void initSerializationRule2id(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull RTSerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
 		if (serializationRule2id2 == null) {
-			serializationRule2id = serializationRule2id2 = new HashMap<>();
+			Set<@NonNull BasicSerializationRule> basicSerializationRules = new HashSet<>();
 			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					for (@NonNull SerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
+					for (@NonNull BasicSerializationRule serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
 					//	System.out.println(NameUtil.debugSimpleName(serializationRule) + " => " + NameUtil.debugSimpleName(serializationRule.getBasicSerializationRule()) + " => " + NameUtil.debugSimpleName(serializationRule.getBasicSerializationRule().getRuntime()) + " : " + serializationRule.toString());
-						serializationRule2id2.put(serializationRule.getBasicSerializationRule().getRuntime(), "");
+						basicSerializationRules.add(serializationRule);
 					}
 				}
 			}
-			List<@NonNull RTSerializationRule> serializationRules = new ArrayList<>(serializationRule2id2.keySet());
+			List<@NonNull BasicSerializationRule> serializationRules = new ArrayList<>(basicSerializationRules);
 			Collections.sort(serializationRules, NameUtil.NAMEABLE_COMPARATOR);
+			serializationRule2id = serializationRule2id2 = new HashMap<>();
 			String formatString = "_" + getDigitsFormatString(serializationRules);
 			int i = 0;
-			for (@NonNull RTSerializationRule serializationRule : serializationRules) {
-				serializationRule2id2.put(serializationRule, String.format(formatString, i++));
+			for (@NonNull BasicSerializationRule serializationRule : serializationRules) {
+				serializationRule2id2.put(serializationRule.getRuntime(), String.format(formatString, i++));
 			}
 			this.serializationRules = serializationRules;
 		}
 	}
 
-	protected @NonNull Iterable<@NonNull RTSerializationRule> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected @NonNull Iterable<@NonNull BasicSerializationRule> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
 		assert serializationRules != null;
 		return serializationRules;
 	}
