@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 
 /**
  * The (static) SerializationRules identify the alternative rules that may be used to serialize a given EClass.
@@ -28,7 +28,7 @@ public class SerializationRules extends RTSerializationRules
 {
 	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
 
-	public SerializationRules(/*@NonNull*/ EClass eClass, @NonNull Iterable<@NonNull SerializationRule> serializationRules) {
+	public SerializationRules(/*@NonNull*/ EClass eClass, @NonNull Iterable<@NonNull RTSerializationRule> serializationRules) {
 		super(eClass, serializationRules);
 		assert eClass != null;
 	}

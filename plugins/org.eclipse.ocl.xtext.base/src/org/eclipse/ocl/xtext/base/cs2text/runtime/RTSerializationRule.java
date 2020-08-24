@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -28,7 +27,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
-public class RTSerializationRule implements SerializationRule
+public class RTSerializationRule
 {
 	private final int ruleValueIndex;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
@@ -61,7 +60,6 @@ public class RTSerializationRule implements SerializationRule
 		return staticSegments;
 	}
 
-	@Override
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
 //		assert staticRuleMatch != null;
 //		return staticRuleMatch.match(slotsAnalysis);
@@ -121,7 +119,6 @@ public class RTSerializationRule implements SerializationRule
 		return s.toString();
 	}
 
-	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		StringUtil.appendIndentation(s, depth);
 		s.append("Serialization Steps");
@@ -134,13 +131,11 @@ public class RTSerializationRule implements SerializationRule
 	//	}
 	}
 
-	@Override
 	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public @NonNull BasicSerializationRule getBasicSerializationRule() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
@@ -151,19 +146,15 @@ public class RTSerializationRule implements SerializationRule
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public int getRuleValueIndex() {
 		return ruleValueIndex;
 	}
 
-	@Override
 	public void toRuleString(@NonNull StringBuilder s) {
 		// TODO Auto-generated method stub
-
 	}
-	@Override
+
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
 		// TODO Auto-generated method stub
-
 	}
 }

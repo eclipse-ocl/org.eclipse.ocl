@@ -200,7 +200,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 '''/* «serializationRule.getRuntime().toRuleString()» */
 new «new TypeReference(RTSerializationRule)»(«serializationRule.getRuleValueIndex()», /* «serializationRule.getName()» */
 	new /*@NonNull*/ «new TypeReference(CardinalitySolutionStep)» /*@NonNull*/ []{
-		«FOR solutionStep : serializationRule.getBasicSerializationRule().getStaticRuleMatch().getSteps() SEPARATOR ','»
+		«FOR solutionStep : serializationRule.getStaticRuleMatch().getSteps() SEPARATOR ','»
 		«getSolutionStepId(solutionStep, true)» /* «solutionStep.toString()» */
 		«ENDFOR»
 	}, 

@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 
 /**
@@ -27,9 +26,9 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 public class RTSerializationRules
 {
 	protected final @NonNull EClass eClass;
-	protected final @NonNull Iterable<@NonNull SerializationRule> serializationRules;
+	protected final @NonNull Iterable<@NonNull RTSerializationRule> serializationRules;
 
-	public RTSerializationRules(/*@NonNull*/ EClass eClass, /*@NonNull*/ Iterable<@NonNull SerializationRule> serializationRules) {
+	public RTSerializationRules(/*@NonNull*/ EClass eClass, /*@NonNull*/ Iterable<@NonNull RTSerializationRule> serializationRules) {
 		assert eClass != null;
 		this.eClass = eClass;
 		assert serializationRules != null;
@@ -47,7 +46,7 @@ public class RTSerializationRules
 		return eClass;
 	}
 
-	public @NonNull Iterable<@NonNull SerializationRule> getSerializationRules() {
+	public @NonNull Iterable<@NonNull RTSerializationRule> getSerializationRules() {
 		return serializationRules;
 	}
 
@@ -62,7 +61,7 @@ public class RTSerializationRules
 		s.append(eClass.getEPackage().getName());
 		s.append("::");
 		s.append(eClass.getName());
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		for (@NonNull RTSerializationRule serializationRule : serializationRules) {
 			StringUtil.appendIndentation(s, i);
 			s.append("|&  ");
 			serializationRule.toString(s, -1);

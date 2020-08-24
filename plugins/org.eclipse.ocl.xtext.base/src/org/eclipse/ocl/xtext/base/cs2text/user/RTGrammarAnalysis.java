@@ -21,7 +21,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRules;
@@ -99,8 +98,8 @@ public class RTGrammarAnalysis
 			s.append("::");
 			s.append(eClass.getName());
 		//	boolean isMany = Iterables.size(serializationRules) > 1;
-			for (@NonNull SerializationRule serializationRule : serializationRules) {
-				SerializationRule basicSerializationRule = serializationRule;//.getBasicSerializationRule();
+			for (@NonNull RTSerializationRule serializationRule : serializationRules) {
+		//		SerializationRule basicSerializationRule = serializationRule;//.getBasicSerializationRule();
 		//		if (isMany) {
 					StringUtil.appendIndentation(s, depth+1);
 		//		}
@@ -110,7 +109,7 @@ public class RTGrammarAnalysis
 	//			s.append(serializationRule.getName());
 	//			s.append(" - ");
 			//	basicSerializationRule.toRuleString(s);
-				basicSerializationRule.toSolutionString(s, depth+2);
+				serializationRule.toSolutionString(s, depth+2);
 			}
 		}
 		return s.toString();

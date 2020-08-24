@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public class SerializationRuleComparator implements Comparator<@NonNull BasicSerializationRule>
 {
-	private Map<@NonNull SerializationRule, @NonNull Integer> rule2size = new HashMap<>();
+	private Map<@NonNull BasicSerializationRule, @NonNull Integer> rule2size = new HashMap<>();
 
 	@Override
 	public int compare(@NonNull BasicSerializationRule rule1, @NonNull BasicSerializationRule rule2) {

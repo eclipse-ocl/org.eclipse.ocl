@@ -44,7 +44,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 import com.google.common.collect.Iterables;
 
-public class BasicSerializationRule implements Nameable, SerializationRule, ToDebugStringable
+public class BasicSerializationRule implements Nameable, ToDebugStringable
 {
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
@@ -156,7 +156,6 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		return assignedSerializationNodes;
 	}
 
-	@Override
 	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
 		Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = getEReference2AssignedRuleAnalyses().get(eReference);
 		if (assignedRuleAnalyses == null) {
@@ -171,11 +170,6 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 
 	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
 		return gatherAssignedSerializationNodes(eReference, rootSerializationNode, null);
-	}
-
-	@Override
-	public @NonNull BasicSerializationRule getBasicSerializationRule() {
-		return this;
 	}
 
 	protected @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> getEAttribute2EnumerationValues() {
@@ -376,7 +370,6 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		return ruleAnalysis;
 	}
 
-	@Override
 	public int getRuleValueIndex() {
 		return ruleAnalysis.getIndex();
 	}
@@ -422,7 +415,7 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
 			assert staticRuleMatch != null;
-			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRule().getBasicSerializationRule().getRuleAnalysis().getGrammarAnalysis().getIdioms();
+			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRule().getRuleAnalysis().getGrammarAnalysis().getIdioms();
 			//
 			//	Locate the matches for each idiom.
 			//
@@ -447,7 +440,6 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		return staticRuleMatch.getCardinalityVariables();
 	}
 
-	@Override
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.match(slotsAnalysis);
@@ -500,12 +492,10 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		rootSerializationNode.toString(s, -1);
 	}
 
-	@Override
 	public void toRuleString(@NonNull StringBuilder s) {
 		rootSerializationNode.toString(s, -1);
 	}
 
-	@Override
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
 		StaticRuleMatch staticRuleMatch2 = staticRuleMatch;
 		if (staticRuleMatch2 != null) {
@@ -520,7 +510,6 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		return String.valueOf(s);
 	}
 
-	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(ruleAnalysis.getName());
 		s.append("(");

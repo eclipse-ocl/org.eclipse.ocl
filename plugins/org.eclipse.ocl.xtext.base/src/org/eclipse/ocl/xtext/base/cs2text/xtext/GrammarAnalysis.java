@@ -36,7 +36,6 @@ import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
@@ -619,7 +618,7 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 				if ("Base::TypeRefCS".equals(parserRuleAnalysis.getName())) {
 					getClass();		// XXX
 				}
-				for (@NonNull SerializationRule serializationRule : parserRuleAnalysis.getSerializationRules()) {
+				for (@NonNull BasicSerializationRule serializationRule : parserRuleAnalysis.getSerializationRules()) {
 		//		SerializationNode rootSerializationNode = parserRuleAnalysis.getR();
 		//		if (rootSerializationNode != null) {
 				//	s.append("\n");
