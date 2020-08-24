@@ -38,7 +38,6 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -259,19 +258,19 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 		}
 	}
 
-	@Override
+/*	@Override
 	public @Nullable Map<@NonNull EReference, @NonNull IndexVector> getEReference2DiscriminatingRuleValueIndexes() {
 		ParserRuleAnalysis ruleAnalysis = getRuleAnalysis();
 		Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
 		if (ruleDiscriminatingEReferences == null) {
 			return null;
 		}
-		Map<@NonNull EReference, @NonNull IndexVector> ruleDiscriminatingEReferences9 = new HashMap<>();
+		Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = new HashMap<>();
 		for (Map.Entry<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> entry : ruleDiscriminatingEReferences.entrySet()) {
-			ruleDiscriminatingEReferences9.put(entry.getKey(), new IndexVector(entry.getValue()));
+			eReference2discriminatingRuleValueIndexes.put(entry.getKey(), new IndexVector(entry.getValue()));
 		}
-		return ruleDiscriminatingEReferences9;
-	}
+		return eReference2discriminatingRuleValueIndexes;
+	} */
 
 	@Override
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {

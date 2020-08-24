@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +29,7 @@ public class EClassData implements Nameable
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 	private final @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues;
-	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
+//	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
 
 	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
 			@Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues) {
@@ -50,7 +49,7 @@ public class EClassData implements Nameable
 			int ruleValueIndex = serializationRule.getRuleValueIndex();
 			if (targetRuleValueIndexes.test(ruleValueIndex)) {
 				newSerializationRules.add(serializationRule);
-				Map<@NonNull EReference, @NonNull IndexVector> ruleDiscriminatingEReferences9 = serializationRule.getEReference2DiscriminatingRuleValueIndexes();
+			/*	Map<@NonNull EReference, @NonNull IndexVector> ruleDiscriminatingEReferences9 = serializationRule.getEReference2DiscriminatingRuleValueIndexes();
 				if (ruleDiscriminatingEReferences9 != null) {
 					Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes2 = eReference2discriminatingRuleValueIndexes;
 					if (eReference2discriminatingRuleValueIndexes2 == null) {
@@ -66,7 +65,7 @@ public class EClassData implements Nameable
 						}
 						discriminatingRuleValueIndexes.setAll(entry.getValue());
 					}
-				}
+				} */
 			}
 		}
 		return new DynamicSerializationRules(this, newSerializationRules.toArray(new @NonNull SerializationRule[newSerializationRules.size()]));

@@ -80,7 +80,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	/**
 	 * The EReferences that need a run-time check is needed that the actual user element is compatible with any rules.
 	 */
-	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses = null;
+//	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2discriminatingRuleAnalyses = null;
 
 	private @Nullable ParserRuleValue parserRuleValue = null;
 
@@ -280,15 +280,15 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				assert ruleAnalyses.size() >= 2;
 				discriminatingRuleAnalyses = ruleAnalyses;		// XXX can probably be much stricter
 			}
-			if ((discriminatingRuleAnalysis != null) || (discriminatingRuleAnalyses != null)) {
-				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatingRuleAnalyses2 = eReference2disciminatingRuleAnalyses;
-				if (eReference2disciminatingRuleAnalyses2 == null) {
-					eReference2disciminatingRuleAnalyses = eReference2disciminatingRuleAnalyses2 = new HashMap<>();
+		/*	if ((discriminatingRuleAnalysis != null) || (discriminatingRuleAnalyses != null)) {
+				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2discriminatingRuleAnalyses2 = eReference2discriminatingRuleAnalyses;
+				if (eReference2discriminatingRuleAnalyses2 == null) {
+					eReference2discriminatingRuleAnalyses = eReference2discriminatingRuleAnalyses2 = new HashMap<>();
 				}
-				List<@NonNull ParserRuleAnalysis> list = eReference2disciminatingRuleAnalyses2.get(eReference);
+				List<@NonNull ParserRuleAnalysis> list = eReference2discriminatingRuleAnalyses2.get(eReference);
 				if (list == null) {
 					list = new ArrayList<>();
-					eReference2disciminatingRuleAnalyses2.put(eReference, list);
+					eReference2discriminatingRuleAnalyses2.put(eReference, list);
 				}
 				if ((discriminatingRuleAnalysis != null) && !list.contains(discriminatingRuleAnalysis)) {
 					list.add(discriminatingRuleAnalysis);
@@ -300,7 +300,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 						}
 					}
 				}
-			}
+			} */
 		}
 	}
 	private void analyzeSerializations(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull Object> eReference2ruleAnalysisOrAnalyses) {
@@ -364,9 +364,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return eFeature2assignmentAnalyses;
 	}
 
-	public @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> getEReference2DiscriminatingRuleAnalyses() {
-		return eReference2disciminatingRuleAnalyses;
-	}
+//	public @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> getEReference2DiscriminatingRuleAnalyses() {
+//		return eReference2discriminatingRuleAnalyses;
+//	}
 
 	@Override
 	public int getIndex() {
