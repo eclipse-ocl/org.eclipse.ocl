@@ -15,9 +15,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -27,8 +25,8 @@ public interface SerializationRule
 	@NonNull BasicSerializationRule getBasicSerializationRule();
 	int getRuleValueIndex();
 	@Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis);
-	void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
-	void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
+//	void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
+//	void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 	void toRuleString(@NonNull StringBuilder s);
 	void toSolutionString(@NonNull StringBuilder s, int depth);
 	void toString(@NonNull StringBuilder s, int depth);

@@ -451,7 +451,7 @@ public class UserSlotsAnalysis
 
 	public @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull RTStaticRuleMatch staticRuleMatch) {
 		assert basicGetDynamicRuleMatch(staticRuleMatch) == null;
-		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(this, staticRuleMatch.getSerializationRule(), staticRuleMatch.getSteps(), staticRuleMatch);
+		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(this, staticRuleMatch.getSerializationRule().getRuntime(), staticRuleMatch.getSteps(), staticRuleMatch);
 		dynamicRuleMatches.add(dynamicRuleMatch);
 		return dynamicRuleMatch;
 	}

@@ -44,6 +44,11 @@ import com.google.common.collect.Lists;
 public class StaticRuleMatch extends RTStaticRuleMatch
 {
 	/**
+	 * The rule for which this is the static analysis.
+	 */
+	protected final @NonNull BasicSerializationRule serializationRule;
+
+	/**
 	 * The CardinalityVariable for each node, unless always exactly 1.
 	 *
 	 * Only used during serialization - replae by known indexes.
@@ -66,7 +71,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
 
 	public StaticRuleMatch(@NonNull BasicSerializationRule serializationRule) {
-		super(serializationRule);
+		this.serializationRule = serializationRule;
 	}
 
 	/**
@@ -86,7 +91,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		if (eStructuralFeature instanceof EAttribute) {
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-			getSerializationRule().analyzeAssignment(eAttribute, enumerationValue, netMultiplicativeCardinality);
+			serializationRule.analyzeAssignment(eAttribute, enumerationValue, netMultiplicativeCardinality);
 		/*	Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 			if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
 				eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
@@ -118,7 +123,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			//	Add cardinalityVariables as a further product term to the sum of products.
 			//
 			if (enumerationValue != null) {
-				GrammarAnalysis grammarAnalysis = getSerializationRule().getRuleAnalysis().getGrammarAnalysis();
+				GrammarAnalysis grammarAnalysis = serializationRule.getRuleAnalysis().getGrammarAnalysis();
 				cardinalityExpression = cardinalityExpression.getCardinalityExpression(grammarAnalysis, enumerationValue);
 			}
 		}
@@ -128,7 +133,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		else {
 			EReference eReference = (EReference)eStructuralFeature;
 			Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-			getSerializationRule().analyzeAssignment(eReference, ruleAnalyses, netMultiplicativeCardinality);
+			serializationRule.analyzeAssignment(eReference, ruleAnalyses, netMultiplicativeCardinality);
 		/*	Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 			if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 				eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
@@ -166,10 +171,10 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSerialization() {
-		if ("EnumerationCS".equals(getSerializationRule().getRuleAnalysis().getRuleName())) {
+		if ("EnumerationCS".equals(serializationRule.getRuleAnalysis().getRuleName())) {
 			getClass();	// XXX
 		}
-		analyzeSerialization(getSerializationRule().getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
+		analyzeSerialization(serializationRule.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
 	}
 	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
 		//
@@ -220,7 +225,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSolution() {
-		if ("EssentialOCL::ExpCS".equals(getSerializationRule().getName())) {
+		if ("EssentialOCL::ExpCS".equals(serializationRule.getName())) {
 			getClass();		// XXX debugging
 		}
 	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : feature2expression.entrySet()) {
@@ -233,7 +238,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			//	steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eReferenceType));
 			}
 		} */
-		getSerializationRule().analyzeSolution(steps);
+		serializationRule.analyzeSolution(steps);
 	/*	if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
 			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
 				EReference eReference = entry.getKey();
@@ -297,7 +302,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			}
 		}
 		Collections.sort(residualExpressions, NameUtil.NAMEABLE_COMPARATOR);
-		List<@NonNull CardinalityVariable> variables = Lists.newArrayList(getSerializationRule().getVariables());
+		List<@NonNull CardinalityVariable> variables = Lists.newArrayList(serializationRule.getVariables());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		//
 		//	Confirm that variables with a "1" solution were skipped.
@@ -527,9 +532,9 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return variable2node.keySet();
 	}
 
-	@Override
+//	@Override
 	public @NonNull BasicSerializationRule getSerializationRule() {
-		return (BasicSerializationRule)serializationRule;
+		return serializationRule;
 	}
 
 	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
@@ -565,7 +570,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(getSerializationRule().getName());
+		s.append(serializationRule.getName());
 		s.append(" : ");
 		serializationRule.toRuleString(s);
 		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());

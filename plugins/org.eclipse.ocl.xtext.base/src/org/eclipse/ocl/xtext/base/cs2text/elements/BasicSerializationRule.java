@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -38,7 +37,6 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -424,7 +422,7 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
 			assert staticRuleMatch != null;
-			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRule().getRuleAnalysis().getGrammarAnalysis().getIdioms();
+			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRule().getBasicSerializationRule().getRuleAnalysis().getGrammarAnalysis().getIdioms();
 			//
 			//	Locate the matches for each idiom.
 			//
@@ -495,16 +493,6 @@ public class BasicSerializationRule implements Nameable, SerializationRule, ToDe
 			}
 		}
 		return producedEClass;
-	}
-
-	@Override
-	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		getRuntime().serializeRule(serializer, serializationBuilder);
-	}
-
-	@Override
-	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		getRuntime().serializeSubRule(startIndex, endIndex, serializer, serializationBuilder);
 	}
 
 	@Override

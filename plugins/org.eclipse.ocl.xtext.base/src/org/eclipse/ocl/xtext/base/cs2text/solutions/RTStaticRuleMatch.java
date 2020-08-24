@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.elements.BasicSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
@@ -36,7 +36,7 @@ public class RTStaticRuleMatch implements RuleMatch
 	/**
 	 * The rule for which this is the static analysis.
 	 */
-	protected final @NonNull SerializationRule serializationRule;
+//	protected final @NonNull RTSerializationRule serializationRule;
 
 	/**
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
@@ -57,9 +57,9 @@ public class RTStaticRuleMatch implements RuleMatch
 	 */
 	protected final @NonNull List<@NonNull CardinalitySolutionStep> steps = new ArrayList<>();
 
-	public RTStaticRuleMatch(@NonNull SerializationRule serializationRule) {
-		this.serializationRule = serializationRule;
-	}
+//	public RTStaticRuleMatch(@NonNull RTSerializationRule serializationRule) {
+//		this.serializationRule = serializationRule;
+//	}
 
 	/**
 	 * Accumulate an additional cardinalitySolution expression for a cardinalityVariable.
@@ -106,8 +106,8 @@ public class RTStaticRuleMatch implements RuleMatch
 		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
 
-	public @NonNull SerializationRule getSerializationRule() {
-		return serializationRule;
+	public @NonNull BasicSerializationRule getSerializationRule() {
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	@Override

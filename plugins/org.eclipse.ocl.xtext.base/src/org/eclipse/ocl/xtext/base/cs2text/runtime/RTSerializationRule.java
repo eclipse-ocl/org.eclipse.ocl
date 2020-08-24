@@ -69,12 +69,10 @@ public class RTSerializationRule implements SerializationRule
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
 	}
 
-	@Override
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (int index = startIndex; index < endIndex; ) {
 			Segment[] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
