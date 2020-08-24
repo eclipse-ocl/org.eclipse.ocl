@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RTStaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class UserSlotsAnalysis
@@ -435,7 +435,7 @@ public class UserSlotsAnalysis
 		}
 	}
 
-	public @Nullable DynamicRuleMatch basicGetDynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch) {
+	public @Nullable DynamicRuleMatch basicGetDynamicRuleMatch(@NonNull RTStaticRuleMatch staticRuleMatch) {
 		// Typically one or perhaps two entries; not worth a Map.
 		for (@NonNull DynamicRuleMatch dynamicRuleMatch : dynamicRuleMatches) {
 			if (dynamicRuleMatch.getDebugStaticRuleMatch() == staticRuleMatch) {
@@ -449,9 +449,9 @@ public class UserSlotsAnalysis
 		return eStructuralFeature2slotAnalysis.get(eStructuralFeature);
 	}
 
-	public @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull StaticRuleMatch staticRuleMatch) {
+	public @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull RTStaticRuleMatch staticRuleMatch) {
 		assert basicGetDynamicRuleMatch(staticRuleMatch) == null;
-		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(this, staticRuleMatch.getSerializationRule().getRuntime(), staticRuleMatch.getSteps(), staticRuleMatch);
+		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(this, staticRuleMatch.getSerializationRule(), staticRuleMatch.getSteps(), staticRuleMatch);
 		dynamicRuleMatches.add(dynamicRuleMatch);
 		return dynamicRuleMatch;
 	}

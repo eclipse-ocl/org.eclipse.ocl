@@ -23,9 +23,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RTStaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -36,13 +37,13 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 public class DynamicRuleMatch implements RuleMatch
 {
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
-	protected final @NonNull RTSerializationRule serializationRule;
+	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull Iterable<@NonNull CardinalitySolutionStep> steps;
-	private final @NonNull Object debugStaticRuleMatch;
+	private final @NonNull RTStaticRuleMatch debugStaticRuleMatch;
 	private final @NonNull Map<@NonNull Integer, @NonNull Integer> variableIndex2value = new HashMap<>();
 	private boolean checked = false;
 
-	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull RTSerializationRule serializationRule, @NonNull Iterable<@NonNull CardinalitySolutionStep> steps, @NonNull Object debugStaticRuleMatch) {
+	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationRule serializationRule, @NonNull Iterable<@NonNull CardinalitySolutionStep> steps, @NonNull RTStaticRuleMatch debugStaticRuleMatch) {
 		this.slotsAnalysis = slotsAnalysis;
 		this.serializationRule = serializationRule;
 		this.steps = steps;
@@ -74,11 +75,11 @@ public class DynamicRuleMatch implements RuleMatch
 		throw new IllegalStateException();		// run-time should use known values
 	}
 
-	public @NonNull Object getDebugStaticRuleMatch() {
+	public @NonNull RTStaticRuleMatch getDebugStaticRuleMatch() {
 		return debugStaticRuleMatch;
 	}
 
-	public @NonNull RTSerializationRule getSerializationRule() {
+	public @NonNull SerializationRule getSerializationRule() {
 		return serializationRule;
 	}
 

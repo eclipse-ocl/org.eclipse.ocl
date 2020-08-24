@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -498,6 +500,16 @@ public class BasicSerializationRule implements SerializationRule, ToDebugStringa
 			}
 		}
 		return producedEClass;
+	}
+
+	@Override
+	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		getRuntime().serializeRule(serializer, serializationBuilder);
+	}
+
+	@Override
+	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		getRuntime().serializeSubRule(startIndex, endIndex, serializer, serializationBuilder);
 	}
 
 	@Override
