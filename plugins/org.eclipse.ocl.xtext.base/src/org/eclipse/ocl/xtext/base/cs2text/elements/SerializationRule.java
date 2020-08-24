@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -19,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -27,6 +29,7 @@ public interface SerializationRule extends Nameable
 	@Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference);
 	@Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference);
 	@NonNull BasicSerializationRule getBasicSerializationRule();
+	@Nullable Map<@NonNull EReference, @NonNull IndexVector> getEReference2DiscriminatingRuleValueIndexes();
 	@Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute);
 	@Override
 	@NonNull String getName();

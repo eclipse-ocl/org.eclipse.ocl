@@ -29,8 +29,8 @@ public class EClassData implements Nameable
 	protected final @NonNull String name;
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
-	private @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleValue>> eReference2discriminatingRuleValues = null;
 	private final @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues;
+	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
 
 	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
 			@Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues) {
@@ -50,27 +50,21 @@ public class EClassData implements Nameable
 			int ruleValueIndex = serializationRule.getRuleValueIndex();
 			if (targetRuleValueIndexes.test(ruleValueIndex)) {
 				newSerializationRules.add(serializationRule);
-				ParserRuleAnalysis ruleAnalysis = serializationRule.getRuleAnalysis();
-				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
-				if (ruleDiscriminatingEReferences != null) {
-					Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleValue>> eReference2discriminatingRuleValues2 = eReference2discriminatingRuleValues;
-					if (eReference2discriminatingRuleValues2 == null) {
-						eReference2discriminatingRuleValues = eReference2discriminatingRuleValues2 = new HashMap<>();
+				Map<@NonNull EReference, @NonNull IndexVector> ruleDiscriminatingEReferences9 = serializationRule.getEReference2DiscriminatingRuleValueIndexes();
+				if (ruleDiscriminatingEReferences9 != null) {
+					Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes2 = eReference2discriminatingRuleValueIndexes;
+					if (eReference2discriminatingRuleValueIndexes2 == null) {
+						eReference2discriminatingRuleValueIndexes = eReference2discriminatingRuleValueIndexes2 = new HashMap<>();
 					}
-					for (Map.Entry<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> entry : ruleDiscriminatingEReferences.entrySet()) {
+					for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : ruleDiscriminatingEReferences9.entrySet()) {
 						EReference eReference = entry.getKey();
-						List<@NonNull ParserRuleValue> discriminatingRuleValues = eReference2discriminatingRuleValues2.get(eReference);
-						if (discriminatingRuleValues == null) {
-							discriminatingRuleValues = new ArrayList<>();
+						IndexVector discriminatingRuleValueIndexes = eReference2discriminatingRuleValueIndexes2.get(eReference);
+						if (discriminatingRuleValueIndexes == null) {
+							discriminatingRuleValueIndexes = new IndexVector();
 							assert eReference.isOrdered();
-							eReference2discriminatingRuleValues2.put(eReference, discriminatingRuleValues);
+							eReference2discriminatingRuleValueIndexes2.put(eReference, discriminatingRuleValueIndexes);
 						}
-						for (@NonNull ParserRuleAnalysis ruleAnalysis2 : entry.getValue()) {
-							ParserRuleValue ruleValue = ruleAnalysis2.getRuleValue();
-							if (!discriminatingRuleValues.contains(ruleValue)) {
-								discriminatingRuleValues.add(ruleValue);
-							}
-						}
+						discriminatingRuleValueIndexes.setAll(entry.getValue());
 					}
 				}
 			}

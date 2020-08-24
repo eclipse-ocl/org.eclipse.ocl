@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -27,6 +28,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -43,6 +45,12 @@ public class RTSerializationRule implements SerializationRule
 		this.ruleValueIndex = ruleValueIndex;
 		this.serializationSteps = serializationSteps;
 		this.staticSegments = staticSegments;
+	}
+
+	@Override
+	public @Nullable Map<@NonNull EReference, @NonNull IndexVector> getEReference2DiscriminatingRuleValueIndexes() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull RTSerializationStep @NonNull [] getSerializationSteps() {
