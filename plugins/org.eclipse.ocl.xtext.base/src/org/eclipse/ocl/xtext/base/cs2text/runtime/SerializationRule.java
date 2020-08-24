@@ -31,7 +31,7 @@ public class SerializationRule
 {
 	private final int ruleValueIndex;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
-	private final @Nullable Segment @NonNull [] @NonNull [] staticSegments;
+	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
@@ -48,6 +48,25 @@ public class SerializationRule
 //		throw new UnsupportedOperationException();
 //	}
 
+	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	public int getRuleValueIndex() {
+		return ruleValueIndex;
+	}
+
+	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
 	public @NonNull RTSerializationStep @NonNull [] getSerializationSteps() {
 		return serializationSteps;
 	}
@@ -56,7 +75,7 @@ public class SerializationRule
 //		return staticSubIdioms;
 //	}
 
-	public @Nullable Segment @NonNull [] @NonNull [] getStaticSegments() {
+	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
 		return staticSegments;
 	}
 
@@ -73,7 +92,7 @@ public class SerializationRule
 
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (int index = startIndex; index < endIndex; ) {
-			Segment[] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
+			@NonNull Segment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
 			RTSerializationStep serializationStep = serializationSteps[index++];
 			int cardinalityVariableIndex = serializationStep.getVariableIndex();
 			int stepLoopCount = cardinalityVariableIndex >= 0 ? serializer.getValue(cardinalityVariableIndex) : 1;
@@ -112,6 +131,14 @@ public class SerializationRule
 		return s.toString();
 	}
 
+	public void toRuleString(@NonNull StringBuilder s) {
+		// TODO Auto-generated method stub
+	}
+
+	public void toSolutionString(@NonNull StringBuilder s, int depth) {
+		// TODO Auto-generated method stub
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
@@ -129,32 +156,5 @@ public class SerializationRule
 		//	s.append(" == ");
 		//	serializationSteps[i].toString(s, depth+1);
 	//	}
-	}
-
-	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
-
-	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
-
-	public int getRuleValueIndex() {
-		return ruleValueIndex;
-	}
-
-	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
-
-	public void toRuleString(@NonNull StringBuilder s) {
-		// TODO Auto-generated method stub
-	}
-
-	public void toSolutionString(@NonNull StringBuilder s, int depth) {
-		// TODO Auto-generated method stub
 	}
 }
