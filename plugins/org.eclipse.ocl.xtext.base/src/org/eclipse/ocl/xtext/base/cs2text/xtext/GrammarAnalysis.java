@@ -335,16 +335,14 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 				serializationRules.add(serializationRule);
 			}
 		}
-		int i = 0;
-		Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = new HashMap<>();
 		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRule>> entry : eClass2serializationRuleList.entrySet()) {
 			EClass eClass = entry.getKey();
 			List<@NonNull SerializationRule> serializationRules = entry.getValue();
 
 			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues( serializationRules);
-			EReferenceData[] eReferenceData = null;
+			@NonNull EReferenceData[] eReferenceData = null;
 			if (eContainmentFeature2assignedTargetRuleValues != null) {
-				eReferenceData = new EReferenceData[eContainmentFeature2assignedTargetRuleValues.size()];
+				eReferenceData = new @NonNull EReferenceData[eContainmentFeature2assignedTargetRuleValues.size()];
 				int i2 = 0;
 				for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> entry2 : eContainmentFeature2assignedTargetRuleValues.entrySet()) {
 					Set<@NonNull AbstractRuleValue> values = entry2.getValue();
@@ -356,8 +354,7 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 					eReferenceData[i2++] = new EReferenceData(entry2.getKey(), parserRuleValues);
 				}
 			}
-			addEClassData(new EClassData("_" + i++, eClass, serializationRules.toArray(new SerializationRule[serializationRules.size()]), eReferenceData));
-			//	addSerializationRules(new SerializationRules(entry.getKey(), entry.getValue()));
+			addEClassData(new EClassData(eClass, serializationRules.toArray(new @NonNull SerializationRule[serializationRules.size()]), eReferenceData));
 		}
 	}
 

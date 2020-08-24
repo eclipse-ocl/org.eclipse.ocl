@@ -17,22 +17,19 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
-public class EClassData implements Nameable
+public class EClassData
 {
-	protected final @NonNull String name;
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 	protected final @NonNull EReferenceData @Nullable [] eReferenceDatas;
 //	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
 
-	public EClassData(@NonNull String name, /*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
+	public EClassData(/*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
 			@NonNull EReferenceData @Nullable [] eReferenceDatas) {
 		assert eClass != null;
-		this.name = name;
 		this.eClass = eClass;
 		this.serializationRules = serializationRules;
 		this.eReferenceDatas = eReferenceDatas;
@@ -117,17 +114,12 @@ public class EClassData implements Nameable
 		return eClass;
 	}
 
-	@Override
-	public @NonNull String getName() {
-		return name;
-	}
-
 	public @NonNull SerializationRule @NonNull [] getSerializationRules() {
 		return serializationRules;
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return name;
+		return XtextGrammarUtil.getName(eClass);
 	}
 }
