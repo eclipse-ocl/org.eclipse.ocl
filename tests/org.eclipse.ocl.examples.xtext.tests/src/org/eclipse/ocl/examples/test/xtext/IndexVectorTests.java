@@ -20,7 +20,7 @@ public class IndexVectorTests extends XtextTestCase
 {
 	public void testIndexVector_Ctor() throws Exception {
 		assertEquals(new IndexVector().toString(), "[]");
-		assertEquals(new IndexVector(5).toString(), "[]");
+		assertEquals(new IndexVector().setCapacity(5).toString(), "[]");
 		assertEquals(new IndexVector().set(5).toString(), "[5]");
 		assertEquals(new IndexVector().set(63).toString(), "[63]");
 		assertEquals(new IndexVector().set(32).toString(), "[32]");
@@ -31,20 +31,20 @@ public class IndexVectorTests extends XtextTestCase
 		assertEquals(new IndexVector().set(62).set(63).getCapacity(), 64);
 		assertEquals(new IndexVector().set(62).set(63).set(64).toString(), "[62,63,64]");
 		assertEquals(new IndexVector().set(62).set(63).set(64).getCapacity(), 128);
-		assertEquals(new IndexVector(200).set(62).set(63).getCapacity(), 256);
-		assertEquals(new IndexVector().set(62).set(63).setAll(new IndexVector(200).set(64).set(62)).toString(), "[62,63,64]");
+		assertEquals(new IndexVector().setCapacity(200).set(62).set(63).getCapacity(), 256);
+		assertEquals(new IndexVector().set(62).set(63).setAll(new IndexVector().setCapacity(200).set(64).set(62)).toString(), "[62,63,64]");
 	}
 
 	public void testIndexVector_Equals() throws Exception {
 		assertTrue(new IndexVector().set(63).equals(new IndexVector().set(63)));
 		assertFalse(new IndexVector().set(63).set(64).equals(new IndexVector().set(64)));
 		assertTrue(new IndexVector().set(63).set(64).equals(new IndexVector().set(64).set(63)));
-		assertTrue(new IndexVector().set(63).set(64).equals(new IndexVector(256).set(64).set(63)));
-		assertTrue(new IndexVector(256).set(63).set(64).equals(new IndexVector().set(64).set(63)));
+		assertTrue(new IndexVector().set(63).set(64).equals(new IndexVector().setCapacity(256).set(64).set(63)));
+		assertTrue(new IndexVector().setCapacity(256).set(63).set(64).equals(new IndexVector().set(64).set(63)));
 	}
 
 	public void testIndexVector_HashCode() throws Exception {
-		assertEquals(Sets.newHashSet(new IndexVector().set(63).set(64), new IndexVector(256).set(64).set(63)).size(), 1);
+		assertEquals(Sets.newHashSet(new IndexVector().set(63).set(64), new IndexVector().setCapacity(256).set(64).set(63)).size(), 1);
 	}
 
 	public void testIndexVector_Iterable() throws Exception {
@@ -52,7 +52,7 @@ public class IndexVectorTests extends XtextTestCase
 	}
 
 	public void testIndexVector_Test() throws Exception {
-		IndexVector testValue = new IndexVector().set(62).set(63).setAll(new IndexVector(200).set(64).set(62));
+		IndexVector testValue = new IndexVector().set(62).set(63).setAll(new IndexVector().setCapacity(200).set(64).set(62));
 		assertFalse(testValue.test(0));
 		assertFalse(testValue.test(1));
 		assertFalse(testValue.test(61));

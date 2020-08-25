@@ -44,12 +44,15 @@ public class IndexVector implements Iterable<@NonNull Integer>
 
 	public IndexVector() {}
 
-	public IndexVector(int bitCapacity) {
-		setCapacity(bitCapacity);
+	public IndexVector(long @NonNull ... longs) {
+		this.longs = longs;
 	}
 
-	public IndexVector(long[] longs) {
-		this.longs = longs;
+	public IndexVector(@NonNull Indexed @NonNull [] indexes) {
+		this.longs = null;
+		for (@NonNull Indexed index : indexes) {
+			set(index.getIndex());
+		}
 	}
 
 	public IndexVector(@NonNull Iterable<@NonNull ? extends Indexed> indexes) {
@@ -133,7 +136,7 @@ public class IndexVector implements Iterable<@NonNull Integer>
 		return this;
 	}
 
-	private void setCapacity(int capacity) {
+	public @NonNull IndexVector setCapacity(int capacity) {
 		int newLength = (capacity + Long.SIZE - 1)/Long.SIZE;
 		if (longs == null) {
 			longs = new long[newLength];
@@ -145,6 +148,7 @@ public class IndexVector implements Iterable<@NonNull Integer>
 				longs[i] = oldLongs[i];
 			}
 		}
+		return this;
 	}
 
 	public boolean test(int bitIndex) {

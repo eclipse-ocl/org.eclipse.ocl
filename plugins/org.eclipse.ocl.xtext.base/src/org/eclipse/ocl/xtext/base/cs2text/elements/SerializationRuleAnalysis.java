@@ -39,6 +39,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -124,15 +125,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
 				EReference eReference = entry.getKey();
 				if (eReference.isContainment()) {
-					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();		// XXX exclude null
-					@NonNull ParserRuleValue[] assignedRuleValues = new @NonNull ParserRuleValue[assignedRuleAnalyses.size()];
-					int i = 0;
-					for (@Nullable ParserRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
-						if (assignedRuleAnalysis != null) {
-							assignedRuleValues[i++] = assignedRuleAnalysis.getRuleValue();		// XXX exclude null
-						}
-					}
-					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleValues));
+					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();
+					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, new IndexVector(assignedRuleAnalyses)));
 				}
 			}
 		}

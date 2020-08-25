@@ -91,6 +91,11 @@ public class UserElementAnalysis implements Nameable
 		return dynamicSerializationRules;
 	}
 
+	public @Nullable DynamicRuleMatch createDynamicRuleMatch(int targetParserRuleValueIndex) {
+		ParserRuleValue targetParserRuleValue = (ParserRuleValue)grammarAnalysis.getRuleValue(targetParserRuleValueIndex);
+		return createDynamicRuleMatch(targetParserRuleValue);
+	}
+
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@Nullable ParserRuleValue targetParserRuleValue) {
 		UserSlotsAnalysis slotsAnalysis = getSlotsAnalysis();
 		return serializationRules.createDynamicRuleMatch(slotsAnalysis, targetParserRuleValue);

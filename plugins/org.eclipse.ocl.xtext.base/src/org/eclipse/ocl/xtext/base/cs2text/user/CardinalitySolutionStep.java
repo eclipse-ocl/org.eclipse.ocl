@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.
@@ -158,31 +157,12 @@ public abstract class CardinalitySolutionStep
 	public static class RuleCheck extends CardinalitySolutionStep
 	{
 		protected final @NonNull EReference eReference;
-//		protected final @NonNull Iterable<@NonNull ParserRuleAnalysis> ruleValues;
-		protected final @NonNull ParserRuleValue @NonNull [] ruleValues;
+		protected final @NonNull IndexVector ruleValueIndexes;
 
-		public RuleCheck(@NonNull EReference eReference, @NonNull Collection<@NonNull ParserRuleValue> ruleValues) {
-			this(eReference, ruleValues.toArray(new @NonNull ParserRuleValue @NonNull [ruleValues.size()]));
-		}
-
-		public RuleCheck(@NonNull EReference eReference, @NonNull ParserRuleValue @NonNull [] ruleValues) {
+		public RuleCheck(@NonNull EReference eReference, @NonNull IndexVector ruleValueIndexes) {
 			this.eReference = eReference;
-			this.ruleValues = ruleValues;
-			assert ruleValues.length >= 1;
+			this.ruleValueIndexes = ruleValueIndexes;
 			assert eReference.isContainment();
-		//	if ("ownedType".equals(eReference.getName())) {
-		//		getClass();			// XXX debugging
-		//	}
-		}
-
-		public RuleCheck(@NonNull EReference eReference, @NonNull String @NonNull [] ruleValues) {
-			this.eReference = eReference;
-			this.ruleValues = new ParserRuleValue[] {};
-		//	assert ruleValues.length >= 1;
-		//	assert eReference.isContainment();
-		//	if ("ownedType".equals(eReference.getName())) {
-		//		getClass();			// XXX debugging
-		//	}
 		}
 
 		@Override
@@ -195,7 +175,7 @@ public abstract class CardinalitySolutionStep
 			}
 			RuleCheck that = (RuleCheck)obj;
 			return (this.eReference == that.eReference)
-				&& this.ruleValues.equals(that.ruleValues);
+				&& this.ruleValueIndexes.equals(that.ruleValueIndexes);
 		}
 
 		@Override
@@ -211,7 +191,9 @@ public abstract class CardinalitySolutionStep
 			Object slotContent = eObject.eGet(eReference);
 			if (eReference.isMany()) {
 				for (Object element : (List<?>)slotContent) {
-					if (!isInstance(slotsAnalysis, (@NonNull EObject)element)) {
+					@SuppressWarnings("null")
+					@NonNull EObject castElement = (@NonNull EObject)element;
+					if (!isInstance(slotsAnalysis, castElement)) {
 						return false;
 					}
 				}
@@ -229,8 +211,8 @@ public abstract class CardinalitySolutionStep
 			return eReference;
 		}
 
-		public @NonNull ParserRuleValue  [] getRuleValues() {
-			return ruleValues;
+		public @NonNull IndexVector getRuleValueIndexes() {
+			return ruleValueIndexes;
 		}
 
 		@Override
@@ -240,23 +222,19 @@ public abstract class CardinalitySolutionStep
 
 		@Override
 		public int hashCode() {
-			int hashCode = getClass().hashCode() + 5 * eReference.hashCode();
-			for (@NonNull ParserRuleValue ruleValue : ruleValues) {
-				hashCode += 7 * ruleValue.hashCode();
-			}
-			return hashCode;
+			return getClass().hashCode() + 5 * eReference.hashCode() + 7 * ruleValueIndexes.hashCode();
 		}
 
 		protected boolean isInstance(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull EObject slotContent) {
 			UserElementAnalysis elementAnalysis = slotsAnalysis.getModelAnalysis().getElementAnalysis(slotContent);
-			for (@NonNull ParserRuleValue ruleValue : ruleValues) {
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleValue);
+			for (@NonNull Integer ruleValueIndex : ruleValueIndexes) {
+				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleValueIndex);
 				if (dynamicRuleMatch != null) {
 					return true;
 				}
 			}
-			for (@NonNull ParserRuleValue ruleValue : ruleValues) {		// XXX debugging
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleValue);
+			for (@NonNull Integer ruleValueIndex : ruleValueIndexes) {		// XXX debugging
+				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleValueIndex);
 				if (dynamicRuleMatch != null) {
 					return true;
 				}
@@ -274,11 +252,12 @@ public abstract class CardinalitySolutionStep
 			s.append(eReference.getName());
 			s.append(" : ");
 			boolean isFirst = true;
-			for (@NonNull ParserRuleValue ruleValue : ruleValues) {
+			for (@NonNull Integer ruleValueIndex : ruleValueIndexes) {
 				if (!isFirst) {
 					s.append("|");
 				}
-				s.append(ruleValue.getName());
+				s.append(ruleValueIndex);
+//				s.append(ruleValue.getName());
 				isFirst = false;
 			}
 		}

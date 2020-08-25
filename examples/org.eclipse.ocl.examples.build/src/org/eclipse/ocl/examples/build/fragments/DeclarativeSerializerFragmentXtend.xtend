@@ -555,7 +555,7 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 	}
 	
 	protected def generateSolutionStep_RuleCheck(CardinalitySolutionStep.RuleCheck solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», new String[]{«FOR ruleValue : solutionStep.getRuleValues() SEPARATOR ', '»"«getRuleValueId(ruleValue, true)»"«ENDFOR»})'''
+		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», new «new TypeReference(IndexVector)»(«solutionStep.getRuleValueIndexes().toWordsString»))'''
 	}
 	
 	protected def generateSolutionStep_ValueCheck(CardinalitySolutionStep.ValueCheck solutionStep) {
