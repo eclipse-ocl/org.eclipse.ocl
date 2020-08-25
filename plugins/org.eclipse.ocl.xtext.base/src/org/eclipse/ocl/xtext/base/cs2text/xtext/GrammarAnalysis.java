@@ -42,6 +42,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.user.AbstractGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -54,12 +55,13 @@ import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.service.GrammarProvider;
 
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
 /**
  * An XtextGrammarAnalysis provides the extended analysis of an Xtext (multi-)grammar.
  */
-public class GrammarAnalysis extends RTGrammarAnalysis
+public class GrammarAnalysis extends AbstractGrammarAnalysis
 {
 	@Inject
 	private @NonNull GrammarProvider grammarProvider;
@@ -97,7 +99,8 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 	private  final @NonNull Map<@NonNull String, @NonNull SingleEnumerationValue> value2enumerationValue = new HashMap<>();
 	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
 
-//	private @Nullable RTGrammarAnalysis runtime = null;
+	private @Nullable RTGrammarAnalysis runtime = null;
+	private @Nullable Iterable<@NonNull EClassData> sortedProducedEClassDatas = null;
 
 	public GrammarAnalysis() {
 		this.grammar = null;
@@ -556,25 +559,36 @@ public class GrammarAnalysis extends RTGrammarAnalysis
 
 	@Deprecated
 	public @NonNull RTGrammarAnalysis getRuntime() {
-//		RTGrammarAnalysis runtime2 = runtime;
-//		if (runtime2 == null)  {
-//			runtime = runtime2 = new RTGrammarAnalysis(this);
-//		}
-//		return runtime2;
-		return this;
+		RTGrammarAnalysis runtime2 = runtime;
+		if (runtime2 == null)  {
+			Iterable<@NonNull EClassData> sortedProducedEClassDatas = getSortedProducedEClassDatas();
+			@NonNull EClassData @NonNull [] eClassDatas = Iterables.toArray(sortedProducedEClassDatas, EClassData.class);
+			runtime = runtime2 = new RTGrammarAnalysis(eClassDatas);
+		}
+		return runtime2;
 	}
 
 //	@Override
-	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull EClass eClass) {
-		if ("PathElementWithURICS".equals(eClass.getName())) {
-			getClass(); // XXX
-		}
+//	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull EClass eClass) {
+//		if ("PathElementWithURICS".equals(eClass.getName())) {
+//			getClass(); // XXX
+//		}
 	//	assert eClass2serializationRules != null;
-		return getEClassData(eClass).getSerializationRules();
-	}
+//		return getEClassData(eClass).getSerializationRules();
+//	}
 
 	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull ParserRuleValue ruleValue) {
 		return ruleValue.getSerializationRules();
+	}
+
+
+	@Override
+	public @NonNull Iterable<@NonNull EClassData> getSortedProducedEClassDatas() {
+		Iterable<@NonNull EClassData> sortedProducedEClassDatas2 = sortedProducedEClassDatas;
+		if (sortedProducedEClassDatas2 == null) {
+			sortedProducedEClassDatas = sortedProducedEClassDatas2 = super.getSortedProducedEClassDatas();
+		}
+		return sortedProducedEClassDatas2;
 	}
 
 	@Override

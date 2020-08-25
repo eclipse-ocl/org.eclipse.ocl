@@ -12,8 +12,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.serializer;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 
 public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 {
@@ -22,7 +24,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 	@Override
 	public RTGrammarAnalysis getAnalysis() {
 		if (analysis == null) {
-			analysis = new RTGrammarAnalysis();
+			analysis = new RTGrammarAnalysis(new @NonNull EClassData[] {});
 		}
 		return analysis;
 	}

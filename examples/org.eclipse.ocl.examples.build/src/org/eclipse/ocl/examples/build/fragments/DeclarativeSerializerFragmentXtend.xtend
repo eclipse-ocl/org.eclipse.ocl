@@ -92,13 +92,13 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			@Override
 			public «new TypeReference(RTGrammarAnalysis)» getAnalysis() {
 				if (analysis == null) {
-					analysis = new «new TypeReference(RTGrammarAnalysis)»();
-					«FOR eClass : getSortedEClasses(grammarAnalysis)»
-						analysis.addEClassData(«getEClassId(eClass, true)»);
-					«ENDFOR»
-					«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
-					//	analysis.addSerializationRule(«getSerializationRuleId(serializationRule.getRuntime(), true)»);
-					«ENDFOR»
+					analysis = new «new TypeReference(RTGrammarAnalysis)»(
+						new «new TypeReference(EClassData)» [] {
+							«FOR eClass : getSortedEClasses(grammarAnalysis) SEPARATOR ','»
+							«getEClassId(eClass, true)»  /* «eClass.getEPackage().getName()»::«eClass.getName()» */
+							«ENDFOR»
+						}
+					);
 				}
 				return analysis;
 			}
@@ -261,7 +261,7 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 	protected def generateEClassData_EClass(GrammarAnalysis grammarAnalysis, EClass eClass) {
 		'''
 		new «new TypeReference(EClassData)»(«emitLiteral(eClass)»,
-		new «new TypeReference(SerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(eClass) SEPARATOR ','»
+		new «new TypeReference(SerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getEClassData(eClass).getSerializationRules() SEPARATOR ','»
 		«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toString()» */
 		«ENDFOR»},
 		«IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null

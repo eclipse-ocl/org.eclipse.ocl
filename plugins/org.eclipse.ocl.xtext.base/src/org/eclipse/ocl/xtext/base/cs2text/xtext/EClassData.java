@@ -17,10 +17,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
-public class EClassData
+public class EClassData implements Nameable
 {
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
@@ -114,12 +116,47 @@ public class EClassData
 		return eClass;
 	}
 
+	@Override
+	public @NonNull String getName() {
+		return XtextGrammarUtil.getName(eClass);
+	}
+
 	public @NonNull SerializationRule @NonNull [] getSerializationRules() {
 		return serializationRules;
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return XtextGrammarUtil.getName(eClass);
+		return getName();
+	}
+
+	public void toString(@NonNull StringBuilder s, int depth) {
+//		s.append("\n  ");;
+		s.append(eClass.getEPackage(). getName());
+		s.append("::");;
+		s.append(eClass.getName());
+		if ("PackageCS".equals(eClass.getName())) {
+			getClass(); // XXX debugging
+		}
+		s.append(" <=>");;
+//		int depth = 2;
+//		serializationRules.toString(s, depth);
+		s.append(eClass.getEPackage().getName());
+		s.append("::");
+		s.append(eClass.getName());
+	//	boolean isMany = Iterables.size(serializationRules) > 1;
+		for (@NonNull SerializationRule serializationRule : serializationRules) {
+	//		SerializationRule serializationRuleAnalysis = serializationRule;//.getSerializationRuleAnalysis();
+	//		if (isMany) {
+				StringUtil.appendIndentation(s, depth+1);
+	//		}
+	//		else {
+	//			s.append(" ");
+	//		}
+//			s.append(serializationRule.getName());
+//			s.append(" - ");
+		//	serializationRuleAnalysis.toRuleString(s);
+			serializationRule.toSolutionString(s, depth+2);
+		}
 	}
 }
