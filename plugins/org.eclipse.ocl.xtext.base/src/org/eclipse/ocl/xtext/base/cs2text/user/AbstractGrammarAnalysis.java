@@ -21,17 +21,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 
 public abstract class AbstractGrammarAnalysis
 {
-//	private /*@NonNull*/ GrammarAnalysis grammarAnalysis;
-
-	/**
-	 * The prioritized serialization rules for each EClass.
-	 */
-//	private final @NonNull Map<@NonNull EClass, @NonNull SerializationRules> eClass2serializationRules = new HashMap<>();
-
 	private final @NonNull Map<@NonNull EClass, @NonNull EClassData> eClass2eClassData = new HashMap<>();
 
 	protected void addEClassData(@NonNull EClassData eClassData) {
@@ -44,6 +38,8 @@ public abstract class AbstractGrammarAnalysis
 		assert eClass2eClassData.size() > 0;
 		return ClassUtil.nonNullState(eClass2eClassData.get(eClass));
 	}
+
+	public abstract @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex);
 
 	public @NonNull Iterable<@NonNull EClassData> getSortedProducedEClassDatas() {
 		assert eClass2eClassData.size() > 0;

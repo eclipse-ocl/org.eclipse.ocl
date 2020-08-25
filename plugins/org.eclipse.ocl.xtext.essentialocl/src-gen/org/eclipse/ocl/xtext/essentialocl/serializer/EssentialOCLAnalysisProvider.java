@@ -15,6 +15,7 @@ package org.eclipse.ocl.xtext.essentialocl.serializer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 
 public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
@@ -24,7 +25,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 	@Override
 	public RTGrammarAnalysis getAnalysis() {
 		if (analysis == null) {
-			analysis = new RTGrammarAnalysis(new @NonNull EClassData[] {});
+			analysis = new RTGrammarAnalysis(new @NonNull EClassData[] {}, new @NonNull AbstractRuleValue[] {});
 		}
 		return analysis;
 	}

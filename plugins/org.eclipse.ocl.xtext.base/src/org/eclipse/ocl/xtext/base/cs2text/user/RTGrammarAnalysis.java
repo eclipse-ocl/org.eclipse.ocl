@@ -10,15 +10,27 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.user;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 
 public class RTGrammarAnalysis extends AbstractGrammarAnalysis
 {
-	public RTGrammarAnalysis(/*@NonNull*/ EClassData /*@NonNull*/ [] eClassDatas) {
-		assert eClassDatas != null;
-		for (/*@NonNull*/ EClassData eClassData : eClassDatas) {
-			assert eClassData != null;
+	protected final @NonNull AbstractRuleValue @NonNull [] ruleValues;
+
+	public RTGrammarAnalysis(/*@NonNull*/ EClassData /*@NonNull*/ [] eClassDatas, /*@NonNull*/ AbstractRuleValue /*@NonNull*/ [] ruleValues) {
+		@SuppressWarnings("null")
+		@NonNull EClassData @NonNull [] castEClassDatas = (@NonNull EClassData @NonNull [])eClassDatas;
+		for (@NonNull EClassData eClassData : castEClassDatas) {
 			addEClassData(eClassData);
 		}
+		@SuppressWarnings("null")
+		@NonNull AbstractRuleValue @NonNull [] castRuleValues = (@NonNull AbstractRuleValue @NonNull [])ruleValues;
+		this.ruleValues = castRuleValues;
+	}
+
+	@Override
+	public @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex) {
+		return ruleValues[ruleValueIndex];
 	}
 }

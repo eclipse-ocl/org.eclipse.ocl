@@ -72,6 +72,11 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	private @Nullable Grammar grammar = null;
 
 	/**
+	 * The rule analyses in index order.
+	 */
+	private final @NonNull List<@NonNull AbstractRuleAnalysis> ruleAnalyses = new ArrayList<>();
+
+	/**
 	 * The rule analysis for each rule.
 	 */
 	private final @NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = new HashMap<>();
@@ -130,8 +135,8 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls = new HashMap<>();
 		Map<@NonNull String, @NonNull List<@NonNull AbstractRule>> ruleName2rules = analyzeRuleNames(rule2ruleCalls);
 		/*this.rule2ruleAnalysis =*/ createRuleAnalyses(ruleName2rules, rule2ruleCalls);
-		List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = new ArrayList<>(rule2ruleAnalysis.size());
-		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
+		List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = new ArrayList<>(ruleAnalyses.size());
+		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
 			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {
 				parserRuleAnalyses.add((ParserRuleAnalysis)abstractRuleAnalysis);
 			}
@@ -378,7 +383,6 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			@NonNull Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls) {
 		List<@NonNull String> ruleNames = new ArrayList<>(ruleName2rules.keySet());
 		Collections.sort(ruleNames);
-		int ruleIndex = 0;
 		for (@NonNull String ruleName : ruleNames) {
 			List<@NonNull AbstractRule> rules = ruleName2rules.get(ruleName);
 			assert rules != null;
@@ -400,23 +404,25 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			if (activeRule == null) {
 				throw new IllegalStateException("No unique rule '" + ruleName + "'");
 			}
+			int ruleIndex = ruleAnalyses.size();
 			AbstractRuleAnalysis ruleAnalysis;
 			if (activeRule instanceof ParserRule) {
 				EClassifier eClassifier = XtextGrammarUtil.getClassifier(activeRule.getType());
 				if (eClassifier instanceof EClass) {
-					ruleAnalysis = new ParserRuleAnalysis(this, ruleIndex++, (ParserRule)activeRule, (EClass)eClassifier);
+					ruleAnalysis = new ParserRuleAnalysis(this, ruleIndex, (ParserRule)activeRule, (EClass)eClassifier);
 				}
 				else {
-					ruleAnalysis = new DataTypeRuleAnalysis(this, ruleIndex++, (ParserRule)activeRule, (EDataType)eClassifier);
+					ruleAnalysis = new DataTypeRuleAnalysis(this, ruleIndex, (ParserRule)activeRule, (EDataType)eClassifier);
 				}
 			}
 			else if (activeRule instanceof TerminalRule) {
-				ruleAnalysis = new TerminalRuleAnalysis(this, ruleIndex++, (TerminalRule)activeRule);
+				ruleAnalysis = new TerminalRuleAnalysis(this, ruleIndex, (TerminalRule)activeRule);
 			}
 			else {
 				throw new UnsupportedOperationException();
 			}
 			rule2ruleAnalysis.put(activeRule, ruleAnalysis);
+			ruleAnalyses.add(ruleAnalysis);
 		}
 	}
 
@@ -557,13 +563,26 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		return ClassUtil.nonNullState(rule2ruleAnalysis.get(abstractRule));
 	}
 
+	public @NonNull AbstractRuleAnalysis getRuleAnalysis(int ruleValueIndex) {
+		return ruleAnalyses.get(ruleValueIndex);
+	}
+
+	@Override
+	public @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex) {
+		return getRuleAnalysis(ruleValueIndex).getRuleValue();
+	}
+
 	@Deprecated
 	public @NonNull RTGrammarAnalysis getRuntime() {
 		RTGrammarAnalysis runtime2 = runtime;
 		if (runtime2 == null)  {
 			Iterable<@NonNull EClassData> sortedProducedEClassDatas = getSortedProducedEClassDatas();
 			@NonNull EClassData @NonNull [] eClassDatas = Iterables.toArray(sortedProducedEClassDatas, EClassData.class);
-			runtime = runtime2 = new RTGrammarAnalysis(eClassDatas);
+			@NonNull AbstractRuleValue @NonNull [] ruleValues = new @NonNull AbstractRuleValue [ruleAnalyses.size()];
+			for (int i = 0; i < ruleAnalyses.size(); i++) {
+				ruleValues[i] = ruleAnalyses.get(i).getRuleValue();
+			}
+			runtime = runtime2 = new RTGrammarAnalysis(eClassDatas, ruleValues);
 		}
 		return runtime2;
 	}
@@ -599,9 +618,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	//	}
 		StringBuilder s = new StringBuilder();
 		s.append("Xtext production rule -> Xtext base rules <=> User EClass - User EStructuralFeatures");
-		List<@NonNull AbstractRuleAnalysis> abstractRuleAnalyses = new ArrayList<>(rule2ruleAnalysis.values());
-		Collections.sort(abstractRuleAnalyses, NameUtil.NAMEABLE_COMPARATOR);
-		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : abstractRuleAnalyses) {
+		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
 			s.append("\n  ");
 			s.append(abstractRuleAnalysis);
 			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {

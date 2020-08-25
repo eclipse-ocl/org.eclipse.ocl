@@ -97,6 +97,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 							«FOR eClass : getSortedEClasses(grammarAnalysis) SEPARATOR ','»
 							«getEClassId(eClass, true)»  /* «eClass.getEPackage().getName()»::«eClass.getName()» */
 							«ENDFOR»
+						},
+						new «new TypeReference(AbstractRuleValue)» [] {
+							«FOR ruleValue : getSortedRuleValues(grammarAnalysis) SEPARATOR ','»
+							«getRuleValueId(ruleValue, true)»  /* «ruleValue.toString()» */
+							«ENDFOR»
 						}
 					);
 				}
