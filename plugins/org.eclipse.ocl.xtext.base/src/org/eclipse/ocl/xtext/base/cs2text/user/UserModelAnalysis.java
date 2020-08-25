@@ -45,8 +45,8 @@ public class UserModelAnalysis
 	/**
 	 * The overall (multi-)grammar analysis.
 	 */
-//	@Inject
-//	private @NonNull GrammarAnalysis grammarAnalysis;
+	@Inject
+	private @NonNull GrammarAnalysis grammarAnalysis;
 
 	@Inject
 	private @NonNull IValueConverterService valueConverterService;
@@ -156,14 +156,14 @@ public class UserModelAnalysis
 	}
 
 	public @NonNull RTGrammarAnalysis getGrammarAnalysis() {
-//		return grammarAnalysis.getRuntime();
-		return analysisProvider.getAnalysis();
+		return grammarAnalysis.getRuntime();
+//		return analysisProvider.getAnalysis();
 	}
 
 	@Deprecated
 	public @NonNull GrammarAnalysis getInjectedGrammarAnalysis() {
-//		return grammarAnalysis;
-		throw new UnsupportedOperationException();
+		return grammarAnalysis;
+//		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull IValueConverterService getValueConverterService() {
