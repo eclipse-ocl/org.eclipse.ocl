@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +29,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
 public class SerializationRule
@@ -39,7 +39,8 @@ public class SerializationRule
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 	private final @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues;
-	private final @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleValueIndexes;
+	private final @NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes;
+//	private final @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleValueIndexes;
 
 	/**
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
@@ -50,16 +51,9 @@ public class SerializationRule
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
-			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments) {
-		this(ruleValueIndex, solutionSteps, serializationSteps, staticSegments, null, null, new HashMap<>());
-	}
-
-	public SerializationRule(int ruleValueIndex,
-			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
-			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues,
-			@Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleValueIndexes,
+			@NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes,
 			@NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression) {
 		this.ruleValueIndex = ruleValueIndex;
 		this.solutionSteps = solutionSteps;
@@ -71,7 +65,15 @@ public class SerializationRule
 	}
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
-		return eReference2assignedRuleValueIndexes != null ? eReference2assignedRuleValueIndexes.get(eReference) : null;
+		if (eReference2assignedRuleValueIndexes != null) {
+			for (@NonNull EReferenceData eReferenceData : eReference2assignedRuleValueIndexes) {
+				if (eReferenceData.getEReference() == eReference) {
+					return eReferenceData.getAssignedTargetRuleValueIndexes();
+				}
+			}
+		}
+		return null;
+//		return eReference2assignedRuleValueIndexes != null ? eReference2assignedRuleValueIndexes.get(eReference) : null;
 	}
 
 //	@Override

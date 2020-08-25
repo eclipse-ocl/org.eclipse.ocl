@@ -91,7 +91,7 @@ public class EClassData implements Nameable
 		if (eReferenceDatas != null) {
 			for (@NonNull EReferenceData eReferenceData : eReferenceDatas) {
 				if (eReferenceData.getEReference() == eContainmentFeature) {
-					return eReferenceData.getAssignedTargetRuleValues();
+					return eReferenceData.getAssignedTargetRuleValueIndexes();
 				}
 			}
 		}

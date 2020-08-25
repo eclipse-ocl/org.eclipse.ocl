@@ -82,6 +82,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 {
 	private static final Logger LOG = Logger.getLogger(DeclarativeSerializerFragment.class);
 
+	public static int RULES_PER_PAGE = 64;
+
 	@Inject
 	private XtextGeneratorNaming xtextGeneratorNaming;
 
@@ -480,6 +482,25 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 	}
 
+	protected @NonNull Iterable<@NonNull Integer> getSortedSerializationRulePages(@NonNull GrammarAnalysis grammarAnalysis) {
+		assert serializationRules != null;
+		int maxPage = (serializationRules.size() + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
+		List<@NonNull Integer> pages = new ArrayList<>();
+		for (int i = 0; i < maxPage; i++) {
+			pages.add(i);
+		}
+		return pages;
+	}
+
+	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis, int page) {
+		assert serializationRules != null;
+		int size = serializationRules.size();
+		int maxPage = (size + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
+		int firstIndex = RULES_PER_PAGE * page;
+		assert serializationRules != null;
+		return serializationRules.subList(firstIndex, Math.min(firstIndex+RULES_PER_PAGE-1, size-1));
+	}
+
 	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
 		assert serializationRules != null;
 		return serializationRules;
@@ -538,7 +559,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				@NonNull EReferenceData[] eReferenceDatas = grammarAnalysis.basicGetEReferenceDatas(eClass);
 				if (eReferenceDatas != null) {
 					for (@NonNull EReferenceData eReferenceData : eReferenceDatas) {
-						IndexVector assignedTargetRuleValues = eReferenceData.getAssignedTargetRuleValues();
+						IndexVector assignedTargetRuleValues = eReferenceData.getAssignedTargetRuleValueIndexes();
 						indexVector2id2.put(assignedTargetRuleValues, "");
 					}
 				}

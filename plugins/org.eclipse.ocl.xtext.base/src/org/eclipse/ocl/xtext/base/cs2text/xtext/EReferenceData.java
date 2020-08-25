@@ -28,7 +28,7 @@ public class EReferenceData
 		return eReference;
 	}
 
-	public @NonNull IndexVector getAssignedTargetRuleValues() {
+	public @NonNull IndexVector getAssignedTargetRuleValueIndexes() {
 		return parserRuleValueIndexes;
 	}
 

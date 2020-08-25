@@ -70,6 +70,7 @@ import org.eclipse.xtext.Grammar
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule
+import java.util.HashMap
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -210,8 +211,18 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private class _SerializationRules
 			{
 				«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
-				private final /*@NonNull*/ «new TypeReference(SerializationRule)» «getSerializationRuleId(serializationRule.getRuntime(), false)»
-					= «generateSerializationRule(serializationRule)»;
+				private /*@NonNull*/ «new TypeReference(SerializationRule)» «getSerializationRuleId(serializationRule.getRuntime(), false)»;
+				«ENDFOR»
+				
+				/**
+				 * Post constructor initializations that avoid byte limits.
+				 */
+				«FOR page : getSortedSerializationRulePages(grammarAnalysis)»
+				private final void init«page»() {
+					«FOR serializationRule : getSortedSerializationRules(grammarAnalysis, page)»
+					«getSerializationRuleId(serializationRule.getRuntime(), false)» = «generateSerializationRule(serializationRule)»;
+					«ENDFOR»
+				}
 				«ENDFOR»
 			}
 			
@@ -241,6 +252,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				rv = new _RuleValues();
 				ec = new _EClassData();		
 				st.init();
+				«FOR page : getSortedSerializationRulePages(grammarAnalysis)»
+				sr.init«page»();
+				«ENDFOR»
 			}
 		}
 		'''
@@ -270,11 +284,23 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 		«ENDIF»
 		«ENDFOR»
 		«ENDIF»
-	}
+	},
 	«ELSE»
-	null
+	null,
 	«ENDIF»
-)'''
+	null,
+	«IF serializationRule.basicGetEReference2AssignedRuleValueIndexes() !== null»
+	new «new TypeReference(EReferenceData)» [] {
+		«FOR eReferenceData : serializationRule.getEReference2AssignedRuleValueIndexes() SEPARATOR ','»
+		new «new TypeReference(EReferenceData)»(«emitLiteral(eReferenceData.getEReference())»,
+			«getIndexVectorId(eReferenceData.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
+		«ENDFOR»
+	},
+	«ELSE»
+	null,
+	«ENDIF»
+	new «new TypeReference(HashMap)»<>()
+	)'''
 	}
 	
 /*	protected def generateSerializationRules(GrammarAnalysis grammarAnalysis, EClass eClass) {
@@ -320,7 +346,7 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 			new «new TypeReference(EReferenceData)» [] {
 				«FOR eReferenceData : grammarAnalysis.getEReferenceDatas(eClass) SEPARATOR ','»
 				new «new TypeReference(EReferenceData)»(«emitLiteral(eReferenceData.getEReference())»,
-					«getIndexVectorId(eReferenceData.getAssignedTargetRuleValues(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValues() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
+					«getIndexVectorId(eReferenceData.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
 				«ENDFOR»
 			}«ENDIF»
 		)'''
