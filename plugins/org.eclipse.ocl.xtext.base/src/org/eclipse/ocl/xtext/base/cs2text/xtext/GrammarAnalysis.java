@@ -568,6 +568,11 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	@Override
+	public @NonNull String getRuleName(int ruleValueIndex) {
+		return getRuleAnalysis(ruleValueIndex).getRuleName();
+	}
+
+	@Override
 	public @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex) {
 		return getRuleAnalysis(ruleValueIndex).getRuleValue();
 	}

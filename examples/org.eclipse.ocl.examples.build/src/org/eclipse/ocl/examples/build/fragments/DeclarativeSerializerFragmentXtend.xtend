@@ -108,6 +108,14 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				return analysis;
 			}
 			
+			private class _IndexVectors
+			{
+				«FOR indexVector : getSortedIndexVectors(grammarAnalysis)»
+				private final /*@NonNull*/ «new TypeReference(IndexVector)» «getIndexVectorId(indexVector, false)» // /*«FOR index : indexVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/
+					= new «new TypeReference(IndexVector)»(«indexVector.toWordsString()»);
+				«ENDFOR»
+			}
+			
 			private class _EnumValues
 			{
 				«FOR enumValue : getSortedEnumValues(grammarAnalysis)»
@@ -175,6 +183,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			}
 			
 			private _EnumValues ev;
+			private _IndexVectors iv;
 			private _MatchTerms mt;
 			private _MatchSteps ms;
 			private _SerializationTerms st;
@@ -186,6 +195,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			@Inject
 			public void init() {
 			//	«new TypeReference(Grammar)» grammar = grammarProvider.getGrammar(this);
+				iv = new _IndexVectors();
 				ev = new _EnumValues();
 				mt = new _MatchTerms();
 				ms = new _MatchSteps();
@@ -387,9 +397,7 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 	= new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»",
 	new «new TypeReference(SerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
 			«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
-			«ENDFOR»},
-			new «new TypeReference(IndexVector)»(new long[]{
-	«subParserRuleValueIndexes.toWordsString()»})); // «FOR index : subParserRuleValueIndexes SEPARATOR ','»«getRuleName(index)»«ENDFOR»'''
+			«ENDFOR»}, «getIndexVectorId(subParserRuleValueIndexes, true)»); /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getRuleName(index)»«ENDFOR» */'''
 		}
 		else {
 		'''private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
@@ -555,7 +563,7 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 	}
 	
 	protected def generateSolutionStep_RuleCheck(CardinalitySolutionStep.RuleCheck solutionStep) {
-		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», new «new TypeReference(IndexVector)»(«solutionStep.getRuleValueIndexes().toWordsString»))'''
+		'''new «new TypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», «getIndexVectorId(solutionStep.getRuleValueIndexes(), true)»/*«FOR index : solutionStep.getRuleValueIndexes() SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/)'''
 	}
 	
 	protected def generateSolutionStep_ValueCheck(CardinalitySolutionStep.ValueCheck solutionStep) {

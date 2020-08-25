@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public class IndexVector implements Iterable<@NonNull Integer>
+public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonNull IndexVector>
 {
 	protected class IndexIterator implements Iterator<@NonNull Integer>
 	{
@@ -60,6 +60,31 @@ public class IndexVector implements Iterable<@NonNull Integer>
 		for (@NonNull Indexed index : indexes) {
 			set(index.getIndex());
 		}
+	}
+
+	@Override
+	public int compareTo(@NonNull IndexVector that) {
+		int iThis = this.getLength();
+		int iThat = that.getLength();
+		int iCommon = Math.min(iThis, iThat);
+		int i = Math.max(iThis, iThat);
+		for ( ; (i > iCommon) && (i > iThat); ) {
+			if (this.longs[--i] != 0) {
+				return 1;
+			}
+		}
+		for ( ; (i > iCommon) && (i > iThis); ) {
+			if (that.longs[--i] != 0) {
+				return -1;
+			}
+		}
+		for ( ; --i >= 0; ) {
+			int diff = Long.compareUnsigned(this.longs[i], that.longs[i]);
+			if (diff != 0) {
+				return diff;
+			}
+		}
+		return 0;
 	}
 
 	@Override

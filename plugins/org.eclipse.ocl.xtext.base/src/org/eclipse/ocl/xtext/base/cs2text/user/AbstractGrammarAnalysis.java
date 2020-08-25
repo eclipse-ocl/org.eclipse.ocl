@@ -39,6 +39,8 @@ public abstract class AbstractGrammarAnalysis
 		return ClassUtil.nonNullState(eClass2eClassData.get(eClass));
 	}
 
+	public abstract @NonNull String getRuleName(int ruleValueIndex);
+
 	public abstract @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex);
 
 	public @NonNull Iterable<@NonNull EClassData> getSortedProducedEClassDatas() {

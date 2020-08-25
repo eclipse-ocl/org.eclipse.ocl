@@ -35,6 +35,10 @@ public class IndexVectorTests extends XtextTestCase
 		assertEquals(new IndexVector().set(62).set(63).setAll(new IndexVector().setCapacity(200).set(64).set(62)).toString(), "[62,63,64]");
 	}
 
+	public void testIndexVector_CompareTo() throws Exception {
+		assertTrue(new IndexVector().set(64).compareTo(new IndexVector().set(63)) > 0);
+	}
+
 	public void testIndexVector_Equals() throws Exception {
 		assertTrue(new IndexVector().set(63).equals(new IndexVector().set(63)));
 		assertFalse(new IndexVector().set(63).set(64).equals(new IndexVector().set(64)));

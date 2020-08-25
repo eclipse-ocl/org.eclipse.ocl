@@ -50,7 +50,9 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.AbstractRule;
@@ -515,6 +517,49 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		String id = eClass2id.get(eClass);
 		assert id != null;
 		return addQualifier ? "ec." + id : id;
+	}
+
+	private @Nullable Map<@NonNull IndexVector, @NonNull String> indexVector2id = null;
+	private @Nullable List<@NonNull IndexVector> indexVectors = null;
+
+	protected @NonNull String getIndexVectorId(@NonNull IndexVector indexVector, boolean addQualifier) {
+		assert indexVector2id != null;
+		String id = indexVector2id.get(indexVector);
+		return addQualifier ? "iv." + id : id;
+	}
+
+	protected @NonNull Iterable<@NonNull IndexVector> getSortedIndexVectors(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull IndexVector, @NonNull String> indexVector2id2 = indexVector2id;
+		List<@NonNull IndexVector> indexVectors2 = indexVectors;
+		if ((indexVector2id2 == null) || (indexVectors2 == null)) {
+			indexVector2id = indexVector2id2 = new HashMap<>();
+			for (@NonNull AbstractRuleValue ruleValue : getSortedRuleValues(grammarAnalysis)) {
+				if (ruleValue instanceof ParserRuleValue) {
+					IndexVector subParserRuleValueIndexes = ((ParserRuleValue)ruleValue).getSubParserRuleValueIndexes();
+					if (subParserRuleValueIndexes != null) {
+						indexVector2id2.put(subParserRuleValueIndexes, "");
+					}
+				}
+			}
+			for (@NonNull CardinalitySolutionStep step : getSortedSolutionSteps(grammarAnalysis)) {
+				if (step instanceof CardinalitySolutionStep.RuleCheck) {
+					indexVector2id2.put(((CardinalitySolutionStep.RuleCheck)step).getRuleValueIndexes(), "");
+				}
+			}
+			indexVectors = indexVectors2 = new ArrayList<>(indexVector2id2.keySet());
+			Collections.sort(indexVectors2);
+			int i = 0;
+			for (@NonNull IndexVector indexVector : indexVectors2) {
+				if (i > 0) {
+					IndexVector prevIndexVector = indexVectors2.get(i-1);
+					if (!(indexVector.compareTo(prevIndexVector) > 0)) {
+						assert indexVector.compareTo(prevIndexVector) > 0;
+					}
+				}
+				indexVector2id2.put(indexVector, "_" + i++);
+			}
+		}
+		return indexVectors2;
 	}
 
 	@Override

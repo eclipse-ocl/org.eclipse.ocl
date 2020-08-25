@@ -30,6 +30,11 @@ public class RTGrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	@Override
+	public @NonNull String getRuleName(int ruleValueIndex) {
+		return ruleValues[ruleValueIndex].getRuleName();
+	}
+
+	@Override
 	public @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex) {
 		return ruleValues[ruleValueIndex];
 	}
