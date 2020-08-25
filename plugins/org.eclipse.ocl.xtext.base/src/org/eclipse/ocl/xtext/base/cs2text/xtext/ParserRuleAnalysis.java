@@ -29,11 +29,11 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationElement;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleComparator;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
@@ -406,6 +406,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			// rtSerializationRules content defined after construction to allow recursive references
 			//
 			int i = 0;
+			if ("OCLinEcore::AnnotationCS".equals(name)) {
+				getClass();		// XXX
+			}
 			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
 				rtSerializationRules[i++] = serializationRule.getRuntime();
 			}

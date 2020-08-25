@@ -31,8 +31,8 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -156,18 +156,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return assignedSerializationNodes;
 	}
 
-	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
-		Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = getEReference2AssignedRuleAnalyses().get(eReference);
-		if (assignedRuleAnalyses == null) {
-			return null;
-		}
-		Set<@NonNull ParserRuleValue> assignedRuleValues = new HashSet<>();
-		for (@NonNull ParserRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
-			assignedRuleValues.add(assignedRuleAnalysis.getRuleValue());
-		}
-		return assignedRuleValues;
-	}
-
 	public @Nullable Iterable<@NonNull AssignedSerializationNode> getAssignedSerializationNodes(@NonNull EReference eReference) {
 		return gatherAssignedSerializationNodes(eReference, rootSerializationNode, null);
 	}
@@ -230,17 +218,20 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		else*/ if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)) {
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-			EReference eReference = (EReference)assignedSerializationNode.getEStructuralFeature();
-			Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = eReference2assignedRuleAnalyses.get(eReference);
-			if (assignedRuleAnalyses == null) {
-				assignedRuleAnalyses = new HashSet<>();
-				eReference2assignedRuleAnalyses.put(eReference, assignedRuleAnalyses);
-			}
-			Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-			if (ruleAnalyses != null) {
-				for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-					if (ruleAnalysis instanceof ParserRuleAnalysis) {
-						assignedRuleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
+			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
+			if (eStructuralFeature instanceof EReference) {
+				EReference eReference = (EReference)eStructuralFeature;
+				Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = eReference2assignedRuleAnalyses.get(eReference);
+				if (assignedRuleAnalyses == null) {
+					assignedRuleAnalyses = new HashSet<>();
+					eReference2assignedRuleAnalyses.put(eReference, assignedRuleAnalyses);
+				}
+				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
+				if (ruleAnalyses != null) {
+					for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+						if (ruleAnalysis instanceof ParserRuleAnalysis) {
+							assignedRuleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
+						}
 					}
 				}
 			}
@@ -250,6 +241,20 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				getEReference2AssignedRuleAnalyses(nestedSerializationNode, eReference2assignedRuleAnalyses);
 			}
 		}
+	}
+
+	public @Nullable Map<@NonNull EReference, Set<@NonNull ParserRuleValue>> getEReference2AssignedRuleValues() {
+		Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2AssignedRuleAnalyses2 = getEReference2AssignedRuleAnalyses();
+		Map<@NonNull EReference, Set<@NonNull ParserRuleValue>> eReference2AssignedRuleValues = new HashMap<>(eReference2AssignedRuleAnalyses2.size());
+		for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> entry : eReference2AssignedRuleAnalyses2.entrySet()) {
+			Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue();
+			Set<@NonNull ParserRuleValue> assignedRuleValues = new HashSet<>(assignedRuleAnalyses.size());
+			for (@NonNull ParserRuleAnalysis ruleAnalysis : assignedRuleAnalyses) {
+				assignedRuleValues.add(ruleAnalysis.getRuleValue());
+			}
+			eReference2AssignedRuleValues.put(entry.getKey(), assignedRuleValues);
+		}
+		return eReference2AssignedRuleValues;
 	}
 
 /*	@Override

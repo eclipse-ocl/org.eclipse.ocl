@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
@@ -26,7 +25,6 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class RTSerializationRule2 extends SerializationRule
 {
@@ -38,9 +36,9 @@ public class RTSerializationRule2 extends SerializationRule
 		serializationRuleAnalysis.getRootSerializationNode().gatherRuntime(serializationRuleAnalysis.getStaticRuleMatch(), stepsList, serializationNode2subIdioms, subIdiomsList);
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
-			@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
+		@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
 	//	@Nullable SubIdiom @NonNull [] staticSubIdioms = subIdiomsList.toArray(new @Nullable SubIdiom[size]);
-		@Nullable Segment @NonNull [] @Nullable [] staticSegments = new @Nullable Segment [size] [];
+		@Nullable Segment @NonNull [] @Nullable [] staticSegments = new @Nullable Segment @NonNull [size] @Nullable [];
 		for (int i = 0; i < size; i++) {
 			SubIdiom subIdiom = subIdiomsList.get(i);
 			List<Segment> segments = subIdiom != null ? subIdiom.getSegments() : null;
@@ -53,15 +51,10 @@ public class RTSerializationRule2 extends SerializationRule
 	private final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;
 
 	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
-		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments);
+		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments, null /*serializationRuleAnalysis.getEReference2AssignedRuleValues()*/);	// XXX
 		this.serializationRuleAnalysis = serializationRuleAnalysis;
 		RTSerializationRule2 old = debugMap.put(serializationRuleAnalysis, this);		// XXX debugging
 		assert old == null;
-	}
-
-	@Override
-	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
-		return serializationRuleAnalysis.getAssignedRuleValues(eReference);
 	}
 
 	@Override

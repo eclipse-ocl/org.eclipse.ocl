@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -32,14 +33,28 @@ public class SerializationRule
 	private final int ruleValueIndex;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
+	private final @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleValue>> eReference2assignedRuleValues;
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments) {
+		this(ruleValueIndex, solutionSteps, serializationSteps, staticSegments, null);
+	}
+
+	public SerializationRule(int ruleValueIndex,
+			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
+			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
+			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
+			@Nullable Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleValue>> eReference2assignedRuleValues) {
 		this.ruleValueIndex = ruleValueIndex;
 		this.serializationSteps = serializationSteps;
 		this.staticSegments = staticSegments;
+		this.eReference2assignedRuleValues = eReference2assignedRuleValues;
+	}
+
+	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
+		return eReference2assignedRuleValues != null ? eReference2assignedRuleValues.get(eReference) : null;
 	}
 
 //	@Override
@@ -47,11 +62,6 @@ public class SerializationRule
 //		// TODO Auto-generated method stub
 //		throw new UnsupportedOperationException();
 //	}
-
-	public @Nullable Set<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
 
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		// TODO Auto-generated method stub
@@ -70,10 +80,6 @@ public class SerializationRule
 	public @NonNull RTSerializationStep @NonNull [] getSerializationSteps() {
 		return serializationSteps;
 	}
-
-//	public @Nullable SubIdiom @NonNull [] getStaticSubIdioms() {
-//		return staticSubIdioms;
-//	}
 
 	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
 		return staticSegments;
