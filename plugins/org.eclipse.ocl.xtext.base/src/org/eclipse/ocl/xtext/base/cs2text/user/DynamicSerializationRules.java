@@ -28,6 +28,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 import com.google.common.collect.Lists;
@@ -122,11 +123,11 @@ public class DynamicSerializationRules
 			}
 			else {
 				EReference eReference = (EReference)eStructuralFeature;
-				Iterable<@NonNull ParserRuleValue> assignedRuleValues = getAssignedRuleValues(eReference);
-				if (assignedRuleValues != null) {
-					List<@NonNull ParserRuleValue> sortedRuleValues = Lists.newArrayList(assignedRuleValues);
-					Collections.sort(sortedRuleValues, NameUtil.NAMEABLE_COMPARATOR);
-					for (@NonNull ParserRuleValue ruleValue : sortedRuleValues) {
+				IndexVector assignedRuleValueIndexes = getAssignedRuleValueIndexes(eReference);
+				if (assignedRuleValueIndexes != null) {
+					RTGrammarAnalysis grammarAnalysis = slotsAnalysis.getModelAnalysis().getGrammarAnalysis();
+					for (int ruleValueIndex : assignedRuleValueIndexes) {
+						ParserRuleValue ruleValue = (ParserRuleValue)grammarAnalysis.getRuleValue(ruleValueIndex);
 						int size2 = slotsAnalysis.getSize(eReference, ruleValue);
 						s.append(String.format("\n %-29.29s%8d", "'" + ruleValue.getName() + "'", size2));
 						for (@NonNull SerializationRule serializationRule : serializationRules) {
@@ -141,18 +142,18 @@ public class DynamicSerializationRules
 		s.append("\n");
 	}
 
-	public @Nullable Iterable<@NonNull ParserRuleValue> getAssignedRuleValues(@NonNull EReference eReference) {
-		Set<@NonNull ParserRuleValue> allAssignedRuleValues = null;
+	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
+		IndexVector allAssignedRuleValueIndexes = null;
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			Set<@NonNull ParserRuleValue> assignedRuleValues = serializationRule.getAssignedRuleValues(eReference);
-			if (assignedRuleValues != null) {
-				if (allAssignedRuleValues == null) {
-					allAssignedRuleValues = new HashSet<>();
+			IndexVector assignedRuleValueIndexes = serializationRule.getAssignedRuleValueIndexes(eReference);
+			if (assignedRuleValueIndexes != null) {
+				if (allAssignedRuleValueIndexes == null) {
+					allAssignedRuleValueIndexes = new IndexVector();
 				}
-				allAssignedRuleValues.addAll(assignedRuleValues);
+				allAssignedRuleValueIndexes.setAll(assignedRuleValueIndexes);
 			}
 		}
-		return allAssignedRuleValues;
+		return allAssignedRuleValueIndexes;
 	}
 
 	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {

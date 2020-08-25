@@ -89,7 +89,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		//
 		//	Accumulate enumerated attributes
 		//
-		CardinalityExpression cardinalityExpression = feature2expression.get(eStructuralFeature);
+		CardinalityExpression cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
 		if (eStructuralFeature instanceof EAttribute) {
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
@@ -111,7 +111,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
 			//
 			if (cardinalityExpression == null) {
-				String name = String.format("E%02d", feature2expression.size());
+				String name = String.format("E%02d", eStructuralFeature2requiredSlotsExpression.size());
 				assert name != null;;
 				if (enumerationValue == null) {
 					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
@@ -119,7 +119,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 				else {		// XXX RuleAnalysis
 					cardinalityExpression = new EAttributeCardinalityExpression(name, (EAttribute)eStructuralFeature, enumerationValue);
 				}
-				feature2expression.put(eStructuralFeature, cardinalityExpression);
+				eStructuralFeature2requiredSlotsExpression.put(eStructuralFeature, cardinalityExpression);
 			}
 			//
 			//	Add cardinalityVariables as a further product term to the sum of products.
@@ -158,12 +158,12 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			//
 			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
 			//
-			cardinalityExpression = feature2expression.get(eStructuralFeature);
+			cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
 			if (cardinalityExpression == null) {
-				String name = String.format("E%02d", feature2expression.size());
+				String name = String.format("E%02d", eStructuralFeature2requiredSlotsExpression.size());
 				assert name != null;;
 				cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
-				feature2expression.put(eStructuralFeature, cardinalityExpression);
+				eStructuralFeature2requiredSlotsExpression.put(eStructuralFeature, cardinalityExpression);
 			}
 		}
 		//
@@ -230,7 +230,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		if ("EssentialOCL::ExpCS".equals(serializationRule.getName())) {
 			getClass();		// XXX debugging
 		}
-	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : feature2expression.entrySet()) {
+	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
 			EStructuralFeature eStructuralFeature = entry.getKey();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
@@ -292,7 +292,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 //		assert variable2solution2 == null;
 //		variable2solution = variable2solution2 = new HashMap<>();
 		List<@NonNull CardinalityExpression> residualExpressions = new ArrayList<>();
-		for (@NonNull CardinalityExpression expression : feature2expression.values()) {
+		for (@NonNull CardinalityExpression expression : eStructuralFeature2requiredSlotsExpression.values()) {
 			Iterable<@NonNull CardinalityExpression> cardinalityExpressions = expression.getCardinalityExpressions();
 			if (cardinalityExpressions != null) {
 				for (@NonNull CardinalityExpression cardinalityExpression : cardinalityExpressions) {
@@ -551,7 +551,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
-		CardinalityExpression expression = feature2expression.get(eStructuralFeature);
+		CardinalityExpression expression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
 		if (expression == null) {
 			return false;
 		}
@@ -586,7 +586,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		s.append(serializationRule.getName());
 		s.append(" : ");
 		serializationRule.toRuleString(s);
-		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(feature2expression.values());
+		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(eStructuralFeature2requiredSlotsExpression.values());
 		Collections.sort(expressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityExpression expression : expressions) {
 			StringUtil.appendIndentation(s, depth);

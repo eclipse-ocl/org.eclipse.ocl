@@ -40,9 +40,9 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 
 	/**
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
-	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
+	 * cardinality variables. This is checked against the actual number of slots in an actual user element.
 	 */
-	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression = new HashMap<>();
+	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> eStructuralFeature2requiredSlotsExpression = new HashMap<>();
 
 	/**
 	 * The per-variable solution expression that computes the variable's value from the actual number of slots of an actual user element.
@@ -56,10 +56,6 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 	 * each solution for its variable.
 	 */
 	protected final @NonNull List<@NonNull CardinalitySolutionStep> steps = new ArrayList<>();
-
-//	public RTStaticRuleMatch(@NonNull RTSerializationRule serializationRule) {
-//		this.serializationRule = serializationRule;
-//	}
 
 	/**
 	 * Accumulate an additional cardinalitySolution expression for a cardinalityVariable.
@@ -108,6 +104,10 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 
 	protected abstract @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis);
 
+	public @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> geteStructuralFeature2requiredSlotsExpression() {
+		return eStructuralFeature2requiredSlotsExpression;
+	}
+
 	public @NonNull SerializationRuleAnalysis getSerializationRule() {
 		throw new UnsupportedOperationException();		// XXX
 	}
@@ -144,8 +144,8 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 			//
 			//	Evaluate the expressions to determine the required size of each slot.
 			//
-			for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
-				CardinalityExpression expression = feature2expression.get(eStructuralFeature);
+			for (@NonNull EStructuralFeature eStructuralFeature : eStructuralFeature2requiredSlotsExpression.keySet()) {
+				CardinalityExpression expression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
 				assert expression != null;
 				if (!expression.checkSize(dynamicRuleMatch)) {
 					return null;
@@ -155,7 +155,7 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 			//	Check that no 'unused' features are used.
 			//
 			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
-				if (!feature2expression.containsKey(eStructuralFeature)) {
+				if (!eStructuralFeature2requiredSlotsExpression.containsKey(eStructuralFeature)) {
 					UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
 					if (!object.isCounted() || (object.asCounted() != 0)) {
 						return null;

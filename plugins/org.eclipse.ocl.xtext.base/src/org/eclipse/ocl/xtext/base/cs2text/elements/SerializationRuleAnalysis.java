@@ -65,7 +65,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	private @Nullable Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = null;
 
 	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = null;
-	private @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2assignedRuleAnalyses = null;
+	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes = null;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
@@ -154,7 +154,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return gatherAssignedSerializationNodes(eReference, rootSerializationNode, null);
 	}
 
-	protected @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> getEAttribute2EnumerationValues() {
+	public @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> getEAttribute2EnumerationValues() {
 		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
 		if (eAttribute2enumerationValues2 == null) {
 			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
@@ -192,15 +192,15 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 	}
 
-	protected @NonNull Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> getEReference2AssignedRuleAnalyses() {
-		Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2assignedRuleAnalyses2 = eReference2assignedRuleAnalyses;
-		if (eReference2assignedRuleAnalyses2 == null) {
-			eReference2assignedRuleAnalyses = eReference2assignedRuleAnalyses2 = new HashMap<>();
-			getEReference2AssignedRuleAnalyses(getRootSerializationNode(), eReference2assignedRuleAnalyses2);
+	protected @NonNull Map<@NonNull EReference, @NonNull IndexVector> getEReference2AssignedRuleIndexes() {
+		Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes2 = eReference2assignedRuleIndexes;
+		if (eReference2assignedRuleIndexes2 == null) {
+			eReference2assignedRuleIndexes = eReference2assignedRuleIndexes2 = new HashMap<>();
+			getEReference2AssignedRuleIndexes(getRootSerializationNode(), eReference2assignedRuleIndexes2);
 		}
-		return eReference2assignedRuleAnalyses2;
+		return eReference2assignedRuleIndexes2;
 	}
-	private void getEReference2AssignedRuleAnalyses(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2assignedRuleAnalyses) {
+	private void getEReference2AssignedRuleIndexes(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes) {
 		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
 			if (assignedKeywordsSerializationNode.getEStructuralFeature() == eReference) {
@@ -215,16 +215,16 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
-				Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = eReference2assignedRuleAnalyses.get(eReference);
-				if (assignedRuleAnalyses == null) {
-					assignedRuleAnalyses = new HashSet<>();
-					eReference2assignedRuleAnalyses.put(eReference, assignedRuleAnalyses);
+				IndexVector assignedRuleIndexes = eReference2assignedRuleIndexes.get(eReference);
+				if (assignedRuleIndexes == null) {
+					assignedRuleIndexes = new IndexVector();
+					eReference2assignedRuleIndexes.put(eReference, assignedRuleIndexes);
 				}
 				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
 				if (ruleAnalyses != null) {
 					for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
 						if (ruleAnalysis instanceof ParserRuleAnalysis) {
-							assignedRuleAnalyses.add((ParserRuleAnalysis) ruleAnalysis);
+							assignedRuleIndexes.set(ruleAnalysis.getIndex());
 						}
 					}
 				}
@@ -232,23 +232,19 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		else if (serializationNode instanceof SequenceSerializationNode) {
 			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				getEReference2AssignedRuleAnalyses(nestedSerializationNode, eReference2assignedRuleAnalyses);
+				getEReference2AssignedRuleIndexes(nestedSerializationNode, eReference2assignedRuleIndexes);
 			}
 		}
 	}
 
-	public @Nullable Map<@NonNull EReference, Set<@NonNull ParserRuleValue>> getEReference2AssignedRuleValues() {
-		Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> eReference2AssignedRuleAnalyses2 = getEReference2AssignedRuleAnalyses();
-		Map<@NonNull EReference, Set<@NonNull ParserRuleValue>> eReference2AssignedRuleValues = new HashMap<>(eReference2AssignedRuleAnalyses2.size());
-		for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull ParserRuleAnalysis>> entry : eReference2AssignedRuleAnalyses2.entrySet()) {
-			Set<@NonNull ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue();
-			Set<@NonNull ParserRuleValue> assignedRuleValues = new HashSet<>(assignedRuleAnalyses.size());
-			for (@NonNull ParserRuleAnalysis ruleAnalysis : assignedRuleAnalyses) {
-				assignedRuleValues.add(ruleAnalysis.getRuleValue());
-			}
-			eReference2AssignedRuleValues.put(entry.getKey(), assignedRuleValues);
+	public @Nullable Map<@NonNull EReference, @NonNull IndexVector> getEReference2AssignedRuleValueIndexes() {
+		Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes2 = getEReference2AssignedRuleIndexes();
+		Map<@NonNull EReference, @NonNull IndexVector> eReference2AssignedRuleValueIndexes = new HashMap<>(eReference2assignedRuleIndexes2.size());
+		for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2assignedRuleIndexes2.entrySet()) {
+			IndexVector assignedRuleIndexes = entry.getValue();
+			eReference2AssignedRuleValueIndexes.put(entry.getKey(), assignedRuleIndexes);
 		}
-		return eReference2AssignedRuleValues;
+		return eReference2AssignedRuleValueIndexes;
 	}
 
 /*	@Override
