@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -22,18 +24,27 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class SerializationRule
 {
 	private final int ruleValueIndex;
+	private final @NonNull CardinalitySolutionStep @NonNull [] solutionSteps;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 	private final @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleValue>> eReference2assignedRuleValues;
+
+	/**
+	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
+	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
+	 */
+	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression = new HashMap<>();
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
@@ -48,6 +59,7 @@ public class SerializationRule
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@Nullable Map<@NonNull EReference, @NonNull Set<@NonNull ParserRuleValue>> eReference2assignedRuleValues) {
 		this.ruleValueIndex = ruleValueIndex;
+		this.solutionSteps = solutionSteps;
 		this.serializationSteps = serializationSteps;
 		this.staticSegments = staticSegments;
 		this.eReference2assignedRuleValues = eReference2assignedRuleValues;
@@ -86,10 +98,52 @@ public class SerializationRule
 	}
 
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
-//		assert staticRuleMatch != null;
-//		return staticRuleMatch.match(slotsAnalysis);
+		//
+		//	Compute the solutions and assign to/check against each CardinalityVariable
+		//
+		DynamicRuleMatch dynamicRuleMatch = slotsAnalysis.basicGetDynamicRuleMatch(this); // new DynamicRuleMatch(this, slotsAnalysis);
+		if (dynamicRuleMatch == null) {
+		//	dynamicRuleMatch = slotsAnalysis.createDynamicRuleMatch(this);
+
+
+			assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
+			dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, this, solutionSteps, this);
+			slotsAnalysis.addDynamicRuleMatch(dynamicRuleMatch);
+
+			if (!dynamicRuleMatch.analyze()) {
+				return null;
+			}
+			//
+			//	Evaluate the expressions to determine the required size of each slot.
+			//
+			for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
+				CardinalityExpression expression = feature2expression.get(eStructuralFeature);
+				assert expression != null;
+				if (!expression.checkSize(dynamicRuleMatch)) {
+					return null;
+				}
+			}
+			//
+			//	Check that no 'unused' features are used.
+			//
+			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
+				if (!feature2expression.containsKey(eStructuralFeature)) {
+					UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
+					if (!object.isCounted() || (object.asCounted() != 0)) {
+						return null;
+					}
+				}
+			}
+			dynamicRuleMatch.setChecked();
+		}
+		else {
+			if (!dynamicRuleMatch.isChecked()) {
+				return null;
+			}
+		}
+		return dynamicRuleMatch;
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+	//	throw new UnsupportedOperationException();
 	}
 
 	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {

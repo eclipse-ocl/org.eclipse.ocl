@@ -25,6 +25,8 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 public class RTSerializationRule2 extends SerializationRule
 {
@@ -65,6 +67,11 @@ public class RTSerializationRule2 extends SerializationRule
 	@Override
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		return serializationRuleAnalysis.getEnumerationValues(eAttribute);
+	}
+
+	@Override
+	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
+		return serializationRuleAnalysis.match(slotsAnalysis);
 	}
 
 	@Override

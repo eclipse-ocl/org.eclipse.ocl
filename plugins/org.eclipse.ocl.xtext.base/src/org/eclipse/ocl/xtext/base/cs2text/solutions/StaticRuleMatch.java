@@ -26,12 +26,14 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
@@ -523,6 +525,16 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return variable2expressions;
 	}
 
+	@Override
+	protected @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis) {
+		assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
+		List<@NonNull CardinalitySolutionStep> matchStepsList = getSteps();
+		@NonNull CardinalitySolutionStep [] matchStepsArray = matchStepsList.toArray(new CardinalitySolutionStep[matchStepsList.size()]);
+		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, getSerializationRule().getRuntime(), matchStepsArray, this);
+		slotsAnalysis.addDynamicRuleMatch(dynamicRuleMatch);
+		return dynamicRuleMatch;
+	}
+
 	public int getCardinalityVariableIndex(@NonNull SerializationNode serializationNode) {
 		CardinalityVariable cardinalityVariable = node2variable.get(serializationNode);
 		return cardinalityVariable != null ? cardinalityVariable.getIndex() : -1;
@@ -533,6 +545,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 //	@Override
+	@Override
 	public @NonNull SerializationRuleAnalysis getSerializationRule() {
 		return serializationRule;
 	}

@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RTStaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class UserSlotsAnalysis
@@ -299,6 +298,10 @@ public class UserSlotsAnalysis
 		modelAnalysis.debugAddUserSlotsAnalysis(this);
 	}
 
+	public void addDynamicRuleMatch(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+		dynamicRuleMatches.add(dynamicRuleMatch);
+	}
+
 	protected @NonNull Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> analyze() {
 		Map<@NonNull EStructuralFeature, @NonNull UserSlotAnalysis> eStructuralFeature2slotAnalysis = new HashMap<>();
 		DynamicSerializationRules serializationRules2 = serializationRules;
@@ -435,7 +438,7 @@ public class UserSlotsAnalysis
 		}
 	}
 
-	public @Nullable DynamicRuleMatch basicGetDynamicRuleMatch(@NonNull RTStaticRuleMatch staticRuleMatch) {
+	public @Nullable DynamicRuleMatch basicGetDynamicRuleMatch(@NonNull Object staticRuleMatch) {
 		// Typically one or perhaps two entries; not worth a Map.
 		for (@NonNull DynamicRuleMatch dynamicRuleMatch : dynamicRuleMatches) {
 			if (dynamicRuleMatch.getDebugStaticRuleMatch() == staticRuleMatch) {
@@ -447,13 +450,6 @@ public class UserSlotsAnalysis
 
 	public @Nullable UserSlotAnalysis basicGetSlotAnalysis(@NonNull EStructuralFeature eStructuralFeature) {
 		return eStructuralFeature2slotAnalysis.get(eStructuralFeature);
-	}
-
-	public @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull RTStaticRuleMatch staticRuleMatch) {
-		assert basicGetDynamicRuleMatch(staticRuleMatch) == null;
-		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(this, staticRuleMatch.getSerializationRule().getRuntime(), staticRuleMatch.getSteps(), staticRuleMatch);
-		dynamicRuleMatches.add(dynamicRuleMatch);
-		return dynamicRuleMatch;
 	}
 
 	public void diagnose(@NonNull StringBuilder s) {

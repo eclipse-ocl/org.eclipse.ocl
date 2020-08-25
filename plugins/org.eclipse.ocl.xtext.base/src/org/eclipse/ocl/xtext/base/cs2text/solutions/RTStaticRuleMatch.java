@@ -31,7 +31,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 /**
  * A StaticRuleMatch accumulates the variables and expressions that determine the cardinalities of the various SerializationRule terms.
  */
-public class RTStaticRuleMatch implements RuleMatch
+public abstract class RTStaticRuleMatch implements RuleMatch
 {
 	/**
 	 * The rule for which this is the static analysis.
@@ -106,6 +106,8 @@ public class RTStaticRuleMatch implements RuleMatch
 		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
 
+	protected abstract @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis);
+
 	public @NonNull SerializationRuleAnalysis getSerializationRule() {
 		throw new UnsupportedOperationException();		// XXX
 	}
@@ -135,7 +137,7 @@ public class RTStaticRuleMatch implements RuleMatch
 		//
 		DynamicRuleMatch dynamicRuleMatch = slotsAnalysis.basicGetDynamicRuleMatch(this); // new DynamicRuleMatch(this, slotsAnalysis);
 		if (dynamicRuleMatch == null) {
-			dynamicRuleMatch = slotsAnalysis.createDynamicRuleMatch(this);
+			dynamicRuleMatch = createDynamicRuleMatch(slotsAnalysis);
 			if (!dynamicRuleMatch.analyze()) {
 				return null;
 			}

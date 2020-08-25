@@ -63,7 +63,7 @@ public class DynamicSerializationRules
 	public @Nullable DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @Nullable ParserRuleValue targetParserRuleValue) {
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationRule.getRuleValueIndex())) {
-				DynamicRuleMatch dynamicRuleMatch = serializationRule.getSerializationRuleAnalysis().match(slotsAnalysis);
+				DynamicRuleMatch dynamicRuleMatch = serializationRule.match(slotsAnalysis);
 				if (dynamicRuleMatch != null) {
 					return dynamicRuleMatch;
 				}

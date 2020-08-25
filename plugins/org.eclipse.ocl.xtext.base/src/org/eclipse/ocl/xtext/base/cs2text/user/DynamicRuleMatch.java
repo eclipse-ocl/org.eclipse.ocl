@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RTStaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -38,15 +37,15 @@ public class DynamicRuleMatch implements RuleMatch
 {
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
 	protected final @NonNull SerializationRule serializationRule;
-	protected final @NonNull Iterable<@NonNull CardinalitySolutionStep> steps;
-	private final @NonNull RTStaticRuleMatch debugStaticRuleMatch;
+	protected final @NonNull CardinalitySolutionStep @NonNull [] matchSteps;
+	private final @NonNull Object debugStaticRuleMatch;
 	private final @NonNull Map<@NonNull Integer, @NonNull Integer> variableIndex2value = new HashMap<>();
 	private boolean checked = false;
 
-	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationRule serializationRule, @NonNull Iterable<@NonNull CardinalitySolutionStep> steps, @NonNull RTStaticRuleMatch debugStaticRuleMatch) {
+	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationRule serializationRule, @NonNull CardinalitySolutionStep @NonNull [] matchSteps, @NonNull Object debugStaticRuleMatch) {
 		this.slotsAnalysis = slotsAnalysis;
 		this.serializationRule = serializationRule;
-		this.steps = steps;
+		this.matchSteps = matchSteps;
 		this.debugStaticRuleMatch = debugStaticRuleMatch;
 		slotsAnalysis.getModelAnalysis().debugAddDynamicRuleMatch(this);
 	}
@@ -57,7 +56,7 @@ public class DynamicRuleMatch implements RuleMatch
 	 * Returns false if analysis fails.
 	 */
 	public boolean analyze() {
-		for (@NonNull CardinalitySolutionStep step : steps) {
+		for (@NonNull CardinalitySolutionStep step : matchSteps) {
 			if (!step.execute(this)) {
 				return false;
 			}
@@ -75,7 +74,7 @@ public class DynamicRuleMatch implements RuleMatch
 		throw new IllegalStateException();		// run-time should use known values
 	}
 
-	public @NonNull RTStaticRuleMatch getDebugStaticRuleMatch() {
+	public @NonNull Object getDebugStaticRuleMatch() {
 		return debugStaticRuleMatch;
 	}
 
