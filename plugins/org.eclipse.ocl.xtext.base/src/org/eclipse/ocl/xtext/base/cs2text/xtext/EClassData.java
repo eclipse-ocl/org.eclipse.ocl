@@ -75,7 +75,7 @@ public class EClassData implements Nameable
 	/**
 	 * Return the rule analyses assigned by one or more of the serialization rules that can assign eContainmentFeature.
 	 */
-	public @NonNull ParserRuleValue @Nullable [] getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
+	public @Nullable IndexVector getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
 	/*	Set<@NonNull AbstractRuleValue> targetRuleValues = new HashSet<>();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);

@@ -358,7 +358,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 					for (AbstractRuleValue value : values) {
 						parserRuleValues[i3++] = (ParserRuleValue) value;
 					}
-					eReferenceData[i2++] = new EReferenceData(entry2.getKey(), parserRuleValues);
+					eReferenceData[i2++] = new EReferenceData(entry2.getKey(), new IndexVector(parserRuleValues));
 				}
 			}
 			@NonNull SerializationRule [] rtSerializationRules = new @NonNull SerializationRule [serializationRuleAnalysiss.size()];

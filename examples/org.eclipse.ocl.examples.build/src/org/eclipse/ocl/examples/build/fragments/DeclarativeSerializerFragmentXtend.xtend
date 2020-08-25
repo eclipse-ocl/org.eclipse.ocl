@@ -276,20 +276,18 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 	protected def generateEClassData_EClass(GrammarAnalysis grammarAnalysis, EClass eClass) {
 		'''
 		new «new TypeReference(EClassData)»(«emitLiteral(eClass)»,
-		new «new TypeReference(SerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getEClassData(eClass).getSerializationRules() SEPARATOR ','»
-		«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toString()» */
-		«ENDFOR»},
-		«IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null
-		«ELSE»
-			new «new TypeReference(EReferenceData)»[] {
+			new «new TypeReference(SerializationRule)» [] {
+				«FOR serializationRule : grammarAnalysis.getEClassData(eClass).getSerializationRules() SEPARATOR ','»
+				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+				«ENDFOR»
+			}, «IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null«ELSE»
+			new «new TypeReference(EReferenceData)» [] {
 				«FOR eReferenceData : grammarAnalysis.getEReferenceDatas(eClass) SEPARATOR ','»
-				new «new TypeReference(EReferenceData)»(«emitLiteral(eReferenceData.getEReference())», new «new TypeReference(ParserRuleValue)»[] {
-					«FOR ruleValue : eReferenceData.getAssignedTargetRuleValues() SEPARATOR ','»
-					«getRuleValueId(ruleValue, true)» /* «ruleValue.toString()» */
-					«ENDFOR»
-				})
-				«ENDFOR»}
-		«ENDIF»)'''
+				new «new TypeReference(EReferenceData)»(«emitLiteral(eReferenceData.getEReference())»,
+					«getIndexVectorId(eReferenceData.getAssignedTargetRuleValues(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValues() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
+				«ENDFOR»
+			}«ENDIF»
+		)'''
 	}
 	
 	/* ************************************************************************************************************************** */

@@ -16,20 +16,20 @@ import org.eclipse.jdt.annotation.NonNull;
 public class EReferenceData
 {
 	protected final @NonNull EReference eReference;
-	protected final @NonNull ParserRuleValue @NonNull [] parserRuleValues;
+	protected final @NonNull IndexVector parserRuleValueIndexes;
 
-	public EReferenceData(/*@NonNull*/ EReference eReference, @NonNull ParserRuleValue @NonNull [] parserRuleValues) {
+	public EReferenceData(/*@NonNull*/ EReference eReference, @NonNull IndexVector parserRuleValueIndexes) {
 		assert eReference != null;
 		this.eReference = eReference;
-		this.parserRuleValues = parserRuleValues;
+		this.parserRuleValueIndexes = parserRuleValueIndexes;
 	}
 
 	public @NonNull EReference getEReference() {
 		return eReference;
 	}
 
-	public @NonNull ParserRuleValue @NonNull [] getAssignedTargetRuleValues() {
-		return parserRuleValues;
+	public @NonNull IndexVector getAssignedTargetRuleValues() {
+		return parserRuleValueIndexes;
 	}
 
 //	@Override

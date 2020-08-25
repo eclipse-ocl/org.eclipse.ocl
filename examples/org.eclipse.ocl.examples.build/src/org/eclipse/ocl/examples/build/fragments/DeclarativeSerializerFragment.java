@@ -49,6 +49,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -533,6 +534,15 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		List<@NonNull IndexVector> indexVectors2 = indexVectors;
 		if ((indexVector2id2 == null) || (indexVectors2 == null)) {
 			indexVector2id = indexVector2id2 = new HashMap<>();
+			for (@NonNull EClass eClass : getSortedEClasses(grammarAnalysis)) {
+				@NonNull EReferenceData[] eReferenceDatas = grammarAnalysis.basicGetEReferenceDatas(eClass);
+				if (eReferenceDatas != null) {
+					for (@NonNull EReferenceData eReferenceData : eReferenceDatas) {
+						IndexVector assignedTargetRuleValues = eReferenceData.getAssignedTargetRuleValues();
+						indexVector2id2.put(assignedTargetRuleValues, "");
+					}
+				}
+			}
 			for (@NonNull AbstractRuleValue ruleValue : getSortedRuleValues(grammarAnalysis)) {
 				if (ruleValue instanceof ParserRuleValue) {
 					IndexVector subParserRuleValueIndexes = ((ParserRuleValue)ruleValue).getSubParserRuleValueIndexes();
