@@ -87,6 +87,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		//	@Inject
 		//	private «new TypeReference(GrammarProvider)» grammarProvider;
 
+			/**
+			 * The metadata resulting from static analysis of the grammar.
+			 */
 			private static «new TypeReference(RTGrammarAnalysis)» analysis = null;
 		
 			@Override
@@ -108,14 +111,20 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				return analysis;
 			}
 			
+			/**
+			 * Bit vectors of useful grammar rule combinations
+			 */
 			private class _IndexVectors
 			{
 				«FOR indexVector : getSortedIndexVectors(grammarAnalysis)»
-				private final /*@NonNull*/ «new TypeReference(IndexVector)» «getIndexVectorId(indexVector, false)» // /*«FOR index : indexVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/
+				private final /*@NonNull*/ «new TypeReference(IndexVector)» «getIndexVectorId(indexVector, false)» // «FOR index : indexVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»
 					= new «new TypeReference(IndexVector)»(«indexVector.toWordsString()»);
 				«ENDFOR»
 			}
 			
+			/**
+			 * String combinations used by assigned String EAttributes
+			 */
 			private class _EnumValues
 			{
 				«FOR enumValue : getSortedEnumValues(grammarAnalysis)»
@@ -124,6 +133,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 			
+			/**
+			 * Expression terms used during the matching process.
+			 */
 			private class _MatchTerms
 			{
 				«FOR solution : getSortedSolutions(grammarAnalysis)»
@@ -132,6 +144,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 			
+			/**
+			 * Steps for the matching process.
+			 */
 			private class _MatchSteps
 			{
 				«FOR step : getSortedSolutionSteps(grammarAnalysis)»
@@ -140,17 +155,26 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 			
+			/**
+			 * The various serialization term used to serialize a serialization rule.
+			 */
 			private class _SerializationTerms
 			{
 				«FOR step : getSortedSerializationSteps(grammarAnalysis)»
 				«generateSerializationTerm1(step)»;
 				«ENDFOR»
 				
+				/**
+				 * Post constructor initialization that avoids recursions.
+				 */
 				private final void init() {
 					«FOR step : getSortedSerializationSteps(grammarAnalysis)»«generateSerializationTerm2(step)»«ENDFOR»
 				}
 			}
 			
+			/**
+			 * The various string segment sequences that may be used to serialize a serialization term.
+			 */
 			private class _SerializationSegments
 			{
 				«FOR segments : getSortedSegments(grammarAnalysis)»
@@ -159,6 +183,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 						
+			/**
+			 * The various serialization rules for each grammar rule.
+			 */
 			private class _RuleValues
 			{
 				«FOR ruleValue : getSortedRuleValues(grammarAnalysis)»
@@ -166,6 +193,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 						
+			/**
+			 * Configuration for each EClass that may be serialized.
+			 */
 			private class _EClassData
 			{
 				«FOR eClass : getSortedEClasses(grammarAnalysis)»
@@ -174,6 +204,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 			}
 						
+			/**
+			 * The various serialization rules that serialize an EClass.
+			 */
 			private class _SerializationRules
 			{
 				«FOR serializationRule : getSortedSerializationRules(grammarAnalysis)»
@@ -192,6 +225,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private _RuleValues rv;
 			private _EClassData ec;
 
+			/**
+			 * Post constructor/injection initialization to avoid recursions.
+			 */
 			@Inject
 			public void init() {
 			//	«new TypeReference(Grammar)» grammar = grammarProvider.getGrammar(this);
@@ -391,18 +427,28 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 			// «FOR subParserRuleValue : subParserRuleValueClosure SEPARATOR ','» «getParserRuleValueId(subParserRuleValue, true)» /* «subParserRuleValue.getName()» */«ENDFOR» */'''
 		var subParserRuleValueIndexes = ruleValue.getSubParserRuleValueIndexes();
 		if (subParserRuleValueIndexes !== null) {
-		'''private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
-	= new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»",
-	new «new TypeReference(SerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
-			«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
-			«ENDFOR»}, «getIndexVectorId(subParserRuleValueIndexes, true)»); /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getRuleName(index)»«ENDFOR» */'''
+			'''
+			private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
+				= new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»",
+					new «new TypeReference(SerializationRule)» [] {
+						«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
+						«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+						«ENDFOR»
+					}, 
+					«getIndexVectorId(subParserRuleValueIndexes, true)»); /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getRuleName(index)»«ENDFOR» */
+			'''
 		}
 		else {
-		'''private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
-	= new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»", 
-	new «new TypeReference(SerializationRule)» [] {«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
-			«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
-			«ENDFOR»}, («new TypeReference(IndexVector)»)null);'''
+			'''
+			private final /*@NonNull*/ «new TypeReference(ParserRuleValue)» «getRuleValueId(ruleValue, false)» // «ruleValue.getName()»
+				= new «new TypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»", 
+					new «new TypeReference(SerializationRule)» [] {
+						«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
+						«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+						«ENDFOR»
+					}, 
+					(«new TypeReference(IndexVector)»)null);
+			'''
 		}
 	}
 	

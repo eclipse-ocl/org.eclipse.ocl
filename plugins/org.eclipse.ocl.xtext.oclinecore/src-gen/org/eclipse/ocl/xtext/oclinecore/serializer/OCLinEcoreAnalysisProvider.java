@@ -33,6 +33,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 	//	@Inject
 	//	private GrammarProvider grammarProvider;
 
+		/**
+		 * The metadata resulting from static analysis of the grammar.
+		 */
 		private static RTGrammarAnalysis analysis = null;
 
 		@Override
@@ -247,156 +250,162 @@ import org.eclipse.xtext.service.GrammarProvider;
 			return analysis;
 		}
 
+		/**
+		 * Bit vectors of useful grammar rule combinations
+		 */
 		private class _IndexVectors
 		{
-			private final /*@NonNull*/ IndexVector _0 // /*AnnotationElementCS*/
+			private final /*@NonNull*/ IndexVector _0 // AnnotationElementCS
 				= new IndexVector(0x4L);
-			private final /*@NonNull*/ IndexVector _1 // /*ClassCS*/
+			private final /*@NonNull*/ IndexVector _1 // ClassCS
 				= new IndexVector(0x40L);
-			private final /*@NonNull*/ IndexVector _2 // /*CoIteratorVariableCS*/
+			private final /*@NonNull*/ IndexVector _2 // CoIteratorVariableCS
 				= new IndexVector(0x80L);
-			private final /*@NonNull*/ IndexVector _3 // /*CollectionLiteralPartCS*/
+			private final /*@NonNull*/ IndexVector _3 // CollectionLiteralPartCS
 				= new IndexVector(0x200L);
-			private final /*@NonNull*/ IndexVector _4 // /*CollectionTypeCS*/
+			private final /*@NonNull*/ IndexVector _4 // CollectionTypeCS
 				= new IndexVector(0x800L);
-			private final /*@NonNull*/ IndexVector _5 // /*CurlyBracketedClauseCS*/
+			private final /*@NonNull*/ IndexVector _5 // CurlyBracketedClauseCS
 				= new IndexVector(0x2000L);
-			private final /*@NonNull*/ IndexVector _6 // /*DetailCS*/
+			private final /*@NonNull*/ IndexVector _6 // DetailCS
 				= new IndexVector(0x10000L);
-			private final /*@NonNull*/ IndexVector _7 // /*ElseIfThenExpCS*/
+			private final /*@NonNull*/ IndexVector _7 // ElseIfThenExpCS
 				= new IndexVector(0x100000L);
-			private final /*@NonNull*/ IndexVector _8 // /*EnumerationLiteralCS*/
+			private final /*@NonNull*/ IndexVector _8 // EnumerationLiteralCS
 				= new IndexVector(0x400000L);
-			private final /*@NonNull*/ IndexVector _9 // /*ExpCS*/
+			private final /*@NonNull*/ IndexVector _9 // ExpCS
 				= new IndexVector(0x40000000L);
-			private final /*@NonNull*/ IndexVector _10 // /*FirstPathElementCS*/
+			private final /*@NonNull*/ IndexVector _10 // FirstPathElementCS
 				= new IndexVector(0x80000000L);
-			private final /*@NonNull*/ IndexVector _11 // /*ImplicitOppositeCS*/
+			private final /*@NonNull*/ IndexVector _11 // ImplicitOppositeCS
 				= new IndexVector(0x2000000000L);
-			private final /*@NonNull*/ IndexVector _12 // /*ImportCS*/
+			private final /*@NonNull*/ IndexVector _12 // ImportCS
 				= new IndexVector(0x4000000000L);
-			private final /*@NonNull*/ IndexVector _13 // /*InvariantConstraintCS*/
+			private final /*@NonNull*/ IndexVector _13 // InvariantConstraintCS
 				= new IndexVector(0x20000000000L);
-			private final /*@NonNull*/ IndexVector _14 // /*LetVariableCS*/
+			private final /*@NonNull*/ IndexVector _14 // LetVariableCS
 				= new IndexVector(0x400000000000L);
-			private final /*@NonNull*/ IndexVector _15 // /*MapLiteralPartCS*/
+			private final /*@NonNull*/ IndexVector _15 // MapLiteralPartCS
 				= new IndexVector(0x4000000000000L);
-			private final /*@NonNull*/ IndexVector _16 // /*MapTypeCS*/
+			private final /*@NonNull*/ IndexVector _16 // MapTypeCS
 				= new IndexVector(0x8000000000000L);
-			private final /*@NonNull*/ IndexVector _17 // /*ModelElementCS*/
+			private final /*@NonNull*/ IndexVector _17 // ModelElementCS
 				= new IndexVector(0x20000000000000L);
-			private final /*@NonNull*/ IndexVector _18 // /*ModelElementRefCS*/
+			private final /*@NonNull*/ IndexVector _18 // ModelElementRefCS
 				= new IndexVector(0x40000000000000L);
-			private final /*@NonNull*/ IndexVector _19 // /*MultiplicityCS*/
+			private final /*@NonNull*/ IndexVector _19 // MultiplicityCS
 				= new IndexVector(0x100000000000000L);
-			private final /*@NonNull*/ IndexVector _20 // /*NavigatingArgExpCS*/
+			private final /*@NonNull*/ IndexVector _20 // NavigatingArgExpCS
 				= new IndexVector(0x2000000000000000L);
-			private final /*@NonNull*/ IndexVector _21 // /*NavigatingArgCS|NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS*/
+			private final /*@NonNull*/ IndexVector _21 // NavigatingArgCS|NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS
 				= new IndexVector(0xd000000000000000L,0x1L);
-			private final /*@NonNull*/ IndexVector _22 // /*FirstPathElementCS|NextPathElementCS*/
+			private final /*@NonNull*/ IndexVector _22 // FirstPathElementCS|NextPathElementCS
 				= new IndexVector(0x80000000L,0x8L);
-			private final /*@NonNull*/ IndexVector _23 // /*OperationCS*/
+			private final /*@NonNull*/ IndexVector _23 // OperationCS
 				= new IndexVector(0x0L,0x40L);
-			private final /*@NonNull*/ IndexVector _24 // /*PackageCS*/
+			private final /*@NonNull*/ IndexVector _24 // PackageCS
 				= new IndexVector(0x0L,0x80L);
-			private final /*@NonNull*/ IndexVector _25 // /*ParameterCS*/
+			private final /*@NonNull*/ IndexVector _25 // ParameterCS
 				= new IndexVector(0x0L,0x100L);
-			private final /*@NonNull*/ IndexVector _26 // /*PathNameCS*/
+			private final /*@NonNull*/ IndexVector _26 // PathNameCS
 				= new IndexVector(0x0L,0x200L);
-			private final /*@NonNull*/ IndexVector _27 // /*PatternExpCS*/
+			private final /*@NonNull*/ IndexVector _27 // PatternExpCS
 				= new IndexVector(0x0L,0x400L);
-			private final /*@NonNull*/ IndexVector _28 // /*ExpCS|PatternExpCS*/
+			private final /*@NonNull*/ IndexVector _28 // ExpCS|PatternExpCS
 				= new IndexVector(0x40000000L,0x400L);
-			private final /*@NonNull*/ IndexVector _29 // /*PostconditionConstraintCS*/
+			private final /*@NonNull*/ IndexVector _29 // PostconditionConstraintCS
 				= new IndexVector(0x0L,0x800L);
-			private final /*@NonNull*/ IndexVector _30 // /*PreconditionConstraintCS*/
+			private final /*@NonNull*/ IndexVector _30 // PreconditionConstraintCS
 				= new IndexVector(0x0L,0x1000L);
-			private final /*@NonNull*/ IndexVector _31 // /*PrefixedLetExpCS*/
+			private final /*@NonNull*/ IndexVector _31 // PrefixedLetExpCS
 				= new IndexVector(0x0L,0x2000L);
-			private final /*@NonNull*/ IndexVector _32 // /*LetExpCS|PrefixedLetExpCS*/
+			private final /*@NonNull*/ IndexVector _32 // LetExpCS|PrefixedLetExpCS
 				= new IndexVector(0x200000000000L,0x2000L);
-			private final /*@NonNull*/ IndexVector _33 // /*PrefixedPrimaryExpCS*/
+			private final /*@NonNull*/ IndexVector _33 // PrefixedPrimaryExpCS
 				= new IndexVector(0x0L,0x4000L);
-			private final /*@NonNull*/ IndexVector _34 // /*RoundBracketedClauseCS*/
+			private final /*@NonNull*/ IndexVector _34 // RoundBracketedClauseCS
 				= new IndexVector(0x0L,0x100000L);
-			private final /*@NonNull*/ IndexVector _35 // /*ShadowPartCS*/
+			private final /*@NonNull*/ IndexVector _35 // ShadowPartCS
 				= new IndexVector(0x0L,0x4000000L);
-			private final /*@NonNull*/ IndexVector _36 // /*SpecificationCS*/
+			private final /*@NonNull*/ IndexVector _36 // SpecificationCS
 				= new IndexVector(0x0L,0x10000000L);
-			private final /*@NonNull*/ IndexVector _37 // /*SquareBracketedClauseCS*/
+			private final /*@NonNull*/ IndexVector _37 // SquareBracketedClauseCS
 				= new IndexVector(0x0L,0x20000000L);
-			private final /*@NonNull*/ IndexVector _38 // /*StringLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _38 // StringLiteralExpCS
 				= new IndexVector(0x0L,0x80000000L);
-			private final /*@NonNull*/ IndexVector _39 // /*StructuralFeatureCS*/
+			private final /*@NonNull*/ IndexVector _39 // StructuralFeatureCS
 				= new IndexVector(0x0L,0x100000000L);
-			private final /*@NonNull*/ IndexVector _40 // /*AttributeCS|ReferenceCS|StructuralFeatureCS*/
+			private final /*@NonNull*/ IndexVector _40 // AttributeCS|ReferenceCS|StructuralFeatureCS
 				= new IndexVector(0x8L,0x100080000L);
-			private final /*@NonNull*/ IndexVector _41 // /*ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS*/
+			private final /*@NonNull*/ IndexVector _41 // ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS
 				= new IndexVector(0x208040L,0x200000000L);
-			private final /*@NonNull*/ IndexVector _42 // /*AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS*/
+			private final /*@NonNull*/ IndexVector _42 // AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS
 				= new IndexVector(0x20000000608048L,0x3000800c0L);
-			private final /*@NonNull*/ IndexVector _43 // /*AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS*/
+			private final /*@NonNull*/ IndexVector _43 // AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS
 				= new IndexVector(0x20006L,0x400000000L);
-			private final /*@NonNull*/ IndexVector _44 // /*TemplateBindingCS*/
+			private final /*@NonNull*/ IndexVector _44 // TemplateBindingCS
 				= new IndexVector(0x0L,0x800000000L);
-			private final /*@NonNull*/ IndexVector _45 // /*TemplateParameterSubstitutionCS*/
+			private final /*@NonNull*/ IndexVector _45 // TemplateParameterSubstitutionCS
 				= new IndexVector(0x0L,0x1000000000L);
-			private final /*@NonNull*/ IndexVector _46 // /*TemplateSignatureCS*/
+			private final /*@NonNull*/ IndexVector _46 // TemplateSignatureCS
 				= new IndexVector(0x0L,0x2000000000L);
-			private final /*@NonNull*/ IndexVector _47 // /*TupleLiteralPartCS*/
+			private final /*@NonNull*/ IndexVector _47 // TupleLiteralPartCS
 				= new IndexVector(0x0L,0x10000000000L);
-			private final /*@NonNull*/ IndexVector _48 // /*TuplePartCS*/
+			private final /*@NonNull*/ IndexVector _48 // TuplePartCS
 				= new IndexVector(0x0L,0x20000000000L);
-			private final /*@NonNull*/ IndexVector _49 // /*TypeExpCS*/
+			private final /*@NonNull*/ IndexVector _49 // TypeExpCS
 				= new IndexVector(0x0L,0x80000000000L);
-			private final /*@NonNull*/ IndexVector _50 // /*TypeExpWithoutMultiplicityCS*/
+			private final /*@NonNull*/ IndexVector _50 // TypeExpWithoutMultiplicityCS
 				= new IndexVector(0x0L,0x100000000000L);
-			private final /*@NonNull*/ IndexVector _51 // /*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS*/
+			private final /*@NonNull*/ IndexVector _51 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS
 				= new IndexVector(0x8000000000800L,0x440000020000L);
-			private final /*@NonNull*/ IndexVector _52 // /*TypeLiteralWithMultiplicityCS*/
+			private final /*@NonNull*/ IndexVector _52 // TypeLiteralWithMultiplicityCS
 				= new IndexVector(0x0L,0x1000000000000L);
-			private final /*@NonNull*/ IndexVector _53 // /*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeLiteralWithMultiplicityCS*/
+			private final /*@NonNull*/ IndexVector _53 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeLiteralWithMultiplicityCS
 				= new IndexVector(0x8000000000800L,0x1440000020000L);
-			private final /*@NonNull*/ IndexVector _54 // /*CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS*/
+			private final /*@NonNull*/ IndexVector _54 // CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS
 				= new IndexVector(0x8000000000c00L,0x2540000020000L);
-			private final /*@NonNull*/ IndexVector _55 // /*CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS*/
+			private final /*@NonNull*/ IndexVector _55 // CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS
 				= new IndexVector(0x8000000000c00L,0x25c0000020000L);
-			private final /*@NonNull*/ IndexVector _56 // /*TypeParameterCS*/
+			private final /*@NonNull*/ IndexVector _56 // TypeParameterCS
 				= new IndexVector(0x0L,0x4000000000000L);
-			private final /*@NonNull*/ IndexVector _57 // /*TypeRefCS*/
+			private final /*@NonNull*/ IndexVector _57 // TypeRefCS
 				= new IndexVector(0x0L,0x8000000000000L);
-			private final /*@NonNull*/ IndexVector _58 // /*TypedMultiplicityRefCS*/
+			private final /*@NonNull*/ IndexVector _58 // TypedMultiplicityRefCS
 				= new IndexVector(0x0L,0x10000000000000L);
-			private final /*@NonNull*/ IndexVector _59 // /*TypedRefCS*/
+			private final /*@NonNull*/ IndexVector _59 // TypedRefCS
 				= new IndexVector(0x0L,0x20000000000000L);
-			private final /*@NonNull*/ IndexVector _60 // /*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS*/
+			private final /*@NonNull*/ IndexVector _60 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS
 				= new IndexVector(0x8000000000800L,0x60440000020000L);
-			private final /*@NonNull*/ IndexVector _61 // /*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedMultiplicityRefCS|TypedRefCS|TypedTypeRefCS*/
+			private final /*@NonNull*/ IndexVector _61 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedMultiplicityRefCS|TypedRefCS|TypedTypeRefCS
 				= new IndexVector(0x8000000000800L,0x70440000020000L);
-			private final /*@NonNull*/ IndexVector _62 // /*NextPathElementCS|URIFirstPathElementCS*/
+			private final /*@NonNull*/ IndexVector _62 // NextPathElementCS|URIFirstPathElementCS
 				= new IndexVector(0x0L,0x400000000000008L);
-			private final /*@NonNull*/ IndexVector _63 // /*FirstPathElementCS|NextPathElementCS|URIFirstPathElementCS*/
+			private final /*@NonNull*/ IndexVector _63 // FirstPathElementCS|NextPathElementCS|URIFirstPathElementCS
 				= new IndexVector(0x80000000L,0x400000000000008L);
-			private final /*@NonNull*/ IndexVector _64 // /*URIPathNameCS*/
+			private final /*@NonNull*/ IndexVector _64 // URIPathNameCS
 				= new IndexVector(0x0L,0x800000000000000L);
-			private final /*@NonNull*/ IndexVector _65 // /*BooleanLiteralExpCS|InvalidLiteralExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimitiveLiteralExpCS|StringLiteralExpCS|UnlimitedNaturalLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _65 // BooleanLiteralExpCS|InvalidLiteralExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimitiveLiteralExpCS|StringLiteralExpCS|UnlimitedNaturalLiteralExpCS
 				= new IndexVector(0x10000000020L,0x2000000080010030L);
-			private final /*@NonNull*/ IndexVector _66 // /*BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _66 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
 				= new IndexVector(0x802111000000120L,0x2000808082018034L);
-			private final /*@NonNull*/ IndexVector _67 // /*BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _67 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
 				= new IndexVector(0x802111000000120L,0x200080808201c034L);
-			private final /*@NonNull*/ IndexVector _68 // /*BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _68 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
 				= new IndexVector(0x802311000000120L,0x200080808201e034L);
-			private final /*@NonNull*/ IndexVector _69 // /*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _69 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
 				= new IndexVector(0x802311040000120L,0x200080808201e034L);
-			private final /*@NonNull*/ IndexVector _70 // /*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _70 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
 				= new IndexVector(0x2802311040000120L,0x200080808201e034L);
-			private final /*@NonNull*/ IndexVector _71 // /*BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS*/
+			private final /*@NonNull*/ IndexVector _71 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
 				= new IndexVector(0x802311040000120L,0x200080808201e434L);
-			private final /*@NonNull*/ IndexVector _72 // /*CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS*/
+			private final /*@NonNull*/ IndexVector _72 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS
 				= new IndexVector(0x8000000000800L,0x68440000020000L,0x2L);
 		}
 
+		/**
+		 * String combinations used by assigned String EAttributes
+		 */
 		private class _EnumValues
 		{
 			private final /*@NonNull*/ EnumerationValue _00 // '!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'
@@ -449,6 +458,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue("|1");
 		}
 
+		/**
+		 * Expression terms used during the matching process.
+		 */
 		private class _MatchTerms
 		{
 			private final /*@NonNull*/ CardinalitySolution _000 // 0
@@ -911,6 +923,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_130, _001);
 		}
 
+		/**
+		 * Steps for the matching process.
+		 */
 		private class _MatchSteps
 		{
 			private final /*@NonNull*/ CardinalitySolutionStep _000 // assert (|exprString| - 1) == 0
@@ -1557,6 +1572,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.RuleCheck(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, iv._49/*TypeExpCS*/);
 		}
 
+		/**
+		 * The various serialization term used to serialize a serialization rule.
+		 */
 		private class _SerializationTerms
 		{
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep _000 // 1*'!serializable'
@@ -2050,6 +2068,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _241 // V13*ownedPostconditions+=PostconditionConstraintCS
 										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(13, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS);
 
+			/**
+			 * Post constructor initialization that avoids recursions.
+			 */
 			private final void init() {
 				_064.init(rv._087);
 				_065.init(rv._119);
@@ -2195,6 +2216,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			}
 		}
 
+		/**
+		 * The various string segment sequences that may be used to serialize a serialization term.
+		 */
 		private class _SerializationSegments
 		{
 			private final /*@NonNull*/ Segment [] _0 // []
@@ -2251,146 +2275,166 @@ import org.eclipse.xtext.service.GrammarProvider;
 				;
 		}
 
+		/**
+		 * The various serialization rules for each grammar rule.
+		 */
 		private class _RuleValues
 		{
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _000 // ANY_OTHER
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(0, "ANY_OTHER");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _001 // AnnotationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(1, "AnnotationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._118 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
-				sr._120 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */,
-				sr._119 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */,
-				sr._117 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._118 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
+						sr._120 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */,
+						sr._119 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */,
+						sr._117 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _002 // AnnotationElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(2, "AnnotationElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._201 /* { 'sysml' ownedDetails+=DetailCS ';' } */,
-				sr._200 /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */,
-				sr._118 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
-				sr._141 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
-				sr._120 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */,
-				sr._119 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */,
-				sr._117 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' } */
-				}, iv._43); /* AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._201 /* { 'sysml' ownedDetails+=DetailCS ';' } */,
+						sr._200 /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */,
+						sr._118 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
+						sr._141 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
+						sr._120 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */,
+						sr._119 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */,
+						sr._117 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' } */
+					},
+					iv._43); /* AnnotationCS|AnnotationElementCS|DocumentationCS|SysMLCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _003 // AttributeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(3, "AttributeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._121 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._126 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._124 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._123 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._125 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._121 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._126 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._124 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._123 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._125 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _004 // BinaryOperatorName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(4, "BinaryOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _005 // BooleanLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(5, "BooleanLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._016 /* symbol={'false|true'} */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._016 /* symbol={'false|true'} */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _006 // ClassCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(6, "ClassCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._152 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
-				sr._137 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
-				sr._149 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
-				sr._144 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
-				sr._130 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
-				sr._129 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
-				sr._136 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._153 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._131 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._132 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._142 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._146 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._199 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
-				sr._198 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				}, iv._41); /* ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._152 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
+						sr._137 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
+						sr._149 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
+						sr._144 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
+						sr._130 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
+						sr._129 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
+						sr._136 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._153 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._131 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._132 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._142 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._146 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._199 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
+						sr._198 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
+					},
+					iv._41); /* ClassCS|DataTypeCS|EnumerationCS|StructuredClassCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _007 // CoIteratorVariableCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(7, "CoIteratorVariableCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._017 /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._017 /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _008 // CollectionLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(8, "CollectionLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._018 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._018 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _009 // CollectionLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(9, "CollectionLiteralPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._019 /* ownedExpression=PatternExpCS */,
-				sr._020 /* { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._019 /* ownedExpression=PatternExpCS */,
+						sr._020 /* { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _010 // CollectionPatternCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(10, "CollectionPatternCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._021 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._021 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _011 // CollectionTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(11, "CollectionTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _012 // CollectionTypeIdentifier
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(12, "CollectionTypeIdentifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _013 // CurlyBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(13, "CurlyBracketedClauseCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._024 /* { '{' { ownedParts+=ShadowPartCS { ',' ownedParts+=ShadowPartCS }[*] }[?] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._024 /* { '{' { ownedParts+=ShadowPartCS { ',' ownedParts+=ShadowPartCS }[*] }[?] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _014 // DOUBLE_QUOTED_STRING
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(14, "DOUBLE_QUOTED_STRING");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _015 // DataTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(15, "DataTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._127 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
-				sr._133 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
-				sr._128 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
-				sr._138 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._134 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._135 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._127 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
+						sr._133 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
+						sr._128 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
+						sr._138 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._134 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._135 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _016 // DetailCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(16, "DetailCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._139 /* { name=(UnrestrictedName|SINGLE_QUOTED_STRING) '=' values+=(SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING)[*] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._139 /* { name=(UnrestrictedName|SINGLE_QUOTED_STRING) '=' values+=(SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING)[*] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _017 // DocumentationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(17, "DocumentationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._140 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._140 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _018 // ESCAPED_CHARACTER
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(18, "ESCAPED_CHARACTER");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _019 // ESCAPED_ID
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(19, "ESCAPED_ID");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _020 // ElseIfThenExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(20, "ElseIfThenExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._025 /* { 'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._025 /* { 'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _021 // EnumerationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(21, "EnumerationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._147 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
-				sr._151 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
-				sr._148 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
-				sr._143 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._145 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._150 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._147 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
+						sr._151 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
+						sr._148 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
+						sr._143 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._145 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._150 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _022 // EnumerationLiteralCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(22, "EnumerationLiteralCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._156 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
-				sr._155 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
-				sr._157 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
-				sr._154 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._156 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
+						sr._155 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
+						sr._157 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
+						sr._154 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _023 // EnumerationLiteralName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(23, "EnumerationLiteralName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _024 // EssentialOCLInfixOperatorName
@@ -2407,32 +2451,34 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(29, "EssentialOCLUnrestrictedName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _030 // ExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(30, "ExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._029 /* symbol={'false|true'} */,
-				sr._038 /* '*' */,
-				sr._030 /* 'invalid' */,
-				sr._035 /* 'null' */,
-				sr._027 /* 'self' */,
-				sr._026 /* symbol=NUMBER_LITERAL */,
-				sr._028 /* segments+=StringLiteral[+] */,
-				sr._036 /* ownedType=TypeLiteralWithMultiplicityCS */,
-				sr._041 /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
-				sr._078 /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
-				sr._031 /* { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS } */,
-				sr._034 /* { '(' ownedExpression=ExpCS ')' } */,
-				sr._033 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
-				sr._032 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
-				sr._042 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
-				sr._037 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
-				sr._050 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */,
-				sr._039 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
-				sr._040 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				}, iv._69); /* BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._029 /* symbol={'false|true'} */,
+						sr._038 /* '*' */,
+						sr._030 /* 'invalid' */,
+						sr._035 /* 'null' */,
+						sr._027 /* 'self' */,
+						sr._026 /* symbol=NUMBER_LITERAL */,
+						sr._028 /* segments+=StringLiteral[+] */,
+						sr._036 /* ownedType=TypeLiteralWithMultiplicityCS */,
+						sr._041 /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
+						sr._078 /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
+						sr._031 /* { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS } */,
+						sr._034 /* { '(' ownedExpression=ExpCS ')' } */,
+						sr._033 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
+						sr._032 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
+						sr._042 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
+						sr._037 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
+						sr._050 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */,
+						sr._039 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
+						sr._040 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
+					},
+					iv._69); /* BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _031 // FirstPathElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(31, "FirstPathElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._000 /* referredElement=UnrestrictedName */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._000 /* referredElement=UnrestrictedName */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _032 // ID
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(32, "ID");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _033 // INT
@@ -2443,339 +2489,380 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(35, "Identifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _036 // IfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(36, "IfExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._044 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._044 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _037 // ImplicitOppositeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(37, "ImplicitOppositeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._158 /* { 'opposite' name=UnrestrictedName ':' ownedType=TypedMultiplicityRefCS { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._158 /* { 'opposite' name=UnrestrictedName ':' ownedType=TypedMultiplicityRefCS { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _038 // ImportCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(38, "ImportCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._159 /* { {'import'|'library'} { name=UnrestrictedName ':' }[?] ownedPathName=URIPathNameCS isAll='::*'[?] ';' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._159 /* { {'import'|'library'} { name=UnrestrictedName ':' }[?] ownedPathName=URIPathNameCS isAll='::*'[?] ';' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _039 // InfixOperatorName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(39, "InfixOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _040 // InvalidLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(40, "InvalidLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._046 /* 'invalid' */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._046 /* 'invalid' */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _041 // InvariantConstraintCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(41, "InvariantConstraintCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._160 /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ';' } */,
-				sr._161 /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._160 /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ';' } */,
+						sr._161 /* { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _042 // LETTER_CHARACTER
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(42, "LETTER_CHARACTER");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _043 // LOWER
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(43, "LOWER");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _044 // LambdaLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(44, "LambdaLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._048 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._048 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _045 // LetExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(45, "LetExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._049 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._049 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _046 // LetVariableCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(46, "LetVariableCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._051 /* { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._051 /* { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _047 // ML_COMMENT
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(47, "ML_COMMENT");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _048 // ML_SINGLE_QUOTED_STRING
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(48, "ML_SINGLE_QUOTED_STRING");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _049 // MapLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(49, "MapLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._053 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._053 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _050 // MapLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(50, "MapLiteralPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._054 /* { ownedKey=ExpCS '<-' ownedValue=ExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._054 /* { ownedKey=ExpCS '<-' ownedValue=ExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _051 // MapTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(51, "MapTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._055 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._055 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _052 // Model
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(52, "Model",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._057 /* ownedExpression=ExpCS */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._057 /* ownedExpression=ExpCS */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _053 // ModelElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(53, "ModelElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._156 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
-				sr._155 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
-				sr._177 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
-				sr._152 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
-				sr._157 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
-				sr._137 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
-				sr._154 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
-				sr._149 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
-				sr._144 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
-				sr._130 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
-				sr._129 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
-				sr._178 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */,
-				sr._136 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._153 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._131 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._132 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._142 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._146 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._121 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._126 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._191 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._187 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._185 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._199 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
-				sr._198 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
-				sr._124 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._123 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._125 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._168 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
-				sr._174 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
-				sr._172 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
-				sr._163 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
-				sr._173 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
-				sr._164 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
-				sr._188 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
-				sr._189 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
-				sr._190 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				}, iv._42); /* AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._156 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
+						sr._155 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' } */,
+						sr._177 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
+						sr._152 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
+						sr._157 /* { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
+						sr._137 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] ';' } */,
+						sr._154 /* { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] '{' ownedAnnotations+=AnnotationElementCS[*] '}' } */,
+						sr._149 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
+						sr._144 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
+						sr._130 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] ';' } */,
+						sr._129 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] ';' } */,
+						sr._178 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */,
+						sr._136 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._153 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._131 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._132 /* { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._142 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._146 /* { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._121 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._126 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._191 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._187 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._185 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._199 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
+						sr._198 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */,
+						sr._124 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._123 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._125 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._168 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
+						sr._174 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
+						sr._172 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
+						sr._163 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
+						sr._173 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
+						sr._164 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
+						sr._188 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
+						sr._189 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
+						sr._190 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
+					},
+					iv._42); /* AttributeCS|ClassCS|DataTypeCS|EnumerationCS|EnumerationLiteralCS|ModelElementCS|OperationCS|PackageCS|ReferenceCS|StructuralFeatureCS|StructuredClassCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _054 // ModelElementRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(54, "ModelElementRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._162 /* { 'reference' ownedPathName=PathNameCS ';' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._162 /* { 'reference' ownedPathName=PathNameCS ';' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _055 // MultiplicityBoundsCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(55, "MultiplicityBoundsCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._001 /* { lowerBound=LOWER { '..' upperBound=UPPER }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._001 /* { lowerBound=LOWER { '..' upperBound=UPPER }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _056 // MultiplicityCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(56, "MultiplicityCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._006 /* { '[' stringBounds={'*|+|?'} ']' } */,
-				sr._007 /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
-				sr._004 /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */,
-				sr._005 /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' } */,
-				sr._002 /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' } */,
-				sr._003 /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] isNullFree='|1'[?] ']' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._006 /* { '[' stringBounds={'*|+|?'} ']' } */,
+						sr._007 /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
+						sr._004 /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */,
+						sr._005 /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' } */,
+						sr._002 /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' } */,
+						sr._003 /* { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] isNullFree='|1'[?] ']' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _057 // MultiplicityStringCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(57, "MultiplicityStringCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._008 /* stringBounds={'*|+|?'} */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._008 /* stringBounds={'*|+|?'} */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _058 // NUMBER_LITERAL
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(58, "NUMBER_LITERAL");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _059 // NameExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(59, "NameExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._058 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._058 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _060 // NavigatingArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(60, "NavigatingArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._064 /* ownedNameExpression=NavigatingArgExpCS */,
-				sr._061 /* { ':' ownedType=TypeExpCS } */,
-				sr._060 /* { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */,
-				sr._062 /* { ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] } */,
-				sr._063 /* { ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._064 /* ownedNameExpression=NavigatingArgExpCS */,
+						sr._061 /* { ':' ownedType=TypeExpCS } */,
+						sr._060 /* { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */,
+						sr._062 /* { ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] } */,
+						sr._063 /* { ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _061 // NavigatingArgExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(61, "NavigatingArgExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._029 /* symbol={'false|true'} */,
-				sr._038 /* '*' */,
-				sr._030 /* 'invalid' */,
-				sr._035 /* 'null' */,
-				sr._027 /* 'self' */,
-				sr._026 /* symbol=NUMBER_LITERAL */,
-				sr._028 /* segments+=StringLiteral[+] */,
-				sr._036 /* ownedType=TypeLiteralWithMultiplicityCS */,
-				sr._041 /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
-				sr._078 /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
-				sr._031 /* { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS } */,
-				sr._034 /* { '(' ownedExpression=ExpCS ')' } */,
-				sr._033 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
-				sr._032 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
-				sr._042 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
-				sr._037 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
-				sr._050 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */,
-				sr._039 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
-				sr._040 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				}, iv._70); /* BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._029 /* symbol={'false|true'} */,
+						sr._038 /* '*' */,
+						sr._030 /* 'invalid' */,
+						sr._035 /* 'null' */,
+						sr._027 /* 'self' */,
+						sr._026 /* symbol=NUMBER_LITERAL */,
+						sr._028 /* segments+=StringLiteral[+] */,
+						sr._036 /* ownedType=TypeLiteralWithMultiplicityCS */,
+						sr._041 /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
+						sr._078 /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
+						sr._031 /* { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS } */,
+						sr._034 /* { '(' ownedExpression=ExpCS ')' } */,
+						sr._033 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
+						sr._032 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
+						sr._042 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
+						sr._037 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
+						sr._050 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */,
+						sr._039 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
+						sr._040 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
+					},
+					iv._70); /* BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _062 // NavigatingBarArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(62, "NavigatingBarArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._065 /* { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._065 /* { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _063 // NavigatingCommaArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(63, "NavigatingCommaArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._067 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS } */,
-				sr._068 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */,
-				sr._066 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] } */,
-				sr._069 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._067 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS } */,
+						sr._068 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] } */,
+						sr._066 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] } */,
+						sr._069 /* { prefix=',' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _064 // NavigatingSemiArgCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(64, "NavigatingSemiArgCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._070 /* { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._070 /* { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _065 // NavigationOperatorName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(65, "NavigationOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _066 // NestedExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(66, "NestedExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._071 /* { '(' ownedExpression=ExpCS ')' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._071 /* { '(' ownedExpression=ExpCS ')' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _067 // NextPathElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(67, "NextPathElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._009 /* referredElement=UnreservedName */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._009 /* referredElement=UnreservedName */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _068 // NullLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(68, "NullLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._073 /* 'null' */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._073 /* 'null' */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _069 // NumberLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(69, "NumberLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._076 /* symbol=NUMBER_LITERAL */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._076 /* symbol=NUMBER_LITERAL */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _070 // OperationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(70, "OperationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._169 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
-				sr._165 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
-				sr._166 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
-				sr._170 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
-				sr._167 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
-				sr._171 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._169 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
+						sr._165 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
+						sr._166 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' } */,
+						sr._170 /* { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
+						sr._167 /* { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */,
+						sr._171 /* { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _071 // PackageCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(71, "PackageCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._176 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
-				sr._175 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._176 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' } */,
+						sr._175 /* { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _072 // ParameterCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(72, "ParameterCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._179 /* { name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] { '{' ownedAnnotations+=AnnotationElementCS[*] '}' }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._179 /* { name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '{' { qualifiers+={'!ordered|!unique|ordered|unique'} }[+] '}' }[?] { '{' ownedAnnotations+=AnnotationElementCS[*] '}' }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _073 // PathNameCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(73, "PathNameCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._010 /* { ownedPathElements+=FirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._010 /* { ownedPathElements+=FirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _074 // PatternExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(74, "PatternExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._077 /* { patternVariableName=UnrestrictedName[?] ':' ownedPatternType=TypeExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._077 /* { patternVariableName=UnrestrictedName[?] ':' ownedPatternType=TypeExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _075 // PostconditionConstraintCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(75, "PostconditionConstraintCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._180 /* { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._180 /* { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _076 // PreconditionConstraintCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(76, "PreconditionConstraintCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._181 /* { stereotype='precondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._181 /* { stereotype='precondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _077 // PrefixedLetExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(77, "PrefixedLetExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._079 /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
-				sr._049 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
-				}, iv._32); /* LetExpCS|PrefixedLetExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._079 /* { name=UnaryOperatorName ownedRight=PrefixedLetExpCS } */,
+						sr._049 /* { 'let' ownedVariables+=LetVariableCS { ',' ownedVariables+=LetVariableCS }[*] 'in' ownedInExpression=ExpCS } */
+					},
+					iv._32); /* LetExpCS|PrefixedLetExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _078 // PrefixedPrimaryExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(78, "PrefixedPrimaryExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._016 /* symbol={'false|true'} */,
-				sr._045 /* 'invalid' */,
-				sr._074 /* 'null' */,
-				sr._075 /* symbol=NUMBER_LITERAL */,
-				sr._084 /* 'self' */,
-				sr._091 /* segments+=StringLiteral[+] */,
-				sr._105 /* ownedType=TypeLiteralWithMultiplicityCS */,
-				sr._116 /* '*' */,
-				sr._080 /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
-				sr._072 /* { '(' ownedExpression=ExpCS ')' } */,
-				sr._047 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
-				sr._043 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
-				sr._059 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
-				sr._092 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
-				sr._018 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
-				sr._052 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				}, iv._67); /* BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._016 /* symbol={'false|true'} */,
+						sr._045 /* 'invalid' */,
+						sr._074 /* 'null' */,
+						sr._075 /* symbol=NUMBER_LITERAL */,
+						sr._084 /* 'self' */,
+						sr._091 /* segments+=StringLiteral[+] */,
+						sr._105 /* ownedType=TypeLiteralWithMultiplicityCS */,
+						sr._116 /* '*' */,
+						sr._080 /* { name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS } */,
+						sr._072 /* { '(' ownedExpression=ExpCS ')' } */,
+						sr._047 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
+						sr._043 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
+						sr._059 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
+						sr._092 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
+						sr._018 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
+						sr._052 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
+					},
+					iv._67); /* BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _079 // PrimaryExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(79, "PrimaryExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._016 /* symbol={'false|true'} */,
-				sr._045 /* 'invalid' */,
-				sr._074 /* 'null' */,
-				sr._075 /* symbol=NUMBER_LITERAL */,
-				sr._084 /* 'self' */,
-				sr._091 /* segments+=StringLiteral[+] */,
-				sr._105 /* ownedType=TypeLiteralWithMultiplicityCS */,
-				sr._116 /* '*' */,
-				sr._071 /* { '(' ownedExpression=ExpCS ')' } */,
-				sr._048 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
-				sr._044 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
-				sr._058 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
-				sr._092 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
-				sr._018 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
-				sr._053 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
-				}, iv._66); /* BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._016 /* symbol={'false|true'} */,
+						sr._045 /* 'invalid' */,
+						sr._074 /* 'null' */,
+						sr._075 /* symbol=NUMBER_LITERAL */,
+						sr._084 /* 'self' */,
+						sr._091 /* segments+=StringLiteral[+] */,
+						sr._105 /* ownedType=TypeLiteralWithMultiplicityCS */,
+						sr._116 /* '*' */,
+						sr._071 /* { '(' ownedExpression=ExpCS ')' } */,
+						sr._048 /* { 'Lambda' '{' ownedExpressionCS=ExpCS '}' } */,
+						sr._044 /* { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' } */,
+						sr._058 /* { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] } */,
+						sr._092 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */,
+						sr._018 /* { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' } */,
+						sr._053 /* { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' } */
+					},
+					iv._66); /* BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _080 // PrimitiveLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(80, "PrimitiveLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._016 /* symbol={'false|true'} */,
-				sr._046 /* 'invalid' */,
-				sr._073 /* 'null' */,
-				sr._076 /* symbol=NUMBER_LITERAL */,
-				sr._091 /* segments+=StringLiteral[+] */,
-				sr._116 /* '*' */
-				}, iv._65); /* BooleanLiteralExpCS|InvalidLiteralExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimitiveLiteralExpCS|StringLiteralExpCS|UnlimitedNaturalLiteralExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._016 /* symbol={'false|true'} */,
+						sr._046 /* 'invalid' */,
+						sr._073 /* 'null' */,
+						sr._076 /* symbol=NUMBER_LITERAL */,
+						sr._091 /* segments+=StringLiteral[+] */,
+						sr._116 /* '*' */
+					},
+					iv._65); /* BooleanLiteralExpCS|InvalidLiteralExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimitiveLiteralExpCS|StringLiteralExpCS|UnlimitedNaturalLiteralExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _081 // PrimitiveTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(81, "PrimitiveTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._081 /* name=PrimitiveTypeIdentifier */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._081 /* name=PrimitiveTypeIdentifier */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _082 // PrimitiveTypeIdentifier
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(82, "PrimitiveTypeIdentifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _083 // ReferenceCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(83, "ReferenceCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._186 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._184 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._182 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._193 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
-				sr._183 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
-				sr._192 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._186 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._184 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._182 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._193 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
+						sr._183 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
+						sr._192 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _084 // RoundBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(84, "RoundBracketedClauseCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._083 /* { '(' { ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS)[*] }[?] ')' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._083 /* { '(' { ownedArguments+=NavigatingArgCS ownedArguments+=(NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS)[*] }[?] ')' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _085 // SIGNED
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(85, "SIGNED");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _086 // SIMPLE_ID
@@ -2786,201 +2873,229 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(88, "SL_COMMENT");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _089 // SelfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(89, "SelfExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._085 /* 'self' */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._085 /* 'self' */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _090 // ShadowPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(90, "ShadowPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._087 /* ownedInitExpression=StringLiteralExpCS */,
-				sr._086 /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._087 /* ownedInitExpression=StringLiteralExpCS */,
+						sr._086 /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _091 // SimplePathNameCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(91, "SimplePathNameCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._088 /* ownedPathElements+=FirstPathElementCS */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._088 /* ownedPathElements+=FirstPathElementCS */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _092 // SpecificationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(92, "SpecificationCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._195 /* exprString=UNQUOTED_STRING */,
-				sr._194 /* ownedExpression=ExpCS */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._195 /* exprString=UNQUOTED_STRING */,
+						sr._194 /* ownedExpression=ExpCS */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _093 // SquareBracketedClauseCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(93, "SquareBracketedClauseCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._089 /* { '[' ownedTerms+=ExpCS { ',' ownedTerms+=ExpCS }[*] ']' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._089 /* { '[' ownedTerms+=ExpCS { ',' ownedTerms+=ExpCS }[*] ']' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _094 // StringLiteral
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(94, "StringLiteral");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _095 // StringLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(95, "StringLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._090 /* segments+=StringLiteral[+] */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._090 /* segments+=StringLiteral[+] */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _096 // StructuralFeatureCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(96, "StructuralFeatureCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._121 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._126 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._186 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._184 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._182 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
-				sr._124 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._123 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._125 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
-				sr._193 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
-				sr._183 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
-				sr._192 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
-				}, iv._40); /* AttributeCS|ReferenceCS|StructuralFeatureCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._121 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._122 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._126 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._186 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._184 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._182 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] ';' } */,
+						sr._124 /* { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._123 /* { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._125 /* { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' } */,
+						sr._193 /* { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
+						sr._183 /* { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */,
+						sr._192 /* { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' } */
+					},
+					iv._40); /* AttributeCS|ReferenceCS|StructuralFeatureCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _097 // StructuredClassCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(97, "StructuredClassCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._197 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
-				sr._196 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._197 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' } */,
+						sr._196 /* { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _098 // SysMLCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(98, "SysMLCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._203 /* { 'sysml' ownedDetails+=DetailCS ';' } */,
-				sr._202 /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._203 /* { 'sysml' ownedDetails+=DetailCS ';' } */,
+						sr._202 /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _099 // TemplateBindingCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(99, "TemplateBindingCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._011 /* { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._011 /* { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _100 // TemplateParameterSubstitutionCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(100, "TemplateParameterSubstitutionCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._012 /* ownedActualParameter=TypeRefCS */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._012 /* ownedActualParameter=TypeRefCS */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _101 // TemplateSignatureCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(101, "TemplateSignatureCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._205 /* { '(' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] ')' } */,
-				sr._204 /* { '<' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] '>' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._205 /* { '(' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] ')' } */,
+						sr._204 /* { '<' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] '>' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _102 // TopLevelCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(102, "TopLevelCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._206 /* { { 'module' }[?] ownedImports+=ImportCS[*] ownedPackages+=PackageCS[*] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._206 /* { { 'module' }[?] ownedImports+=ImportCS[*] ownedPackages+=PackageCS[*] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _103 // TupleLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(103, "TupleLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._093 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._093 /* { 'Tuple' '{' ownedParts+=TupleLiteralPartCS { ',' ownedParts+=TupleLiteralPartCS }[*] '}' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _104 // TupleLiteralPartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(104, "TupleLiteralPartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._094 /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._094 /* { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _105 // TuplePartCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(105, "TuplePartCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._095 /* { name=UnrestrictedName ':' ownedType=TypeExpCS } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._095 /* { name=UnrestrictedName ':' ownedType=TypeExpCS } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _106 // TupleTypeCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(106, "TupleTypeCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._097 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._097 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _107 // TypeExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(107, "TypeExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._102 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._100 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._098 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._103 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._101 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._099 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				}, iv._55); /* CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._102 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._100 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._098 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._103 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._101 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._099 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
+					},
+					iv._55); /* CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _108 // TypeExpWithoutMultiplicityCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(108, "TypeExpWithoutMultiplicityCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._082 /* name=PrimitiveTypeIdentifier */,
-				sr._022 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
-				sr._056 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
-				sr._110 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */,
-				sr._021 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */,
-				sr._096 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
-				}, iv._54); /* CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._082 /* name=PrimitiveTypeIdentifier */,
+						sr._022 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
+						sr._056 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
+						sr._110 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */,
+						sr._021 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */,
+						sr._096 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
+					},
+					iv._54); /* CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _109 // TypeIdentifier
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(109, "TypeIdentifier");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _110 // TypeLiteralCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(110, "TypeLiteralCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._081 /* name=PrimitiveTypeIdentifier */,
-				sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
-				sr._055 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
-				sr._097 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
-				}, iv._51); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._081 /* name=PrimitiveTypeIdentifier */,
+						sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
+						sr._055 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
+						sr._097 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
+					},
+					iv._51); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _111 // TypeLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(111, "TypeLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._104 /* ownedType=TypeLiteralWithMultiplicityCS */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._104 /* ownedType=TypeLiteralWithMultiplicityCS */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _112 // TypeLiteralWithMultiplicityCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(112, "TypeLiteralWithMultiplicityCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._106 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._107 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._109 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._108 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				}, iv._53); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeLiteralWithMultiplicityCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._106 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._107 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._109 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._108 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
+					},
+					iv._53); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeLiteralWithMultiplicityCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _113 // TypeNameExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(113, "TypeNameExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._111 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._111 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _114 // TypeParameterCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(114, "TypeParameterCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._013 /* { name=UnrestrictedName { 'extends' ownedExtends+=TypedRefCS { '&&' ownedExtends+=TypedRefCS }[*] }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._013 /* { name=UnrestrictedName { 'extends' ownedExtends+=TypedRefCS { '&&' ownedExtends+=TypedRefCS }[*] }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _115 // TypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(115, "TypeRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._082 /* name=PrimitiveTypeIdentifier */,
-				sr._218 /* ownedPathName=PathNameCS */,
-				sr._219 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
-				sr._215 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */,
-				sr._014 /* { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */,
-				sr._022 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
-				sr._056 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
-				sr._096 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
-				}, iv._72); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._082 /* name=PrimitiveTypeIdentifier */,
+						sr._218 /* ownedPathName=PathNameCS */,
+						sr._219 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
+						sr._215 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */,
+						sr._014 /* { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */,
+						sr._022 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
+						sr._056 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
+						sr._096 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
+					},
+					iv._72); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _116 // TypedMultiplicityRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(116, "TypedMultiplicityRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._212 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._208 /* { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._213 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._209 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._207 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._210 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-				sr._211 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
-				}, iv._61); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedMultiplicityRefCS|TypedRefCS|TypedTypeRefCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._212 /* { name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._208 /* { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._213 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._209 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._207 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._210 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */,
+						sr._211 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] } */
+					},
+					iv._61); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedMultiplicityRefCS|TypedRefCS|TypedTypeRefCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _117 // TypedRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(117, "TypedRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._081 /* name=PrimitiveTypeIdentifier */,
-				sr._218 /* ownedPathName=PathNameCS */,
-				sr._219 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
-				sr._215 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */,
-				sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
-				sr._055 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
-				sr._097 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
-				}, iv._60); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._081 /* name=PrimitiveTypeIdentifier */,
+						sr._218 /* ownedPathName=PathNameCS */,
+						sr._219 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
+						sr._215 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */,
+						sr._023 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
+						sr._055 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
+						sr._097 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
+					},
+					iv._60); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS */
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _118 // TypedTypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(118, "TypedTypeRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._217 /* ownedPathName=PathNameCS */,
-				sr._216 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
-				sr._214 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._217 /* ownedPathName=PathNameCS */,
+						sr._216 /* { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' } */,
+						sr._214 /* { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _119 // UNQUOTED_STRING
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(119, "UNQUOTED_STRING");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _120 // UPPER
@@ -2989,22 +3104,25 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(121, "URI");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _122 // URIFirstPathElementCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(122, "URIFirstPathElementCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._112 /* referredElement=UnrestrictedName */,
-				sr._113 /* referredElement=URI */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._112 /* referredElement=UnrestrictedName */,
+						sr._113 /* referredElement=URI */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _123 // URIPathNameCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(123, "URIPathNameCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._114 /* { ownedPathElements+=URIFirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._114 /* { ownedPathElements+=URIFirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _124 // UnaryOperatorName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(124, "UnaryOperatorName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _125 // UnlimitedNaturalLiteralExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(125, "UnlimitedNaturalLiteralExpCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._115 /* '*' */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._115 /* '*' */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _126 // UnreservedName
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue(126, "UnreservedName");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue _127 // UnrestrictedName
@@ -3013,11 +3131,15 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue(128, "WS");
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _129 // WildcardTypeRefCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(129, "WildcardTypeRefCS",
-				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-				sr._015 /* { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */
-				}, (org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
+					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
+						sr._015 /* { '?' { 'extends' ownedExtends=TypedRefCS }[?] } */
+					},
+					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 		}
 
+		/**
+		 * Configuration for each EClass that may be serialized.
+		 */
 		private class _EClassData
 		{
 			private final /*@NonNull*/ EClassData _00 // AnnotationCS
@@ -4034,6 +4156,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 				);
 		}
 
+		/**
+		 * The various serialization rules that serialize an EClass.
+		 */
 		private class _SerializationRules
 		{
 			private final /*@NonNull*/ SerializationRule _000
@@ -12093,6 +12218,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 		private _RuleValues rv;
 		private _EClassData ec;
 
+		/**
+		 * Post constructor/injection initialization to avoid recursions.
+		 */
 		@Inject
 		public void init() {
 		//	Grammar grammar = grammarProvider.getGrammar(this);
