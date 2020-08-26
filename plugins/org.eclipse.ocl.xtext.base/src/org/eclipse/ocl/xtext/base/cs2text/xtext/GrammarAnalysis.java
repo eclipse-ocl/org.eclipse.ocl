@@ -106,6 +106,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 
 	private @Nullable RTGrammarAnalysis runtime = null;
 	private @Nullable Iterable<@NonNull EClassData> sortedProducedEClassDatas = null;
+	private @Nullable Map<@NonNull SerializationRule, @NonNull SerializationRuleAnalysis> serializationRule2aserializationRuleAnalysis = null;
 
 	public GrammarAnalysis() {
 		this.grammar = null;
@@ -328,6 +329,9 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	} */
 
 	protected void analyzeSerializations(@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
+		Map<@NonNull SerializationRule, @NonNull SerializationRuleAnalysis> serializationRule2aserializationRuleAnalysis2 = serializationRule2aserializationRuleAnalysis;
+		assert serializationRule2aserializationRuleAnalysis2 == null;
+		serializationRule2aserializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2 = new HashMap<>();
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> eClass2serializationRuleList = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
 			if ("EssentialOCL::SelfExpCS".equals(ruleAnalysis.getName())) {
@@ -345,8 +349,8 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		}
 		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> entry : eClass2serializationRuleList.entrySet()) {
 			EClass eClass = entry.getKey();
-			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalysiss = entry.getValue();
-			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues(serializationRuleAnalysiss);
+			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = entry.getValue();
+			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues(serializationRuleAnalyses);
 			@NonNull EReferenceData[] eReferenceData = null;
 			if (eContainmentFeature2assignedTargetRuleValues != null) {
 				eReferenceData = new @NonNull EReferenceData[eContainmentFeature2assignedTargetRuleValues.size()];
@@ -361,12 +365,14 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 					eReferenceData[i2++] = new EReferenceData(entry2.getKey(), new IndexVector(parserRuleValues));
 				}
 			}
-			@NonNull SerializationRule [] rtSerializationRules = new @NonNull SerializationRule [serializationRuleAnalysiss.size()];
+			@NonNull SerializationRule [] serializationRules = new @NonNull SerializationRule [serializationRuleAnalyses.size()];
 			int i = 0;
-			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalysiss) {
-				rtSerializationRules[i++] = serializationRuleAnalysis.getRuntime();
+			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalyses) {
+				SerializationRule serializationRule = serializationRuleAnalysis.getRuntime();
+				serializationRules[i++] = serializationRule;
+				serializationRule2aserializationRuleAnalysis2.put(serializationRule, serializationRuleAnalysis);
 			}
-			addEClassData(new EClassData(eClass, rtSerializationRules, eReferenceData));
+			addEClassData(new EClassData(eClass, serializationRules, eReferenceData));
 		}
 	}
 
@@ -581,7 +587,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	public @NonNull RTGrammarAnalysis getRuntime() {
 		RTGrammarAnalysis runtime2 = runtime;
 		if (runtime2 == null)  {
-			Iterable<@NonNull EClassData> sortedProducedEClassDatas = getSortedProducedEClassDatas();
+			Iterable<? extends @NonNull EClassData> sortedProducedEClassDatas = getSortedProducedEClassDatas();
 			@NonNull EClassData @NonNull [] eClassDatas = Iterables.toArray(sortedProducedEClassDatas, EClassData.class);
 			@NonNull AbstractRuleValue @NonNull [] ruleValues = new @NonNull AbstractRuleValue [ruleAnalyses.size()];
 			for (int i = 0; i < ruleAnalyses.size(); i++) {
@@ -601,10 +607,14 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 //		return getEClassData(eClass).getSerializationRules();
 //	}
 
+	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull SerializationRule serializationRule) {
+		assert serializationRule2aserializationRuleAnalysis != null;
+		return ClassUtil.nonNullState(serializationRule2aserializationRuleAnalysis.get(serializationRule));
+	}
+
 	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull ParserRuleValue ruleValue) {
 		return ruleValue.getSerializationRules();
 	}
-
 
 	@Override
 	public @NonNull Iterable<@NonNull EClassData> getSortedProducedEClassDatas() {

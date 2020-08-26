@@ -490,9 +490,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _012 // |isPrimitive.'primitive'|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, ev._19);
 			private final /*@NonNull*/ CardinalitySolution _013 // |isSerializable.'serializable'|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, ev._20);
-			private final /*@NonNull*/ CardinalitySolution _014 // |isSerializable.'serializable'|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, ev._20);
+			private final /*@NonNull*/ CardinalitySolution _014 // |isSerializable.'serializable'|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, ev._20);
 			private final /*@NonNull*/ CardinalitySolution _015 // |literal|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL);
 			private final /*@NonNull*/ CardinalitySolution _016 // |lowerBound|
@@ -536,9 +536,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _035 // |ownedContents|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS);
 			private final /*@NonNull*/ CardinalitySolution _036 // |ownedCurlyBracketedClause|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
-			private final /*@NonNull*/ CardinalitySolution _037 // |ownedCurlyBracketedClause|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
+			private final /*@NonNull*/ CardinalitySolution _037 // |ownedCurlyBracketedClause|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
 			private final /*@NonNull*/ CardinalitySolution _038 // |ownedDefaultExpressions|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
 			private final /*@NonNull*/ CardinalitySolution _039 // |ownedDetails|
@@ -550,13 +550,13 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _042 // |ownedExpressionCS|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS);
 			private final /*@NonNull*/ CardinalitySolution _043 // |ownedExpression|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
-			private final /*@NonNull*/ CardinalitySolution _044 // |ownedExpression|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
+			private final /*@NonNull*/ CardinalitySolution _044 // |ownedExpression|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
 			private final /*@NonNull*/ CardinalitySolution _045 // |ownedExpression|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
-			private final /*@NonNull*/ CardinalitySolution _046 // |ownedExpression|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
+			private final /*@NonNull*/ CardinalitySolution _046 // |ownedExpression|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
 			private final /*@NonNull*/ CardinalitySolution _047 // |ownedExtends|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
 			private final /*@NonNull*/ CardinalitySolution _048 // |ownedExtends|
@@ -588,9 +588,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _061 // |ownedMessageSpecification|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION);
 			private final /*@NonNull*/ CardinalitySolution _062 // |ownedMultiplicity|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
-			private final /*@NonNull*/ CardinalitySolution _063 // |ownedMultiplicity|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+			private final /*@NonNull*/ CardinalitySolution _063 // |ownedMultiplicity|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
 			private final /*@NonNull*/ CardinalitySolution _064 // |ownedNameExpression|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION);
 			private final /*@NonNull*/ CardinalitySolution _065 // |ownedOperations|
@@ -602,29 +602,29 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _068 // |ownedParameters|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
 			private final /*@NonNull*/ CardinalitySolution _069 // |ownedParts|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
 			private final /*@NonNull*/ CardinalitySolution _070 // |ownedParts|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
 			private final /*@NonNull*/ CardinalitySolution _071 // |ownedParts|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS);
 			private final /*@NonNull*/ CardinalitySolution _072 // |ownedParts|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS);
 			private final /*@NonNull*/ CardinalitySolution _073 // |ownedParts|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS);
 			private final /*@NonNull*/ CardinalitySolution _074 // |ownedParts|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
 			private final /*@NonNull*/ CardinalitySolution _075 // |ownedPathElements|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
 			private final /*@NonNull*/ CardinalitySolution _076 // |ownedPathName|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME);
-			private final /*@NonNull*/ CardinalitySolution _077 // |ownedPathName|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
-			private final /*@NonNull*/ CardinalitySolution _078 // |ownedPathName|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
-			private final /*@NonNull*/ CardinalitySolution _079 // |ownedPathName|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
-			private final /*@NonNull*/ CardinalitySolution _080 // |ownedPathName|
+			private final /*@NonNull*/ CardinalitySolution _077 // |ownedPathName|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
+			private final /*@NonNull*/ CardinalitySolution _078 // |ownedPathName|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME);
+			private final /*@NonNull*/ CardinalitySolution _079 // |ownedPathName|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
+			private final /*@NonNull*/ CardinalitySolution _080 // |ownedPathName|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
 			private final /*@NonNull*/ CardinalitySolution _081 // |ownedPatternGuard|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
 			private final /*@NonNull*/ CardinalitySolution _082 // |ownedPatternType|
@@ -640,9 +640,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _087 // |ownedRight|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
 			private final /*@NonNull*/ CardinalitySolution _088 // |ownedRoundBracketedClause|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE);
-			private final /*@NonNull*/ CardinalitySolution _089 // |ownedRoundBracketedClause|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE);
+			private final /*@NonNull*/ CardinalitySolution _089 // |ownedRoundBracketedClause|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE);
 			private final /*@NonNull*/ CardinalitySolution _090 // |ownedSignature|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE);
 			private final /*@NonNull*/ CardinalitySolution _091 // |ownedSpecification|
@@ -660,21 +660,21 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _097 // |ownedThenExpression|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION);
 			private final /*@NonNull*/ CardinalitySolution _098 // |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE);
-			private final /*@NonNull*/ CardinalitySolution _099 // |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
-			private final /*@NonNull*/ CardinalitySolution _100 // |ownedType|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE);
+			private final /*@NonNull*/ CardinalitySolution _099 // |ownedType|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE);
+			private final /*@NonNull*/ CardinalitySolution _100 // |ownedType|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
 			private final /*@NonNull*/ CardinalitySolution _101 // |ownedType|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE);
 			private final /*@NonNull*/ CardinalitySolution _102 // |ownedType|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
 			private final /*@NonNull*/ CardinalitySolution _103 // |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
 			private final /*@NonNull*/ CardinalitySolution _104 // |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE);
 			private final /*@NonNull*/ CardinalitySolution _105 // |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE);
 			private final /*@NonNull*/ CardinalitySolution _106 // |ownedValueType|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE);
 			private final /*@NonNull*/ CardinalitySolution _107 // |ownedValue|
@@ -730,17 +730,17 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _132 // |values|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DETAIL_CS__VALUES);
 			private final /*@NonNull*/ CardinalitySolution _133 // |value|
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE);
-			private final /*@NonNull*/ CardinalitySolution _134 // |value|
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE);
+			private final /*@NonNull*/ CardinalitySolution _134 // |value|
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE);
 			private final /*@NonNull*/ CardinalitySolution _135 // (|exprString| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_004, _001);
 			private final /*@NonNull*/ CardinalitySolution _136 // (|isInterface.'interface'| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_009, _000);
 			private final /*@NonNull*/ CardinalitySolution _137 // (|isSerializable.'serializable'| > 0)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_013, _000);
-			private final /*@NonNull*/ CardinalitySolution _138 // (|isSerializable.'serializable'| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_014, _000);
+			private final /*@NonNull*/ CardinalitySolution _138 // (|isSerializable.'serializable'| > 0)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_013, _000);
 			private final /*@NonNull*/ CardinalitySolution _139 // (|lowerBound| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_016, _001);
 			private final /*@NonNull*/ CardinalitySolution _140 // (|name.'Map'| - 1)
@@ -786,13 +786,13 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _160 // (|ownedExpressionCS| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_042, _001);
 			private final /*@NonNull*/ CardinalitySolution _161 // (|ownedExpression| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_044, _001);
-			private final /*@NonNull*/ CardinalitySolution _162 // (|ownedExpression| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_045, _001);
-			private final /*@NonNull*/ CardinalitySolution _163 // (|ownedExpression| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_046, _001);
-			private final /*@NonNull*/ CardinalitySolution _164 // (|ownedExpression| - 1)
+			private final /*@NonNull*/ CardinalitySolution _162 // (|ownedExpression| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_043, _001);
+			private final /*@NonNull*/ CardinalitySolution _163 // (|ownedExpression| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_045, _001);
+			private final /*@NonNull*/ CardinalitySolution _164 // (|ownedExpression| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_044, _001);
 			private final /*@NonNull*/ CardinalitySolution _165 // (|ownedExtends| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_048, _001);
 			private final /*@NonNull*/ CardinalitySolution _166 // (|ownedExtends| > 0)
@@ -800,11 +800,11 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _167 // (|ownedInExpression| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_052, _001);
 			private final /*@NonNull*/ CardinalitySolution _168 // (|ownedInitExpression| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_054, _001);
-			private final /*@NonNull*/ CardinalitySolution _169 // (|ownedInitExpression| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_055, _001);
-			private final /*@NonNull*/ CardinalitySolution _170 // (|ownedInitExpression| - 1)
+			private final /*@NonNull*/ CardinalitySolution _169 // (|ownedInitExpression| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_053, _001);
+			private final /*@NonNull*/ CardinalitySolution _170 // (|ownedInitExpression| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_054, _001);
 			private final /*@NonNull*/ CardinalitySolution _171 // (|ownedKeyType| - V0)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_056, _002);
 			private final /*@NonNull*/ CardinalitySolution _172 // (|ownedKey| - 1)
@@ -820,37 +820,37 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _177 // (|ownedParameters| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_067, _000);
 			private final /*@NonNull*/ CardinalitySolution _178 // (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_073, _001);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_070, _001);
 			private final /*@NonNull*/ CardinalitySolution _179 // (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_069, _001);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_074, _001);
 			private final /*@NonNull*/ CardinalitySolution _180 // (|ownedParts| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_071, _001);
 			private final /*@NonNull*/ CardinalitySolution _181 // (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_074, _001);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_073, _001);
 			private final /*@NonNull*/ CardinalitySolution _182 // (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_070, _001);
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_069, _001);
 			private final /*@NonNull*/ CardinalitySolution _183 // (|ownedParts| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_072, _001);
 			private final /*@NonNull*/ CardinalitySolution _184 // (|ownedParts| > 0)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_069, _000);
-			private final /*@NonNull*/ CardinalitySolution _185 // (|ownedParts| > 0)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_071, _000);
-			private final /*@NonNull*/ CardinalitySolution _186 // (|ownedParts| > 0)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_073, _000);
-			private final /*@NonNull*/ CardinalitySolution _187 // (|ownedParts| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_074, _000);
+			private final /*@NonNull*/ CardinalitySolution _185 // (|ownedParts| > 0)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_070, _000);
+			private final /*@NonNull*/ CardinalitySolution _186 // (|ownedParts| > 0)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_071, _000);
+			private final /*@NonNull*/ CardinalitySolution _187 // (|ownedParts| > 0)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution(_073, _000);
 			private final /*@NonNull*/ CardinalitySolution _188 // (|ownedPathElements| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_075, _001);
 			private final /*@NonNull*/ CardinalitySolution _189 // (|ownedPathName| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_076, _001);
-			private final /*@NonNull*/ CardinalitySolution _190 // (|ownedPathName| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_078, _001);
-			private final /*@NonNull*/ CardinalitySolution _191 // (|ownedPathName| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_077, _001);
-			private final /*@NonNull*/ CardinalitySolution _192 // (|ownedPathName| - 1)
+			private final /*@NonNull*/ CardinalitySolution _190 // (|ownedPathName| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_079, _001);
-			private final /*@NonNull*/ CardinalitySolution _193 // (|ownedPathName| - 1)
+			private final /*@NonNull*/ CardinalitySolution _191 // (|ownedPathName| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_076, _001);
+			private final /*@NonNull*/ CardinalitySolution _192 // (|ownedPathName| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_080, _001);
+			private final /*@NonNull*/ CardinalitySolution _193 // (|ownedPathName| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_077, _001);
 			private final /*@NonNull*/ CardinalitySolution _194 // (|ownedPatternType| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_082, _001);
 			private final /*@NonNull*/ CardinalitySolution _195 // (|ownedRight| - 1)
@@ -870,15 +870,15 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolution _202 // (|ownedType| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_102, _001);
 			private final /*@NonNull*/ CardinalitySolution _203 // (|ownedType| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_103, _001);
-			private final /*@NonNull*/ CardinalitySolution _204 // (|ownedType| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_098, _001);
-			private final /*@NonNull*/ CardinalitySolution _205 // (|ownedType| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_105, _001);
-			private final /*@NonNull*/ CardinalitySolution _206 // (|ownedType| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_100, _001);
-			private final /*@NonNull*/ CardinalitySolution _207 // (|ownedType| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_104, _001);
+			private final /*@NonNull*/ CardinalitySolution _204 // (|ownedType| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_105, _001);
+			private final /*@NonNull*/ CardinalitySolution _205 // (|ownedType| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_099, _001);
+			private final /*@NonNull*/ CardinalitySolution _206 // (|ownedType| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_098, _001);
+			private final /*@NonNull*/ CardinalitySolution _207 // (|ownedType| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_100, _001);
 			private final /*@NonNull*/ CardinalitySolution _208 // (|ownedValue| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution(_107, _001);
 			private final /*@NonNull*/ CardinalitySolution _209 // (|ownedVariables| - 1)
@@ -937,11 +937,11 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _003 // assert (|name.'Tuple'| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._141);
 			private final /*@NonNull*/ CardinalitySolutionStep _004 // assert (|name| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._143);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._142);
 			private final /*@NonNull*/ CardinalitySolutionStep _005 // assert (|name| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._144);
 			private final /*@NonNull*/ CardinalitySolutionStep _006 // assert (|name| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._142);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._143);
 			private final /*@NonNull*/ CardinalitySolutionStep _007 // assert (|ownedActualParameter| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._145);
 			private final /*@NonNull*/ CardinalitySolutionStep _008 // assert (|ownedBinding| - 1) == 0
@@ -949,9 +949,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _009 // assert (|ownedCoIterator| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._151);
 			private final /*@NonNull*/ CardinalitySolutionStep _010 // assert (|ownedCondition| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._152);
-			private final /*@NonNull*/ CardinalitySolutionStep _011 // assert (|ownedCondition| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._153);
+			private final /*@NonNull*/ CardinalitySolutionStep _011 // assert (|ownedCondition| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._152);
 			private final /*@NonNull*/ CardinalitySolutionStep _012 // assert (|ownedDetails| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._155);
 			private final /*@NonNull*/ CardinalitySolutionStep _013 // assert (|ownedElseExpression| - 1) == 0
@@ -959,21 +959,21 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _014 // assert (|ownedExpressionCS| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._160);
 			private final /*@NonNull*/ CardinalitySolutionStep _015 // assert (|ownedExpression| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._161);
-			private final /*@NonNull*/ CardinalitySolutionStep _016 // assert (|ownedExpression| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._162);
-			private final /*@NonNull*/ CardinalitySolutionStep _017 // assert (|ownedExpression| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._163);
-			private final /*@NonNull*/ CardinalitySolutionStep _018 // assert (|ownedExpression| - 1) == 0
+			private final /*@NonNull*/ CardinalitySolutionStep _016 // assert (|ownedExpression| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._164);
+			private final /*@NonNull*/ CardinalitySolutionStep _017 // assert (|ownedExpression| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._162);
+			private final /*@NonNull*/ CardinalitySolutionStep _018 // assert (|ownedExpression| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._161);
 			private final /*@NonNull*/ CardinalitySolutionStep _019 // assert (|ownedInExpression| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._167);
 			private final /*@NonNull*/ CardinalitySolutionStep _020 // assert (|ownedInitExpression| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._170);
-			private final /*@NonNull*/ CardinalitySolutionStep _021 // assert (|ownedInitExpression| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._168);
-			private final /*@NonNull*/ CardinalitySolutionStep _022 // assert (|ownedInitExpression| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._169);
+			private final /*@NonNull*/ CardinalitySolutionStep _021 // assert (|ownedInitExpression| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._170);
+			private final /*@NonNull*/ CardinalitySolutionStep _022 // assert (|ownedInitExpression| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._168);
 			private final /*@NonNull*/ CardinalitySolutionStep _023 // assert (|ownedKeyType| - V0) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._171);
 			private final /*@NonNull*/ CardinalitySolutionStep _024 // assert (|ownedKey| - 1) == 0
@@ -987,33 +987,33 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _028 // assert (|ownedPathName| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._190);
 			private final /*@NonNull*/ CardinalitySolutionStep _029 // assert (|ownedPathName| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._189);
-			private final /*@NonNull*/ CardinalitySolutionStep _030 // assert (|ownedPathName| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._193);
-			private final /*@NonNull*/ CardinalitySolutionStep _031 // assert (|ownedPathName| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._191);
-			private final /*@NonNull*/ CardinalitySolutionStep _032 // assert (|ownedPathName| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._192);
+			private final /*@NonNull*/ CardinalitySolutionStep _030 // assert (|ownedPathName| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._189);
+			private final /*@NonNull*/ CardinalitySolutionStep _031 // assert (|ownedPathName| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._193);
+			private final /*@NonNull*/ CardinalitySolutionStep _032 // assert (|ownedPathName| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._191);
 			private final /*@NonNull*/ CardinalitySolutionStep _033 // assert (|ownedPatternType| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._194);
 			private final /*@NonNull*/ CardinalitySolutionStep _034 // assert (|ownedRight| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._195);
 			private final /*@NonNull*/ CardinalitySolutionStep _035 // assert (|ownedThenExpression| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._201);
-			private final /*@NonNull*/ CardinalitySolutionStep _036 // assert (|ownedThenExpression| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._200);
+			private final /*@NonNull*/ CardinalitySolutionStep _036 // assert (|ownedThenExpression| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._201);
 			private final /*@NonNull*/ CardinalitySolutionStep _037 // assert (|ownedType| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._203);
-			private final /*@NonNull*/ CardinalitySolutionStep _038 // assert (|ownedType| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._202);
-			private final /*@NonNull*/ CardinalitySolutionStep _039 // assert (|ownedType| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._205);
-			private final /*@NonNull*/ CardinalitySolutionStep _040 // assert (|ownedType| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._206);
-			private final /*@NonNull*/ CardinalitySolutionStep _041 // assert (|ownedType| - 1) == 0
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._204);
-			private final /*@NonNull*/ CardinalitySolutionStep _042 // assert (|ownedType| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._207);
+			private final /*@NonNull*/ CardinalitySolutionStep _038 // assert (|ownedType| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._204);
+			private final /*@NonNull*/ CardinalitySolutionStep _039 // assert (|ownedType| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._202);
+			private final /*@NonNull*/ CardinalitySolutionStep _040 // assert (|ownedType| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._205);
+			private final /*@NonNull*/ CardinalitySolutionStep _041 // assert (|ownedType| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._203);
+			private final /*@NonNull*/ CardinalitySolutionStep _042 // assert (|ownedType| - 1) == 0
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._206);
 			private final /*@NonNull*/ CardinalitySolutionStep _043 // assert (|ownedValue| - 1) == 0
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assert(mt._208);
 			private final /*@NonNull*/ CardinalitySolutionStep _044 // assert (|prefix.','| - 1) == 0
@@ -1049,15 +1049,15 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _059 // assign V0 = (|ownedParameters| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._175);
 			private final /*@NonNull*/ CardinalitySolutionStep _060 // assign V0 = (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._183);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._182);
 			private final /*@NonNull*/ CardinalitySolutionStep _061 // assign V0 = (|ownedParts| > 0)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._184);
-			private final /*@NonNull*/ CardinalitySolutionStep _062 // assign V0 = (|ownedParts| > 0)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._186);
-			private final /*@NonNull*/ CardinalitySolutionStep _063 // assign V0 = (|ownedParts| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._187);
-			private final /*@NonNull*/ CardinalitySolutionStep _064 // assign V0 = (|ownedParts| > 0)
+			private final /*@NonNull*/ CardinalitySolutionStep _062 // assign V0 = (|ownedParts| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._185);
+			private final /*@NonNull*/ CardinalitySolutionStep _063 // assign V0 = (|ownedParts| > 0)
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._186);
+			private final /*@NonNull*/ CardinalitySolutionStep _064 // assign V0 = (|ownedParts| > 0)
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._184);
 			private final /*@NonNull*/ CardinalitySolutionStep _065 // assign V0 = (|ownedPathElements| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._188);
 			private final /*@NonNull*/ CardinalitySolutionStep _066 // assign V0 = (|ownedSubstitutions| - 1)
@@ -1087,7 +1087,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _078 // assign V0 = |ownedCoIterator|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._030);
 			private final /*@NonNull*/ CardinalitySolutionStep _079 // assign V0 = |ownedCurlyBracketedClause|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._036);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._037);
 			private final /*@NonNull*/ CardinalitySolutionStep _080 // assign V0 = |ownedDetails|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._039);
 			private final /*@NonNull*/ CardinalitySolutionStep _081 // assign V0 = |ownedExtends|
@@ -1099,9 +1099,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _084 // assign V0 = |ownedLastExpression|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._058);
 			private final /*@NonNull*/ CardinalitySolutionStep _085 // assign V0 = |ownedMultiplicity|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._063);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._062);
 			private final /*@NonNull*/ CardinalitySolutionStep _086 // assign V0 = |ownedRoundBracketedClause|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._089);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._088);
 			private final /*@NonNull*/ CardinalitySolutionStep _087 // assign V0 = |ownedSignature|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._090);
 			private final /*@NonNull*/ CardinalitySolutionStep _088 // assign V0 = |ownedSquareBracketedClauses|
@@ -1109,11 +1109,11 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _089 // assign V0 = |ownedType|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._102);
 			private final /*@NonNull*/ CardinalitySolutionStep _090 // assign V0 = |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._099);
-			private final /*@NonNull*/ CardinalitySolutionStep _091 // assign V0 = |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._100);
-			private final /*@NonNull*/ CardinalitySolutionStep _092 // assign V0 = |ownedType|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._101);
+			private final /*@NonNull*/ CardinalitySolutionStep _091 // assign V0 = |ownedType|
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._098);
+			private final /*@NonNull*/ CardinalitySolutionStep _092 // assign V0 = |ownedType|
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._103);
 			private final /*@NonNull*/ CardinalitySolutionStep _093 // assign V0 = |ownedValueType|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._106);
 			private final /*@NonNull*/ CardinalitySolutionStep _094 // assign V0 = |patternVariableName|
@@ -1133,7 +1133,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _101 // assign V0 = |values|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._132);
 			private final /*@NonNull*/ CardinalitySolutionStep _102 // assign V0 = |value|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._134);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(0, mt._133);
 			private final /*@NonNull*/ CardinalitySolutionStep _103 // assign V1 = (|ownedArguments| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._147);
 			private final /*@NonNull*/ CardinalitySolutionStep _104 // assign V1 = (|ownedDetails| > 0)
@@ -1143,15 +1143,15 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _106 // assign V1 = (|ownedParameters| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._177);
 			private final /*@NonNull*/ CardinalitySolutionStep _107 // assign V1 = (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._178);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._183);
 			private final /*@NonNull*/ CardinalitySolutionStep _108 // assign V1 = (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._181);
-			private final /*@NonNull*/ CardinalitySolutionStep _109 // assign V1 = (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._182);
-			private final /*@NonNull*/ CardinalitySolutionStep _110 // assign V1 = (|ownedParts| - 1)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._180);
+			private final /*@NonNull*/ CardinalitySolutionStep _109 // assign V1 = (|ownedParts| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._179);
+			private final /*@NonNull*/ CardinalitySolutionStep _110 // assign V1 = (|ownedParts| - 1)
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._178);
 			private final /*@NonNull*/ CardinalitySolutionStep _111 // assign V1 = (|ownedParts| > 0)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._184);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._187);
 			private final /*@NonNull*/ CardinalitySolutionStep _112 // assign V1 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._216);
 			private final /*@NonNull*/ CardinalitySolutionStep _113 // assign V1 = |default|
@@ -1177,25 +1177,25 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _123 // assign V1 = |ownedMessageSpecification|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._061);
 			private final /*@NonNull*/ CardinalitySolutionStep _124 // assign V1 = |ownedMultiplicity|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._062);
-			private final /*@NonNull*/ CardinalitySolutionStep _125 // assign V1 = |ownedMultiplicity|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._063);
+			private final /*@NonNull*/ CardinalitySolutionStep _125 // assign V1 = |ownedMultiplicity|
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._062);
 			private final /*@NonNull*/ CardinalitySolutionStep _126 // assign V1 = |ownedPatternGuard|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._081);
 			private final /*@NonNull*/ CardinalitySolutionStep _127 // assign V1 = |ownedRoundBracketedClause|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._088);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._089);
 			private final /*@NonNull*/ CardinalitySolutionStep _128 // assign V1 = |ownedSignature|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._090);
 			private final /*@NonNull*/ CardinalitySolutionStep _129 // assign V1 = |ownedType|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._102);
 			private final /*@NonNull*/ CardinalitySolutionStep _130 // assign V1 = |ownedType|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._099);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._103);
 			private final /*@NonNull*/ CardinalitySolutionStep _131 // assign V1 = |qualifiers.'!ordered|!unique|ordered|unique'|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._116);
 			private final /*@NonNull*/ CardinalitySolutionStep _132 // assign V1 = |referredOpposite|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._121);
 			private final /*@NonNull*/ CardinalitySolutionStep _133 // assign V1 = |value|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._133);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(1, mt._134);
 			private final /*@NonNull*/ CardinalitySolutionStep _134 // assign V10 = (|ownedBodyExpressions| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(10, mt._150);
 			private final /*@NonNull*/ CardinalitySolutionStep _135 // assign V10 = (|ownedDefaultExpressions| > 0)
@@ -1233,7 +1233,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _151 // assign V2 = (|ownedParameters| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._177);
 			private final /*@NonNull*/ CardinalitySolutionStep _152 // assign V2 = (|ownedParts| - 1)
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._179);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._181);
 			private final /*@NonNull*/ CardinalitySolutionStep _153 // assign V2 = (|ownedSuperTypes| > 0)
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._198);
 			private final /*@NonNull*/ CardinalitySolutionStep _154 // assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
@@ -1247,11 +1247,11 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _158 // assign V2 = |ownedAnnotations|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._025);
 			private final /*@NonNull*/ CardinalitySolutionStep _159 // assign V2 = |ownedCurlyBracketedClause|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._037);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._036);
 			private final /*@NonNull*/ CardinalitySolutionStep _160 // assign V2 = |ownedMessageSpecification|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._061);
 			private final /*@NonNull*/ CardinalitySolutionStep _161 // assign V2 = |ownedMultiplicity|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._063);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._062);
 			private final /*@NonNull*/ CardinalitySolutionStep _162 // assign V2 = |ownedPackages|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(2, mt._066);
 			private final /*@NonNull*/ CardinalitySolutionStep _163 // assign V2 = |ownedSpecification|
@@ -1279,11 +1279,11 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _174 // assign V3 = |isPre.'@'|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, mt._011);
 			private final /*@NonNull*/ CardinalitySolutionStep _175 // assign V3 = |isSerializable.'serializable'|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, mt._014);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, mt._013);
 			private final /*@NonNull*/ CardinalitySolutionStep _176 // assign V3 = |ownedAnnotations|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, mt._025);
 			private final /*@NonNull*/ CardinalitySolutionStep _177 // assign V3 = |ownedMultiplicity|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, mt._063);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, mt._062);
 			private final /*@NonNull*/ CardinalitySolutionStep _178 // assign V3 = |ownedPackages|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(3, mt._066);
 			private final /*@NonNull*/ CardinalitySolutionStep _179 // assign V3 = |ownedSpecification|
@@ -1299,7 +1299,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ CardinalitySolutionStep _184 // assign V4 = |instanceClassName|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, mt._005);
 			private final /*@NonNull*/ CardinalitySolutionStep _185 // assign V4 = |isSerializable.'serializable'|
-				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, mt._013);
+				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, mt._014);
 			private final /*@NonNull*/ CardinalitySolutionStep _186 // assign V4 = |ownedAnnotations|
 				= new org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.Assign(4, mt._025);
 			private final /*@NonNull*/ CardinalitySolutionStep _187 // assign V4 = |ownedClasses|
@@ -1758,9 +1758,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _088 // 1*ownedExceptions+=TypedRefCS
 										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _089 // 1*ownedExpression=ExpCS
-										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
-			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _090 // 1*ownedExpression=ExpCS
 										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
+			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _090 // 1*ownedExpression=ExpCS
+										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _091 // 1*ownedExpression=ExpCS
 										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _092 // 1*ownedExpression=ExpCS
@@ -1821,11 +1821,11 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _119 // 1*ownedPathElements+=URIFirstPathElementCS
 										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _120 // 1*ownedPathName=PathNameCS
-										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
+										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _121 // 1*ownedPathName=PathNameCS
 										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _122 // 1*ownedPathName=PathNameCS
-										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
+										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _123 // 1*ownedPathName=PathNameCS
 										= new org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep(-1, org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep _124 // 1*ownedPathName=URIPathNameCS
@@ -2297,7 +2297,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						sr._201 /* { 'sysml' ownedDetails+=DetailCS ';' } */,
 						sr._200 /* { 'sysml' '{' { ownedDetails+=DetailCS ';' }[*] '}' } */,
 						sr._118 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
-						sr._141 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
+						sr._140 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
 						sr._120 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' } */,
 						sr._119 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' } */,
 						sr._117 /* { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' } */
@@ -2402,7 +2402,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _017 // DocumentationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(17, "DocumentationCS",
 					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-						sr._140 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
+						sr._141 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
 					},
 					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue _018 // ESCAPED_CHARACTER
@@ -2793,7 +2793,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						sr._045 /* 'invalid' */,
 						sr._074 /* 'null' */,
 						sr._075 /* symbol=NUMBER_LITERAL */,
-						sr._084 /* 'self' */,
+						sr._085 /* 'self' */,
 						sr._091 /* segments+=StringLiteral[+] */,
 						sr._105 /* ownedType=TypeLiteralWithMultiplicityCS */,
 						sr._116 /* '*' */,
@@ -2814,7 +2814,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						sr._045 /* 'invalid' */,
 						sr._074 /* 'null' */,
 						sr._075 /* symbol=NUMBER_LITERAL */,
-						sr._084 /* 'self' */,
+						sr._085 /* 'self' */,
 						sr._091 /* segments+=StringLiteral[+] */,
 						sr._105 /* ownedType=TypeLiteralWithMultiplicityCS */,
 						sr._116 /* '*' */,
@@ -2874,7 +2874,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _089 // SelfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(89, "SelfExpCS",
 					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-						sr._085 /* 'self' */
+						sr._084 /* 'self' */
 					},
 					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _090 // ShadowPartCS
@@ -3008,7 +3008,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						sr._082 /* name=PrimitiveTypeIdentifier */,
 						sr._022 /* { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] } */,
 						sr._056 /* { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] } */,
-						sr._110 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */,
+						sr._111 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */,
 						sr._021 /* { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' } */,
 						sr._096 /* { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] } */
 					},
@@ -3042,7 +3042,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _113 // TypeNameExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue(113, "TypeNameExpCS",
 					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-						sr._111 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
+						sr._110 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
 					},
 					(org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector)null);
 			private final /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue _114 // TypeParameterCS
@@ -3333,8 +3333,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ EClassData _11 // DocumentationCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.DOCUMENTATION_CS,
 					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-						sr._141 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
-						sr._140 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
+						sr._140 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */,
+						sr._141 /* { 'documentation' value=SINGLE_QUOTED_STRING[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] ';' } */
 					},
 					new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData [] {
 						new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData(org.eclipse.ocl.xtext.basecs.BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
@@ -3882,9 +3882,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 			private final /*@NonNull*/ EClassData _48 // SelfExpCS
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.SELF_EXP_CS,
 					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
-						sr._084 /* 'self' */,
-						sr._084 /* 'self' */,
-						sr._085 /* 'self' */
+						sr._085 /* 'self' */,
+						sr._085 /* 'self' */,
+						sr._084 /* 'self' */
 					}, null
 				);
 			private final /*@NonNull*/ EClassData _49 // ShadowPartCS
@@ -4075,8 +4075,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 				= new org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS,
 					new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule [] {
 						sr._103 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] } */,
-						sr._110 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */,
-						sr._111 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
+						sr._111 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */,
+						sr._110 /* { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] } */
 					},
 					new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData [] {
 						new org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData(org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
@@ -4712,7 +4712,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(114, /* Base::TypeParameterCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._261 /* check-rule basecs::TypeParameterCS.ownedExtends : 117 */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._058 /* assign V0 = (|ownedExtends| > 0) */,
 						ms._105 /* assign V1 = (|ownedExtends| - 1) */
 					},
@@ -4819,8 +4819,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(7, /* EssentialOCL::CoIteratorVariableCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
-						ms._090 /* assign V0 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._092 /* assign V0 = |ownedType| */,
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-4-steps */,
@@ -4848,9 +4848,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._272 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 9 */,
 						ms._273 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 11 */,
-						ms._042 /* assert (|ownedType| - 1) == 0 */,
-						ms._063 /* assign V0 = (|ownedParts| > 0) */,
-						ms._108 /* assign V1 = (|ownedParts| - 1) */
+						ms._037 /* assert (|ownedType| - 1) == 0 */,
+						ms._064 /* assign V0 = (|ownedParts| > 0) */,
+						ms._109 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -4887,7 +4887,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(9, /* EssentialOCL::CollectionLiteralPartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._275 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 74 */,
-						ms._018 /* assert (|ownedExpression| - 1) == 0 */
+						ms._016 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._093 /* 1*ownedExpression=PatternExpCS */
@@ -4908,7 +4908,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._276 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : 30 */,
 						ms._274 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 30 */,
 						ms._084 /* assign V0 = |ownedLastExpression| */,
-						ms._018 /* assert (|ownedExpression| - 1) == 0 */
+						ms._016 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-4-steps */,
@@ -4939,8 +4939,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._277 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 74 */,
 						ms._278 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 11 */,
 						ms._098 /* assign V0 = |restVariableName| */,
-						ms._109 /* assign V1 = (|ownedParts| - 1) */,
-						ms._041 /* assert (|ownedType| - 1) == 0 */
+						ms._107 /* assign V1 = (|ownedParts| - 1) */,
+						ms._038 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-10-steps */,
@@ -4982,8 +4982,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 						ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
-						ms._092 /* assign V0 = |ownedType| */,
-						ms._004 /* assert (|name| - 1) == 0 */,
+						ms._090 /* assign V0 = |ownedType| */,
+						ms._006 /* assert (|name| - 1) == 0 */,
 						ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -5018,8 +5018,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 						ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
-						ms._092 /* assign V0 = |ownedType| */,
-						ms._004 /* assert (|name| - 1) == 0 */,
+						ms._090 /* assign V0 = |ownedType| */,
+						ms._006 /* assert (|name| - 1) == 0 */,
 						ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -5054,7 +5054,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._282 /* check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : 90 */,
 						ms._062 /* assign V0 = (|ownedParts| > 0) */,
-						ms._107 /* assign V1 = (|ownedParts| - 1) */
+						ms._110 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-7-steps */,
@@ -5088,8 +5088,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._289 /* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : 30 */,
 						ms._288 /* check-rule essentialoclcs::IfThenExpCS.ownedCondition : 30 */,
-						ms._036 /* assert (|ownedThenExpression| - 1) == 0 */,
-						ms._011 /* assert (|ownedCondition| - 1) == 0 */
+						ms._035 /* assert (|ownedThenExpression| - 1) == 0 */,
+						ms._010 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-4-steps */,
@@ -5196,7 +5196,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._290 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : 78 */,
 						ms._306 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 30 */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._025 /* assert (|ownedLeft| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -5229,8 +5229,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
 						ms._013 /* assert (|ownedElseExpression| - 1) == 0 */,
 						ms._082 /* assign V0 = |ownedIfThenExpressions| */,
-						ms._035 /* assert (|ownedThenExpression| - 1) == 0 */,
-						ms._010 /* assert (|ownedCondition| - 1) == 0 */
+						ms._036 /* assert (|ownedThenExpression| - 1) == 0 */,
+						ms._011 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -5298,12 +5298,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._305 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 30 */,
-						ms._016 /* assert (|ownedExpression| - 1) == 0 */
+						ms._018 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-3-steps */,
 						st._003 /* 1*'(' */,
-						st._090 /* 1*ownedExpression=ExpCS */,
+						st._089 /* 1*ownedExpression=ExpCS */,
 						st._004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -5337,7 +5337,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(30, /* EssentialOCL::ExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._315 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112 */,
-						ms._037 /* assert (|ownedType| - 1) == 0 */
+						ms._041 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -5404,9 +5404,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._272 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 9 */,
 						ms._273 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 11 */,
-						ms._042 /* assert (|ownedType| - 1) == 0 */,
-						ms._063 /* assign V0 = (|ownedParts| > 0) */,
-						ms._108 /* assign V1 = (|ownedParts| - 1) */
+						ms._037 /* assert (|ownedType| - 1) == 0 */,
+						ms._064 /* assign V0 = (|ownedParts| > 0) */,
+						ms._109 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -5444,9 +5444,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 						ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
-						ms._039 /* assert (|ownedType| - 1) == 0 */,
-						ms._064 /* assign V0 = (|ownedParts| > 0) */,
-						ms._110 /* assign V1 = (|ownedParts| - 1) */
+						ms._040 /* assert (|ownedType| - 1) == 0 */,
+						ms._063 /* assign V0 = (|ownedParts| > 0) */,
+						ms._108 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -5484,7 +5484,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._308 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 78 */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-2-steps */,
@@ -5561,8 +5561,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
 						ms._013 /* assert (|ownedElseExpression| - 1) == 0 */,
 						ms._082 /* assign V0 = |ownedIfThenExpressions| */,
-						ms._035 /* assert (|ownedThenExpression| - 1) == 0 */,
-						ms._010 /* assert (|ownedCondition| - 1) == 0 */
+						ms._036 /* assert (|ownedThenExpression| - 1) == 0 */,
+						ms._011 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -5608,8 +5608,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
 						ms._013 /* assert (|ownedElseExpression| - 1) == 0 */,
 						ms._082 /* assign V0 = |ownedIfThenExpressions| */,
-						ms._035 /* assert (|ownedThenExpression| - 1) == 0 */,
-						ms._010 /* assert (|ownedCondition| - 1) == 0 */
+						ms._036 /* assert (|ownedThenExpression| - 1) == 0 */,
+						ms._011 /* assert (|ownedCondition| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -5811,7 +5811,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._020 /* assert (|ownedInitExpression| - 1) == 0 */,
 						ms._130 /* assign V1 = |ownedType| */,
 						ms._086 /* assign V0 = |ownedRoundBracketedClause| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-7-steps */,
@@ -5849,9 +5849,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 						ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
-						ms._039 /* assert (|ownedType| - 1) == 0 */,
-						ms._064 /* assign V0 = (|ownedParts| > 0) */,
-						ms._110 /* assign V1 = (|ownedParts| - 1) */
+						ms._040 /* assert (|ownedType| - 1) == 0 */,
+						ms._063 /* assign V0 = (|ownedParts| > 0) */,
+						ms._108 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -5889,9 +5889,9 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 						ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
-						ms._039 /* assert (|ownedType| - 1) == 0 */,
-						ms._064 /* assign V0 = (|ownedParts| > 0) */,
-						ms._110 /* assign V1 = (|ownedParts| - 1) */
+						ms._040 /* assert (|ownedType| - 1) == 0 */,
+						ms._063 /* assign V0 = (|ownedParts| > 0) */,
+						ms._108 /* assign V1 = (|ownedParts| - 1) */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -6039,10 +6039,10 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(52, /* EssentialOCL::Model */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._281 /* check-rule essentialoclcs::ContextCS.ownedExpression : 30 */,
-						ms._017 /* assert (|ownedExpression| - 1) == 0 */
+						ms._015 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
-						st._089 /* 1*ownedExpression=ExpCS */
+						st._090 /* 1*ownedExpression=ExpCS */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
 						null
@@ -6195,7 +6195,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(60, /* EssentialOCL::NavigatingArgCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-						ms._040 /* assert (|ownedType| - 1) == 0 */
+						ms._042 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-2-steps */,
@@ -6223,7 +6223,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 						ms._122 /* assign V1 = |ownedInitExpression| */,
 						ms._078 /* assign V0 = |ownedCoIterator| */,
-						ms._040 /* assert (|ownedType| - 1) == 0 */,
+						ms._042 /* assert (|ownedType| - 1) == 0 */,
 						ms._026 /* assert (|ownedNameExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -6340,7 +6340,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 						ms._122 /* assign V1 = |ownedInitExpression| */,
 						ms._078 /* assign V0 = |ownedCoIterator| */,
-						ms._040 /* assert (|ownedType| - 1) == 0 */,
+						ms._042 /* assert (|ownedType| - 1) == 0 */,
 						ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
 						ms._044 /* assert (|prefix.','| - 1) == 0 */
 					},
@@ -6564,12 +6564,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(66, /* EssentialOCL::NestedExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._305 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 30 */,
-						ms._016 /* assert (|ownedExpression| - 1) == 0 */
+						ms._018 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-3-steps */,
 						st._003 /* 1*'(' */,
-						st._090 /* 1*ownedExpression=ExpCS */,
+						st._089 /* 1*ownedExpression=ExpCS */,
 						st._004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -6589,12 +6589,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(66, /* EssentialOCL::NestedExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._305 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 30 */,
-						ms._016 /* assert (|ownedExpression| - 1) == 0 */
+						ms._018 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-3-steps */,
 						st._003 /* 1*'(' */,
-						st._090 /* 1*ownedExpression=ExpCS */,
+						st._089 /* 1*ownedExpression=ExpCS */,
 						st._004 /* 1*')' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -6699,7 +6699,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._307 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 77 */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-2-steps */,
@@ -6723,7 +6723,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._307 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 77 */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-2-steps */,
@@ -6747,7 +6747,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._308 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 78 */,
 						ms._034 /* assert (|ownedRight| - 1) == 0 */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-2-steps */,
@@ -7051,8 +7051,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
 						ms._319 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 30 */,
 						ms._020 /* assert (|ownedInitExpression| - 1) == 0 */,
-						ms._090 /* assign V0 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._092 /* assign V0 = |ownedType| */,
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-6-steps */,
@@ -7085,8 +7085,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(105, /* EssentialOCL::TuplePartCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._262 /* check-rule basecs::TypedElementCS.ownedType : 107 */,
-						ms._038 /* assert (|ownedType| - 1) == 0 */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._039 /* assert (|ownedType| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-3-steps */,
@@ -7296,8 +7296,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 						ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 						ms._161 /* assign V2 = |ownedMultiplicity| */,
-						ms._092 /* assign V0 = |ownedType| */,
-						ms._004 /* assert (|name| - 1) == 0 */,
+						ms._090 /* assign V0 = |ownedType| */,
+						ms._006 /* assert (|name| - 1) == 0 */,
 						ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7339,8 +7339,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 						ms._161 /* assign V2 = |ownedMultiplicity| */,
 						ms._098 /* assign V0 = |restVariableName| */,
-						ms._109 /* assign V1 = (|ownedParts| - 1) */,
-						ms._041 /* assert (|ownedType| - 1) == 0 */
+						ms._107 /* assign V1 = (|ownedParts| - 1) */,
+						ms._038 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-11-steps */,
@@ -7414,12 +7414,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
 						ms._161 /* assign V2 = |ownedMultiplicity| */,
 						ms._079 /* assign V0 = |ownedCurlyBracketedClause| */,
-						ms._031 /* assert (|ownedPathName| - 1) == 0 */,
+						ms._032 /* assert (|ownedPathName| - 1) == 0 */,
 						ms._126 /* assign V1 = |ownedPatternGuard| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
-						st._120 /* 1*ownedPathName=PathNameCS */,
+						st._122 /* 1*ownedPathName=PathNameCS */,
 						st._169 /* V00*next-5-steps */,
 						st._085 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
 						st._181 /* V01*next-3-steps */,
@@ -7456,7 +7456,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(111, /* EssentialOCL::TypeLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._315 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112 */,
-						ms._037 /* assert (|ownedType| - 1) == 0 */
+						ms._041 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -7475,7 +7475,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(111, /* EssentialOCL::TypeLiteralExpCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._315 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112 */,
-						ms._037 /* assert (|ownedType| - 1) == 0 */
+						ms._041 /* assert (|ownedType| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -7521,8 +7521,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 						ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 						ms._161 /* assign V2 = |ownedMultiplicity| */,
-						ms._092 /* assign V0 = |ownedType| */,
-						ms._004 /* assert (|name| - 1) == 0 */,
+						ms._090 /* assign V0 = |ownedType| */,
+						ms._006 /* assert (|name| - 1) == 0 */,
 						ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -7659,12 +7659,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._318 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 30 */,
 						ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
 						ms._079 /* assign V0 = |ownedCurlyBracketedClause| */,
-						ms._031 /* assert (|ownedPathName| - 1) == 0 */,
+						ms._032 /* assert (|ownedPathName| - 1) == 0 */,
 						ms._126 /* assign V1 = |ownedPatternGuard| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-7-steps */,
-						st._120 /* 1*ownedPathName=PathNameCS */,
+						st._122 /* 1*ownedPathName=PathNameCS */,
 						st._169 /* V00*next-5-steps */,
 						st._085 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
 						st._181 /* V01*next-3-steps */,
@@ -7700,12 +7700,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._318 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 30 */,
 						ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
 						ms._079 /* assign V0 = |ownedCurlyBracketedClause| */,
-						ms._031 /* assert (|ownedPathName| - 1) == 0 */,
+						ms._032 /* assert (|ownedPathName| - 1) == 0 */,
 						ms._126 /* assign V1 = |ownedPatternGuard| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-7-steps */,
-						st._120 /* 1*ownedPathName=PathNameCS */,
+						st._122 /* 1*ownedPathName=PathNameCS */,
 						st._169 /* V00*next-5-steps */,
 						st._085 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
 						st._181 /* V01*next-3-steps */,
@@ -8049,7 +8049,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._113 /* assign V1 = |default| */,
 						ms._089 /* assign V0 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._154 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
 						ms._181 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 					},
@@ -8103,7 +8103,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._156 /* assign V2 = |default| */,
 						ms._129 /* assign V1 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
 						ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
@@ -8166,7 +8166,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._196 /* assign V5 = |ownedAnnotations| */,
 						ms._156 /* assign V2 = |default| */,
 						ms._129 /* assign V1 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
 						ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
@@ -8261,7 +8261,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._113 /* assign V1 = |default| */,
 						ms._089 /* assign V0 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._154 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
 						ms._181 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
 						ms._198 /* assign V5 = |ownedDefaultExpressions| */,
@@ -8350,7 +8350,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._196 /* assign V5 = |ownedAnnotations| */,
 						ms._156 /* assign V2 = |default| */,
 						ms._129 /* assign V1 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
 						ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
@@ -8442,7 +8442,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._156 /* assign V2 = |default| */,
 						ms._129 /* assign V1 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
 						ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
@@ -8504,7 +8504,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
 						ms._185 /* assign V4 = |isSerializable.'serializable'| */
@@ -8557,7 +8557,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
 						ms._185 /* assign V4 = |isSerializable.'serializable'| */
@@ -8610,7 +8610,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._172 /* assign V3 = 0 */
 					},
@@ -8664,7 +8664,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._172 /* assign V3 = 0 */
 					},
@@ -8728,7 +8728,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._196 /* assign V5 = |ownedAnnotations| */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
 						ms._185 /* assign V4 = |isSerializable.'serializable'| */
@@ -8791,7 +8791,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._172 /* assign V3 = 0 */
 					},
@@ -8845,7 +8845,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._172 /* assign V3 = 0 */
 					},
@@ -8909,7 +8909,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._196 /* assign V5 = |ownedAnnotations| */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
 						ms._185 /* assign V4 = |isSerializable.'serializable'| */
@@ -8976,7 +8976,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._172 /* assign V3 = 0 */
 					},
@@ -9034,7 +9034,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._172 /* assign V3 = 0 */
 					},
@@ -9086,7 +9086,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._157 /* assign V2 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
 						ms._172 /* assign V3 = 0 */
 					},
@@ -9142,7 +9142,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(16, /* OCLinEcore::DetailCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._101 /* assign V0 = |values| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-3-steps */,
@@ -9254,7 +9254,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._176 /* assign V3 = |ownedAnnotations| */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9318,7 +9318,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._176 /* assign V3 = |ownedAnnotations| */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9374,7 +9374,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
 						ms._175 /* assign V3 = |isSerializable.'serializable'| */
 					},
@@ -9428,7 +9428,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._176 /* assign V3 = |ownedAnnotations| */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9492,7 +9492,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
 						ms._175 /* assign V3 = |isSerializable.'serializable'| */
 					},
@@ -9554,7 +9554,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9596,7 +9596,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
 						ms._175 /* assign V3 = |isSerializable.'serializable'| */
 					},
@@ -9644,7 +9644,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9694,7 +9694,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
 						ms._175 /* assign V3 = |isSerializable.'serializable'| */
 					},
@@ -9756,7 +9756,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9800,7 +9800,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9848,7 +9848,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._176 /* assign V3 = |ownedAnnotations| */,
 						ms._114 /* assign V1 = |instanceClassName| */,
 						ms._087 /* assign V0 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._155 /* assign V2 = 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -9905,7 +9905,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._158 /* assign V2 = |ownedAnnotations| */,
 						ms._133 /* assign V1 = |value| */,
 						ms._075 /* assign V0 = |literal| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-11-steps */,
@@ -9947,7 +9947,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._133 /* assign V1 = |value| */,
 						ms._075 /* assign V0 = |literal| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-9-steps */,
@@ -9982,7 +9982,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._133 /* assign V1 = |value| */,
 						ms._075 /* assign V0 = |literal| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-8-steps */,
@@ -10017,7 +10017,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._158 /* assign V2 = |ownedAnnotations| */,
 						ms._133 /* assign V1 = |value| */,
 						ms._075 /* assign V0 = |literal| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-10-steps */,
@@ -10056,8 +10056,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(37, /* OCLinEcore::ImplicitOppositeCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-						ms._038 /* assert (|ownedType| - 1) == 0 */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._039 /* assert (|ownedType| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._069 /* assign V0 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
 						ms._131 /* assign V1 = |qualifiers.'!ordered|!unique|ordered|unique'| */
 					},
@@ -10100,7 +10100,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._236 /* check-rule basecs::ImportCS.ownedPathName : 123 */,
 						ms._115 /* assign V1 = |isAll.'::*'| */,
-						ms._029 /* assert (|ownedPathName| - 1) == 0 */,
+						ms._030 /* assert (|ownedPathName| - 1) == 0 */,
 						ms._076 /* assign V0 = |name| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -10235,12 +10235,12 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(54, /* OCLinEcore::ModelElementRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._238 /* check-rule basecs::ModelElementRefCS.ownedPathName : 73 */,
-						ms._032 /* assert (|ownedPathName| - 1) == 0 */
+						ms._029 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-3-steps */,
 						st._054 /* 1*'reference' */,
-						st._122 /* 1*ownedPathName=PathNameCS */,
+						st._120 /* 1*ownedPathName=PathNameCS */,
 						st._011 /* 1*';' */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.idioms.Segment /*@NonNull*/ [] []{
@@ -10271,7 +10271,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._227 /* assign V9 = |ownedPreconditions| */,
 						ms._219 /* assign V8 = |ownedAnnotations| */,
 						ms._180 /* assign V3 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._087 /* assign V0 = |ownedSignature| */,
 						ms._134 /* assign V10 = (|ownedBodyExpressions| > 0) */,
 						ms._141 /* assign V11 = |ownedBodyExpressions| */,
@@ -10395,7 +10395,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._138 /* assign V10 = |ownedPreconditions| */,
 						ms._225 /* assign V9 = |ownedAnnotations| */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
@@ -10518,7 +10518,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
@@ -10613,7 +10613,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
@@ -10715,7 +10715,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._138 /* assign V10 = |ownedPreconditions| */,
 						ms._225 /* assign V9 = |ownedAnnotations| */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
@@ -10838,7 +10838,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._180 /* assign V3 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._087 /* assign V0 = |ownedSignature| */,
 						ms._204 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
 						ms._216 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
@@ -10927,7 +10927,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._180 /* assign V3 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._087 /* assign V0 = |ownedSignature| */,
 						ms._204 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
 						ms._216 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
@@ -11023,7 +11023,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._227 /* assign V9 = |ownedPreconditions| */,
 						ms._219 /* assign V8 = |ownedAnnotations| */,
 						ms._180 /* assign V3 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._087 /* assign V0 = |ownedSignature| */,
 						ms._134 /* assign V10 = (|ownedBodyExpressions| > 0) */,
 						ms._141 /* assign V11 = |ownedBodyExpressions| */,
@@ -11147,7 +11147,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._138 /* assign V10 = |ownedPreconditions| */,
 						ms._225 /* assign V9 = |ownedAnnotations| */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
@@ -11270,7 +11270,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
@@ -11372,7 +11372,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._138 /* assign V10 = |ownedPreconditions| */,
 						ms._225 /* assign V9 = |ownedAnnotations| */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
@@ -11495,7 +11495,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._190 /* assign V4 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._128 /* assign V1 = |ownedSignature| */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
@@ -11593,7 +11593,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._158 /* assign V2 = |ownedAnnotations| */,
 						ms._118 /* assign V1 = |nsURI| */,
 						ms._077 /* assign V0 = |nsPrefix| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-13-steps */,
@@ -11643,7 +11643,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._118 /* assign V1 = |nsURI| */,
 						ms._077 /* assign V0 = |nsPrefix| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-9-steps */,
@@ -11678,7 +11678,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._118 /* assign V1 = |nsURI| */,
 						ms._077 /* assign V0 = |nsPrefix| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-9-steps */,
@@ -11719,7 +11719,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._158 /* assign V2 = |ownedAnnotations| */,
 						ms._118 /* assign V1 = |nsURI| */,
 						ms._077 /* assign V0 = |nsPrefix| */,
-						ms._006 /* assert (|name| - 1) == 0 */
+						ms._004 /* assert (|name| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-13-steps */,
@@ -11770,7 +11770,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 						ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 						ms._089 /* assign V0 = |ownedType| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._167 /* assign V3 = (|ownedAnnotations| > 0) */,
 						ms._186 /* assign V4 = |ownedAnnotations| */,
 						ms._112 /* assign V1 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
@@ -11923,7 +11923,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
 						ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
@@ -11995,7 +11995,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
 						ms._213 /* assign V7 = (|referredKeys| > 0) */,
@@ -12118,7 +12118,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
 						ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
@@ -12185,7 +12185,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
 						ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
@@ -12252,7 +12252,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._156 /* assign V2 = |default| */,
 						ms._129 /* assign V1 = |ownedType| */,
 						ms._097 /* assign V0 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._170 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
 						ms._191 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 					},
@@ -12313,7 +12313,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
 						ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
@@ -12385,7 +12385,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._156 /* assign V2 = |default| */,
 						ms._129 /* assign V1 = |ownedType| */,
 						ms._097 /* assign V0 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._205 /* assign V6 = (|referredKeys| > 0) */,
 						ms._212 /* assign V7 = (|referredKeys| - 1) */,
 						ms._170 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
@@ -12507,7 +12507,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._096 /* assign V0 = |qualifiers.'static'| */,
 						ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
 						ms._213 /* assign V7 = (|referredKeys| > 0) */,
@@ -12635,7 +12635,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
 						ms._213 /* assign V7 = (|referredKeys| > 0) */,
@@ -12765,7 +12765,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._173 /* assign V3 = |default| */,
 						ms._164 /* assign V2 = |ownedType| */,
 						ms._132 /* assign V1 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._095 /* assign V0 = |qualifiers.'definition'| */,
 						ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
 						ms._213 /* assign V7 = (|referredKeys| > 0) */,
@@ -12893,7 +12893,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._156 /* assign V2 = |default| */,
 						ms._129 /* assign V1 = |ownedType| */,
 						ms._097 /* assign V0 = |referredOpposite| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._205 /* assign V6 = (|referredKeys| > 0) */,
 						ms._212 /* assign V7 = (|referredKeys| - 1) */,
 						ms._170 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
@@ -13007,7 +13007,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(92, /* OCLinEcore::SpecificationCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._283 /* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : 30 */,
-						ms._015 /* assert (|ownedExpression| - 1) == 0 */
+						ms._017 /* assert (|ownedExpression| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._092 /* 1*ownedExpression=ExpCS */
@@ -13052,7 +13052,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._215 /* assign V7 = |ownedAnnotations| */,
 						ms._184 /* assign V4 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._071 /* assign V0 = |isAbstract.'abstract'| */,
 						ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
 						ms._206 /* assign V6 = |isInterface.'interface'| */,
@@ -13140,7 +13140,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._184 /* assign V4 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._071 /* assign V0 = |isAbstract.'abstract'| */,
 						ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
 						ms._206 /* assign V6 = |isInterface.'interface'| */,
@@ -13218,7 +13218,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._215 /* assign V7 = |ownedAnnotations| */,
 						ms._184 /* assign V4 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._071 /* assign V0 = |isAbstract.'abstract'| */,
 						ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
 						ms._206 /* assign V6 = |isInterface.'interface'| */,
@@ -13306,7 +13306,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 						ms._184 /* assign V4 = |instanceClassName| */,
 						ms._128 /* assign V1 = |ownedSignature| */,
-						ms._006 /* assert (|name| - 1) == 0 */,
+						ms._004 /* assert (|name| - 1) == 0 */,
 						ms._071 /* assign V0 = |isAbstract.'abstract'| */,
 						ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
 						ms._206 /* assign V6 = |isInterface.'interface'| */,
@@ -13582,8 +13582,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 						ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 						ms._161 /* assign V2 = |ownedMultiplicity| */,
-						ms._092 /* assign V0 = |ownedType| */,
-						ms._004 /* assert (|name| - 1) == 0 */,
+						ms._090 /* assign V0 = |ownedType| */,
+						ms._006 /* assert (|name| - 1) == 0 */,
 						ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
@@ -13623,7 +13623,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 						ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 						ms._085 /* assign V0 = |ownedMultiplicity| */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-2-steps */,
@@ -13652,7 +13652,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 						ms._085 /* assign V0 = |ownedMultiplicity| */,
 						ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-5-steps */,
@@ -13809,7 +13809,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 						ms._085 /* assign V0 = |ownedMultiplicity| */,
 						ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-5-steps */,
@@ -13844,7 +13844,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 						ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 						ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-4-steps */,
@@ -13875,7 +13875,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 						ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 						ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-4-steps */,
@@ -13906,7 +13906,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 						ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 						ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 						ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._076 /* 1*next-4-steps */,
@@ -13935,7 +13935,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._123 /* 1*ownedPathName=PathNameCS */
@@ -13954,7 +13954,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 				new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule(118, /* OCLinEcore::TypedTypeRefCS */
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep /*@NonNull*/ []{
 						ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
-						ms._030 /* assert (|ownedPathName| - 1) == 0 */
+						ms._031 /* assert (|ownedPathName| - 1) == 0 */
 					},
 					new /*@NonNull*/ org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep /*@NonNull*/ []{
 						st._123 /* 1*ownedPathName=PathNameCS */

@@ -240,7 +240,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
 			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationRuleAnalysis().getRuntime().getSerializationSteps()) {
+				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
 					serializationStep2id2.put(serializationStep, "");
 				}
 			}
@@ -300,8 +300,9 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			solutionStep2id = solutionStep2id2 = new HashMap<>();
 		}
 		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getSerializationRuleAnalysis().getStaticRuleMatch().getSteps()) {
+			for (@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
+				for (@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					solutionStep2id2.put(solutionStep, "");
 				}
 			}
@@ -332,7 +333,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
 			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				for(@NonNull CardinalitySolutionStep solutionStep : serializationRule.getSerializationRuleAnalysis().getStaticRuleMatch().getSteps()) {
+				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
+				for(@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
 						solution2id2.put(solution, "");
 					}
@@ -381,7 +383,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
 			for (@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				for (@NonNull CardinalitySolutionStep solutionStep : serializationRule.getSerializationRuleAnalysis().getStaticRuleMatch().getSteps()) {
+				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
+				for (@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
 						if (solution instanceof EAttributeSizeCardinalitySolution) {
 							enumValue2id2.put(((EAttributeSizeCardinalitySolution)solution).getEnumerationValue(), "");

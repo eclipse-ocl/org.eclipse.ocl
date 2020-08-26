@@ -112,7 +112,7 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
 			for (@NonNull AbstractRuleValue calledRuleValue : getCalledRuleValues()) {		// search for matching rule
 				for (@NonNull SerializationRule serializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {
-					DynamicRuleMatch match = serializationRule.getSerializationRuleAnalysis().getStaticRuleMatch().match(slotsAnalysis);
+					DynamicRuleMatch match = serializationRule.match(slotsAnalysis);
 					if (match != null) {
 						// XXX we could mark the serializationBuilder context and catch a backtracking exception/null return if needed here
 						serializer.serializeElement(serializationBuilder, eObject, calledRuleValue);

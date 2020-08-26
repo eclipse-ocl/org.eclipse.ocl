@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
@@ -27,6 +29,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class RTSerializationRule2 extends SerializationRule
 {
@@ -62,18 +65,28 @@ public class RTSerializationRule2 extends SerializationRule
 	}
 
 	@Override
-	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis() {
-		return serializationRuleAnalysis;
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		return serializationRuleAnalysis.getMultiplicativeCardinality(eAttribute, enumerationValue);
 	}
 
 	@Override
-	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		return serializationRuleAnalysis.getEnumerationValues(eAttribute);
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
+		return serializationRuleAnalysis.getMultiplicativeCardinality(eReference, ruleValue);
+	}
+
+	@Override
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
+		return serializationRuleAnalysis.getMultiplicativeCardinality(eStructuralFeature);
 	}
 
 	@Override
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		return serializationRuleAnalysis.match(slotsAnalysis);
+	}
+
+	@Override
+	public boolean needsDefault(@NonNull EAttribute eAttribute) {
+		return serializationRuleAnalysis.needsDefault(eAttribute);
 	}
 
 	@Override

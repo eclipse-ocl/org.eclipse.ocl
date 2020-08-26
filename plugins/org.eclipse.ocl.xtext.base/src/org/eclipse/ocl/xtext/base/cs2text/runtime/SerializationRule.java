@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
@@ -32,6 +32,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysi
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class SerializationRule
 {
@@ -93,13 +94,23 @@ public class SerializationRule
 		return null;
 	}
 
-	public int getRuleValueIndex() {
-		return ruleValueIndex;
-	}
-
-	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis() {
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
+	}
+
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
+	public int getRuleValueIndex() {
+		return ruleValueIndex;
 	}
 
 	public @NonNull RTSerializationStep @NonNull [] getSerializationSteps() {
@@ -157,6 +168,11 @@ public class SerializationRule
 		return dynamicRuleMatch;
 		// TODO Auto-generated method stub
 	//	throw new UnsupportedOperationException();
+	}
+
+	public boolean needsDefault(@NonNull EAttribute eAttribute) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {

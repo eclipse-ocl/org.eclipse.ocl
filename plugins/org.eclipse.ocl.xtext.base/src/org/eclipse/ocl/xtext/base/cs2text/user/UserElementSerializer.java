@@ -23,8 +23,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -95,10 +93,6 @@ public class UserElementSerializer
 
 	public @NonNull SerializationRule getSerializationRule() {
 		return serializationRule;
-	}
-
-	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
-		return serializationRule.getSerializationRuleAnalysis().getSubIdiom(serializationNode);
 	}
 
 	public int getValue(int cardinalityVariableIndex) {
