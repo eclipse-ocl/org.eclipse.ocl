@@ -71,6 +71,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule
 import java.util.HashMap
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -288,10 +289,21 @@ new «new TypeReference(SerializationRule)»(«serializationRule.getRuleValueInd
 	«ELSE»
 	null,
 	«ENDIF»
+	«var eAttribute2EnumerationValues = serializationRule.basicGetEAttribute2EnumerationValues()»
+	«IF eAttribute2EnumerationValues !== null»
+	new «new TypeReference(EAttributeData)» [] {
+		«FOR eAttributeData : eAttribute2EnumerationValues SEPARATOR ','»
+		new «new TypeReference(EAttributeData)»(«emitLiteral(eAttributeData.getEAttribute())»,
+			«FOR enumerationValue : eAttributeData.getEnumerationValues() SEPARATOR ','»«getEnumValueId(enumerationValue, true)»«ENDFOR»)
+		«ENDFOR»
+	},
+	«ELSE»
 	null,
-	«IF serializationRule.basicGetEReference2AssignedRuleValueIndexes() !== null»
+	«ENDIF»
+	«var eReference2AssignedRuleValueIndexes = serializationRule.basicGetEReference2AssignedRuleValueIndexes()»
+	«IF eReference2AssignedRuleValueIndexes !== null»
 	new «new TypeReference(EReferenceData)» [] {
-		«FOR eReferenceData : serializationRule.getEReference2AssignedRuleValueIndexes() SEPARATOR ','»
+		«FOR eReferenceData : eReference2AssignedRuleValueIndexes SEPARATOR ','»
 		new «new TypeReference(EReferenceData)»(«emitLiteral(eReferenceData.getEReference())»,
 			«getIndexVectorId(eReferenceData.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
 		«ENDFOR»

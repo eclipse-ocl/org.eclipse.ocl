@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
@@ -40,6 +39,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -134,19 +134,29 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 	}
 
-	public @NonNull EReferenceData @Nullable [] basicGetEReference2AssignedRuleValueIndexes() {
-		Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes2 = getEReference2AssignedRuleIndexes();
-		if (eReference2assignedRuleIndexes2.size() <= 0) {
+	public @NonNull EAttributeData @Nullable [] basicGetEAttribute2EnumerationValues() {
+		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = getEAttribute2EnumerationValues();
+		int size = eAttribute2enumerationValues.size();
+		if (size <= 0) {
 			return null;
 		}
-		Map<@NonNull EReference, @NonNull IndexVector> eReference2AssignedRuleValueIndexes = new HashMap<>(eReference2assignedRuleIndexes2.size());
-		for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2assignedRuleIndexes2.entrySet()) {
-			IndexVector assignedRuleIndexes = entry.getValue();
-			eReference2AssignedRuleValueIndexes.put(entry.getKey(), assignedRuleIndexes);
-		}
-		@NonNull EReferenceData[] eReferenceDatas = new @NonNull EReferenceData[eReference2AssignedRuleValueIndexes.size()];
+		@NonNull EAttributeData[] eAttributeDatas = new @NonNull EAttributeData[size];
 		int i = 0;
-		for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2AssignedRuleValueIndexes.entrySet()) {
+		for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues.entrySet()) {
+			eAttributeDatas[i++] = new EAttributeData(entry.getKey(), entry.getValue());
+		}
+		return eAttributeDatas;
+	}
+
+	public @NonNull EReferenceData @Nullable [] basicGetEReference2AssignedRuleValueIndexes() {
+		Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes = getEReference2AssignedRuleValueIndexes();
+		int size = eReference2assignedRuleIndexes.size();
+		if (size <= 0) {
+			return null;
+		}
+		@NonNull EReferenceData[] eReferenceDatas = new @NonNull EReferenceData[size];
+		int i = 0;
+		for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2assignedRuleIndexes.entrySet()) {
 			eReferenceDatas[i++] = new EReferenceData(entry.getKey(), entry.getValue());
 		}
 		return eReferenceDatas;
@@ -174,14 +184,48 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return gatherAssignedSerializationNodes(eReference, rootSerializationNode, null);
 	}
 
+
+/*	public @NonNull EAttributeData @Nullable [] basicGetEAttribute2EnumerationValues() {
+		Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes2 = getEReference2AssignedRuleIndexes();
+		if (eReference2assignedRuleIndexes2.size() <= 0) {
+			return null;
+		}
+		Map<@NonNull EReference, @NonNull IndexVector> eReference2AssignedRuleValueIndexes = new HashMap<>(eReference2assignedRuleIndexes2.size());
+		for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2assignedRuleIndexes2.entrySet()) {
+			IndexVector assignedRuleIndexes = entry.getValue();
+			eReference2AssignedRuleValueIndexes.put(entry.getKey(), assignedRuleIndexes);
+		}
+		@NonNull EReferenceData[] eReferenceDatas = new @NonNull EReferenceData[eReference2AssignedRuleValueIndexes.size()];
+		int i = 0;
+		for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2AssignedRuleValueIndexes.entrySet()) {
+			eReferenceDatas[i++] = new EReferenceData(entry.getKey(), entry.getValue());
+		}
+		return eReferenceDatas;
+	} */
+
 	public @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> getEAttribute2EnumerationValues() {
 		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
 		if (eAttribute2enumerationValues2 == null) {
 			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
 			getEAttribute2EnumerationValues(getRootSerializationNode(), eAttribute2enumerationValues2);
 		}
+		if (eAttribute2enumerationValues2.size() > 0) {
+			for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues2.entrySet()) {
+				Set<@NonNull EnumerationValue> assignedRuleIndexes = entry.getValue();
+				eAttribute2enumerationValues2.put(entry.getKey(), assignedRuleIndexes);
+			}
+		}
 		return eAttribute2enumerationValues2;
 	}
+
+/*	public @NonNull EAttributeData @NonNull [] getEAttribute2EnumerationValues() {
+		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
+		if (eAttribute2enumerationValues2 == null) {
+			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
+			getEAttribute2EnumerationValues(getRootSerializationNode(), eAttribute2enumerationValues2);
+		}
+		return eAttribute2enumerationValues2;
+	} */
 	private void getEAttribute2EnumerationValues(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues) {
 		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
@@ -212,14 +256,20 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 	}
 
-	protected @NonNull Map<@NonNull EReference, @NonNull IndexVector> getEReference2AssignedRuleIndexes() {
+	public @NonNull Map<@NonNull EReference, @NonNull IndexVector> getEReference2AssignedRuleValueIndexes() {
 		Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes2 = eReference2assignedRuleIndexes;
 		if (eReference2assignedRuleIndexes2 == null) {
 			eReference2assignedRuleIndexes = eReference2assignedRuleIndexes2 = new HashMap<>();
 			getEReference2AssignedRuleIndexes(getRootSerializationNode(), eReference2assignedRuleIndexes2);
+		//	for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2assignedRuleIndexes.entrySet()) {
+		//		EReference eReference = entry.getKey();
+		//		IndexVector assignedRuleIndexes = entry.getValue();
+		//		eReference2assignedRuleIndexes2.put(eReference, new EReferenceData(eReference, assignedRuleIndexes));
+		//	}
 		}
 		return eReference2assignedRuleIndexes2;
 	}
+
 	private void getEReference2AssignedRuleIndexes(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes) {
 		/* if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
@@ -255,10 +305,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				getEReference2AssignedRuleIndexes(nestedSerializationNode, eReference2assignedRuleIndexes);
 			}
 		}
-	}
-
-	public @NonNull EReferenceData @NonNull [] getEReference2AssignedRuleValueIndexes() {
-		return ClassUtil.nonNullState(basicGetEReference2AssignedRuleValueIndexes());
 	}
 
 /*	@Override

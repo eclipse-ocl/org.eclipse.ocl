@@ -29,6 +29,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
@@ -38,7 +39,7 @@ public class SerializationRule
 	private final @NonNull CardinalitySolutionStep @NonNull [] solutionSteps;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
-	private final @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues;
+	private final @NonNull EAttributeData @Nullable [] eAttribute2enumerationValues;
 	private final @NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes;
 //	private final @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleValueIndexes;
 
@@ -52,7 +53,7 @@ public class SerializationRule
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
-			@Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues,
+			@NonNull EAttributeData @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes,
 			@NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression) {
 		this.ruleValueIndex = ruleValueIndex;
@@ -73,7 +74,6 @@ public class SerializationRule
 			}
 		}
 		return null;
-//		return eReference2assignedRuleValueIndexes != null ? eReference2assignedRuleValueIndexes.get(eReference) : null;
 	}
 
 //	@Override
@@ -83,8 +83,14 @@ public class SerializationRule
 //	}
 
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		if (eAttribute2enumerationValues != null) {
+			for (@NonNull EAttributeData eAttributeData : eAttribute2enumerationValues) {
+				if (eAttributeData.getEAttribute() == eAttribute) {
+					return eAttributeData.getEnumerationValues();
+				}
+			}
+		}
+		return null;
 	}
 
 	public int getRuleValueIndex() {

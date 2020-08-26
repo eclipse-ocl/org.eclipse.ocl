@@ -12,8 +12,9 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 
-public class EReferenceData
+public class EReferenceData implements Nameable
 {
 	protected final @NonNull EReference eReference;
 	protected final @NonNull IndexVector parserRuleValueIndexes;
@@ -32,17 +33,14 @@ public class EReferenceData
 		return parserRuleValueIndexes;
 	}
 
-//	@Override
-//	public @NonNull String getName() {
-//		return name;
-//	}
+	@Override
+	public @NonNull String getName() {
+		return XtextGrammarUtil.getName(eReference);
+	}
 
-//	public @NonNull SerializationRule @NonNull [] getSerializationRules() {
-//		return serializationRules;
-//	}
 
-//	@Override
-//	public @NonNull String toString() {
-//		return name;
-//	}
+	@Override
+	public @NonNull String toString() {
+		return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + parserRuleValueIndexes;
+	}
 }
