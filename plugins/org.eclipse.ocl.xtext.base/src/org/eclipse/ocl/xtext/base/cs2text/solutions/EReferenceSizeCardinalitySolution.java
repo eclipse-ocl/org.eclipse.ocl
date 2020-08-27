@@ -74,6 +74,8 @@ public class EReferenceSizeCardinalitySolution extends AbstractCardinalitySoluti
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
+		s.append(eReference.getEContainingClass().getName());
+		s.append("::");
 		s.append(eReference.getName());
 		s.append(".'");
 		s.append(parserRuleValue.getRuleName());

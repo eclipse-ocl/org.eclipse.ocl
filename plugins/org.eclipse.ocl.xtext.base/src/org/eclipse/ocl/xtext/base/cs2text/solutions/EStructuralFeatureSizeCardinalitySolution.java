@@ -67,6 +67,8 @@ public class EStructuralFeatureSizeCardinalitySolution extends AbstractCardinali
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
+		s.append(eStructuralFeature.getEContainingClass().getName());
+		s.append("::");
 		s.append(eStructuralFeature.getName());
 		s.append("|");
 	}

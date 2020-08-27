@@ -495,458 +495,458 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			= new IntegerCardinalitySolution(1);
 		private final @NonNull CardinalitySolution _002 // V0
 			= new VariableCardinalitySolution(0);
-		private final @NonNull CardinalitySolution _003 // |default|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT);
-		private final @NonNull CardinalitySolution _004 // |exprString|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING);
-		private final @NonNull CardinalitySolution _005 // |instanceClassName|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME);
-		private final @NonNull CardinalitySolution _006 // |isAbstract.'abstract'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, ev._11);
-		private final @NonNull CardinalitySolution _007 // |isAll.'::*'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.IMPORT_CS__IS_ALL, ev._06);
-		private final @NonNull CardinalitySolution _008 // |isCallable.'callable'|
-			= new EAttributeSizeCardinalitySolution(OCLinEcoreCSPackage.Literals.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE, ev._12);
-		private final @NonNull CardinalitySolution _009 // |isInterface.'interface'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE, ev._15);
-		private final @NonNull CardinalitySolution _010 // |isNullFree.'|1'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, ev._23);
-		private final @NonNull CardinalitySolution _011 // |isPre.'@'|
+		private final @NonNull CardinalitySolution _003 // |AbstractNameExpCS::isPre.'@'|
 			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, ev._08);
-		private final @NonNull CardinalitySolution _012 // |isPrimitive.'primitive'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, ev._19);
-		private final @NonNull CardinalitySolution _013 // |isSerializable.'serializable'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, ev._20);
-		private final @NonNull CardinalitySolution _014 // |isSerializable.'serializable'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, ev._20);
-		private final @NonNull CardinalitySolution _015 // |literal|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL);
-		private final @NonNull CardinalitySolution _016 // |lowerBound|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
-		private final @NonNull CardinalitySolution _017 // |name.'Map'|
-			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, ev._09);
-		private final @NonNull CardinalitySolution _018 // |name.'Tuple'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, ev._10);
-		private final @NonNull CardinalitySolution _019 // |name|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME);
-		private final @NonNull CardinalitySolution _020 // |name|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
-		private final @NonNull CardinalitySolution _021 // |name|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME);
-		private final @NonNull CardinalitySolution _022 // |nsPrefix|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX);
-		private final @NonNull CardinalitySolution _023 // |nsURI|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_CS__NS_URI);
-		private final @NonNull CardinalitySolution _024 // |ownedActualParameter|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
-		private final @NonNull CardinalitySolution _025 // |ownedAnnotations|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull CardinalitySolution _026 // |ownedArguments|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS);
-		private final @NonNull CardinalitySolution _027 // |ownedBinding|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
-		private final @NonNull CardinalitySolution _028 // |ownedBodyExpressions|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS);
-		private final @NonNull CardinalitySolution _029 // |ownedClasses|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES);
-		private final @NonNull CardinalitySolution _030 // |ownedCoIterator|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR);
-		private final @NonNull CardinalitySolution _031 // |ownedCollectionMultiplicity|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY);
-		private final @NonNull CardinalitySolution _032 // |ownedCondition|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION);
-		private final @NonNull CardinalitySolution _033 // |ownedCondition|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION);
-		private final @NonNull CardinalitySolution _034 // |ownedConstraints|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS);
-		private final @NonNull CardinalitySolution _035 // |ownedContents|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS);
-		private final @NonNull CardinalitySolution _036 // |ownedCurlyBracketedClause|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
-		private final @NonNull CardinalitySolution _037 // |ownedCurlyBracketedClause|
+		private final @NonNull CardinalitySolution _004 // |AbstractNameExpCS::ownedCurlyBracketedClause|
 			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
-		private final @NonNull CardinalitySolution _038 // |ownedDefaultExpressions|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull CardinalitySolution _039 // |ownedDetails|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS);
-		private final @NonNull CardinalitySolution _040 // |ownedElseExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION);
-		private final @NonNull CardinalitySolution _041 // |ownedExceptions|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS);
-		private final @NonNull CardinalitySolution _042 // |ownedExpressionCS|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS);
-		private final @NonNull CardinalitySolution _043 // |ownedExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
-		private final @NonNull CardinalitySolution _044 // |ownedExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
-		private final @NonNull CardinalitySolution _045 // |ownedExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
-		private final @NonNull CardinalitySolution _046 // |ownedExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
-		private final @NonNull CardinalitySolution _047 // |ownedExtends|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
-		private final @NonNull CardinalitySolution _048 // |ownedExtends|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
-		private final @NonNull CardinalitySolution _049 // |ownedIfThenExpressions|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS);
-		private final @NonNull CardinalitySolution _050 // |ownedImplicitOpposites|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES);
-		private final @NonNull CardinalitySolution _051 // |ownedImports|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS);
-		private final @NonNull CardinalitySolution _052 // |ownedInExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION);
-		private final @NonNull CardinalitySolution _053 // |ownedInitExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION);
-		private final @NonNull CardinalitySolution _054 // |ownedInitExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION);
-		private final @NonNull CardinalitySolution _055 // |ownedInitExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION);
-		private final @NonNull CardinalitySolution _056 // |ownedKeyType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE);
-		private final @NonNull CardinalitySolution _057 // |ownedKey|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY);
-		private final @NonNull CardinalitySolution _058 // |ownedLastExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION);
-		private final @NonNull CardinalitySolution _059 // |ownedLeft|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT);
-		private final @NonNull CardinalitySolution _060 // |ownedLiterals|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS);
-		private final @NonNull CardinalitySolution _061 // |ownedMessageSpecification|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION);
-		private final @NonNull CardinalitySolution _062 // |ownedMultiplicity|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
-		private final @NonNull CardinalitySolution _063 // |ownedMultiplicity|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
-		private final @NonNull CardinalitySolution _064 // |ownedNameExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION);
-		private final @NonNull CardinalitySolution _065 // |ownedOperations|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS);
-		private final @NonNull CardinalitySolution _066 // |ownedPackages|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES);
-		private final @NonNull CardinalitySolution _067 // |ownedParameters|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
-		private final @NonNull CardinalitySolution _068 // |ownedParameters|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS);
-		private final @NonNull CardinalitySolution _069 // |ownedParts|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
-		private final @NonNull CardinalitySolution _070 // |ownedParts|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
-		private final @NonNull CardinalitySolution _071 // |ownedParts|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS);
-		private final @NonNull CardinalitySolution _072 // |ownedParts|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
-		private final @NonNull CardinalitySolution _073 // |ownedParts|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS);
-		private final @NonNull CardinalitySolution _074 // |ownedParts|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS);
-		private final @NonNull CardinalitySolution _075 // |ownedPathElements|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
-		private final @NonNull CardinalitySolution _076 // |ownedPathName|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
-		private final @NonNull CardinalitySolution _077 // |ownedPathName|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME);
-		private final @NonNull CardinalitySolution _078 // |ownedPathName|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
-		private final @NonNull CardinalitySolution _079 // |ownedPathName|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
-		private final @NonNull CardinalitySolution _080 // |ownedPathName|
+		private final @NonNull CardinalitySolution _005 // |AbstractNameExpCS::ownedPathName|
 			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
-		private final @NonNull CardinalitySolution _081 // |ownedPatternGuard|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
-		private final @NonNull CardinalitySolution _082 // |ownedPatternType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE);
-		private final @NonNull CardinalitySolution _083 // |ownedPostconditions|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS);
-		private final @NonNull CardinalitySolution _084 // |ownedPreconditions|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS);
-		private final @NonNull CardinalitySolution _085 // |ownedProperties|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES);
-		private final @NonNull CardinalitySolution _086 // |ownedReferences|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES);
-		private final @NonNull CardinalitySolution _087 // |ownedRight|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
-		private final @NonNull CardinalitySolution _088 // |ownedRoundBracketedClause|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE);
-		private final @NonNull CardinalitySolution _089 // |ownedRoundBracketedClause|
+		private final @NonNull CardinalitySolution _006 // |AbstractNameExpCS::ownedRoundBracketedClause|
 			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE);
-		private final @NonNull CardinalitySolution _090 // |ownedSignature|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE);
-		private final @NonNull CardinalitySolution _091 // |ownedSpecification|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION);
-		private final @NonNull CardinalitySolution _092 // |ownedSquareBracketedClauses|
+		private final @NonNull CardinalitySolution _007 // |AbstractNameExpCS::ownedSquareBracketedClauses|
 			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES);
-		private final @NonNull CardinalitySolution _093 // |ownedSubstitutions|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
-		private final @NonNull CardinalitySolution _094 // |ownedSuperTypes|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES);
-		private final @NonNull CardinalitySolution _095 // |ownedTerms|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS);
-		private final @NonNull CardinalitySolution _096 // |ownedThenExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION);
-		private final @NonNull CardinalitySolution _097 // |ownedThenExpression|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION);
-		private final @NonNull CardinalitySolution _098 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _099 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _100 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _101 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _102 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _103 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _104 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _105 // |ownedType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE);
-		private final @NonNull CardinalitySolution _106 // |ownedValueType|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE);
-		private final @NonNull CardinalitySolution _107 // |ownedValue|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE);
-		private final @NonNull CardinalitySolution _108 // |ownedVariables|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES);
-		private final @NonNull CardinalitySolution _109 // |patternVariableName|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME);
-		private final @NonNull CardinalitySolution _110 // |prefix.','|
-			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ev._05);
-		private final @NonNull CardinalitySolution _111 // |prefix.';'|
-			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ev._07);
-		private final @NonNull CardinalitySolution _112 // |prefix.'|'|
-			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ev._22);
-		private final @NonNull CardinalitySolution _113 // |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._00);
-		private final @NonNull CardinalitySolution _114 // |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._01);
-		private final @NonNull CardinalitySolution _115 // |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._02);
-		private final @NonNull CardinalitySolution _116 // |qualifiers.'!ordered|!unique|ordered|unique'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._03);
-		private final @NonNull CardinalitySolution _117 // |qualifiers.'definition'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._13);
-		private final @NonNull CardinalitySolution _118 // |qualifiers.'static'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._21);
-		private final @NonNull CardinalitySolution _119 // |referredElement|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
-		private final @NonNull CardinalitySolution _120 // |referredKeys|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS);
-		private final @NonNull CardinalitySolution _121 // |referredOpposite|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE);
-		private final @NonNull CardinalitySolution _122 // |referredProperty|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY);
-		private final @NonNull CardinalitySolution _123 // |restVariableName|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME);
-		private final @NonNull CardinalitySolution _124 // |segments|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS);
-		private final @NonNull CardinalitySolution _125 // |stereotype.'invariant'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, ev._16);
-		private final @NonNull CardinalitySolution _126 // |stereotype.'postcondition'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, ev._17);
-		private final @NonNull CardinalitySolution _127 // |stereotype.'precondition'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, ev._18);
-		private final @NonNull CardinalitySolution _128 // |stringBounds.'*|+|?'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, ev._04);
-		private final @NonNull CardinalitySolution _129 // |symbol.'false|true'|
+		private final @NonNull CardinalitySolution _008 // |AnnotationCS::ownedContents|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS);
+		private final @NonNull CardinalitySolution _009 // |AnnotationCS::ownedReferences|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES);
+		private final @NonNull CardinalitySolution _010 // |AnnotationElementCS::ownedDetails|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS);
+		private final @NonNull CardinalitySolution _011 // |BooleanLiteralExpCS::symbol.'false|true'|
 			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, ev._14);
-		private final @NonNull CardinalitySolution _130 // |symbol|
-			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL);
-		private final @NonNull CardinalitySolution _131 // |upperBound|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
-		private final @NonNull CardinalitySolution _132 // |values|
+		private final @NonNull CardinalitySolution _012 // |ClassCS::instanceClassName|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME);
+		private final @NonNull CardinalitySolution _013 // |ClassCS::ownedConstraints|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS);
+		private final @NonNull CardinalitySolution _014 // |CollectionLiteralExpCS::ownedParts|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
+		private final @NonNull CardinalitySolution _015 // |CollectionLiteralExpCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _016 // |CollectionLiteralPartCS::ownedExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
+		private final @NonNull CardinalitySolution _017 // |CollectionLiteralPartCS::ownedLastExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION);
+		private final @NonNull CardinalitySolution _018 // |CollectionPatternCS::ownedParts|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS);
+		private final @NonNull CardinalitySolution _019 // |CollectionPatternCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _020 // |CollectionPatternCS::restVariableName|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME);
+		private final @NonNull CardinalitySolution _021 // |CollectionTypeCS::name|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME);
+		private final @NonNull CardinalitySolution _022 // |CollectionTypeCS::ownedCollectionMultiplicity|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY);
+		private final @NonNull CardinalitySolution _023 // |CollectionTypeCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _024 // |ConstraintCS::ownedMessageSpecification|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION);
+		private final @NonNull CardinalitySolution _025 // |ConstraintCS::ownedSpecification|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION);
+		private final @NonNull CardinalitySolution _026 // |ConstraintCS::stereotype.'invariant'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, ev._16);
+		private final @NonNull CardinalitySolution _027 // |ConstraintCS::stereotype.'postcondition'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, ev._17);
+		private final @NonNull CardinalitySolution _028 // |ConstraintCS::stereotype.'precondition'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, ev._18);
+		private final @NonNull CardinalitySolution _029 // |ContextCS::ownedExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
+		private final @NonNull CardinalitySolution _030 // |CurlyBracketedClauseCS::ownedParts|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
+		private final @NonNull CardinalitySolution _031 // |DataTypeCS::isPrimitive.'primitive'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, ev._19);
+		private final @NonNull CardinalitySolution _032 // |DataTypeCS::isSerializable.'serializable'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, ev._20);
+		private final @NonNull CardinalitySolution _033 // |DetailCS::values|
 			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.DETAIL_CS__VALUES);
-		private final @NonNull CardinalitySolution _133 // |value|
+		private final @NonNull CardinalitySolution _034 // |DocumentationCS::value|
 			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE);
-		private final @NonNull CardinalitySolution _134 // |value|
+		private final @NonNull CardinalitySolution _035 // |EnumerationCS::isSerializable.'serializable'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, ev._20);
+		private final @NonNull CardinalitySolution _036 // |EnumerationCS::ownedLiterals|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS);
+		private final @NonNull CardinalitySolution _037 // |EnumerationLiteralCS::literal|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL);
+		private final @NonNull CardinalitySolution _038 // |EnumerationLiteralCS::value|
 			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE);
-		private final @NonNull CardinalitySolution _135 // (|exprString| - 1)
-			= new SubtractCardinalitySolution(_004, _001);
-		private final @NonNull CardinalitySolution _136 // (|isInterface.'interface'| > 0)
-			= new GreaterThanCardinalitySolution(_009, _000);
-		private final @NonNull CardinalitySolution _137 // (|isSerializable.'serializable'| > 0)
+		private final @NonNull CardinalitySolution _039 // |ExpSpecificationCS::ownedExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
+		private final @NonNull CardinalitySolution _040 // |IfExpCS::ownedCondition|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION);
+		private final @NonNull CardinalitySolution _041 // |IfExpCS::ownedElseExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION);
+		private final @NonNull CardinalitySolution _042 // |IfExpCS::ownedIfThenExpressions|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS);
+		private final @NonNull CardinalitySolution _043 // |IfExpCS::ownedThenExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION);
+		private final @NonNull CardinalitySolution _044 // |IfThenExpCS::ownedCondition|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION);
+		private final @NonNull CardinalitySolution _045 // |IfThenExpCS::ownedThenExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION);
+		private final @NonNull CardinalitySolution _046 // |ImportCS::isAll.'::*'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.IMPORT_CS__IS_ALL, ev._06);
+		private final @NonNull CardinalitySolution _047 // |ImportCS::ownedPathName|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME);
+		private final @NonNull CardinalitySolution _048 // |InfixExpCS::ownedLeft|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT);
+		private final @NonNull CardinalitySolution _049 // |LambdaLiteralExpCS::ownedExpressionCS|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS);
+		private final @NonNull CardinalitySolution _050 // |LetExpCS::ownedInExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION);
+		private final @NonNull CardinalitySolution _051 // |LetExpCS::ownedVariables|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES);
+		private final @NonNull CardinalitySolution _052 // |LetVariableCS::ownedRoundBracketedClause|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE);
+		private final @NonNull CardinalitySolution _053 // |MapLiteralExpCS::ownedParts|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS);
+		private final @NonNull CardinalitySolution _054 // |MapLiteralExpCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _055 // |MapLiteralPartCS::ownedKey|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY);
+		private final @NonNull CardinalitySolution _056 // |MapLiteralPartCS::ownedValue|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE);
+		private final @NonNull CardinalitySolution _057 // |MapTypeCS::name.'Map'|
+			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, ev._09);
+		private final @NonNull CardinalitySolution _058 // |MapTypeCS::ownedKeyType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE);
+		private final @NonNull CardinalitySolution _059 // |MapTypeCS::ownedValueType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE);
+		private final @NonNull CardinalitySolution _060 // |ModelElementCS::ownedAnnotations|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		private final @NonNull CardinalitySolution _061 // |ModelElementRefCS::ownedPathName|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
+		private final @NonNull CardinalitySolution _062 // |MultiplicityBoundsCS::lowerBound|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
+		private final @NonNull CardinalitySolution _063 // |MultiplicityBoundsCS::upperBound|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
+		private final @NonNull CardinalitySolution _064 // |MultiplicityCS::isNullFree.'|1'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, ev._23);
+		private final @NonNull CardinalitySolution _065 // |MultiplicityStringCS::stringBounds.'*|+|?'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, ev._04);
+		private final @NonNull CardinalitySolution _066 // |NamedElementCS::name|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		private final @NonNull CardinalitySolution _067 // |NavigatingArgCS::ownedCoIterator|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR);
+		private final @NonNull CardinalitySolution _068 // |NavigatingArgCS::ownedInitExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION);
+		private final @NonNull CardinalitySolution _069 // |NavigatingArgCS::ownedNameExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION);
+		private final @NonNull CardinalitySolution _070 // |NavigatingArgCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _071 // |NavigatingArgCS::prefix.','|
+			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ev._05);
+		private final @NonNull CardinalitySolution _072 // |NavigatingArgCS::prefix.';'|
+			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ev._07);
+		private final @NonNull CardinalitySolution _073 // |NavigatingArgCS::prefix.'|'|
+			= new EAttributeSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, ev._22);
+		private final @NonNull CardinalitySolution _074 // |NestedExpCS::ownedExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
+		private final @NonNull CardinalitySolution _075 // |NumberLiteralExpCS::symbol|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL);
+		private final @NonNull CardinalitySolution _076 // |OCLinEcoreConstraintCS::isCallable.'callable'|
+			= new EAttributeSizeCardinalitySolution(OCLinEcoreCSPackage.Literals.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE, ev._12);
+		private final @NonNull CardinalitySolution _077 // |OperationCS::ownedBodyExpressions|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS);
+		private final @NonNull CardinalitySolution _078 // |OperationCS::ownedExceptions|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS);
+		private final @NonNull CardinalitySolution _079 // |OperationCS::ownedParameters|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS);
+		private final @NonNull CardinalitySolution _080 // |OperationCS::ownedPostconditions|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS);
+		private final @NonNull CardinalitySolution _081 // |OperationCS::ownedPreconditions|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS);
+		private final @NonNull CardinalitySolution _082 // |OperatorExpCS::ownedRight|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
+		private final @NonNull CardinalitySolution _083 // |PackageCS::nsPrefix|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX);
+		private final @NonNull CardinalitySolution _084 // |PackageCS::nsURI|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_CS__NS_URI);
+		private final @NonNull CardinalitySolution _085 // |PackageCS::ownedClasses|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES);
+		private final @NonNull CardinalitySolution _086 // |PackageOwnerCS::ownedPackages|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES);
+		private final @NonNull CardinalitySolution _087 // |PathElementCS::referredElement|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
+		private final @NonNull CardinalitySolution _088 // |PathNameCS::ownedPathElements|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
+		private final @NonNull CardinalitySolution _089 // |PatternExpCS::ownedPatternType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE);
+		private final @NonNull CardinalitySolution _090 // |PatternExpCS::patternVariableName|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME);
+		private final @NonNull CardinalitySolution _091 // |PrimitiveTypeRefCS::name|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME);
+		private final @NonNull CardinalitySolution _092 // |ReferenceCS::ownedImplicitOpposites|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES);
+		private final @NonNull CardinalitySolution _093 // |ReferenceCS::referredKeys|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS);
+		private final @NonNull CardinalitySolution _094 // |ReferenceCS::referredOpposite|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE);
+		private final @NonNull CardinalitySolution _095 // |RootCS::ownedImports|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS);
+		private final @NonNull CardinalitySolution _096 // |RoundBracketedClauseCS::ownedArguments|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS);
+		private final @NonNull CardinalitySolution _097 // |ShadowPartCS::ownedInitExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION);
+		private final @NonNull CardinalitySolution _098 // |ShadowPartCS::referredProperty|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY);
+		private final @NonNull CardinalitySolution _099 // |SpecificationCS::exprString|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING);
+		private final @NonNull CardinalitySolution _100 // |SquareBracketedClauseCS::ownedTerms|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS);
+		private final @NonNull CardinalitySolution _101 // |StringLiteralExpCS::segments|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS);
+		private final @NonNull CardinalitySolution _102 // |StructuralFeatureCS::default|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT);
+		private final @NonNull CardinalitySolution _103 // |StructuralFeatureCS::ownedDefaultExpressions|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
+		private final @NonNull CardinalitySolution _104 // |StructuredClassCS::isAbstract.'abstract'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, ev._11);
+		private final @NonNull CardinalitySolution _105 // |StructuredClassCS::isInterface.'interface'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE, ev._15);
+		private final @NonNull CardinalitySolution _106 // |StructuredClassCS::ownedOperations|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS);
+		private final @NonNull CardinalitySolution _107 // |StructuredClassCS::ownedProperties|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES);
+		private final @NonNull CardinalitySolution _108 // |StructuredClassCS::ownedSuperTypes|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES);
+		private final @NonNull CardinalitySolution _109 // |TemplateBindingCS::ownedMultiplicity|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
+		private final @NonNull CardinalitySolution _110 // |TemplateBindingCS::ownedSubstitutions|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
+		private final @NonNull CardinalitySolution _111 // |TemplateParameterSubstitutionCS::ownedActualParameter|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
+		private final @NonNull CardinalitySolution _112 // |TemplateSignatureCS::ownedParameters|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
+		private final @NonNull CardinalitySolution _113 // |TemplateableElementCS::ownedSignature|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE);
+		private final @NonNull CardinalitySolution _114 // |TupleLiteralExpCS::ownedParts|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
+		private final @NonNull CardinalitySolution _115 // |TupleTypeCS::name.'Tuple'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, ev._10);
+		private final @NonNull CardinalitySolution _116 // |TupleTypeCS::ownedParts|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS);
+		private final @NonNull CardinalitySolution _117 // |TypeLiteralExpCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _118 // |TypeNameExpCS::ownedCurlyBracketedClause|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
+		private final @NonNull CardinalitySolution _119 // |TypeNameExpCS::ownedPathName|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
+		private final @NonNull CardinalitySolution _120 // |TypeNameExpCS::ownedPatternGuard|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
+		private final @NonNull CardinalitySolution _121 // |TypeParameterCS::ownedExtends|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
+		private final @NonNull CardinalitySolution _122 // |TypedElementCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _123 // |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._00);
+		private final @NonNull CardinalitySolution _124 // |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._01);
+		private final @NonNull CardinalitySolution _125 // |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._02);
+		private final @NonNull CardinalitySolution _126 // |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._03);
+		private final @NonNull CardinalitySolution _127 // |TypedElementCS::qualifiers.'definition'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._13);
+		private final @NonNull CardinalitySolution _128 // |TypedElementCS::qualifiers.'static'|
+			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, ev._21);
+		private final @NonNull CardinalitySolution _129 // |TypedRefCS::ownedMultiplicity|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		private final @NonNull CardinalitySolution _130 // |TypedTypeRefCS::ownedBinding|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
+		private final @NonNull CardinalitySolution _131 // |TypedTypeRefCS::ownedPathName|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
+		private final @NonNull CardinalitySolution _132 // |VariableCS::ownedInitExpression|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION);
+		private final @NonNull CardinalitySolution _133 // |VariableCS::ownedType|
+			= new EStructuralFeatureSizeCardinalitySolution(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
+		private final @NonNull CardinalitySolution _134 // |WildcardTypeRefCS::ownedExtends|
+			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
+		private final @NonNull CardinalitySolution _135 // (|AbstractNameExpCS::ownedPathName| - 1)
+			= new SubtractCardinalitySolution(_005, _001);
+		private final @NonNull CardinalitySolution _136 // (|AnnotationElementCS::ownedDetails| - 1)
+			= new SubtractCardinalitySolution(_010, _001);
+		private final @NonNull CardinalitySolution _137 // (|AnnotationElementCS::ownedDetails| > 0)
+			= new GreaterThanCardinalitySolution(_010, _000);
+		private final @NonNull CardinalitySolution _138 // (|BooleanLiteralExpCS::symbol.'false|true'| - 1)
+			= new SubtractCardinalitySolution(_011, _001);
+		private final @NonNull CardinalitySolution _139 // (|CollectionLiteralExpCS::ownedParts| - 1)
+			= new SubtractCardinalitySolution(_014, _001);
+		private final @NonNull CardinalitySolution _140 // (|CollectionLiteralExpCS::ownedParts| > 0)
 			= new GreaterThanCardinalitySolution(_014, _000);
-		private final @NonNull CardinalitySolution _138 // (|isSerializable.'serializable'| > 0)
-			= new GreaterThanCardinalitySolution(_013, _000);
-		private final @NonNull CardinalitySolution _139 // (|lowerBound| - 1)
+		private final @NonNull CardinalitySolution _141 // (|CollectionLiteralExpCS::ownedType| - 1)
+			= new SubtractCardinalitySolution(_015, _001);
+		private final @NonNull CardinalitySolution _142 // (|CollectionLiteralPartCS::ownedExpression| - 1)
 			= new SubtractCardinalitySolution(_016, _001);
-		private final @NonNull CardinalitySolution _140 // (|name.'Map'| - 1)
-			= new SubtractCardinalitySolution(_017, _001);
-		private final @NonNull CardinalitySolution _141 // (|name.'Tuple'| - 1)
+		private final @NonNull CardinalitySolution _143 // (|CollectionPatternCS::ownedParts| - 1)
 			= new SubtractCardinalitySolution(_018, _001);
-		private final @NonNull CardinalitySolution _142 // (|name| - 1)
+		private final @NonNull CardinalitySolution _144 // (|CollectionPatternCS::ownedType| - 1)
 			= new SubtractCardinalitySolution(_019, _001);
-		private final @NonNull CardinalitySolution _143 // (|name| - 1)
+		private final @NonNull CardinalitySolution _145 // (|CollectionTypeCS::name| - 1)
 			= new SubtractCardinalitySolution(_021, _001);
-		private final @NonNull CardinalitySolution _144 // (|name| - 1)
-			= new SubtractCardinalitySolution(_020, _001);
-		private final @NonNull CardinalitySolution _145 // (|ownedActualParameter| - 1)
-			= new SubtractCardinalitySolution(_024, _001);
-		private final @NonNull CardinalitySolution _146 // (|ownedAnnotations| > 0)
-			= new GreaterThanCardinalitySolution(_025, _000);
-		private final @NonNull CardinalitySolution _147 // (|ownedArguments| - 1)
+		private final @NonNull CardinalitySolution _146 // (|ConstraintCS::stereotype.'invariant'| - 1)
 			= new SubtractCardinalitySolution(_026, _001);
-		private final @NonNull CardinalitySolution _148 // (|ownedArguments| > 0)
-			= new GreaterThanCardinalitySolution(_026, _000);
-		private final @NonNull CardinalitySolution _149 // (|ownedBinding| - 1)
+		private final @NonNull CardinalitySolution _147 // (|ConstraintCS::stereotype.'postcondition'| - 1)
 			= new SubtractCardinalitySolution(_027, _001);
-		private final @NonNull CardinalitySolution _150 // (|ownedBodyExpressions| > 0)
-			= new GreaterThanCardinalitySolution(_028, _000);
-		private final @NonNull CardinalitySolution _151 // (|ownedCoIterator| - 1)
+		private final @NonNull CardinalitySolution _148 // (|ConstraintCS::stereotype.'precondition'| - 1)
+			= new SubtractCardinalitySolution(_028, _001);
+		private final @NonNull CardinalitySolution _149 // (|ContextCS::ownedExpression| - 1)
+			= new SubtractCardinalitySolution(_029, _001);
+		private final @NonNull CardinalitySolution _150 // (|CurlyBracketedClauseCS::ownedParts| - 1)
 			= new SubtractCardinalitySolution(_030, _001);
-		private final @NonNull CardinalitySolution _152 // (|ownedCondition| - 1)
-			= new SubtractCardinalitySolution(_032, _001);
-		private final @NonNull CardinalitySolution _153 // (|ownedCondition| - 1)
-			= new SubtractCardinalitySolution(_033, _001);
-		private final @NonNull CardinalitySolution _154 // (|ownedDefaultExpressions| > 0)
-			= new GreaterThanCardinalitySolution(_038, _000);
-		private final @NonNull CardinalitySolution _155 // (|ownedDetails| - 1)
+		private final @NonNull CardinalitySolution _151 // (|CurlyBracketedClauseCS::ownedParts| > 0)
+			= new GreaterThanCardinalitySolution(_030, _000);
+		private final @NonNull CardinalitySolution _152 // (|DataTypeCS::isSerializable.'serializable'| > 0)
+			= new GreaterThanCardinalitySolution(_032, _000);
+		private final @NonNull CardinalitySolution _153 // (|EnumerationCS::isSerializable.'serializable'| > 0)
+			= new GreaterThanCardinalitySolution(_035, _000);
+		private final @NonNull CardinalitySolution _154 // (|ExpSpecificationCS::ownedExpression| - 1)
 			= new SubtractCardinalitySolution(_039, _001);
-		private final @NonNull CardinalitySolution _156 // (|ownedDetails| > 0)
-			= new GreaterThanCardinalitySolution(_039, _000);
-		private final @NonNull CardinalitySolution _157 // (|ownedElseExpression| - 1)
+		private final @NonNull CardinalitySolution _155 // (|IfExpCS::ownedCondition| - 1)
 			= new SubtractCardinalitySolution(_040, _001);
-		private final @NonNull CardinalitySolution _158 // (|ownedExceptions| - 1)
+		private final @NonNull CardinalitySolution _156 // (|IfExpCS::ownedElseExpression| - 1)
 			= new SubtractCardinalitySolution(_041, _001);
-		private final @NonNull CardinalitySolution _159 // (|ownedExceptions| > 0)
-			= new GreaterThanCardinalitySolution(_041, _000);
-		private final @NonNull CardinalitySolution _160 // (|ownedExpressionCS| - 1)
-			= new SubtractCardinalitySolution(_042, _001);
-		private final @NonNull CardinalitySolution _161 // (|ownedExpression| - 1)
+		private final @NonNull CardinalitySolution _157 // (|IfExpCS::ownedThenExpression| - 1)
 			= new SubtractCardinalitySolution(_043, _001);
-		private final @NonNull CardinalitySolution _162 // (|ownedExpression| - 1)
-			= new SubtractCardinalitySolution(_045, _001);
-		private final @NonNull CardinalitySolution _163 // (|ownedExpression| - 1)
+		private final @NonNull CardinalitySolution _158 // (|IfThenExpCS::ownedCondition| - 1)
 			= new SubtractCardinalitySolution(_044, _001);
-		private final @NonNull CardinalitySolution _164 // (|ownedExpression| - 1)
-			= new SubtractCardinalitySolution(_046, _001);
-		private final @NonNull CardinalitySolution _165 // (|ownedExtends| - 1)
+		private final @NonNull CardinalitySolution _159 // (|IfThenExpCS::ownedThenExpression| - 1)
+			= new SubtractCardinalitySolution(_045, _001);
+		private final @NonNull CardinalitySolution _160 // (|ImportCS::ownedPathName| - 1)
 			= new SubtractCardinalitySolution(_047, _001);
-		private final @NonNull CardinalitySolution _166 // (|ownedExtends| > 0)
-			= new GreaterThanCardinalitySolution(_047, _000);
-		private final @NonNull CardinalitySolution _167 // (|ownedInExpression| - 1)
-			= new SubtractCardinalitySolution(_052, _001);
-		private final @NonNull CardinalitySolution _168 // (|ownedInitExpression| - 1)
-			= new SubtractCardinalitySolution(_054, _001);
-		private final @NonNull CardinalitySolution _169 // (|ownedInitExpression| - 1)
+		private final @NonNull CardinalitySolution _161 // (|InfixExpCS::ownedLeft| - 1)
+			= new SubtractCardinalitySolution(_048, _001);
+		private final @NonNull CardinalitySolution _162 // (|LambdaLiteralExpCS::ownedExpressionCS| - 1)
+			= new SubtractCardinalitySolution(_049, _001);
+		private final @NonNull CardinalitySolution _163 // (|LetExpCS::ownedInExpression| - 1)
+			= new SubtractCardinalitySolution(_050, _001);
+		private final @NonNull CardinalitySolution _164 // (|LetExpCS::ownedVariables| - 1)
+			= new SubtractCardinalitySolution(_051, _001);
+		private final @NonNull CardinalitySolution _165 // (|MapLiteralExpCS::ownedParts| - 1)
 			= new SubtractCardinalitySolution(_053, _001);
-		private final @NonNull CardinalitySolution _170 // (|ownedInitExpression| - 1)
+		private final @NonNull CardinalitySolution _166 // (|MapLiteralExpCS::ownedParts| > 0)
+			= new GreaterThanCardinalitySolution(_053, _000);
+		private final @NonNull CardinalitySolution _167 // (|MapLiteralExpCS::ownedType| - 1)
+			= new SubtractCardinalitySolution(_054, _001);
+		private final @NonNull CardinalitySolution _168 // (|MapLiteralPartCS::ownedKey| - 1)
 			= new SubtractCardinalitySolution(_055, _001);
-		private final @NonNull CardinalitySolution _171 // (|ownedKeyType| - V0)
-			= new SubtractCardinalitySolution(_056, _002);
-		private final @NonNull CardinalitySolution _172 // (|ownedKey| - 1)
+		private final @NonNull CardinalitySolution _169 // (|MapLiteralPartCS::ownedValue| - 1)
+			= new SubtractCardinalitySolution(_056, _001);
+		private final @NonNull CardinalitySolution _170 // (|MapTypeCS::name.'Map'| - 1)
 			= new SubtractCardinalitySolution(_057, _001);
-		private final @NonNull CardinalitySolution _173 // (|ownedLeft| - 1)
-			= new SubtractCardinalitySolution(_059, _001);
-		private final @NonNull CardinalitySolution _174 // (|ownedNameExpression| - 1)
-			= new SubtractCardinalitySolution(_064, _001);
-		private final @NonNull CardinalitySolution _175 // (|ownedParameters| - 1)
+		private final @NonNull CardinalitySolution _171 // (|MapTypeCS::ownedKeyType| - V0)
+			= new SubtractCardinalitySolution(_058, _002);
+		private final @NonNull CardinalitySolution _172 // (|ModelElementCS::ownedAnnotations| > 0)
+			= new GreaterThanCardinalitySolution(_060, _000);
+		private final @NonNull CardinalitySolution _173 // (|ModelElementRefCS::ownedPathName| - 1)
+			= new SubtractCardinalitySolution(_061, _001);
+		private final @NonNull CardinalitySolution _174 // (|MultiplicityBoundsCS::lowerBound| - 1)
+			= new SubtractCardinalitySolution(_062, _001);
+		private final @NonNull CardinalitySolution _175 // (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1)
+			= new SubtractCardinalitySolution(_065, _001);
+		private final @NonNull CardinalitySolution _176 // (|NamedElementCS::name| - 1)
+			= new SubtractCardinalitySolution(_066, _001);
+		private final @NonNull CardinalitySolution _177 // (|NavigatingArgCS::ownedCoIterator| - 1)
 			= new SubtractCardinalitySolution(_067, _001);
-		private final @NonNull CardinalitySolution _176 // (|ownedParameters| - 1)
+		private final @NonNull CardinalitySolution _178 // (|NavigatingArgCS::ownedInitExpression| - 1)
 			= new SubtractCardinalitySolution(_068, _001);
-		private final @NonNull CardinalitySolution _177 // (|ownedParameters| > 0)
-			= new GreaterThanCardinalitySolution(_068, _000);
-		private final @NonNull CardinalitySolution _178 // (|ownedParts| - 1)
+		private final @NonNull CardinalitySolution _179 // (|NavigatingArgCS::ownedNameExpression| - 1)
 			= new SubtractCardinalitySolution(_069, _001);
-		private final @NonNull CardinalitySolution _179 // (|ownedParts| - 1)
-			= new SubtractCardinalitySolution(_074, _001);
-		private final @NonNull CardinalitySolution _180 // (|ownedParts| - 1)
+		private final @NonNull CardinalitySolution _180 // (|NavigatingArgCS::ownedType| - 1)
 			= new SubtractCardinalitySolution(_070, _001);
-		private final @NonNull CardinalitySolution _181 // (|ownedParts| - 1)
-			= new SubtractCardinalitySolution(_073, _001);
-		private final @NonNull CardinalitySolution _182 // (|ownedParts| - 1)
-			= new SubtractCardinalitySolution(_072, _001);
-		private final @NonNull CardinalitySolution _183 // (|ownedParts| - 1)
+		private final @NonNull CardinalitySolution _181 // (|NavigatingArgCS::prefix.','| - 1)
 			= new SubtractCardinalitySolution(_071, _001);
-		private final @NonNull CardinalitySolution _184 // (|ownedParts| > 0)
-			= new GreaterThanCardinalitySolution(_072, _000);
-		private final @NonNull CardinalitySolution _185 // (|ownedParts| > 0)
-			= new GreaterThanCardinalitySolution(_070, _000);
-		private final @NonNull CardinalitySolution _186 // (|ownedParts| > 0)
-			= new GreaterThanCardinalitySolution(_073, _000);
-		private final @NonNull CardinalitySolution _187 // (|ownedParts| > 0)
-			= new GreaterThanCardinalitySolution(_074, _000);
-		private final @NonNull CardinalitySolution _188 // (|ownedPathElements| - 1)
+		private final @NonNull CardinalitySolution _182 // (|NavigatingArgCS::prefix.';'| - 1)
+			= new SubtractCardinalitySolution(_072, _001);
+		private final @NonNull CardinalitySolution _183 // (|NavigatingArgCS::prefix.'|'| - 1)
+			= new SubtractCardinalitySolution(_073, _001);
+		private final @NonNull CardinalitySolution _184 // (|NestedExpCS::ownedExpression| - 1)
+			= new SubtractCardinalitySolution(_074, _001);
+		private final @NonNull CardinalitySolution _185 // (|NumberLiteralExpCS::symbol| - 1)
 			= new SubtractCardinalitySolution(_075, _001);
-		private final @NonNull CardinalitySolution _189 // (|ownedPathName| - 1)
-			= new SubtractCardinalitySolution(_076, _001);
-		private final @NonNull CardinalitySolution _190 // (|ownedPathName| - 1)
-			= new SubtractCardinalitySolution(_079, _001);
-		private final @NonNull CardinalitySolution _191 // (|ownedPathName| - 1)
-			= new SubtractCardinalitySolution(_077, _001);
-		private final @NonNull CardinalitySolution _192 // (|ownedPathName| - 1)
-			= new SubtractCardinalitySolution(_080, _001);
-		private final @NonNull CardinalitySolution _193 // (|ownedPathName| - 1)
+		private final @NonNull CardinalitySolution _186 // (|OperationCS::ownedBodyExpressions| > 0)
+			= new GreaterThanCardinalitySolution(_077, _000);
+		private final @NonNull CardinalitySolution _187 // (|OperationCS::ownedExceptions| - 1)
 			= new SubtractCardinalitySolution(_078, _001);
-		private final @NonNull CardinalitySolution _194 // (|ownedPatternType| - 1)
+		private final @NonNull CardinalitySolution _188 // (|OperationCS::ownedExceptions| > 0)
+			= new GreaterThanCardinalitySolution(_078, _000);
+		private final @NonNull CardinalitySolution _189 // (|OperationCS::ownedParameters| - 1)
+			= new SubtractCardinalitySolution(_079, _001);
+		private final @NonNull CardinalitySolution _190 // (|OperationCS::ownedParameters| > 0)
+			= new GreaterThanCardinalitySolution(_079, _000);
+		private final @NonNull CardinalitySolution _191 // (|OperatorExpCS::ownedRight| - 1)
 			= new SubtractCardinalitySolution(_082, _001);
-		private final @NonNull CardinalitySolution _195 // (|ownedRight| - 1)
+		private final @NonNull CardinalitySolution _192 // (|PathElementCS::referredElement| - 1)
 			= new SubtractCardinalitySolution(_087, _001);
-		private final @NonNull CardinalitySolution _196 // (|ownedSubstitutions| - 1)
+		private final @NonNull CardinalitySolution _193 // (|PathNameCS::ownedPathElements| - 1)
+			= new SubtractCardinalitySolution(_088, _001);
+		private final @NonNull CardinalitySolution _194 // (|PatternExpCS::ownedPatternType| - 1)
+			= new SubtractCardinalitySolution(_089, _001);
+		private final @NonNull CardinalitySolution _195 // (|PrimitiveTypeRefCS::name| - 1)
+			= new SubtractCardinalitySolution(_091, _001);
+		private final @NonNull CardinalitySolution _196 // (|ReferenceCS::referredKeys| - 1)
 			= new SubtractCardinalitySolution(_093, _001);
-		private final @NonNull CardinalitySolution _197 // (|ownedSuperTypes| - 1)
-			= new SubtractCardinalitySolution(_094, _001);
-		private final @NonNull CardinalitySolution _198 // (|ownedSuperTypes| > 0)
-			= new GreaterThanCardinalitySolution(_094, _000);
-		private final @NonNull CardinalitySolution _199 // (|ownedTerms| - 1)
-			= new SubtractCardinalitySolution(_095, _001);
-		private final @NonNull CardinalitySolution _200 // (|ownedThenExpression| - 1)
-			= new SubtractCardinalitySolution(_097, _001);
-		private final @NonNull CardinalitySolution _201 // (|ownedThenExpression| - 1)
+		private final @NonNull CardinalitySolution _197 // (|ReferenceCS::referredKeys| > 0)
+			= new GreaterThanCardinalitySolution(_093, _000);
+		private final @NonNull CardinalitySolution _198 // (|RoundBracketedClauseCS::ownedArguments| - 1)
 			= new SubtractCardinalitySolution(_096, _001);
-		private final @NonNull CardinalitySolution _202 // (|ownedType| - 1)
-			= new SubtractCardinalitySolution(_101, _001);
-		private final @NonNull CardinalitySolution _203 // (|ownedType| - 1)
-			= new SubtractCardinalitySolution(_104, _001);
-		private final @NonNull CardinalitySolution _204 // (|ownedType| - 1)
+		private final @NonNull CardinalitySolution _199 // (|RoundBracketedClauseCS::ownedArguments| > 0)
+			= new GreaterThanCardinalitySolution(_096, _000);
+		private final @NonNull CardinalitySolution _200 // (|ShadowPartCS::ownedInitExpression| - 1)
+			= new SubtractCardinalitySolution(_097, _001);
+		private final @NonNull CardinalitySolution _201 // (|ShadowPartCS::referredProperty| - 1)
+			= new SubtractCardinalitySolution(_098, _001);
+		private final @NonNull CardinalitySolution _202 // (|SpecificationCS::exprString| - 1)
 			= new SubtractCardinalitySolution(_099, _001);
-		private final @NonNull CardinalitySolution _205 // (|ownedType| - 1)
-			= new SubtractCardinalitySolution(_103, _001);
-		private final @NonNull CardinalitySolution _206 // (|ownedType| - 1)
-			= new SubtractCardinalitySolution(_102, _001);
-		private final @NonNull CardinalitySolution _207 // (|ownedType| - 1)
-			= new SubtractCardinalitySolution(_105, _001);
-		private final @NonNull CardinalitySolution _208 // (|ownedValue| - 1)
-			= new SubtractCardinalitySolution(_107, _001);
-		private final @NonNull CardinalitySolution _209 // (|ownedVariables| - 1)
+		private final @NonNull CardinalitySolution _203 // (|SquareBracketedClauseCS::ownedTerms| - 1)
+			= new SubtractCardinalitySolution(_100, _001);
+		private final @NonNull CardinalitySolution _204 // (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+			= new GreaterThanCardinalitySolution(_103, _000);
+		private final @NonNull CardinalitySolution _205 // (|StructuredClassCS::isInterface.'interface'| > 0)
+			= new GreaterThanCardinalitySolution(_105, _000);
+		private final @NonNull CardinalitySolution _206 // (|StructuredClassCS::ownedSuperTypes| - 1)
 			= new SubtractCardinalitySolution(_108, _001);
-		private final @NonNull CardinalitySolution _210 // (|prefix.','| - 1)
+		private final @NonNull CardinalitySolution _207 // (|StructuredClassCS::ownedSuperTypes| > 0)
+			= new GreaterThanCardinalitySolution(_108, _000);
+		private final @NonNull CardinalitySolution _208 // (|TemplateBindingCS::ownedSubstitutions| - 1)
 			= new SubtractCardinalitySolution(_110, _001);
-		private final @NonNull CardinalitySolution _211 // (|prefix.';'| - 1)
+		private final @NonNull CardinalitySolution _209 // (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1)
 			= new SubtractCardinalitySolution(_111, _001);
-		private final @NonNull CardinalitySolution _212 // (|prefix.'|'| - 1)
+		private final @NonNull CardinalitySolution _210 // (|TemplateSignatureCS::ownedParameters| - 1)
 			= new SubtractCardinalitySolution(_112, _001);
-		private final @NonNull CardinalitySolution _213 // (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
-			= new GreaterThanCardinalitySolution(_113, _000);
-		private final @NonNull CardinalitySolution _214 // (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
-			= new GreaterThanCardinalitySolution(_114, _000);
-		private final @NonNull CardinalitySolution _215 // (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
-			= new GreaterThanCardinalitySolution(_115, _000);
-		private final @NonNull CardinalitySolution _216 // (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+		private final @NonNull CardinalitySolution _211 // (|TupleLiteralExpCS::ownedParts| - 1)
+			= new SubtractCardinalitySolution(_114, _001);
+		private final @NonNull CardinalitySolution _212 // (|TupleTypeCS::name.'Tuple'| - 1)
+			= new SubtractCardinalitySolution(_115, _001);
+		private final @NonNull CardinalitySolution _213 // (|TupleTypeCS::ownedParts| - 1)
+			= new SubtractCardinalitySolution(_116, _001);
+		private final @NonNull CardinalitySolution _214 // (|TupleTypeCS::ownedParts| > 0)
 			= new GreaterThanCardinalitySolution(_116, _000);
-		private final @NonNull CardinalitySolution _217 // (|qualifiers.'definition'| - 1)
+		private final @NonNull CardinalitySolution _215 // (|TypeLiteralExpCS::ownedType| - 1)
 			= new SubtractCardinalitySolution(_117, _001);
-		private final @NonNull CardinalitySolution _218 // (|qualifiers.'static'| - 1)
-			= new SubtractCardinalitySolution(_118, _001);
-		private final @NonNull CardinalitySolution _219 // (|referredElement| - 1)
+		private final @NonNull CardinalitySolution _216 // (|TypeNameExpCS::ownedPathName| - 1)
 			= new SubtractCardinalitySolution(_119, _001);
-		private final @NonNull CardinalitySolution _220 // (|referredKeys| - 1)
-			= new SubtractCardinalitySolution(_120, _001);
-		private final @NonNull CardinalitySolution _221 // (|referredKeys| > 0)
-			= new GreaterThanCardinalitySolution(_120, _000);
-		private final @NonNull CardinalitySolution _222 // (|referredProperty| - 1)
+		private final @NonNull CardinalitySolution _217 // (|TypeParameterCS::ownedExtends| - 1)
+			= new SubtractCardinalitySolution(_121, _001);
+		private final @NonNull CardinalitySolution _218 // (|TypeParameterCS::ownedExtends| > 0)
+			= new GreaterThanCardinalitySolution(_121, _000);
+		private final @NonNull CardinalitySolution _219 // (|TypedElementCS::ownedType| - 1)
 			= new SubtractCardinalitySolution(_122, _001);
-		private final @NonNull CardinalitySolution _223 // (|stereotype.'invariant'| - 1)
-			= new SubtractCardinalitySolution(_125, _001);
-		private final @NonNull CardinalitySolution _224 // (|stereotype.'postcondition'| - 1)
-			= new SubtractCardinalitySolution(_126, _001);
-		private final @NonNull CardinalitySolution _225 // (|stereotype.'precondition'| - 1)
+		private final @NonNull CardinalitySolution _220 // (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+			= new GreaterThanCardinalitySolution(_123, _000);
+		private final @NonNull CardinalitySolution _221 // (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+			= new GreaterThanCardinalitySolution(_124, _000);
+		private final @NonNull CardinalitySolution _222 // (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+			= new GreaterThanCardinalitySolution(_125, _000);
+		private final @NonNull CardinalitySolution _223 // (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+			= new GreaterThanCardinalitySolution(_126, _000);
+		private final @NonNull CardinalitySolution _224 // (|TypedElementCS::qualifiers.'definition'| - 1)
 			= new SubtractCardinalitySolution(_127, _001);
-		private final @NonNull CardinalitySolution _226 // (|stringBounds.'*|+|?'| - 1)
+		private final @NonNull CardinalitySolution _225 // (|TypedElementCS::qualifiers.'static'| - 1)
 			= new SubtractCardinalitySolution(_128, _001);
-		private final @NonNull CardinalitySolution _227 // (|symbol.'false|true'| - 1)
-			= new SubtractCardinalitySolution(_129, _001);
-		private final @NonNull CardinalitySolution _228 // (|symbol| - 1)
+		private final @NonNull CardinalitySolution _226 // (|TypedTypeRefCS::ownedBinding| - 1)
 			= new SubtractCardinalitySolution(_130, _001);
+		private final @NonNull CardinalitySolution _227 // (|TypedTypeRefCS::ownedPathName| - 1)
+			= new SubtractCardinalitySolution(_131, _001);
+		private final @NonNull CardinalitySolution _228 // (|VariableCS::ownedInitExpression| - 1)
+			= new SubtractCardinalitySolution(_132, _001);
 	}
 
 	/**
@@ -954,464 +954,464 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _MatchSteps
 	{
-		private final @NonNull CardinalitySolutionStep _000 // assert (|exprString| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _000 // assert (|AbstractNameExpCS::ownedPathName| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._135);
-		private final @NonNull CardinalitySolutionStep _001 // assert (|lowerBound| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._139);
-		private final @NonNull CardinalitySolutionStep _002 // assert (|name.'Map'| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._140);
-		private final @NonNull CardinalitySolutionStep _003 // assert (|name.'Tuple'| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _001 // assert (|AnnotationElementCS::ownedDetails| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._136);
+		private final @NonNull CardinalitySolutionStep _002 // assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._138);
+		private final @NonNull CardinalitySolutionStep _003 // assert (|CollectionLiteralExpCS::ownedType| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._141);
-		private final @NonNull CardinalitySolutionStep _004 // assert (|name| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._143);
-		private final @NonNull CardinalitySolutionStep _005 // assert (|name| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._144);
-		private final @NonNull CardinalitySolutionStep _006 // assert (|name| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _004 // assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._142);
-		private final @NonNull CardinalitySolutionStep _007 // assert (|ownedActualParameter| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _005 // assert (|CollectionPatternCS::ownedType| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._144);
+		private final @NonNull CardinalitySolutionStep _006 // assert (|CollectionTypeCS::name| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._145);
-		private final @NonNull CardinalitySolutionStep _008 // assert (|ownedBinding| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _007 // assert (|ConstraintCS::stereotype.'invariant'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._146);
+		private final @NonNull CardinalitySolutionStep _008 // assert (|ConstraintCS::stereotype.'postcondition'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._147);
+		private final @NonNull CardinalitySolutionStep _009 // assert (|ConstraintCS::stereotype.'precondition'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._148);
+		private final @NonNull CardinalitySolutionStep _010 // assert (|ContextCS::ownedExpression| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._149);
-		private final @NonNull CardinalitySolutionStep _009 // assert (|ownedCoIterator| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._151);
-		private final @NonNull CardinalitySolutionStep _010 // assert (|ownedCondition| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._153);
-		private final @NonNull CardinalitySolutionStep _011 // assert (|ownedCondition| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._152);
-		private final @NonNull CardinalitySolutionStep _012 // assert (|ownedDetails| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _011 // assert (|ExpSpecificationCS::ownedExpression| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._154);
+		private final @NonNull CardinalitySolutionStep _012 // assert (|IfExpCS::ownedCondition| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._155);
-		private final @NonNull CardinalitySolutionStep _013 // assert (|ownedElseExpression| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _013 // assert (|IfExpCS::ownedElseExpression| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._156);
+		private final @NonNull CardinalitySolutionStep _014 // assert (|IfExpCS::ownedThenExpression| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._157);
-		private final @NonNull CardinalitySolutionStep _014 // assert (|ownedExpressionCS| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _015 // assert (|IfThenExpCS::ownedCondition| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._158);
+		private final @NonNull CardinalitySolutionStep _016 // assert (|IfThenExpCS::ownedThenExpression| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._159);
+		private final @NonNull CardinalitySolutionStep _017 // assert (|ImportCS::ownedPathName| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._160);
-		private final @NonNull CardinalitySolutionStep _015 // assert (|ownedExpression| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._162);
-		private final @NonNull CardinalitySolutionStep _016 // assert (|ownedExpression| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._163);
-		private final @NonNull CardinalitySolutionStep _017 // assert (|ownedExpression| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _018 // assert (|InfixExpCS::ownedLeft| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._161);
-		private final @NonNull CardinalitySolutionStep _018 // assert (|ownedExpression| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._164);
-		private final @NonNull CardinalitySolutionStep _019 // assert (|ownedInExpression| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _019 // assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._162);
+		private final @NonNull CardinalitySolutionStep _020 // assert (|LetExpCS::ownedInExpression| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._163);
+		private final @NonNull CardinalitySolutionStep _021 // assert (|MapLiteralExpCS::ownedType| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._167);
-		private final @NonNull CardinalitySolutionStep _020 // assert (|ownedInitExpression| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._170);
-		private final @NonNull CardinalitySolutionStep _021 // assert (|ownedInitExpression| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._169);
-		private final @NonNull CardinalitySolutionStep _022 // assert (|ownedInitExpression| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _022 // assert (|MapLiteralPartCS::ownedKey| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._168);
-		private final @NonNull CardinalitySolutionStep _023 // assert (|ownedKeyType| - V0) == 0
+		private final @NonNull CardinalitySolutionStep _023 // assert (|MapLiteralPartCS::ownedValue| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._169);
+		private final @NonNull CardinalitySolutionStep _024 // assert (|MapTypeCS::name.'Map'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._170);
+		private final @NonNull CardinalitySolutionStep _025 // assert (|MapTypeCS::ownedKeyType| - V0) == 0
 			= new CardinalitySolutionStep.Assert(mt._171);
-		private final @NonNull CardinalitySolutionStep _024 // assert (|ownedKey| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._172);
-		private final @NonNull CardinalitySolutionStep _025 // assert (|ownedLeft| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _026 // assert (|ModelElementRefCS::ownedPathName| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._173);
-		private final @NonNull CardinalitySolutionStep _026 // assert (|ownedNameExpression| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _027 // assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._174);
-		private final @NonNull CardinalitySolutionStep _027 // assert (|ownedPathElements| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._188);
-		private final @NonNull CardinalitySolutionStep _028 // assert (|ownedPathName| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._189);
-		private final @NonNull CardinalitySolutionStep _029 // assert (|ownedPathName| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._193);
-		private final @NonNull CardinalitySolutionStep _030 // assert (|ownedPathName| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _028 // assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._175);
+		private final @NonNull CardinalitySolutionStep _029 // assert (|NamedElementCS::name| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._176);
+		private final @NonNull CardinalitySolutionStep _030 // assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._177);
+		private final @NonNull CardinalitySolutionStep _031 // assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._178);
+		private final @NonNull CardinalitySolutionStep _032 // assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._179);
+		private final @NonNull CardinalitySolutionStep _033 // assert (|NavigatingArgCS::ownedType| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._180);
+		private final @NonNull CardinalitySolutionStep _034 // assert (|NavigatingArgCS::prefix.','| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._181);
+		private final @NonNull CardinalitySolutionStep _035 // assert (|NavigatingArgCS::prefix.';'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._182);
+		private final @NonNull CardinalitySolutionStep _036 // assert (|NavigatingArgCS::prefix.'|'| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._183);
+		private final @NonNull CardinalitySolutionStep _037 // assert (|NestedExpCS::ownedExpression| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._184);
+		private final @NonNull CardinalitySolutionStep _038 // assert (|NumberLiteralExpCS::symbol| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._185);
+		private final @NonNull CardinalitySolutionStep _039 // assert (|OperatorExpCS::ownedRight| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._191);
-		private final @NonNull CardinalitySolutionStep _031 // assert (|ownedPathName| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _040 // assert (|PathElementCS::referredElement| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._192);
-		private final @NonNull CardinalitySolutionStep _032 // assert (|ownedPathName| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._190);
-		private final @NonNull CardinalitySolutionStep _033 // assert (|ownedPatternType| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _041 // assert (|PathNameCS::ownedPathElements| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._193);
+		private final @NonNull CardinalitySolutionStep _042 // assert (|PatternExpCS::ownedPatternType| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._194);
-		private final @NonNull CardinalitySolutionStep _034 // assert (|ownedRight| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _043 // assert (|PrimitiveTypeRefCS::name| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._195);
-		private final @NonNull CardinalitySolutionStep _035 // assert (|ownedThenExpression| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _044 // assert (|ShadowPartCS::ownedInitExpression| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._200);
-		private final @NonNull CardinalitySolutionStep _036 // assert (|ownedThenExpression| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _045 // assert (|ShadowPartCS::referredProperty| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._201);
-		private final @NonNull CardinalitySolutionStep _037 // assert (|ownedType| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._204);
-		private final @NonNull CardinalitySolutionStep _038 // assert (|ownedType| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._203);
-		private final @NonNull CardinalitySolutionStep _039 // assert (|ownedType| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._206);
-		private final @NonNull CardinalitySolutionStep _040 // assert (|ownedType| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _046 // assert (|SpecificationCS::exprString| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._202);
-		private final @NonNull CardinalitySolutionStep _041 // assert (|ownedType| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._205);
-		private final @NonNull CardinalitySolutionStep _042 // assert (|ownedType| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._207);
-		private final @NonNull CardinalitySolutionStep _043 // assert (|ownedValue| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._208);
-		private final @NonNull CardinalitySolutionStep _044 // assert (|prefix.','| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._210);
-		private final @NonNull CardinalitySolutionStep _045 // assert (|prefix.';'| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._211);
-		private final @NonNull CardinalitySolutionStep _046 // assert (|prefix.'|'| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _047 // assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._209);
+		private final @NonNull CardinalitySolutionStep _048 // assert (|TupleTypeCS::name.'Tuple'| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._212);
-		private final @NonNull CardinalitySolutionStep _047 // assert (|qualifiers.'definition'| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._217);
-		private final @NonNull CardinalitySolutionStep _048 // assert (|qualifiers.'static'| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._218);
-		private final @NonNull CardinalitySolutionStep _049 // assert (|referredElement| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _049 // assert (|TypeLiteralExpCS::ownedType| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._215);
+		private final @NonNull CardinalitySolutionStep _050 // assert (|TypeNameExpCS::ownedPathName| - 1) == 0
+			= new CardinalitySolutionStep.Assert(mt._216);
+		private final @NonNull CardinalitySolutionStep _051 // assert (|TypedElementCS::ownedType| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._219);
-		private final @NonNull CardinalitySolutionStep _050 // assert (|referredProperty| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._222);
-		private final @NonNull CardinalitySolutionStep _051 // assert (|stereotype.'invariant'| - 1) == 0
-			= new CardinalitySolutionStep.Assert(mt._223);
-		private final @NonNull CardinalitySolutionStep _052 // assert (|stereotype.'postcondition'| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _052 // assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._224);
-		private final @NonNull CardinalitySolutionStep _053 // assert (|stereotype.'precondition'| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _053 // assert (|TypedElementCS::qualifiers.'static'| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._225);
-		private final @NonNull CardinalitySolutionStep _054 // assert (|stringBounds.'*|+|?'| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _054 // assert (|TypedTypeRefCS::ownedBinding| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._226);
-		private final @NonNull CardinalitySolutionStep _055 // assert (|symbol.'false|true'| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _055 // assert (|TypedTypeRefCS::ownedPathName| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._227);
-		private final @NonNull CardinalitySolutionStep _056 // assert (|symbol| - 1) == 0
+		private final @NonNull CardinalitySolutionStep _056 // assert (|VariableCS::ownedInitExpression| - 1) == 0
 			= new CardinalitySolutionStep.Assert(mt._228);
-		private final @NonNull CardinalitySolutionStep _057 // assign V0 = (|ownedArguments| > 0)
-			= new CardinalitySolutionStep.Assign(0, mt._148);
-		private final @NonNull CardinalitySolutionStep _058 // assign V0 = (|ownedExtends| > 0)
+		private final @NonNull CardinalitySolutionStep _057 // assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0)
+			= new CardinalitySolutionStep.Assign(0, mt._140);
+		private final @NonNull CardinalitySolutionStep _058 // assign V0 = (|CurlyBracketedClauseCS::ownedParts| > 0)
+			= new CardinalitySolutionStep.Assign(0, mt._151);
+		private final @NonNull CardinalitySolutionStep _059 // assign V0 = (|LetExpCS::ownedVariables| - 1)
+			= new CardinalitySolutionStep.Assign(0, mt._164);
+		private final @NonNull CardinalitySolutionStep _060 // assign V0 = (|MapLiteralExpCS::ownedParts| > 0)
 			= new CardinalitySolutionStep.Assign(0, mt._166);
-		private final @NonNull CardinalitySolutionStep _059 // assign V0 = (|ownedParameters| - 1)
-			= new CardinalitySolutionStep.Assign(0, mt._175);
-		private final @NonNull CardinalitySolutionStep _060 // assign V0 = (|ownedParts| - 1)
-			= new CardinalitySolutionStep.Assign(0, mt._178);
-		private final @NonNull CardinalitySolutionStep _061 // assign V0 = (|ownedParts| > 0)
-			= new CardinalitySolutionStep.Assign(0, mt._187);
-		private final @NonNull CardinalitySolutionStep _062 // assign V0 = (|ownedParts| > 0)
-			= new CardinalitySolutionStep.Assign(0, mt._184);
-		private final @NonNull CardinalitySolutionStep _063 // assign V0 = (|ownedParts| > 0)
-			= new CardinalitySolutionStep.Assign(0, mt._185);
-		private final @NonNull CardinalitySolutionStep _064 // assign V0 = (|ownedParts| > 0)
-			= new CardinalitySolutionStep.Assign(0, mt._186);
-		private final @NonNull CardinalitySolutionStep _065 // assign V0 = (|ownedPathElements| - 1)
-			= new CardinalitySolutionStep.Assign(0, mt._188);
-		private final @NonNull CardinalitySolutionStep _066 // assign V0 = (|ownedSubstitutions| - 1)
-			= new CardinalitySolutionStep.Assign(0, mt._196);
-		private final @NonNull CardinalitySolutionStep _067 // assign V0 = (|ownedTerms| - 1)
+		private final @NonNull CardinalitySolutionStep _061 // assign V0 = (|PathNameCS::ownedPathElements| - 1)
+			= new CardinalitySolutionStep.Assign(0, mt._193);
+		private final @NonNull CardinalitySolutionStep _062 // assign V0 = (|RoundBracketedClauseCS::ownedArguments| > 0)
 			= new CardinalitySolutionStep.Assign(0, mt._199);
-		private final @NonNull CardinalitySolutionStep _068 // assign V0 = (|ownedVariables| - 1)
-			= new CardinalitySolutionStep.Assign(0, mt._209);
-		private final @NonNull CardinalitySolutionStep _069 // assign V0 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
-			= new CardinalitySolutionStep.Assign(0, mt._216);
+		private final @NonNull CardinalitySolutionStep _063 // assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1)
+			= new CardinalitySolutionStep.Assign(0, mt._203);
+		private final @NonNull CardinalitySolutionStep _064 // assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1)
+			= new CardinalitySolutionStep.Assign(0, mt._208);
+		private final @NonNull CardinalitySolutionStep _065 // assign V0 = (|TemplateSignatureCS::ownedParameters| - 1)
+			= new CardinalitySolutionStep.Assign(0, mt._210);
+		private final @NonNull CardinalitySolutionStep _066 // assign V0 = (|TupleLiteralExpCS::ownedParts| - 1)
+			= new CardinalitySolutionStep.Assign(0, mt._211);
+		private final @NonNull CardinalitySolutionStep _067 // assign V0 = (|TupleTypeCS::ownedParts| > 0)
+			= new CardinalitySolutionStep.Assign(0, mt._214);
+		private final @NonNull CardinalitySolutionStep _068 // assign V0 = (|TypeParameterCS::ownedExtends| > 0)
+			= new CardinalitySolutionStep.Assign(0, mt._218);
+		private final @NonNull CardinalitySolutionStep _069 // assign V0 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+			= new CardinalitySolutionStep.Assign(0, mt._223);
 		private final @NonNull CardinalitySolutionStep _070 // assign V0 = 0
 			= new CardinalitySolutionStep.Assign(0, mt._000);
-		private final @NonNull CardinalitySolutionStep _071 // assign V0 = |isAbstract.'abstract'|
-			= new CardinalitySolutionStep.Assign(0, mt._006);
-		private final @NonNull CardinalitySolutionStep _072 // assign V0 = |isCallable.'callable'|
-			= new CardinalitySolutionStep.Assign(0, mt._008);
-		private final @NonNull CardinalitySolutionStep _073 // assign V0 = |isNullFree.'|1'|
+		private final @NonNull CardinalitySolutionStep _071 // assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses|
+			= new CardinalitySolutionStep.Assign(0, mt._007);
+		private final @NonNull CardinalitySolutionStep _072 // assign V0 = |AnnotationElementCS::ownedDetails|
 			= new CardinalitySolutionStep.Assign(0, mt._010);
-		private final @NonNull CardinalitySolutionStep _074 // assign V0 = |isPrimitive.'primitive'|
-			= new CardinalitySolutionStep.Assign(0, mt._012);
-		private final @NonNull CardinalitySolutionStep _075 // assign V0 = |literal|
-			= new CardinalitySolutionStep.Assign(0, mt._015);
-		private final @NonNull CardinalitySolutionStep _076 // assign V0 = |name|
+		private final @NonNull CardinalitySolutionStep _073 // assign V0 = |CollectionLiteralPartCS::ownedLastExpression|
+			= new CardinalitySolutionStep.Assign(0, mt._017);
+		private final @NonNull CardinalitySolutionStep _074 // assign V0 = |CollectionPatternCS::restVariableName|
 			= new CardinalitySolutionStep.Assign(0, mt._020);
-		private final @NonNull CardinalitySolutionStep _077 // assign V0 = |nsPrefix|
-			= new CardinalitySolutionStep.Assign(0, mt._022);
-		private final @NonNull CardinalitySolutionStep _078 // assign V0 = |ownedCoIterator|
-			= new CardinalitySolutionStep.Assign(0, mt._030);
-		private final @NonNull CardinalitySolutionStep _079 // assign V0 = |ownedCurlyBracketedClause|
-			= new CardinalitySolutionStep.Assign(0, mt._036);
-		private final @NonNull CardinalitySolutionStep _080 // assign V0 = |ownedDetails|
-			= new CardinalitySolutionStep.Assign(0, mt._039);
-		private final @NonNull CardinalitySolutionStep _081 // assign V0 = |ownedExtends|
-			= new CardinalitySolutionStep.Assign(0, mt._048);
-		private final @NonNull CardinalitySolutionStep _082 // assign V0 = |ownedIfThenExpressions|
-			= new CardinalitySolutionStep.Assign(0, mt._049);
-		private final @NonNull CardinalitySolutionStep _083 // assign V0 = |ownedInitExpression|
-			= new CardinalitySolutionStep.Assign(0, mt._053);
-		private final @NonNull CardinalitySolutionStep _084 // assign V0 = |ownedLastExpression|
-			= new CardinalitySolutionStep.Assign(0, mt._058);
-		private final @NonNull CardinalitySolutionStep _085 // assign V0 = |ownedMultiplicity|
+		private final @NonNull CardinalitySolutionStep _075 // assign V0 = |CollectionTypeCS::ownedType|
+			= new CardinalitySolutionStep.Assign(0, mt._023);
+		private final @NonNull CardinalitySolutionStep _076 // assign V0 = |DataTypeCS::isPrimitive.'primitive'|
+			= new CardinalitySolutionStep.Assign(0, mt._031);
+		private final @NonNull CardinalitySolutionStep _077 // assign V0 = |DetailCS::values|
+			= new CardinalitySolutionStep.Assign(0, mt._033);
+		private final @NonNull CardinalitySolutionStep _078 // assign V0 = |DocumentationCS::value|
+			= new CardinalitySolutionStep.Assign(0, mt._034);
+		private final @NonNull CardinalitySolutionStep _079 // assign V0 = |EnumerationLiteralCS::literal|
+			= new CardinalitySolutionStep.Assign(0, mt._037);
+		private final @NonNull CardinalitySolutionStep _080 // assign V0 = |IfExpCS::ownedIfThenExpressions|
+			= new CardinalitySolutionStep.Assign(0, mt._042);
+		private final @NonNull CardinalitySolutionStep _081 // assign V0 = |LetVariableCS::ownedRoundBracketedClause|
+			= new CardinalitySolutionStep.Assign(0, mt._052);
+		private final @NonNull CardinalitySolutionStep _082 // assign V0 = |MapTypeCS::ownedValueType|
+			= new CardinalitySolutionStep.Assign(0, mt._059);
+		private final @NonNull CardinalitySolutionStep _083 // assign V0 = |MultiplicityBoundsCS::upperBound|
 			= new CardinalitySolutionStep.Assign(0, mt._063);
-		private final @NonNull CardinalitySolutionStep _086 // assign V0 = |ownedRoundBracketedClause|
-			= new CardinalitySolutionStep.Assign(0, mt._088);
-		private final @NonNull CardinalitySolutionStep _087 // assign V0 = |ownedSignature|
+		private final @NonNull CardinalitySolutionStep _084 // assign V0 = |MultiplicityCS::isNullFree.'|1'|
+			= new CardinalitySolutionStep.Assign(0, mt._064);
+		private final @NonNull CardinalitySolutionStep _085 // assign V0 = |NamedElementCS::name|
+			= new CardinalitySolutionStep.Assign(0, mt._066);
+		private final @NonNull CardinalitySolutionStep _086 // assign V0 = |NavigatingArgCS::ownedCoIterator|
+			= new CardinalitySolutionStep.Assign(0, mt._067);
+		private final @NonNull CardinalitySolutionStep _087 // assign V0 = |NavigatingArgCS::ownedInitExpression|
+			= new CardinalitySolutionStep.Assign(0, mt._068);
+		private final @NonNull CardinalitySolutionStep _088 // assign V0 = |NavigatingArgCS::ownedType|
+			= new CardinalitySolutionStep.Assign(0, mt._070);
+		private final @NonNull CardinalitySolutionStep _089 // assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'|
+			= new CardinalitySolutionStep.Assign(0, mt._076);
+		private final @NonNull CardinalitySolutionStep _090 // assign V0 = |PackageCS::nsPrefix|
+			= new CardinalitySolutionStep.Assign(0, mt._083);
+		private final @NonNull CardinalitySolutionStep _091 // assign V0 = |PatternExpCS::patternVariableName|
 			= new CardinalitySolutionStep.Assign(0, mt._090);
-		private final @NonNull CardinalitySolutionStep _088 // assign V0 = |ownedSquareBracketedClauses|
-			= new CardinalitySolutionStep.Assign(0, mt._092);
-		private final @NonNull CardinalitySolutionStep _089 // assign V0 = |ownedType|
-			= new CardinalitySolutionStep.Assign(0, mt._103);
-		private final @NonNull CardinalitySolutionStep _090 // assign V0 = |ownedType|
-			= new CardinalitySolutionStep.Assign(0, mt._098);
-		private final @NonNull CardinalitySolutionStep _091 // assign V0 = |ownedType|
-			= new CardinalitySolutionStep.Assign(0, mt._100);
-		private final @NonNull CardinalitySolutionStep _092 // assign V0 = |ownedType|
+		private final @NonNull CardinalitySolutionStep _092 // assign V0 = |ReferenceCS::referredOpposite|
+			= new CardinalitySolutionStep.Assign(0, mt._094);
+		private final @NonNull CardinalitySolutionStep _093 // assign V0 = |StringLiteralExpCS::segments|
 			= new CardinalitySolutionStep.Assign(0, mt._101);
-		private final @NonNull CardinalitySolutionStep _093 // assign V0 = |ownedValueType|
-			= new CardinalitySolutionStep.Assign(0, mt._106);
-		private final @NonNull CardinalitySolutionStep _094 // assign V0 = |patternVariableName|
-			= new CardinalitySolutionStep.Assign(0, mt._109);
-		private final @NonNull CardinalitySolutionStep _095 // assign V0 = |qualifiers.'definition'|
-			= new CardinalitySolutionStep.Assign(0, mt._117);
-		private final @NonNull CardinalitySolutionStep _096 // assign V0 = |qualifiers.'static'|
+		private final @NonNull CardinalitySolutionStep _094 // assign V0 = |StructuredClassCS::isAbstract.'abstract'|
+			= new CardinalitySolutionStep.Assign(0, mt._104);
+		private final @NonNull CardinalitySolutionStep _095 // assign V0 = |TemplateableElementCS::ownedSignature|
+			= new CardinalitySolutionStep.Assign(0, mt._113);
+		private final @NonNull CardinalitySolutionStep _096 // assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause|
 			= new CardinalitySolutionStep.Assign(0, mt._118);
-		private final @NonNull CardinalitySolutionStep _097 // assign V0 = |referredOpposite|
-			= new CardinalitySolutionStep.Assign(0, mt._121);
-		private final @NonNull CardinalitySolutionStep _098 // assign V0 = |restVariableName|
-			= new CardinalitySolutionStep.Assign(0, mt._123);
-		private final @NonNull CardinalitySolutionStep _099 // assign V0 = |segments|
-			= new CardinalitySolutionStep.Assign(0, mt._124);
-		private final @NonNull CardinalitySolutionStep _100 // assign V0 = |upperBound|
-			= new CardinalitySolutionStep.Assign(0, mt._131);
-		private final @NonNull CardinalitySolutionStep _101 // assign V0 = |values|
-			= new CardinalitySolutionStep.Assign(0, mt._132);
-		private final @NonNull CardinalitySolutionStep _102 // assign V0 = |value|
+		private final @NonNull CardinalitySolutionStep _097 // assign V0 = |TypedElementCS::ownedType|
+			= new CardinalitySolutionStep.Assign(0, mt._122);
+		private final @NonNull CardinalitySolutionStep _098 // assign V0 = |TypedElementCS::qualifiers.'definition'|
+			= new CardinalitySolutionStep.Assign(0, mt._127);
+		private final @NonNull CardinalitySolutionStep _099 // assign V0 = |TypedElementCS::qualifiers.'static'|
+			= new CardinalitySolutionStep.Assign(0, mt._128);
+		private final @NonNull CardinalitySolutionStep _100 // assign V0 = |TypedRefCS::ownedMultiplicity|
+			= new CardinalitySolutionStep.Assign(0, mt._129);
+		private final @NonNull CardinalitySolutionStep _101 // assign V0 = |VariableCS::ownedType|
 			= new CardinalitySolutionStep.Assign(0, mt._133);
-		private final @NonNull CardinalitySolutionStep _103 // assign V1 = (|ownedArguments| - 1)
-			= new CardinalitySolutionStep.Assign(1, mt._147);
-		private final @NonNull CardinalitySolutionStep _104 // assign V1 = (|ownedDetails| > 0)
-			= new CardinalitySolutionStep.Assign(1, mt._156);
-		private final @NonNull CardinalitySolutionStep _105 // assign V1 = (|ownedExtends| - 1)
+		private final @NonNull CardinalitySolutionStep _102 // assign V0 = |WildcardTypeRefCS::ownedExtends|
+			= new CardinalitySolutionStep.Assign(0, mt._134);
+		private final @NonNull CardinalitySolutionStep _103 // assign V1 = (|AnnotationElementCS::ownedDetails| > 0)
+			= new CardinalitySolutionStep.Assign(1, mt._137);
+		private final @NonNull CardinalitySolutionStep _104 // assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1)
+			= new CardinalitySolutionStep.Assign(1, mt._139);
+		private final @NonNull CardinalitySolutionStep _105 // assign V1 = (|CollectionPatternCS::ownedParts| - 1)
+			= new CardinalitySolutionStep.Assign(1, mt._143);
+		private final @NonNull CardinalitySolutionStep _106 // assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1)
+			= new CardinalitySolutionStep.Assign(1, mt._150);
+		private final @NonNull CardinalitySolutionStep _107 // assign V1 = (|MapLiteralExpCS::ownedParts| - 1)
 			= new CardinalitySolutionStep.Assign(1, mt._165);
-		private final @NonNull CardinalitySolutionStep _106 // assign V1 = (|ownedParameters| > 0)
-			= new CardinalitySolutionStep.Assign(1, mt._177);
-		private final @NonNull CardinalitySolutionStep _107 // assign V1 = (|ownedParts| - 1)
-			= new CardinalitySolutionStep.Assign(1, mt._180);
-		private final @NonNull CardinalitySolutionStep _108 // assign V1 = (|ownedParts| - 1)
-			= new CardinalitySolutionStep.Assign(1, mt._182);
-		private final @NonNull CardinalitySolutionStep _109 // assign V1 = (|ownedParts| - 1)
-			= new CardinalitySolutionStep.Assign(1, mt._179);
-		private final @NonNull CardinalitySolutionStep _110 // assign V1 = (|ownedParts| - 1)
-			= new CardinalitySolutionStep.Assign(1, mt._183);
-		private final @NonNull CardinalitySolutionStep _111 // assign V1 = (|ownedParts| > 0)
-			= new CardinalitySolutionStep.Assign(1, mt._186);
-		private final @NonNull CardinalitySolutionStep _112 // assign V1 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0)
-			= new CardinalitySolutionStep.Assign(1, mt._216);
-		private final @NonNull CardinalitySolutionStep _113 // assign V1 = |default|
-			= new CardinalitySolutionStep.Assign(1, mt._003);
-		private final @NonNull CardinalitySolutionStep _114 // assign V1 = |instanceClassName|
-			= new CardinalitySolutionStep.Assign(1, mt._005);
-		private final @NonNull CardinalitySolutionStep _115 // assign V1 = |isAll.'::*'|
-			= new CardinalitySolutionStep.Assign(1, mt._007);
-		private final @NonNull CardinalitySolutionStep _116 // assign V1 = |isNullFree.'|1'|
-			= new CardinalitySolutionStep.Assign(1, mt._010);
-		private final @NonNull CardinalitySolutionStep _117 // assign V1 = |name|
-			= new CardinalitySolutionStep.Assign(1, mt._020);
-		private final @NonNull CardinalitySolutionStep _118 // assign V1 = |nsURI|
-			= new CardinalitySolutionStep.Assign(1, mt._023);
-		private final @NonNull CardinalitySolutionStep _119 // assign V1 = |ownedCoIterator|
-			= new CardinalitySolutionStep.Assign(1, mt._030);
-		private final @NonNull CardinalitySolutionStep _120 // assign V1 = |ownedCollectionMultiplicity|
-			= new CardinalitySolutionStep.Assign(1, mt._031);
-		private final @NonNull CardinalitySolutionStep _121 // assign V1 = |ownedImports|
-			= new CardinalitySolutionStep.Assign(1, mt._051);
-		private final @NonNull CardinalitySolutionStep _122 // assign V1 = |ownedInitExpression|
-			= new CardinalitySolutionStep.Assign(1, mt._053);
-		private final @NonNull CardinalitySolutionStep _123 // assign V1 = |ownedMessageSpecification|
-			= new CardinalitySolutionStep.Assign(1, mt._061);
-		private final @NonNull CardinalitySolutionStep _124 // assign V1 = |ownedMultiplicity|
-			= new CardinalitySolutionStep.Assign(1, mt._063);
-		private final @NonNull CardinalitySolutionStep _125 // assign V1 = |ownedMultiplicity|
-			= new CardinalitySolutionStep.Assign(1, mt._062);
-		private final @NonNull CardinalitySolutionStep _126 // assign V1 = |ownedPatternGuard|
-			= new CardinalitySolutionStep.Assign(1, mt._081);
-		private final @NonNull CardinalitySolutionStep _127 // assign V1 = |ownedRoundBracketedClause|
-			= new CardinalitySolutionStep.Assign(1, mt._089);
-		private final @NonNull CardinalitySolutionStep _128 // assign V1 = |ownedSignature|
-			= new CardinalitySolutionStep.Assign(1, mt._090);
-		private final @NonNull CardinalitySolutionStep _129 // assign V1 = |ownedType|
-			= new CardinalitySolutionStep.Assign(1, mt._103);
-		private final @NonNull CardinalitySolutionStep _130 // assign V1 = |ownedType|
-			= new CardinalitySolutionStep.Assign(1, mt._098);
-		private final @NonNull CardinalitySolutionStep _131 // assign V1 = |qualifiers.'!ordered|!unique|ordered|unique'|
-			= new CardinalitySolutionStep.Assign(1, mt._116);
-		private final @NonNull CardinalitySolutionStep _132 // assign V1 = |referredOpposite|
-			= new CardinalitySolutionStep.Assign(1, mt._121);
-		private final @NonNull CardinalitySolutionStep _133 // assign V1 = |value|
-			= new CardinalitySolutionStep.Assign(1, mt._134);
-		private final @NonNull CardinalitySolutionStep _134 // assign V10 = (|ownedBodyExpressions| > 0)
-			= new CardinalitySolutionStep.Assign(10, mt._150);
-		private final @NonNull CardinalitySolutionStep _135 // assign V10 = (|ownedDefaultExpressions| > 0)
-			= new CardinalitySolutionStep.Assign(10, mt._154);
+		private final @NonNull CardinalitySolutionStep _108 // assign V1 = (|OperationCS::ownedParameters| > 0)
+			= new CardinalitySolutionStep.Assign(1, mt._190);
+		private final @NonNull CardinalitySolutionStep _109 // assign V1 = (|RoundBracketedClauseCS::ownedArguments| - 1)
+			= new CardinalitySolutionStep.Assign(1, mt._198);
+		private final @NonNull CardinalitySolutionStep _110 // assign V1 = (|TupleTypeCS::ownedParts| > 0)
+			= new CardinalitySolutionStep.Assign(1, mt._214);
+		private final @NonNull CardinalitySolutionStep _111 // assign V1 = (|TypeParameterCS::ownedExtends| - 1)
+			= new CardinalitySolutionStep.Assign(1, mt._217);
+		private final @NonNull CardinalitySolutionStep _112 // assign V1 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0)
+			= new CardinalitySolutionStep.Assign(1, mt._223);
+		private final @NonNull CardinalitySolutionStep _113 // assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause|
+			= new CardinalitySolutionStep.Assign(1, mt._006);
+		private final @NonNull CardinalitySolutionStep _114 // assign V1 = |ClassCS::instanceClassName|
+			= new CardinalitySolutionStep.Assign(1, mt._012);
+		private final @NonNull CardinalitySolutionStep _115 // assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity|
+			= new CardinalitySolutionStep.Assign(1, mt._022);
+		private final @NonNull CardinalitySolutionStep _116 // assign V1 = |ConstraintCS::ownedMessageSpecification|
+			= new CardinalitySolutionStep.Assign(1, mt._024);
+		private final @NonNull CardinalitySolutionStep _117 // assign V1 = |EnumerationLiteralCS::value|
+			= new CardinalitySolutionStep.Assign(1, mt._038);
+		private final @NonNull CardinalitySolutionStep _118 // assign V1 = |ImportCS::isAll.'::*'|
+			= new CardinalitySolutionStep.Assign(1, mt._046);
+		private final @NonNull CardinalitySolutionStep _119 // assign V1 = |MultiplicityCS::isNullFree.'|1'|
+			= new CardinalitySolutionStep.Assign(1, mt._064);
+		private final @NonNull CardinalitySolutionStep _120 // assign V1 = |NamedElementCS::name|
+			= new CardinalitySolutionStep.Assign(1, mt._066);
+		private final @NonNull CardinalitySolutionStep _121 // assign V1 = |NavigatingArgCS::ownedCoIterator|
+			= new CardinalitySolutionStep.Assign(1, mt._067);
+		private final @NonNull CardinalitySolutionStep _122 // assign V1 = |NavigatingArgCS::ownedInitExpression|
+			= new CardinalitySolutionStep.Assign(1, mt._068);
+		private final @NonNull CardinalitySolutionStep _123 // assign V1 = |PackageCS::nsURI|
+			= new CardinalitySolutionStep.Assign(1, mt._084);
+		private final @NonNull CardinalitySolutionStep _124 // assign V1 = |ReferenceCS::referredOpposite|
+			= new CardinalitySolutionStep.Assign(1, mt._094);
+		private final @NonNull CardinalitySolutionStep _125 // assign V1 = |RootCS::ownedImports|
+			= new CardinalitySolutionStep.Assign(1, mt._095);
+		private final @NonNull CardinalitySolutionStep _126 // assign V1 = |StructuralFeatureCS::default|
+			= new CardinalitySolutionStep.Assign(1, mt._102);
+		private final @NonNull CardinalitySolutionStep _127 // assign V1 = |TemplateBindingCS::ownedMultiplicity|
+			= new CardinalitySolutionStep.Assign(1, mt._109);
+		private final @NonNull CardinalitySolutionStep _128 // assign V1 = |TemplateableElementCS::ownedSignature|
+			= new CardinalitySolutionStep.Assign(1, mt._113);
+		private final @NonNull CardinalitySolutionStep _129 // assign V1 = |TypeNameExpCS::ownedPatternGuard|
+			= new CardinalitySolutionStep.Assign(1, mt._120);
+		private final @NonNull CardinalitySolutionStep _130 // assign V1 = |TypedElementCS::ownedType|
+			= new CardinalitySolutionStep.Assign(1, mt._122);
+		private final @NonNull CardinalitySolutionStep _131 // assign V1 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
+			= new CardinalitySolutionStep.Assign(1, mt._126);
+		private final @NonNull CardinalitySolutionStep _132 // assign V1 = |TypedRefCS::ownedMultiplicity|
+			= new CardinalitySolutionStep.Assign(1, mt._129);
+		private final @NonNull CardinalitySolutionStep _133 // assign V1 = |VariableCS::ownedType|
+			= new CardinalitySolutionStep.Assign(1, mt._133);
+		private final @NonNull CardinalitySolutionStep _134 // assign V10 = (|OperationCS::ownedBodyExpressions| > 0)
+			= new CardinalitySolutionStep.Assign(10, mt._186);
+		private final @NonNull CardinalitySolutionStep _135 // assign V10 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+			= new CardinalitySolutionStep.Assign(10, mt._204);
 		private final @NonNull CardinalitySolutionStep _136 // assign V10 = 0
 			= new CardinalitySolutionStep.Assign(10, mt._000);
-		private final @NonNull CardinalitySolutionStep _137 // assign V10 = |ownedConstraints|
-			= new CardinalitySolutionStep.Assign(10, mt._034);
-		private final @NonNull CardinalitySolutionStep _138 // assign V10 = |ownedPreconditions|
-			= new CardinalitySolutionStep.Assign(10, mt._084);
-		private final @NonNull CardinalitySolutionStep _139 // assign V11 = (|ownedBodyExpressions| > 0)
-			= new CardinalitySolutionStep.Assign(11, mt._150);
+		private final @NonNull CardinalitySolutionStep _137 // assign V10 = |ClassCS::ownedConstraints|
+			= new CardinalitySolutionStep.Assign(10, mt._013);
+		private final @NonNull CardinalitySolutionStep _138 // assign V10 = |OperationCS::ownedPreconditions|
+			= new CardinalitySolutionStep.Assign(10, mt._081);
+		private final @NonNull CardinalitySolutionStep _139 // assign V11 = (|OperationCS::ownedBodyExpressions| > 0)
+			= new CardinalitySolutionStep.Assign(11, mt._186);
 		private final @NonNull CardinalitySolutionStep _140 // assign V11 = 0
 			= new CardinalitySolutionStep.Assign(11, mt._000);
-		private final @NonNull CardinalitySolutionStep _141 // assign V11 = |ownedBodyExpressions|
-			= new CardinalitySolutionStep.Assign(11, mt._028);
+		private final @NonNull CardinalitySolutionStep _141 // assign V11 = |OperationCS::ownedBodyExpressions|
+			= new CardinalitySolutionStep.Assign(11, mt._077);
 		private final @NonNull CardinalitySolutionStep _142 // assign V12 = 0
 			= new CardinalitySolutionStep.Assign(12, mt._000);
-		private final @NonNull CardinalitySolutionStep _143 // assign V12 = |ownedBodyExpressions|
-			= new CardinalitySolutionStep.Assign(12, mt._028);
-		private final @NonNull CardinalitySolutionStep _144 // assign V12 = |ownedImplicitOpposites|
-			= new CardinalitySolutionStep.Assign(12, mt._050);
-		private final @NonNull CardinalitySolutionStep _145 // assign V12 = |ownedPostconditions|
-			= new CardinalitySolutionStep.Assign(12, mt._083);
-		private final @NonNull CardinalitySolutionStep _146 // assign V13 = |ownedImplicitOpposites|
-			= new CardinalitySolutionStep.Assign(13, mt._050);
-		private final @NonNull CardinalitySolutionStep _147 // assign V13 = |ownedPostconditions|
-			= new CardinalitySolutionStep.Assign(13, mt._083);
-		private final @NonNull CardinalitySolutionStep _148 // assign V2 = (|isSerializable.'serializable'| > 0)
-			= new CardinalitySolutionStep.Assign(2, mt._138);
-		private final @NonNull CardinalitySolutionStep _149 // assign V2 = (|ownedDetails| - 1)
-			= new CardinalitySolutionStep.Assign(2, mt._155);
-		private final @NonNull CardinalitySolutionStep _150 // assign V2 = (|ownedParameters| - 1)
-			= new CardinalitySolutionStep.Assign(2, mt._176);
-		private final @NonNull CardinalitySolutionStep _151 // assign V2 = (|ownedParameters| > 0)
-			= new CardinalitySolutionStep.Assign(2, mt._177);
-		private final @NonNull CardinalitySolutionStep _152 // assign V2 = (|ownedParts| - 1)
-			= new CardinalitySolutionStep.Assign(2, mt._181);
-		private final @NonNull CardinalitySolutionStep _153 // assign V2 = (|ownedSuperTypes| > 0)
-			= new CardinalitySolutionStep.Assign(2, mt._198);
-		private final @NonNull CardinalitySolutionStep _154 // assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
-			= new CardinalitySolutionStep.Assign(2, mt._214);
+		private final @NonNull CardinalitySolutionStep _143 // assign V12 = |OperationCS::ownedBodyExpressions|
+			= new CardinalitySolutionStep.Assign(12, mt._077);
+		private final @NonNull CardinalitySolutionStep _144 // assign V12 = |OperationCS::ownedPostconditions|
+			= new CardinalitySolutionStep.Assign(12, mt._080);
+		private final @NonNull CardinalitySolutionStep _145 // assign V12 = |ReferenceCS::ownedImplicitOpposites|
+			= new CardinalitySolutionStep.Assign(12, mt._092);
+		private final @NonNull CardinalitySolutionStep _146 // assign V13 = |OperationCS::ownedPostconditions|
+			= new CardinalitySolutionStep.Assign(13, mt._080);
+		private final @NonNull CardinalitySolutionStep _147 // assign V13 = |ReferenceCS::ownedImplicitOpposites|
+			= new CardinalitySolutionStep.Assign(13, mt._092);
+		private final @NonNull CardinalitySolutionStep _148 // assign V2 = (|AnnotationElementCS::ownedDetails| - 1)
+			= new CardinalitySolutionStep.Assign(2, mt._136);
+		private final @NonNull CardinalitySolutionStep _149 // assign V2 = (|EnumerationCS::isSerializable.'serializable'| > 0)
+			= new CardinalitySolutionStep.Assign(2, mt._153);
+		private final @NonNull CardinalitySolutionStep _150 // assign V2 = (|OperationCS::ownedParameters| - 1)
+			= new CardinalitySolutionStep.Assign(2, mt._189);
+		private final @NonNull CardinalitySolutionStep _151 // assign V2 = (|OperationCS::ownedParameters| > 0)
+			= new CardinalitySolutionStep.Assign(2, mt._190);
+		private final @NonNull CardinalitySolutionStep _152 // assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0)
+			= new CardinalitySolutionStep.Assign(2, mt._207);
+		private final @NonNull CardinalitySolutionStep _153 // assign V2 = (|TupleTypeCS::ownedParts| - 1)
+			= new CardinalitySolutionStep.Assign(2, mt._213);
+		private final @NonNull CardinalitySolutionStep _154 // assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+			= new CardinalitySolutionStep.Assign(2, mt._221);
 		private final @NonNull CardinalitySolutionStep _155 // assign V2 = 0
 			= new CardinalitySolutionStep.Assign(2, mt._000);
-		private final @NonNull CardinalitySolutionStep _156 // assign V2 = |default|
-			= new CardinalitySolutionStep.Assign(2, mt._003);
-		private final @NonNull CardinalitySolutionStep _157 // assign V2 = |instanceClassName|
-			= new CardinalitySolutionStep.Assign(2, mt._005);
-		private final @NonNull CardinalitySolutionStep _158 // assign V2 = |ownedAnnotations|
+		private final @NonNull CardinalitySolutionStep _156 // assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause|
+			= new CardinalitySolutionStep.Assign(2, mt._004);
+		private final @NonNull CardinalitySolutionStep _157 // assign V2 = |ClassCS::instanceClassName|
+			= new CardinalitySolutionStep.Assign(2, mt._012);
+		private final @NonNull CardinalitySolutionStep _158 // assign V2 = |ConstraintCS::ownedMessageSpecification|
+			= new CardinalitySolutionStep.Assign(2, mt._024);
+		private final @NonNull CardinalitySolutionStep _159 // assign V2 = |ConstraintCS::ownedSpecification|
 			= new CardinalitySolutionStep.Assign(2, mt._025);
-		private final @NonNull CardinalitySolutionStep _159 // assign V2 = |ownedCurlyBracketedClause|
-			= new CardinalitySolutionStep.Assign(2, mt._037);
-		private final @NonNull CardinalitySolutionStep _160 // assign V2 = |ownedMessageSpecification|
-			= new CardinalitySolutionStep.Assign(2, mt._061);
-		private final @NonNull CardinalitySolutionStep _161 // assign V2 = |ownedMultiplicity|
-			= new CardinalitySolutionStep.Assign(2, mt._063);
-		private final @NonNull CardinalitySolutionStep _162 // assign V2 = |ownedPackages|
-			= new CardinalitySolutionStep.Assign(2, mt._066);
-		private final @NonNull CardinalitySolutionStep _163 // assign V2 = |ownedSpecification|
-			= new CardinalitySolutionStep.Assign(2, mt._091);
-		private final @NonNull CardinalitySolutionStep _164 // assign V2 = |ownedType|
-			= new CardinalitySolutionStep.Assign(2, mt._103);
-		private final @NonNull CardinalitySolutionStep _165 // assign V2 = |qualifiers.'!ordered|!unique|ordered|unique'|
-			= new CardinalitySolutionStep.Assign(2, mt._116);
-		private final @NonNull CardinalitySolutionStep _166 // assign V3 = (|isSerializable.'serializable'| > 0)
-			= new CardinalitySolutionStep.Assign(3, mt._137);
-		private final @NonNull CardinalitySolutionStep _167 // assign V3 = (|ownedAnnotations| > 0)
-			= new CardinalitySolutionStep.Assign(3, mt._146);
-		private final @NonNull CardinalitySolutionStep _168 // assign V3 = (|ownedParameters| - 1)
-			= new CardinalitySolutionStep.Assign(3, mt._176);
-		private final @NonNull CardinalitySolutionStep _169 // assign V3 = (|ownedSuperTypes| - 1)
-			= new CardinalitySolutionStep.Assign(3, mt._197);
-		private final @NonNull CardinalitySolutionStep _170 // assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
-			= new CardinalitySolutionStep.Assign(3, mt._213);
-		private final @NonNull CardinalitySolutionStep _171 // assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
-			= new CardinalitySolutionStep.Assign(3, mt._214);
+		private final @NonNull CardinalitySolutionStep _160 // assign V2 = |ModelElementCS::ownedAnnotations|
+			= new CardinalitySolutionStep.Assign(2, mt._060);
+		private final @NonNull CardinalitySolutionStep _161 // assign V2 = |PackageOwnerCS::ownedPackages|
+			= new CardinalitySolutionStep.Assign(2, mt._086);
+		private final @NonNull CardinalitySolutionStep _162 // assign V2 = |StructuralFeatureCS::default|
+			= new CardinalitySolutionStep.Assign(2, mt._102);
+		private final @NonNull CardinalitySolutionStep _163 // assign V2 = |TypedElementCS::ownedType|
+			= new CardinalitySolutionStep.Assign(2, mt._122);
+		private final @NonNull CardinalitySolutionStep _164 // assign V2 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'|
+			= new CardinalitySolutionStep.Assign(2, mt._126);
+		private final @NonNull CardinalitySolutionStep _165 // assign V2 = |TypedRefCS::ownedMultiplicity|
+			= new CardinalitySolutionStep.Assign(2, mt._129);
+		private final @NonNull CardinalitySolutionStep _166 // assign V3 = (|DataTypeCS::isSerializable.'serializable'| > 0)
+			= new CardinalitySolutionStep.Assign(3, mt._152);
+		private final @NonNull CardinalitySolutionStep _167 // assign V3 = (|ModelElementCS::ownedAnnotations| > 0)
+			= new CardinalitySolutionStep.Assign(3, mt._172);
+		private final @NonNull CardinalitySolutionStep _168 // assign V3 = (|OperationCS::ownedParameters| - 1)
+			= new CardinalitySolutionStep.Assign(3, mt._189);
+		private final @NonNull CardinalitySolutionStep _169 // assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1)
+			= new CardinalitySolutionStep.Assign(3, mt._206);
+		private final @NonNull CardinalitySolutionStep _170 // assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+			= new CardinalitySolutionStep.Assign(3, mt._220);
+		private final @NonNull CardinalitySolutionStep _171 // assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0)
+			= new CardinalitySolutionStep.Assign(3, mt._221);
 		private final @NonNull CardinalitySolutionStep _172 // assign V3 = 0
 			= new CardinalitySolutionStep.Assign(3, mt._000);
-		private final @NonNull CardinalitySolutionStep _173 // assign V3 = |default|
+		private final @NonNull CardinalitySolutionStep _173 // assign V3 = |AbstractNameExpCS::isPre.'@'|
 			= new CardinalitySolutionStep.Assign(3, mt._003);
-		private final @NonNull CardinalitySolutionStep _174 // assign V3 = |isPre.'@'|
-			= new CardinalitySolutionStep.Assign(3, mt._011);
-		private final @NonNull CardinalitySolutionStep _175 // assign V3 = |isSerializable.'serializable'|
-			= new CardinalitySolutionStep.Assign(3, mt._013);
-		private final @NonNull CardinalitySolutionStep _176 // assign V3 = |ownedAnnotations|
+		private final @NonNull CardinalitySolutionStep _174 // assign V3 = |ConstraintCS::ownedSpecification|
 			= new CardinalitySolutionStep.Assign(3, mt._025);
-		private final @NonNull CardinalitySolutionStep _177 // assign V3 = |ownedMultiplicity|
-			= new CardinalitySolutionStep.Assign(3, mt._063);
-		private final @NonNull CardinalitySolutionStep _178 // assign V3 = |ownedPackages|
-			= new CardinalitySolutionStep.Assign(3, mt._066);
-		private final @NonNull CardinalitySolutionStep _179 // assign V3 = |ownedSpecification|
-			= new CardinalitySolutionStep.Assign(3, mt._091);
-		private final @NonNull CardinalitySolutionStep _180 // assign V3 = |ownedType|
-			= new CardinalitySolutionStep.Assign(3, mt._103);
-		private final @NonNull CardinalitySolutionStep _181 // assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-			= new CardinalitySolutionStep.Assign(3, mt._114);
-		private final @NonNull CardinalitySolutionStep _182 // assign V4 = (|ownedExceptions| > 0)
-			= new CardinalitySolutionStep.Assign(4, mt._159);
-		private final @NonNull CardinalitySolutionStep _183 // assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
-			= new CardinalitySolutionStep.Assign(4, mt._213);
-		private final @NonNull CardinalitySolutionStep _184 // assign V4 = |instanceClassName|
-			= new CardinalitySolutionStep.Assign(4, mt._005);
-		private final @NonNull CardinalitySolutionStep _185 // assign V4 = |isSerializable.'serializable'|
-			= new CardinalitySolutionStep.Assign(4, mt._014);
-		private final @NonNull CardinalitySolutionStep _186 // assign V4 = |ownedAnnotations|
-			= new CardinalitySolutionStep.Assign(4, mt._025);
-		private final @NonNull CardinalitySolutionStep _187 // assign V4 = |ownedClasses|
-			= new CardinalitySolutionStep.Assign(4, mt._029);
-		private final @NonNull CardinalitySolutionStep _188 // assign V4 = |ownedContents|
-			= new CardinalitySolutionStep.Assign(4, mt._035);
-		private final @NonNull CardinalitySolutionStep _189 // assign V4 = |ownedLiterals|
+		private final @NonNull CardinalitySolutionStep _175 // assign V3 = |EnumerationCS::isSerializable.'serializable'|
+			= new CardinalitySolutionStep.Assign(3, mt._035);
+		private final @NonNull CardinalitySolutionStep _176 // assign V3 = |ModelElementCS::ownedAnnotations|
+			= new CardinalitySolutionStep.Assign(3, mt._060);
+		private final @NonNull CardinalitySolutionStep _177 // assign V3 = |PackageOwnerCS::ownedPackages|
+			= new CardinalitySolutionStep.Assign(3, mt._086);
+		private final @NonNull CardinalitySolutionStep _178 // assign V3 = |StructuralFeatureCS::default|
+			= new CardinalitySolutionStep.Assign(3, mt._102);
+		private final @NonNull CardinalitySolutionStep _179 // assign V3 = |TypedElementCS::ownedType|
+			= new CardinalitySolutionStep.Assign(3, mt._122);
+		private final @NonNull CardinalitySolutionStep _180 // assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+			= new CardinalitySolutionStep.Assign(3, mt._124);
+		private final @NonNull CardinalitySolutionStep _181 // assign V3 = |TypedRefCS::ownedMultiplicity|
+			= new CardinalitySolutionStep.Assign(3, mt._129);
+		private final @NonNull CardinalitySolutionStep _182 // assign V4 = (|OperationCS::ownedExceptions| > 0)
+			= new CardinalitySolutionStep.Assign(4, mt._188);
+		private final @NonNull CardinalitySolutionStep _183 // assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0)
+			= new CardinalitySolutionStep.Assign(4, mt._220);
+		private final @NonNull CardinalitySolutionStep _184 // assign V4 = |AnnotationCS::ownedContents|
+			= new CardinalitySolutionStep.Assign(4, mt._008);
+		private final @NonNull CardinalitySolutionStep _185 // assign V4 = |ClassCS::instanceClassName|
+			= new CardinalitySolutionStep.Assign(4, mt._012);
+		private final @NonNull CardinalitySolutionStep _186 // assign V4 = |DataTypeCS::isSerializable.'serializable'|
+			= new CardinalitySolutionStep.Assign(4, mt._032);
+		private final @NonNull CardinalitySolutionStep _187 // assign V4 = |EnumerationCS::ownedLiterals|
+			= new CardinalitySolutionStep.Assign(4, mt._036);
+		private final @NonNull CardinalitySolutionStep _188 // assign V4 = |ModelElementCS::ownedAnnotations|
 			= new CardinalitySolutionStep.Assign(4, mt._060);
-		private final @NonNull CardinalitySolutionStep _190 // assign V4 = |ownedType|
-			= new CardinalitySolutionStep.Assign(4, mt._103);
-		private final @NonNull CardinalitySolutionStep _191 // assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
-			= new CardinalitySolutionStep.Assign(4, mt._113);
-		private final @NonNull CardinalitySolutionStep _192 // assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
-			= new CardinalitySolutionStep.Assign(4, mt._114);
-		private final @NonNull CardinalitySolutionStep _193 // assign V5 = (|isInterface.'interface'| > 0)
-			= new CardinalitySolutionStep.Assign(5, mt._136);
-		private final @NonNull CardinalitySolutionStep _194 // assign V5 = (|ownedExceptions| - 1)
-			= new CardinalitySolutionStep.Assign(5, mt._158);
-		private final @NonNull CardinalitySolutionStep _195 // assign V5 = (|ownedExceptions| > 0)
-			= new CardinalitySolutionStep.Assign(5, mt._159);
-		private final @NonNull CardinalitySolutionStep _196 // assign V5 = |ownedAnnotations|
-			= new CardinalitySolutionStep.Assign(5, mt._025);
-		private final @NonNull CardinalitySolutionStep _197 // assign V5 = |ownedConstraints|
-			= new CardinalitySolutionStep.Assign(5, mt._034);
-		private final @NonNull CardinalitySolutionStep _198 // assign V5 = |ownedDefaultExpressions|
-			= new CardinalitySolutionStep.Assign(5, mt._038);
-		private final @NonNull CardinalitySolutionStep _199 // assign V5 = |ownedLiterals|
+		private final @NonNull CardinalitySolutionStep _189 // assign V4 = |PackageCS::ownedClasses|
+			= new CardinalitySolutionStep.Assign(4, mt._085);
+		private final @NonNull CardinalitySolutionStep _190 // assign V4 = |TypedElementCS::ownedType|
+			= new CardinalitySolutionStep.Assign(4, mt._122);
+		private final @NonNull CardinalitySolutionStep _191 // assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+			= new CardinalitySolutionStep.Assign(4, mt._123);
+		private final @NonNull CardinalitySolutionStep _192 // assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'|
+			= new CardinalitySolutionStep.Assign(4, mt._124);
+		private final @NonNull CardinalitySolutionStep _193 // assign V5 = (|OperationCS::ownedExceptions| - 1)
+			= new CardinalitySolutionStep.Assign(5, mt._187);
+		private final @NonNull CardinalitySolutionStep _194 // assign V5 = (|OperationCS::ownedExceptions| > 0)
+			= new CardinalitySolutionStep.Assign(5, mt._188);
+		private final @NonNull CardinalitySolutionStep _195 // assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0)
+			= new CardinalitySolutionStep.Assign(5, mt._205);
+		private final @NonNull CardinalitySolutionStep _196 // assign V5 = |AnnotationCS::ownedReferences|
+			= new CardinalitySolutionStep.Assign(5, mt._009);
+		private final @NonNull CardinalitySolutionStep _197 // assign V5 = |ClassCS::ownedConstraints|
+			= new CardinalitySolutionStep.Assign(5, mt._013);
+		private final @NonNull CardinalitySolutionStep _198 // assign V5 = |EnumerationCS::ownedLiterals|
+			= new CardinalitySolutionStep.Assign(5, mt._036);
+		private final @NonNull CardinalitySolutionStep _199 // assign V5 = |ModelElementCS::ownedAnnotations|
 			= new CardinalitySolutionStep.Assign(5, mt._060);
-		private final @NonNull CardinalitySolutionStep _200 // assign V5 = |ownedReferences|
-			= new CardinalitySolutionStep.Assign(5, mt._086);
-		private final @NonNull CardinalitySolutionStep _201 // assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
-			= new CardinalitySolutionStep.Assign(5, mt._113);
-		private final @NonNull CardinalitySolutionStep _202 // assign V6 = (|ownedDefaultExpressions| > 0)
-			= new CardinalitySolutionStep.Assign(6, mt._154);
-		private final @NonNull CardinalitySolutionStep _203 // assign V6 = (|ownedExceptions| - 1)
-			= new CardinalitySolutionStep.Assign(6, mt._158);
-		private final @NonNull CardinalitySolutionStep _204 // assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
-			= new CardinalitySolutionStep.Assign(6, mt._215);
-		private final @NonNull CardinalitySolutionStep _205 // assign V6 = (|referredKeys| > 0)
-			= new CardinalitySolutionStep.Assign(6, mt._221);
-		private final @NonNull CardinalitySolutionStep _206 // assign V6 = |isInterface.'interface'|
-			= new CardinalitySolutionStep.Assign(6, mt._009);
-		private final @NonNull CardinalitySolutionStep _207 // assign V6 = |ownedAnnotations|
-			= new CardinalitySolutionStep.Assign(6, mt._025);
-		private final @NonNull CardinalitySolutionStep _208 // assign V6 = |ownedConstraints|
-			= new CardinalitySolutionStep.Assign(6, mt._034);
-		private final @NonNull CardinalitySolutionStep _209 // assign V6 = |ownedDefaultExpressions|
-			= new CardinalitySolutionStep.Assign(6, mt._038);
-		private final @NonNull CardinalitySolutionStep _210 // assign V7 = (|ownedDefaultExpressions| > 0)
-			= new CardinalitySolutionStep.Assign(7, mt._154);
-		private final @NonNull CardinalitySolutionStep _211 // assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
-			= new CardinalitySolutionStep.Assign(7, mt._215);
-		private final @NonNull CardinalitySolutionStep _212 // assign V7 = (|referredKeys| - 1)
-			= new CardinalitySolutionStep.Assign(7, mt._220);
-		private final @NonNull CardinalitySolutionStep _213 // assign V7 = (|referredKeys| > 0)
-			= new CardinalitySolutionStep.Assign(7, mt._221);
+		private final @NonNull CardinalitySolutionStep _200 // assign V5 = |StructuralFeatureCS::ownedDefaultExpressions|
+			= new CardinalitySolutionStep.Assign(5, mt._103);
+		private final @NonNull CardinalitySolutionStep _201 // assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'|
+			= new CardinalitySolutionStep.Assign(5, mt._123);
+		private final @NonNull CardinalitySolutionStep _202 // assign V6 = (|OperationCS::ownedExceptions| - 1)
+			= new CardinalitySolutionStep.Assign(6, mt._187);
+		private final @NonNull CardinalitySolutionStep _203 // assign V6 = (|ReferenceCS::referredKeys| > 0)
+			= new CardinalitySolutionStep.Assign(6, mt._197);
+		private final @NonNull CardinalitySolutionStep _204 // assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+			= new CardinalitySolutionStep.Assign(6, mt._204);
+		private final @NonNull CardinalitySolutionStep _205 // assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+			= new CardinalitySolutionStep.Assign(6, mt._222);
+		private final @NonNull CardinalitySolutionStep _206 // assign V6 = |ClassCS::ownedConstraints|
+			= new CardinalitySolutionStep.Assign(6, mt._013);
+		private final @NonNull CardinalitySolutionStep _207 // assign V6 = |ModelElementCS::ownedAnnotations|
+			= new CardinalitySolutionStep.Assign(6, mt._060);
+		private final @NonNull CardinalitySolutionStep _208 // assign V6 = |StructuralFeatureCS::ownedDefaultExpressions|
+			= new CardinalitySolutionStep.Assign(6, mt._103);
+		private final @NonNull CardinalitySolutionStep _209 // assign V6 = |StructuredClassCS::isInterface.'interface'|
+			= new CardinalitySolutionStep.Assign(6, mt._105);
+		private final @NonNull CardinalitySolutionStep _210 // assign V7 = (|ReferenceCS::referredKeys| - 1)
+			= new CardinalitySolutionStep.Assign(7, mt._196);
+		private final @NonNull CardinalitySolutionStep _211 // assign V7 = (|ReferenceCS::referredKeys| > 0)
+			= new CardinalitySolutionStep.Assign(7, mt._197);
+		private final @NonNull CardinalitySolutionStep _212 // assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+			= new CardinalitySolutionStep.Assign(7, mt._204);
+		private final @NonNull CardinalitySolutionStep _213 // assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0)
+			= new CardinalitySolutionStep.Assign(7, mt._222);
 		private final @NonNull CardinalitySolutionStep _214 // assign V7 = 0
 			= new CardinalitySolutionStep.Assign(7, mt._000);
-		private final @NonNull CardinalitySolutionStep _215 // assign V7 = |ownedAnnotations|
-			= new CardinalitySolutionStep.Assign(7, mt._025);
-		private final @NonNull CardinalitySolutionStep _216 // assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-			= new CardinalitySolutionStep.Assign(7, mt._115);
-		private final @NonNull CardinalitySolutionStep _217 // assign V8 = (|referredKeys| - 1)
-			= new CardinalitySolutionStep.Assign(8, mt._220);
+		private final @NonNull CardinalitySolutionStep _215 // assign V7 = |ModelElementCS::ownedAnnotations|
+			= new CardinalitySolutionStep.Assign(7, mt._060);
+		private final @NonNull CardinalitySolutionStep _216 // assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+			= new CardinalitySolutionStep.Assign(7, mt._125);
+		private final @NonNull CardinalitySolutionStep _217 // assign V8 = (|ReferenceCS::referredKeys| - 1)
+			= new CardinalitySolutionStep.Assign(8, mt._196);
 		private final @NonNull CardinalitySolutionStep _218 // assign V8 = 0
 			= new CardinalitySolutionStep.Assign(8, mt._000);
-		private final @NonNull CardinalitySolutionStep _219 // assign V8 = |ownedAnnotations|
-			= new CardinalitySolutionStep.Assign(8, mt._025);
-		private final @NonNull CardinalitySolutionStep _220 // assign V8 = |ownedDefaultExpressions|
-			= new CardinalitySolutionStep.Assign(8, mt._038);
-		private final @NonNull CardinalitySolutionStep _221 // assign V8 = |ownedOperations|
-			= new CardinalitySolutionStep.Assign(8, mt._065);
-		private final @NonNull CardinalitySolutionStep _222 // assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
-			= new CardinalitySolutionStep.Assign(8, mt._115);
-		private final @NonNull CardinalitySolutionStep _223 // assign V9 = (|ownedDefaultExpressions| > 0)
-			= new CardinalitySolutionStep.Assign(9, mt._154);
+		private final @NonNull CardinalitySolutionStep _219 // assign V8 = |ModelElementCS::ownedAnnotations|
+			= new CardinalitySolutionStep.Assign(8, mt._060);
+		private final @NonNull CardinalitySolutionStep _220 // assign V8 = |StructuralFeatureCS::ownedDefaultExpressions|
+			= new CardinalitySolutionStep.Assign(8, mt._103);
+		private final @NonNull CardinalitySolutionStep _221 // assign V8 = |StructuredClassCS::ownedOperations|
+			= new CardinalitySolutionStep.Assign(8, mt._106);
+		private final @NonNull CardinalitySolutionStep _222 // assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'|
+			= new CardinalitySolutionStep.Assign(8, mt._125);
+		private final @NonNull CardinalitySolutionStep _223 // assign V9 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0)
+			= new CardinalitySolutionStep.Assign(9, mt._204);
 		private final @NonNull CardinalitySolutionStep _224 // assign V9 = 0
 			= new CardinalitySolutionStep.Assign(9, mt._000);
-		private final @NonNull CardinalitySolutionStep _225 // assign V9 = |ownedAnnotations|
-			= new CardinalitySolutionStep.Assign(9, mt._025);
-		private final @NonNull CardinalitySolutionStep _226 // assign V9 = |ownedDefaultExpressions|
-			= new CardinalitySolutionStep.Assign(9, mt._038);
-		private final @NonNull CardinalitySolutionStep _227 // assign V9 = |ownedPreconditions|
-			= new CardinalitySolutionStep.Assign(9, mt._084);
-		private final @NonNull CardinalitySolutionStep _228 // assign V9 = |ownedProperties|
-			= new CardinalitySolutionStep.Assign(9, mt._085);
+		private final @NonNull CardinalitySolutionStep _225 // assign V9 = |ModelElementCS::ownedAnnotations|
+			= new CardinalitySolutionStep.Assign(9, mt._060);
+		private final @NonNull CardinalitySolutionStep _226 // assign V9 = |OperationCS::ownedPreconditions|
+			= new CardinalitySolutionStep.Assign(9, mt._081);
+		private final @NonNull CardinalitySolutionStep _227 // assign V9 = |StructuralFeatureCS::ownedDefaultExpressions|
+			= new CardinalitySolutionStep.Assign(9, mt._103);
+		private final @NonNull CardinalitySolutionStep _228 // assign V9 = |StructuredClassCS::ownedProperties|
+			= new CardinalitySolutionStep.Assign(9, mt._107);
 		private final @NonNull CardinalitySolutionStep _229 // check-rule basecs::AnnotationCS.ownedContents : 53
 			= new CardinalitySolutionStep.RuleCheck(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS, iv._17/*ModelElementCS*/);
 		private final @NonNull CardinalitySolutionStep _230 // check-rule basecs::AnnotationCS.ownedReferences : 54
@@ -4180,7 +4180,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::FirstPathElementCS : referredElement=UnrestrictedName
 		private @NonNull SerializationRule _000 = new SerializationRule(31,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._049 /* assert (|referredElement| - 1) == 0 */
+				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._151 /* 1*referredElement=UnrestrictedName */
@@ -4197,8 +4197,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityBoundsCS : { lowerBound=LOWER { '..' upperBound=UPPER }[?] }
 		private @NonNull SerializationRule _001 = new SerializationRule(55,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._100 /* assign V0 = |upperBound| */,
-				ms._001 /* assert (|lowerBound| - 1) == 0 */
+				ms._083 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4225,8 +4225,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityCS : { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' }
 		private @NonNull SerializationRule _002 = new SerializationRule(56,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._100 /* assign V0 = |upperBound| */,
-				ms._001 /* assert (|lowerBound| - 1) == 0 */
+				ms._083 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -4259,9 +4259,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityCS : { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] isNullFree='|1'[?] ']' }
 		private @NonNull SerializationRule _003 = new SerializationRule(56,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._116 /* assign V1 = |isNullFree.'|1'| */,
-				ms._100 /* assign V0 = |upperBound| */,
-				ms._001 /* assert (|lowerBound| - 1) == 0 */
+				ms._119 /* assign V1 = |MultiplicityCS::isNullFree.'|1'| */,
+				ms._083 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -4300,8 +4300,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' }
 		private @NonNull SerializationRule _004 = new SerializationRule(56,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._073 /* assign V0 = |isNullFree.'|1'| */,
-				ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
+				ms._084 /* assign V0 = |MultiplicityCS::isNullFree.'|1'| */,
+				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4335,8 +4335,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityCS : { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' }
 		private @NonNull SerializationRule _005 = new SerializationRule(56,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._100 /* assign V0 = |upperBound| */,
-				ms._001 /* assert (|lowerBound| - 1) == 0 */
+				ms._083 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -4367,7 +4367,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} ']' }
 		private @NonNull SerializationRule _006 = new SerializationRule(56,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
+				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -4394,7 +4394,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} '|?' ']' }
 		private @NonNull SerializationRule _007 = new SerializationRule(56,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
+				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4423,7 +4423,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::MultiplicityStringCS : stringBounds={'*|+|?'}
 		private @NonNull SerializationRule _008 = new SerializationRule(57,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._054 /* assert (|stringBounds.'*|+|?'| - 1) == 0 */
+				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._157 /* 1*stringBounds */
@@ -4444,7 +4444,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// Base::NextPathElementCS : referredElement=UnreservedName
 		private @NonNull SerializationRule _009 = new SerializationRule(67,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._049 /* assert (|referredElement| - 1) == 0 */
+				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._149 /* 1*referredElement=UnreservedName */
@@ -4462,7 +4462,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _010 = new SerializationRule(73,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._247 /* check-rule basecs::PathNameCS.ownedPathElements : 31|67 */,
-				ms._065 /* assign V0 = (|ownedPathElements| - 1) */
+				ms._061 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4492,8 +4492,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._256 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : 100 */,
 				ms._255 /* check-rule basecs::TemplateBindingCS.ownedMultiplicity : 56 */,
-				ms._125 /* assign V1 = |ownedMultiplicity| */,
-				ms._066 /* assign V0 = (|ownedSubstitutions| - 1) */
+				ms._127 /* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
+				ms._064 /* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-5-steps */,
@@ -4528,7 +4528,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _012 = new SerializationRule(100,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._257 /* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 115 */,
-				ms._007 /* assert (|ownedActualParameter| - 1) == 0 */
+				ms._047 /* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._079 /* 1*ownedActualParameter=TypeRefCS */
@@ -4549,9 +4549,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _013 = new SerializationRule(114,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._261 /* check-rule basecs::TypeParameterCS.ownedExtends : 117 */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._058 /* assign V0 = (|ownedExtends| > 0) */,
-				ms._105 /* assign V1 = (|ownedExtends| - 1) */
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._068 /* assign V0 = (|TypeParameterCS::ownedExtends| > 0) */,
+				ms._111 /* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -4588,7 +4588,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _014 = new SerializationRule(129,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._267 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : 117 */,
-				ms._081 /* assign V0 = |ownedExtends| */
+				ms._102 /* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4617,7 +4617,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _015 = new SerializationRule(129,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._267 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : 117 */,
-				ms._081 /* assign V0 = |ownedExtends| */
+				ms._102 /* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4645,7 +4645,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::BooleanLiteralExpCS : symbol={'false|true'}
 		private @NonNull SerializationRule _016 = new SerializationRule(5,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._055 /* assert (|symbol.'false|true'| - 1) == 0 */
+				ms._002 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._158 /* 1*symbol */
@@ -4667,8 +4667,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _017 = new SerializationRule(7,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
-				ms._090 /* assign V0 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._101 /* assign V0 = |VariableCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4700,9 +4700,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._272 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 9 */,
 				ms._273 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 11 */,
-				ms._037 /* assert (|ownedType| - 1) == 0 */,
-				ms._062 /* assign V0 = (|ownedParts| > 0) */,
-				ms._108 /* assign V1 = (|ownedParts| - 1) */
+				ms._003 /* assert (|CollectionLiteralExpCS::ownedType| - 1) == 0 */,
+				ms._057 /* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
+				ms._104 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -4743,7 +4743,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _019 = new SerializationRule(9,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._275 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 74 */,
-				ms._015 /* assert (|ownedExpression| - 1) == 0 */
+				ms._004 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._093 /* 1*ownedExpression=PatternExpCS */
@@ -4765,8 +4765,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._276 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : 30 */,
 				ms._274 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 30 */,
-				ms._084 /* assign V0 = |ownedLastExpression| */,
-				ms._015 /* assert (|ownedExpression| - 1) == 0 */
+				ms._073 /* assign V0 = |CollectionLiteralPartCS::ownedLastExpression| */,
+				ms._004 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -4800,9 +4800,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._277 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 74 */,
 				ms._278 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 11 */,
-				ms._098 /* assign V0 = |restVariableName| */,
-				ms._110 /* assign V1 = (|ownedParts| - 1) */,
-				ms._042 /* assert (|ownedType| - 1) == 0 */
+				ms._074 /* assign V0 = |CollectionPatternCS::restVariableName| */,
+				ms._105 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
+				ms._005 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -4850,9 +4850,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
-				ms._091 /* assign V0 = |ownedType| */,
-				ms._006 /* assert (|name| - 1) == 0 */,
-				ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
+				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
+				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
+				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -4892,9 +4892,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
-				ms._091 /* assign V0 = |ownedType| */,
-				ms._006 /* assert (|name| - 1) == 0 */,
-				ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
+				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
+				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
+				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -4933,8 +4933,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _024 = new SerializationRule(13,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._282 /* check-rule essentialoclcs::CurlyBracketedClauseCS.ownedParts : 90 */,
-				ms._063 /* assign V0 = (|ownedParts| > 0) */,
-				ms._107 /* assign V1 = (|ownedParts| - 1) */
+				ms._058 /* assign V0 = (|CurlyBracketedClauseCS::ownedParts| > 0) */,
+				ms._106 /* assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -4970,8 +4970,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._289 /* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : 30 */,
 				ms._288 /* check-rule essentialoclcs::IfThenExpCS.ownedCondition : 30 */,
-				ms._036 /* assert (|ownedThenExpression| - 1) == 0 */,
-				ms._011 /* assert (|ownedCondition| - 1) == 0 */
+				ms._016 /* assert (|IfThenExpCS::ownedThenExpression| - 1) == 0 */,
+				ms._015 /* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -5003,7 +5003,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::ExpCS : symbol=NUMBER_LITERAL
 		private @NonNull SerializationRule _026 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._056 /* assert (|symbol| - 1) == 0 */
+				ms._038 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._159 /* 1*symbol=NUMBER_LITERAL */
@@ -5034,7 +5034,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::ExpCS : segments+=StringLiteral[+]
 		private @NonNull SerializationRule _028 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._099 /* assign V0 = |segments| */
+				ms._093 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._176 /* V00*segments+=StringLiteral */
@@ -5051,7 +5051,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::ExpCS : symbol={'false|true'}
 		private @NonNull SerializationRule _029 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._055 /* assert (|symbol.'false|true'| - 1) == 0 */
+				ms._002 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._158 /* 1*symbol */
@@ -5088,9 +5088,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._290 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : 78 */,
 				ms._306 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 30 */,
-				ms._034 /* assert (|ownedRight| - 1) == 0 */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._025 /* assert (|ownedLeft| - 1) == 0 */
+				ms._039 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._018 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -5126,10 +5126,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._285 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 30 */,
 				ms._284 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 30|74 */,
 				ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
-				ms._013 /* assert (|ownedElseExpression| - 1) == 0 */,
-				ms._082 /* assign V0 = |ownedIfThenExpressions| */,
-				ms._035 /* assert (|ownedThenExpression| - 1) == 0 */,
-				ms._010 /* assert (|ownedCondition| - 1) == 0 */
+				ms._013 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
+				ms._080 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
+				ms._014 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
+				ms._012 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -5178,7 +5178,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _033 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._291 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 30 */,
-				ms._014 /* assert (|ownedExpressionCS| - 1) == 0 */
+				ms._019 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -5207,7 +5207,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _034 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._305 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 30 */,
-				ms._016 /* assert (|ownedExpression| - 1) == 0 */
+				ms._037 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -5248,7 +5248,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _036 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._315 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112 */,
-				ms._039 /* assert (|ownedType| - 1) == 0 */
+				ms._049 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -5269,7 +5269,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _037 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._314 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 104 */,
-				ms._060 /* assign V0 = (|ownedParts| - 1) */
+				ms._066 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -5319,9 +5319,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._272 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 9 */,
 				ms._273 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 11 */,
-				ms._037 /* assert (|ownedType| - 1) == 0 */,
-				ms._062 /* assign V0 = (|ownedParts| > 0) */,
-				ms._108 /* assign V1 = (|ownedParts| - 1) */
+				ms._003 /* assert (|CollectionLiteralExpCS::ownedType| - 1) == 0 */,
+				ms._057 /* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
+				ms._104 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -5363,9 +5363,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 				ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
-				ms._038 /* assert (|ownedType| - 1) == 0 */,
-				ms._061 /* assign V0 = (|ownedParts| > 0) */,
-				ms._109 /* assign V1 = (|ownedParts| - 1) */
+				ms._021 /* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
+				ms._060 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
+				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -5406,8 +5406,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _041 = new SerializationRule(30,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._308 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 78 */,
-				ms._034 /* assert (|ownedRight| - 1) == 0 */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._039 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -5437,11 +5437,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._268 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._270 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 84 */,
 				ms._271 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93 */,
-				ms._174 /* assign V3 = |isPre.'@'| */,
-				ms._159 /* assign V2 = |ownedCurlyBracketedClause| */,
-				ms._127 /* assign V1 = |ownedRoundBracketedClause| */,
-				ms._088 /* assign V0 = |ownedSquareBracketedClauses| */,
-				ms._031 /* assert (|ownedPathName| - 1) == 0 */
+				ms._173 /* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
+				ms._156 /* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
+				ms._113 /* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
+				ms._071 /* assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses| */,
+				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -5497,10 +5497,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._285 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 30 */,
 				ms._284 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 30|74 */,
 				ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
-				ms._013 /* assert (|ownedElseExpression| - 1) == 0 */,
-				ms._082 /* assign V0 = |ownedIfThenExpressions| */,
-				ms._035 /* assert (|ownedThenExpression| - 1) == 0 */,
-				ms._010 /* assert (|ownedCondition| - 1) == 0 */
+				ms._013 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
+				ms._080 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
+				ms._014 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
+				ms._012 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -5552,10 +5552,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._285 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 30 */,
 				ms._284 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 30|74 */,
 				ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
-				ms._013 /* assert (|ownedElseExpression| - 1) == 0 */,
-				ms._082 /* assign V0 = |ownedIfThenExpressions| */,
-				ms._035 /* assert (|ownedThenExpression| - 1) == 0 */,
-				ms._010 /* assert (|ownedCondition| - 1) == 0 */
+				ms._013 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
+				ms._080 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
+				ms._014 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
+				ms._012 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -5632,7 +5632,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _047 = new SerializationRule(44,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._291 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 30 */,
-				ms._014 /* assert (|ownedExpressionCS| - 1) == 0 */
+				ms._019 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -5661,7 +5661,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _048 = new SerializationRule(44,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._291 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 30 */,
-				ms._014 /* assert (|ownedExpressionCS| - 1) == 0 */
+				ms._019 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -5691,8 +5691,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._292 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : 30 */,
 				ms._293 /* check-rule essentialoclcs::LetExpCS.ownedVariables : 46 */,
-				ms._019 /* assert (|ownedInExpression| - 1) == 0 */,
-				ms._068 /* assign V0 = (|ownedVariables| - 1) */
+				ms._020 /* assert (|LetExpCS::ownedInExpression| - 1) == 0 */,
+				ms._059 /* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -5732,8 +5732,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._292 /* check-rule essentialoclcs::LetExpCS.ownedInExpression : 30 */,
 				ms._293 /* check-rule essentialoclcs::LetExpCS.ownedVariables : 46 */,
-				ms._019 /* assert (|ownedInExpression| - 1) == 0 */,
-				ms._068 /* assign V0 = (|ownedVariables| - 1) */
+				ms._020 /* assert (|LetExpCS::ownedInExpression| - 1) == 0 */,
+				ms._059 /* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -5774,10 +5774,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
 				ms._319 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 30 */,
 				ms._294 /* check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : 84 */,
-				ms._022 /* assert (|ownedInitExpression| - 1) == 0 */,
-				ms._130 /* assign V1 = |ownedType| */,
-				ms._086 /* assign V0 = |ownedRoundBracketedClause| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._056 /* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
+				ms._133 /* assign V1 = |VariableCS::ownedType| */,
+				ms._081 /* assign V0 = |LetVariableCS::ownedRoundBracketedClause| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -5823,9 +5823,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 				ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
-				ms._038 /* assert (|ownedType| - 1) == 0 */,
-				ms._061 /* assign V0 = (|ownedParts| > 0) */,
-				ms._109 /* assign V1 = (|ownedParts| - 1) */
+				ms._021 /* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
+				ms._060 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
+				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -5867,9 +5867,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 				ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
-				ms._038 /* assert (|ownedType| - 1) == 0 */,
-				ms._061 /* assign V0 = (|ownedParts| > 0) */,
-				ms._109 /* assign V1 = (|ownedParts| - 1) */
+				ms._021 /* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
+				ms._060 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
+				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -5911,8 +5911,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._297 /* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : 30 */,
 				ms._298 /* check-rule essentialoclcs::MapLiteralPartCS.ownedValue : 30 */,
-				ms._043 /* assert (|ownedValue| - 1) == 0 */,
-				ms._024 /* assert (|ownedKey| - 1) == 0 */
+				ms._023 /* assert (|MapLiteralPartCS::ownedValue| - 1) == 0 */,
+				ms._022 /* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -5944,9 +5944,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
-				ms._093 /* assign V0 = |ownedValueType| */,
-				ms._023 /* assert (|ownedKeyType| - V0) == 0 */,
-				ms._002 /* assert (|name.'Map'| - 1) == 0 */
+				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
+				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
+				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -5992,9 +5992,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
-				ms._093 /* assign V0 = |ownedValueType| */,
-				ms._023 /* assert (|ownedKeyType| - V0) == 0 */,
-				ms._002 /* assert (|name.'Map'| - 1) == 0 */
+				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
+				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
+				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -6039,7 +6039,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _057 = new SerializationRule(52,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._281 /* check-rule essentialoclcs::ContextCS.ownedExpression : 30 */,
-				ms._017 /* assert (|ownedExpression| - 1) == 0 */
+				ms._010 /* assert (|ContextCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._091 /* 1*ownedExpression=ExpCS */
@@ -6063,11 +6063,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._268 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._270 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 84 */,
 				ms._271 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93 */,
-				ms._174 /* assign V3 = |isPre.'@'| */,
-				ms._159 /* assign V2 = |ownedCurlyBracketedClause| */,
-				ms._127 /* assign V1 = |ownedRoundBracketedClause| */,
-				ms._088 /* assign V0 = |ownedSquareBracketedClauses| */,
-				ms._031 /* assert (|ownedPathName| - 1) == 0 */
+				ms._173 /* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
+				ms._156 /* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
+				ms._113 /* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
+				ms._071 /* assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses| */,
+				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -6123,11 +6123,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._268 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._270 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 84 */,
 				ms._271 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93 */,
-				ms._174 /* assign V3 = |isPre.'@'| */,
-				ms._159 /* assign V2 = |ownedCurlyBracketedClause| */,
-				ms._127 /* assign V1 = |ownedRoundBracketedClause| */,
-				ms._088 /* assign V0 = |ownedSquareBracketedClauses| */,
-				ms._031 /* assert (|ownedPathName| - 1) == 0 */
+				ms._173 /* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
+				ms._156 /* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
+				ms._113 /* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
+				ms._071 /* assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses| */,
+				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -6182,9 +6182,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._083 /* assign V0 = |ownedInitExpression| */,
-				ms._009 /* assert (|ownedCoIterator| - 1) == 0 */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */
+				ms._087 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
+				ms._030 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -6225,7 +6225,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _061 = new SerializationRule(60,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-				ms._040 /* assert (|ownedType| - 1) == 0 */
+				ms._033 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -6253,10 +6253,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._122 /* assign V1 = |ownedInitExpression| */,
-				ms._078 /* assign V0 = |ownedCoIterator| */,
-				ms._040 /* assert (|ownedType| - 1) == 0 */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */
+				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
+				ms._086 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
+				ms._033 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -6310,10 +6310,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._021 /* assert (|ownedInitExpression| - 1) == 0 */,
-				ms._119 /* assign V1 = |ownedCoIterator| */,
-				ms._092 /* assign V0 = |ownedType| */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */
+				ms._031 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
+				ms._121 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
+				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -6367,7 +6367,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _064 = new SerializationRule(60,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._108 /* 1*ownedNameExpression=NavigatingArgExpCS */
@@ -6390,10 +6390,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._092 /* assign V0 = |ownedType| */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
-				ms._046 /* assert (|prefix.'|'| - 1) == 0 */,
-				ms._122 /* assign V1 = |ownedInitExpression| */
+				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._036 /* assert (|NavigatingArgCS::prefix.'|'| - 1) == 0 */,
+				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -6447,11 +6447,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._122 /* assign V1 = |ownedInitExpression| */,
-				ms._078 /* assign V0 = |ownedCoIterator| */,
-				ms._040 /* assert (|ownedType| - 1) == 0 */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
-				ms._044 /* assert (|prefix.','| - 1) == 0 */
+				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
+				ms._086 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
+				ms._033 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -6510,8 +6510,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _067 = new SerializationRule(63,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
-				ms._044 /* assert (|prefix.','| - 1) == 0 */
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -6544,10 +6544,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._083 /* assign V0 = |ownedInitExpression| */,
-				ms._009 /* assert (|ownedCoIterator| - 1) == 0 */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
-				ms._044 /* assert (|prefix.','| - 1) == 0 */
+				ms._087 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
+				ms._030 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -6599,11 +6599,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._021 /* assert (|ownedInitExpression| - 1) == 0 */,
-				ms._119 /* assign V1 = |ownedCoIterator| */,
-				ms._092 /* assign V0 = |ownedType| */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
-				ms._044 /* assert (|prefix.','| - 1) == 0 */
+				ms._031 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
+				ms._121 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
+				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -6664,10 +6664,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
 				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._092 /* assign V0 = |ownedType| */,
-				ms._026 /* assert (|ownedNameExpression| - 1) == 0 */,
-				ms._045 /* assert (|prefix.';'| - 1) == 0 */,
-				ms._122 /* assign V1 = |ownedInitExpression| */
+				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
+				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._035 /* assert (|NavigatingArgCS::prefix.';'| - 1) == 0 */,
+				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -6718,7 +6718,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _071 = new SerializationRule(66,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._305 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 30 */,
-				ms._016 /* assert (|ownedExpression| - 1) == 0 */
+				ms._037 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -6745,7 +6745,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _072 = new SerializationRule(66,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._305 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 30 */,
-				ms._016 /* assert (|ownedExpression| - 1) == 0 */
+				ms._037 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -6799,7 +6799,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::NumberLiteralExpCS : symbol=NUMBER_LITERAL
 		private @NonNull SerializationRule _075 = new SerializationRule(69,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._056 /* assert (|symbol| - 1) == 0 */
+				ms._038 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._159 /* 1*symbol=NUMBER_LITERAL */
@@ -6816,7 +6816,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::NumberLiteralExpCS : symbol=NUMBER_LITERAL
 		private @NonNull SerializationRule _076 = new SerializationRule(69,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._056 /* assert (|symbol| - 1) == 0 */
+				ms._038 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._159 /* 1*symbol=NUMBER_LITERAL */
@@ -6834,8 +6834,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _077 = new SerializationRule(74,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._309 /* check-rule essentialoclcs::PatternExpCS.ownedPatternType : 107 */,
-				ms._033 /* assert (|ownedPatternType| - 1) == 0 */,
-				ms._094 /* assign V0 = |patternVariableName| */
+				ms._042 /* assert (|PatternExpCS::ownedPatternType| - 1) == 0 */,
+				ms._091 /* assign V0 = |PatternExpCS::patternVariableName| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -6864,8 +6864,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _078 = new SerializationRule(77,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._307 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 77 */,
-				ms._034 /* assert (|ownedRight| - 1) == 0 */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._039 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -6892,8 +6892,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _079 = new SerializationRule(77,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._307 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 77 */,
-				ms._034 /* assert (|ownedRight| - 1) == 0 */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._039 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -6920,8 +6920,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _080 = new SerializationRule(78,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._308 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 78 */,
-				ms._034 /* assert (|ownedRight| - 1) == 0 */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._039 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -6947,7 +6947,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::PrimitiveTypeCS : name=PrimitiveTypeIdentifier
 		private @NonNull SerializationRule _081 = new SerializationRule(81,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._004 /* assert (|name| - 1) == 0 */
+				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._072 /* 1*name=PrimitiveTypeIdentifier */
@@ -6964,7 +6964,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::PrimitiveTypeCS : name=PrimitiveTypeIdentifier
 		private @NonNull SerializationRule _082 = new SerializationRule(81,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._004 /* assert (|name| - 1) == 0 */
+				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._072 /* 1*name=PrimitiveTypeIdentifier */
@@ -6982,8 +6982,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _083 = new SerializationRule(84,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._310 /* check-rule essentialoclcs::RoundBracketedClauseCS.ownedArguments : 60|62|63|64 */,
-				ms._057 /* assign V0 = (|ownedArguments| > 0) */,
-				ms._103 /* assign V1 = (|ownedArguments| - 1) */
+				ms._062 /* assign V0 = (|RoundBracketedClauseCS::ownedArguments| > 0) */,
+				ms._109 /* assign V1 = (|RoundBracketedClauseCS::ownedArguments| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-5-steps */,
@@ -7042,8 +7042,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _086 = new SerializationRule(90,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._311 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 30|74 */,
-				ms._020 /* assert (|ownedInitExpression| - 1) == 0 */,
-				ms._050 /* assert (|referredProperty| - 1) == 0 */
+				ms._044 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */,
+				ms._045 /* assert (|ShadowPartCS::referredProperty| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -7072,7 +7072,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _087 = new SerializationRule(90,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._312 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 95 */,
-				ms._020 /* assert (|ownedInitExpression| - 1) == 0 */
+				ms._044 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._102 /* 1*ownedInitExpression=StringLiteralExpCS */
@@ -7093,7 +7093,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _088 = new SerializationRule(91,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._246 /* check-rule basecs::PathNameCS.ownedPathElements : 31 */,
-				ms._027 /* assert (|ownedPathElements| - 1) == 0 */
+				ms._041 /* assert (|PathNameCS::ownedPathElements| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._117 /* 1*ownedPathElements+=FirstPathElementCS */
@@ -7114,7 +7114,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _089 = new SerializationRule(93,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._313 /* check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : 30 */,
-				ms._067 /* assign V0 = (|ownedTerms| - 1) */
+				ms._063 /* assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -7146,7 +7146,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::StringLiteralExpCS : segments+=StringLiteral[+]
 		private @NonNull SerializationRule _090 = new SerializationRule(95,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._099 /* assign V0 = |segments| */
+				ms._093 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._176 /* V00*segments+=StringLiteral */
@@ -7163,7 +7163,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::StringLiteralExpCS : segments+=StringLiteral[+]
 		private @NonNull SerializationRule _091 = new SerializationRule(95,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._099 /* assign V0 = |segments| */
+				ms._093 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._176 /* V00*segments+=StringLiteral */
@@ -7181,7 +7181,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _092 = new SerializationRule(103,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._314 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 104 */,
-				ms._060 /* assign V0 = (|ownedParts| - 1) */
+				ms._066 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -7216,7 +7216,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _093 = new SerializationRule(103,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._314 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 104 */,
-				ms._060 /* assign V0 = (|ownedParts| - 1) */
+				ms._066 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -7252,9 +7252,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
 				ms._319 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 30 */,
-				ms._022 /* assert (|ownedInitExpression| - 1) == 0 */,
-				ms._090 /* assign V0 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._056 /* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
+				ms._101 /* assign V0 = |VariableCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -7293,8 +7293,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _095 = new SerializationRule(105,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._262 /* check-rule basecs::TypedElementCS.ownedType : 107 */,
-				ms._041 /* assert (|ownedType| - 1) == 0 */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._051 /* assert (|TypedElementCS::ownedType| - 1) == 0 */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -7323,10 +7323,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _096 = new SerializationRule(106,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._260 /* check-rule basecs::TupleTypeCS.ownedParts : 105 */,
-				ms._003 /* assert (|name.'Tuple'| - 1) == 0 */,
-				ms._064 /* assign V0 = (|ownedParts| > 0) */,
-				ms._111 /* assign V1 = (|ownedParts| > 0) */,
-				ms._152 /* assign V2 = (|ownedParts| - 1) */
+				ms._048 /* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
+				ms._067 /* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._110 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -7371,10 +7371,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _097 = new SerializationRule(106,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._260 /* check-rule basecs::TupleTypeCS.ownedParts : 105 */,
-				ms._003 /* assert (|name.'Tuple'| - 1) == 0 */,
-				ms._064 /* assign V0 = (|ownedParts| > 0) */,
-				ms._111 /* assign V1 = (|ownedParts| > 0) */,
-				ms._152 /* assign V2 = (|ownedParts| - 1) */
+				ms._048 /* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
+				ms._067 /* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._110 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -7421,10 +7421,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._124 /* assign V1 = |ownedMultiplicity| */,
-				ms._093 /* assign V0 = |ownedValueType| */,
-				ms._023 /* assert (|ownedKeyType| - V0) == 0 */,
-				ms._002 /* assert (|name.'Map'| - 1) == 0 */
+				ms._132 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
+				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
+				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
+				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -7476,11 +7476,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._260 /* check-rule basecs::TupleTypeCS.ownedParts : 105 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._177 /* assign V3 = |ownedMultiplicity| */,
-				ms._003 /* assert (|name.'Tuple'| - 1) == 0 */,
-				ms._064 /* assign V0 = (|ownedParts| > 0) */,
-				ms._111 /* assign V1 = (|ownedParts| > 0) */,
-				ms._152 /* assign V2 = (|ownedParts| - 1) */
+				ms._181 /* assign V3 = |TypedRefCS::ownedMultiplicity| */,
+				ms._048 /* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
+				ms._067 /* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._110 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -7533,10 +7533,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._161 /* assign V2 = |ownedMultiplicity| */,
-				ms._091 /* assign V0 = |ownedType| */,
-				ms._006 /* assert (|name| - 1) == 0 */,
-				ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
+				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
+				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
+				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -7583,10 +7583,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._277 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 74 */,
 				ms._278 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 11 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._161 /* assign V2 = |ownedMultiplicity| */,
-				ms._098 /* assign V0 = |restVariableName| */,
-				ms._110 /* assign V1 = (|ownedParts| - 1) */,
-				ms._042 /* assert (|ownedType| - 1) == 0 */
+				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				ms._074 /* assign V0 = |CollectionPatternCS::restVariableName| */,
+				ms._105 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
+				ms._005 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-11-steps */,
@@ -7639,8 +7639,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _102 = new SerializationRule(107,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._085 /* assign V0 = |ownedMultiplicity| */,
-				ms._004 /* assert (|name| - 1) == 0 */
+				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -7670,10 +7670,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._318 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 30 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
-				ms._161 /* assign V2 = |ownedMultiplicity| */,
-				ms._079 /* assign V0 = |ownedCurlyBracketedClause| */,
-				ms._028 /* assert (|ownedPathName| - 1) == 0 */,
-				ms._126 /* assign V1 = |ownedPatternGuard| */
+				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				ms._096 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
+				ms._050 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
+				ms._129 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -7722,7 +7722,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _104 = new SerializationRule(111,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._315 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112 */,
-				ms._039 /* assert (|ownedType| - 1) == 0 */
+				ms._049 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -7743,7 +7743,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _105 = new SerializationRule(111,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._315 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 112 */,
-				ms._039 /* assert (|ownedType| - 1) == 0 */
+				ms._049 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._142 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
@@ -7764,8 +7764,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _106 = new SerializationRule(112,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._085 /* assign V0 = |ownedMultiplicity| */,
-				ms._004 /* assert (|name| - 1) == 0 */
+				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -7794,10 +7794,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._161 /* assign V2 = |ownedMultiplicity| */,
-				ms._091 /* assign V0 = |ownedType| */,
-				ms._006 /* assert (|name| - 1) == 0 */,
-				ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
+				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
+				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
+				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -7843,11 +7843,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._260 /* check-rule basecs::TupleTypeCS.ownedParts : 105 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._177 /* assign V3 = |ownedMultiplicity| */,
-				ms._003 /* assert (|name.'Tuple'| - 1) == 0 */,
-				ms._064 /* assign V0 = (|ownedParts| > 0) */,
-				ms._111 /* assign V1 = (|ownedParts| > 0) */,
-				ms._152 /* assign V2 = (|ownedParts| - 1) */
+				ms._181 /* assign V3 = |TypedRefCS::ownedMultiplicity| */,
+				ms._048 /* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
+				ms._067 /* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._110 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -7900,10 +7900,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._124 /* assign V1 = |ownedMultiplicity| */,
-				ms._093 /* assign V0 = |ownedValueType| */,
-				ms._023 /* assert (|ownedKeyType| - V0) == 0 */,
-				ms._002 /* assert (|name.'Map'| - 1) == 0 */
+				ms._132 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
+				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
+				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
+				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -7956,9 +7956,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._317 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 73 */,
 				ms._318 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 30 */,
 				ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
-				ms._079 /* assign V0 = |ownedCurlyBracketedClause| */,
-				ms._028 /* assert (|ownedPathName| - 1) == 0 */,
-				ms._126 /* assign V1 = |ownedPatternGuard| */
+				ms._096 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
+				ms._050 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
+				ms._129 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -8003,9 +8003,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._317 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 73 */,
 				ms._318 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 30 */,
 				ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
-				ms._079 /* assign V0 = |ownedCurlyBracketedClause| */,
-				ms._028 /* assert (|ownedPathName| - 1) == 0 */,
-				ms._126 /* assign V1 = |ownedPatternGuard| */
+				ms._096 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
+				ms._050 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
+				ms._129 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -8047,7 +8047,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::URIFirstPathElementCS : referredElement=UnrestrictedName
 		private @NonNull SerializationRule _112 = new SerializationRule(122,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._049 /* assert (|referredElement| - 1) == 0 */
+				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._150 /* 1*referredElement=UnrestrictedName */
@@ -8064,7 +8064,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// EssentialOCL::URIFirstPathElementCS : referredElement=URI
 		private @NonNull SerializationRule _113 = new SerializationRule(122,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._049 /* assert (|referredElement| - 1) == 0 */
+				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._148 /* 1*referredElement=URI */
@@ -8082,7 +8082,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _114 = new SerializationRule(123,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._248 /* check-rule basecs::PathNameCS.ownedPathElements : 67|122 */,
-				ms._065 /* assign V0 = (|ownedPathElements| - 1) */
+				ms._061 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -8142,12 +8142,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._200 /* assign V5 = |ownedReferences| */,
-				ms._188 /* assign V4 = |ownedContents| */,
-				ms._176 /* assign V3 = |ownedAnnotations| */,
-				ms._076 /* assign V0 = |name| */,
-				ms._104 /* assign V1 = (|ownedDetails| > 0) */,
-				ms._149 /* assign V2 = (|ownedDetails| - 1) */
+				ms._196 /* assign V5 = |AnnotationCS::ownedReferences| */,
+				ms._184 /* assign V4 = |AnnotationCS::ownedContents| */,
+				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				ms._085 /* assign V0 = |NamedElementCS::name| */,
+				ms._103 /* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-14-steps */,
@@ -8210,9 +8210,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _118 = new SerializationRule(1,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
-				ms._076 /* assign V0 = |name| */,
-				ms._104 /* assign V1 = (|ownedDetails| > 0) */,
-				ms._149 /* assign V2 = (|ownedDetails| - 1) */
+				ms._085 /* assign V0 = |NamedElementCS::name| */,
+				ms._103 /* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -8258,12 +8258,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._200 /* assign V5 = |ownedReferences| */,
-				ms._188 /* assign V4 = |ownedContents| */,
-				ms._176 /* assign V3 = |ownedAnnotations| */,
-				ms._076 /* assign V0 = |name| */,
-				ms._104 /* assign V1 = (|ownedDetails| > 0) */,
-				ms._149 /* assign V2 = (|ownedDetails| - 1) */
+				ms._196 /* assign V5 = |AnnotationCS::ownedReferences| */,
+				ms._184 /* assign V4 = |AnnotationCS::ownedContents| */,
+				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				ms._085 /* assign V0 = |NamedElementCS::name| */,
+				ms._103 /* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-14-steps */,
@@ -8329,12 +8329,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._200 /* assign V5 = |ownedReferences| */,
-				ms._188 /* assign V4 = |ownedContents| */,
-				ms._176 /* assign V3 = |ownedAnnotations| */,
-				ms._076 /* assign V0 = |name| */,
-				ms._104 /* assign V1 = (|ownedDetails| > 0) */,
-				ms._149 /* assign V2 = (|ownedDetails| - 1) */
+				ms._196 /* assign V5 = |AnnotationCS::ownedReferences| */,
+				ms._184 /* assign V4 = |AnnotationCS::ownedContents| */,
+				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				ms._085 /* assign V0 = |NamedElementCS::name| */,
+				ms._103 /* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-14-steps */,
@@ -8397,11 +8397,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _121 = new SerializationRule(3,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._113 /* assign V1 = |default| */,
-				ms._089 /* assign V0 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._154 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				ms._181 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+				ms._126 /* assign V1 = |StructuralFeatureCS::default| */,
+				ms._097 /* assign V0 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._154 /* assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				ms._180 /* assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-14-steps */,
@@ -8460,13 +8460,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _122 = new SerializationRule(3,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				ms._192 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._171 /* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				ms._192 /* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-16-steps */,
@@ -8533,16 +8533,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._196 /* assign V5 = |ownedAnnotations| */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				ms._192 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-				ms._209 /* assign V6 = |ownedDefaultExpressions| */,
-				ms._210 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._171 /* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				ms._192 /* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+				ms._208 /* assign V6 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._212 /* assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._218 /* assign V8 = 0 */,
 				ms._224 /* assign V9 = 0 */
 			},
@@ -8643,14 +8643,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._113 /* assign V1 = |default| */,
-				ms._089 /* assign V0 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._154 /* assign V2 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				ms._181 /* assign V3 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-				ms._198 /* assign V5 = |ownedDefaultExpressions| */,
-				ms._202 /* assign V6 = (|ownedDefaultExpressions| > 0) */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._126 /* assign V1 = |StructuralFeatureCS::default| */,
+				ms._097 /* assign V0 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._154 /* assign V2 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				ms._180 /* assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+				ms._200 /* assign V5 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._204 /* assign V6 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._214 /* assign V7 = 0 */,
 				ms._218 /* assign V8 = 0 */
 			},
@@ -8745,16 +8745,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._196 /* assign V5 = |ownedAnnotations| */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				ms._192 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
-				ms._209 /* assign V6 = |ownedDefaultExpressions| */,
-				ms._210 /* assign V7 = (|ownedDefaultExpressions| > 0) */,
+				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._171 /* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				ms._192 /* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */,
+				ms._208 /* assign V6 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._212 /* assign V7 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._218 /* assign V8 = 0 */,
 				ms._224 /* assign V9 = 0 */
 			},
@@ -8853,13 +8853,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _126 = new SerializationRule(3,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._171 /* assign V3 = (|qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
-				ms._192 /* assign V4 = |qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._171 /* assign V3 = (|TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| > 0) */,
+				ms._192 /* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-16-steps */,
@@ -8924,10 +8924,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _127 = new SerializationRule(15,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -8984,12 +8984,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _128 = new SerializationRule(15,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
-				ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
-				ms._185 /* assign V4 = |isSerializable.'serializable'| */
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				ms._166 /* assign V3 = (|DataTypeCS::isSerializable.'serializable'| > 0) */,
+				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-12-steps */,
@@ -9049,12 +9049,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _129 = new SerializationRule(15,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
-				ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
-				ms._185 /* assign V4 = |isSerializable.'serializable'| */
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				ms._166 /* assign V3 = (|DataTypeCS::isSerializable.'serializable'| > 0) */,
+				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-12-steps */,
@@ -9114,10 +9114,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _130 = new SerializationRule(15,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9175,12 +9175,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9252,14 +9252,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._208 /* assign V6 = |ownedConstraints| */,
-				ms._196 /* assign V5 = |ownedAnnotations| */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
-				ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
-				ms._185 /* assign V4 = |isSerializable.'serializable'| */
+				ms._206 /* assign V6 = |ClassCS::ownedConstraints| */,
+				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				ms._166 /* assign V3 = (|DataTypeCS::isSerializable.'serializable'| > 0) */,
+				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-15-steps */,
@@ -9333,10 +9333,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _133 = new SerializationRule(15,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9394,12 +9394,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9471,14 +9471,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._208 /* assign V6 = |ownedConstraints| */,
-				ms._196 /* assign V5 = |ownedAnnotations| */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
-				ms._166 /* assign V3 = (|isSerializable.'serializable'| > 0) */,
-				ms._185 /* assign V4 = |isSerializable.'serializable'| */
+				ms._206 /* assign V6 = |ClassCS::ownedConstraints| */,
+				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
+				ms._166 /* assign V3 = (|DataTypeCS::isSerializable.'serializable'| > 0) */,
+				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-15-steps */,
@@ -9554,12 +9554,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9627,10 +9627,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _137 = new SerializationRule(15,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9686,12 +9686,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._157 /* assign V2 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._074 /* assign V0 = |isPrimitive.'primitive'| */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._076 /* assign V0 = |DataTypeCS::isPrimitive.'primitive'| */,
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9758,8 +9758,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// OCLinEcore::DetailCS : { name=(UnrestrictedName|SINGLE_QUOTED_STRING) '=' values+=(SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING)[*] }
 		private @NonNull SerializationRule _139 = new SerializationRule(16,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._101 /* assign V0 = |values| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._077 /* assign V0 = |DetailCS::values| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -9785,9 +9785,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _140 = new SerializationRule(17,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
-				ms._102 /* assign V0 = |value| */,
-				ms._104 /* assign V1 = (|ownedDetails| > 0) */,
-				ms._149 /* assign V2 = (|ownedDetails| - 1) */
+				ms._078 /* assign V0 = |DocumentationCS::value| */,
+				ms._103 /* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -9830,9 +9830,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _141 = new SerializationRule(17,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
-				ms._102 /* assign V0 = |value| */,
-				ms._104 /* assign V1 = (|ownedDetails| > 0) */,
-				ms._149 /* assign V2 = (|ownedDetails| - 1) */
+				ms._078 /* assign V0 = |DocumentationCS::value| */,
+				ms._103 /* assign V1 = (|AnnotationElementCS::ownedDetails| > 0) */,
+				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -9878,12 +9878,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._189 /* assign V4 = |ownedLiterals| */,
-				ms._176 /* assign V3 = |ownedAnnotations| */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._187 /* assign V4 = |EnumerationCS::ownedLiterals| */,
+				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -9954,12 +9954,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._189 /* assign V4 = |ownedLiterals| */,
-				ms._176 /* assign V3 = |ownedAnnotations| */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._187 /* assign V4 = |EnumerationCS::ownedLiterals| */,
+				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -10025,11 +10025,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _144 = new SerializationRule(21,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
-				ms._175 /* assign V3 = |isSerializable.'serializable'| */
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._149 /* assign V2 = (|EnumerationCS::isSerializable.'serializable'| > 0) */,
+				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-11-steps */,
@@ -10085,12 +10085,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._189 /* assign V4 = |ownedLiterals| */,
-				ms._176 /* assign V3 = |ownedAnnotations| */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._187 /* assign V4 = |EnumerationCS::ownedLiterals| */,
+				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -10161,14 +10161,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._208 /* assign V6 = |ownedConstraints| */,
-				ms._199 /* assign V5 = |ownedLiterals| */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
-				ms._175 /* assign V3 = |isSerializable.'serializable'| */
+				ms._206 /* assign V6 = |ClassCS::ownedConstraints| */,
+				ms._198 /* assign V5 = |EnumerationCS::ownedLiterals| */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._149 /* assign V2 = (|EnumerationCS::isSerializable.'serializable'| > 0) */,
+				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-15-steps */,
@@ -10241,9 +10241,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _147 = new SerializationRule(21,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -10289,11 +10289,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _148 = new SerializationRule(21,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
-				ms._175 /* assign V3 = |isSerializable.'serializable'| */
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._149 /* assign V2 = (|EnumerationCS::isSerializable.'serializable'| > 0) */,
+				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-11-steps */,
@@ -10346,9 +10346,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _149 = new SerializationRule(21,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -10399,14 +10399,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._208 /* assign V6 = |ownedConstraints| */,
-				ms._199 /* assign V5 = |ownedLiterals| */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._148 /* assign V2 = (|isSerializable.'serializable'| > 0) */,
-				ms._175 /* assign V3 = |isSerializable.'serializable'| */
+				ms._206 /* assign V6 = |ClassCS::ownedConstraints| */,
+				ms._198 /* assign V5 = |EnumerationCS::ownedLiterals| */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._149 /* assign V2 = (|EnumerationCS::isSerializable.'serializable'| > 0) */,
+				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-15-steps */,
@@ -10479,9 +10479,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _151 = new SerializationRule(21,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -10529,9 +10529,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _152 = new SerializationRule(21,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -10580,12 +10580,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._197 /* assign V5 = |ownedConstraints| */,
-				ms._189 /* assign V4 = |ownedLiterals| */,
-				ms._176 /* assign V3 = |ownedAnnotations| */,
-				ms._114 /* assign V1 = |instanceClassName| */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
+				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
+				ms._187 /* assign V4 = |EnumerationCS::ownedLiterals| */,
+				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
+				ms._114 /* assign V1 = |ClassCS::instanceClassName| */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -10651,10 +10651,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _154 = new SerializationRule(22,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._158 /* assign V2 = |ownedAnnotations| */,
-				ms._133 /* assign V1 = |value| */,
-				ms._075 /* assign V0 = |literal| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._160 /* assign V2 = |ModelElementCS::ownedAnnotations| */,
+				ms._117 /* assign V1 = |EnumerationLiteralCS::value| */,
+				ms._079 /* assign V0 = |EnumerationLiteralCS::literal| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-11-steps */,
@@ -10702,9 +10702,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// OCLinEcore::EnumerationLiteralCS : { 'literal' name=UnrestrictedName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 		private @NonNull SerializationRule _155 = new SerializationRule(22,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._133 /* assign V1 = |value| */,
-				ms._075 /* assign V0 = |literal| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._117 /* assign V1 = |EnumerationLiteralCS::value| */,
+				ms._079 /* assign V0 = |EnumerationLiteralCS::literal| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -10743,9 +10743,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// OCLinEcore::EnumerationLiteralCS : { name=EnumerationLiteralName { ':' literal=SINGLE_QUOTED_STRING }[?] { '=' value=SIGNED }[?] ';' }
 		private @NonNull SerializationRule _156 = new SerializationRule(22,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._133 /* assign V1 = |value| */,
-				ms._075 /* assign V0 = |literal| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._117 /* assign V1 = |EnumerationLiteralCS::value| */,
+				ms._079 /* assign V0 = |EnumerationLiteralCS::literal| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -10783,10 +10783,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _157 = new SerializationRule(22,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._158 /* assign V2 = |ownedAnnotations| */,
-				ms._133 /* assign V1 = |value| */,
-				ms._075 /* assign V0 = |literal| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._160 /* assign V2 = |ModelElementCS::ownedAnnotations| */,
+				ms._117 /* assign V1 = |EnumerationLiteralCS::value| */,
+				ms._079 /* assign V0 = |EnumerationLiteralCS::literal| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -10833,10 +10833,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _158 = new SerializationRule(37,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._041 /* assert (|ownedType| - 1) == 0 */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._069 /* assign V0 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
-				ms._131 /* assign V1 = |qualifiers.'!ordered|!unique|ordered|unique'| */
+				ms._051 /* assert (|TypedElementCS::ownedType| - 1) == 0 */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._069 /* assign V0 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
+				ms._131 /* assign V1 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -10883,9 +10883,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _159 = new SerializationRule(38,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._236 /* check-rule basecs::ImportCS.ownedPathName : 123 */,
-				ms._115 /* assign V1 = |isAll.'::*'| */,
-				ms._030 /* assert (|ownedPathName| - 1) == 0 */,
-				ms._076 /* assign V0 = |name| */
+				ms._118 /* assign V1 = |ImportCS::isAll.'::*'| */,
+				ms._017 /* assert (|ImportCS::ownedPathName| - 1) == 0 */,
+				ms._085 /* assign V0 = |NamedElementCS::name| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -10928,10 +10928,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _160 = new SerializationRule(41,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._233 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : 92 */,
-				ms._117 /* assign V1 = |name| */,
-				ms._051 /* assert (|stereotype.'invariant'| - 1) == 0 */,
-				ms._072 /* assign V0 = |isCallable.'callable'| */,
-				ms._160 /* assign V2 = |ownedMessageSpecification| */
+				ms._120 /* assign V1 = |NamedElementCS::name| */,
+				ms._007 /* assert (|ConstraintCS::stereotype.'invariant'| - 1) == 0 */,
+				ms._089 /* assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'| */,
+				ms._158 /* assign V2 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -10984,11 +10984,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._233 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : 92 */,
-				ms._179 /* assign V3 = |ownedSpecification| */,
-				ms._117 /* assign V1 = |name| */,
-				ms._051 /* assert (|stereotype.'invariant'| - 1) == 0 */,
-				ms._072 /* assign V0 = |isCallable.'callable'| */,
-				ms._160 /* assign V2 = |ownedMessageSpecification| */
+				ms._174 /* assign V3 = |ConstraintCS::ownedSpecification| */,
+				ms._120 /* assign V1 = |NamedElementCS::name| */,
+				ms._007 /* assert (|ConstraintCS::stereotype.'invariant'| - 1) == 0 */,
+				ms._089 /* assign V0 = |OCLinEcoreConstraintCS::isCallable.'callable'| */,
+				ms._158 /* assign V2 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-11-steps */,
@@ -11048,7 +11048,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _162 = new SerializationRule(54,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._238 /* check-rule basecs::ModelElementRefCS.ownedPathName : 73 */,
-				ms._032 /* assert (|ownedPathName| - 1) == 0 */
+				ms._026 /* assert (|ModelElementRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -11082,20 +11082,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._145 /* assign V12 = |ownedPostconditions| */,
-				ms._227 /* assign V9 = |ownedPreconditions| */,
-				ms._219 /* assign V8 = |ownedAnnotations| */,
-				ms._180 /* assign V3 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._134 /* assign V10 = (|ownedBodyExpressions| > 0) */,
-				ms._141 /* assign V11 = |ownedBodyExpressions| */,
-				ms._204 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._216 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-				ms._182 /* assign V4 = (|ownedExceptions| > 0) */,
-				ms._194 /* assign V5 = (|ownedExceptions| - 1) */,
-				ms._106 /* assign V1 = (|ownedParameters| > 0) */,
-				ms._150 /* assign V2 = (|ownedParameters| - 1) */
+				ms._144 /* assign V12 = |OperationCS::ownedPostconditions| */,
+				ms._226 /* assign V9 = |OperationCS::ownedPreconditions| */,
+				ms._219 /* assign V8 = |ModelElementCS::ownedAnnotations| */,
+				ms._179 /* assign V3 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._134 /* assign V10 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				ms._141 /* assign V11 = |OperationCS::ownedBodyExpressions| */,
+				ms._205 /* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._216 /* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+				ms._182 /* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._193 /* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._108 /* assign V1 = (|OperationCS::ownedParameters| > 0) */,
+				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-34-steps */,
@@ -11227,22 +11227,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._147 /* assign V13 = |ownedPostconditions| */,
-				ms._138 /* assign V10 = |ownedPreconditions| */,
-				ms._225 /* assign V9 = |ownedAnnotations| */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._139 /* assign V11 = (|ownedBodyExpressions| > 0) */,
-				ms._143 /* assign V12 = |ownedBodyExpressions| */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._146 /* assign V13 = |OperationCS::ownedPostconditions| */,
+				ms._138 /* assign V10 = |OperationCS::ownedPreconditions| */,
+				ms._225 /* assign V9 = |ModelElementCS::ownedAnnotations| */,
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._139 /* assign V11 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				ms._143 /* assign V12 = |OperationCS::ownedBodyExpressions| */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-36-steps */,
@@ -11376,17 +11376,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-27-steps */,
@@ -11486,17 +11486,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-27-steps */,
@@ -11600,22 +11600,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._147 /* assign V13 = |ownedPostconditions| */,
-				ms._138 /* assign V10 = |ownedPreconditions| */,
-				ms._225 /* assign V9 = |ownedAnnotations| */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._139 /* assign V11 = (|ownedBodyExpressions| > 0) */,
-				ms._143 /* assign V12 = |ownedBodyExpressions| */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._146 /* assign V13 = |OperationCS::ownedPostconditions| */,
+				ms._138 /* assign V10 = |OperationCS::ownedPreconditions| */,
+				ms._225 /* assign V9 = |ModelElementCS::ownedAnnotations| */,
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._139 /* assign V11 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				ms._143 /* assign V12 = |OperationCS::ownedBodyExpressions| */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-36-steps */,
@@ -11749,15 +11749,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._180 /* assign V3 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._204 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._216 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-				ms._182 /* assign V4 = (|ownedExceptions| > 0) */,
-				ms._194 /* assign V5 = (|ownedExceptions| - 1) */,
-				ms._106 /* assign V1 = (|ownedParameters| > 0) */,
-				ms._150 /* assign V2 = (|ownedParameters| - 1) */
+				ms._179 /* assign V3 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._205 /* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._216 /* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+				ms._182 /* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._193 /* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._108 /* assign V1 = (|OperationCS::ownedParameters| > 0) */,
+				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-25-steps */,
@@ -11851,15 +11851,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._180 /* assign V3 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._204 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._216 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-				ms._182 /* assign V4 = (|ownedExceptions| > 0) */,
-				ms._194 /* assign V5 = (|ownedExceptions| - 1) */,
-				ms._106 /* assign V1 = (|ownedParameters| > 0) */,
-				ms._150 /* assign V2 = (|ownedParameters| - 1) */
+				ms._179 /* assign V3 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._205 /* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._216 /* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+				ms._182 /* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._193 /* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._108 /* assign V1 = (|OperationCS::ownedParameters| > 0) */,
+				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-25-steps */,
@@ -11957,20 +11957,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._145 /* assign V12 = |ownedPostconditions| */,
-				ms._227 /* assign V9 = |ownedPreconditions| */,
-				ms._219 /* assign V8 = |ownedAnnotations| */,
-				ms._180 /* assign V3 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._087 /* assign V0 = |ownedSignature| */,
-				ms._134 /* assign V10 = (|ownedBodyExpressions| > 0) */,
-				ms._141 /* assign V11 = |ownedBodyExpressions| */,
-				ms._204 /* assign V6 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._216 /* assign V7 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
-				ms._182 /* assign V4 = (|ownedExceptions| > 0) */,
-				ms._194 /* assign V5 = (|ownedExceptions| - 1) */,
-				ms._106 /* assign V1 = (|ownedParameters| > 0) */,
-				ms._150 /* assign V2 = (|ownedParameters| - 1) */
+				ms._144 /* assign V12 = |OperationCS::ownedPostconditions| */,
+				ms._226 /* assign V9 = |OperationCS::ownedPreconditions| */,
+				ms._219 /* assign V8 = |ModelElementCS::ownedAnnotations| */,
+				ms._179 /* assign V3 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
+				ms._134 /* assign V10 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				ms._141 /* assign V11 = |OperationCS::ownedBodyExpressions| */,
+				ms._205 /* assign V6 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._216 /* assign V7 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */,
+				ms._182 /* assign V4 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._193 /* assign V5 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._108 /* assign V1 = (|OperationCS::ownedParameters| > 0) */,
+				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-34-steps */,
@@ -12102,22 +12102,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._147 /* assign V13 = |ownedPostconditions| */,
-				ms._138 /* assign V10 = |ownedPreconditions| */,
-				ms._225 /* assign V9 = |ownedAnnotations| */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._139 /* assign V11 = (|ownedBodyExpressions| > 0) */,
-				ms._143 /* assign V12 = |ownedBodyExpressions| */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._146 /* assign V13 = |OperationCS::ownedPostconditions| */,
+				ms._138 /* assign V10 = |OperationCS::ownedPreconditions| */,
+				ms._225 /* assign V9 = |ModelElementCS::ownedAnnotations| */,
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._139 /* assign V11 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				ms._143 /* assign V12 = |OperationCS::ownedBodyExpressions| */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-36-steps */,
@@ -12251,17 +12251,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-27-steps */,
@@ -12365,22 +12365,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._147 /* assign V13 = |ownedPostconditions| */,
-				ms._138 /* assign V10 = |ownedPreconditions| */,
-				ms._225 /* assign V9 = |ownedAnnotations| */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._139 /* assign V11 = (|ownedBodyExpressions| > 0) */,
-				ms._143 /* assign V12 = |ownedBodyExpressions| */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._146 /* assign V13 = |OperationCS::ownedPostconditions| */,
+				ms._138 /* assign V10 = |OperationCS::ownedPreconditions| */,
+				ms._225 /* assign V9 = |ModelElementCS::ownedAnnotations| */,
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._139 /* assign V11 = (|OperationCS::ownedBodyExpressions| > 0) */,
+				ms._143 /* assign V12 = |OperationCS::ownedBodyExpressions| */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-36-steps */,
@@ -12514,17 +12514,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._190 /* assign V4 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._195 /* assign V5 = (|ownedExceptions| > 0) */,
-				ms._203 /* assign V6 = (|ownedExceptions| - 1) */,
-				ms._151 /* assign V2 = (|ownedParameters| > 0) */,
-				ms._168 /* assign V3 = (|ownedParameters| - 1) */,
-				ms._211 /* assign V7 = (|qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
-				ms._222 /* assign V8 = |qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
+				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._194 /* assign V5 = (|OperationCS::ownedExceptions| > 0) */,
+				ms._202 /* assign V6 = (|OperationCS::ownedExceptions| - 1) */,
+				ms._151 /* assign V2 = (|OperationCS::ownedParameters| > 0) */,
+				ms._168 /* assign V3 = (|OperationCS::ownedParameters| - 1) */,
+				ms._213 /* assign V7 = (|TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| > 0) */,
+				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-27-steps */,
@@ -12623,12 +12623,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._245 /* check-rule basecs::PackageOwnerCS.ownedPackages : 71 */,
 				ms._244 /* check-rule basecs::PackageCS.ownedClasses : 6 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._187 /* assign V4 = |ownedClasses| */,
-				ms._178 /* assign V3 = |ownedPackages| */,
-				ms._158 /* assign V2 = |ownedAnnotations| */,
-				ms._118 /* assign V1 = |nsURI| */,
-				ms._077 /* assign V0 = |nsPrefix| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._189 /* assign V4 = |PackageCS::ownedClasses| */,
+				ms._177 /* assign V3 = |PackageOwnerCS::ownedPackages| */,
+				ms._160 /* assign V2 = |ModelElementCS::ownedAnnotations| */,
+				ms._123 /* assign V1 = |PackageCS::nsURI| */,
+				ms._090 /* assign V0 = |PackageCS::nsPrefix| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-13-steps */,
@@ -12688,9 +12688,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// OCLinEcore::PackageCS : { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' }
 		private @NonNull SerializationRule _176 = new SerializationRule(71,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._118 /* assign V1 = |nsURI| */,
-				ms._077 /* assign V0 = |nsPrefix| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._123 /* assign V1 = |PackageCS::nsURI| */,
+				ms._090 /* assign V0 = |PackageCS::nsPrefix| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -12729,9 +12729,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// OCLinEcore::PackageCS : { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] ';' }
 		private @NonNull SerializationRule _177 = new SerializationRule(71,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._118 /* assign V1 = |nsURI| */,
-				ms._077 /* assign V0 = |nsPrefix| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._123 /* assign V1 = |PackageCS::nsURI| */,
+				ms._090 /* assign V0 = |PackageCS::nsPrefix| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-9-steps */,
@@ -12773,12 +12773,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._245 /* check-rule basecs::PackageOwnerCS.ownedPackages : 71 */,
 				ms._244 /* check-rule basecs::PackageCS.ownedClasses : 6 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._187 /* assign V4 = |ownedClasses| */,
-				ms._178 /* assign V3 = |ownedPackages| */,
-				ms._158 /* assign V2 = |ownedAnnotations| */,
-				ms._118 /* assign V1 = |nsURI| */,
-				ms._077 /* assign V0 = |nsPrefix| */,
-				ms._005 /* assert (|name| - 1) == 0 */
+				ms._189 /* assign V4 = |PackageCS::ownedClasses| */,
+				ms._177 /* assign V3 = |PackageOwnerCS::ownedPackages| */,
+				ms._160 /* assign V2 = |ModelElementCS::ownedAnnotations| */,
+				ms._123 /* assign V1 = |PackageCS::nsURI| */,
+				ms._090 /* assign V0 = |PackageCS::nsPrefix| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-13-steps */,
@@ -12840,12 +12840,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._089 /* assign V0 = |ownedType| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._167 /* assign V3 = (|ownedAnnotations| > 0) */,
-				ms._186 /* assign V4 = |ownedAnnotations| */,
-				ms._112 /* assign V1 = (|qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
-				ms._165 /* assign V2 = |qualifiers.'!ordered|!unique|ordered|unique'| */
+				ms._097 /* assign V0 = |TypedElementCS::ownedType| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._167 /* assign V3 = (|ModelElementCS::ownedAnnotations| > 0) */,
+				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
+				ms._112 /* assign V1 = (|TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| > 0) */,
+				ms._164 /* assign V2 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-13-steps */,
@@ -12905,10 +12905,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._233 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : 92 */,
-				ms._163 /* assign V2 = |ownedSpecification| */,
-				ms._076 /* assign V0 = |name| */,
-				ms._052 /* assert (|stereotype.'postcondition'| - 1) == 0 */,
-				ms._123 /* assign V1 = |ownedMessageSpecification| */
+				ms._159 /* assign V2 = |ConstraintCS::ownedSpecification| */,
+				ms._085 /* assign V0 = |NamedElementCS::name| */,
+				ms._008 /* assert (|ConstraintCS::stereotype.'postcondition'| - 1) == 0 */,
+				ms._116 /* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -12962,10 +12962,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._233 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : 92 */,
-				ms._163 /* assign V2 = |ownedSpecification| */,
-				ms._076 /* assign V0 = |name| */,
-				ms._053 /* assert (|stereotype.'precondition'| - 1) == 0 */,
-				ms._123 /* assign V1 = |ownedMessageSpecification| */
+				ms._159 /* assign V2 = |ConstraintCS::ownedSpecification| */,
+				ms._085 /* assign V0 = |NamedElementCS::name| */,
+				ms._009 /* assert (|ConstraintCS::stereotype.'precondition'| - 1) == 0 */,
+				ms._116 /* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -13018,14 +13018,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _182 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-19-steps */,
@@ -13101,20 +13101,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
-				ms._146 /* assign V13 = |ownedImplicitOpposites| */,
-				ms._207 /* assign V6 = |ownedAnnotations| */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._213 /* assign V7 = (|referredKeys| > 0) */,
-				ms._217 /* assign V8 = (|referredKeys| - 1) */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				ms._226 /* assign V9 = |ownedDefaultExpressions| */,
-				ms._135 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+				ms._147 /* assign V13 = |ReferenceCS::ownedImplicitOpposites| */,
+				ms._207 /* assign V6 = |ModelElementCS::ownedAnnotations| */,
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._211 /* assign V7 = (|ReferenceCS::referredKeys| > 0) */,
+				ms._217 /* assign V8 = (|ReferenceCS::referredKeys| - 1) */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				ms._227 /* assign V9 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._135 /* assign V10 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._140 /* assign V11 = 0 */,
 				ms._142 /* assign V12 = 0 */
 			},
@@ -13247,14 +13247,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _184 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-19-steps */,
@@ -13327,14 +13327,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _185 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-19-steps */,
@@ -13407,12 +13407,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _186 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._097 /* assign V0 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._170 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._191 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._092 /* assign V0 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._170 /* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._191 /* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-17-steps */,
@@ -13479,14 +13479,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _187 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-19-steps */,
@@ -13562,18 +13562,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
-				ms._144 /* assign V12 = |ownedImplicitOpposites| */,
-				ms._196 /* assign V5 = |ownedAnnotations| */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._097 /* assign V0 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._205 /* assign V6 = (|referredKeys| > 0) */,
-				ms._212 /* assign V7 = (|referredKeys| - 1) */,
-				ms._170 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._191 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				ms._220 /* assign V8 = |ownedDefaultExpressions| */,
-				ms._223 /* assign V9 = (|ownedDefaultExpressions| > 0) */,
+				ms._145 /* assign V12 = |ReferenceCS::ownedImplicitOpposites| */,
+				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._092 /* assign V0 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._203 /* assign V6 = (|ReferenceCS::referredKeys| > 0) */,
+				ms._210 /* assign V7 = (|ReferenceCS::referredKeys| - 1) */,
+				ms._170 /* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._191 /* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				ms._220 /* assign V8 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._223 /* assign V9 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._136 /* assign V10 = 0 */,
 				ms._140 /* assign V11 = 0 */
 			},
@@ -13703,20 +13703,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
-				ms._146 /* assign V13 = |ownedImplicitOpposites| */,
-				ms._207 /* assign V6 = |ownedAnnotations| */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._096 /* assign V0 = |qualifiers.'static'| */,
-				ms._047 /* assert (|qualifiers.'definition'| - 1) == 0 */,
-				ms._213 /* assign V7 = (|referredKeys| > 0) */,
-				ms._217 /* assign V8 = (|referredKeys| - 1) */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				ms._226 /* assign V9 = |ownedDefaultExpressions| */,
-				ms._135 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+				ms._147 /* assign V13 = |ReferenceCS::ownedImplicitOpposites| */,
+				ms._207 /* assign V6 = |ModelElementCS::ownedAnnotations| */,
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._099 /* assign V0 = |TypedElementCS::qualifiers.'static'| */,
+				ms._052 /* assert (|TypedElementCS::qualifiers.'definition'| - 1) == 0 */,
+				ms._211 /* assign V7 = (|ReferenceCS::referredKeys| > 0) */,
+				ms._217 /* assign V8 = (|ReferenceCS::referredKeys| - 1) */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				ms._227 /* assign V9 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._135 /* assign V10 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._140 /* assign V11 = 0 */,
 				ms._142 /* assign V12 = 0 */
 			},
@@ -13852,20 +13852,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
-				ms._146 /* assign V13 = |ownedImplicitOpposites| */,
-				ms._207 /* assign V6 = |ownedAnnotations| */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._213 /* assign V7 = (|referredKeys| > 0) */,
-				ms._217 /* assign V8 = (|referredKeys| - 1) */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				ms._226 /* assign V9 = |ownedDefaultExpressions| */,
-				ms._135 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+				ms._147 /* assign V13 = |ReferenceCS::ownedImplicitOpposites| */,
+				ms._207 /* assign V6 = |ModelElementCS::ownedAnnotations| */,
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._211 /* assign V7 = (|ReferenceCS::referredKeys| > 0) */,
+				ms._217 /* assign V8 = (|ReferenceCS::referredKeys| - 1) */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				ms._227 /* assign V9 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._135 /* assign V10 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._140 /* assign V11 = 0 */,
 				ms._142 /* assign V12 = 0 */
 			},
@@ -13998,12 +13998,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _191 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._097 /* assign V0 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._170 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._191 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._092 /* assign V0 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._170 /* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._191 /* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-17-steps */,
@@ -14076,20 +14076,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
-				ms._146 /* assign V13 = |ownedImplicitOpposites| */,
-				ms._207 /* assign V6 = |ownedAnnotations| */,
-				ms._173 /* assign V3 = |default| */,
-				ms._164 /* assign V2 = |ownedType| */,
-				ms._132 /* assign V1 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._095 /* assign V0 = |qualifiers.'definition'| */,
-				ms._048 /* assert (|qualifiers.'static'| - 1) == 0 */,
-				ms._213 /* assign V7 = (|referredKeys| > 0) */,
-				ms._217 /* assign V8 = (|referredKeys| - 1) */,
-				ms._183 /* assign V4 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._201 /* assign V5 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				ms._226 /* assign V9 = |ownedDefaultExpressions| */,
-				ms._135 /* assign V10 = (|ownedDefaultExpressions| > 0) */,
+				ms._147 /* assign V13 = |ReferenceCS::ownedImplicitOpposites| */,
+				ms._207 /* assign V6 = |ModelElementCS::ownedAnnotations| */,
+				ms._178 /* assign V3 = |StructuralFeatureCS::default| */,
+				ms._163 /* assign V2 = |TypedElementCS::ownedType| */,
+				ms._124 /* assign V1 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._098 /* assign V0 = |TypedElementCS::qualifiers.'definition'| */,
+				ms._053 /* assert (|TypedElementCS::qualifiers.'static'| - 1) == 0 */,
+				ms._211 /* assign V7 = (|ReferenceCS::referredKeys| > 0) */,
+				ms._217 /* assign V8 = (|ReferenceCS::referredKeys| - 1) */,
+				ms._183 /* assign V4 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				ms._227 /* assign V9 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._135 /* assign V10 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._140 /* assign V11 = 0 */,
 				ms._142 /* assign V12 = 0 */
 			},
@@ -14225,18 +14225,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
-				ms._144 /* assign V12 = |ownedImplicitOpposites| */,
-				ms._196 /* assign V5 = |ownedAnnotations| */,
-				ms._156 /* assign V2 = |default| */,
-				ms._129 /* assign V1 = |ownedType| */,
-				ms._097 /* assign V0 = |referredOpposite| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._205 /* assign V6 = (|referredKeys| > 0) */,
-				ms._212 /* assign V7 = (|referredKeys| - 1) */,
-				ms._170 /* assign V3 = (|qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
-				ms._191 /* assign V4 = |qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
-				ms._220 /* assign V8 = |ownedDefaultExpressions| */,
-				ms._223 /* assign V9 = (|ownedDefaultExpressions| > 0) */,
+				ms._145 /* assign V12 = |ReferenceCS::ownedImplicitOpposites| */,
+				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
+				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
+				ms._130 /* assign V1 = |TypedElementCS::ownedType| */,
+				ms._092 /* assign V0 = |ReferenceCS::referredOpposite| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._203 /* assign V6 = (|ReferenceCS::referredKeys| > 0) */,
+				ms._210 /* assign V7 = (|ReferenceCS::referredKeys| - 1) */,
+				ms._170 /* assign V3 = (|TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| > 0) */,
+				ms._191 /* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */,
+				ms._220 /* assign V8 = |StructuralFeatureCS::ownedDefaultExpressions| */,
+				ms._223 /* assign V9 = (|StructuralFeatureCS::ownedDefaultExpressions| > 0) */,
 				ms._136 /* assign V10 = 0 */,
 				ms._140 /* assign V11 = 0 */
 			},
@@ -14363,7 +14363,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _194 = new SerializationRule(92,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._283 /* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : 30 */,
-				ms._018 /* assert (|ownedExpression| - 1) == 0 */
+				ms._011 /* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._090 /* 1*ownedExpression=ExpCS */
@@ -14383,7 +14383,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		// OCLinEcore::SpecificationCS : exprString=UNQUOTED_STRING
 		private @NonNull SerializationRule _195 = new SerializationRule(92,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._000 /* assert (|exprString| - 1) == 0 */
+				ms._046 /* assert (|SpecificationCS::exprString| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._065 /* 1*exprString=UNQUOTED_STRING */
@@ -14406,18 +14406,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._253 /* check-rule basecs::StructuredClassCS.ownedProperties : 96 */,
 				ms._252 /* check-rule basecs::StructuredClassCS.ownedOperations : 70 */,
-				ms._137 /* assign V10 = |ownedConstraints| */,
-				ms._228 /* assign V9 = |ownedProperties| */,
-				ms._221 /* assign V8 = |ownedOperations| */,
-				ms._215 /* assign V7 = |ownedAnnotations| */,
-				ms._184 /* assign V4 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._071 /* assign V0 = |isAbstract.'abstract'| */,
-				ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
-				ms._206 /* assign V6 = |isInterface.'interface'| */,
-				ms._153 /* assign V2 = (|ownedSuperTypes| > 0) */,
-				ms._169 /* assign V3 = (|ownedSuperTypes| - 1) */
+				ms._137 /* assign V10 = |ClassCS::ownedConstraints| */,
+				ms._228 /* assign V9 = |StructuredClassCS::ownedProperties| */,
+				ms._221 /* assign V8 = |StructuredClassCS::ownedOperations| */,
+				ms._215 /* assign V7 = |ModelElementCS::ownedAnnotations| */,
+				ms._185 /* assign V4 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._094 /* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
+				ms._195 /* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
+				ms._209 /* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
+				ms._152 /* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
+				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-23-steps */,
@@ -14520,14 +14520,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._254 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._184 /* assign V4 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._071 /* assign V0 = |isAbstract.'abstract'| */,
-				ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
-				ms._206 /* assign V6 = |isInterface.'interface'| */,
-				ms._153 /* assign V2 = (|ownedSuperTypes| > 0) */,
-				ms._169 /* assign V3 = (|ownedSuperTypes| - 1) */
+				ms._185 /* assign V4 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._094 /* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
+				ms._195 /* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
+				ms._209 /* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
+				ms._152 /* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
+				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-18-steps */,
@@ -14608,18 +14608,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._253 /* check-rule basecs::StructuredClassCS.ownedProperties : 96 */,
 				ms._252 /* check-rule basecs::StructuredClassCS.ownedOperations : 70 */,
-				ms._137 /* assign V10 = |ownedConstraints| */,
-				ms._228 /* assign V9 = |ownedProperties| */,
-				ms._221 /* assign V8 = |ownedOperations| */,
-				ms._215 /* assign V7 = |ownedAnnotations| */,
-				ms._184 /* assign V4 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._071 /* assign V0 = |isAbstract.'abstract'| */,
-				ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
-				ms._206 /* assign V6 = |isInterface.'interface'| */,
-				ms._153 /* assign V2 = (|ownedSuperTypes| > 0) */,
-				ms._169 /* assign V3 = (|ownedSuperTypes| - 1) */
+				ms._137 /* assign V10 = |ClassCS::ownedConstraints| */,
+				ms._228 /* assign V9 = |StructuredClassCS::ownedProperties| */,
+				ms._221 /* assign V8 = |StructuredClassCS::ownedOperations| */,
+				ms._215 /* assign V7 = |ModelElementCS::ownedAnnotations| */,
+				ms._185 /* assign V4 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._094 /* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
+				ms._195 /* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
+				ms._209 /* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
+				ms._152 /* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
+				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-23-steps */,
@@ -14722,14 +14722,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._254 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : 117 */,
 				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._184 /* assign V4 = |instanceClassName| */,
-				ms._128 /* assign V1 = |ownedSignature| */,
-				ms._005 /* assert (|name| - 1) == 0 */,
-				ms._071 /* assign V0 = |isAbstract.'abstract'| */,
-				ms._193 /* assign V5 = (|isInterface.'interface'| > 0) */,
-				ms._206 /* assign V6 = |isInterface.'interface'| */,
-				ms._153 /* assign V2 = (|ownedSuperTypes| > 0) */,
-				ms._169 /* assign V3 = (|ownedSuperTypes| - 1) */
+				ms._185 /* assign V4 = |ClassCS::instanceClassName| */,
+				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
+				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._094 /* assign V0 = |StructuredClassCS::isAbstract.'abstract'| */,
+				ms._195 /* assign V5 = (|StructuredClassCS::isInterface.'interface'| > 0) */,
+				ms._209 /* assign V6 = |StructuredClassCS::isInterface.'interface'| */,
+				ms._152 /* assign V2 = (|StructuredClassCS::ownedSuperTypes| > 0) */,
+				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-18-steps */,
@@ -14805,7 +14805,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _200 = new SerializationRule(98,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
-				ms._080 /* assign V0 = |ownedDetails| */
+				ms._072 /* assign V0 = |AnnotationElementCS::ownedDetails| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -14838,7 +14838,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _201 = new SerializationRule(98,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
-				ms._012 /* assert (|ownedDetails| - 1) == 0 */
+				ms._001 /* assert (|AnnotationElementCS::ownedDetails| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -14865,7 +14865,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _202 = new SerializationRule(98,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
-				ms._080 /* assign V0 = |ownedDetails| */
+				ms._072 /* assign V0 = |AnnotationElementCS::ownedDetails| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -14898,7 +14898,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _203 = new SerializationRule(98,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
-				ms._012 /* assert (|ownedDetails| - 1) == 0 */
+				ms._001 /* assert (|AnnotationElementCS::ownedDetails| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-3-steps */,
@@ -14925,7 +14925,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _204 = new SerializationRule(101,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._258 /* check-rule basecs::TemplateSignatureCS.ownedParameters : 114 */,
-				ms._059 /* assign V0 = (|ownedParameters| - 1) */
+				ms._065 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -14958,7 +14958,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _205 = new SerializationRule(101,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._258 /* check-rule basecs::TemplateSignatureCS.ownedParameters : 114 */,
-				ms._059 /* assign V0 = (|ownedParameters| - 1) */
+				ms._065 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-6-steps */,
@@ -14992,8 +14992,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._245 /* check-rule basecs::PackageOwnerCS.ownedPackages : 71 */,
 				ms._250 /* check-rule basecs::RootCS.ownedImports : 38 */,
-				ms._162 /* assign V2 = |ownedPackages| */,
-				ms._121 /* assign V1 = |ownedImports| */,
+				ms._161 /* assign V2 = |PackageOwnerCS::ownedPackages| */,
+				ms._125 /* assign V1 = |RootCS::ownedImports| */,
 				ms._070 /* assign V0 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -15029,10 +15029,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._161 /* assign V2 = |ownedMultiplicity| */,
-				ms._091 /* assign V0 = |ownedType| */,
-				ms._006 /* assert (|name| - 1) == 0 */,
-				ms._120 /* assign V1 = |ownedCollectionMultiplicity| */
+				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
+				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
+				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-7-steps */,
@@ -15078,8 +15078,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._085 /* assign V0 = |ownedMultiplicity| */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -15110,9 +15110,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._085 /* assign V0 = |ownedMultiplicity| */,
-				ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-5-steps */,
@@ -15153,10 +15153,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._124 /* assign V1 = |ownedMultiplicity| */,
-				ms._093 /* assign V0 = |ownedValueType| */,
-				ms._023 /* assert (|ownedKeyType| - V0) == 0 */,
-				ms._002 /* assert (|name.'Map'| - 1) == 0 */
+				ms._132 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
+				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
+				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
+				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-8-steps */,
@@ -15208,11 +15208,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._260 /* check-rule basecs::TupleTypeCS.ownedParts : 105 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._177 /* assign V3 = |ownedMultiplicity| */,
-				ms._003 /* assert (|name.'Tuple'| - 1) == 0 */,
-				ms._064 /* assign V0 = (|ownedParts| > 0) */,
-				ms._111 /* assign V1 = (|ownedParts| > 0) */,
-				ms._152 /* assign V2 = (|ownedParts| - 1) */
+				ms._181 /* assign V3 = |TypedRefCS::ownedMultiplicity| */,
+				ms._048 /* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
+				ms._067 /* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._110 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
+				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-10-steps */,
@@ -15263,8 +15263,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _212 = new SerializationRule(116,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._085 /* assign V0 = |ownedMultiplicity| */,
-				ms._004 /* assert (|name| - 1) == 0 */
+				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-2-steps */,
@@ -15293,9 +15293,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._085 /* assign V0 = |ownedMultiplicity| */,
-				ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-5-steps */,
@@ -15335,8 +15335,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
-				ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -15370,8 +15370,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
-				ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -15405,8 +15405,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
-				ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,
@@ -15439,7 +15439,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _217 = new SerializationRule(118,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._121 /* 1*ownedPathName=PathNameCS */
@@ -15460,7 +15460,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _218 = new SerializationRule(118,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._121 /* 1*ownedPathName=PathNameCS */
@@ -15482,8 +15482,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
-				ms._008 /* assert (|ownedBinding| - 1) == 0 */,
-				ms._029 /* assert (|ownedPathName| - 1) == 0 */
+				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
+				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
 				st._076 /* 1*next-4-steps */,

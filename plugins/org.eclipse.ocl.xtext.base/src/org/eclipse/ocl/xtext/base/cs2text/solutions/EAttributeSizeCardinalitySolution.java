@@ -75,6 +75,8 @@ public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySoluti
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("|");
+		s.append(eAttribute.getEContainingClass().getName());
+		s.append("::");
 		s.append(eAttribute.getName());
 		s.append(".'");
 		s.append(enumerationValue.getName());
