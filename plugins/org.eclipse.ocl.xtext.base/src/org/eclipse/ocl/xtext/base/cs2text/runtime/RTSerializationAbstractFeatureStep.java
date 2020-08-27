@@ -17,8 +17,9 @@ public abstract class RTSerializationAbstractFeatureStep extends RTAbstractSeria
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	protected RTSerializationAbstractFeatureStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature) {
+	protected RTSerializationAbstractFeatureStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
 		super(variableIndex);
+		assert eStructuralFeature != null;
 		this.eStructuralFeature = eStructuralFeature;
 	}
 

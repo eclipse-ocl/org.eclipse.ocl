@@ -22,7 +22,8 @@ public class EStructuralFeatureSizeCardinalitySolution extends AbstractCardinali
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	public EStructuralFeatureSizeCardinalitySolution(@NonNull EStructuralFeature eStructuralFeature) {
+	public EStructuralFeatureSizeCardinalitySolution(/*@NonNull*/ EStructuralFeature eStructuralFeature) {
+		assert eStructuralFeature != null;
 		this.eStructuralFeature = eStructuralFeature;
 	}
 

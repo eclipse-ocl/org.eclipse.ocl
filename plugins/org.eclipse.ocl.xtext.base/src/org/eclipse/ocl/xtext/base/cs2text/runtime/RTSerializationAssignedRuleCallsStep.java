@@ -30,7 +30,7 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 {
 	private @NonNull AbstractRuleValue @NonNull [] calledRuleValues;
 
-	public RTSerializationAssignedRuleCallsStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature, @NonNull AbstractRuleValue @NonNull [] calledRuleValues) {
+	public RTSerializationAssignedRuleCallsStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull AbstractRuleValue @NonNull [] calledRuleValues) {
 		super(variableIndex, eStructuralFeature);
 		this.calledRuleValues = calledRuleValues;
 	}

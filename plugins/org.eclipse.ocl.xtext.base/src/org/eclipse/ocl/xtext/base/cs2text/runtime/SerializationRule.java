@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -31,6 +30,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -48,7 +48,7 @@ public class SerializationRule
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
-	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression;
+	protected final @NonNull EStructuralFeatureData @NonNull [] eStructuralFeature2cardinalityExpression;
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
@@ -56,14 +56,14 @@ public class SerializationRule
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttributeData @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> feature2expression) {
+			@NonNull EStructuralFeatureData @NonNull [] eStructuralFeature2cardinalityExpression) {
 		this.ruleValueIndex = ruleValueIndex;
 		this.solutionSteps = solutionSteps;
 		this.serializationSteps = serializationSteps;
 		this.staticSegments = staticSegments;
 		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
 		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
-		this.feature2expression = feature2expression;
+		this.eStructuralFeature2cardinalityExpression = eStructuralFeature2cardinalityExpression;
 	}
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
@@ -140,8 +140,8 @@ public class SerializationRule
 			//
 			//	Evaluate the expressions to determine the required size of each slot.
 			//
-			for (@NonNull EStructuralFeature eStructuralFeature : feature2expression.keySet()) {
-				CardinalityExpression expression = feature2expression.get(eStructuralFeature);
+			for (@NonNull EStructuralFeatureData eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+				CardinalityExpression expression = eStructuralFeatureData.getCardinalityExpression();
 				assert expression != null;
 				if (!expression.checkSize(dynamicRuleMatch)) {
 					return null;
@@ -151,7 +151,13 @@ public class SerializationRule
 			//	Check that no 'unused' features are used.
 			//
 			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
-				if (!feature2expression.containsKey(eStructuralFeature)) {
+				boolean gotIt = false;
+				for (@NonNull EStructuralFeatureData eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+					if (eStructuralFeatureData.getEStructuralFeature() == eStructuralFeature) {
+						gotIt = true;
+					}
+				}
+				if (!gotIt) {
 					UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
 					if (!object.isCounted() || (object.asCounted() != 0)) {
 						return null;
@@ -171,8 +177,16 @@ public class SerializationRule
 	}
 
 	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		for (@NonNull EStructuralFeatureData eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+			if (eStructuralFeatureData.getEStructuralFeature() == eAttribute) {
+				CardinalityExpression expression = eStructuralFeatureData.getCardinalityExpression();
+			//	if (expression == null) {
+			//		return false;
+			//	}
+				return expression.isOne();
+			}
+		}
+		return false;
 	}
 
 	public void serializeRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {

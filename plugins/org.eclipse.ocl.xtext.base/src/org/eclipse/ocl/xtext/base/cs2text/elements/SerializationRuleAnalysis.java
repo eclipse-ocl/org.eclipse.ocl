@@ -41,6 +41,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
@@ -160,6 +161,11 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			eReferenceDatas[i++] = new EReferenceData(entry.getKey(), entry.getValue());
 		}
 		return eReferenceDatas;
+	}
+
+	public @NonNull EStructuralFeatureData @Nullable [] basicGetEStructuralFeature2cardinalityExpression() {
+		@NonNull EStructuralFeatureData[] eStructuralFeatureDatas = getEStructuralFeature2cardinalityExpression();
+		return eStructuralFeatureDatas;
 	}
 
 	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {
@@ -320,6 +326,11 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		return eReference2discriminatingRuleValueIndexes;
 	} */
+
+	private @NonNull EStructuralFeatureData @NonNull [] getEStructuralFeature2cardinalityExpression() {
+		assert staticRuleMatch != null;
+		return staticRuleMatch.getEStructuralFeature2requiredSlotsExpression();
+	}
 
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		return getEAttribute2EnumerationValues().get(eAttribute);

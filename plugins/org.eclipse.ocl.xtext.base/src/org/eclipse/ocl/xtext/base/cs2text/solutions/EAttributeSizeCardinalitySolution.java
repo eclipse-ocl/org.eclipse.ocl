@@ -24,7 +24,8 @@ public class EAttributeSizeCardinalitySolution extends AbstractCardinalitySoluti
 	protected final @NonNull EAttribute eAttribute;
 	protected final @NonNull EnumerationValue enumerationValue;
 
-	public EAttributeSizeCardinalitySolution(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+	public EAttributeSizeCardinalitySolution(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		assert eAttribute != null;
 		this.eAttribute = eAttribute;
 		this.enumerationValue = enumerationValue;
 	}

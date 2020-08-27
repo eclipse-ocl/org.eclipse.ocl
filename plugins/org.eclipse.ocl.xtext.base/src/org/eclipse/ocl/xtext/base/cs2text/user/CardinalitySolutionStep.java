@@ -159,7 +159,8 @@ public abstract class CardinalitySolutionStep
 		protected final @NonNull EReference eReference;
 		protected final @NonNull IndexVector ruleValueIndexes;
 
-		public RuleCheck(@NonNull EReference eReference, @NonNull IndexVector ruleValueIndexes) {
+		public RuleCheck(/*@NonNull*/ EReference eReference, @NonNull IndexVector ruleValueIndexes) {
+			assert eReference != null;
 			this.eReference = eReference;
 			this.ruleValueIndexes = ruleValueIndexes;
 			assert eReference.isContainment();

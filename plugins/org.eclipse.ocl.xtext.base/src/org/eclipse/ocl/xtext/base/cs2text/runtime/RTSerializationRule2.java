@@ -58,7 +58,7 @@ public class RTSerializationRule2 extends SerializationRule
 	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
-			serializationRuleAnalysis.getStaticRuleMatch().geteStructuralFeature2requiredSlotsExpression());
+			serializationRuleAnalysis.getStaticRuleMatch().getEStructuralFeature2requiredSlotsExpression());
 		this.serializationRuleAnalysis = serializationRuleAnalysis;
 		RTSerializationRule2 old = debugMap.put(serializationRuleAnalysis, this);		// XXX debugging
 		assert old == null;
@@ -84,10 +84,10 @@ public class RTSerializationRule2 extends SerializationRule
 		return serializationRuleAnalysis.match(slotsAnalysis);
 	}
 
-	@Override
-	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		return serializationRuleAnalysis.needsDefault(eAttribute);
-	}
+//	@Override
+//	public boolean needsDefault(@NonNull EAttribute eAttribute) {
+//		return serializationRuleAnalysis.needsDefault(eAttribute);
+//	}
 
 	@Override
 	public void toRuleString(@NonNull StringBuilder s) {

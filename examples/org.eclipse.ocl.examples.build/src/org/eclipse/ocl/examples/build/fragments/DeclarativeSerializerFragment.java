@@ -94,6 +94,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @NonNull MetamodelManager metamodelManager = ocl.getMetamodelManager();
 	private @NonNull GenModelHelper genModelHelper = new AbstractGenModelHelper((PivotMetamodelManager)metamodelManager);
 	private @Nullable GrammarAnalysis grammarAnalysis;
+	private @NonNull Set<@NonNull String> referredClassNames = new HashSet<>();
 
 	protected abstract StringConcatenationClient doGetAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis);
 
@@ -133,11 +134,11 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	protected @NonNull String emitLiteral(@NonNull EClassifier eClassifier) {
-		return new TypeReference(genModelHelper.getQualifiedPackageInterfaceName(eClassifier.getEPackage())) + ".Literals." + genModelHelper.getLiteralName(eClassifier);
+		return newTypeReference(genModelHelper.getQualifiedPackageInterfaceName(eClassifier.getEPackage())) + ".Literals." + genModelHelper.getLiteralName(eClassifier);
 	}
 
 	protected @NonNull String emitLiteral(@NonNull EStructuralFeature eStructuralFeature) {
-		return new TypeReference(genModelHelper.getQualifiedPackageInterfaceName(eStructuralFeature.getEContainingClass().getEPackage())) + ".Literals." + genModelHelper.getEcoreLiteralName(eStructuralFeature);
+		return newTypeReference(genModelHelper.getQualifiedPackageInterfaceName(eStructuralFeature.getEContainingClass().getEPackage())) + ".Literals." + genModelHelper.getEcoreLiteralName(eStructuralFeature);
 	}
 
 	protected @NonNull String emitQualifiedLiteral(@NonNull EPackage ePackage) {
@@ -201,7 +202,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	 * Return the formString that encodes a fixed width zero padded element of domain.
 	 */
 	protected @NonNull String getDigitsFormatString(@NonNull Collection<?> domain) {
-		int digits = domain.size() > 0 ? (int)Math.ceil(Math.log10(domain.size())) : 1;
+		return getDigitsFormatString(domain.size());
+	}
+	protected @NonNull String getDigitsFormatString(int domainSize) {
+		int digits = domainSize > 0 ? (int)Math.ceil(Math.log10(domainSize)) : 1;
 		return "%0" + digits + "d";
 	}
 
@@ -476,10 +480,11 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			List<@NonNull SerializationRuleAnalysis> serializationRules = new ArrayList<>(serializationRuleAnalyses);
 			Collections.sort(serializationRules, NameUtil.NAMEABLE_COMPARATOR);
 			serializationRule2id = serializationRule2id2 = new HashMap<>();
-			String formatString = "_" + getDigitsFormatString(serializationRules);
+			String formatString = "sr" + getDigitsFormatString(getSerializationRulePage(serializationRules.size())) + "._" + getDigitsFormatString(serializationRules);
 			int i = 0;
 			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
-				serializationRule2id2.put(serializationRule.getRuntime(), String.format(formatString, i++));
+				serializationRule2id2.put(serializationRule.getRuntime(), String.format(formatString, getSerializationRulePage(i), i));
+				i++;
 			}
 			this.serializationRules = serializationRules;
 		}
@@ -487,7 +492,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 	protected @NonNull Iterable<@NonNull Integer> getSortedSerializationRulePages(@NonNull GrammarAnalysis grammarAnalysis) {
 		assert serializationRules != null;
-		int maxPage = (serializationRules.size() + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
+		int maxPage = getSerializationRulePages(serializationRules.size());
 		List<@NonNull Integer> pages = new ArrayList<>();
 		for (int i = 0; i < maxPage; i++) {
 			pages.add(i);
@@ -498,10 +503,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis, int page) {
 		assert serializationRules != null;
 		int size = serializationRules.size();
-		int maxPage = (size + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
+		int maxPage = getSerializationRulePage(size);
 		int firstIndex = RULES_PER_PAGE * page;
 		assert serializationRules != null;
-		return serializationRules.subList(firstIndex, Math.min(firstIndex+RULES_PER_PAGE-1, size-1));
+		return serializationRules.subList(firstIndex, Math.min(firstIndex+RULES_PER_PAGE, size));
 	}
 
 	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
@@ -514,7 +519,19 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		String id = serializationRule2id.get(serializationRule);
 	//	System.out.println("?? " + NameUtil.debugSimpleName(serializationRule) + " => " + id  + " : " + serializationRule.toRuleString());
 		assert id != null;
-		return addQualifier ? "sr." + id : id;
+		if (addQualifier) {
+			return id;
+		}
+		int index = id.indexOf('.');
+		return index >= 0 ? id.substring(index+1) : id;
+	}
+
+	private int getSerializationRulePage(int serializationRuleIndex) {
+		return serializationRuleIndex / RULES_PER_PAGE;
+	}
+
+	private int getSerializationRulePages(int serializationRuleIndex) {
+		return (serializationRuleIndex + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
 	}
 
 	private @Nullable Map<@NonNull EClass, @NonNull String> eClass2id = null;
@@ -610,5 +627,34 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		initRuleValues(grammarAnalysis);
 		getSortedEClasses(grammarAnalysis);
 		initSerializationRule2id(grammarAnalysis);
+	}
+
+	protected @NonNull Iterable<@NonNull String> getSortedImportClassNames() {
+		List<@NonNull String> referredClassesList = new ArrayList<>(referredClassNames);
+		Collections.sort(referredClassesList);
+		return referredClassesList;
+	}
+
+	//
+	//	Xtend does not support annotations so we need to manually format x.y.z @NonNull T
+	//
+	protected @NonNull String newTypeReference(@NonNull Class<?> referredClass) {
+		return newTypeReference(referredClass.getName());
+	}
+	protected @NonNull String newTypeReference(@Nullable String referredClassName) {
+		if (referredClassName == null) {
+			return "";			// Shouldn't happen
+		}
+		int index = referredClassName.lastIndexOf('$');
+		if (index >= 0) {
+			referredClassNames.add(referredClassName.substring(0, index));
+			index = referredClassName.lastIndexOf('.');
+			return referredClassName.substring(index+1).replace('$', '.');	// Keep an outer qualifier for nested classes
+		}
+		else {
+			referredClassNames.add(referredClassName);
+			index = referredClassName.lastIndexOf('.');
+			return referredClassName.substring(index+1);
+		}
 	}
 }

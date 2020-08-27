@@ -26,6 +26,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
@@ -104,8 +105,13 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 
 	protected abstract @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis);
 
-	public @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> geteStructuralFeature2requiredSlotsExpression() {
-		return eStructuralFeature2requiredSlotsExpression;
+	public @NonNull EStructuralFeatureData @NonNull [] getEStructuralFeature2requiredSlotsExpression() {
+		@NonNull EStructuralFeatureData [] eStructuralFeatureDatas = new @NonNull EStructuralFeatureData[eStructuralFeature2requiredSlotsExpression.size()];
+		int i = 0;
+		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
+			eStructuralFeatureDatas[i++] = new EStructuralFeatureData(entry.getKey(), entry.getValue());
+		}
+		return eStructuralFeatureDatas;
 	}
 
 	public @NonNull SerializationRuleAnalysis getSerializationRule() {
