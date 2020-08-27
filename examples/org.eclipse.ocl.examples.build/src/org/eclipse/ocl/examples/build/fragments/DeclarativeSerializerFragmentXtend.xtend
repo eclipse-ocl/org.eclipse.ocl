@@ -465,9 +465,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				new «newTypeReference(EStructuralFeatureData)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
 					"getIndexVectorId(eStructuralFeatureData.getCardinalityExpression(), true)") /* «eStructuralFeatureData.getCardinalityExpression()» */
 				«ENDFOR»
-			});
+			}, null, null);
 			«ELSE»
-			null);
+			null, null, null);
 			«ENDIF»
 		'''
 	}

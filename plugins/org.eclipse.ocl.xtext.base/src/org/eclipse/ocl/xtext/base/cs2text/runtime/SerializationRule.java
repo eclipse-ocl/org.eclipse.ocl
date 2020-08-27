@@ -33,7 +33,6 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class SerializationRule
@@ -60,7 +59,27 @@ public class SerializationRule
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
 	 */
-	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality = null;
+
+	public SerializationRule(int ruleValueIndex,
+			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
+			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
+			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
+			@NonNull EAttributeData @Nullable [] eAttribute2enumerationValues,
+			@NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes,
+			@NonNull EStructuralFeatureData @NonNull [] eStructuralFeature2cardinalityExpression,
+			@Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality,
+			@Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality) {
+		this.ruleValueIndex = ruleValueIndex;
+		this.solutionSteps = solutionSteps;
+		this.serializationSteps = serializationSteps;
+		this.staticSegments = staticSegments;
+		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
+		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
+		this.eStructuralFeature2cardinalityExpression = eStructuralFeature2cardinalityExpression;
+		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
+		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
+	}
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
@@ -69,13 +88,7 @@ public class SerializationRule
 			@NonNull EAttributeData @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes,
 			@NonNull EStructuralFeatureData @NonNull [] eStructuralFeature2cardinalityExpression) {
-		this.ruleValueIndex = ruleValueIndex;
-		this.solutionSteps = solutionSteps;
-		this.serializationSteps = serializationSteps;
-		this.staticSegments = staticSegments;
-		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
-		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
-		this.eStructuralFeature2cardinalityExpression = eStructuralFeature2cardinalityExpression;
+		this(ruleValueIndex, solutionSteps, serializationSteps, staticSegments, eAttribute2enumerationValues, eReference2assignedRuleValueIndexes, eStructuralFeature2cardinalityExpression, null, null);
 	}
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
@@ -128,10 +141,10 @@ public class SerializationRule
 				return enumerationValue2multiplicativeCardinality.get(null);
 			}
 		}
-		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
-			if (ruleAnalysis2multiplicativeCardinality != null) {
-				return ruleAnalysis2multiplicativeCardinality.get(null);
+		if (eReference2ruleValueIndex2multiplicativeCardinality != null) {
+			Map<@Nullable Integer, @NonNull MultiplicativeCardinality> ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality.get(eStructuralFeature);
+			if (ruleValueIndex2multiplicativeCardinality != null) {
+				return ruleValueIndex2multiplicativeCardinality.get(null);
 			}
 		}
 		return null;
@@ -147,25 +160,11 @@ public class SerializationRule
 		return null;
 	}
 
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
-		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
-			if (ruleAnalysis2multiplicativeCardinality != null) {
-				return ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
-			}
-		}
-		return null;
-	}
-
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
-		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
-			if (ruleAnalysis2multiplicativeCardinality != null) {
-				for (@Nullable ParserRuleAnalysis parserRuleAnalysis : ruleAnalysis2multiplicativeCardinality.keySet()) {
-					if ((parserRuleAnalysis != null) && (parserRuleAnalysis.getRuleValue() == ruleValue)) {
-						return ruleAnalysis2multiplicativeCardinality.get(parserRuleAnalysis);
-					}
-				}
+		if (eReference2ruleValueIndex2multiplicativeCardinality != null) {
+			Map<@Nullable Integer, @NonNull MultiplicativeCardinality> ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality.get(eReference);
+			if (ruleValueIndex2multiplicativeCardinality != null) {
+				return ruleValueIndex2multiplicativeCardinality.get(ruleValue);
 			}
 		}
 		return null;

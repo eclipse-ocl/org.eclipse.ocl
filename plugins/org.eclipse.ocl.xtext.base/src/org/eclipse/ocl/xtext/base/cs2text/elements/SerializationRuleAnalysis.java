@@ -73,12 +73,13 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
-//	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
+
 
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
 	 */
-//	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
 
 	private @Nullable SerializationRule runtime = null;
 
@@ -147,6 +148,28 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			eAttributeDatas[i++] = new EAttributeData(entry.getKey(), entry.getValue());
 		}
 		return eAttributeDatas;
+	}
+
+	public @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
+		return eAttribute2enumerationValue2multiplicativeCardinality;
+	}
+
+	public @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> basicGetEReference2ruleValueIndex2multiplicativeCardinality() {
+		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
+		if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
+			return null;
+		}
+		Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality = new HashMap<>();
+		for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry1 : eReference2ruleAnalysis2multiplicativeCardinality2.entrySet()) {
+			Map<@Nullable Integer, @NonNull MultiplicativeCardinality> ruleValueIndex2multiplicativeCardinality = new HashMap<>();
+			for (Map.Entry<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> entry2 : entry1.getValue().entrySet()) {
+				ParserRuleAnalysis ruleAnalysis = entry2.getKey();
+				Integer ruleValueIndex = ruleAnalysis != null ? ruleAnalysis.getIndex() : null;
+				ruleValueIndex2multiplicativeCardinality.put(ruleValueIndex, entry2.getValue());
+			}
+			eReference2ruleValueIndex2multiplicativeCardinality.put(entry1.getKey(), ruleValueIndex2multiplicativeCardinality);
+		}
+		return eReference2ruleValueIndex2multiplicativeCardinality;
 	}
 
 	public @NonNull EReferenceData @Nullable [] basicGetEReference2AssignedRuleValueIndexes() {

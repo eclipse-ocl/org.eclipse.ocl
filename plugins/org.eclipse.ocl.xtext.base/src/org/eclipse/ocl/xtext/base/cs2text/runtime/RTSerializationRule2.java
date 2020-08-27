@@ -15,21 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 public class RTSerializationRule2 extends SerializationRule
 {
@@ -58,36 +52,18 @@ public class RTSerializationRule2 extends SerializationRule
 	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
-			serializationRuleAnalysis.getStaticRuleMatch().getEStructuralFeature2requiredSlotsExpression());
+			serializationRuleAnalysis.getStaticRuleMatch().getEStructuralFeature2requiredSlotsExpression(),
+			serializationRuleAnalysis.basicGetEAttribute2enumerationValue2multiplicativeCardinality(),
+			serializationRuleAnalysis.basicGetEReference2ruleValueIndex2multiplicativeCardinality());
 		this.serializationRuleAnalysis = serializationRuleAnalysis;
 		RTSerializationRule2 old = debugMap.put(serializationRuleAnalysis, this);		// XXX debugging
 		assert old == null;
 	}
 
 	@Override
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		return serializationRuleAnalysis.getMultiplicativeCardinality(eAttribute, enumerationValue);
-	}
-
-	@Override
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
-		return serializationRuleAnalysis.getMultiplicativeCardinality(eReference, ruleValue);
-	}
-
-	@Override
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
-		return serializationRuleAnalysis.getMultiplicativeCardinality(eStructuralFeature);
-	}
-
-	@Override
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		return serializationRuleAnalysis.match(slotsAnalysis);
 	}
-
-//	@Override
-//	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-//		return serializationRuleAnalysis.needsDefault(eAttribute);
-//	}
 
 	@Override
 	public void toRuleString(@NonNull StringBuilder s) {
