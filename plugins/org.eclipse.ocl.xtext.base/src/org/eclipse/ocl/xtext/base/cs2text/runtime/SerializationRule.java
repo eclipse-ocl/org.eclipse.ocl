@@ -298,15 +298,15 @@ public class SerializationRule
 		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
 	}
 
-	public SerializationRule(int ruleValueIndex,
-			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
-			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
-			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
-			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
-			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression) {
-		this(ruleValueIndex, solutionSteps, serializationSteps, staticSegments, eAttribute2enumerationValues, eReference2assignedRuleValueIndexes, eStructuralFeature2cardinalityExpression, null, null);
-	}
+//	public SerializationRule(int ruleValueIndex,
+//			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
+//			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
+//			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
+//			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
+//			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
+//			@NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression) {
+//		this(ruleValueIndex, solutionSteps, serializationSteps, staticSegments, eAttribute2enumerationValues, eReference2assignedRuleValueIndexes, eStructuralFeature2cardinalityExpression, null, null);
+//	}
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
 		if (eReference2assignedRuleValueIndexes != null) {

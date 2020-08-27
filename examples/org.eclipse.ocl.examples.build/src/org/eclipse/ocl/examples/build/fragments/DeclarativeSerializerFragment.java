@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
@@ -139,6 +140,22 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 	protected @NonNull String emitLiteral(@NonNull EStructuralFeature eStructuralFeature) {
 		return newTypeReference(genModelHelper.getQualifiedPackageInterfaceName(eStructuralFeature.getEContainingClass().getEPackage())) + ".Literals." + genModelHelper.getEcoreLiteralName(eStructuralFeature);
+	}
+
+	protected @NonNull String emitMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality.equals(MultiplicativeCardinality.ONE)) {
+			return newTypeReference(MultiplicativeCardinality.class) + ".ONE";
+		}
+		else if (multiplicativeCardinality.equals(MultiplicativeCardinality.ZERO_OR_ONE)) {
+			return newTypeReference(MultiplicativeCardinality.class) + ".ZERO_OR_ONE";
+		}
+		else if (multiplicativeCardinality.equals(MultiplicativeCardinality.ZERO_OR_MORE)) {
+			return newTypeReference(MultiplicativeCardinality.class) + ".ZERO_OR_MORE";
+		}
+		else if (multiplicativeCardinality.equals(MultiplicativeCardinality.ONE_OR_MORE)) {
+			return newTypeReference(MultiplicativeCardinality.class) + ".ONE_OR_MORE";
+		}
+		return multiplicativeCardinality.toString();
 	}
 
 	protected @NonNull String emitQualifiedLiteral(@NonNull EPackage ePackage) {

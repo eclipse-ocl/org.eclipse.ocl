@@ -64,6 +64,10 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralF
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -470,9 +474,42 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				new «newTypeReference(EStructuralFeature_CardinalityExpression)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
 					"getIndexVectorId(eStructuralFeatureData.getCardinalityExpression(), true)") /* «eStructuralFeatureData.getCardinalityExpression()» */
 				«ENDFOR»
-			}, null, null);
+			},
 			«ELSE»
-			null, null, null);
+			null,
+			«ENDIF»
+			«var eAttribute2enumerationValue2multiplicativeCardinalityArray = serializationRuleAnalysis.basicGetEAttribute2enumerationValue2multiplicativeCardinality()»
+			«IF eAttribute2enumerationValue2multiplicativeCardinalityArray !== null»
+			new @NonNull «newTypeReference(EAttribute_EnumerationValue_MultiplicativeCardinality)» [] {
+				«FOR eAttribute2enumerationValue2multiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinalityArray SEPARATOR ','»
+				new «newTypeReference(EAttribute_EnumerationValue_MultiplicativeCardinality)»(«emitLiteral(eAttribute2enumerationValue2multiplicativeCardinality.getEAttribute())»,
+					new @NonNull «newTypeReference(EnumerationValue_MultiplicativeCardinality)» [] {
+					«FOR enumerationValue2multiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinality.getEnumerationValue_MultiplicativeCardinality() SEPARATOR ','»
+					«var enumerationValue = enumerationValue2multiplicativeCardinality.getEnumerationValue()»
+						new «newTypeReference(EnumerationValue_MultiplicativeCardinality)»(«enumerationValue !== null ? getEnumValueId(enumerationValue, true) : "null"», «emitMultiplicativeCardinality(enumerationValue2multiplicativeCardinality.getMultiplicativeCardinality())»)
+					«ENDFOR»
+					}
+				)
+				«ENDFOR»
+			},
+			«ELSE»
+			null,
+			«ENDIF»
+			«var eReference2ruleValueIndex2multiplicativeCardinalityArray = serializationRuleAnalysis.basicGetEReference2ruleValueIndex2multiplicativeCardinality()»
+			«IF eReference2ruleValueIndex2multiplicativeCardinalityArray !== null»
+			new @NonNull «newTypeReference(EReference_RuleIndex_MultiplicativeCardinality)» [] {
+				«FOR eReference2ruleValueIndex2multiplicativeCardinality : eReference2ruleValueIndex2multiplicativeCardinalityArray SEPARATOR ','»
+				new «newTypeReference(EReference_RuleIndex_MultiplicativeCardinality)»(«emitLiteral(eReference2ruleValueIndex2multiplicativeCardinality.getEReference())»,
+					new @NonNull «newTypeReference(RuleIndex_MultiplicativeCardinality)» [] {
+					«FOR ruleValueIndex2multiplicativeCardinality : eReference2ruleValueIndex2multiplicativeCardinality.getRuleIndex_MultiplicativeCardinality() SEPARATOR ','»
+						new «newTypeReference(RuleIndex_MultiplicativeCardinality)»(«ruleValueIndex2multiplicativeCardinality.getRuleIndex()», «emitMultiplicativeCardinality(ruleValueIndex2multiplicativeCardinality.getMultiplicativeCardinality())»)
+					«ENDFOR»
+					}
+				)
+				«ENDFOR»
+			});
+			«ELSE»
+			null);
 			«ENDIF»
 		'''
 	}
