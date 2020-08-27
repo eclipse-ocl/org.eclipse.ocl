@@ -29,11 +29,11 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * An Assert step requires a given expression to be zero-valued to allow the invoking DynamicRuleMatch to succeed.
 	 */
-	public static class Assert extends CardinalitySolutionStep
+	public static class CardinalitySolutionStep_Assert extends CardinalitySolutionStep
 	{
 		protected final @NonNull CardinalitySolution cardinalitySolution;
 
-		public Assert(@NonNull CardinalitySolution cardinalitySolution) {
+		public CardinalitySolutionStep_Assert(@NonNull CardinalitySolution cardinalitySolution) {
 			this.cardinalitySolution = cardinalitySolution;
 		}
 
@@ -42,10 +42,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof Assert)) {
+			if (!(obj instanceof CardinalitySolutionStep_Assert)) {
 				return false;
 			}
-			Assert that = (Assert)obj;
+			CardinalitySolutionStep_Assert that = (CardinalitySolutionStep_Assert)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution);
 		}
 
@@ -84,12 +84,12 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * An Assign step computes the value of a variable on behalf of the invoking DynamicRuleMatch.
 	 */
-	public static class Assign extends CardinalitySolutionStep
+	public static class CardinalitySolutionStep_Assign extends CardinalitySolutionStep
 	{
 		protected final int cardinalityVariableIndex;
 		protected final @NonNull CardinalitySolution cardinalitySolution;
 
-		public Assign(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
+		public CardinalitySolutionStep_Assign(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
 			this.cardinalityVariableIndex = cardinalityVariableIndex;
 			this.cardinalitySolution = cardinalitySolution;
 		}
@@ -99,10 +99,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof Assign)) {
+			if (!(obj instanceof CardinalitySolutionStep_Assign)) {
 				return false;
 			}
-			Assign that = (Assign)obj;
+			CardinalitySolutionStep_Assign that = (CardinalitySolutionStep_Assign)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution)
 				&& (this.cardinalityVariableIndex == that.cardinalityVariableIndex);
 		}
@@ -154,12 +154,12 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * A RuleCheck step checks that a slot value conforms to a rule required by a rule assignment on behalf of the invoking DynamicRuleMatch=.
 	 */
-	public static class RuleCheck extends CardinalitySolutionStep
+	public static class CardinalitySolutionStep_RuleCheck extends CardinalitySolutionStep
 	{
 		protected final @NonNull EReference eReference;
 		protected final @NonNull IndexVector ruleValueIndexes;
 
-		public RuleCheck(/*@NonNull*/ EReference eReference, @NonNull IndexVector ruleValueIndexes) {
+		public CardinalitySolutionStep_RuleCheck(/*@NonNull*/ EReference eReference, @NonNull IndexVector ruleValueIndexes) {
 			assert eReference != null;
 			this.eReference = eReference;
 			this.ruleValueIndexes = ruleValueIndexes;
@@ -171,10 +171,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof RuleCheck)) {
+			if (!(obj instanceof CardinalitySolutionStep_RuleCheck)) {
 				return false;
 			}
-			RuleCheck that = (RuleCheck)obj;
+			CardinalitySolutionStep_RuleCheck that = (CardinalitySolutionStep_RuleCheck)obj;
 			return (this.eReference == that.eReference)
 				&& this.ruleValueIndexes.equals(that.ruleValueIndexes);
 		}
@@ -267,12 +267,12 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * A TypeCheck step checks that a slot value conforms to a type required by a rule assignment on behalf of the invoking DynamicRuleMatch=.
 	 *
-	public static class TypeCheck extends CardinalitySolutionStep
+	public static class CardinalitySolutionStep_TypeCheck extends CardinalitySolutionStep
 	{
 		protected final @NonNull EReference eReference;
 		protected final @NonNull Iterable<@NonNull EClass> eClasses;
 
-		public TypeCheck(@NonNull EReference eReference, @NonNull Iterable<@NonNull EClass> eClasses) {
+		public CardinalitySolutionStep_TypeCheck(@NonNull EReference eReference, @NonNull Iterable<@NonNull EClass> eClasses) {
 			this.eReference = eReference;
 			this.eClasses = eClasses;
 			assert Iterables.size(eClasses) >= 1;
@@ -340,12 +340,12 @@ public abstract class CardinalitySolutionStep
 	 * A ValueCheck step re-computes the value of a variable on behalf of the invoking DynamicRuleMatch and requires it to be
 	 * consistent with the previous computation.
 	 */
-	public static class ValueCheck extends CardinalitySolutionStep
+	public static class CardinalitySolutionStep_ValueCheck extends CardinalitySolutionStep
 	{
 		protected final int cardinalityVariableIndex;
 		protected final @NonNull CardinalitySolution cardinalitySolution;
 
-		public ValueCheck(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
+		public CardinalitySolutionStep_ValueCheck(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
 			this.cardinalityVariableIndex = cardinalityVariableIndex;
 			this.cardinalitySolution = cardinalitySolution;
 		}
@@ -355,10 +355,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof ValueCheck)) {
+			if (!(obj instanceof CardinalitySolutionStep_ValueCheck)) {
 				return false;
 			}
-			ValueCheck that = (ValueCheck)obj;
+			CardinalitySolutionStep_ValueCheck that = (CardinalitySolutionStep_ValueCheck)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution)
 				&& (this.cardinalityVariableIndex == that.cardinalityVariableIndex);
 		}

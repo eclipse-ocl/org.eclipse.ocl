@@ -43,13 +43,13 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -576,9 +576,9 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		if ((indexVector2id2 == null) || (indexVectors2 == null)) {
 			indexVector2id = indexVector2id2 = new HashMap<>();
 			for (@NonNull EClass eClass : getSortedEClasses(grammarAnalysis)) {
-				@NonNull EReferenceData[] eReferenceDatas = grammarAnalysis.basicGetEReferenceDatas(eClass);
+				@NonNull EReference_RuleIndexes[] eReferenceDatas = grammarAnalysis.basicGetEReferenceDatas(eClass);
 				if (eReferenceDatas != null) {
-					for (@NonNull EReferenceData eReferenceData : eReferenceDatas) {
+					for (@NonNull EReference_RuleIndexes eReferenceData : eReferenceDatas) {
 						IndexVector assignedTargetRuleValues = eReferenceData.getAssignedTargetRuleValueIndexes();
 						indexVector2id2.put(assignedTargetRuleValues, "");
 					}
@@ -593,8 +593,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 			for (@NonNull CardinalitySolutionStep step : getSortedSolutionSteps(grammarAnalysis)) {
-				if (step instanceof CardinalitySolutionStep.RuleCheck) {
-					indexVector2id2.put(((CardinalitySolutionStep.RuleCheck)step).getRuleValueIndexes(), "");
+				if (step instanceof CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck) {
+					indexVector2id2.put(((CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck)step).getRuleValueIndexes(), "");
 				}
 			}
 			indexVectors = indexVectors2 = new ArrayList<>(indexVector2id2.keySet());
@@ -647,9 +647,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 		int index = referredClassName.lastIndexOf('$');
 		if (index >= 0) {
-			referredClassNames.add(referredClassName.substring(0, index));
-			index = referredClassName.lastIndexOf('.');
-			return referredClassName.substring(index+1).replace('$', '.');	// Keep an outer qualifier for nested classes
+			referredClassNames.add(referredClassName);
+//			referredClassNames.add(referredClassName.substring(0, index));
+//			index = referredClassName.lastIndexOf('.');
+			return referredClassName.substring(index+1);
 		}
 		else {
 			referredClassNames.add(referredClassName);

@@ -48,14 +48,10 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.MultiplyCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution
 import org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue
@@ -64,6 +60,10 @@ import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import com.google.inject.Inject
 import org.eclipse.jdt.annotation.NonNull
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues
+import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -216,8 +216,13 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			}
 			
 			//	Commented imports to ensure Xtend provides a true import allowing unqualified annotated usage
-				«FOR importedClass : getSortedImportClassNames()»
-				//	import «new TypeReference(importedClass)»;
+				«FOR importedClassName : getSortedImportClassNames()»
+				«var index = importedClassName.lastIndexOf('.')»
+				«IF index < 0»
+				//	import «new TypeReference(importedClassName)»;
+				«ELSE»
+				//	import «new TypeReference(importedClassName.substring(0, index), importedClassName.substring(index+1).replace('$', '.'))»;
+				«ENDIF»
 				«ENDFOR»
 		}
 		'''
@@ -248,9 +253,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
 				«ENDFOR»
 			}, «IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null«ELSE»
-			new @NonNull «newTypeReference(EReferenceData)» [] {
+			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
 				«FOR eReferenceData : grammarAnalysis.getEReferenceDatas(eClass) SEPARATOR ','»
-				new «newTypeReference(EReferenceData)»(«emitLiteral(eReferenceData.getEReference())»,
+				new «newTypeReference(EReference_RuleIndexes)»(«emitLiteral(eReferenceData.getEReference())»,
 					«getIndexVectorId(eReferenceData.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
 				«ENDFOR»
 			}«ENDIF»
@@ -438,9 +443,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ENDIF»
 			«var eAttribute2EnumerationValues = serializationRuleAnalysis.basicGetEAttribute2EnumerationValues()»
 			«IF eAttribute2EnumerationValues !== null»
-			new @NonNull «newTypeReference(EAttributeData)» [] {
+			new @NonNull «newTypeReference(EAttribute_EnumerationValues)» [] {
 				«FOR eAttributeData : eAttribute2EnumerationValues SEPARATOR ','»
-				new «newTypeReference(EAttributeData)»(«emitLiteral(eAttributeData.getEAttribute())»,
+				new «newTypeReference(EAttribute_EnumerationValues)»(«emitLiteral(eAttributeData.getEAttribute())»,
 					«FOR enumerationValue : eAttributeData.getEnumerationValues() SEPARATOR ','»«getEnumValueId(enumerationValue, true)»«ENDFOR»)
 				«ENDFOR»
 			},
@@ -449,9 +454,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ENDIF»
 			«var eReference2AssignedRuleValueIndexes = serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes()»
 			«IF eReference2AssignedRuleValueIndexes !== null»
-			new @NonNull «newTypeReference(EReferenceData)» [] {
+			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
 				«FOR eReferenceData : eReference2AssignedRuleValueIndexes SEPARATOR ','»
-				new «newTypeReference(EReferenceData)»(«emitLiteral(eReferenceData.getEReference())»,
+				new «newTypeReference(EReference_RuleIndexes)»(«emitLiteral(eReferenceData.getEReference())»,
 					«getIndexVectorId(eReferenceData.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
 				«ENDFOR»
 			},
@@ -460,9 +465,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ENDIF»
 			«var eStructuralFeature2cardinalityExpression = serializationRuleAnalysis.basicGetEStructuralFeature2cardinalityExpression()»
 			«IF eStructuralFeature2cardinalityExpression !== null»
-			new @NonNull «newTypeReference(EStructuralFeatureData)» [] {
+			new @NonNull «newTypeReference(EStructuralFeature_CardinalityExpression)» [] {
 				«FOR eStructuralFeatureData : eStructuralFeature2cardinalityExpression SEPARATOR ','»
-				new «newTypeReference(EStructuralFeatureData)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
+				new «newTypeReference(EStructuralFeature_CardinalityExpression)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
 					"getIndexVectorId(eStructuralFeatureData.getCardinalityExpression(), true)") /* «eStructuralFeatureData.getCardinalityExpression()» */
 				«ENDFOR»
 			}, null, null);
@@ -615,27 +620,27 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSolutionStep(CardinalitySolutionStep solutionStep) {
 		switch solutionStep {
-		CardinalitySolutionStep.Assert: return generateSolutionStep_Assert(solutionStep)
-		CardinalitySolutionStep.Assign: return generateSolutionStep_Assign(solutionStep)
-		CardinalitySolutionStep.RuleCheck: return generateSolutionStep_RuleCheck(solutionStep)
-		CardinalitySolutionStep.ValueCheck: return generateSolutionStep_ValueCheck(solutionStep)
+		CardinalitySolutionStep.CardinalitySolutionStep_Assert: return generateSolutionStep_Assert(solutionStep)
+		CardinalitySolutionStep.CardinalitySolutionStep_Assign: return generateSolutionStep_Assign(solutionStep)
+		CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck: return generateSolutionStep_RuleCheck(solutionStep)
+		CardinalitySolutionStep.CardinalitySolutionStep_ValueCheck: return generateSolutionStep_ValueCheck(solutionStep)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateSolutionStep_Assert(CardinalitySolutionStep.Assert solutionStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.Assert)»(«getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
+	protected def generateSolutionStep_Assert(CardinalitySolutionStep.CardinalitySolutionStep_Assert solutionStep) {
+		'''new «newTypeReference(org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep$CardinalitySolutionStep_Assert)»(«getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
 	}
 	
-	protected def generateSolutionStep_Assign(CardinalitySolutionStep.Assign solutionStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.Assign)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
+	protected def generateSolutionStep_Assign(CardinalitySolutionStep.CardinalitySolutionStep_Assign solutionStep) {
+		'''new «newTypeReference(org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep$CardinalitySolutionStep_Assign)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
 	}
 	
-	protected def generateSolutionStep_RuleCheck(CardinalitySolutionStep.RuleCheck solutionStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.RuleCheck)»(«emitLiteral(solutionStep.getEReference())», «getIndexVectorId(solutionStep.getRuleValueIndexes(), true)»/*«FOR index : solutionStep.getRuleValueIndexes() SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/)'''
+	protected def generateSolutionStep_RuleCheck(CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck solutionStep) {
+		'''new «newTypeReference(org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep$CardinalitySolutionStep_RuleCheck)»(«emitLiteral(solutionStep.getEReference())», «getIndexVectorId(solutionStep.getRuleValueIndexes(), true)»/*«FOR index : solutionStep.getRuleValueIndexes() SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/)'''
 	}
 	
-	protected def generateSolutionStep_ValueCheck(CardinalitySolutionStep.ValueCheck solutionStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.ValueCheck)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
+	protected def generateSolutionStep_ValueCheck(CardinalitySolutionStep.CardinalitySolutionStep_ValueCheck solutionStep) {
+		'''new «newTypeReference(org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep$CardinalitySolutionStep_ValueCheck)»(«solutionStep.getVariableIndex()», «getSolutionId(solutionStep.getCardinalitySolution(), true)»)'''
 	}
 }

@@ -33,15 +33,15 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
@@ -130,22 +130,22 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				EReference eReference = entry.getKey();
 				if (eReference.isContainment()) {
 					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();
-					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, new IndexVector(assignedRuleAnalyses)));
+					steps.add(new CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck(eReference, new IndexVector(assignedRuleAnalyses)));
 				}
 			}
 		}
 	}
 
-	public @NonNull EAttributeData @Nullable [] basicGetEAttribute2EnumerationValues() {
+	public @NonNull EAttribute_EnumerationValues @Nullable [] basicGetEAttribute2EnumerationValues() {
 		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = getEAttribute2EnumerationValues();
 		int size = eAttribute2enumerationValues.size();
 		if (size <= 0) {
 			return null;
 		}
-		@NonNull EAttributeData[] eAttributeDatas = new @NonNull EAttributeData[size];
+		@NonNull EAttribute_EnumerationValues[] eAttributeDatas = new @NonNull EAttribute_EnumerationValues[size];
 		int i = 0;
 		for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues.entrySet()) {
-			eAttributeDatas[i++] = new EAttributeData(entry.getKey(), entry.getValue());
+			eAttributeDatas[i++] = new EAttribute_EnumerationValues(entry.getKey(), entry.getValue());
 		}
 		return eAttributeDatas;
 	}
@@ -172,22 +172,22 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return eReference2ruleValueIndex2multiplicativeCardinality;
 	}
 
-	public @NonNull EReferenceData @Nullable [] basicGetEReference2AssignedRuleValueIndexes() {
+	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReference2AssignedRuleValueIndexes() {
 		Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleIndexes = getEReference2AssignedRuleValueIndexes();
 		int size = eReference2assignedRuleIndexes.size();
 		if (size <= 0) {
 			return null;
 		}
-		@NonNull EReferenceData[] eReferenceDatas = new @NonNull EReferenceData[size];
+		@NonNull EReference_RuleIndexes[] eReferenceDatas = new @NonNull EReference_RuleIndexes[size];
 		int i = 0;
 		for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : eReference2assignedRuleIndexes.entrySet()) {
-			eReferenceDatas[i++] = new EReferenceData(entry.getKey(), entry.getValue());
+			eReferenceDatas[i++] = new EReference_RuleIndexes(entry.getKey(), entry.getValue());
 		}
 		return eReferenceDatas;
 	}
 
-	public @NonNull EStructuralFeatureData @Nullable [] basicGetEStructuralFeature2cardinalityExpression() {
-		@NonNull EStructuralFeatureData[] eStructuralFeatureDatas = getEStructuralFeature2cardinalityExpression();
+	public @NonNull EStructuralFeature_CardinalityExpression @Nullable [] basicGetEStructuralFeature2cardinalityExpression() {
+		@NonNull EStructuralFeature_CardinalityExpression[] eStructuralFeatureDatas = getEStructuralFeature2cardinalityExpression();
 		return eStructuralFeatureDatas;
 	}
 
@@ -350,7 +350,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return eReference2discriminatingRuleValueIndexes;
 	} */
 
-	private @NonNull EStructuralFeatureData @NonNull [] getEStructuralFeature2cardinalityExpression() {
+	private @NonNull EStructuralFeature_CardinalityExpression @NonNull [] getEStructuralFeature2cardinalityExpression() {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.getEStructuralFeature2requiredSlotsExpression();
 	}

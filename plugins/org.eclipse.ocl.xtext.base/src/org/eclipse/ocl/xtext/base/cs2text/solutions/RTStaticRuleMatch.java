@@ -22,11 +22,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
@@ -73,16 +73,16 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 				}
 			}
 			if (isAssigned) {
-				newStep = new CardinalitySolutionStep.Assign(cardinalityVariable, cardinalitySolution);
+				newStep = new CardinalitySolutionStep.CardinalitySolutionStep_Assign(cardinalityVariable, cardinalitySolution);
 			//	variable2solution.put(cardinalityVariable, cardinalitySolution);
 				variableIndex2solution.put(cardinalityVariable, cardinalitySolution);
 			}
 			else {
-				newStep = new CardinalitySolutionStep.ValueCheck(cardinalityVariable, cardinalitySolution);
+				newStep = new CardinalitySolutionStep.CardinalitySolutionStep_ValueCheck(cardinalityVariable, cardinalitySolution);
 			}
 		}
 		else {
-			newStep = new CardinalitySolutionStep.Assert(cardinalitySolution);
+			newStep = new CardinalitySolutionStep.CardinalitySolutionStep_Assert(cardinalitySolution);
 		}
 		steps.add(newStep);
 	}
@@ -105,11 +105,11 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 
 	protected abstract @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis);
 
-	public @NonNull EStructuralFeatureData @NonNull [] getEStructuralFeature2requiredSlotsExpression() {
-		@NonNull EStructuralFeatureData [] eStructuralFeatureDatas = new @NonNull EStructuralFeatureData[eStructuralFeature2requiredSlotsExpression.size()];
+	public @NonNull EStructuralFeature_CardinalityExpression @NonNull [] getEStructuralFeature2requiredSlotsExpression() {
+		@NonNull EStructuralFeature_CardinalityExpression [] eStructuralFeatureDatas = new @NonNull EStructuralFeature_CardinalityExpression[eStructuralFeature2requiredSlotsExpression.size()];
 		int i = 0;
 		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
-			eStructuralFeatureDatas[i++] = new EStructuralFeatureData(entry.getKey(), entry.getValue());
+			eStructuralFeatureDatas[i++] = new EStructuralFeature_CardinalityExpression(entry.getKey(), entry.getValue());
 		}
 		return eStructuralFeatureDatas;
 	}

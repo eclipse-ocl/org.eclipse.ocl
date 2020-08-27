@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
@@ -29,27 +30,128 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EAttributeData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EReferenceData;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EStructuralFeatureData;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+
+import com.google.common.collect.Sets;
 
 public class SerializationRule
 {
+	public static class EAttribute_EnumerationValues implements Nameable
+	{
+		protected final @NonNull EAttribute eAttribute;
+		protected final @NonNull Set<@NonNull EnumerationValue> enumerationValues;
+
+		public EAttribute_EnumerationValues(/*@NonNull*/ EAttribute eAttribute, @NonNull Set<@NonNull EnumerationValue> enumerationValues) {
+			assert eAttribute != null;
+			this.eAttribute = eAttribute;
+			this.enumerationValues = enumerationValues;
+		}
+
+		public EAttribute_EnumerationValues(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue @NonNull ... enumerationValues) {
+			assert eAttribute != null;
+			this.eAttribute = eAttribute;
+			this.enumerationValues = Sets.newHashSet(enumerationValues);		// XXX Prefer array
+		}
+
+		public @NonNull EAttribute getEAttribute() {
+			return eAttribute;
+		}
+
+		public @NonNull Set<@NonNull EnumerationValue> getEnumerationValues() {
+			return enumerationValues;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return XtextGrammarUtil.getName(eAttribute);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return eAttribute.getEContainingClass().getName() + "::" + eAttribute.getName() + " " + enumerationValues;
+		}
+	}
+
+	public static class EReference_RuleIndexes implements Nameable
+	{
+		protected final @NonNull EReference eReference;
+		protected final @NonNull IndexVector parserRuleValueIndexes;
+
+		public EReference_RuleIndexes(/*@NonNull*/ EReference eReference, @NonNull IndexVector parserRuleValueIndexes) {
+			assert eReference != null;
+			this.eReference = eReference;
+			this.parserRuleValueIndexes = parserRuleValueIndexes;
+		}
+
+		public @NonNull EReference getEReference() {
+			return eReference;
+		}
+
+		public @NonNull IndexVector getAssignedTargetRuleValueIndexes() {
+			return parserRuleValueIndexes;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return XtextGrammarUtil.getName(eReference);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + parserRuleValueIndexes;
+		}
+	}
+
+	public static class EStructuralFeature_CardinalityExpression implements Nameable
+	{
+		protected final @NonNull EStructuralFeature eStructuralFeature;
+		protected final /*@NonNull*/ CardinalityExpression cardinalityExpression;
+
+		public EStructuralFeature_CardinalityExpression(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CardinalityExpression cardinalityExpression) {
+			assert eStructuralFeature != null;
+			this.eStructuralFeature = eStructuralFeature;
+			this.cardinalityExpression = cardinalityExpression;
+		}
+		public EStructuralFeature_CardinalityExpression(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull String cardinalityExpression) {
+			assert eStructuralFeature != null;
+			this.eStructuralFeature = eStructuralFeature;
+			this.cardinalityExpression = null;//cardinalityExpression;		// XXX
+		}
+
+		public @NonNull EStructuralFeature getEStructuralFeature() {
+			return eStructuralFeature;
+		}
+
+		public @NonNull CardinalityExpression getCardinalityExpression() {
+			return cardinalityExpression;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return XtextGrammarUtil.getName(eStructuralFeature);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " " + cardinalityExpression;
+		}
+	}
+
 	private final int ruleValueIndex;
 	private final @NonNull CardinalitySolutionStep @NonNull [] solutionSteps;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
-	private final @NonNull EAttributeData @Nullable [] eAttribute2enumerationValues;
-	private final @NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes;
+	private final @NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues;
+	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
 //	private final @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleValueIndexes;
 
 	/**
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
-	protected final @NonNull EStructuralFeatureData @NonNull [] eStructuralFeature2cardinalityExpression;
+	protected final @NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
@@ -65,9 +167,9 @@ public class SerializationRule
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
-			@NonNull EAttributeData @Nullable [] eAttribute2enumerationValues,
-			@NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull EStructuralFeatureData @NonNull [] eStructuralFeature2cardinalityExpression,
+			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
+			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
+			@NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression,
 			@Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality,
 			@Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality) {
 		this.ruleValueIndex = ruleValueIndex;
@@ -85,15 +187,15 @@ public class SerializationRule
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
-			@NonNull EAttributeData @Nullable [] eAttribute2enumerationValues,
-			@NonNull EReferenceData @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull EStructuralFeatureData @NonNull [] eStructuralFeature2cardinalityExpression) {
+			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
+			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
+			@NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression) {
 		this(ruleValueIndex, solutionSteps, serializationSteps, staticSegments, eAttribute2enumerationValues, eReference2assignedRuleValueIndexes, eStructuralFeature2cardinalityExpression, null, null);
 	}
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
 		if (eReference2assignedRuleValueIndexes != null) {
-			for (@NonNull EReferenceData eReferenceData : eReference2assignedRuleValueIndexes) {
+			for (@NonNull EReference_RuleIndexes eReferenceData : eReference2assignedRuleValueIndexes) {
 				if (eReferenceData.getEReference() == eReference) {
 					return eReferenceData.getAssignedTargetRuleValueIndexes();
 				}
@@ -110,7 +212,7 @@ public class SerializationRule
 
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		if (eAttribute2enumerationValues != null) {
-			for (@NonNull EAttributeData eAttributeData : eAttribute2enumerationValues) {
+			for (@NonNull EAttribute_EnumerationValues eAttributeData : eAttribute2enumerationValues) {
 				if (eAttributeData.getEAttribute() == eAttribute) {
 					return eAttributeData.getEnumerationValues();
 				}
@@ -201,7 +303,7 @@ public class SerializationRule
 			//
 			//	Evaluate the expressions to determine the required size of each slot.
 			//
-			for (@NonNull EStructuralFeatureData eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+			for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
 				CardinalityExpression expression = eStructuralFeatureData.getCardinalityExpression();
 				assert expression != null;
 				if (!expression.checkSize(dynamicRuleMatch)) {
@@ -213,7 +315,7 @@ public class SerializationRule
 			//
 			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
 				boolean gotIt = false;
-				for (@NonNull EStructuralFeatureData eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+				for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
 					if (eStructuralFeatureData.getEStructuralFeature() == eStructuralFeature) {
 						gotIt = true;
 					}
@@ -238,7 +340,7 @@ public class SerializationRule
 	}
 
 	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		for (@NonNull EStructuralFeatureData eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+		for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
 			if (eStructuralFeatureData.getEStructuralFeature() == eAttribute) {
 				CardinalityExpression expression = eStructuralFeatureData.getCardinalityExpression();
 			//	if (expression == null) {

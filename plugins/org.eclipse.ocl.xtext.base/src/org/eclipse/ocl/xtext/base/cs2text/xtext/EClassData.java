@@ -20,24 +20,25 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
 public class EClassData implements Nameable
 {
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
-	protected final @NonNull EReferenceData @Nullable [] eReferenceDatas;
+	protected final @NonNull EReference_RuleIndexes @Nullable [] eReferenceDatas;
 //	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
 
 	public EClassData(/*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
-			@NonNull EReferenceData @Nullable [] eReferenceDatas) {
+			@NonNull EReference_RuleIndexes @Nullable [] eReferenceDatas) {
 		assert eClass != null;
 		this.eClass = eClass;
 		this.serializationRules = serializationRules;
 		this.eReferenceDatas = eReferenceDatas;
 	}
 
-	public @NonNull EReferenceData @Nullable [] basicGetEReferenceDatas() {
+	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceDatas() {
 		return eReferenceDatas;
 	}
 
@@ -89,7 +90,7 @@ public class EClassData implements Nameable
 		}
 		return targetRuleValues; */
 		if (eReferenceDatas != null) {
-			for (@NonNull EReferenceData eReferenceData : eReferenceDatas) {
+			for (@NonNull EReference_RuleIndexes eReferenceData : eReferenceDatas) {
 				if (eReferenceData.getEReference() == eContainmentFeature) {
 					return eReferenceData.getAssignedTargetRuleValueIndexes();
 				}
