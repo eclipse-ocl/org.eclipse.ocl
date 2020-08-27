@@ -33,9 +33,13 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -150,24 +154,49 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return eAttributeDatas;
 	}
 
-	public @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
+	public @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
+		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+		if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
+			return null;
+		}
+		@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] eAttribute2enumerationValue2multiplicativeCardinality = new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality[eAttribute2enumerationValue2multiplicativeCardinality2.size()];
+		int i1 = 0;
+		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> entry1 : eAttribute2enumerationValue2multiplicativeCardinality2.entrySet()) {
+			EAttribute eAttribute = entry1.getKey();
+			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> value = entry1.getValue();
+			@NonNull EnumerationValue_MultiplicativeCardinality [] enumerationValue_MultiplicativeCardinality = new @NonNull EnumerationValue_MultiplicativeCardinality [value.size()];
+			int i2 = 0;
+			for (Map.Entry<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> entry2 : value.entrySet()) {
+				EnumerationValue enumerationValue = entry2.getKey();
+				enumerationValue_MultiplicativeCardinality[i2++] = new EnumerationValue_MultiplicativeCardinality(enumerationValue, entry2.getValue());
+			}
+			eAttribute2enumerationValue2multiplicativeCardinality[i1++] = new EAttribute_EnumerationValue_MultiplicativeCardinality(eAttribute, enumerationValue_MultiplicativeCardinality);
+		}
 		return eAttribute2enumerationValue2multiplicativeCardinality;
 	}
+//	public @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
+//		return eAttribute2enumerationValue2multiplicativeCardinality;
+//	}
 
-	public @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> basicGetEReference2ruleValueIndex2multiplicativeCardinality() {
+//	public @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> basicGetEReference2ruleValueIndex2multiplicativeCardinality() {
+	public @NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] basicGetEReference2ruleValueIndex2multiplicativeCardinality() {
 		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 		if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 			return null;
 		}
-		Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality = new HashMap<>();
+		@NonNull EReference_RuleIndex_MultiplicativeCardinality [] eReference2ruleValueIndex2multiplicativeCardinality = new @NonNull EReference_RuleIndex_MultiplicativeCardinality[eReference2ruleAnalysis2multiplicativeCardinality2.size()];
+		int i1 = 0;
 		for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry1 : eReference2ruleAnalysis2multiplicativeCardinality2.entrySet()) {
-			Map<@Nullable Integer, @NonNull MultiplicativeCardinality> ruleValueIndex2multiplicativeCardinality = new HashMap<>();
-			for (Map.Entry<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> entry2 : entry1.getValue().entrySet()) {
+			EReference eReference = entry1.getKey();
+			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> value = entry1.getValue();
+			@NonNull RuleIndex_MultiplicativeCardinality [] ruleValueIndex2multiplicativeCardinality = new @NonNull RuleIndex_MultiplicativeCardinality [value.size()];
+			int i2 = 0;
+			for (Map.Entry<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> entry2 : value.entrySet()) {
 				ParserRuleAnalysis ruleAnalysis = entry2.getKey();
 				Integer ruleValueIndex = ruleAnalysis != null ? ruleAnalysis.getIndex() : null;
-				ruleValueIndex2multiplicativeCardinality.put(ruleValueIndex, entry2.getValue());
+				ruleValueIndex2multiplicativeCardinality[i2++] = new RuleIndex_MultiplicativeCardinality(ruleValueIndex, entry2.getValue());
 			}
-			eReference2ruleValueIndex2multiplicativeCardinality.put(entry1.getKey(), ruleValueIndex2multiplicativeCardinality);
+			eReference2ruleValueIndex2multiplicativeCardinality[i1++] = new EReference_RuleIndex_MultiplicativeCardinality(eReference, ruleValueIndex2multiplicativeCardinality);
 		}
 		return eReference2ruleValueIndex2multiplicativeCardinality;
 	}

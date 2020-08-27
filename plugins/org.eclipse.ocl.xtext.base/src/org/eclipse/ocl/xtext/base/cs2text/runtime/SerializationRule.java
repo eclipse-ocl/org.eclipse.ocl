@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -74,6 +73,36 @@ public class SerializationRule
 		}
 	}
 
+	public static class EAttribute_EnumerationValue_MultiplicativeCardinality implements Nameable
+	{
+		protected final @NonNull EAttribute eAttribute;
+		protected final @NonNull EnumerationValue_MultiplicativeCardinality @NonNull [] enumerationValue2multiplicativeCardinality;
+
+		public EAttribute_EnumerationValue_MultiplicativeCardinality(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue_MultiplicativeCardinality @NonNull [] enumerationValue2multiplicativeCardinality) {
+			assert eAttribute != null;
+			this.eAttribute = eAttribute;
+			this.enumerationValue2multiplicativeCardinality = enumerationValue2multiplicativeCardinality;
+		}
+
+		public @NonNull EAttribute getEAttribute() {
+			return eAttribute;
+		}
+
+		public @NonNull EnumerationValue_MultiplicativeCardinality @NonNull [] getEnumerationValue_MultiplicativeCardinality() {
+			return enumerationValue2multiplicativeCardinality;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return XtextGrammarUtil.getName(eAttribute);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return eAttribute.getEContainingClass().getName() + "::" + eAttribute.getName() + " " + enumerationValue2multiplicativeCardinality;
+		}
+	}
+
 	public static class EReference_RuleIndexes implements Nameable
 	{
 		protected final @NonNull EReference eReference;
@@ -101,6 +130,36 @@ public class SerializationRule
 		@Override
 		public @NonNull String toString() {
 			return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + parserRuleValueIndexes;
+		}
+	}
+
+	public static class EReference_RuleIndex_MultiplicativeCardinality implements Nameable
+	{
+		protected final @NonNull EReference eReference;
+		protected final @NonNull RuleIndex_MultiplicativeCardinality @NonNull [] ruleIndex2multiplicativeCardinality;
+
+		public EReference_RuleIndex_MultiplicativeCardinality(/*@NonNull*/ EReference eReference, @NonNull RuleIndex_MultiplicativeCardinality @NonNull [] ruleIndex2multiplicativeCardinality) {
+			assert eReference != null;
+			this.eReference = eReference;
+			this.ruleIndex2multiplicativeCardinality = ruleIndex2multiplicativeCardinality;
+		}
+
+		public @NonNull EReference getEReference() {
+			return eReference;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return XtextGrammarUtil.getName(eReference);
+		}
+
+		public @NonNull RuleIndex_MultiplicativeCardinality @NonNull [] getRuleIndex_MultiplicativeCardinality() {
+			return ruleIndex2multiplicativeCardinality;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + ruleIndex2multiplicativeCardinality;
 		}
 	}
 
@@ -139,29 +198,85 @@ public class SerializationRule
 		}
 	}
 
+	public static class EnumerationValue_MultiplicativeCardinality implements Nameable
+	{
+		protected final @Nullable EnumerationValue enumerationValue;
+		protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
+
+		public EnumerationValue_MultiplicativeCardinality(/*@NonNull*/ EnumerationValue enumerationValue, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+//			assert enumerationValue != null;
+			this.enumerationValue = enumerationValue;
+			this.multiplicativeCardinality = multiplicativeCardinality;
+		}
+
+		public @Nullable EnumerationValue getEnumerationValue() {
+			return enumerationValue;
+		}
+
+		public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+			return multiplicativeCardinality;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return enumerationValue != null ? enumerationValue.getName() : "«null»";
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return getName() + " " + multiplicativeCardinality;
+		}
+	}
+
+	public static class RuleIndex_MultiplicativeCardinality
+	{
+		protected final @NonNull Integer ruleIndex;
+		protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
+
+		public RuleIndex_MultiplicativeCardinality(/*@NonNull*/ Integer ruleIndex, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+			assert ruleIndex != null;
+			this.ruleIndex = ruleIndex;
+			this.multiplicativeCardinality = multiplicativeCardinality;
+		}
+
+		public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+			return multiplicativeCardinality;
+		}
+
+		public @NonNull Integer getRuleIndex() {
+			return ruleIndex;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return ruleIndex + " " + multiplicativeCardinality;
+		}
+	}
+
 	private final int ruleValueIndex;
 	private final @NonNull CardinalitySolutionStep @NonNull [] solutionSteps;
 	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
 	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 	private final @NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues;
 	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
-//	private final @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2assignedRuleValueIndexes;
 
 	/**
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
-	protected final @NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression;
+	private final @NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
+	private final @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality;
+//	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
 
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
 	 */
-	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality = null;
+	private final @NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality;
+//	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality = null;
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
@@ -170,8 +285,8 @@ public class SerializationRule
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
 			@NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression,
-			@Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality,
-			@Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality) {
+			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality,
+			@NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality) {
 		this.ruleValueIndex = ruleValueIndex;
 		this.solutionSteps = solutionSteps;
 		this.serializationSteps = serializationSteps;
@@ -238,15 +353,15 @@ public class SerializationRule
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
-			if (enumerationValue2multiplicativeCardinality != null) {
-				return enumerationValue2multiplicativeCardinality.get(null);
-			}
-		}
-		if (eReference2ruleValueIndex2multiplicativeCardinality != null) {
-			Map<@Nullable Integer, @NonNull MultiplicativeCardinality> ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality.get(eStructuralFeature);
-			if (ruleValueIndex2multiplicativeCardinality != null) {
-				return ruleValueIndex2multiplicativeCardinality.get(null);
+			for (@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality eAttribute_EnumerationValue_MultiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinality) {
+				if (eAttribute_EnumerationValue_MultiplicativeCardinality.getEAttribute() == eStructuralFeature) {
+					for (@NonNull EnumerationValue_MultiplicativeCardinality enumerationValue2multiplicativeCardinality : eAttribute_EnumerationValue_MultiplicativeCardinality.getEnumerationValue_MultiplicativeCardinality()) {
+						if (enumerationValue2multiplicativeCardinality.getEnumerationValue() == null) {
+							return enumerationValue2multiplicativeCardinality.getMultiplicativeCardinality();
+						}
+					}
+					return null;
+				}
 			}
 		}
 		return null;
@@ -254,9 +369,15 @@ public class SerializationRule
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
-			if (enumerationValue2multiplicativeCardinality != null) {
-				return enumerationValue2multiplicativeCardinality.get(enumerationValue);
+			for (@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality eAttribute_EnumerationValue_MultiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinality) {
+				if (eAttribute_EnumerationValue_MultiplicativeCardinality.getEAttribute() == eAttribute) {
+					for (@NonNull EnumerationValue_MultiplicativeCardinality enumerationValue2multiplicativeCardinality : eAttribute_EnumerationValue_MultiplicativeCardinality.getEnumerationValue_MultiplicativeCardinality()) {
+						if (enumerationValue2multiplicativeCardinality.getEnumerationValue() == enumerationValue) {
+							return enumerationValue2multiplicativeCardinality.getMultiplicativeCardinality();
+						}
+					}
+					return null;
+				}
 			}
 		}
 		return null;
@@ -264,9 +385,15 @@ public class SerializationRule
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
 		if (eReference2ruleValueIndex2multiplicativeCardinality != null) {
-			Map<@Nullable Integer, @NonNull MultiplicativeCardinality> ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality.get(eReference);
-			if (ruleValueIndex2multiplicativeCardinality != null) {
-				return ruleValueIndex2multiplicativeCardinality.get(ruleValue);
+			for (@NonNull EReference_RuleIndex_MultiplicativeCardinality eReference_RuleIndex_MultiplicativeCardinality : eReference2ruleValueIndex2multiplicativeCardinality) {
+				if (eReference_RuleIndex_MultiplicativeCardinality.getEReference() == eReference) {
+					for (@NonNull RuleIndex_MultiplicativeCardinality ruleIndex2multiplicativeCardinality : eReference_RuleIndex_MultiplicativeCardinality.getRuleIndex_MultiplicativeCardinality()) {
+						if (ruleIndex2multiplicativeCardinality.getRuleIndex() == ruleValue.getIndex()) {
+							return ruleIndex2multiplicativeCardinality.getMultiplicativeCardinality();
+						}
+					}
+					return null;
+				}
 			}
 		}
 		return null;
