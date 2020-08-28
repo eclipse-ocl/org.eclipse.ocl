@@ -3,9 +3,9 @@
   <imports href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#/"/>
   <ownedIdioms name="HASH">
     <ownedSubIdioms locator="//@ownedLocators.0" name="HASH">
-      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.1"/>
-      <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
-      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.2"/>
+      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.3"/>
+      <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.10"/>
+      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.4"/>
     </ownedSubIdioms>
   </ownedIdioms>
   <ownedLocators xsi:type="idioms:KeywordLocator" name="HASH" string="#"/>

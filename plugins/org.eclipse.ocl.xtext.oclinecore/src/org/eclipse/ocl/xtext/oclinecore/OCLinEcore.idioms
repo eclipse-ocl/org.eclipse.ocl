@@ -4,16 +4,16 @@
   <ownedIdioms name="2nd COLON in OperationCS">
     <ownedSubIdioms locator="//@ownedLocators.0" name="COLON in OperationCS"/>
     <ownedSubIdioms locator="//@ownedLocators.0" name="COLON in OperationCS">
-      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.1"/>
-      <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
-      <segments xsi:type="idioms:SoftSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.6"/>
+      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.3"/>
+      <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.10"/>
+      <segments xsi:type="idioms:SoftSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
     </ownedSubIdioms>
   </ownedIdioms>
   <ownedIdioms name="COLON in OCLinEcoreConstraintCS">
     <ownedSubIdioms locator="//@ownedLocators.1" name="COLON in OCLinEcoreConstraintCS">
-      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.1"/>
-      <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
-      <segments xsi:type="idioms:SoftSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.6"/>
+      <segments xsi:type="idioms:NoSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.3"/>
+      <segments xsi:type="idioms:ValueSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.10"/>
+      <segments xsi:type="idioms:SoftSpaceSegment" href="../../../../../../../org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms#//@ownedSegments.8"/>
     </ownedSubIdioms>
   </ownedIdioms>
   <ownedLocators xsi:type="idioms:KeywordLocator" name="COLON in OperationCS" string=":">

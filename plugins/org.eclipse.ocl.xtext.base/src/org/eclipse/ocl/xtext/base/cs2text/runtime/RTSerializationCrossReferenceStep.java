@@ -64,6 +64,8 @@ public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFe
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		super.toString(s, depth);
+		s.append(XtextGrammarUtil.getName(XtextGrammarUtil.getEContainingClass(eStructuralFeature)));
+		s.append("::");
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(((RuleCall)crossReference.getTerminal()).getRule().getName());

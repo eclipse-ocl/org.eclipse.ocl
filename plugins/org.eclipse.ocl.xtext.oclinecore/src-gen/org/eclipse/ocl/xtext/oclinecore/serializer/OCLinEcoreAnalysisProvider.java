@@ -1739,257 +1739,257 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 									= new RTSerializationLiteralStep(-1, "|?");
 		private final @NonNull RTSerializationLiteralStep _063 // 1*'}'
 									= new RTSerializationLiteralStep(-1, "}");
-		private final @NonNull RTSerializationAssignedRuleCallStep _064 // 1*default=SINGLE_QUOTED_STRING
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT);
-		private final @NonNull RTSerializationAssignedRuleCallStep _065 // 1*exprString=UNQUOTED_STRING
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING);
-		private final @NonNull RTSerializationAssignedRuleCallStep _066 // 1*instanceClassName=SINGLE_QUOTED_STRING
+		private final @NonNull RTSerializationAssignedRuleCallStep _064 // 1*AbstractNameExpCS::ownedPathName=PathNameCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _065 // 1*AnnotationElementCS::ownedDetails+=DetailCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS);
+		private final @NonNull RTSerializationAssignStep _066 // 1*BooleanLiteralExpCS::symbol
+									= new RTSerializationAssignStep(-1, EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL);
+		private final @NonNull RTSerializationAssignedRuleCallStep _067 // 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING
 									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _067 // 1*literal=SINGLE_QUOTED_STRING
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL);
-		private final @NonNull RTSerializationAssignedRuleCallStep _068 // 1*lowerBound=LOWER
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
-		private final @NonNull RTSerializationAssignedRuleCallStep _069 // 1*name=BinaryOperatorName
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _070 // 1*name=CollectionTypeIdentifier
+		private final @NonNull RTSerializationAssignedRuleCallStep _068 // 1*CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _069 // 1*CollectionLiteralExpCS::ownedType=CollectionTypeCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _070 // 1*CollectionLiteralPartCS::ownedExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _071 // 1*CollectionLiteralPartCS::ownedExpression=PatternExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _072 // 1*CollectionLiteralPartCS::ownedLastExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _073 // 1*CollectionPatternCS::ownedParts+=PatternExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _074 // 1*CollectionPatternCS::ownedType=CollectionTypeCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _075 // 1*CollectionPatternCS::restVariableName=Identifier
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _076 // 1*CollectionTypeCS::name=CollectionTypeIdentifier
 									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _071 // 1*name=EnumerationLiteralName
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _072 // 1*name=PrimitiveTypeIdentifier
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _073 // 1*name=UnaryOperatorName
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _074 // 1*name=UnrestrictedName
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
-		private final @NonNull RTSerializationAssignedRuleCallsStep _075 // 1*name=UnrestrictedName|SINGLE_QUOTED_STRING
-									= new RTSerializationAssignedRuleCallsStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-				 new @NonNull AbstractRuleValue [2]);
-		private final @NonNull RTSerializationSequenceStep _076 // 1*next-10-steps
-									= new RTSerializationSequenceStep(-1, 1, 11);
-		private final @NonNull RTSerializationSequenceStep _077 // 1*next-11-steps
-									= new RTSerializationSequenceStep(-1, 1, 12);
-		private final @NonNull RTSerializationSequenceStep _078 // 1*next-12-steps
-									= new RTSerializationSequenceStep(-1, 1, 13);
-		private final @NonNull RTSerializationSequenceStep _079 // 1*next-13-steps
-									= new RTSerializationSequenceStep(-1, 1, 14);
-		private final @NonNull RTSerializationSequenceStep _080 // 1*next-14-steps
-									= new RTSerializationSequenceStep(-1, 1, 15);
-		private final @NonNull RTSerializationSequenceStep _081 // 1*next-15-steps
-									= new RTSerializationSequenceStep(-1, 1, 16);
-		private final @NonNull RTSerializationSequenceStep _082 // 1*next-16-steps
-									= new RTSerializationSequenceStep(-1, 1, 17);
-		private final @NonNull RTSerializationSequenceStep _083 // 1*next-17-steps
-									= new RTSerializationSequenceStep(-1, 1, 18);
-		private final @NonNull RTSerializationSequenceStep _084 // 1*next-18-steps
-									= new RTSerializationSequenceStep(-1, 1, 19);
-		private final @NonNull RTSerializationSequenceStep _085 // 1*next-19-steps
-									= new RTSerializationSequenceStep(-1, 1, 20);
-		private final @NonNull RTSerializationSequenceStep _086 // 1*next-2-steps
-									= new RTSerializationSequenceStep(-1, 1, 3);
-		private final @NonNull RTSerializationSequenceStep _087 // 1*next-23-steps
-									= new RTSerializationSequenceStep(-1, 1, 24);
-		private final @NonNull RTSerializationSequenceStep _088 // 1*next-25-steps
-									= new RTSerializationSequenceStep(-1, 1, 26);
-		private final @NonNull RTSerializationSequenceStep _089 // 1*next-26-steps
-									= new RTSerializationSequenceStep(-1, 1, 27);
-		private final @NonNull RTSerializationSequenceStep _090 // 1*next-27-steps
-									= new RTSerializationSequenceStep(-1, 1, 28);
-		private final @NonNull RTSerializationSequenceStep _091 // 1*next-28-steps
-									= new RTSerializationSequenceStep(-1, 1, 29);
-		private final @NonNull RTSerializationSequenceStep _092 // 1*next-3-steps
-									= new RTSerializationSequenceStep(-1, 1, 4);
-		private final @NonNull RTSerializationSequenceStep _093 // 1*next-34-steps
-									= new RTSerializationSequenceStep(-1, 1, 35);
-		private final @NonNull RTSerializationSequenceStep _094 // 1*next-36-steps
-									= new RTSerializationSequenceStep(-1, 1, 37);
-		private final @NonNull RTSerializationSequenceStep _095 // 1*next-39-steps
-									= new RTSerializationSequenceStep(-1, 1, 40);
-		private final @NonNull RTSerializationSequenceStep _096 // 1*next-4-steps
-									= new RTSerializationSequenceStep(-1, 1, 5);
-		private final @NonNull RTSerializationSequenceStep _097 // 1*next-41-steps
-									= new RTSerializationSequenceStep(-1, 1, 42);
-		private final @NonNull RTSerializationSequenceStep _098 // 1*next-5-steps
-									= new RTSerializationSequenceStep(-1, 1, 6);
-		private final @NonNull RTSerializationSequenceStep _099 // 1*next-6-steps
-									= new RTSerializationSequenceStep(-1, 1, 7);
-		private final @NonNull RTSerializationSequenceStep _100 // 1*next-7-steps
-									= new RTSerializationSequenceStep(-1, 1, 8);
-		private final @NonNull RTSerializationSequenceStep _101 // 1*next-8-steps
-									= new RTSerializationSequenceStep(-1, 1, 9);
-		private final @NonNull RTSerializationSequenceStep _102 // 1*next-9-steps
-									= new RTSerializationSequenceStep(-1, 1, 10);
-		private final @NonNull RTSerializationAssignedRuleCallStep _103 // 1*nsPrefix=UnrestrictedName
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX);
-		private final @NonNull RTSerializationAssignedRuleCallStep _104 // 1*nsURI=URI
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PACKAGE_CS__NS_URI);
-		private final @NonNull RTSerializationAssignedRuleCallStep _105 // 1*ownedActualParameter=TypeRefCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
-		private final @NonNull RTSerializationAssignedRuleCallStep _106 // 1*ownedArguments+=NavigatingArgCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _107 // 1*ownedBinding=TemplateBindingCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
-		private final @NonNull RTSerializationAssignedRuleCallStep _108 // 1*ownedCoIterator=CoIteratorVariableCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR);
-		private final @NonNull RTSerializationAssignedRuleCallStep _109 // 1*ownedCondition=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION);
-		private final @NonNull RTSerializationAssignedRuleCallsStep _110 // 1*ownedCondition=ExpCS|PatternExpCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _077 // 1*CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _078 // 1*ConstraintCS::ownedMessageSpecification=SpecificationCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _079 // 1*ContextCS::ownedExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _080 // 1*CurlyBracketedClauseCS::ownedParts+=ShadowPartCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _081 // 1*EnumerationLiteralCS::literal=SINGLE_QUOTED_STRING
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL);
+		private final @NonNull RTSerializationAssignedRuleCallStep _082 // 1*EnumerationLiteralCS::value=SIGNED
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _083 // 1*ExpSpecificationCS::ownedExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallsStep _084 // 1*IfExpCS::ownedCondition=ExpCS|PatternExpCS
 									= new RTSerializationAssignedRuleCallsStep(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 				 new @NonNull AbstractRuleValue [2]);
-		private final @NonNull RTSerializationAssignedRuleCallStep _111 // 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _112 // 1*ownedDetails+=DetailCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _113 // 1*ownedElseExpression=ExpCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _085 // 1*IfExpCS::ownedElseExpression=ExpCS
 									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _114 // 1*ownedExceptions+=TypedRefCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _115 // 1*ownedExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _116 // 1*ownedExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _117 // 1*ownedExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _118 // 1*ownedExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _119 // 1*ownedExpression=PatternExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _120 // 1*ownedExpressionCS=ExpCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _086 // 1*IfExpCS::ownedThenExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _087 // 1*IfThenExpCS::ownedCondition=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _088 // 1*IfThenExpCS::ownedThenExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _089 // 1*ImportCS::ownedPathName=URIPathNameCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _090 // 1*InfixExpCS::ownedLeft=PrefixedPrimaryExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT);
+		private final @NonNull RTSerializationAssignedRuleCallStep _091 // 1*LambdaLiteralExpCS::ownedExpressionCS=ExpCS
 									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _121 // 1*ownedExtends+=TypedRefCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _122 // 1*ownedExtends=TypedRefCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _123 // 1*ownedImplicitOpposites+=ImplicitOppositeCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES);
-		private final @NonNull RTSerializationAssignedRuleCallStep _124 // 1*ownedInExpression=ExpCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _092 // 1*LetExpCS::ownedInExpression=ExpCS
 									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _125 // 1*ownedInitExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _126 // 1*ownedInitExpression=ExpCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _093 // 1*LetExpCS::ownedVariables+=LetVariableCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES);
+		private final @NonNull RTSerializationAssignedRuleCallStep _094 // 1*MapLiteralExpCS::ownedParts+=MapLiteralPartCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _095 // 1*MapLiteralExpCS::ownedType=MapTypeCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _096 // 1*MapLiteralPartCS::ownedKey=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY);
+		private final @NonNull RTSerializationAssignedRuleCallStep _097 // 1*MapLiteralPartCS::ownedValue=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _098 // 1*MapTypeCS::ownedKeyType=TypeExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _099 // 1*MapTypeCS::ownedValueType=TypeExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _100 // 1*ModelElementRefCS::ownedPathName=PathNameCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _101 // 1*MultiplicityBoundsCS::lowerBound=LOWER
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
+		private final @NonNull RTSerializationAssignedRuleCallStep _102 // 1*MultiplicityBoundsCS::upperBound=UPPER
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
+		private final @NonNull RTSerializationAssignStep _103 // 1*MultiplicityStringCS::stringBounds
+									= new RTSerializationAssignStep(-1, BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _104 // 1*NamedElementCS::name=BinaryOperatorName
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _105 // 1*NamedElementCS::name=EnumerationLiteralName
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _106 // 1*NamedElementCS::name=UnaryOperatorName
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _107 // 1*NamedElementCS::name=UnrestrictedName
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		private final @NonNull RTSerializationAssignedRuleCallsStep _108 // 1*NamedElementCS::name=UnrestrictedName|SINGLE_QUOTED_STRING
+									= new RTSerializationAssignedRuleCallsStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+				 new @NonNull AbstractRuleValue [2]);
+		private final @NonNull RTSerializationAssignedRuleCallStep _109 // 1*NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR);
+		private final @NonNull RTSerializationAssignedRuleCallStep _110 // 1*NavigatingArgCS::ownedInitExpression=ExpCS
 									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallsStep _127 // 1*ownedInitExpression=ExpCS|PatternExpCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _111 // 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _112 // 1*NavigatingArgCS::ownedType=TypeExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _113 // 1*NestedExpCS::ownedExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _114 // 1*NumberLiteralExpCS::symbol=NUMBER_LITERAL
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL);
+		private final @NonNull RTSerializationAssignedRuleCallStep _115 // 1*OperationCS::ownedExceptions+=TypedRefCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _116 // 1*OperationCS::ownedParameters+=ParameterCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _117 // 1*OperatorExpCS::ownedRight=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
+		private final @NonNull RTSerializationAssignedRuleCallStep _118 // 1*OperatorExpCS::ownedRight=PrefixedLetExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
+		private final @NonNull RTSerializationAssignedRuleCallStep _119 // 1*OperatorExpCS::ownedRight=PrefixedPrimaryExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
+		private final @NonNull RTSerializationAssignedRuleCallStep _120 // 1*PackageCS::nsPrefix=UnrestrictedName
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX);
+		private final @NonNull RTSerializationAssignedRuleCallStep _121 // 1*PackageCS::nsURI=URI
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PACKAGE_CS__NS_URI);
+		private final @NonNull RTSerializationCrossReferenceStep _122 // 1*PathElementCS::referredElement=URI
+									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "URI"));
+		private final @NonNull RTSerializationCrossReferenceStep _123 // 1*PathElementCS::referredElement=UnreservedName
+									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"));
+		private final @NonNull RTSerializationCrossReferenceStep _124 // 1*PathElementCS::referredElement=UnrestrictedName
+									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
+		private final @NonNull RTSerializationCrossReferenceStep _125 // 1*PathElementCS::referredElement=UnrestrictedName
+									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
+		private final @NonNull RTSerializationAssignedRuleCallStep _126 // 1*PathNameCS::ownedPathElements+=FirstPathElementCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _127 // 1*PathNameCS::ownedPathElements+=NextPathElementCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _128 // 1*PathNameCS::ownedPathElements+=URIFirstPathElementCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _129 // 1*PatternExpCS::ownedPatternType=TypeExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _130 // 1*PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _131 // 1*ReferenceCS::ownedImplicitOpposites+=ImplicitOppositeCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES);
+		private final @NonNull RTSerializationCrossReferenceStep _132 // 1*ReferenceCS::referredKeys+=UnrestrictedName
+									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, getCrossReference(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, "UnrestrictedName"));
+		private final @NonNull RTSerializationCrossReferenceStep _133 // 1*ReferenceCS::referredKeys+=UnrestrictedName
+									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, getCrossReference(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, "UnrestrictedName"));
+		private final @NonNull RTSerializationCrossReferenceStep _134 // 1*ReferenceCS::referredOpposite=UnrestrictedName
+									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, getCrossReference(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, "UnrestrictedName"));
+		private final @NonNull RTSerializationAssignedRuleCallStep _135 // 1*RoundBracketedClauseCS::ownedArguments+=NavigatingArgCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS);
+		private final @NonNull RTSerializationAssignedRuleCallsStep _136 // 1*ShadowPartCS::ownedInitExpression=ExpCS|PatternExpCS
 									= new RTSerializationAssignedRuleCallsStep(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
 				 new @NonNull AbstractRuleValue [2]);
-		private final @NonNull RTSerializationAssignedRuleCallStep _128 // 1*ownedInitExpression=StringLiteralExpCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _137 // 1*ShadowPartCS::ownedInitExpression=StringLiteralExpCS
 									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _129 // 1*ownedKey=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY);
-		private final @NonNull RTSerializationAssignedRuleCallStep _130 // 1*ownedKeyType=TypeExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _131 // 1*ownedLastExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _132 // 1*ownedLeft=PrefixedPrimaryExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT);
-		private final @NonNull RTSerializationAssignedRuleCallStep _133 // 1*ownedMessageSpecification=SpecificationCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _134 // 1*ownedNameExpression=NavigatingArgExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _135 // 1*ownedParameters+=ParameterCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _136 // 1*ownedParameters+=TypeParameterCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _137 // 1*ownedParts+=CollectionLiteralPartCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _138 // 1*ownedParts+=MapLiteralPartCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _139 // 1*ownedParts+=PatternExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _140 // 1*ownedParts+=ShadowPartCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _141 // 1*ownedParts+=TupleLiteralPartCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _142 // 1*ownedParts+=TuplePartCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _143 // 1*ownedPathElements+=FirstPathElementCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _144 // 1*ownedPathElements+=NextPathElementCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _145 // 1*ownedPathElements+=URIFirstPathElementCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _146 // 1*ownedPathName=PathNameCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _147 // 1*ownedPathName=PathNameCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _148 // 1*ownedPathName=PathNameCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _149 // 1*ownedPathName=PathNameCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _150 // 1*ownedPathName=URIPathNameCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _151 // 1*ownedPatternGuard=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
-		private final @NonNull RTSerializationAssignedRuleCallStep _152 // 1*ownedPatternType=TypeExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _153 // 1*ownedRight=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
-		private final @NonNull RTSerializationAssignedRuleCallStep _154 // 1*ownedRight=PrefixedLetExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
-		private final @NonNull RTSerializationAssignedRuleCallStep _155 // 1*ownedRight=PrefixedPrimaryExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT);
-		private final @NonNull RTSerializationAssignedRuleCallStep _156 // 1*ownedSubstitutions+=TemplateParameterSubstitutionCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _157 // 1*ownedSuperTypes+=TypedRefCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES);
-		private final @NonNull RTSerializationAssignedRuleCallStep _158 // 1*ownedTerms+=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _159 // 1*ownedThenExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _160 // 1*ownedThenExpression=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION);
-		private final @NonNull RTSerializationAssignedRuleCallStep _161 // 1*ownedType=CollectionTypeCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _162 // 1*ownedType=CollectionTypeCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _163 // 1*ownedType=MapTypeCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _164 // 1*ownedType=TypeExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _165 // 1*ownedType=TypeExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _166 // 1*ownedType=TypeExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _167 // 1*ownedType=TypeExpWithoutMultiplicityCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _168 // 1*ownedType=TypeLiteralWithMultiplicityCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _169 // 1*ownedType=TypedMultiplicityRefCS
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _170 // 1*ownedValue=ExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _171 // 1*ownedValueType=TypeExpCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _172 // 1*ownedVariables+=LetVariableCS
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES);
-		private final @NonNull RTSerializationAssignStep _173 // 1*qualifiers
-									= new RTSerializationAssignStep(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS);
-		private final @NonNull RTSerializationCrossReferenceStep _174 // 1*referredElement=URI
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "URI"));
-		private final @NonNull RTSerializationCrossReferenceStep _175 // 1*referredElement=UnreservedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _176 // 1*referredElement=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _177 // 1*referredElement=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _178 // 1*referredKeys+=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, getCrossReference(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, "UnrestrictedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _179 // 1*referredKeys+=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, getCrossReference(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, "UnrestrictedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _180 // 1*referredOpposite=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, getCrossReference(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, "UnrestrictedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _181 // 1*referredProperty=UnrestrictedName
+		private final @NonNull RTSerializationCrossReferenceStep _138 // 1*ShadowPartCS::referredProperty=UnrestrictedName
 									= new RTSerializationCrossReferenceStep(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, getCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, "UnrestrictedName"));
-		private final @NonNull RTSerializationAssignedRuleCallStep _182 // 1*restVariableName=Identifier
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME);
-		private final @NonNull RTSerializationAssignStep _183 // 1*stringBounds
-									= new RTSerializationAssignStep(-1, BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS);
-		private final @NonNull RTSerializationAssignStep _184 // 1*symbol
-									= new RTSerializationAssignStep(-1, EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL);
-		private final @NonNull RTSerializationAssignedRuleCallStep _185 // 1*symbol=NUMBER_LITERAL
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL);
-		private final @NonNull RTSerializationAssignedRuleCallStep _186 // 1*upperBound=UPPER
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
-		private final @NonNull RTSerializationAssignedRuleCallStep _187 // 1*value=SIGNED
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _139 // 1*SpecificationCS::exprString=UNQUOTED_STRING
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING);
+		private final @NonNull RTSerializationAssignedRuleCallStep _140 // 1*SquareBracketedClauseCS::ownedTerms+=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _141 // 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT);
+		private final @NonNull RTSerializationAssignedRuleCallStep _142 // 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES);
+		private final @NonNull RTSerializationAssignedRuleCallStep _143 // 1*TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _144 // 1*TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
+		private final @NonNull RTSerializationAssignedRuleCallStep _145 // 1*TemplateSignatureCS::ownedParameters+=TypeParameterCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _146 // 1*TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _147 // 1*TupleTypeCS::ownedParts+=TuplePartCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _148 // 1*TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _149 // 1*TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _150 // 1*TypeNameExpCS::ownedPathName=PathNameCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _151 // 1*TypeNameExpCS::ownedPatternGuard=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD);
+		private final @NonNull RTSerializationAssignedRuleCallStep _152 // 1*TypeParameterCS::ownedExtends+=TypedRefCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _153 // 1*TypedElementCS::ownedType=TypeExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _154 // 1*TypedElementCS::ownedType=TypedMultiplicityRefCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignStep _155 // 1*TypedElementCS::qualifiers
+									= new RTSerializationAssignStep(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _156 // 1*TypedTypeRefCS::ownedBinding=TemplateBindingCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
+		private final @NonNull RTSerializationAssignedRuleCallStep _157 // 1*TypedTypeRefCS::ownedPathName=PathNameCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _158 // 1*VariableCS::ownedInitExpression=ExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _159 // 1*VariableCS::ownedType=TypeExpCS
+									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _160 // 1*WildcardTypeRefCS::ownedExtends=TypedRefCS
+									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
+		private final @NonNull RTSerializationSequenceStep _161 // 1*next-10-steps
+									= new RTSerializationSequenceStep(-1, 1, 11);
+		private final @NonNull RTSerializationSequenceStep _162 // 1*next-11-steps
+									= new RTSerializationSequenceStep(-1, 1, 12);
+		private final @NonNull RTSerializationSequenceStep _163 // 1*next-12-steps
+									= new RTSerializationSequenceStep(-1, 1, 13);
+		private final @NonNull RTSerializationSequenceStep _164 // 1*next-13-steps
+									= new RTSerializationSequenceStep(-1, 1, 14);
+		private final @NonNull RTSerializationSequenceStep _165 // 1*next-14-steps
+									= new RTSerializationSequenceStep(-1, 1, 15);
+		private final @NonNull RTSerializationSequenceStep _166 // 1*next-15-steps
+									= new RTSerializationSequenceStep(-1, 1, 16);
+		private final @NonNull RTSerializationSequenceStep _167 // 1*next-16-steps
+									= new RTSerializationSequenceStep(-1, 1, 17);
+		private final @NonNull RTSerializationSequenceStep _168 // 1*next-17-steps
+									= new RTSerializationSequenceStep(-1, 1, 18);
+		private final @NonNull RTSerializationSequenceStep _169 // 1*next-18-steps
+									= new RTSerializationSequenceStep(-1, 1, 19);
+		private final @NonNull RTSerializationSequenceStep _170 // 1*next-19-steps
+									= new RTSerializationSequenceStep(-1, 1, 20);
+		private final @NonNull RTSerializationSequenceStep _171 // 1*next-2-steps
+									= new RTSerializationSequenceStep(-1, 1, 3);
+		private final @NonNull RTSerializationSequenceStep _172 // 1*next-23-steps
+									= new RTSerializationSequenceStep(-1, 1, 24);
+		private final @NonNull RTSerializationSequenceStep _173 // 1*next-25-steps
+									= new RTSerializationSequenceStep(-1, 1, 26);
+		private final @NonNull RTSerializationSequenceStep _174 // 1*next-26-steps
+									= new RTSerializationSequenceStep(-1, 1, 27);
+		private final @NonNull RTSerializationSequenceStep _175 // 1*next-27-steps
+									= new RTSerializationSequenceStep(-1, 1, 28);
+		private final @NonNull RTSerializationSequenceStep _176 // 1*next-28-steps
+									= new RTSerializationSequenceStep(-1, 1, 29);
+		private final @NonNull RTSerializationSequenceStep _177 // 1*next-3-steps
+									= new RTSerializationSequenceStep(-1, 1, 4);
+		private final @NonNull RTSerializationSequenceStep _178 // 1*next-34-steps
+									= new RTSerializationSequenceStep(-1, 1, 35);
+		private final @NonNull RTSerializationSequenceStep _179 // 1*next-36-steps
+									= new RTSerializationSequenceStep(-1, 1, 37);
+		private final @NonNull RTSerializationSequenceStep _180 // 1*next-39-steps
+									= new RTSerializationSequenceStep(-1, 1, 40);
+		private final @NonNull RTSerializationSequenceStep _181 // 1*next-4-steps
+									= new RTSerializationSequenceStep(-1, 1, 5);
+		private final @NonNull RTSerializationSequenceStep _182 // 1*next-41-steps
+									= new RTSerializationSequenceStep(-1, 1, 42);
+		private final @NonNull RTSerializationSequenceStep _183 // 1*next-5-steps
+									= new RTSerializationSequenceStep(-1, 1, 6);
+		private final @NonNull RTSerializationSequenceStep _184 // 1*next-6-steps
+									= new RTSerializationSequenceStep(-1, 1, 7);
+		private final @NonNull RTSerializationSequenceStep _185 // 1*next-7-steps
+									= new RTSerializationSequenceStep(-1, 1, 8);
+		private final @NonNull RTSerializationSequenceStep _186 // 1*next-8-steps
+									= new RTSerializationSequenceStep(-1, 1, 9);
+		private final @NonNull RTSerializationSequenceStep _187 // 1*next-9-steps
+									= new RTSerializationSequenceStep(-1, 1, 10);
 		private final @NonNull RTSerializationLiteralStep _188 // V00*'abstract'
 									= new RTSerializationLiteralStep(0, "abstract");
 		private final @NonNull RTSerializationLiteralStep _189 // V00*'callable'
@@ -2002,425 +2002,425 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 									= new RTSerializationLiteralStep(0, "static");
 		private final @NonNull RTSerializationLiteralStep _193 // V00*'|1'
 									= new RTSerializationLiteralStep(0, "|1");
-		private final @NonNull RTSerializationAssignedRuleCallsStep _194 // V00*name=UnrestrictedName|SINGLE_QUOTED_STRING
-									= new RTSerializationAssignedRuleCallsStep(0, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-				 new @NonNull AbstractRuleValue [2]);
-		private final @NonNull RTSerializationSequenceStep _195 // V00*next-1-steps
-									= new RTSerializationSequenceStep(0, 2, 3);
-		private final @NonNull RTSerializationSequenceStep _196 // V00*next-2-steps
-									= new RTSerializationSequenceStep(0, 3, 5);
-		private final @NonNull RTSerializationSequenceStep _197 // V00*next-2-steps
-									= new RTSerializationSequenceStep(0, 6, 8);
-		private final @NonNull RTSerializationSequenceStep _198 // V00*next-2-steps
-									= new RTSerializationSequenceStep(0, 4, 6);
-		private final @NonNull RTSerializationSequenceStep _199 // V00*next-2-steps
-									= new RTSerializationSequenceStep(0, 5, 7);
-		private final @NonNull RTSerializationSequenceStep _200 // V00*next-4-steps
-									= new RTSerializationSequenceStep(0, 4, 8);
-		private final @NonNull RTSerializationSequenceStep _201 // V00*next-4-steps
-									= new RTSerializationSequenceStep(0, 3, 7);
-		private final @NonNull RTSerializationSequenceStep _202 // V00*next-4-steps
-									= new RTSerializationSequenceStep(0, 6, 10);
-		private final @NonNull RTSerializationSequenceStep _203 // V00*next-5-steps
-									= new RTSerializationSequenceStep(0, 4, 9);
-		private final @NonNull RTSerializationSequenceStep _204 // V00*next-5-steps
-									= new RTSerializationSequenceStep(0, 3, 8);
-		private final @NonNull RTSerializationSequenceStep _205 // V00*next-6-steps
-									= new RTSerializationSequenceStep(0, 4, 10);
-		private final @NonNull RTSerializationSequenceStep _206 // V00*next-7-steps
-									= new RTSerializationSequenceStep(0, 3, 10);
-		private final @NonNull RTSerializationAssignedRuleCallStep _207 // V00*ownedIfThenExpressions+=ElseIfThenExpCS
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _208 // V00*ownedMultiplicity=MultiplicityCS
-									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
-		private final @NonNull RTSerializationAssignedRuleCallStep _209 // V00*ownedRoundBracketedClause=RoundBracketedClauseCS
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _210 // V00*ownedSignature=TemplateSignatureCS
-									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _211 // V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _194 // V00*AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS
 									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES);
-		private final @NonNull RTSerializationAssignedRuleCallStep _212 // V00*patternVariableName=UnrestrictedName
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME);
-		private final @NonNull RTSerializationAssignedRuleCallStep _213 // V00*segments+=StringLiteral
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _214 // V00*value=SINGLE_QUOTED_STRING
-									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE);
-		private final @NonNull RTSerializationAssignedRuleCallsStep _215 // V00*values+=SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING
+		private final @NonNull RTSerializationAssignedRuleCallsStep _195 // V00*DetailCS::values+=SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING
 									= new RTSerializationAssignedRuleCallsStep(0, BaseCSPackage.Literals.DETAIL_CS__VALUES,
 				 new @NonNull AbstractRuleValue [2]);
+		private final @NonNull RTSerializationAssignedRuleCallStep _196 // V00*DocumentationCS::value=SINGLE_QUOTED_STRING
+									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _197 // V00*IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS
+									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _198 // V00*LetVariableCS::ownedRoundBracketedClause=RoundBracketedClauseCS
+									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE);
+		private final @NonNull RTSerializationAssignedRuleCallsStep _199 // V00*NamedElementCS::name=UnrestrictedName|SINGLE_QUOTED_STRING
+									= new RTSerializationAssignedRuleCallsStep(0, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+				 new @NonNull AbstractRuleValue [2]);
+		private final @NonNull RTSerializationAssignedRuleCallStep _200 // V00*PatternExpCS::patternVariableName=UnrestrictedName
+									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME);
+		private final @NonNull RTSerializationAssignedRuleCallStep _201 // V00*StringLiteralExpCS::segments+=StringLiteral
+									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _202 // V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS
+									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _203 // V00*TypedRefCS::ownedMultiplicity=MultiplicityCS
+									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		private final @NonNull RTSerializationSequenceStep _204 // V00*next-1-steps
+									= new RTSerializationSequenceStep(0, 2, 3);
+		private final @NonNull RTSerializationSequenceStep _205 // V00*next-2-steps
+									= new RTSerializationSequenceStep(0, 3, 5);
+		private final @NonNull RTSerializationSequenceStep _206 // V00*next-2-steps
+									= new RTSerializationSequenceStep(0, 5, 7);
+		private final @NonNull RTSerializationSequenceStep _207 // V00*next-2-steps
+									= new RTSerializationSequenceStep(0, 4, 6);
+		private final @NonNull RTSerializationSequenceStep _208 // V00*next-2-steps
+									= new RTSerializationSequenceStep(0, 6, 8);
+		private final @NonNull RTSerializationSequenceStep _209 // V00*next-4-steps
+									= new RTSerializationSequenceStep(0, 4, 8);
+		private final @NonNull RTSerializationSequenceStep _210 // V00*next-4-steps
+									= new RTSerializationSequenceStep(0, 3, 7);
+		private final @NonNull RTSerializationSequenceStep _211 // V00*next-4-steps
+									= new RTSerializationSequenceStep(0, 6, 10);
+		private final @NonNull RTSerializationSequenceStep _212 // V00*next-5-steps
+									= new RTSerializationSequenceStep(0, 3, 8);
+		private final @NonNull RTSerializationSequenceStep _213 // V00*next-5-steps
+									= new RTSerializationSequenceStep(0, 4, 9);
+		private final @NonNull RTSerializationSequenceStep _214 // V00*next-6-steps
+									= new RTSerializationSequenceStep(0, 4, 10);
+		private final @NonNull RTSerializationSequenceStep _215 // V00*next-7-steps
+									= new RTSerializationSequenceStep(0, 3, 10);
 		private final @NonNull RTSerializationLiteralStep _216 // V01*'::*'
 									= new RTSerializationLiteralStep(1, "::*");
 		private final @NonNull RTSerializationLiteralStep _217 // V01*'|1'
 									= new RTSerializationLiteralStep(1, "|1");
-		private final @NonNull RTSerializationSequenceStep _218 // V01*next-1-steps
-									= new RTSerializationSequenceStep(1, 8, 9);
-		private final @NonNull RTSerializationSequenceStep _219 // V01*next-2-steps
-									= new RTSerializationSequenceStep(1, 5, 7);
-		private final @NonNull RTSerializationSequenceStep _220 // V01*next-2-steps
-									= new RTSerializationSequenceStep(1, 4, 6);
-		private final @NonNull RTSerializationSequenceStep _221 // V01*next-2-steps
-									= new RTSerializationSequenceStep(1, 8, 10);
-		private final @NonNull RTSerializationSequenceStep _222 // V01*next-2-steps
-									= new RTSerializationSequenceStep(1, 6, 8);
-		private final @NonNull RTSerializationSequenceStep _223 // V01*next-2-steps
-									= new RTSerializationSequenceStep(1, 7, 9);
-		private final @NonNull RTSerializationSequenceStep _224 // V01*next-2-steps
-									= new RTSerializationSequenceStep(1, 9, 11);
-		private final @NonNull RTSerializationSequenceStep _225 // V01*next-3-steps
-									= new RTSerializationSequenceStep(1, 5, 8);
-		private final @NonNull RTSerializationSequenceStep _226 // V01*next-4-steps
-									= new RTSerializationSequenceStep(1, 5, 9);
-		private final @NonNull RTSerializationSequenceStep _227 // V01*next-4-steps
-									= new RTSerializationSequenceStep(1, 6, 10);
-		private final @NonNull RTSerializationSequenceStep _228 // V01*next-5-steps
-									= new RTSerializationSequenceStep(1, 4, 9);
-		private final @NonNull RTSerializationSequenceStep _229 // V01*next-6-steps
-									= new RTSerializationSequenceStep(1, 4, 10);
-		private final @NonNull RTSerializationAssignedRuleCallsStep _230 // V01*ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _218 // V01*AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS
+									= new RTSerializationAssignedRuleCallStep(1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE);
+		private final @NonNull RTSerializationAssignedRuleCallStep _219 // V01*CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS
+									= new RTSerializationAssignedRuleCallStep(1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY);
+		private final @NonNull RTSerializationAssignedRuleCallStep _220 // V01*RootCS::ownedImports+=ImportCS
+									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS);
+		private final @NonNull RTSerializationAssignedRuleCallsStep _221 // V01*RoundBracketedClauseCS::ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS
 									= new RTSerializationAssignedRuleCallsStep(1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
 				 new @NonNull AbstractRuleValue [3]);
-		private final @NonNull RTSerializationAssignedRuleCallStep _231 // V01*ownedCollectionMultiplicity=MultiplicityCS
-									= new RTSerializationAssignedRuleCallStep(1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY);
-		private final @NonNull RTSerializationAssignedRuleCallStep _232 // V01*ownedImports+=ImportCS
-									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _233 // V01*ownedMultiplicity=MultiplicityCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _222 // V01*TemplateBindingCS::ownedMultiplicity=MultiplicityCS
 									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
-		private final @NonNull RTSerializationAssignedRuleCallStep _234 // V01*ownedMultiplicity=MultiplicityCS
-									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
-		private final @NonNull RTSerializationAssignedRuleCallStep _235 // V01*ownedRoundBracketedClause=RoundBracketedClauseCS
-									= new RTSerializationAssignedRuleCallStep(1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _236 // V01*ownedSignature=TemplateSignatureCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _223 // V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS
 									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE);
-		private final @NonNull RTSerializationSequenceStep _237 // V02*next-1-steps
-									= new RTSerializationSequenceStep(2, 8, 9);
-		private final @NonNull RTSerializationSequenceStep _238 // V02*next-2-steps
-									= new RTSerializationSequenceStep(2, 7, 9);
-		private final @NonNull RTSerializationSequenceStep _239 // V02*next-2-steps
-									= new RTSerializationSequenceStep(2, 6, 8);
-		private final @NonNull RTSerializationSequenceStep _240 // V02*next-2-steps
-									= new RTSerializationSequenceStep(2, 10, 12);
-		private final @NonNull RTSerializationSequenceStep _241 // V02*next-2-steps
-									= new RTSerializationSequenceStep(2, 8, 10);
-		private final @NonNull RTSerializationSequenceStep _242 // V02*next-2-steps
-									= new RTSerializationSequenceStep(2, 9, 11);
-		private final @NonNull RTSerializationSequenceStep _243 // V02*next-3-steps
-									= new RTSerializationSequenceStep(2, 6, 9);
-		private final @NonNull RTSerializationSequenceStep _244 // V02*next-3-steps
-									= new RTSerializationSequenceStep(2, 8, 11);
-		private final @NonNull RTSerializationSequenceStep _245 // V02*next-4-steps
-									= new RTSerializationSequenceStep(2, 10, 14);
-		private final @NonNull RTSerializationSequenceStep _246 // V02*next-4-steps
-									= new RTSerializationSequenceStep(2, 8, 12);
-		private final @NonNull RTSerializationSequenceStep _247 // V02*next-5-steps
-									= new RTSerializationSequenceStep(2, 6, 11);
-		private final @NonNull RTSerializationAssignedRuleCallStep _248 // V02*ownedAnnotations+=AnnotationElementCS
-									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _249 // V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _224 // V01*TypedRefCS::ownedMultiplicity=MultiplicityCS
+									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		private final @NonNull RTSerializationSequenceStep _225 // V01*next-1-steps
+									= new RTSerializationSequenceStep(1, 8, 9);
+		private final @NonNull RTSerializationSequenceStep _226 // V01*next-2-steps
+									= new RTSerializationSequenceStep(1, 4, 6);
+		private final @NonNull RTSerializationSequenceStep _227 // V01*next-2-steps
+									= new RTSerializationSequenceStep(1, 6, 8);
+		private final @NonNull RTSerializationSequenceStep _228 // V01*next-2-steps
+									= new RTSerializationSequenceStep(1, 5, 7);
+		private final @NonNull RTSerializationSequenceStep _229 // V01*next-2-steps
+									= new RTSerializationSequenceStep(1, 7, 9);
+		private final @NonNull RTSerializationSequenceStep _230 // V01*next-2-steps
+									= new RTSerializationSequenceStep(1, 8, 10);
+		private final @NonNull RTSerializationSequenceStep _231 // V01*next-2-steps
+									= new RTSerializationSequenceStep(1, 9, 11);
+		private final @NonNull RTSerializationSequenceStep _232 // V01*next-3-steps
+									= new RTSerializationSequenceStep(1, 5, 8);
+		private final @NonNull RTSerializationSequenceStep _233 // V01*next-4-steps
+									= new RTSerializationSequenceStep(1, 6, 10);
+		private final @NonNull RTSerializationSequenceStep _234 // V01*next-4-steps
+									= new RTSerializationSequenceStep(1, 5, 9);
+		private final @NonNull RTSerializationSequenceStep _235 // V01*next-5-steps
+									= new RTSerializationSequenceStep(1, 4, 9);
+		private final @NonNull RTSerializationSequenceStep _236 // V01*next-6-steps
+									= new RTSerializationSequenceStep(1, 4, 10);
+		private final @NonNull RTSerializationAssignedRuleCallStep _237 // V02*AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS
 									= new RTSerializationAssignedRuleCallStep(2, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE);
-		private final @NonNull RTSerializationAssignedRuleCallStep _250 // V02*ownedMultiplicity=MultiplicityCS
-									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
-		private final @NonNull RTSerializationAssignedRuleCallStep _251 // V02*ownedPackages+=PackageCS
-									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES);
-		private final @NonNull RTSerializationAssignedRuleCallStep _252 // V02*ownedSpecification=SpecificationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _238 // V02*ConstraintCS::ownedSpecification=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _239 // V02*ModelElementCS::ownedAnnotations+=AnnotationElementCS
+									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _240 // V02*PackageOwnerCS::ownedPackages+=PackageCS
+									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES);
+		private final @NonNull RTSerializationAssignedRuleCallStep _241 // V02*TypedRefCS::ownedMultiplicity=MultiplicityCS
+									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		private final @NonNull RTSerializationSequenceStep _242 // V02*next-1-steps
+									= new RTSerializationSequenceStep(2, 8, 9);
+		private final @NonNull RTSerializationSequenceStep _243 // V02*next-2-steps
+									= new RTSerializationSequenceStep(2, 6, 8);
+		private final @NonNull RTSerializationSequenceStep _244 // V02*next-2-steps
+									= new RTSerializationSequenceStep(2, 8, 10);
+		private final @NonNull RTSerializationSequenceStep _245 // V02*next-2-steps
+									= new RTSerializationSequenceStep(2, 7, 9);
+		private final @NonNull RTSerializationSequenceStep _246 // V02*next-2-steps
+									= new RTSerializationSequenceStep(2, 9, 11);
+		private final @NonNull RTSerializationSequenceStep _247 // V02*next-2-steps
+									= new RTSerializationSequenceStep(2, 10, 12);
+		private final @NonNull RTSerializationSequenceStep _248 // V02*next-3-steps
+									= new RTSerializationSequenceStep(2, 6, 9);
+		private final @NonNull RTSerializationSequenceStep _249 // V02*next-3-steps
+									= new RTSerializationSequenceStep(2, 8, 11);
+		private final @NonNull RTSerializationSequenceStep _250 // V02*next-4-steps
+									= new RTSerializationSequenceStep(2, 10, 14);
+		private final @NonNull RTSerializationSequenceStep _251 // V02*next-4-steps
+									= new RTSerializationSequenceStep(2, 8, 12);
+		private final @NonNull RTSerializationSequenceStep _252 // V02*next-5-steps
+									= new RTSerializationSequenceStep(2, 6, 11);
 		private final @NonNull RTSerializationLiteralStep _253 // V03*'serializable'
 									= new RTSerializationLiteralStep(3, "serializable");
-		private final @NonNull RTSerializationSequenceStep _254 // V03*next-1-steps
-									= new RTSerializationSequenceStep(3, 12, 13);
-		private final @NonNull RTSerializationSequenceStep _255 // V03*next-2-steps
-									= new RTSerializationSequenceStep(3, 12, 14);
-		private final @NonNull RTSerializationSequenceStep _256 // V03*next-2-steps
-									= new RTSerializationSequenceStep(3, 6, 8);
-		private final @NonNull RTSerializationSequenceStep _257 // V03*next-2-steps
-									= new RTSerializationSequenceStep(3, 9, 11);
-		private final @NonNull RTSerializationSequenceStep _258 // V03*next-2-steps
-									= new RTSerializationSequenceStep(3, 10, 12);
-		private final @NonNull RTSerializationSequenceStep _259 // V03*next-3-steps
-									= new RTSerializationSequenceStep(3, 11, 14);
-		private final @NonNull RTSerializationSequenceStep _260 // V03*next-3-steps
-									= new RTSerializationSequenceStep(3, 9, 12);
-		private final @NonNull RTSerializationSequenceStep _261 // V03*next-4-steps
-									= new RTSerializationSequenceStep(3, 13, 17);
-		private final @NonNull RTSerializationSequenceStep _262 // V03*next-4-steps
-									= new RTSerializationSequenceStep(3, 12, 16);
-		private final @NonNull RTSerializationAssignedRuleCallStep _263 // V03*ownedAnnotations+=AnnotationElementCS
-									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _264 // V03*ownedMultiplicity=MultiplicityCS
-									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
-		private final @NonNull RTSerializationAssignedRuleCallStep _265 // V03*ownedPackages+=PackageCS
-									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES);
-		private final @NonNull RTSerializationAssignedRuleCallStep _266 // V03*ownedSpecification=SpecificationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _254 // V03*ConstraintCS::ownedSpecification=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION);
+		private final @NonNull RTSerializationAssignedRuleCallStep _255 // V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS
+									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _256 // V03*PackageOwnerCS::ownedPackages+=PackageCS
+									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES);
+		private final @NonNull RTSerializationAssignedRuleCallStep _257 // V03*TypedRefCS::ownedMultiplicity=MultiplicityCS
+									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		private final @NonNull RTSerializationSequenceStep _258 // V03*next-1-steps
+									= new RTSerializationSequenceStep(3, 12, 13);
+		private final @NonNull RTSerializationSequenceStep _259 // V03*next-2-steps
+									= new RTSerializationSequenceStep(3, 12, 14);
+		private final @NonNull RTSerializationSequenceStep _260 // V03*next-2-steps
+									= new RTSerializationSequenceStep(3, 6, 8);
+		private final @NonNull RTSerializationSequenceStep _261 // V03*next-2-steps
+									= new RTSerializationSequenceStep(3, 10, 12);
+		private final @NonNull RTSerializationSequenceStep _262 // V03*next-2-steps
+									= new RTSerializationSequenceStep(3, 9, 11);
+		private final @NonNull RTSerializationSequenceStep _263 // V03*next-3-steps
+									= new RTSerializationSequenceStep(3, 11, 14);
+		private final @NonNull RTSerializationSequenceStep _264 // V03*next-3-steps
+									= new RTSerializationSequenceStep(3, 9, 12);
+		private final @NonNull RTSerializationSequenceStep _265 // V03*next-4-steps
+									= new RTSerializationSequenceStep(3, 13, 17);
+		private final @NonNull RTSerializationSequenceStep _266 // V03*next-4-steps
+									= new RTSerializationSequenceStep(3, 12, 16);
 		private final @NonNull RTSerializationLiteralStep _267 // V04*'serializable'
 									= new RTSerializationLiteralStep(4, "serializable");
-		private final @NonNull RTSerializationSequenceStep _268 // V04*next-1-steps
-									= new RTSerializationSequenceStep(4, 15, 16);
-		private final @NonNull RTSerializationSequenceStep _269 // V04*next-1-steps
-									= new RTSerializationSequenceStep(4, 14, 15);
-		private final @NonNull RTSerializationSequenceStep _270 // V04*next-2-steps
-									= new RTSerializationSequenceStep(4, 12, 14);
-		private final @NonNull RTSerializationSequenceStep _271 // V04*next-2-steps
-									= new RTSerializationSequenceStep(4, 14, 16);
-		private final @NonNull RTSerializationSequenceStep _272 // V04*next-4-steps
-									= new RTSerializationSequenceStep(4, 15, 19);
-		private final @NonNull RTSerializationSequenceStep _273 // V04*next-5-steps
-									= new RTSerializationSequenceStep(4, 15, 20);
-		private final @NonNull RTSerializationAssignedRuleCallStep _274 // V04*ownedAnnotations+=AnnotationElementCS
-									= new RTSerializationAssignedRuleCallStep(4, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _275 // V04*ownedClasses+=ClassCS
-									= new RTSerializationAssignedRuleCallStep(4, BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES);
-		private final @NonNull RTSerializationAssignedRuleCallStep _276 // V04*ownedContents+=ModelElementCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _268 // V04*AnnotationCS::ownedContents+=ModelElementCS
 									= new RTSerializationAssignedRuleCallStep(4, BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _277 // V04*ownedLiterals+=EnumerationLiteralCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _269 // V04*EnumerationCS::ownedLiterals+=EnumerationLiteralCS
 									= new RTSerializationAssignedRuleCallStep(4, BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS);
-		private final @NonNull RTSerializationSequenceStep _278 // V05*next-1-steps
-									= new RTSerializationSequenceStep(5, 17, 18);
-		private final @NonNull RTSerializationSequenceStep _279 // V05*next-2-steps
-									= new RTSerializationSequenceStep(5, 18, 20);
-		private final @NonNull RTSerializationSequenceStep _280 // V05*next-3-steps
-									= new RTSerializationSequenceStep(5, 15, 18);
-		private final @NonNull RTSerializationSequenceStep _281 // V05*next-4-steps
-									= new RTSerializationSequenceStep(5, 17, 21);
-		private final @NonNull RTSerializationSequenceStep _282 // V05*next-5-steps
-									= new RTSerializationSequenceStep(5, 17, 22);
-		private final @NonNull RTSerializationAssignedRuleCallStep _283 // V05*ownedAnnotations+=AnnotationElementCS
-									= new RTSerializationAssignedRuleCallStep(5, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _284 // V05*ownedConstraints+=InvariantConstraintCS
-									= new RTSerializationAssignedRuleCallStep(5, BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _285 // V05*ownedLiterals+=EnumerationLiteralCS
-									= new RTSerializationAssignedRuleCallStep(5, BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _286 // V05*ownedReferences+=ModelElementRefCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _270 // V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS
+									= new RTSerializationAssignedRuleCallStep(4, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _271 // V04*PackageCS::ownedClasses+=ClassCS
+									= new RTSerializationAssignedRuleCallStep(4, BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES);
+		private final @NonNull RTSerializationSequenceStep _272 // V04*next-1-steps
+									= new RTSerializationSequenceStep(4, 14, 15);
+		private final @NonNull RTSerializationSequenceStep _273 // V04*next-1-steps
+									= new RTSerializationSequenceStep(4, 15, 16);
+		private final @NonNull RTSerializationSequenceStep _274 // V04*next-2-steps
+									= new RTSerializationSequenceStep(4, 12, 14);
+		private final @NonNull RTSerializationSequenceStep _275 // V04*next-2-steps
+									= new RTSerializationSequenceStep(4, 14, 16);
+		private final @NonNull RTSerializationSequenceStep _276 // V04*next-4-steps
+									= new RTSerializationSequenceStep(4, 15, 19);
+		private final @NonNull RTSerializationSequenceStep _277 // V04*next-5-steps
+									= new RTSerializationSequenceStep(4, 15, 20);
+		private final @NonNull RTSerializationAssignedRuleCallStep _278 // V05*AnnotationCS::ownedReferences+=ModelElementRefCS
 									= new RTSerializationAssignedRuleCallStep(5, BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES);
+		private final @NonNull RTSerializationAssignedRuleCallStep _279 // V05*ClassCS::ownedConstraints+=InvariantConstraintCS
+									= new RTSerializationAssignedRuleCallStep(5, BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _280 // V05*EnumerationCS::ownedLiterals+=EnumerationLiteralCS
+									= new RTSerializationAssignedRuleCallStep(5, BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _281 // V05*ModelElementCS::ownedAnnotations+=AnnotationElementCS
+									= new RTSerializationAssignedRuleCallStep(5, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		private final @NonNull RTSerializationSequenceStep _282 // V05*next-1-steps
+									= new RTSerializationSequenceStep(5, 17, 18);
+		private final @NonNull RTSerializationSequenceStep _283 // V05*next-2-steps
+									= new RTSerializationSequenceStep(5, 18, 20);
+		private final @NonNull RTSerializationSequenceStep _284 // V05*next-3-steps
+									= new RTSerializationSequenceStep(5, 15, 18);
+		private final @NonNull RTSerializationSequenceStep _285 // V05*next-4-steps
+									= new RTSerializationSequenceStep(5, 17, 21);
+		private final @NonNull RTSerializationSequenceStep _286 // V05*next-5-steps
+									= new RTSerializationSequenceStep(5, 17, 22);
 		private final @NonNull RTSerializationLiteralStep _287 // V06*'interface'
 									= new RTSerializationLiteralStep(6, "interface");
-		private final @NonNull RTSerializationSequenceStep _288 // V06*next-2-steps
-									= new RTSerializationSequenceStep(6, 20, 22);
-		private final @NonNull RTSerializationSequenceStep _289 // V06*next-4-steps
-									= new RTSerializationSequenceStep(6, 19, 23);
-		private final @NonNull RTSerializationSequenceStep _290 // V06*next-4-steps
-									= new RTSerializationSequenceStep(6, 21, 25);
-		private final @NonNull RTSerializationSequenceStep _291 // V06*next-6-steps
-									= new RTSerializationSequenceStep(6, 20, 26);
-		private final @NonNull RTSerializationAssignedRuleCallStep _292 // V06*ownedAnnotations+=AnnotationElementCS
-									= new RTSerializationAssignedRuleCallStep(6, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _293 // V06*ownedConstraints+=InvariantConstraintCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _288 // V06*ClassCS::ownedConstraints+=InvariantConstraintCS
 									= new RTSerializationAssignedRuleCallStep(6, BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _294 // V06*ownedDefaultExpressions+=SpecificationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _289 // V06*ModelElementCS::ownedAnnotations+=AnnotationElementCS
+									= new RTSerializationAssignedRuleCallStep(6, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _290 // V06*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(6, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull RTSerializationSequenceStep _295 // V07*next-1-steps
-									= new RTSerializationSequenceStep(7, 23, 24);
-		private final @NonNull RTSerializationSequenceStep _296 // V07*next-2-steps
-									= new RTSerializationSequenceStep(7, 23, 25);
-		private final @NonNull RTSerializationSequenceStep _297 // V07*next-4-steps
-									= new RTSerializationSequenceStep(7, 22, 26);
-		private final @NonNull RTSerializationSequenceStep _298 // V07*next-4-steps
-									= new RTSerializationSequenceStep(7, 23, 27);
-		private final @NonNull RTSerializationSequenceStep _299 // V07*next-6-steps
-									= new RTSerializationSequenceStep(7, 22, 28);
-		private final @NonNull RTSerializationAssignedRuleCallStep _300 // V07*ownedAnnotations+=AnnotationElementCS
+		private final @NonNull RTSerializationSequenceStep _291 // V06*next-2-steps
+									= new RTSerializationSequenceStep(6, 20, 22);
+		private final @NonNull RTSerializationSequenceStep _292 // V06*next-4-steps
+									= new RTSerializationSequenceStep(6, 19, 23);
+		private final @NonNull RTSerializationSequenceStep _293 // V06*next-4-steps
+									= new RTSerializationSequenceStep(6, 21, 25);
+		private final @NonNull RTSerializationSequenceStep _294 // V06*next-6-steps
+									= new RTSerializationSequenceStep(6, 20, 26);
+		private final @NonNull RTSerializationAssignedRuleCallStep _295 // V07*ModelElementCS::ownedAnnotations+=AnnotationElementCS
 									= new RTSerializationAssignedRuleCallStep(7, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _301 // V07*ownedDefaultExpressions+=SpecificationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _296 // V07*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(7, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull RTSerializationSequenceStep _302 // V08*next-1-steps
-									= new RTSerializationSequenceStep(8, 25, 26);
-		private final @NonNull RTSerializationSequenceStep _303 // V08*next-2-steps
-									= new RTSerializationSequenceStep(8, 25, 27);
-		private final @NonNull RTSerializationSequenceStep _304 // V08*next-4-steps
-									= new RTSerializationSequenceStep(8, 24, 28);
-		private final @NonNull RTSerializationSequenceStep _305 // V08*next-4-steps
-									= new RTSerializationSequenceStep(8, 27, 31);
-		private final @NonNull RTSerializationAssignedRuleCallStep _306 // V08*ownedAnnotations+=AnnotationElementCS
+		private final @NonNull RTSerializationSequenceStep _297 // V07*next-1-steps
+									= new RTSerializationSequenceStep(7, 23, 24);
+		private final @NonNull RTSerializationSequenceStep _298 // V07*next-2-steps
+									= new RTSerializationSequenceStep(7, 23, 25);
+		private final @NonNull RTSerializationSequenceStep _299 // V07*next-4-steps
+									= new RTSerializationSequenceStep(7, 23, 27);
+		private final @NonNull RTSerializationSequenceStep _300 // V07*next-4-steps
+									= new RTSerializationSequenceStep(7, 22, 26);
+		private final @NonNull RTSerializationSequenceStep _301 // V07*next-6-steps
+									= new RTSerializationSequenceStep(7, 22, 28);
+		private final @NonNull RTSerializationAssignedRuleCallStep _302 // V08*ModelElementCS::ownedAnnotations+=AnnotationElementCS
 									= new RTSerializationAssignedRuleCallStep(8, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _307 // V08*ownedDefaultExpressions+=SpecificationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _303 // V08*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(8, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _308 // V08*ownedOperations+=OperationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _304 // V08*StructuredClassCS::ownedOperations+=OperationCS
 									= new RTSerializationAssignedRuleCallStep(8, BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS);
-		private final @NonNull RTSerializationSequenceStep _309 // V09*next-4-steps
-									= new RTSerializationSequenceStep(9, 29, 33);
-		private final @NonNull RTSerializationAssignedRuleCallStep _310 // V09*ownedAnnotations+=AnnotationElementCS
+		private final @NonNull RTSerializationSequenceStep _305 // V08*next-1-steps
+									= new RTSerializationSequenceStep(8, 25, 26);
+		private final @NonNull RTSerializationSequenceStep _306 // V08*next-2-steps
+									= new RTSerializationSequenceStep(8, 25, 27);
+		private final @NonNull RTSerializationSequenceStep _307 // V08*next-4-steps
+									= new RTSerializationSequenceStep(8, 24, 28);
+		private final @NonNull RTSerializationSequenceStep _308 // V08*next-4-steps
+									= new RTSerializationSequenceStep(8, 27, 31);
+		private final @NonNull RTSerializationAssignedRuleCallStep _309 // V09*ModelElementCS::ownedAnnotations+=AnnotationElementCS
 									= new RTSerializationAssignedRuleCallStep(9, BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _311 // V09*ownedDefaultExpressions+=SpecificationCS
-									= new RTSerializationAssignedRuleCallStep(9, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _312 // V09*ownedPreconditions+=PreconditionConstraintCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _310 // V09*OperationCS::ownedPreconditions+=PreconditionConstraintCS
 									= new RTSerializationAssignedRuleCallStep(9, BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _313 // V09*ownedProperties+=StructuralFeatureCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _311 // V09*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS
+									= new RTSerializationAssignedRuleCallStep(9, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
+		private final @NonNull RTSerializationAssignedRuleCallStep _312 // V09*StructuredClassCS::ownedProperties+=StructuralFeatureCS
 									= new RTSerializationAssignedRuleCallStep(9, BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES);
-		private final @NonNull RTSerializationSequenceStep _314 // V10*next-4-steps
-									= new RTSerializationSequenceStep(10, 29, 33);
-		private final @NonNull RTSerializationSequenceStep _315 // V10*next-4-steps
-									= new RTSerializationSequenceStep(10, 32, 36);
-		private final @NonNull RTSerializationAssignedRuleCallStep _316 // V10*ownedConstraints+=InvariantConstraintCS
+		private final @NonNull RTSerializationSequenceStep _313 // V09*next-4-steps
+									= new RTSerializationSequenceStep(9, 29, 33);
+		private final @NonNull RTSerializationAssignedRuleCallStep _314 // V10*ClassCS::ownedConstraints+=InvariantConstraintCS
 									= new RTSerializationAssignedRuleCallStep(10, BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _317 // V10*ownedDefaultExpressions+=SpecificationCS
-									= new RTSerializationAssignedRuleCallStep(10, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _318 // V10*ownedPreconditions+=PreconditionConstraintCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _315 // V10*OperationCS::ownedPreconditions+=PreconditionConstraintCS
 									= new RTSerializationAssignedRuleCallStep(10, BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS);
-		private final @NonNull RTSerializationSequenceStep _319 // V11*next-4-steps
-									= new RTSerializationSequenceStep(11, 31, 35);
-		private final @NonNull RTSerializationSequenceStep _320 // V11*next-4-steps
-									= new RTSerializationSequenceStep(11, 34, 38);
-		private final @NonNull RTSerializationAssignedRuleCallStep _321 // V11*ownedBodyExpressions+=SpecificationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _316 // V10*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS
+									= new RTSerializationAssignedRuleCallStep(10, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
+		private final @NonNull RTSerializationSequenceStep _317 // V10*next-4-steps
+									= new RTSerializationSequenceStep(10, 32, 36);
+		private final @NonNull RTSerializationSequenceStep _318 // V10*next-4-steps
+									= new RTSerializationSequenceStep(10, 29, 33);
+		private final @NonNull RTSerializationAssignedRuleCallStep _319 // V11*OperationCS::ownedBodyExpressions+=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(11, BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _322 // V11*ownedDefaultExpressions+=SpecificationCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _320 // V11*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(11, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull RTSerializationSequenceStep _323 // V12*next-2-steps
-									= new RTSerializationSequenceStep(12, 37, 39);
-		private final @NonNull RTSerializationAssignedRuleCallStep _324 // V12*ownedBodyExpressions+=SpecificationCS
+		private final @NonNull RTSerializationSequenceStep _321 // V11*next-4-steps
+									= new RTSerializationSequenceStep(11, 34, 38);
+		private final @NonNull RTSerializationSequenceStep _322 // V11*next-4-steps
+									= new RTSerializationSequenceStep(11, 31, 35);
+		private final @NonNull RTSerializationAssignedRuleCallStep _323 // V12*OperationCS::ownedBodyExpressions+=SpecificationCS
 									= new RTSerializationAssignedRuleCallStep(12, BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _325 // V12*ownedDefaultExpressions+=SpecificationCS
-									= new RTSerializationAssignedRuleCallStep(12, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
-		private final @NonNull RTSerializationAssignedRuleCallStep _326 // V12*ownedPostconditions+=PostconditionConstraintCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _324 // V12*OperationCS::ownedPostconditions+=PostconditionConstraintCS
 									= new RTSerializationAssignedRuleCallStep(12, BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS);
-		private final @NonNull RTSerializationSequenceStep _327 // V13*next-2-steps
-									= new RTSerializationSequenceStep(13, 39, 41);
-		private final @NonNull RTSerializationAssignedRuleCallStep _328 // V13*ownedPostconditions+=PostconditionConstraintCS
+		private final @NonNull RTSerializationAssignedRuleCallStep _325 // V12*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS
+									= new RTSerializationAssignedRuleCallStep(12, BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS);
+		private final @NonNull RTSerializationSequenceStep _326 // V12*next-2-steps
+									= new RTSerializationSequenceStep(12, 37, 39);
+		private final @NonNull RTSerializationAssignedRuleCallStep _327 // V13*OperationCS::ownedPostconditions+=PostconditionConstraintCS
 									= new RTSerializationAssignedRuleCallStep(13, BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS);
+		private final @NonNull RTSerializationSequenceStep _328 // V13*next-2-steps
+									= new RTSerializationSequenceStep(13, 39, 41);
 
 		/**
 		 * Post constructor initialization that avoids recursions.
 		 */
 		private final void init() {
-			_064.init(rv._087);
-			_065.init(rv._119);
-			_066.init(rv._087);
+			_064.init(rv._073);
+			_065.init(rv._016);
 			_067.init(rv._087);
-			_068.init(rv._043);
-			_069.init(rv._004);
-			_070.init(rv._012);
-			_071.init(rv._023);
-			_072.init(rv._082);
-			_073.init(rv._124);
-			_074.init(rv._127);
-			_075.init(new @NonNull AbstractRuleValue [] {rv._127/*UnrestrictedName*/, rv._087/*SINGLE_QUOTED_STRING*/});
-			_103.init(rv._127);
-			_104.init(rv._121);
-			_105.init(rv._115);
-			_106.init(rv._060);
-			_107.init(rv._099);
-			_108.init(rv._007);
-			_109.init(rv._030);
-			_110.init(new @NonNull AbstractRuleValue [] {rv._030/*ExpCS*/, rv._074/*PatternExpCS*/});
-			_111.init(rv._013);
-			_112.init(rv._016);
+			_068.init(rv._009);
+			_069.init(rv._011);
+			_070.init(rv._030);
+			_071.init(rv._074);
+			_072.init(rv._030);
+			_073.init(rv._074);
+			_074.init(rv._011);
+			_075.init(rv._035);
+			_076.init(rv._012);
+			_077.init(rv._108);
+			_078.init(rv._092);
+			_079.init(rv._030);
+			_080.init(rv._090);
+			_081.init(rv._087);
+			_082.init(rv._085);
+			_083.init(rv._030);
+			_084.init(new @NonNull AbstractRuleValue [] {rv._030/*ExpCS*/, rv._074/*PatternExpCS*/});
+			_085.init(rv._030);
+			_086.init(rv._030);
+			_087.init(rv._030);
+			_088.init(rv._030);
+			_089.init(rv._123);
+			_090.init(rv._078);
+			_091.init(rv._030);
+			_092.init(rv._030);
+			_093.init(rv._046);
+			_094.init(rv._050);
+			_095.init(rv._051);
+			_096.init(rv._030);
+			_097.init(rv._030);
+			_098.init(rv._107);
+			_099.init(rv._107);
+			_100.init(rv._073);
+			_101.init(rv._043);
+			_102.init(rv._120);
+			_104.init(rv._004);
+			_105.init(rv._023);
+			_106.init(rv._124);
+			_107.init(rv._127);
+			_108.init(new @NonNull AbstractRuleValue [] {rv._127/*UnrestrictedName*/, rv._087/*SINGLE_QUOTED_STRING*/});
+			_109.init(rv._007);
+			_110.init(rv._030);
+			_111.init(rv._061);
+			_112.init(rv._107);
 			_113.init(rv._030);
-			_114.init(rv._117);
-			_115.init(rv._030);
-			_116.init(rv._030);
+			_114.init(rv._058);
+			_115.init(rv._117);
+			_116.init(rv._072);
 			_117.init(rv._030);
-			_118.init(rv._030);
-			_119.init(rv._074);
-			_120.init(rv._030);
-			_121.init(rv._117);
-			_122.init(rv._117);
-			_123.init(rv._037);
-			_124.init(rv._030);
-			_125.init(rv._030);
-			_126.init(rv._030);
-			_127.init(new @NonNull AbstractRuleValue [] {rv._030/*ExpCS*/, rv._074/*PatternExpCS*/});
-			_128.init(rv._095);
-			_129.init(rv._030);
-			_130.init(rv._107);
-			_131.init(rv._030);
-			_132.init(rv._078);
-			_133.init(rv._092);
-			_134.init(rv._061);
-			_135.init(rv._072);
-			_136.init(rv._114);
-			_137.init(rv._009);
-			_138.init(rv._050);
-			_139.init(rv._074);
-			_140.init(rv._090);
-			_141.init(rv._104);
-			_142.init(rv._105);
-			_143.init(rv._031);
-			_144.init(rv._067);
-			_145.init(rv._122);
-			_146.init(rv._073);
-			_147.init(rv._073);
-			_148.init(rv._073);
-			_149.init(rv._073);
-			_150.init(rv._123);
+			_118.init(rv._077);
+			_119.init(rv._078);
+			_120.init(rv._127);
+			_121.init(rv._121);
+			_126.init(rv._031);
+			_127.init(rv._067);
+			_128.init(rv._122);
+			_129.init(rv._107);
+			_130.init(rv._082);
+			_131.init(rv._037);
+			_135.init(rv._060);
+			_136.init(new @NonNull AbstractRuleValue [] {rv._030/*ExpCS*/, rv._074/*PatternExpCS*/});
+			_137.init(rv._095);
+			_139.init(rv._119);
+			_140.init(rv._030);
+			_141.init(rv._087);
+			_142.init(rv._117);
+			_143.init(rv._100);
+			_144.init(rv._115);
+			_145.init(rv._114);
+			_146.init(rv._104);
+			_147.init(rv._105);
+			_148.init(rv._112);
+			_149.init(rv._013);
+			_150.init(rv._073);
 			_151.init(rv._030);
-			_152.init(rv._107);
-			_153.init(rv._030);
-			_154.init(rv._077);
-			_155.init(rv._078);
-			_156.init(rv._100);
-			_157.init(rv._117);
+			_152.init(rv._117);
+			_153.init(rv._107);
+			_154.init(rv._116);
+			_156.init(rv._099);
+			_157.init(rv._073);
 			_158.init(rv._030);
-			_159.init(rv._030);
-			_160.init(rv._030);
-			_161.init(rv._011);
-			_162.init(rv._011);
-			_163.init(rv._051);
-			_164.init(rv._107);
-			_165.init(rv._107);
-			_166.init(rv._107);
-			_167.init(rv._108);
-			_168.init(rv._112);
-			_169.init(rv._116);
-			_170.init(rv._030);
-			_171.init(rv._107);
-			_172.init(rv._046);
-			_182.init(rv._035);
-			_185.init(rv._058);
-			_186.init(rv._120);
-			_187.init(rv._085);
-			_194.init(new @NonNull AbstractRuleValue [] {rv._127/*UnrestrictedName*/, rv._087/*SINGLE_QUOTED_STRING*/});
-			_207.init(rv._020);
-			_208.init(rv._056);
-			_209.init(rv._084);
-			_210.init(rv._101);
-			_211.init(rv._093);
-			_212.init(rv._127);
-			_213.init(rv._094);
-			_214.init(rv._087);
-			_215.init(new @NonNull AbstractRuleValue [] {rv._087/*SINGLE_QUOTED_STRING*/, rv._048/*ML_SINGLE_QUOTED_STRING*/});
-			_230.init(new @NonNull AbstractRuleValue [] {rv._063/*NavigatingCommaArgCS*/, rv._064/*NavigatingSemiArgCS*/, rv._062/*NavigatingBarArgCS*/});
-			_231.init(rv._056);
-			_232.init(rv._038);
-			_233.init(rv._056);
-			_234.init(rv._056);
-			_235.init(rv._084);
-			_236.init(rv._101);
-			_248.init(rv._002);
-			_249.init(rv._013);
-			_250.init(rv._056);
-			_251.init(rv._071);
-			_252.init(rv._092);
-			_263.init(rv._002);
-			_264.init(rv._056);
-			_265.init(rv._071);
-			_266.init(rv._092);
-			_274.init(rv._002);
-			_275.init(rv._006);
-			_276.init(rv._053);
-			_277.init(rv._022);
-			_283.init(rv._002);
-			_284.init(rv._041);
-			_285.init(rv._022);
-			_286.init(rv._054);
-			_292.init(rv._002);
-			_293.init(rv._041);
-			_294.init(rv._092);
-			_300.init(rv._002);
-			_301.init(rv._092);
-			_306.init(rv._002);
-			_307.init(rv._092);
-			_308.init(rv._070);
-			_310.init(rv._002);
+			_159.init(rv._107);
+			_160.init(rv._117);
+			_194.init(rv._093);
+			_195.init(new @NonNull AbstractRuleValue [] {rv._087/*SINGLE_QUOTED_STRING*/, rv._048/*ML_SINGLE_QUOTED_STRING*/});
+			_196.init(rv._087);
+			_197.init(rv._020);
+			_198.init(rv._084);
+			_199.init(new @NonNull AbstractRuleValue [] {rv._127/*UnrestrictedName*/, rv._087/*SINGLE_QUOTED_STRING*/});
+			_200.init(rv._127);
+			_201.init(rv._094);
+			_202.init(rv._101);
+			_203.init(rv._056);
+			_218.init(rv._084);
+			_219.init(rv._056);
+			_220.init(rv._038);
+			_221.init(new @NonNull AbstractRuleValue [] {rv._063/*NavigatingCommaArgCS*/, rv._064/*NavigatingSemiArgCS*/, rv._062/*NavigatingBarArgCS*/});
+			_222.init(rv._056);
+			_223.init(rv._101);
+			_224.init(rv._056);
+			_237.init(rv._013);
+			_238.init(rv._092);
+			_239.init(rv._002);
+			_240.init(rv._071);
+			_241.init(rv._056);
+			_254.init(rv._092);
+			_255.init(rv._002);
+			_256.init(rv._071);
+			_257.init(rv._056);
+			_268.init(rv._053);
+			_269.init(rv._022);
+			_270.init(rv._002);
+			_271.init(rv._006);
+			_278.init(rv._054);
+			_279.init(rv._041);
+			_280.init(rv._022);
+			_281.init(rv._002);
+			_288.init(rv._041);
+			_289.init(rv._002);
+			_290.init(rv._092);
+			_295.init(rv._002);
+			_296.init(rv._092);
+			_302.init(rv._002);
+			_303.init(rv._092);
+			_304.init(rv._070);
+			_309.init(rv._002);
+			_310.init(rv._076);
 			_311.init(rv._092);
-			_312.init(rv._076);
-			_313.init(rv._096);
-			_316.init(rv._041);
-			_317.init(rv._092);
-			_318.init(rv._076);
-			_321.init(rv._092);
-			_322.init(rv._092);
-			_324.init(rv._092);
+			_312.init(rv._096);
+			_314.init(rv._041);
+			_315.init(rv._076);
+			_316.init(rv._092);
+			_319.init(rv._092);
+			_320.init(rv._092);
+			_323.init(rv._092);
+			_324.init(rv._075);
 			_325.init(rv._092);
-			_326.init(rv._075);
-			_328.init(rv._075);
+			_327.init(rv._075);
 		}
 	}
 
@@ -2470,6 +2470,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			IdiomsUtils.SOFT_SPACE /* «? » */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.SOFT_SPACE /* «? » */
+		};
+		private final @NonNull Segment [] _9 = new @NonNull Segment @NonNull [] {
+			IdiomsUtils.HALF_NEW_LINE /* «½\n» */,
+			IdiomsUtils.VALUE /* «value» */,
+			IdiomsUtils.HALF_NEW_LINE /* «½\n» */
 		};
 	}
 
@@ -4365,7 +4370,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._177 /* 1*referredElement=UnrestrictedName */
+				st._125 /* 1*PathElementCS::referredElement=UnrestrictedName */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -4387,11 +4392,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._068 /* 1*lowerBound=LOWER */,
-				st._196 /* V00*next-2-steps */,
+				st._181 /* 1*next-4-steps */,
+				st._101 /* 1*MultiplicityBoundsCS::lowerBound=LOWER */,
+				st._205 /* V00*next-2-steps */,
 				st._008 /* 1*'..' */,
-				st._186 /* 1*upperBound=UPPER */
+				st._102 /* 1*MultiplicityBoundsCS::upperBound=UPPER */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -4425,12 +4430,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._021 /* 1*'[' */,
-				st._068 /* 1*lowerBound=LOWER */,
-				st._198 /* V00*next-2-steps */,
+				st._101 /* 1*MultiplicityBoundsCS::lowerBound=LOWER */,
+				st._207 /* V00*next-2-steps */,
 				st._008 /* 1*'..' */,
-				st._186 /* 1*upperBound=UPPER */,
+				st._102 /* 1*MultiplicityBoundsCS::upperBound=UPPER */,
 				st._062 /* 1*'|?' */,
 				st._022 /* 1*']' */
 			},
@@ -4470,12 +4475,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._021 /* 1*'[' */,
-				st._068 /* 1*lowerBound=LOWER */,
-				st._198 /* V00*next-2-steps */,
+				st._101 /* 1*MultiplicityBoundsCS::lowerBound=LOWER */,
+				st._207 /* V00*next-2-steps */,
 				st._008 /* 1*'..' */,
-				st._186 /* 1*upperBound=UPPER */,
+				st._102 /* 1*MultiplicityBoundsCS::upperBound=UPPER */,
 				st._217 /* V01*'|1' */,
 				st._022 /* 1*']' */
 			},
@@ -4522,9 +4527,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._021 /* 1*'[' */,
-				st._183 /* 1*stringBounds */,
+				st._103 /* 1*MultiplicityStringCS::stringBounds */,
 				st._193 /* V00*'|1' */,
 				st._022 /* 1*']' */
 			},
@@ -4563,12 +4568,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
+				st._184 /* 1*next-6-steps */,
 				st._021 /* 1*'[' */,
-				st._068 /* 1*lowerBound=LOWER */,
-				st._198 /* V00*next-2-steps */,
+				st._101 /* 1*MultiplicityBoundsCS::lowerBound=LOWER */,
+				st._207 /* V00*next-2-steps */,
 				st._008 /* 1*'..' */,
-				st._186 /* 1*upperBound=UPPER */,
+				st._102 /* 1*MultiplicityBoundsCS::upperBound=UPPER */,
 				st._022 /* 1*']' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -4604,9 +4609,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
+				st._177 /* 1*next-3-steps */,
 				st._021 /* 1*'[' */,
-				st._183 /* 1*stringBounds */,
+				st._103 /* 1*MultiplicityStringCS::stringBounds */,
 				st._022 /* 1*']' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -4635,9 +4640,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._021 /* 1*'[' */,
-				st._183 /* 1*stringBounds */,
+				st._103 /* 1*MultiplicityStringCS::stringBounds */,
 				st._062 /* 1*'|?' */,
 				st._022 /* 1*']' */
 			},
@@ -4668,7 +4673,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._028 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._183 /* 1*stringBounds */
+				st._103 /* 1*MultiplicityStringCS::stringBounds */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -4693,7 +4698,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._175 /* 1*referredElement=UnreservedName */
+				st._123 /* 1*PathElementCS::referredElement=UnreservedName */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -4715,11 +4720,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._061 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._143 /* 1*ownedPathElements+=FirstPathElementCS */,
-				st._196 /* V00*next-2-steps */,
+				st._181 /* 1*next-4-steps */,
+				st._126 /* 1*PathNameCS::ownedPathElements+=FirstPathElementCS */,
+				st._205 /* V00*next-2-steps */,
 				st._010 /* 1*'::' */,
-				st._144 /* 1*ownedPathElements+=NextPathElementCS */
+				st._127 /* 1*PathNameCS::ownedPathElements+=NextPathElementCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -4752,12 +4757,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._064 /* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._098 /* 1*next-5-steps */,
-				st._156 /* 1*ownedSubstitutions+=TemplateParameterSubstitutionCS */,
-				st._196 /* V00*next-2-steps */,
+				st._183 /* 1*next-5-steps */,
+				st._143 /* 1*TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS */,
+				st._205 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._156 /* 1*ownedSubstitutions+=TemplateParameterSubstitutionCS */,
-				st._233 /* V01*ownedMultiplicity=MultiplicityCS */
+				st._143 /* 1*TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS */,
+				st._222 /* V01*TemplateBindingCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -4795,7 +4800,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._047 /* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._105 /* 1*ownedActualParameter=TypeRefCS */
+				st._144 /* 1*TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -4823,14 +4828,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._111 /* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._204 /* V00*next-5-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._212 /* V00*next-5-steps */,
 				st._035 /* 1*'extends' */,
-				st._121 /* 1*ownedExtends+=TypedRefCS */,
-				st._222 /* V01*next-2-steps */,
+				st._152 /* 1*TypeParameterCS::ownedExtends+=TypedRefCS */,
+				st._227 /* V01*next-2-steps */,
 				st._002 /* 1*'&&' */,
-				st._121 /* 1*ownedExtends+=TypedRefCS */
+				st._152 /* 1*TypeParameterCS::ownedExtends+=TypedRefCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -4871,11 +4876,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._102 /* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._016 /* 1*'?' */,
-				st._196 /* V00*next-2-steps */,
+				st._205 /* V00*next-2-steps */,
 				st._035 /* 1*'extends' */,
-				st._122 /* 1*ownedExtends=TypedRefCS */
+				st._160 /* 1*WildcardTypeRefCS::ownedExtends=TypedRefCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -4905,11 +4910,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._102 /* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._016 /* 1*'?' */,
-				st._196 /* V00*next-2-steps */,
+				st._205 /* V00*next-2-steps */,
 				st._035 /* 1*'extends' */,
-				st._122 /* 1*ownedExtends=TypedRefCS */
+				st._160 /* 1*WildcardTypeRefCS::ownedExtends=TypedRefCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -4938,7 +4943,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._002 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._184 /* 1*symbol */
+				st._066 /* 1*BooleanLiteralExpCS::symbol */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -4965,11 +4970,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._196 /* V00*next-2-steps */,
+				st._181 /* 1*next-4-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._205 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._165 /* 1*ownedType=TypeExpCS */
+				st._159 /* 1*VariableCS::ownedType=TypeExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -5010,14 +5015,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._104 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
-				st._162 /* 1*ownedType=CollectionTypeCS */,
+				st._186 /* 1*next-8-steps */,
+				st._069 /* 1*CollectionLiteralExpCS::ownedType=CollectionTypeCS */,
 				st._060 /* 1*'{' */,
-				st._200 /* V00*next-4-steps */,
-				st._137 /* 1*ownedParts+=CollectionLiteralPartCS */,
-				st._222 /* V01*next-2-steps */,
+				st._209 /* V00*next-4-steps */,
+				st._068 /* 1*CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS */,
+				st._227 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._137 /* 1*ownedParts+=CollectionLiteralPartCS */,
+				st._068 /* 1*CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5059,7 +5064,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._004 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._119 /* 1*ownedExpression=PatternExpCS */
+				st._071 /* 1*CollectionLiteralPartCS::ownedExpression=PatternExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -5087,11 +5092,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._004 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._115 /* 1*ownedExpression=ExpCS */,
-				st._196 /* V00*next-2-steps */,
+				st._181 /* 1*next-4-steps */,
+				st._070 /* 1*CollectionLiteralPartCS::ownedExpression=ExpCS */,
+				st._205 /* V00*next-2-steps */,
 				st._008 /* 1*'..' */,
-				st._131 /* 1*ownedLastExpression=ExpCS */
+				st._072 /* 1*CollectionLiteralPartCS::ownedLastExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -5131,16 +5136,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._005 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
-				st._161 /* 1*ownedType=CollectionTypeCS */,
+				st._161 /* 1*next-10-steps */,
+				st._074 /* 1*CollectionPatternCS::ownedType=CollectionTypeCS */,
 				st._060 /* 1*'{' */,
-				st._205 /* V00*next-6-steps */,
-				st._139 /* 1*ownedParts+=PatternExpCS */,
-				st._222 /* V01*next-2-steps */,
+				st._214 /* V00*next-6-steps */,
+				st._073 /* 1*CollectionPatternCS::ownedParts+=PatternExpCS */,
+				st._227 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._139 /* 1*ownedParts+=PatternExpCS */,
+				st._073 /* 1*CollectionPatternCS::ownedParts+=PatternExpCS */,
 				st._006 /* 1*'++' */,
-				st._182 /* 1*restVariableName=Identifier */,
+				st._075 /* 1*CollectionPatternCS::restVariableName=Identifier */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5193,12 +5198,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
-				st._070 /* 1*name=CollectionTypeIdentifier */,
-				st._201 /* V00*next-4-steps */,
+				st._184 /* 1*next-6-steps */,
+				st._076 /* 1*CollectionTypeCS::name=CollectionTypeIdentifier */,
+				st._210 /* V00*next-4-steps */,
 				st._003 /* 1*'(' */,
-				st._167 /* 1*ownedType=TypeExpWithoutMultiplicityCS */,
-				st._231 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
+				st._077 /* 1*CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS */,
+				st._219 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5249,12 +5254,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
-				st._070 /* 1*name=CollectionTypeIdentifier */,
-				st._201 /* V00*next-4-steps */,
+				st._184 /* 1*next-6-steps */,
+				st._076 /* 1*CollectionTypeCS::name=CollectionTypeIdentifier */,
+				st._210 /* V00*next-4-steps */,
 				st._003 /* 1*'(' */,
-				st._167 /* 1*ownedType=TypeExpWithoutMultiplicityCS */,
-				st._231 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
+				st._077 /* 1*CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS */,
+				st._219 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5303,13 +5308,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._106 /* assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._060 /* 1*'{' */,
-				st._201 /* V00*next-4-steps */,
-				st._140 /* 1*ownedParts+=ShadowPartCS */,
-				st._219 /* V01*next-2-steps */,
+				st._210 /* V00*next-4-steps */,
+				st._080 /* 1*CurlyBracketedClauseCS::ownedParts+=ShadowPartCS */,
+				st._228 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._140 /* 1*ownedParts+=ShadowPartCS */,
+				st._080 /* 1*CurlyBracketedClauseCS::ownedParts+=ShadowPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5345,11 +5350,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._015 /* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._032 /* 1*'elseif' */,
-				st._109 /* 1*ownedCondition=ExpCS */,
+				st._087 /* 1*IfThenExpCS::ownedCondition=ExpCS */,
 				st._058 /* 1*'then' */,
-				st._160 /* 1*ownedThenExpression=ExpCS */
+				st._088 /* 1*IfThenExpCS::ownedThenExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -5385,7 +5390,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._038 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._185 /* 1*symbol=NUMBER_LITERAL */
+				st._114 /* 1*NumberLiteralExpCS::symbol=NUMBER_LITERAL */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -5424,7 +5429,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._093 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._213 /* V00*segments+=StringLiteral */
+				st._201 /* V00*StringLiteralExpCS::segments+=StringLiteral */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -5446,7 +5451,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._002 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._184 /* 1*symbol */
+				st._066 /* 1*BooleanLiteralExpCS::symbol */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -5490,10 +5495,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._018 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
-				st._132 /* 1*ownedLeft=PrefixedPrimaryExpCS */,
-				st._069 /* 1*name=BinaryOperatorName */,
-				st._153 /* 1*ownedRight=ExpCS */
+				st._177 /* 1*next-3-steps */,
+				st._090 /* 1*InfixExpCS::ownedLeft=PrefixedPrimaryExpCS */,
+				st._104 /* 1*NamedElementCS::name=BinaryOperatorName */,
+				st._117 /* 1*OperatorExpCS::ownedRight=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -5543,14 +5548,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._012 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._036 /* 1*'if' */,
-				st._110 /* 1*ownedCondition=ExpCS|PatternExpCS */,
+				st._084 /* 1*IfExpCS::ownedCondition=ExpCS|PatternExpCS */,
 				st._058 /* 1*'then' */,
-				st._159 /* 1*ownedThenExpression=ExpCS */,
-				st._207 /* V00*ownedIfThenExpressions+=ElseIfThenExpCS */,
+				st._086 /* 1*IfExpCS::ownedThenExpression=ExpCS */,
+				st._197 /* V00*IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS */,
 				st._031 /* 1*'else' */,
-				st._113 /* 1*ownedElseExpression=ExpCS */,
+				st._085 /* 1*IfExpCS::ownedElseExpression=ExpCS */,
 				st._033 /* 1*'endif' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5607,10 +5612,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._019 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._018 /* 1*'Lambda' */,
 				st._060 /* 1*'{' */,
-				st._120 /* 1*ownedExpressionCS=ExpCS */,
+				st._091 /* 1*LambdaLiteralExpCS::ownedExpressionCS=ExpCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5641,9 +5646,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._037 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
+				st._177 /* 1*next-3-steps */,
 				st._003 /* 1*'(' */,
-				st._118 /* 1*ownedExpression=ExpCS */,
+				st._113 /* 1*NestedExpCS::ownedExpression=ExpCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5688,7 +5693,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._049 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._168 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
+				st._148 /* 1*TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -5714,13 +5719,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._066 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._020 /* 1*'Tuple' */,
 				st._060 /* 1*'{' */,
-				st._141 /* 1*ownedParts+=TupleLiteralPartCS */,
-				st._199 /* V00*next-2-steps */,
+				st._146 /* 1*TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS */,
+				st._206 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._141 /* 1*ownedParts+=TupleLiteralPartCS */,
+				st._146 /* 1*TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5772,14 +5777,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._104 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
-				st._162 /* 1*ownedType=CollectionTypeCS */,
+				st._186 /* 1*next-8-steps */,
+				st._069 /* 1*CollectionLiteralExpCS::ownedType=CollectionTypeCS */,
 				st._060 /* 1*'{' */,
-				st._200 /* V00*next-4-steps */,
-				st._137 /* 1*ownedParts+=CollectionLiteralPartCS */,
-				st._222 /* V01*next-2-steps */,
+				st._209 /* V00*next-4-steps */,
+				st._068 /* 1*CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS */,
+				st._227 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._137 /* 1*ownedParts+=CollectionLiteralPartCS */,
+				st._068 /* 1*CollectionLiteralExpCS::ownedParts+=CollectionLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5824,14 +5829,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
-				st._163 /* 1*ownedType=MapTypeCS */,
+				st._186 /* 1*next-8-steps */,
+				st._095 /* 1*MapLiteralExpCS::ownedType=MapTypeCS */,
 				st._060 /* 1*'{' */,
-				st._200 /* V00*next-4-steps */,
-				st._138 /* 1*ownedParts+=MapLiteralPartCS */,
-				st._222 /* V01*next-2-steps */,
+				st._209 /* V00*next-4-steps */,
+				st._094 /* 1*MapLiteralExpCS::ownedParts+=MapLiteralPartCS */,
+				st._227 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._138 /* 1*ownedParts+=MapLiteralPartCS */,
+				st._094 /* 1*MapLiteralExpCS::ownedParts+=MapLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -5874,9 +5879,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._073 /* 1*name=UnaryOperatorName */,
-				st._155 /* 1*ownedRight=PrefixedPrimaryExpCS */
+				st._171 /* 1*next-2-steps */,
+				st._106 /* 1*NamedElementCS::name=UnaryOperatorName */,
+				st._119 /* 1*OperatorExpCS::ownedRight=PrefixedPrimaryExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -5919,12 +5924,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._149 /* 1*ownedPathName=PathNameCS */,
-				st._211 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
-				st._235 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
-				st._249 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
-				st._256 /* V03*next-2-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._064 /* 1*AbstractNameExpCS::ownedPathName=PathNameCS */,
+				st._194 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
+				st._218 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS */,
+				st._237 /* V02*AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
+				st._260 /* V03*next-2-steps */,
 				st._017 /* 1*'@' */,
 				st._051 /* 1*'pre' */
 			},
@@ -5995,14 +6000,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._012 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._036 /* 1*'if' */,
-				st._110 /* 1*ownedCondition=ExpCS|PatternExpCS */,
+				st._084 /* 1*IfExpCS::ownedCondition=ExpCS|PatternExpCS */,
 				st._058 /* 1*'then' */,
-				st._159 /* 1*ownedThenExpression=ExpCS */,
-				st._207 /* V00*ownedIfThenExpressions+=ElseIfThenExpCS */,
+				st._086 /* 1*IfExpCS::ownedThenExpression=ExpCS */,
+				st._197 /* V00*IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS */,
 				st._031 /* 1*'else' */,
-				st._113 /* 1*ownedElseExpression=ExpCS */,
+				st._085 /* 1*IfExpCS::ownedElseExpression=ExpCS */,
 				st._033 /* 1*'endif' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6065,14 +6070,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._012 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._036 /* 1*'if' */,
-				st._110 /* 1*ownedCondition=ExpCS|PatternExpCS */,
+				st._084 /* 1*IfExpCS::ownedCondition=ExpCS|PatternExpCS */,
 				st._058 /* 1*'then' */,
-				st._159 /* 1*ownedThenExpression=ExpCS */,
-				st._207 /* V00*ownedIfThenExpressions+=ElseIfThenExpCS */,
+				st._086 /* 1*IfExpCS::ownedThenExpression=ExpCS */,
+				st._197 /* V00*IfExpCS::ownedIfThenExpressions+=ElseIfThenExpCS */,
 				st._031 /* 1*'else' */,
-				st._113 /* 1*ownedElseExpression=ExpCS */,
+				st._085 /* 1*IfExpCS::ownedElseExpression=ExpCS */,
 				st._033 /* 1*'endif' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6159,10 +6164,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._019 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._018 /* 1*'Lambda' */,
 				st._060 /* 1*'{' */,
-				st._120 /* 1*ownedExpressionCS=ExpCS */,
+				st._091 /* 1*LambdaLiteralExpCS::ownedExpressionCS=ExpCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6193,10 +6198,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._019 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
+				st._181 /* 1*next-4-steps */,
 				st._018 /* 1*'Lambda' */,
 				st._060 /* 1*'{' */,
-				st._120 /* 1*ownedExpressionCS=ExpCS */,
+				st._091 /* 1*LambdaLiteralExpCS::ownedExpressionCS=ExpCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6229,14 +6234,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._059 /* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._043 /* 1*'let' */,
-				st._172 /* 1*ownedVariables+=LetVariableCS */,
-				st._198 /* V00*next-2-steps */,
+				st._093 /* 1*LetExpCS::ownedVariables+=LetVariableCS */,
+				st._207 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._172 /* 1*ownedVariables+=LetVariableCS */,
+				st._093 /* 1*LetExpCS::ownedVariables+=LetVariableCS */,
 				st._038 /* 1*'in' */,
-				st._124 /* 1*ownedInExpression=ExpCS */
+				st._092 /* 1*LetExpCS::ownedInExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -6278,14 +6283,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._059 /* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._043 /* 1*'let' */,
-				st._172 /* 1*ownedVariables+=LetVariableCS */,
-				st._198 /* V00*next-2-steps */,
+				st._093 /* 1*LetExpCS::ownedVariables+=LetVariableCS */,
+				st._207 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._172 /* 1*ownedVariables+=LetVariableCS */,
+				st._093 /* 1*LetExpCS::ownedVariables+=LetVariableCS */,
 				st._038 /* 1*'in' */,
-				st._124 /* 1*ownedInExpression=ExpCS */
+				st._092 /* 1*LetExpCS::ownedInExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -6330,14 +6335,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._209 /* V00*ownedRoundBracketedClause=RoundBracketedClauseCS */,
-				st._220 /* V01*next-2-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._198 /* V00*LetVariableCS::ownedRoundBracketedClause=RoundBracketedClauseCS */,
+				st._226 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._165 /* 1*ownedType=TypeExpCS */,
+				st._159 /* 1*VariableCS::ownedType=TypeExpCS */,
 				st._014 /* 1*'=' */,
-				st._125 /* 1*ownedInitExpression=ExpCS */
+				st._158 /* 1*VariableCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -6395,14 +6400,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
-				st._163 /* 1*ownedType=MapTypeCS */,
+				st._186 /* 1*next-8-steps */,
+				st._095 /* 1*MapLiteralExpCS::ownedType=MapTypeCS */,
 				st._060 /* 1*'{' */,
-				st._200 /* V00*next-4-steps */,
-				st._138 /* 1*ownedParts+=MapLiteralPartCS */,
-				st._222 /* V01*next-2-steps */,
+				st._209 /* V00*next-4-steps */,
+				st._094 /* 1*MapLiteralExpCS::ownedParts+=MapLiteralPartCS */,
+				st._227 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._138 /* 1*ownedParts+=MapLiteralPartCS */,
+				st._094 /* 1*MapLiteralExpCS::ownedParts+=MapLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6447,14 +6452,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
-				st._163 /* 1*ownedType=MapTypeCS */,
+				st._186 /* 1*next-8-steps */,
+				st._095 /* 1*MapLiteralExpCS::ownedType=MapTypeCS */,
 				st._060 /* 1*'{' */,
-				st._200 /* V00*next-4-steps */,
-				st._138 /* 1*ownedParts+=MapLiteralPartCS */,
-				st._222 /* V01*next-2-steps */,
+				st._209 /* V00*next-4-steps */,
+				st._094 /* 1*MapLiteralExpCS::ownedParts+=MapLiteralPartCS */,
+				st._227 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._138 /* 1*ownedParts+=MapLiteralPartCS */,
+				st._094 /* 1*MapLiteralExpCS::ownedParts+=MapLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6498,10 +6503,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
-				st._129 /* 1*ownedKey=ExpCS */,
+				st._177 /* 1*next-3-steps */,
+				st._096 /* 1*MapLiteralPartCS::ownedKey=ExpCS */,
 				st._013 /* 1*'<-' */,
-				st._170 /* 1*ownedValue=ExpCS */
+				st._097 /* 1*MapLiteralPartCS::ownedValue=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -6540,13 +6545,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._019 /* 1*'Map' */,
-				st._204 /* V00*next-5-steps */,
+				st._212 /* V00*next-5-steps */,
 				st._003 /* 1*'(' */,
-				st._130 /* 1*ownedKeyType=TypeExpCS */,
+				st._098 /* 1*MapTypeCS::ownedKeyType=TypeExpCS */,
 				st._007 /* 1*',' */,
-				st._171 /* 1*ownedValueType=TypeExpCS */,
+				st._099 /* 1*MapTypeCS::ownedValueType=TypeExpCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6599,13 +6604,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._019 /* 1*'Map' */,
-				st._204 /* V00*next-5-steps */,
+				st._212 /* V00*next-5-steps */,
 				st._003 /* 1*'(' */,
-				st._130 /* 1*ownedKeyType=TypeExpCS */,
+				st._098 /* 1*MapTypeCS::ownedKeyType=TypeExpCS */,
 				st._007 /* 1*',' */,
-				st._171 /* 1*ownedValueType=TypeExpCS */,
+				st._099 /* 1*MapTypeCS::ownedValueType=TypeExpCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -6655,7 +6660,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._010 /* assert (|ContextCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._117 /* 1*ownedExpression=ExpCS */
+				st._079 /* 1*ContextCS::ownedExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -6688,12 +6693,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._149 /* 1*ownedPathName=PathNameCS */,
-				st._211 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
-				st._235 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
-				st._249 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
-				st._256 /* V03*next-2-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._064 /* 1*AbstractNameExpCS::ownedPathName=PathNameCS */,
+				st._194 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
+				st._218 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS */,
+				st._237 /* V02*AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
+				st._260 /* V03*next-2-steps */,
 				st._017 /* 1*'@' */,
 				st._051 /* 1*'pre' */
 			},
@@ -6765,12 +6770,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._149 /* 1*ownedPathName=PathNameCS */,
-				st._211 /* V00*ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
-				st._235 /* V01*ownedRoundBracketedClause=RoundBracketedClauseCS */,
-				st._249 /* V02*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
-				st._256 /* V03*next-2-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._064 /* 1*AbstractNameExpCS::ownedPathName=PathNameCS */,
+				st._194 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=SquareBracketedClauseCS */,
+				st._218 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=RoundBracketedClauseCS */,
+				st._237 /* V02*AbstractNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
+				st._260 /* V03*next-2-steps */,
 				st._017 /* 1*'@' */,
 				st._051 /* 1*'pre' */
 			},
@@ -6839,13 +6844,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
+				st._184 /* 1*next-6-steps */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
 				st._013 /* 1*'<-' */,
-				st._108 /* 1*ownedCoIterator=CoIteratorVariableCS */,
-				st._199 /* V00*next-2-steps */,
+				st._109 /* 1*NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS */,
+				st._206 /* V00*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -6891,9 +6896,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._033 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
+				st._171 /* 1*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._166 /* 1*ownedType=TypeExpCS */
+				st._112 /* 1*NavigatingArgCS::ownedType=TypeExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -6927,16 +6932,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
+				st._187 /* 1*next-9-steps */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
 				st._009 /* 1*':' */,
-				st._166 /* 1*ownedType=TypeExpCS */,
-				st._199 /* V00*next-2-steps */,
+				st._112 /* 1*NavigatingArgCS::ownedType=TypeExpCS */,
+				st._206 /* V00*next-2-steps */,
 				st._013 /* 1*'<-' */,
-				st._108 /* 1*ownedCoIterator=CoIteratorVariableCS */,
-				st._221 /* V01*next-2-steps */,
+				st._109 /* 1*NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS */,
+				st._230 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -6998,16 +7003,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
-				st._196 /* V00*next-2-steps */,
+				st._187 /* 1*next-9-steps */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
+				st._205 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._166 /* 1*ownedType=TypeExpCS */,
-				st._222 /* V01*next-2-steps */,
+				st._112 /* 1*NavigatingArgCS::ownedType=TypeExpCS */,
+				st._227 /* V01*next-2-steps */,
 				st._013 /* 1*'<-' */,
-				st._108 /* 1*ownedCoIterator=CoIteratorVariableCS */,
+				st._109 /* 1*NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS */,
 				st._038 /* 1*'in' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7066,7 +7071,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -7097,15 +7102,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._061 /* 1*'|' */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
-				st._203 /* V00*next-5-steps */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
+				st._213 /* V00*next-5-steps */,
 				st._009 /* 1*':' */,
-				st._166 /* 1*ownedType=TypeExpCS */,
-				st._223 /* V01*next-2-steps */,
+				st._112 /* 1*NavigatingArgCS::ownedType=TypeExpCS */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7169,17 +7174,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._007 /* 1*',' */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
 				st._009 /* 1*':' */,
-				st._166 /* 1*ownedType=TypeExpCS */,
-				st._197 /* V00*next-2-steps */,
+				st._112 /* 1*NavigatingArgCS::ownedType=TypeExpCS */,
+				st._208 /* V00*next-2-steps */,
 				st._013 /* 1*'<-' */,
-				st._108 /* 1*ownedCoIterator=CoIteratorVariableCS */,
-				st._224 /* V01*next-2-steps */,
+				st._109 /* 1*NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS */,
+				st._231 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7246,9 +7251,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
+				st._171 /* 1*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7290,14 +7295,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._007 /* 1*',' */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
 				st._013 /* 1*'<-' */,
-				st._108 /* 1*ownedCoIterator=CoIteratorVariableCS */,
-				st._197 /* V00*next-2-steps */,
+				st._109 /* 1*NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS */,
+				st._208 /* V00*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7360,17 +7365,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._034 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._007 /* 1*',' */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
-				st._198 /* V00*next-2-steps */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._166 /* 1*ownedType=TypeExpCS */,
-				st._223 /* V01*next-2-steps */,
+				st._112 /* 1*NavigatingArgCS::ownedType=TypeExpCS */,
+				st._229 /* V01*next-2-steps */,
 				st._013 /* 1*'<-' */,
-				st._108 /* 1*ownedCoIterator=CoIteratorVariableCS */,
+				st._109 /* 1*NavigatingArgCS::ownedCoIterator=CoIteratorVariableCS */,
 				st._038 /* 1*'in' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7441,15 +7446,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._011 /* 1*';' */,
-				st._134 /* 1*ownedNameExpression=NavigatingArgExpCS */,
-				st._203 /* V00*next-5-steps */,
+				st._111 /* 1*NavigatingArgCS::ownedNameExpression=NavigatingArgExpCS */,
+				st._213 /* V00*next-5-steps */,
 				st._009 /* 1*':' */,
-				st._166 /* 1*ownedType=TypeExpCS */,
-				st._223 /* V01*next-2-steps */,
+				st._112 /* 1*NavigatingArgCS::ownedType=TypeExpCS */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._126 /* 1*ownedInitExpression=ExpCS */
+				st._110 /* 1*NavigatingArgCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7506,9 +7511,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._037 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
+				st._177 /* 1*next-3-steps */,
 				st._003 /* 1*'(' */,
-				st._118 /* 1*ownedExpression=ExpCS */,
+				st._113 /* 1*NestedExpCS::ownedExpression=ExpCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -7538,9 +7543,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._037 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
+				st._177 /* 1*next-3-steps */,
 				st._003 /* 1*'(' */,
-				st._118 /* 1*ownedExpression=ExpCS */,
+				st._113 /* 1*NestedExpCS::ownedExpression=ExpCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -7599,7 +7604,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._038 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._185 /* 1*symbol=NUMBER_LITERAL */
+				st._114 /* 1*NumberLiteralExpCS::symbol=NUMBER_LITERAL */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -7623,7 +7628,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._038 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._185 /* 1*symbol=NUMBER_LITERAL */
+				st._114 /* 1*NumberLiteralExpCS::symbol=NUMBER_LITERAL */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -7649,10 +7654,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._091 /* assign V0 = |PatternExpCS::patternVariableName| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
-				st._212 /* V00*patternVariableName=UnrestrictedName */,
+				st._177 /* 1*next-3-steps */,
+				st._200 /* V00*PatternExpCS::patternVariableName=UnrestrictedName */,
 				st._009 /* 1*':' */,
-				st._152 /* 1*ownedPatternType=TypeExpCS */
+				st._129 /* 1*PatternExpCS::ownedPatternType=TypeExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7688,9 +7693,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._073 /* 1*name=UnaryOperatorName */,
-				st._154 /* 1*ownedRight=PrefixedLetExpCS */
+				st._171 /* 1*next-2-steps */,
+				st._106 /* 1*NamedElementCS::name=UnaryOperatorName */,
+				st._118 /* 1*OperatorExpCS::ownedRight=PrefixedLetExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7727,9 +7732,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._073 /* 1*name=UnaryOperatorName */,
-				st._154 /* 1*ownedRight=PrefixedLetExpCS */
+				st._171 /* 1*next-2-steps */,
+				st._106 /* 1*NamedElementCS::name=UnaryOperatorName */,
+				st._118 /* 1*OperatorExpCS::ownedRight=PrefixedLetExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7766,9 +7771,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._073 /* 1*name=UnaryOperatorName */,
-				st._155 /* 1*ownedRight=PrefixedPrimaryExpCS */
+				st._171 /* 1*next-2-steps */,
+				st._106 /* 1*NamedElementCS::name=UnaryOperatorName */,
+				st._119 /* 1*OperatorExpCS::ownedRight=PrefixedPrimaryExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7803,7 +7808,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._072 /* 1*name=PrimitiveTypeIdentifier */
+				st._130 /* 1*PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -7827,7 +7832,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._072 /* 1*name=PrimitiveTypeIdentifier */
+				st._130 /* 1*PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -7853,11 +7858,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._109 /* assign V1 = (|RoundBracketedClauseCS::ownedArguments| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._098 /* 1*next-5-steps */,
+				st._183 /* 1*next-5-steps */,
 				st._003 /* 1*'(' */,
-				st._196 /* V00*next-2-steps */,
-				st._106 /* 1*ownedArguments+=NavigatingArgCS */,
-				st._230 /* V01*ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS */,
+				st._205 /* V00*next-2-steps */,
+				st._135 /* 1*RoundBracketedClauseCS::ownedArguments+=NavigatingArgCS */,
+				st._221 /* V01*RoundBracketedClauseCS::ownedArguments+=NavigatingCommaArgCS|NavigatingSemiArgCS|NavigatingBarArgCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -7923,10 +7928,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._045 /* assert (|ShadowPartCS::referredProperty| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
-				st._181 /* 1*referredProperty=UnrestrictedName */,
+				st._177 /* 1*next-3-steps */,
+				st._138 /* 1*ShadowPartCS::referredProperty=UnrestrictedName */,
 				st._014 /* 1*'=' */,
-				st._127 /* 1*ownedInitExpression=ExpCS|PatternExpCS */
+				st._136 /* 1*ShadowPartCS::ownedInitExpression=ExpCS|PatternExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -7960,7 +7965,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._044 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._128 /* 1*ownedInitExpression=StringLiteralExpCS */
+				st._137 /* 1*ShadowPartCS::ownedInitExpression=StringLiteralExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -7986,7 +7991,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._041 /* assert (|PathNameCS::ownedPathElements| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._143 /* 1*ownedPathElements+=FirstPathElementCS */
+				st._126 /* 1*PathNameCS::ownedPathElements+=FirstPathElementCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -8012,12 +8017,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._063 /* assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
+				st._184 /* 1*next-6-steps */,
 				st._021 /* 1*'[' */,
-				st._158 /* 1*ownedTerms+=ExpCS */,
-				st._198 /* V00*next-2-steps */,
+				st._140 /* 1*SquareBracketedClauseCS::ownedTerms+=ExpCS */,
+				st._207 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._158 /* 1*ownedTerms+=ExpCS */,
+				st._140 /* 1*SquareBracketedClauseCS::ownedTerms+=ExpCS */,
 				st._022 /* 1*']' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -8049,7 +8054,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._093 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._213 /* V00*segments+=StringLiteral */
+				st._201 /* V00*StringLiteralExpCS::segments+=StringLiteral */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -8071,7 +8076,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._093 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._213 /* V00*segments+=StringLiteral */
+				st._201 /* V00*StringLiteralExpCS::segments+=StringLiteral */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -8094,13 +8099,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._066 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._020 /* 1*'Tuple' */,
 				st._060 /* 1*'{' */,
-				st._141 /* 1*ownedParts+=TupleLiteralPartCS */,
-				st._199 /* V00*next-2-steps */,
+				st._146 /* 1*TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS */,
+				st._206 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._141 /* 1*ownedParts+=TupleLiteralPartCS */,
+				st._146 /* 1*TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -8134,13 +8139,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._066 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._020 /* 1*'Tuple' */,
 				st._060 /* 1*'{' */,
-				st._141 /* 1*ownedParts+=TupleLiteralPartCS */,
-				st._199 /* V00*next-2-steps */,
+				st._146 /* 1*TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS */,
+				st._206 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._141 /* 1*ownedParts+=TupleLiteralPartCS */,
+				st._146 /* 1*TupleLiteralExpCS::ownedParts+=TupleLiteralPartCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -8177,13 +8182,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._196 /* V00*next-2-steps */,
+				st._184 /* 1*next-6-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._205 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._165 /* 1*ownedType=TypeExpCS */,
+				st._159 /* 1*VariableCS::ownedType=TypeExpCS */,
 				st._014 /* 1*'=' */,
-				st._125 /* 1*ownedInitExpression=ExpCS */
+				st._158 /* 1*VariableCS::ownedInitExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8231,10 +8236,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._177 /* 1*next-3-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._009 /* 1*':' */,
-				st._164 /* 1*ownedType=TypeExpCS */
+				st._153 /* 1*TypedElementCS::ownedType=TypeExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8274,15 +8279,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
+				st._187 /* 1*next-9-steps */,
 				st._020 /* 1*'Tuple' */,
-				st._206 /* V00*next-7-steps */,
+				st._215 /* V00*next-7-steps */,
 				st._003 /* 1*'(' */,
-				st._226 /* V01*next-4-steps */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
-				st._238 /* V02*next-2-steps */,
+				st._234 /* V01*next-4-steps */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -8330,15 +8335,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
+				st._187 /* 1*next-9-steps */,
 				st._020 /* 1*'Tuple' */,
-				st._206 /* V00*next-7-steps */,
+				st._215 /* V00*next-7-steps */,
 				st._003 /* 1*'(' */,
-				st._226 /* V01*next-4-steps */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
-				st._238 /* V02*next-2-steps */,
+				st._234 /* V01*next-4-steps */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -8388,15 +8393,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._019 /* 1*'Map' */,
-				st._204 /* V00*next-5-steps */,
+				st._212 /* V00*next-5-steps */,
 				st._003 /* 1*'(' */,
-				st._130 /* 1*ownedKeyType=TypeExpCS */,
+				st._098 /* 1*MapTypeCS::ownedKeyType=TypeExpCS */,
 				st._007 /* 1*',' */,
-				st._171 /* 1*ownedValueType=TypeExpCS */,
+				st._099 /* 1*MapTypeCS::ownedValueType=TypeExpCS */,
 				st._004 /* 1*')' */,
-				st._234 /* V01*ownedMultiplicity=MultiplicityCS */
+				st._224 /* V01*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8458,17 +8463,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._020 /* 1*'Tuple' */,
-				st._206 /* V00*next-7-steps */,
+				st._215 /* V00*next-7-steps */,
 				st._003 /* 1*'(' */,
-				st._226 /* V01*next-4-steps */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
-				st._238 /* V02*next-2-steps */,
+				st._234 /* V01*next-4-steps */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
 				st._004 /* 1*')' */,
-				st._264 /* V03*ownedMultiplicity=MultiplicityCS */
+				st._257 /* V03*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8525,14 +8530,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._070 /* 1*name=CollectionTypeIdentifier */,
-				st._201 /* V00*next-4-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._076 /* 1*CollectionTypeCS::name=CollectionTypeIdentifier */,
+				st._210 /* V00*next-4-steps */,
 				st._003 /* 1*'(' */,
-				st._167 /* 1*ownedType=TypeExpWithoutMultiplicityCS */,
-				st._231 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
+				st._077 /* 1*CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS */,
+				st._219 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS */,
 				st._004 /* 1*')' */,
-				st._250 /* V02*ownedMultiplicity=MultiplicityCS */
+				st._241 /* V02*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8592,18 +8597,18 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._005 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
-				st._161 /* 1*ownedType=CollectionTypeCS */,
+				st._162 /* 1*next-11-steps */,
+				st._074 /* 1*CollectionPatternCS::ownedType=CollectionTypeCS */,
 				st._060 /* 1*'{' */,
-				st._205 /* V00*next-6-steps */,
-				st._139 /* 1*ownedParts+=PatternExpCS */,
-				st._222 /* V01*next-2-steps */,
+				st._214 /* V00*next-6-steps */,
+				st._073 /* 1*CollectionPatternCS::ownedParts+=PatternExpCS */,
+				st._227 /* V01*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._139 /* 1*ownedParts+=PatternExpCS */,
+				st._073 /* 1*CollectionPatternCS::ownedParts+=PatternExpCS */,
 				st._006 /* 1*'++' */,
-				st._182 /* 1*restVariableName=Identifier */,
+				st._075 /* 1*CollectionPatternCS::restVariableName=Identifier */,
 				st._063 /* 1*'}' */,
-				st._250 /* V02*ownedMultiplicity=MultiplicityCS */
+				st._241 /* V02*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8661,9 +8666,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._072 /* 1*name=PrimitiveTypeIdentifier */,
-				st._208 /* V00*ownedMultiplicity=MultiplicityCS */
+				st._171 /* 1*next-2-steps */,
+				st._130 /* 1*PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier */,
+				st._203 /* V00*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8705,15 +8710,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._129 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
-				st._146 /* 1*ownedPathName=PathNameCS */,
-				st._204 /* V00*next-5-steps */,
-				st._111 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
-				st._225 /* V01*next-3-steps */,
+				st._186 /* 1*next-8-steps */,
+				st._150 /* 1*TypeNameExpCS::ownedPathName=PathNameCS */,
+				st._212 /* V00*next-5-steps */,
+				st._149 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
+				st._232 /* V01*next-3-steps */,
 				st._060 /* 1*'{' */,
-				st._151 /* 1*ownedPatternGuard=ExpCS */,
+				st._151 /* 1*TypeNameExpCS::ownedPatternGuard=ExpCS */,
 				st._063 /* 1*'}' */,
-				st._250 /* V02*ownedMultiplicity=MultiplicityCS */
+				st._241 /* V02*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8768,7 +8773,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._049 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._168 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
+				st._148 /* 1*TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -8794,7 +8799,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._049 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._168 /* 1*ownedType=TypeLiteralWithMultiplicityCS */
+				st._148 /* 1*TypeLiteralExpCS::ownedType=TypeLiteralWithMultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -8821,9 +8826,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._072 /* 1*name=PrimitiveTypeIdentifier */,
-				st._208 /* V00*ownedMultiplicity=MultiplicityCS */
+				st._171 /* 1*next-2-steps */,
+				st._130 /* 1*PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier */,
+				st._203 /* V00*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8864,14 +8869,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._070 /* 1*name=CollectionTypeIdentifier */,
-				st._201 /* V00*next-4-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._076 /* 1*CollectionTypeCS::name=CollectionTypeIdentifier */,
+				st._210 /* V00*next-4-steps */,
 				st._003 /* 1*'(' */,
-				st._167 /* 1*ownedType=TypeExpWithoutMultiplicityCS */,
-				st._231 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
+				st._077 /* 1*CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS */,
+				st._219 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS */,
 				st._004 /* 1*')' */,
-				st._250 /* V02*ownedMultiplicity=MultiplicityCS */
+				st._241 /* V02*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8931,17 +8936,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._020 /* 1*'Tuple' */,
-				st._206 /* V00*next-7-steps */,
+				st._215 /* V00*next-7-steps */,
 				st._003 /* 1*'(' */,
-				st._226 /* V01*next-4-steps */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
-				st._238 /* V02*next-2-steps */,
+				st._234 /* V01*next-4-steps */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
 				st._004 /* 1*')' */,
-				st._264 /* V03*ownedMultiplicity=MultiplicityCS */
+				st._257 /* V03*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -8998,15 +9003,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._019 /* 1*'Map' */,
-				st._204 /* V00*next-5-steps */,
+				st._212 /* V00*next-5-steps */,
 				st._003 /* 1*'(' */,
-				st._130 /* 1*ownedKeyType=TypeExpCS */,
+				st._098 /* 1*MapTypeCS::ownedKeyType=TypeExpCS */,
 				st._007 /* 1*',' */,
-				st._171 /* 1*ownedValueType=TypeExpCS */,
+				st._099 /* 1*MapTypeCS::ownedValueType=TypeExpCS */,
 				st._004 /* 1*')' */,
-				st._234 /* V01*ownedMultiplicity=MultiplicityCS */
+				st._224 /* V01*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -9067,13 +9072,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._129 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._146 /* 1*ownedPathName=PathNameCS */,
-				st._204 /* V00*next-5-steps */,
-				st._111 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
-				st._225 /* V01*next-3-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._150 /* 1*TypeNameExpCS::ownedPathName=PathNameCS */,
+				st._212 /* V00*next-5-steps */,
+				st._149 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
+				st._232 /* V01*next-3-steps */,
 				st._060 /* 1*'{' */,
-				st._151 /* 1*ownedPatternGuard=ExpCS */,
+				st._151 /* 1*TypeNameExpCS::ownedPatternGuard=ExpCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -9125,13 +9130,13 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._129 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._146 /* 1*ownedPathName=PathNameCS */,
-				st._204 /* V00*next-5-steps */,
-				st._111 /* 1*ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
-				st._225 /* V01*next-3-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._150 /* 1*TypeNameExpCS::ownedPathName=PathNameCS */,
+				st._212 /* V00*next-5-steps */,
+				st._149 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=CurlyBracketedClauseCS */,
+				st._232 /* V01*next-3-steps */,
 				st._060 /* 1*'{' */,
-				st._151 /* 1*ownedPatternGuard=ExpCS */,
+				st._151 /* 1*TypeNameExpCS::ownedPatternGuard=ExpCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -9178,7 +9183,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._176 /* 1*referredElement=UnrestrictedName */
+				st._124 /* 1*PathElementCS::referredElement=UnrestrictedName */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -9199,7 +9204,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._174 /* 1*referredElement=URI */
+				st._122 /* 1*PathElementCS::referredElement=URI */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -9221,11 +9226,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._061 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._145 /* 1*ownedPathElements+=URIFirstPathElementCS */,
-				st._196 /* V00*next-2-steps */,
+				st._181 /* 1*next-4-steps */,
+				st._128 /* 1*PathNameCS::ownedPathElements+=URIFirstPathElementCS */,
+				st._205 /* V00*next-2-steps */,
 				st._010 /* 1*'::' */,
-				st._144 /* 1*ownedPathElements+=NextPathElementCS */
+				st._127 /* 1*PathNameCS::ownedPathElements+=NextPathElementCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -9294,20 +9299,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._023 /* 1*'annotation' */,
-				st._194 /* V00*name=UnrestrictedName|SINGLE_QUOTED_STRING */,
-				st._229 /* V01*next-6-steps */,
+				st._199 /* V00*NamedElementCS::name=UnrestrictedName|SINGLE_QUOTED_STRING */,
+				st._236 /* V01*next-6-steps */,
 				st._003 /* 1*'(' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
-				st._238 /* V02*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._004 /* 1*')' */,
 				st._060 /* 1*'{' */,
-				st._263 /* V03*ownedAnnotations+=AnnotationElementCS */,
-				st._276 /* V04*ownedContents+=ModelElementCS */,
-				st._286 /* V05*ownedReferences+=ModelElementRefCS */,
+				st._255 /* V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._268 /* V04*AnnotationCS::ownedContents+=ModelElementCS */,
+				st._278 /* V05*AnnotationCS::ownedReferences+=ModelElementRefCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -9377,15 +9382,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._023 /* 1*'annotation' */,
-				st._194 /* V00*name=UnrestrictedName|SINGLE_QUOTED_STRING */,
-				st._229 /* V01*next-6-steps */,
+				st._199 /* V00*NamedElementCS::name=UnrestrictedName|SINGLE_QUOTED_STRING */,
+				st._236 /* V01*next-6-steps */,
 				st._003 /* 1*'(' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
-				st._238 /* V02*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._004 /* 1*')' */,
 				st._011 /* 1*';' */
 			},
@@ -9437,20 +9442,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._023 /* 1*'annotation' */,
-				st._194 /* V00*name=UnrestrictedName|SINGLE_QUOTED_STRING */,
-				st._229 /* V01*next-6-steps */,
+				st._199 /* V00*NamedElementCS::name=UnrestrictedName|SINGLE_QUOTED_STRING */,
+				st._236 /* V01*next-6-steps */,
 				st._003 /* 1*'(' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
-				st._238 /* V02*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._004 /* 1*')' */,
 				st._060 /* 1*'{' */,
-				st._263 /* V03*ownedAnnotations+=AnnotationElementCS */,
-				st._276 /* V04*ownedContents+=ModelElementCS */,
-				st._286 /* V05*ownedReferences+=ModelElementRefCS */,
+				st._255 /* V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._268 /* V04*AnnotationCS::ownedContents+=ModelElementCS */,
+				st._278 /* V05*AnnotationCS::ownedReferences+=ModelElementRefCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -9526,20 +9531,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._023 /* 1*'annotation' */,
-				st._194 /* V00*name=UnrestrictedName|SINGLE_QUOTED_STRING */,
-				st._229 /* V01*next-6-steps */,
+				st._199 /* V00*NamedElementCS::name=UnrestrictedName|SINGLE_QUOTED_STRING */,
+				st._236 /* V01*next-6-steps */,
 				st._003 /* 1*'(' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
-				st._238 /* V02*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._004 /* 1*')' */,
 				st._060 /* 1*'{' */,
-				st._263 /* V03*ownedAnnotations+=AnnotationElementCS */,
-				st._276 /* V04*ownedContents+=ModelElementCS */,
-				st._286 /* V05*ownedReferences+=ModelElementRefCS */,
+				st._255 /* V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._268 /* V04*AnnotationCS::ownedContents+=ModelElementCS */,
+				st._278 /* V05*AnnotationCS::ownedReferences+=ModelElementRefCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -9611,19 +9616,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._180 /* assign V3 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._024 /* 1*'attribute' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._223 /* V01*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._245 /* V02*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._250 /* V02*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._254 /* V03*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._258 /* V03*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -9692,21 +9697,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._192 /* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._082 /* 1*next-16-steps */,
+				st._167 /* 1*next-16-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._024 /* 1*'attribute' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._242 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._246 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._262 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._266 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._269 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._272 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -9786,33 +9791,33 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._224 /* assign V9 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._091 /* 1*next-28-steps */,
+				st._176 /* 1*next-28-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._024 /* 1*'attribute' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._242 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._246 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._262 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._266 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._269 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._272 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._283 /* V05*ownedAnnotations+=AnnotationElementCS */,
-				st._289 /* V06*next-4-steps */,
+				st._281 /* V05*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._292 /* V06*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._301 /* V07*ownedDefaultExpressions+=SpecificationCS */,
+				st._296 /* V07*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._304 /* V08*next-4-steps */,
+				st._307 /* V08*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._311 /* V09*ownedDefaultExpressions+=SpecificationCS */,
+				st._311 /* V09*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -9916,31 +9921,31 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._218 /* assign V8 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._089 /* 1*next-26-steps */,
+				st._174 /* 1*next-26-steps */,
 				st._024 /* 1*'attribute' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._223 /* V01*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._245 /* V02*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._250 /* V02*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._254 /* V03*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._258 /* V03*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
-				st._281 /* V05*next-4-steps */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._285 /* V05*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._294 /* V06*ownedDefaultExpressions+=SpecificationCS */,
+				st._290 /* V06*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._297 /* V07*next-4-steps */,
+				st._300 /* V07*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._307 /* V08*ownedDefaultExpressions+=SpecificationCS */,
+				st._303 /* V08*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -10042,33 +10047,33 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._224 /* assign V9 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._091 /* 1*next-28-steps */,
+				st._176 /* 1*next-28-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._024 /* 1*'attribute' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._242 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._246 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._262 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._266 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._269 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._272 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._283 /* V05*ownedAnnotations+=AnnotationElementCS */,
-				st._289 /* V06*next-4-steps */,
+				st._281 /* V05*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._292 /* V06*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._301 /* V07*ownedDefaultExpressions+=SpecificationCS */,
+				st._296 /* V07*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._304 /* V08*next-4-steps */,
+				st._307 /* V08*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._311 /* V09*ownedDefaultExpressions+=SpecificationCS */,
+				st._311 /* V09*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -10167,21 +10172,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._192 /* assign V4 = |TypedElementCS::qualifiers.'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._082 /* 1*next-16-steps */,
+				st._167 /* 1*next-16-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._024 /* 1*'attribute' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._242 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._246 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._262 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._266 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._269 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._272 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -10252,15 +10257,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._257 /* V03*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._262 /* V03*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
@@ -10329,15 +10334,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._078 /* 1*next-12-steps */,
+				st._163 /* 1*next-12-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._267 /* V04*'serializable' */,
 				st._063 /* 1*'}' */,
@@ -10412,15 +10417,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._078 /* 1*next-12-steps */,
+				st._163 /* 1*next-12-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._267 /* V04*'serializable' */,
 				st._063 /* 1*'}' */,
@@ -10494,15 +10499,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._078 /* 1*next-12-steps */,
+				st._163 /* 1*next-12-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
@@ -10573,21 +10578,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -10673,21 +10678,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._267 /* V04*'serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._283 /* V05*ownedAnnotations+=AnnotationElementCS */,
-				st._293 /* V06*ownedConstraints+=InvariantConstraintCS */,
+				st._281 /* V05*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._288 /* V06*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -10775,15 +10780,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._078 /* 1*next-12-steps */,
+				st._163 /* 1*next-12-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
@@ -10854,21 +10859,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -10954,21 +10959,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._186 /* assign V4 = |DataTypeCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._260 /* V03*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._264 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._267 /* V04*'serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._283 /* V05*ownedAnnotations+=AnnotationElementCS */,
-				st._293 /* V06*ownedConstraints+=InvariantConstraintCS */,
+				st._281 /* V05*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._288 /* V06*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -11060,20 +11065,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._257 /* V03*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._262 /* V03*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -11153,15 +11158,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._257 /* V03*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._262 /* V03*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
@@ -11230,20 +11235,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._172 /* assign V3 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._191 /* V00*'primitive' */,
 				st._027 /* 1*'datatype' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._239 /* V02*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._243 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._257 /* V03*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._262 /* V03*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -11319,10 +11324,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
-				st._075 /* 1*name=UnrestrictedName|SINGLE_QUOTED_STRING */,
+				st._177 /* 1*next-3-steps */,
+				st._108 /* 1*NamedElementCS::name=UnrestrictedName|SINGLE_QUOTED_STRING */,
 				st._014 /* 1*'=' */,
-				st._215 /* V00*values+=SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING */
+				st._195 /* V00*DetailCS::values+=SINGLE_QUOTED_STRING|ML_SINGLE_QUOTED_STRING */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -11357,15 +11362,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._030 /* 1*'documentation' */,
-				st._214 /* V00*value=SINGLE_QUOTED_STRING */,
-				st._229 /* V01*next-6-steps */,
+				st._196 /* V00*DocumentationCS::value=SINGLE_QUOTED_STRING */,
+				st._236 /* V01*next-6-steps */,
 				st._003 /* 1*'(' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
-				st._238 /* V02*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._004 /* 1*')' */,
 				st._011 /* 1*';' */
 			},
@@ -11411,15 +11416,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._148 /* assign V2 = (|AnnotationElementCS::ownedDetails| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._030 /* 1*'documentation' */,
-				st._214 /* V00*value=SINGLE_QUOTED_STRING */,
-				st._229 /* V01*next-6-steps */,
+				st._196 /* V00*DocumentationCS::value=SINGLE_QUOTED_STRING */,
+				st._236 /* V01*next-6-steps */,
 				st._003 /* 1*'(' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
-				st._238 /* V02*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._004 /* 1*')' */,
 				st._011 /* 1*';' */
 			},
@@ -11472,21 +11477,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._263 /* V03*ownedAnnotations+=AnnotationElementCS */,
-				st._277 /* V04*ownedLiterals+=EnumerationLiteralCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._255 /* V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._269 /* V04*EnumerationCS::ownedLiterals+=EnumerationLiteralCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -11571,20 +11576,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._241 /* V02*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._244 /* V02*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._263 /* V03*ownedAnnotations+=AnnotationElementCS */,
-				st._277 /* V04*ownedLiterals+=EnumerationLiteralCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._255 /* V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._269 /* V04*EnumerationCS::ownedLiterals+=EnumerationLiteralCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -11663,14 +11668,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._253 /* V03*'serializable' */,
 				st._063 /* 1*'}' */,
@@ -11741,21 +11746,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._263 /* V03*ownedAnnotations+=AnnotationElementCS */,
-				st._277 /* V04*ownedLiterals+=EnumerationLiteralCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._255 /* V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._269 /* V04*EnumerationCS::ownedLiterals+=EnumerationLiteralCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -11841,21 +11846,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._253 /* V03*'serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
-				st._285 /* V05*ownedLiterals+=EnumerationLiteralCS */,
-				st._293 /* V06*ownedConstraints+=InvariantConstraintCS */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._280 /* V05*EnumerationCS::ownedLiterals+=EnumerationLiteralCS */,
+				st._288 /* V06*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -11942,14 +11947,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._241 /* V02*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._244 /* V02*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
@@ -12005,14 +12010,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._253 /* V03*'serializable' */,
 				st._063 /* 1*'}' */,
@@ -12077,14 +12082,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
@@ -12148,21 +12153,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._175 /* assign V3 = |EnumerationCS::isSerializable.'serializable'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*next-15-steps */,
+				st._166 /* 1*next-15-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._253 /* V03*'serializable' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
-				st._285 /* V05*ownedLiterals+=EnumerationLiteralCS */,
-				st._293 /* V06*ownedConstraints+=InvariantConstraintCS */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._280 /* V05*EnumerationCS::ownedLiterals+=EnumerationLiteralCS */,
+				st._288 /* V06*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12249,14 +12254,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._244 /* V02*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._249 /* V02*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._000 /* 1*'!serializable' */,
 				st._063 /* 1*'}' */,
@@ -12313,14 +12318,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._241 /* V02*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._244 /* V02*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
@@ -12381,20 +12386,20 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._155 /* assign V2 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._080 /* 1*next-14-steps */,
+				st._165 /* 1*next-14-steps */,
 				st._034 /* 1*'enum' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._219 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._228 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._241 /* V02*next-2-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._244 /* V02*next-2-steps */,
 				st._060 /* 1*'{' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._263 /* V03*ownedAnnotations+=AnnotationElementCS */,
-				st._277 /* V04*ownedLiterals+=EnumerationLiteralCS */,
-				st._284 /* V05*ownedConstraints+=InvariantConstraintCS */,
+				st._255 /* V03*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._269 /* V04*EnumerationCS::ownedLiterals+=EnumerationLiteralCS */,
+				st._279 /* V05*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12472,17 +12477,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._044 /* 1*'literal' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._067 /* 1*literal=SINGLE_QUOTED_STRING */,
-				st._223 /* V01*next-2-steps */,
+				st._081 /* 1*EnumerationLiteralCS::literal=SINGLE_QUOTED_STRING */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._187 /* 1*value=SIGNED */,
+				st._082 /* 1*EnumerationLiteralCS::value=SIGNED */,
 				st._060 /* 1*'{' */,
-				st._248 /* V02*ownedAnnotations+=AnnotationElementCS */,
+				st._239 /* V02*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12539,15 +12544,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
+				st._187 /* 1*next-9-steps */,
 				st._044 /* 1*'literal' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._067 /* 1*literal=SINGLE_QUOTED_STRING */,
-				st._223 /* V01*next-2-steps */,
+				st._081 /* 1*EnumerationLiteralCS::literal=SINGLE_QUOTED_STRING */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._187 /* 1*value=SIGNED */,
+				st._082 /* 1*EnumerationLiteralCS::value=SIGNED */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12593,14 +12598,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
-				st._071 /* 1*name=EnumerationLiteralName */,
-				st._196 /* V00*next-2-steps */,
+				st._186 /* 1*next-8-steps */,
+				st._105 /* 1*NamedElementCS::name=EnumerationLiteralName */,
+				st._205 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._067 /* 1*literal=SINGLE_QUOTED_STRING */,
-				st._222 /* V01*next-2-steps */,
+				st._081 /* 1*EnumerationLiteralCS::literal=SINGLE_QUOTED_STRING */,
+				st._227 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._187 /* 1*value=SIGNED */,
+				st._082 /* 1*EnumerationLiteralCS::value=SIGNED */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12647,16 +12652,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
-				st._071 /* 1*name=EnumerationLiteralName */,
-				st._196 /* V00*next-2-steps */,
+				st._161 /* 1*next-10-steps */,
+				st._105 /* 1*NamedElementCS::name=EnumerationLiteralName */,
+				st._205 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._067 /* 1*literal=SINGLE_QUOTED_STRING */,
-				st._222 /* V01*next-2-steps */,
+				st._081 /* 1*EnumerationLiteralCS::literal=SINGLE_QUOTED_STRING */,
+				st._227 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._187 /* 1*value=SIGNED */,
+				st._082 /* 1*EnumerationLiteralCS::value=SIGNED */,
 				st._060 /* 1*'{' */,
-				st._248 /* V02*ownedAnnotations+=AnnotationElementCS */,
+				st._239 /* V02*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12714,15 +12719,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._131 /* assign V1 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
+				st._187 /* 1*next-9-steps */,
 				st._048 /* 1*'opposite' */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._202 /* V00*next-4-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._211 /* V00*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._218 /* V01*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._225 /* V01*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12776,12 +12781,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._085 /* assign V0 = |NamedElementCS::name| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
+				st._185 /* 1*next-7-steps */,
 				st._037 /* 1*'import' */,
-				st._196 /* V00*next-2-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._205 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._009 /* 1*':' */,
-				st._150 /* 1*ownedPathName=URIPathNameCS */,
+				st._089 /* 1*ImportCS::ownedPathName=URIPathNameCS */,
 				st._216 /* V01*'::*' */,
 				st._011 /* 1*';' */
 			},
@@ -12833,14 +12838,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._158 /* assign V2 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
+				st._187 /* 1*next-9-steps */,
 				st._189 /* V00*'callable' */,
 				st._041 /* 1*'invariant' */,
-				st._228 /* V01*next-5-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._243 /* V02*next-3-steps */,
+				st._235 /* V01*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._248 /* V02*next-3-steps */,
 				st._003 /* 1*'(' */,
-				st._133 /* 1*ownedMessageSpecification=SpecificationCS */,
+				st._078 /* 1*ConstraintCS::ownedMessageSpecification=SpecificationCS */,
 				st._004 /* 1*')' */,
 				st._011 /* 1*';' */
 			},
@@ -12903,17 +12908,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._158 /* assign V2 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._077 /* 1*next-11-steps */,
+				st._162 /* 1*next-11-steps */,
 				st._189 /* V00*'callable' */,
 				st._041 /* 1*'invariant' */,
-				st._228 /* V01*next-5-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._243 /* V02*next-3-steps */,
+				st._235 /* V01*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._248 /* V02*next-3-steps */,
 				st._003 /* 1*'(' */,
-				st._133 /* 1*ownedMessageSpecification=SpecificationCS */,
+				st._078 /* 1*ConstraintCS::ownedMessageSpecification=SpecificationCS */,
 				st._004 /* 1*')' */,
 				st._009 /* 1*':' */,
-				st._266 /* V03*ownedSpecification=SpecificationCS */,
+				st._254 /* V03*ConstraintCS::ownedSpecification=SpecificationCS */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -12979,9 +12984,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._026 /* assert (|ModelElementRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
+				st._177 /* 1*next-3-steps */,
 				st._054 /* 1*'reference' */,
-				st._148 /* 1*ownedPathName=PathNameCS */,
+				st._100 /* 1*ModelElementRefCS::ownedPathName=PathNameCS */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -13031,40 +13036,40 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._093 /* 1*next-34-steps */,
+				st._178 /* 1*next-34-steps */,
 				st._047 /* 1*'operation' */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._227 /* V01*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._241 /* V02*next-2-steps */,
+				st._233 /* V01*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._244 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._255 /* V03*next-2-steps */,
+				st._259 /* V03*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._273 /* V04*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._277 /* V04*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._279 /* V05*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._283 /* V05*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._290 /* V06*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._293 /* V06*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._295 /* V07*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._297 /* V07*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._306 /* V08*ownedAnnotations+=AnnotationElementCS */,
-				st._312 /* V09*ownedPreconditions+=PreconditionConstraintCS */,
-				st._314 /* V10*next-4-steps */,
+				st._302 /* V08*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._310 /* V09*OperationCS::ownedPreconditions+=PreconditionConstraintCS */,
+				st._318 /* V10*next-4-steps */,
 				st._025 /* 1*'body' */,
 				st._009 /* 1*':' */,
-				st._321 /* V11*ownedBodyExpressions+=SpecificationCS */,
+				st._319 /* V11*OperationCS::ownedBodyExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._326 /* V12*ownedPostconditions+=PostconditionConstraintCS */,
+				st._324 /* V12*OperationCS::ownedPostconditions+=PostconditionConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -13212,42 +13217,42 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._094 /* 1*next-36-steps */,
+				st._179 /* 1*next-36-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._310 /* V09*ownedAnnotations+=AnnotationElementCS */,
-				st._318 /* V10*ownedPreconditions+=PreconditionConstraintCS */,
-				st._319 /* V11*next-4-steps */,
+				st._309 /* V09*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._315 /* V10*OperationCS::ownedPreconditions+=PreconditionConstraintCS */,
+				st._322 /* V11*next-4-steps */,
 				st._025 /* 1*'body' */,
 				st._009 /* 1*':' */,
-				st._324 /* V12*ownedBodyExpressions+=SpecificationCS */,
+				st._323 /* V12*OperationCS::ownedBodyExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._328 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
+				st._327 /* V13*OperationCS::ownedPostconditions+=PostconditionConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -13390,32 +13395,32 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._090 /* 1*next-27-steps */,
+				st._175 /* 1*next-27-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -13522,32 +13527,32 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._090 /* 1*next-27-steps */,
+				st._175 /* 1*next-27-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -13663,42 +13668,42 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._094 /* 1*next-36-steps */,
+				st._179 /* 1*next-36-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._310 /* V09*ownedAnnotations+=AnnotationElementCS */,
-				st._318 /* V10*ownedPreconditions+=PreconditionConstraintCS */,
-				st._319 /* V11*next-4-steps */,
+				st._309 /* V09*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._315 /* V10*OperationCS::ownedPreconditions+=PreconditionConstraintCS */,
+				st._322 /* V11*next-4-steps */,
 				st._025 /* 1*'body' */,
 				st._009 /* 1*':' */,
-				st._324 /* V12*ownedBodyExpressions+=SpecificationCS */,
+				st._323 /* V12*OperationCS::ownedBodyExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._328 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
+				st._327 /* V13*OperationCS::ownedPostconditions+=PostconditionConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -13839,30 +13844,30 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._088 /* 1*next-25-steps */,
+				st._173 /* 1*next-25-steps */,
 				st._047 /* 1*'operation' */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._227 /* V01*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._241 /* V02*next-2-steps */,
+				st._233 /* V01*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._244 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._255 /* V03*next-2-steps */,
+				st._259 /* V03*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._273 /* V04*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._277 /* V04*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._279 /* V05*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._283 /* V05*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._290 /* V06*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._293 /* V06*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._295 /* V07*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._297 /* V07*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -13963,30 +13968,30 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._088 /* 1*next-25-steps */,
+				st._173 /* 1*next-25-steps */,
 				st._047 /* 1*'operation' */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._227 /* V01*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._241 /* V02*next-2-steps */,
+				st._233 /* V01*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._244 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._255 /* V03*next-2-steps */,
+				st._259 /* V03*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._273 /* V04*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._277 /* V04*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._279 /* V05*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._283 /* V05*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._290 /* V06*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._293 /* V06*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._295 /* V07*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._297 /* V07*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -14096,40 +14101,40 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._150 /* assign V2 = (|OperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._093 /* 1*next-34-steps */,
+				st._178 /* 1*next-34-steps */,
 				st._047 /* 1*'operation' */,
-				st._210 /* V00*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._202 /* V00*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._227 /* V01*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._241 /* V02*next-2-steps */,
+				st._233 /* V01*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._244 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._255 /* V03*next-2-steps */,
+				st._259 /* V03*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._273 /* V04*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._277 /* V04*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._279 /* V05*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._283 /* V05*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._290 /* V06*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._293 /* V06*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._295 /* V07*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._297 /* V07*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._306 /* V08*ownedAnnotations+=AnnotationElementCS */,
-				st._312 /* V09*ownedPreconditions+=PreconditionConstraintCS */,
-				st._314 /* V10*next-4-steps */,
+				st._302 /* V08*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._310 /* V09*OperationCS::ownedPreconditions+=PreconditionConstraintCS */,
+				st._318 /* V10*next-4-steps */,
 				st._025 /* 1*'body' */,
 				st._009 /* 1*':' */,
-				st._321 /* V11*ownedBodyExpressions+=SpecificationCS */,
+				st._319 /* V11*OperationCS::ownedBodyExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._326 /* V12*ownedPostconditions+=PostconditionConstraintCS */,
+				st._324 /* V12*OperationCS::ownedPostconditions+=PostconditionConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -14277,42 +14282,42 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._094 /* 1*next-36-steps */,
+				st._179 /* 1*next-36-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._310 /* V09*ownedAnnotations+=AnnotationElementCS */,
-				st._318 /* V10*ownedPreconditions+=PreconditionConstraintCS */,
-				st._319 /* V11*next-4-steps */,
+				st._309 /* V09*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._315 /* V10*OperationCS::ownedPreconditions+=PreconditionConstraintCS */,
+				st._322 /* V11*next-4-steps */,
 				st._025 /* 1*'body' */,
 				st._009 /* 1*':' */,
-				st._324 /* V12*ownedBodyExpressions+=SpecificationCS */,
+				st._323 /* V12*OperationCS::ownedBodyExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._328 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
+				st._327 /* V13*OperationCS::ownedPostconditions+=PostconditionConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -14455,32 +14460,32 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._090 /* 1*next-27-steps */,
+				st._175 /* 1*next-27-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -14596,42 +14601,42 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._094 /* 1*next-36-steps */,
+				st._179 /* 1*next-36-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._310 /* V09*ownedAnnotations+=AnnotationElementCS */,
-				st._318 /* V10*ownedPreconditions+=PreconditionConstraintCS */,
-				st._319 /* V11*next-4-steps */,
+				st._309 /* V09*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._315 /* V10*OperationCS::ownedPreconditions+=PreconditionConstraintCS */,
+				st._322 /* V11*next-4-steps */,
 				st._025 /* 1*'body' */,
 				st._009 /* 1*':' */,
-				st._324 /* V12*ownedBodyExpressions+=SpecificationCS */,
+				st._323 /* V12*OperationCS::ownedBodyExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._328 /* V13*ownedPostconditions+=PostconditionConstraintCS */,
+				st._327 /* V13*OperationCS::ownedPostconditions+=PostconditionConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -14774,32 +14779,32 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._222 /* assign V8 = |TypedElementCS::qualifiers.'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._090 /* 1*next-27-steps */,
+				st._175 /* 1*next-27-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._047 /* 1*'operation' */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._074 /* 1*name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
 				st._003 /* 1*'(' */,
-				st._246 /* V02*next-4-steps */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
-				st._258 /* V03*next-2-steps */,
+				st._251 /* V02*next-4-steps */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
+				st._261 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._135 /* 1*ownedParameters+=ParameterCS */,
+				st._116 /* 1*OperationCS::ownedParameters+=ParameterCS */,
 				st._004 /* 1*')' */,
-				st._271 /* V04*next-2-steps */,
+				st._275 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._282 /* V05*next-5-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._286 /* V05*next-5-steps */,
 				st._059 /* 1*'throws' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._288 /* V06*next-2-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._291 /* V06*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._114 /* 1*ownedExceptions+=TypedRefCS */,
-				st._298 /* V07*next-4-steps */,
+				st._115 /* 1*OperationCS::ownedExceptions+=TypedRefCS */,
+				st._299 /* V07*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._302 /* V08*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._305 /* V08*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -14900,19 +14905,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._079 /* 1*next-13-steps */,
+				st._164 /* 1*next-13-steps */,
 				st._049 /* 1*'package' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._103 /* 1*nsPrefix=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._120 /* 1*PackageCS::nsPrefix=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._104 /* 1*nsURI=URI */,
+				st._121 /* 1*PackageCS::nsURI=URI */,
 				st._060 /* 1*'{' */,
-				st._248 /* V02*ownedAnnotations+=AnnotationElementCS */,
-				st._265 /* V03*ownedPackages+=PackageCS */,
-				st._275 /* V04*ownedClasses+=ClassCS */,
+				st._239 /* V02*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._256 /* V03*PackageOwnerCS::ownedPackages+=PackageCS */,
+				st._271 /* V04*PackageCS::ownedClasses+=ClassCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -14985,15 +14990,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
+				st._187 /* 1*next-9-steps */,
 				st._049 /* 1*'package' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._103 /* 1*nsPrefix=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._120 /* 1*PackageCS::nsPrefix=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._104 /* 1*nsURI=URI */,
+				st._121 /* 1*PackageCS::nsURI=URI */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -15039,15 +15044,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._102 /* 1*next-9-steps */,
+				st._187 /* 1*next-9-steps */,
 				st._049 /* 1*'package' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._103 /* 1*nsPrefix=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._120 /* 1*PackageCS::nsPrefix=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._104 /* 1*nsURI=URI */,
+				st._121 /* 1*PackageCS::nsURI=URI */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -15099,19 +15104,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._079 /* 1*next-13-steps */,
+				st._164 /* 1*next-13-steps */,
 				st._049 /* 1*'package' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._103 /* 1*nsPrefix=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._120 /* 1*PackageCS::nsPrefix=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._104 /* 1*nsURI=URI */,
+				st._121 /* 1*PackageCS::nsURI=URI */,
 				st._060 /* 1*'{' */,
-				st._248 /* V02*ownedAnnotations+=AnnotationElementCS */,
-				st._265 /* V03*ownedPackages+=PackageCS */,
-				st._275 /* V04*ownedClasses+=ClassCS */,
+				st._239 /* V02*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._256 /* V03*PackageOwnerCS::ownedPackages+=PackageCS */,
+				st._271 /* V04*PackageCS::ownedClasses+=ClassCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -15189,19 +15194,19 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._164 /* assign V2 = |TypedElementCS::qualifiers.'!ordered|!unique|ordered|unique'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._079 /* 1*next-13-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._196 /* V00*next-2-steps */,
+				st._164 /* 1*next-13-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._205 /* V00*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._227 /* V01*next-4-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._233 /* V01*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._237 /* V02*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._242 /* V02*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
-				st._259 /* V03*next-3-steps */,
+				st._263 /* V03*next-3-steps */,
 				st._060 /* 1*'{' */,
-				st._274 /* V04*ownedAnnotations+=AnnotationElementCS */,
+				st._270 /* V04*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -15268,16 +15273,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._116 /* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._050 /* 1*'postcondition' */,
-				st._204 /* V00*next-5-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._225 /* V01*next-3-steps */,
+				st._212 /* V00*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._232 /* V01*next-3-steps */,
 				st._003 /* 1*'(' */,
-				st._133 /* 1*ownedMessageSpecification=SpecificationCS */,
+				st._078 /* 1*ConstraintCS::ownedMessageSpecification=SpecificationCS */,
 				st._004 /* 1*')' */,
 				st._009 /* 1*':' */,
-				st._252 /* V02*ownedSpecification=SpecificationCS */,
+				st._238 /* V02*ConstraintCS::ownedSpecification=SpecificationCS */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -15339,16 +15344,16 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._116 /* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._052 /* 1*'precondition' */,
-				st._204 /* V00*next-5-steps */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._225 /* V01*next-3-steps */,
+				st._212 /* V00*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._232 /* V01*next-3-steps */,
 				st._003 /* 1*'(' */,
-				st._133 /* 1*ownedMessageSpecification=SpecificationCS */,
+				st._078 /* 1*ConstraintCS::ownedMessageSpecification=SpecificationCS */,
 				st._004 /* 1*')' */,
 				st._009 /* 1*':' */,
-				st._252 /* V02*ownedSpecification=SpecificationCS */,
+				st._238 /* V02*ConstraintCS::ownedSpecification=SpecificationCS */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -15413,24 +15418,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._085 /* 1*next-19-steps */,
+				st._170 /* 1*next-19-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -15522,46 +15527,46 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._142 /* assign V12 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._097 /* 1*next-41-steps */,
+				st._182 /* 1*next-41-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._292 /* V06*ownedAnnotations+=AnnotationElementCS */,
-				st._299 /* V07*next-6-steps */,
+				st._289 /* V06*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._301 /* V07*next-6-steps */,
 				st._042 /* 1*'key' */,
-				st._178 /* 1*referredKeys+=UnrestrictedName */,
-				st._303 /* V08*next-2-steps */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
+				st._306 /* V08*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._179 /* 1*referredKeys+=UnrestrictedName */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
 				st._011 /* 1*';' */,
-				st._309 /* V09*next-4-steps */,
+				st._313 /* V09*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._317 /* V10*ownedDefaultExpressions+=SpecificationCS */,
+				st._316 /* V10*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._320 /* V11*next-4-steps */,
+				st._321 /* V11*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._325 /* V12*ownedDefaultExpressions+=SpecificationCS */,
+				st._325 /* V12*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._327 /* V13*next-2-steps */,
-				st._123 /* 1*ownedImplicitOpposites+=ImplicitOppositeCS */,
+				st._328 /* V13*next-2-steps */,
+				st._131 /* 1*ReferenceCS::ownedImplicitOpposites+=ImplicitOppositeCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -15689,24 +15694,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._085 /* 1*next-19-steps */,
+				st._170 /* 1*next-19-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -15787,24 +15792,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._085 /* 1*next-19-steps */,
+				st._170 /* 1*next-19-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -15883,22 +15888,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._191 /* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._083 /* 1*next-17-steps */,
+				st._168 /* 1*next-17-steps */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._240 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._247 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._261 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._265 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._268 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._273 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -15975,24 +15980,24 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._201 /* assign V5 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._085 /* 1*next-19-steps */,
+				st._170 /* 1*next-19-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -16082,44 +16087,44 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._140 /* assign V11 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._095 /* 1*next-39-steps */,
+				st._180 /* 1*next-39-steps */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._240 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._247 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._261 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._265 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._268 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._273 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._283 /* V05*ownedAnnotations+=AnnotationElementCS */,
-				st._291 /* V06*next-6-steps */,
+				st._281 /* V05*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._294 /* V06*next-6-steps */,
 				st._042 /* 1*'key' */,
-				st._178 /* 1*referredKeys+=UnrestrictedName */,
-				st._296 /* V07*next-2-steps */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
+				st._298 /* V07*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._179 /* 1*referredKeys+=UnrestrictedName */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
 				st._011 /* 1*';' */,
-				st._305 /* V08*next-4-steps */,
+				st._308 /* V08*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._311 /* V09*ownedDefaultExpressions+=SpecificationCS */,
+				st._311 /* V09*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._315 /* V10*next-4-steps */,
+				st._317 /* V10*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._322 /* V11*ownedDefaultExpressions+=SpecificationCS */,
+				st._320 /* V11*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._323 /* V12*next-2-steps */,
-				st._123 /* 1*ownedImplicitOpposites+=ImplicitOppositeCS */,
+				st._326 /* V12*next-2-steps */,
+				st._131 /* 1*ReferenceCS::ownedImplicitOpposites+=ImplicitOppositeCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -16254,46 +16259,46 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._142 /* assign V12 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._097 /* 1*next-41-steps */,
+				st._182 /* 1*next-41-steps */,
 				st._028 /* 1*'definition' */,
 				st._192 /* V00*'static' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._292 /* V06*ownedAnnotations+=AnnotationElementCS */,
-				st._299 /* V07*next-6-steps */,
+				st._289 /* V06*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._301 /* V07*next-6-steps */,
 				st._042 /* 1*'key' */,
-				st._178 /* 1*referredKeys+=UnrestrictedName */,
-				st._303 /* V08*next-2-steps */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
+				st._306 /* V08*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._179 /* 1*referredKeys+=UnrestrictedName */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
 				st._011 /* 1*';' */,
-				st._309 /* V09*next-4-steps */,
+				st._313 /* V09*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._317 /* V10*ownedDefaultExpressions+=SpecificationCS */,
+				st._316 /* V10*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._320 /* V11*next-4-steps */,
+				st._321 /* V11*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._325 /* V12*ownedDefaultExpressions+=SpecificationCS */,
+				st._325 /* V12*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._327 /* V13*next-2-steps */,
-				st._123 /* 1*ownedImplicitOpposites+=ImplicitOppositeCS */,
+				st._328 /* V13*next-2-steps */,
+				st._131 /* 1*ReferenceCS::ownedImplicitOpposites+=ImplicitOppositeCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -16432,46 +16437,46 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._142 /* assign V12 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._097 /* 1*next-41-steps */,
+				st._182 /* 1*next-41-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._292 /* V06*ownedAnnotations+=AnnotationElementCS */,
-				st._299 /* V07*next-6-steps */,
+				st._289 /* V06*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._301 /* V07*next-6-steps */,
 				st._042 /* 1*'key' */,
-				st._178 /* 1*referredKeys+=UnrestrictedName */,
-				st._303 /* V08*next-2-steps */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
+				st._306 /* V08*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._179 /* 1*referredKeys+=UnrestrictedName */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
 				st._011 /* 1*';' */,
-				st._309 /* V09*next-4-steps */,
+				st._313 /* V09*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._317 /* V10*ownedDefaultExpressions+=SpecificationCS */,
+				st._316 /* V10*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._320 /* V11*next-4-steps */,
+				st._321 /* V11*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._325 /* V12*ownedDefaultExpressions+=SpecificationCS */,
+				st._325 /* V12*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._327 /* V13*next-2-steps */,
-				st._123 /* 1*ownedImplicitOpposites+=ImplicitOppositeCS */,
+				st._328 /* V13*next-2-steps */,
+				st._131 /* 1*ReferenceCS::ownedImplicitOpposites+=ImplicitOppositeCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -16597,22 +16602,22 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._191 /* assign V4 = |TypedElementCS::qualifiers.'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._083 /* 1*next-17-steps */,
+				st._168 /* 1*next-17-steps */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._240 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._247 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._261 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._265 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._268 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._273 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._011 /* 1*';' */
 			},
@@ -16703,46 +16708,46 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._142 /* assign V12 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._097 /* 1*next-41-steps */,
+				st._182 /* 1*next-41-steps */,
 				st._056 /* 1*'static' */,
 				st._190 /* V00*'definition' */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._222 /* V01*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._227 /* V01*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._242 /* V02*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._246 /* V02*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._255 /* V03*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._259 /* V03*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._272 /* V04*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._276 /* V04*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._278 /* V05*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._282 /* V05*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._292 /* V06*ownedAnnotations+=AnnotationElementCS */,
-				st._299 /* V07*next-6-steps */,
+				st._289 /* V06*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._301 /* V07*next-6-steps */,
 				st._042 /* 1*'key' */,
-				st._178 /* 1*referredKeys+=UnrestrictedName */,
-				st._303 /* V08*next-2-steps */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
+				st._306 /* V08*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._179 /* 1*referredKeys+=UnrestrictedName */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
 				st._011 /* 1*';' */,
-				st._309 /* V09*next-4-steps */,
+				st._313 /* V09*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._317 /* V10*ownedDefaultExpressions+=SpecificationCS */,
+				st._316 /* V10*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._320 /* V11*next-4-steps */,
+				st._321 /* V11*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._325 /* V12*ownedDefaultExpressions+=SpecificationCS */,
+				st._325 /* V12*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._327 /* V13*next-2-steps */,
-				st._123 /* 1*ownedImplicitOpposites+=ImplicitOppositeCS */,
+				st._328 /* V13*next-2-steps */,
+				st._131 /* 1*ReferenceCS::ownedImplicitOpposites+=ImplicitOppositeCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -16879,44 +16884,44 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._140 /* assign V11 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._095 /* 1*next-39-steps */,
+				st._180 /* 1*next-39-steps */,
 				st._053 /* 1*'property' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._198 /* V00*next-2-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._207 /* V00*next-2-steps */,
 				st._001 /* 1*'#' */,
-				st._180 /* 1*referredOpposite=UnrestrictedName */,
-				st._223 /* V01*next-2-steps */,
+				st._134 /* 1*ReferenceCS::referredOpposite=UnrestrictedName */,
+				st._229 /* V01*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._169 /* 1*ownedType=TypedMultiplicityRefCS */,
-				st._240 /* V02*next-2-steps */,
+				st._154 /* 1*TypedElementCS::ownedType=TypedMultiplicityRefCS */,
+				st._247 /* V02*next-2-steps */,
 				st._014 /* 1*'=' */,
-				st._064 /* 1*default=SINGLE_QUOTED_STRING */,
-				st._261 /* V03*next-4-steps */,
+				st._141 /* 1*StructuralFeatureCS::default=SINGLE_QUOTED_STRING */,
+				st._265 /* V03*next-4-steps */,
 				st._060 /* 1*'{' */,
-				st._268 /* V04*next-1-steps */,
-				st._173 /* 1*qualifiers */,
+				st._273 /* V04*next-1-steps */,
+				st._155 /* 1*TypedElementCS::qualifiers */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._283 /* V05*ownedAnnotations+=AnnotationElementCS */,
-				st._291 /* V06*next-6-steps */,
+				st._281 /* V05*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._294 /* V06*next-6-steps */,
 				st._042 /* 1*'key' */,
-				st._178 /* 1*referredKeys+=UnrestrictedName */,
-				st._296 /* V07*next-2-steps */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
+				st._298 /* V07*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._179 /* 1*referredKeys+=UnrestrictedName */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName */,
 				st._011 /* 1*';' */,
-				st._305 /* V08*next-4-steps */,
+				st._308 /* V08*next-4-steps */,
 				st._039 /* 1*'initial' */,
 				st._009 /* 1*':' */,
-				st._311 /* V09*ownedDefaultExpressions+=SpecificationCS */,
+				st._311 /* V09*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._315 /* V10*next-4-steps */,
+				st._317 /* V10*next-4-steps */,
 				st._029 /* 1*'derivation' */,
 				st._009 /* 1*':' */,
-				st._322 /* V11*ownedDefaultExpressions+=SpecificationCS */,
+				st._320 /* V11*StructuralFeatureCS::ownedDefaultExpressions+=SpecificationCS */,
 				st._011 /* 1*';' */,
-				st._323 /* V12*next-2-steps */,
-				st._123 /* 1*ownedImplicitOpposites+=ImplicitOppositeCS */,
+				st._326 /* V12*next-2-steps */,
+				st._131 /* 1*ReferenceCS::ownedImplicitOpposites+=ImplicitOppositeCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -17033,7 +17038,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._011 /* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._116 /* 1*ownedExpression=ExpCS */
+				st._083 /* 1*ExpSpecificationCS::ownedExpression=ExpCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -17058,7 +17063,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._046 /* assert (|SpecificationCS::exprString| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._065 /* 1*exprString=UNQUOTED_STRING */
+				st._139 /* 1*SpecificationCS::exprString=UNQUOTED_STRING */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				ss._8 /* «? » + «value» + «? » */
@@ -17099,29 +17104,29 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._087 /* 1*next-23-steps */,
+				st._172 /* 1*next-23-steps */,
 				st._188 /* V00*'abstract' */,
 				st._026 /* 1*'class' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._247 /* V02*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._252 /* V02*next-5-steps */,
 				st._035 /* 1*'extends' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._257 /* V03*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._262 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._270 /* V04*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._274 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._280 /* V05*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._284 /* V05*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._287 /* V06*'interface' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._300 /* V07*ownedAnnotations+=AnnotationElementCS */,
-				st._308 /* V08*ownedOperations+=OperationCS */,
-				st._313 /* V09*ownedProperties+=StructuralFeatureCS */,
-				st._316 /* V10*ownedConstraints+=InvariantConstraintCS */,
+				st._295 /* V07*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._304 /* V08*StructuredClassCS::ownedOperations+=OperationCS */,
+				st._312 /* V09*StructuredClassCS::ownedProperties+=StructuralFeatureCS */,
+				st._314 /* V10*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -17242,21 +17247,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._084 /* 1*next-18-steps */,
+				st._169 /* 1*next-18-steps */,
 				st._188 /* V00*'abstract' */,
 				st._026 /* 1*'class' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._247 /* V02*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._252 /* V02*next-5-steps */,
 				st._035 /* 1*'extends' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._257 /* V03*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._262 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._270 /* V04*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._274 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._280 /* V05*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._284 /* V05*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._287 /* V06*'interface' */,
 				st._063 /* 1*'}' */,
@@ -17355,29 +17360,29 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._087 /* 1*next-23-steps */,
+				st._172 /* 1*next-23-steps */,
 				st._188 /* V00*'abstract' */,
 				st._026 /* 1*'class' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._247 /* V02*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._252 /* V02*next-5-steps */,
 				st._035 /* 1*'extends' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._257 /* V03*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._262 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._270 /* V04*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._274 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._280 /* V05*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._284 /* V05*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._287 /* V06*'interface' */,
 				st._063 /* 1*'}' */,
 				st._060 /* 1*'{' */,
-				st._300 /* V07*ownedAnnotations+=AnnotationElementCS */,
-				st._308 /* V08*ownedOperations+=OperationCS */,
-				st._313 /* V09*ownedProperties+=StructuralFeatureCS */,
-				st._316 /* V10*ownedConstraints+=InvariantConstraintCS */,
+				st._295 /* V07*ModelElementCS::ownedAnnotations+=AnnotationElementCS */,
+				st._304 /* V08*StructuredClassCS::ownedOperations+=OperationCS */,
+				st._312 /* V09*StructuredClassCS::ownedProperties+=StructuralFeatureCS */,
+				st._314 /* V10*ClassCS::ownedConstraints+=InvariantConstraintCS */,
 				st._063 /* 1*'}' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -17498,21 +17503,21 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._169 /* assign V3 = (|StructuredClassCS::ownedSuperTypes| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._084 /* 1*next-18-steps */,
+				st._169 /* 1*next-18-steps */,
 				st._188 /* V00*'abstract' */,
 				st._026 /* 1*'class' */,
-				st._074 /* 1*name=UnrestrictedName */,
-				st._236 /* V01*ownedSignature=TemplateSignatureCS */,
-				st._247 /* V02*next-5-steps */,
+				st._107 /* 1*NamedElementCS::name=UnrestrictedName */,
+				st._223 /* V01*TemplateableElementCS::ownedSignature=TemplateSignatureCS */,
+				st._252 /* V02*next-5-steps */,
 				st._035 /* 1*'extends' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._257 /* V03*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._262 /* V03*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._157 /* 1*ownedSuperTypes+=TypedRefCS */,
-				st._270 /* V04*next-2-steps */,
+				st._142 /* 1*StructuredClassCS::ownedSuperTypes+=TypedRefCS */,
+				st._274 /* V04*next-2-steps */,
 				st._009 /* 1*':' */,
-				st._066 /* 1*instanceClassName=SINGLE_QUOTED_STRING */,
-				st._280 /* V05*next-3-steps */,
+				st._067 /* 1*ClassCS::instanceClassName=SINGLE_QUOTED_STRING */,
+				st._284 /* V05*next-3-steps */,
 				st._060 /* 1*'{' */,
 				st._287 /* V06*'interface' */,
 				st._063 /* 1*'}' */,
@@ -17595,11 +17600,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._072 /* assign V0 = |AnnotationElementCS::ownedDetails| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
+				st._184 /* 1*next-6-steps */,
 				st._057 /* 1*'sysml' */,
 				st._060 /* 1*'{' */,
-				st._198 /* V00*next-2-steps */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._207 /* V00*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -17633,9 +17638,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._001 /* assert (|AnnotationElementCS::ownedDetails| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
+				st._177 /* 1*next-3-steps */,
 				st._057 /* 1*'sysml' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -17665,11 +17670,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._072 /* assign V0 = |AnnotationElementCS::ownedDetails| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
+				st._184 /* 1*next-6-steps */,
 				st._057 /* 1*'sysml' */,
 				st._060 /* 1*'{' */,
-				st._198 /* V00*next-2-steps */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._207 /* V00*next-2-steps */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._011 /* 1*';' */,
 				st._063 /* 1*'}' */
 			},
@@ -17703,9 +17708,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._001 /* assert (|AnnotationElementCS::ownedDetails| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._092 /* 1*next-3-steps */,
+				st._177 /* 1*next-3-steps */,
 				st._057 /* 1*'sysml' */,
-				st._112 /* 1*ownedDetails+=DetailCS */,
+				st._065 /* 1*AnnotationElementCS::ownedDetails+=DetailCS */,
 				st._011 /* 1*';' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -17735,12 +17740,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._065 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
+				st._184 /* 1*next-6-steps */,
 				st._012 /* 1*'<' */,
-				st._136 /* 1*ownedParameters+=TypeParameterCS */,
-				st._198 /* V00*next-2-steps */,
+				st._145 /* 1*TemplateSignatureCS::ownedParameters+=TypeParameterCS */,
+				st._207 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._136 /* 1*ownedParameters+=TypeParameterCS */,
+				st._145 /* 1*TemplateSignatureCS::ownedParameters+=TypeParameterCS */,
 				st._015 /* 1*'>' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -17773,12 +17778,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._065 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._099 /* 1*next-6-steps */,
+				st._184 /* 1*next-6-steps */,
 				st._003 /* 1*'(' */,
-				st._136 /* 1*ownedParameters+=TypeParameterCS */,
-				st._198 /* V00*next-2-steps */,
+				st._145 /* 1*TemplateSignatureCS::ownedParameters+=TypeParameterCS */,
+				st._207 /* V00*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._136 /* 1*ownedParameters+=TypeParameterCS */,
+				st._145 /* 1*TemplateSignatureCS::ownedParameters+=TypeParameterCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -17814,11 +17819,11 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._070 /* assign V0 = 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._195 /* V00*next-1-steps */,
+				st._181 /* 1*next-4-steps */,
+				st._204 /* V00*next-1-steps */,
 				st._045 /* 1*'module' */,
-				st._232 /* V01*ownedImports+=ImportCS */,
-				st._251 /* V02*ownedPackages+=PackageCS */
+				st._220 /* V01*RootCS::ownedImports+=ImportCS */,
+				st._240 /* V02*PackageOwnerCS::ownedPackages+=PackageCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -17860,14 +17865,14 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._100 /* 1*next-7-steps */,
-				st._070 /* 1*name=CollectionTypeIdentifier */,
-				st._201 /* V00*next-4-steps */,
+				st._185 /* 1*next-7-steps */,
+				st._076 /* 1*CollectionTypeCS::name=CollectionTypeIdentifier */,
+				st._210 /* V00*next-4-steps */,
 				st._003 /* 1*'(' */,
-				st._167 /* 1*ownedType=TypeExpWithoutMultiplicityCS */,
-				st._231 /* V01*ownedCollectionMultiplicity=MultiplicityCS */,
+				st._077 /* 1*CollectionTypeCS::ownedType=TypeExpWithoutMultiplicityCS */,
+				st._219 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=MultiplicityCS */,
 				st._004 /* 1*')' */,
-				st._250 /* V02*ownedMultiplicity=MultiplicityCS */
+				st._241 /* V02*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -17924,9 +17929,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._147 /* 1*ownedPathName=PathNameCS */,
-				st._208 /* V00*ownedMultiplicity=MultiplicityCS */
+				st._171 /* 1*next-2-steps */,
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */,
+				st._203 /* V00*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -17965,12 +17970,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._098 /* 1*next-5-steps */,
-				st._147 /* 1*ownedPathName=PathNameCS */,
+				st._183 /* 1*next-5-steps */,
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */,
 				st._012 /* 1*'<' */,
-				st._107 /* 1*ownedBinding=TemplateBindingCS */,
+				st._156 /* 1*TypedTypeRefCS::ownedBinding=TemplateBindingCS */,
 				st._015 /* 1*'>' */,
-				st._208 /* V00*ownedMultiplicity=MultiplicityCS */
+				st._203 /* V00*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -18020,15 +18025,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._101 /* 1*next-8-steps */,
+				st._186 /* 1*next-8-steps */,
 				st._019 /* 1*'Map' */,
-				st._204 /* V00*next-5-steps */,
+				st._212 /* V00*next-5-steps */,
 				st._003 /* 1*'(' */,
-				st._130 /* 1*ownedKeyType=TypeExpCS */,
+				st._098 /* 1*MapTypeCS::ownedKeyType=TypeExpCS */,
 				st._007 /* 1*',' */,
-				st._171 /* 1*ownedValueType=TypeExpCS */,
+				st._099 /* 1*MapTypeCS::ownedValueType=TypeExpCS */,
 				st._004 /* 1*')' */,
-				st._234 /* V01*ownedMultiplicity=MultiplicityCS */
+				st._224 /* V01*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -18090,17 +18095,17 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._153 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._076 /* 1*next-10-steps */,
+				st._161 /* 1*next-10-steps */,
 				st._020 /* 1*'Tuple' */,
-				st._206 /* V00*next-7-steps */,
+				st._215 /* V00*next-7-steps */,
 				st._003 /* 1*'(' */,
-				st._226 /* V01*next-4-steps */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
-				st._238 /* V02*next-2-steps */,
+				st._234 /* V01*next-4-steps */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
+				st._245 /* V02*next-2-steps */,
 				st._007 /* 1*',' */,
-				st._142 /* 1*ownedParts+=TuplePartCS */,
+				st._147 /* 1*TupleTypeCS::ownedParts+=TuplePartCS */,
 				st._004 /* 1*')' */,
-				st._264 /* V03*ownedMultiplicity=MultiplicityCS */
+				st._257 /* V03*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -18153,9 +18158,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._043 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*next-2-steps */,
-				st._072 /* 1*name=PrimitiveTypeIdentifier */,
-				st._208 /* V00*ownedMultiplicity=MultiplicityCS */
+				st._171 /* 1*next-2-steps */,
+				st._130 /* 1*PrimitiveTypeRefCS::name=PrimitiveTypeIdentifier */,
+				st._203 /* V00*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -18195,12 +18200,12 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._098 /* 1*next-5-steps */,
-				st._147 /* 1*ownedPathName=PathNameCS */,
+				st._183 /* 1*next-5-steps */,
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */,
 				st._003 /* 1*'(' */,
-				st._107 /* 1*ownedBinding=TemplateBindingCS */,
+				st._156 /* 1*TypedTypeRefCS::ownedBinding=TemplateBindingCS */,
 				st._004 /* 1*')' */,
-				st._208 /* V00*ownedMultiplicity=MultiplicityCS */
+				st._203 /* V00*TypedRefCS::ownedMultiplicity=MultiplicityCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null,
@@ -18247,10 +18252,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._147 /* 1*ownedPathName=PathNameCS */,
+				st._181 /* 1*next-4-steps */,
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */,
 				st._012 /* 1*'<' */,
-				st._107 /* 1*ownedBinding=TemplateBindingCS */,
+				st._156 /* 1*TypedTypeRefCS::ownedBinding=TemplateBindingCS */,
 				st._015 /* 1*'>' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -18290,10 +18295,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._147 /* 1*ownedPathName=PathNameCS */,
+				st._181 /* 1*next-4-steps */,
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */,
 				st._012 /* 1*'<' */,
-				st._107 /* 1*ownedBinding=TemplateBindingCS */,
+				st._156 /* 1*TypedTypeRefCS::ownedBinding=TemplateBindingCS */,
 				st._015 /* 1*'>' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -18333,10 +18338,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._147 /* 1*ownedPathName=PathNameCS */,
+				st._181 /* 1*next-4-steps */,
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */,
 				st._003 /* 1*'(' */,
-				st._107 /* 1*ownedBinding=TemplateBindingCS */,
+				st._156 /* 1*TypedTypeRefCS::ownedBinding=TemplateBindingCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
@@ -18374,7 +18379,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._147 /* 1*ownedPathName=PathNameCS */
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -18400,7 +18405,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._147 /* 1*ownedPathName=PathNameCS */
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */
 			},
 			new @NonNull Segment @NonNull [] [] {
 				null
@@ -18428,10 +18433,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._096 /* 1*next-4-steps */,
-				st._147 /* 1*ownedPathName=PathNameCS */,
+				st._181 /* 1*next-4-steps */,
+				st._157 /* 1*TypedTypeRefCS::ownedPathName=PathNameCS */,
 				st._003 /* 1*'(' */,
-				st._107 /* 1*ownedBinding=TemplateBindingCS */,
+				st._156 /* 1*TypedTypeRefCS::ownedBinding=TemplateBindingCS */,
 				st._004 /* 1*')' */
 			},
 			new @NonNull Segment @NonNull [] [] {
