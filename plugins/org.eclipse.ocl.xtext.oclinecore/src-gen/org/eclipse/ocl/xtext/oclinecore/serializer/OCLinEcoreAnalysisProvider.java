@@ -5769,7 +5769,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -5801,8 +5801,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
@@ -5846,8 +5845,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
@@ -5895,9 +5893,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
@@ -5944,10 +5940,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					ev._23)
 			},
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -5988,8 +5981,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
@@ -6026,9 +6018,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					ev._04)
 			},
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -6061,9 +6051,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					ev._04)
 			},
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -6088,9 +6076,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					ev._04)
 			},
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -6113,7 +6099,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -6147,9 +6133,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					iv._22) /* FirstPathElementCS|NextPathElementCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
@@ -6190,10 +6174,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
@@ -6225,7 +6206,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._57) /* TypeRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -6269,8 +6250,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._59) /* TypedRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -6311,9 +6291,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
 					iv._59) /* TypedRefCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
@@ -6347,9 +6325,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
 					iv._59) /* TypedRefCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
@@ -6374,9 +6350,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					ev._14)
 			},
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -6412,8 +6386,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._49) /* TypeExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -6468,8 +6441,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._4) /* CollectionTypeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -6502,7 +6474,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._27) /* PatternExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -6542,8 +6514,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -6601,9 +6572,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._4) /* CollectionTypeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME,
@@ -6659,9 +6628,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME,
@@ -6717,9 +6684,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME,
@@ -6772,9 +6737,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS,
 					iv._35) /* ShadowPartCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS,
@@ -6813,8 +6776,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -6843,7 +6806,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL,
@@ -6865,8 +6828,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::ExpCS : segments+=StringLiteral[+]
@@ -6882,9 +6844,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -6909,9 +6869,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					ev._14)
 			},
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -6932,8 +6890,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::ExpCS : { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS }
@@ -6965,9 +6922,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -7034,10 +6991,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._7) /* ElseIfThenExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7089,7 +7045,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7123,7 +7079,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7145,8 +7101,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::ExpCS : ownedType=TypeLiteralWithMultiplicityCS
@@ -7167,7 +7122,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._52) /* TypeLiteralWithMultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7208,9 +7163,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
 					iv._47) /* TupleLiteralPartCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
@@ -7231,8 +7184,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::ExpCS : { ownedType=CollectionTypeCS '{' { ownedParts+=CollectionLiteralPartCS { ',' ownedParts+=CollectionLiteralPartCS }[*] }[?] '}' }
@@ -7274,8 +7226,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._4) /* CollectionTypeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7329,8 +7280,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._15) /* MapLiteralPartCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7368,8 +7318,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._33) /* PrefixedPrimaryExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -7433,11 +7383,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._37) /* SquareBracketedClauseCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE,
@@ -7514,10 +7460,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._7) /* ElseIfThenExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7589,10 +7534,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._7) /* ElseIfThenExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7630,8 +7574,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::InvalidLiteralExpCS : 'invalid'
@@ -7646,8 +7589,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::LambdaLiteralExpCS : { 'Lambda' '{' ownedExpressionCS=ExpCS '}' }
@@ -7676,7 +7618,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7712,7 +7654,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7758,8 +7700,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._14) /* LetVariableCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7810,8 +7751,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._14) /* LetVariableCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7867,10 +7807,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._34) /* RoundBracketedClauseCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -7935,8 +7873,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._15) /* MapLiteralPartCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -7990,8 +7927,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._15) /* MapLiteralPartCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8034,8 +7970,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8089,11 +8025,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
 					iv._49) /* TypeExpCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -8152,11 +8084,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
 					iv._49) /* TypeExpCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -8194,7 +8122,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8252,11 +8180,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._37) /* SquareBracketedClauseCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE,
@@ -8335,11 +8259,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._37) /* SquareBracketedClauseCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__IS_PRE,
@@ -8408,9 +8328,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8452,7 +8371,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._49) /* TypeExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8510,10 +8429,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8586,10 +8503,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8635,7 +8550,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._20) /* NavigatingArgExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -8691,10 +8606,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
@@ -8774,11 +8686,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
@@ -8835,8 +8744,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._20) /* NavigatingArgExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
@@ -8896,10 +8804,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
@@ -8979,11 +8885,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
@@ -9060,10 +8963,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
@@ -9113,7 +9013,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -9147,7 +9047,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -9169,8 +9069,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::NullLiteralExpCS : 'null'
@@ -9185,8 +9084,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::NumberLiteralExpCS : symbol=NUMBER_LITERAL
@@ -9203,7 +9101,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL,
@@ -9227,7 +9125,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL,
@@ -9262,8 +9160,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._49) /* TypeExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME,
@@ -9302,8 +9199,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._31) /* PrefixedLetExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -9342,8 +9239,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._31) /* PrefixedLetExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -9382,8 +9279,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._33) /* PrefixedPrimaryExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -9413,7 +9310,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME,
@@ -9437,7 +9334,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME,
@@ -9475,9 +9372,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
 					iv._21) /* NavigatingArgCS|NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
@@ -9501,8 +9396,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::SelfExpCS : 'self'
@@ -9517,8 +9411,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::ShadowPartCS : { referredProperty=UnrestrictedName '=' ownedInitExpression=(ExpCS|PatternExpCS) }
@@ -9546,8 +9439,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._28) /* ExpCS|PatternExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY),
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -9580,7 +9473,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._38) /* StringLiteralExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -9608,7 +9501,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._10) /* FirstPathElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -9647,9 +9540,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS,
 					iv._9) /* ExpCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS,
@@ -9671,9 +9562,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -9695,9 +9584,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -9737,9 +9624,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
 					iv._47) /* TupleLiteralPartCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
@@ -9779,9 +9664,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
 					iv._47) /* TupleLiteralPartCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
@@ -9825,9 +9708,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -9873,8 +9755,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._49) /* TypeExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -9931,10 +9813,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
 					iv._48) /* TuplePartCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -9990,10 +9869,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
 					iv._48) /* TuplePartCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -10053,12 +9929,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -10130,11 +10001,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -10195,10 +10062,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME,
@@ -10273,10 +10137,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME,
@@ -10325,8 +10186,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME,
@@ -10388,10 +10248,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._5) /* CurlyBracketedClauseCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -10434,7 +10291,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._52) /* TypeLiteralWithMultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -10462,7 +10319,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._52) /* TypeLiteralWithMultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -10495,8 +10352,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME,
@@ -10553,10 +10409,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME,
@@ -10629,11 +10482,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -10698,12 +10547,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -10768,9 +10612,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._5) /* CurlyBracketedClauseCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -10830,9 +10672,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._5) /* CurlyBracketedClauseCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, false)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -10866,7 +10706,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -10889,7 +10729,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -10923,9 +10763,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					iv._62) /* NextPathElementCS|URIFirstPathElementCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
@@ -10947,8 +10785,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// EssentialOCL::UnlimitedNaturalLiteralExpCS : '*'
@@ -10963,8 +10800,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-			},
+			null,
 			null,
 			null);
 		// OCLinEcore::AnnotationCS : { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' }
@@ -11026,13 +10862,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -11101,10 +10931,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -11178,13 +11005,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -11273,13 +11094,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -11362,10 +11177,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -11450,10 +11262,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -11575,12 +11384,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -11706,12 +11510,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -11841,12 +11640,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -11943,10 +11737,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -12021,10 +11812,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -12105,11 +11893,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
@@ -12192,11 +11976,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
@@ -12276,10 +12056,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -12368,12 +12145,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -12475,13 +12247,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
@@ -12571,10 +12337,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -12663,12 +12426,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -12770,13 +12528,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
@@ -12878,12 +12630,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -12966,10 +12713,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -13056,12 +12800,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -13118,8 +12857,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DETAIL_CS__VALUES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DETAIL_CS__VALUES,
@@ -13173,10 +12911,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -13230,10 +12965,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.DOCUMENTATION_CS__VALUE,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -13311,12 +13043,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -13413,12 +13140,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -13501,10 +13223,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE,
@@ -13593,12 +13312,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -13701,13 +13415,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE,
@@ -13789,9 +13497,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -13859,10 +13565,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE,
@@ -13931,9 +13634,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -14021,13 +13722,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE,
@@ -14111,9 +13806,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -14175,9 +13868,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -14259,12 +13950,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -14343,10 +14029,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE,
@@ -14406,9 +14089,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE,
@@ -14460,9 +14141,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE,
@@ -14523,10 +14202,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__LITERAL, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.ENUMERATION_LITERAL_CS__VALUE,
@@ -14594,9 +14270,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -14654,9 +14329,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._64) /* URIPathNameCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.IMPORT_CS__IS_ALL, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.IMPORT_CS__IS_ALL,
@@ -14720,12 +14393,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
 					iv._36) /* SpecificationCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(OCLinEcoreCSPackage.Literals.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -14801,13 +14469,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
 					iv._36) /* SpecificationCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(OCLinEcoreCSPackage.Literals.OC_LIN_ECORE_CONSTRAINT_CS__IS_CALLABLE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -14861,7 +14523,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._26) /* PathNameCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_REF_CS__OWNED_PATH_NAME)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -14994,16 +14656,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -15188,16 +14841,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -15349,12 +14993,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -15486,12 +15125,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -15658,16 +15292,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -15813,12 +15438,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -15942,12 +15562,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -16106,16 +15721,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -16300,16 +15906,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -16461,12 +16058,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -16633,16 +16225,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -16794,12 +16377,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -16892,12 +16470,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_URI, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -16967,9 +16540,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_URI, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17023,9 +16594,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_URI, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17100,12 +16669,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* AnnotationElementCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_CS__NS_URI, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17196,10 +16760,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17271,12 +16832,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
 					iv._36) /* SpecificationCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -17347,12 +16903,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
 					iv._36) /* SpecificationCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -17443,11 +16994,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17606,15 +17153,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._11) /* ImplicitOppositeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17731,11 +17270,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17833,11 +17368,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -17929,11 +17460,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -18029,11 +17556,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -18186,15 +17709,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._11) /* ImplicitOppositeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -18370,15 +17885,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._11) /* ImplicitOppositeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -18556,15 +18063,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._11) /* ImplicitOppositeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -18675,11 +18174,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._58) /* TypedMultiplicityRefCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -18839,15 +18334,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._11) /* ImplicitOppositeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -19019,15 +18506,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._11) /* ImplicitOppositeCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_OPPOSITE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__REFERRED_KEYS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__DEFAULT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_ELEMENT_CS__QUALIFIERS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
@@ -19094,7 +18573,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._9) /* ExpCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -19118,7 +18597,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING,
@@ -19223,16 +18702,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._23) /* OperationCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE,
@@ -19357,12 +18827,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE,
@@ -19493,16 +18958,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._23) /* OperationCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE,
@@ -19627,12 +19083,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._46) /* TemplateSignatureCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE,
@@ -19697,9 +19148,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
@@ -19732,7 +19181,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._6) /* DetailCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -19771,9 +19220,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
@@ -19806,7 +19253,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._6) /* DetailCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -19845,9 +19292,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
 					iv._56) /* TypeParameterCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
@@ -19885,9 +19330,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
 					iv._56) /* TypeParameterCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
@@ -19926,10 +19369,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS,
 					iv._12) /* ImportCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, false)
-			},
+			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES,
@@ -19984,10 +19424,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, true)
+				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME,
@@ -20039,8 +19476,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20091,9 +19527,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20158,12 +19593,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false),
-				new EStructuralFeature_NeedsDefault(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -20235,11 +19665,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */
 			},
-			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, false),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.TUPLE_TYPE_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
@@ -20282,8 +19708,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME)
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME,
@@ -20335,9 +19760,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._19) /* MultiplicityCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, false)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20387,8 +19811,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._44) /* TemplateBindingCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20433,8 +19857,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._44) /* TemplateBindingCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20479,8 +19903,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._44) /* TemplateBindingCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20513,7 +19937,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._26) /* PathNameCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20541,7 +19965,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._26) /* PathNameCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
@@ -20581,8 +20005,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 					iv._44) /* TemplateBindingCS */
 			},
 			new @NonNull EStructuralFeature_NeedsDefault [] {
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, true),
-				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, true)
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME),
+				new EStructuralFeature_NeedsDefault(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING)
 			},
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {

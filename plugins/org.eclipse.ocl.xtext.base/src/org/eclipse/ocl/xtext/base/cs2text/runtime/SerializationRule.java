@@ -165,12 +165,10 @@ public class SerializationRule
 	public static class EStructuralFeature_NeedsDefault implements Nameable
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
-		protected final boolean needsDefault;
 
-		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature, boolean needsDefault) {
+		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature) {
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
-			this.needsDefault = needsDefault;
 		}
 
 		public @NonNull EStructuralFeature getEStructuralFeature() {
@@ -183,7 +181,7 @@ public class SerializationRule
 		}
 
 		public boolean needsDefault() {
-			return needsDefault;
+			return true;
 		}
 
 		@Override
@@ -258,7 +256,7 @@ public class SerializationRule
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
-	private final @NonNull EStructuralFeature_NeedsDefault @NonNull [] eStructuralFeature2cardinalityExpression;
+	private final @NonNull EStructuralFeature_NeedsDefault @Nullable [] eStructuralFeature2cardinalityExpression;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
@@ -287,7 +285,6 @@ public class SerializationRule
 		this.staticSegments = staticSegments;
 		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
 		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
-		assert eStructuralFeature2cardinalityExpression != null;
 		this.eStructuralFeature2cardinalityExpression = eStructuralFeature2cardinalityExpression;
 		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
 		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
@@ -435,11 +432,22 @@ public class SerializationRule
 			//
 			//	Check that no 'unused' features are used.
 			//
+			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality[] eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+			@NonNull EReference_RuleIndex_MultiplicativeCardinality[] eReference2ruleValueIndex2multiplicativeCardinality2 = eReference2ruleValueIndex2multiplicativeCardinality;
 			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
 				boolean gotIt = false;
-				for (@NonNull EStructuralFeature_NeedsDefault eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
-					if (eStructuralFeatureData.getEStructuralFeature() == eStructuralFeature) {
-						gotIt = true;
+				if (eAttribute2enumerationValue2multiplicativeCardinality2 != null) {
+					for (@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality eAttributeData : eAttribute2enumerationValue2multiplicativeCardinality2) {
+						if (eAttributeData.getEAttribute() == eStructuralFeature) {
+							gotIt = true;
+						}
+					}
+				}
+				if (eReference2ruleValueIndex2multiplicativeCardinality2 != null) {
+					for (@NonNull EReference_RuleIndex_MultiplicativeCardinality eReferenceData : eReference2ruleValueIndex2multiplicativeCardinality2) {
+						if (eReferenceData.getEReference() == eStructuralFeature) {
+							gotIt = true;
+						}
 					}
 				}
 				if (!gotIt) {
@@ -462,9 +470,12 @@ public class SerializationRule
 	}
 
 	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		for (@NonNull EStructuralFeature_NeedsDefault eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
-			if (eStructuralFeatureData.getEStructuralFeature() == eAttribute) {
-				return eStructuralFeatureData.needsDefault();
+		@NonNull EStructuralFeature_NeedsDefault[] eStructuralFeature2cardinalityExpression2 = eStructuralFeature2cardinalityExpression;
+		if (eStructuralFeature2cardinalityExpression2 != null) {
+			for (@NonNull EStructuralFeature_NeedsDefault eStructuralFeatureData : eStructuralFeature2cardinalityExpression2) {
+				if (eStructuralFeatureData.getEStructuralFeature() == eAttribute) {
+					return eStructuralFeatureData.needsDefault();
+				}
 			}
 		}
 		return false;
