@@ -536,8 +536,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«IF eStructuralFeature2cardinalityExpression !== null»
 			new @NonNull «newTypeReference(EStructuralFeature_NeedsDefault)» [] {
 				«FOR eStructuralFeatureData : eStructuralFeature2cardinalityExpression SEPARATOR ','»
-				new «newTypeReference(EStructuralFeature_NeedsDefault)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
-					"getIndexVectorId(eStructuralFeatureData.getCardinalityExpression(), true)") /* «eStructuralFeatureData.needsDefault()» */
+				new «newTypeReference(EStructuralFeature_NeedsDefault)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())», «eStructuralFeatureData.needsDefault()»)
 				«ENDFOR»
 			},
 			«ELSE»

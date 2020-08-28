@@ -100,7 +100,7 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		@NonNull EStructuralFeature_NeedsDefault [] eStructuralFeatureDatas = new @NonNull EStructuralFeature_NeedsDefault[eStructuralFeature2requiredSlotsExpression.size()];
 		int i = 0;
 		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
-			eStructuralFeatureDatas[i++] = new EStructuralFeature_NeedsDefault(entry.getKey(), entry.getValue());
+			eStructuralFeatureDatas[i++] = new EStructuralFeature_NeedsDefault(entry.getKey(), entry.getValue().isOne());
 		}
 		return eStructuralFeatureDatas;
 	}

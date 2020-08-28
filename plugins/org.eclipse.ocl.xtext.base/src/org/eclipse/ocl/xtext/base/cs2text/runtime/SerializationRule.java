@@ -23,7 +23,6 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
@@ -168,15 +167,10 @@ public class SerializationRule
 		protected final @NonNull EStructuralFeature eStructuralFeature;
 		protected final boolean needsDefault;
 
-		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CardinalityExpression cardinalityExpression) {
+		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature, boolean needsDefault) {
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
-			this.needsDefault = cardinalityExpression.isOne();
-		}
-		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull String cardinalityExpression) {
-			assert eStructuralFeature != null;
-			this.eStructuralFeature = eStructuralFeature;
-			this.needsDefault = false;
+			this.needsDefault = needsDefault;
 		}
 
 		public @NonNull EStructuralFeature getEStructuralFeature() {
