@@ -60,10 +60,10 @@ public class RTSerializationRule2 extends SerializationRule
 		assert old == null;
 	}
 
-	@Override
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
-		return serializationRuleAnalysis.match(slotsAnalysis);
-	}
+//	@Override
+//	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
+//		return serializationRuleAnalysis.match(slotsAnalysis);
+//	}
 
 	@Override
 	public void toRuleString(@NonNull StringBuilder s) {
