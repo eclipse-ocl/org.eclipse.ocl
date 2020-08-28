@@ -225,22 +225,19 @@ public class SerializationRule
 	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
 
 	/**
-	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
-	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
+	 * The EAttributes whose default value must be used to satisfy grammar rule multiplicities..
 	 */
-	private final @NonNull EStructuralFeature @Nullable [] eStructuralFeature2cardinalityExpression;
+	private final @NonNull EAttribute @Nullable [] needsDefaultEAttributes;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
 	private final @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality;
-//	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
 
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
 	 */
 	private final @NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality;
-//	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> eReference2ruleValueIndex2multiplicativeCardinality = null;
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
@@ -248,7 +245,7 @@ public class SerializationRule
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull EStructuralFeature @Nullable [] eStructuralFeature2cardinalityExpression,
+			@NonNull EAttribute @Nullable [] needsDefaultEAttributes,
 			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality,
 			@NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality) {
 		this.ruleValueIndex = ruleValueIndex;
@@ -257,20 +254,10 @@ public class SerializationRule
 		this.staticSegments = staticSegments;
 		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
 		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
-		this.eStructuralFeature2cardinalityExpression = eStructuralFeature2cardinalityExpression;
+		this.needsDefaultEAttributes = needsDefaultEAttributes;
 		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
 		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
 	}
-
-//	public SerializationRule(int ruleValueIndex,
-//			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
-//			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
-//			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
-//			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
-//			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
-//			@NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression) {
-//		this(ruleValueIndex, solutionSteps, serializationSteps, staticSegments, eAttribute2enumerationValues, eReference2assignedRuleValueIndexes, eStructuralFeature2cardinalityExpression, null, null);
-//	}
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
 		if (eReference2assignedRuleValueIndexes != null) {
@@ -283,12 +270,6 @@ public class SerializationRule
 		return null;
 	}
 
-//	@Override
-//	public @Nullable Map<@NonNull EReference, @NonNull IndexVector> getEReference2DiscriminatingRuleValueIndexes() {
-//		// TODO Auto-generated method stub
-//		throw new UnsupportedOperationException();
-//	}
-
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		if (eAttribute2enumerationValues != null) {
 			for (@NonNull EAttribute_EnumerationValues eAttributeData : eAttribute2enumerationValues) {
@@ -299,21 +280,6 @@ public class SerializationRule
 		}
 		return null;
 	}
-
-/*	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
-
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
-
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	} */
 
 	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
@@ -442,10 +408,10 @@ public class SerializationRule
 	}
 
 	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		@NonNull EStructuralFeature[] eStructuralFeature2cardinalityExpression2 = eStructuralFeature2cardinalityExpression;
-		if (eStructuralFeature2cardinalityExpression2 != null) {
-			for (@NonNull EStructuralFeature eStructuralFeatureData : eStructuralFeature2cardinalityExpression2) {
-				if (eStructuralFeatureData == eAttribute) {
+		@NonNull EAttribute[] needsDefaultEAttributes2 = needsDefaultEAttributes;
+		if (needsDefaultEAttributes2 != null) {
+			for (@NonNull EAttribute needsDefaultEAttribute : needsDefaultEAttributes2) {
+				if (needsDefaultEAttribute == eAttribute) {
 					return true;
 				}
 			}

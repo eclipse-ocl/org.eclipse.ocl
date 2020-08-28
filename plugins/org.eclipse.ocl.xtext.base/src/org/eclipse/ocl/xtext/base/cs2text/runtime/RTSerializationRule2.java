@@ -50,7 +50,7 @@ public class RTSerializationRule2 extends SerializationRule
 	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
-			serializationRuleAnalysis.getStaticRuleMatch().basicGetEStructuralFeature2requiredSlotsExpression(),
+			serializationRuleAnalysis.getStaticRuleMatch().basicGetNeedsDefaultEAttributes(),
 			serializationRuleAnalysis.basicGetEAttribute2enumerationValue2multiplicativeCardinality(),
 			serializationRuleAnalysis.basicGetEReference2ruleValueIndex2multiplicativeCardinality());
 		this.serializationRuleAnalysis = serializationRuleAnalysis;

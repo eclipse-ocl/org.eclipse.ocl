@@ -72,6 +72,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeCardinalityExpress
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceCardinalityExpression
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureCardinalityExpression
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.EAttribute
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -532,11 +533,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ELSE»
 			null,
 			«ENDIF»
-			«var eStructuralFeature2cardinalityExpression = serializationRuleAnalysis.basicGetEStructuralFeature2cardinalityExpression()»
-			«IF eStructuralFeature2cardinalityExpression !== null»
-			new @NonNull «newTypeReference(EStructuralFeature)» [] {
-				«FOR eStructuralFeatureData : eStructuralFeature2cardinalityExpression SEPARATOR ','»
-				«emitLiteral(eStructuralFeatureData)»
+			«var needsDefaultEAttributes = serializationRuleAnalysis.basicGetNeedsDefaultEAttributes()»
+			«IF needsDefaultEAttributes !== null»
+			new @NonNull «newTypeReference(EAttribute)» [] {
+				«FOR eAttribute : needsDefaultEAttributes SEPARATOR ','»
+				«emitLiteral(eAttribute)»
 				«ENDFOR»
 			},
 			«ELSE»

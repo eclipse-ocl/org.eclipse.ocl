@@ -213,9 +213,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return eReferenceDatas;
 	}
 
-	public @NonNull EStructuralFeature @Nullable [] basicGetEStructuralFeature2cardinalityExpression() {
+	public @NonNull EAttribute @Nullable [] basicGetNeedsDefaultEAttributes() {
 		assert staticRuleMatch != null;
-		return staticRuleMatch.basicGetEStructuralFeature2requiredSlotsExpression();
+		return staticRuleMatch.basicGetNeedsDefaultEAttributes();
 	}
 
 	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {

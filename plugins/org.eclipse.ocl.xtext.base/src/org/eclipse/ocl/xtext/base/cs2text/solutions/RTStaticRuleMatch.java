@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
@@ -95,24 +97,26 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
 
-	public @NonNull EStructuralFeature @Nullable [] basicGetEStructuralFeature2requiredSlotsExpression() {
-		int needsDefault = 0;
+	public @NonNull EAttribute @Nullable [] basicGetNeedsDefaultEAttributes() {
+		int needsDefaultCount = 0;
 		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
-			if (entry.getValue().isOne()) {
-				needsDefault++;
+			if (entry.getValue().isOne() && (entry.getKey() instanceof EAttribute)) {
+				needsDefaultCount++;
 			}
 		}
-		if (needsDefault <= 0) {
+		if (needsDefaultCount <= 0) {
 			return null;
 		}
-		@NonNull EStructuralFeature [] eStructuralFeatureDatas = new EStructuralFeature[needsDefault];
-		int i = 0;
+		@NonNull EAttribute [] needsDefaultEAttributes = new @NonNull EAttribute[needsDefaultCount];
+		int needsDefaultIndex = 0;
 		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
-			if (entry.getValue().isOne()) {
-				eStructuralFeatureDatas[i++] = entry.getKey();
+			EStructuralFeature eStructuralFeature = entry.getKey();
+			if (entry.getValue().isOne() && (eStructuralFeature instanceof EAttribute)) {
+				needsDefaultEAttributes[needsDefaultIndex++] = (EAttribute)eStructuralFeature;
 			}
 		}
-		return eStructuralFeatureDatas;
+		Arrays.sort(needsDefaultEAttributes, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		return needsDefaultEAttributes;
 	}
 
 	protected abstract @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis);
