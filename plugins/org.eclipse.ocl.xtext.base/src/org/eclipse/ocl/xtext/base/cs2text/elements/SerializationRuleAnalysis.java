@@ -37,7 +37,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_E
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_NeedsDefault;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
@@ -214,7 +213,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return eReferenceDatas;
 	}
 
-	public @NonNull EStructuralFeature_NeedsDefault @Nullable [] basicGetEStructuralFeature2cardinalityExpression() {
+	public @NonNull EStructuralFeature @Nullable [] basicGetEStructuralFeature2cardinalityExpression() {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.basicGetEStructuralFeature2requiredSlotsExpression();
 	}

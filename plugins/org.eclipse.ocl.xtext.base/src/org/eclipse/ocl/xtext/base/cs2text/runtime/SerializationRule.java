@@ -162,34 +162,6 @@ public class SerializationRule
 		}
 	}
 
-	public static class EStructuralFeature_NeedsDefault implements Nameable
-	{
-		protected final @NonNull EStructuralFeature eStructuralFeature;
-
-		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature) {
-			assert eStructuralFeature != null;
-			this.eStructuralFeature = eStructuralFeature;
-		}
-
-		public @NonNull EStructuralFeature getEStructuralFeature() {
-			return eStructuralFeature;
-		}
-
-		@Override
-		public @NonNull String getName() {
-			return XtextGrammarUtil.getName(eStructuralFeature);
-		}
-
-		public boolean needsDefault() {
-			return true;
-		}
-
-		@Override
-		public @NonNull String toString() {
-			return eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName();
-		}
-	}
-
 	public static class EnumerationValue_MultiplicativeCardinality implements Nameable
 	{
 		protected final @Nullable EnumerationValue enumerationValue;
@@ -256,7 +228,7 @@ public class SerializationRule
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
-	private final @NonNull EStructuralFeature_NeedsDefault @Nullable [] eStructuralFeature2cardinalityExpression;
+	private final @NonNull EStructuralFeature @Nullable [] eStructuralFeature2cardinalityExpression;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
@@ -276,7 +248,7 @@ public class SerializationRule
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull EStructuralFeature_NeedsDefault @Nullable [] eStructuralFeature2cardinalityExpression,
+			@NonNull EStructuralFeature @Nullable [] eStructuralFeature2cardinalityExpression,
 			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality,
 			@NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality) {
 		this.ruleValueIndex = ruleValueIndex;
@@ -470,11 +442,11 @@ public class SerializationRule
 	}
 
 	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		@NonNull EStructuralFeature_NeedsDefault[] eStructuralFeature2cardinalityExpression2 = eStructuralFeature2cardinalityExpression;
+		@NonNull EStructuralFeature[] eStructuralFeature2cardinalityExpression2 = eStructuralFeature2cardinalityExpression;
 		if (eStructuralFeature2cardinalityExpression2 != null) {
-			for (@NonNull EStructuralFeature_NeedsDefault eStructuralFeatureData : eStructuralFeature2cardinalityExpression2) {
-				if (eStructuralFeatureData.getEStructuralFeature() == eAttribute) {
-					return eStructuralFeatureData.needsDefault();
+			for (@NonNull EStructuralFeature eStructuralFeatureData : eStructuralFeature2cardinalityExpression2) {
+				if (eStructuralFeatureData == eAttribute) {
+					return true;
 				}
 			}
 		}
