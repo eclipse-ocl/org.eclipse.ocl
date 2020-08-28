@@ -45,7 +45,6 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -132,7 +131,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		RuleCall ruleCall = (RuleCall)XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule abstractRule = XtextGrammarUtil.getRule(ruleCall);
 		AbstractRuleAnalysis ruleAnalysis = getGrammarAnalysis().getRuleAnalysis(abstractRule);
-		return getRuleValueId(ruleAnalysis.getRuleValue(), true);
+		return ruleAnalysis.getRuleName();
 	}
 
 	protected @NonNull String emitLiteral(@NonNull EClassifier eClassifier) {
@@ -430,38 +429,6 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		String id = enumValue2id.get(enumValue);
 		assert id != null;
 		return addQualifier ? "ev." + id : id;
-	}
-
-	private @Nullable Map<@NonNull CardinalityExpression, @NonNull String> matchCheck2id = null;
-
-	protected @NonNull Iterable<@NonNull CardinalityExpression> getSortedMatchChecks(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull CardinalityExpression, @NonNull String> matchCheck2id2 = matchCheck2id;
-		if (matchCheck2id2 == null) {
-			matchCheck2id = matchCheck2id2 = new HashMap<>();
-		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for (@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
-				for (@NonNull CardinalityExpression matchCheck : serializationRuleAnalysis.getStaticRuleMatch().getEStructuralFeature2requiredSlotsExpression().values()) {
-					matchCheck2id2.put(matchCheck, "");
-				}
-			}
-		}
-		List<@NonNull CardinalityExpression> matchChecks = new ArrayList<>(matchCheck2id2.keySet());
-		Collections.sort(matchChecks, NameUtil.NAMEABLE_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(matchChecks);
-		int i = 0;
-		for (@NonNull CardinalityExpression matchCheck : matchChecks) {
-			matchCheck2id2.put(matchCheck, String.format(formatString, i++));
-		}
-		return matchChecks;
-	}
-
-	protected @NonNull String getMatchCheckId(@NonNull CardinalityExpression matchCheck, boolean addQualifier) {
-		assert matchCheck2id != null;
-		String id = matchCheck2id.get(matchCheck);
-		assert id != null;
-		return addQualifier ? "mc." + id : id;
 	}
 
 	private @Nullable Map<@NonNull AbstractRuleValue, @NonNull String> ruleValue2id = null;

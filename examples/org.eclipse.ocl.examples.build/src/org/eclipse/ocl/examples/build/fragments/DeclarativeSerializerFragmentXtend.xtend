@@ -73,6 +73,8 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceCardinalityExpress
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureCardinalityExpression
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.EAttribute
+import org.eclipse.xtext.service.GrammarProvider
+import org.eclipse.xtext.Grammar
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -120,8 +122,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			
 			«generateEnumValues(grammarAnalysis)»
 			
-			«generateMatchChecks(grammarAnalysis)»
-			
 			«generateMatchTerms(grammarAnalysis)»
 			
 			«generateMatchSteps(grammarAnalysis)»
@@ -138,7 +138,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			
 			private _EnumValues ev;
 			private _IndexVectors iv;
-			private _MatchChecks mc;
 			private _MatchTerms mt;
 			private _MatchSteps ms;
 			private _SerializationTerms st;
@@ -156,7 +155,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			public void init() {
 				iv = new _IndexVectors();
 				ev = new _EnumValues();
-				mc = new _MatchChecks();
 				mt = new _MatchTerms();
 				ms = new _MatchSteps();
 				st = new _SerializationTerms();
@@ -169,16 +167,16 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				st.init();
 			}
 			
-			//	Commented imports to ensure Xtend provides a true import allowing unqualified annotated usage
-				«FOR importedClassName : getSortedImportClassNames()»
-				«var index = importedClassName.lastIndexOf('.')»
-				«IF index < 0»
-				//	import «new TypeReference(importedClassName)»;
-				«ELSE»
-				//	import «new TypeReference(importedClassName.substring(0, index), importedClassName.substring(index+1).replace('$', '.'))»;
-				«ENDIF»
-				«ENDFOR»
 		}
+		//	Commented imports ensure Xtend provides a true import allowing unqualified annotated usage
+		«FOR importedClassName : getSortedImportClassNames()»
+		«var index = importedClassName.lastIndexOf('.')»
+		«IF index < 0»
+		//	import «new TypeReference(importedClassName)»;
+		«ELSE»
+		//	import «new TypeReference(importedClassName.substring(0, index), importedClassName.substring(index+1).replace('$', '.'))»;
+		«ENDIF»
+		«ENDFOR»
 		'''
 	}
 	
@@ -271,43 +269,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 	}
 
-	/* ************************************************************************************************************************** */
-	
-	protected def generateMatchChecks(GrammarAnalysis grammarAnalysis) {
-		'''
-		/**
-		 * Checks for the matching process.
-		 */
-		private class _MatchChecks
-		{
-			«FOR matchCheck : getSortedMatchChecks(grammarAnalysis)»
-			private final @NonNull «newTypeReference(CardinalityExpression)» «getMatchCheckId(matchCheck, false)» /* «matchCheck.toString()» */
-				= «generateMatchCheck(matchCheck)»;
-			«ENDFOR»
-		}
-		'''
-	}
-	
-	protected def generateMatchCheck(CardinalityExpression matchCheck) {
-		switch matchCheck {
-		EAttributeCardinalityExpression: return generateMatchCheck_EAttributeCardinalityExpression(matchCheck)
-		EReferenceCardinalityExpression: return generateMatchCheck_EReferenceCardinalityExpression(matchCheck)
-		EStructuralFeatureCardinalityExpression: return generateMatchCheck_EStructuralFeatureCardinalityExpression(matchCheck)
-		default: throw new UnsupportedOperationException()
-		}
-	}
-	
-	protected def generateMatchCheck_EAttributeCardinalityExpression(EAttributeCardinalityExpression matchCheck) {
-		'''new «newTypeReference(EAttributeCardinalityExpression)»("«matchCheck.getName()»", «emitLiteral(matchCheck.getEAttribute())», «getEnumValueId(matchCheck.getEnumerationValue(), true)»)'''
-	}
-	
-	protected def generateMatchCheck_EReferenceCardinalityExpression(EReferenceCardinalityExpression matchCheck) {
-		'''new «newTypeReference(EReferenceCardinalityExpression)»("«matchCheck.getName()»", «emitLiteral(matchCheck.getEReference())», «getRuleValueId(matchCheck.getParserRuleValue(), true)»)'''
-	}
-	
-	protected def generateMatchCheck_EStructuralFeatureCardinalityExpression(EStructuralFeatureCardinalityExpression matchCheck) {
-		'''new «newTypeReference(EStructuralFeatureCardinalityExpression)»("«matchCheck.getName()»", «emitLiteral(matchCheck.getEStructuralFeature())»)'''
-	}
 	
 	/* ************************************************************************************************************************** */
 	
@@ -535,7 +496,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ENDIF»
 			«var needsDefaultEAttributes = serializationRuleAnalysis.basicGetNeedsDefaultEAttributes()»
 			«IF needsDefaultEAttributes !== null»
-			new @NonNull «newTypeReference(EAttribute)» [] {
+			new /*@NonNull*/ «newTypeReference(EAttribute)» [] {
 				«FOR eAttribute : needsDefaultEAttributes SEPARATOR ','»
 				«emitLiteral(eAttribute)»
 				«ENDFOR»
@@ -708,7 +669,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 
 	protected def generateSerializationTerm1_CrossReference(RTSerializationCrossReferenceStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationCrossReferenceStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
-							= new «newTypeReference(RTSerializationCrossReferenceStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», "«emitCalledRule(serializationStep.getCrossReference())»")'''
+							= new «newTypeReference(RTSerializationCrossReferenceStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», getCrossReference(«emitLiteral(serializationStep.getEStructuralFeature())», "«emitCalledRule(serializationStep.getCrossReference())»"))'''
 	}
 	
 	protected def generateSerializationTerm1_Literal(RTSerializationLiteralStep serializationStep) {

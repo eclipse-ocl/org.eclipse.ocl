@@ -21,16 +21,12 @@ import org.eclipse.xtext.RuleCall;
 
 public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFeatureStep
 {
-	protected /*final @NonNull*/ CrossReference crossReference;
+	protected final @NonNull CrossReference crossReference;
 
-	public RTSerializationCrossReferenceStep(int variableIndex, @NonNull EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
+	public RTSerializationCrossReferenceStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
 		super(variableIndex, eStructuralFeature);
+		assert eStructuralFeature != null;
 		this.crossReference = crossReference;
-	}
-
-	public RTSerializationCrossReferenceStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, String xref) {
-		super(variableIndex, eStructuralFeature);
-	//	this.crossReference = (CrossReference)eStructuralFeature;			// XXX
 	}
 
 	@Override

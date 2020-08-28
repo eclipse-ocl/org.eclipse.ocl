@@ -40,7 +40,7 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 	}
 
 	protected boolean equalTo(@NonNull RTSerializationSequenceStep that) {
-		return super.equalTo(that);
+		return super.equalTo(that) && (this.startIndex == that.startIndex) && (this.endIndex == that.endIndex);
 	}
 
 	public int getEndIndex() {
@@ -53,6 +53,11 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 
 	public int getStepsRange() {
 		return endIndex- startIndex;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() + 5 * startIndex + 7 * endIndex;
 	}
 
 	@Override
