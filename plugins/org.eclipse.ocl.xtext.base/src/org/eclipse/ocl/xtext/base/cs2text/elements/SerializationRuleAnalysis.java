@@ -43,8 +43,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_Mu
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
-import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -556,16 +554,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.getCardinalityVariables();
-	}
-
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
-		assert staticRuleMatch != null;
-		return staticRuleMatch.match(slotsAnalysis);
-	}
-
-	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
-		assert staticRuleMatch != null;
-		return staticRuleMatch.needsDefault(eStructuralFeature);
 	}
 
 	private @NonNull MultiplicativeCardinality refineMultiplicativeCardinality(@NonNull MultiplicativeCardinality netMultiplicativeCardinality, @Nullable MultiplicativeCardinality oldMultiplicativeCardinality) {

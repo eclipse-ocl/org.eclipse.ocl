@@ -550,14 +550,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return serializationRule;
 	}
 
-	public boolean needsDefault(@NonNull EStructuralFeature eStructuralFeature) {
-		CardinalityExpression expression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
-		if (expression == null) {
-			return false;
-		}
-		return expression.isOne();
-	}
-
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
 		List<@NonNull Integer> variables = new ArrayList<>(variableIndex2node.keySet());
 		Collections.sort(variables);
