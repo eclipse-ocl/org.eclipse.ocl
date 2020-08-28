@@ -163,22 +163,19 @@ public class SerializationRule
 		}
 	}
 
-	public static class EStructuralFeature_CardinalityExpression implements Nameable
+	public static class EStructuralFeature_NeedsDefault implements Nameable
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
-	//	protected final /*@NonNull*/ CardinalityExpression cardinalityExpression;
 		protected final boolean needsDefault;
 
-		public EStructuralFeature_CardinalityExpression(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CardinalityExpression cardinalityExpression) {
+		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CardinalityExpression cardinalityExpression) {
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
-		//	this.cardinalityExpression = cardinalityExpression;
 			this.needsDefault = cardinalityExpression.isOne();
 		}
-		public EStructuralFeature_CardinalityExpression(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull String cardinalityExpression) {
+		public EStructuralFeature_NeedsDefault(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull String cardinalityExpression) {
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
-		//	this.cardinalityExpression = null;//cardinalityExpression;		// XXX
 			this.needsDefault = false;
 		}
 
@@ -267,7 +264,7 @@ public class SerializationRule
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked gainst the actual number of slots in an actual user element.
 	 */
-	private final @NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression;
+	private final @NonNull EStructuralFeature_NeedsDefault @NonNull [] eStructuralFeature2cardinalityExpression;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
@@ -287,7 +284,7 @@ public class SerializationRule
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull EStructuralFeature_CardinalityExpression @Nullable [] eStructuralFeature2cardinalityExpression,
+			@NonNull EStructuralFeature_NeedsDefault @Nullable [] eStructuralFeature2cardinalityExpression,
 			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality,
 			@NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality) {
 		this.ruleValueIndex = ruleValueIndex;
@@ -446,7 +443,7 @@ public class SerializationRule
 			//
 			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
 				boolean gotIt = false;
-				for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+				for (@NonNull EStructuralFeature_NeedsDefault eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
 					if (eStructuralFeatureData.getEStructuralFeature() == eStructuralFeature) {
 						gotIt = true;
 					}
@@ -471,7 +468,7 @@ public class SerializationRule
 	}
 
 	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
+		for (@NonNull EStructuralFeature_NeedsDefault eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
 			if (eStructuralFeatureData.getEStructuralFeature() == eAttribute) {
 				return eStructuralFeatureData.needsDefault();
 			}

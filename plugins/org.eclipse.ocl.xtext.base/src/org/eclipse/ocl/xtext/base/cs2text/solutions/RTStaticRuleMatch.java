@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_NeedsDefault;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -96,11 +96,11 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
 
-	public @NonNull EStructuralFeature_CardinalityExpression @Nullable [] basicGetEStructuralFeature2requiredSlotsExpression() {
-		@NonNull EStructuralFeature_CardinalityExpression [] eStructuralFeatureDatas = new @NonNull EStructuralFeature_CardinalityExpression[eStructuralFeature2requiredSlotsExpression.size()];
+	public @NonNull EStructuralFeature_NeedsDefault @Nullable [] basicGetEStructuralFeature2requiredSlotsExpression() {
+		@NonNull EStructuralFeature_NeedsDefault [] eStructuralFeatureDatas = new @NonNull EStructuralFeature_NeedsDefault[eStructuralFeature2requiredSlotsExpression.size()];
 		int i = 0;
 		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
-			eStructuralFeatureDatas[i++] = new EStructuralFeature_CardinalityExpression(entry.getKey(), entry.getValue());
+			eStructuralFeatureDatas[i++] = new EStructuralFeature_NeedsDefault(entry.getKey(), entry.getValue());
 		}
 		return eStructuralFeatureDatas;
 	}

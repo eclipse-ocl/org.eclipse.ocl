@@ -60,7 +60,6 @@ import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import com.google.inject.Inject
 import org.eclipse.jdt.annotation.NonNull
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
@@ -72,6 +71,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeCardinalityExpression
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceCardinalityExpression
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureCardinalityExpression
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_NeedsDefault
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -534,9 +534,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ENDIF»
 			«var eStructuralFeature2cardinalityExpression = serializationRuleAnalysis.basicGetEStructuralFeature2cardinalityExpression()»
 			«IF eStructuralFeature2cardinalityExpression !== null»
-			new @NonNull «newTypeReference(EStructuralFeature_CardinalityExpression)» [] {
+			new @NonNull «newTypeReference(EStructuralFeature_NeedsDefault)» [] {
 				«FOR eStructuralFeatureData : eStructuralFeature2cardinalityExpression SEPARATOR ','»
-				new «newTypeReference(EStructuralFeature_CardinalityExpression)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
+				new «newTypeReference(EStructuralFeature_NeedsDefault)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
 					"getIndexVectorId(eStructuralFeatureData.getCardinalityExpression(), true)") /* «eStructuralFeatureData.needsDefault()» */
 				«ENDFOR»
 			},
