@@ -40,6 +40,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -214,8 +215,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	}
 
 	public @NonNull EStructuralFeature_CardinalityExpression @Nullable [] basicGetEStructuralFeature2cardinalityExpression() {
-		@NonNull EStructuralFeature_CardinalityExpression[] eStructuralFeatureDatas = getEStructuralFeature2cardinalityExpression();
-		return eStructuralFeatureDatas;
+		assert staticRuleMatch != null;
+		return staticRuleMatch.basicGetEStructuralFeature2requiredSlotsExpression();
 	}
 
 	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {
@@ -377,7 +378,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return eReference2discriminatingRuleValueIndexes;
 	} */
 
-	private @NonNull EStructuralFeature_CardinalityExpression @NonNull [] getEStructuralFeature2cardinalityExpression() {
+	private @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> zzgetEStructuralFeature2cardinalityExpression() {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.getEStructuralFeature2requiredSlotsExpression();
 	}

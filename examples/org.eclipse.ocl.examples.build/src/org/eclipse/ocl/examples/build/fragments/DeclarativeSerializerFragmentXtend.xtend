@@ -68,6 +68,10 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_E
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression
+import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeCardinalityExpression
+import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceCardinalityExpression
+import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureCardinalityExpression
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -111,78 +115,21 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				return analysis;
 			}
 			
-			/**
-			 * Bit vectors of useful grammar rule combinations
-			 */
-			private class _IndexVectors
-			{
-				«FOR indexVector : getSortedIndexVectors(grammarAnalysis)»
-				private final @NonNull «newTypeReference(IndexVector)» «getIndexVectorId(indexVector, false)» // «FOR index : indexVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»
-					= new «newTypeReference(IndexVector)»(«indexVector.toWordsString()»);
-				«ENDFOR»
-			}
+			«generateIndexVectors(grammarAnalysis)»
 			
-			/**
-			 * String combinations used by assigned String EAttributes
-			 */
-			private class _EnumValues
-			{
-				«FOR enumValue : getSortedEnumValues(grammarAnalysis)»
-				private final @NonNull «newTypeReference(EnumerationValue)» «getEnumValueId(enumValue, false)» // «enumValue.toString()»
-					= «generateEnumValue(enumValue)»;
-				«ENDFOR»
-			}
+			«generateEnumValues(grammarAnalysis)»
 			
-			/**
-			 * Expression terms used during the matching process.
-			 */
-			private class _MatchTerms
-			{
-				«FOR solution : getSortedSolutions(grammarAnalysis)»
-				private final @NonNull «newTypeReference(CardinalitySolution)» «getSolutionId(solution, false)» // «solution.toString()»
-					= «generateMatchTerm(solution)»;
-				«ENDFOR»
-			}
+			«generateMatchChecks(grammarAnalysis)»
 			
-			/**
-			 * Steps for the matching process.
-			 */
-			private class _MatchSteps
-			{
-				«FOR step : getSortedSolutionSteps(grammarAnalysis)»
-				private final @NonNull «newTypeReference(CardinalitySolutionStep)» «getSolutionStepId(step, false)» // «step.toString()»
-					= «generateSolutionStep(step)»;
-				«ENDFOR»
-			}
+			«generateMatchTerms(grammarAnalysis)»
 			
-			/**
-			 * The various serialization term used to serialize a serialization rule.
-			 */
-			private class _SerializationTerms
-			{
-				«FOR step : getSortedSerializationSteps(grammarAnalysis)»
-				«generateSerializationTerm1(step)»;
-				«ENDFOR»
-				
-				/**
-				 * Post constructor initialization that avoids recursions.
-				 */
-				private final void init() {
-					«FOR step : getSortedSerializationSteps(grammarAnalysis)»«generateSerializationTerm2(step)»«ENDFOR»
-				}
-			}
+			«generateMatchSteps(grammarAnalysis)»
+			
+			«generateSerializationTerms(grammarAnalysis)»
 			
 			«generateSerializationSegments(grammarAnalysis)»
 						
-			/**
-			 * The various serialization rules for each grammar rule.
-			 */
-			private class _RuleValues
-			{
-				«FOR ruleValue : getSortedRuleValues(grammarAnalysis)»
-				«generateRuleValue(grammarAnalysis, ruleValue)»
-				«ENDFOR»
-			}
+			«generateRuleValues(grammarAnalysis)»
 												
 			«generateEClassDatas(grammarAnalysis)»
 
@@ -190,6 +137,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			
 			private _EnumValues ev;
 			private _IndexVectors iv;
+			private _MatchChecks mc;
 			private _MatchTerms mt;
 			private _MatchSteps ms;
 			private _SerializationTerms st;
@@ -207,6 +155,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			public void init() {
 				iv = new _IndexVectors();
 				ev = new _EnumValues();
+				mc = new _MatchChecks();
 				mt = new _MatchTerms();
 				ms = new _MatchSteps();
 				st = new _SerializationTerms();
@@ -268,6 +217,21 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	/* ************************************************************************************************************************** */
 	
+	protected def generateEnumValues(GrammarAnalysis grammarAnalysis) {
+		'''
+		/**
+		 * String combinations used by assigned String EAttributes
+		 */
+		private class _EnumValues
+		{
+			«FOR enumValue : getSortedEnumValues(grammarAnalysis)»
+			private final @NonNull «newTypeReference(EnumerationValue)» «getEnumValueId(enumValue, false)» // «enumValue.toString()»
+				= «generateEnumValue(enumValue)»;
+			«ENDFOR»
+		}
+		'''
+	}
+	
 	protected def generateEnumValue(EnumerationValue enumValue) {
 		switch enumValue {
 		MultipleEnumerationValue: return generateEnumValue_MultipleEnumerationValue(enumValue)
@@ -291,6 +255,93 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 
 	/* ************************************************************************************************************************** */
 	
+	protected def generateIndexVectors(GrammarAnalysis grammarAnalysis) {
+		'''
+		/**
+		 * Bit vectors of useful grammar rule combinations
+		 */
+		private class _IndexVectors
+		{
+			«FOR indexVector : getSortedIndexVectors(grammarAnalysis)»
+			private final @NonNull «newTypeReference(IndexVector)» «getIndexVectorId(indexVector, false)» // «FOR index : indexVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»
+				= new «newTypeReference(IndexVector)»(«indexVector.toWordsString()»);
+			«ENDFOR»
+		}
+		'''
+	}
+
+	/* ************************************************************************************************************************** */
+	
+	protected def generateMatchChecks(GrammarAnalysis grammarAnalysis) {
+		'''
+		/**
+		 * Checks for the matching process.
+		 */
+		private class _MatchChecks
+		{
+			«FOR matchCheck : getSortedMatchChecks(grammarAnalysis)»
+			private final @NonNull «newTypeReference(CardinalityExpression)» «getMatchCheckId(matchCheck, false)» /* «matchCheck.toString()» */
+				= «generateMatchCheck(matchCheck)»;
+			«ENDFOR»
+		}
+		'''
+	}
+	
+	protected def generateMatchCheck(CardinalityExpression matchCheck) {
+		switch matchCheck {
+		EAttributeCardinalityExpression: return generateMatchCheck_EAttributeCardinalityExpression(matchCheck)
+		EReferenceCardinalityExpression: return generateMatchCheck_EReferenceCardinalityExpression(matchCheck)
+		EStructuralFeatureCardinalityExpression: return generateMatchCheck_EStructuralFeatureCardinalityExpression(matchCheck)
+		default: throw new UnsupportedOperationException()
+		}
+	}
+	
+	protected def generateMatchCheck_EAttributeCardinalityExpression(EAttributeCardinalityExpression matchCheck) {
+		'''new «newTypeReference(EAttributeCardinalityExpression)»("«matchCheck.getName()»", «emitLiteral(matchCheck.getEAttribute())», «getEnumValueId(matchCheck.getEnumerationValue(), true)»)'''
+	}
+	
+	protected def generateMatchCheck_EReferenceCardinalityExpression(EReferenceCardinalityExpression matchCheck) {
+		'''new «newTypeReference(EReferenceCardinalityExpression)»("«matchCheck.getName()»", «emitLiteral(matchCheck.getEReference())», «getRuleValueId(matchCheck.getParserRuleValue(), true)»)'''
+	}
+	
+	protected def generateMatchCheck_EStructuralFeatureCardinalityExpression(EStructuralFeatureCardinalityExpression matchCheck) {
+		'''new «newTypeReference(EStructuralFeatureCardinalityExpression)»("«matchCheck.getName()»", «emitLiteral(matchCheck.getEStructuralFeature())»)'''
+	}
+	
+	/* ************************************************************************************************************************** */
+	
+	protected def generateMatchSteps(GrammarAnalysis grammarAnalysis) {
+		'''
+		/**
+		 * Steps for the matching process.
+		 */
+		private class _MatchSteps
+		{
+			«FOR step : getSortedSolutionSteps(grammarAnalysis)»
+			private final @NonNull «newTypeReference(CardinalitySolutionStep)» «getSolutionStepId(step, false)» // «step.toString()»
+				= «generateSolutionStep(step)»;
+			«ENDFOR»
+		}
+		'''
+	}
+	
+	/* ************************************************************************************************************************** */
+	
+	protected def generateMatchTerms(GrammarAnalysis grammarAnalysis) {
+		'''
+		/**
+		 * Expression terms used during the matching process.
+		 */
+		private class _MatchTerms
+		{
+			«FOR solution : getSortedSolutions(grammarAnalysis)»
+			private final @NonNull «newTypeReference(CardinalitySolution)» «getSolutionId(solution, false)» // «solution.toString()»
+				= «generateMatchTerm(solution)»;
+			«ENDFOR»
+		}
+		'''
+	}
+
 	protected def generateMatchTerm(CardinalitySolution solution) {
 		switch solution {
 		AddCardinalitySolution: return generateMatchTerm_AddCardinalitySolution(solution)
@@ -348,6 +399,20 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	/* ************************************************************************************************************************** */
+	
+	protected def generateRuleValues(GrammarAnalysis grammarAnalysis) {
+		'''
+		/**
+		 * The various serialization rules for each grammar rule.
+		 */
+		private class _RuleValues
+		{
+			«FOR ruleValue : getSortedRuleValues(grammarAnalysis)»
+			«generateRuleValue(grammarAnalysis, ruleValue)»
+			«ENDFOR»
+		}
+		'''
+	}
 	
 	protected def generateRuleValue(GrammarAnalysis grammarAnalysis, AbstractRuleValue ruleValue) {
 		switch ruleValue {
@@ -591,6 +656,27 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	/* ************************************************************************************************************************** */
+	
+	protected def generateSerializationTerms(GrammarAnalysis grammarAnalysis) {
+		'''
+		/**
+		 * The various serialization term used to serialize a serialization rule.
+		 */
+		private class _SerializationTerms
+		{
+			«FOR step : getSortedSerializationSteps(grammarAnalysis)»
+			«generateSerializationTerm1(step)»;
+			«ENDFOR»
+			
+			/**
+			 * Post constructor initialization that avoids recursions.
+			 */
+			private final void init() {
+				«FOR step : getSortedSerializationSteps(grammarAnalysis)»«generateSerializationTerm2(step)»«ENDFOR»
+			}
+		}
+		'''
+	}
 	
 	protected def generateSerializationTerm1(RTSerializationStep serializationStep) {
 		switch serializationStep {

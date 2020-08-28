@@ -28,8 +28,9 @@ public class EStructuralFeatureCardinalityExpression extends AbstractCardinality
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	public EStructuralFeatureCardinalityExpression(@NonNull String name, @NonNull EStructuralFeature eStructuralFeature) {
+	public EStructuralFeatureCardinalityExpression(@NonNull String name, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
 		super(name);
+		assert eStructuralFeature != null;
 		this.eStructuralFeature = eStructuralFeature;
 	}
 
@@ -57,6 +58,10 @@ public class EStructuralFeatureCardinalityExpression extends AbstractCardinality
 	@Override
 	public @Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions() {
 		return null;
+	}
+
+	public @NonNull EStructuralFeature getEStructuralFeature() {
+		return eStructuralFeature;
 	}
 
 	@Override

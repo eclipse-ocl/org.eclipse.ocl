@@ -31,11 +31,11 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	protected final @NonNull String name;
 
 	/**
-	 * The cardinalities that determine the production of a particar feature/
+	 * The cardinalities that determine the production of a particular feature/
 	 *
 	 * e.g.  { x+=X (',' x+=X)* }? is C0[?] + C0[?] * C1[*]
 	 *
-	 * NB an empty list for no variab;es is the consyamt 1 sice unit cardinalities are suppressed.
+	 * NB an empty list for no variables is the consyamt 1 sice unit cardinalities are suppressed.
 	 */
 	private final @NonNull List<@NonNull List<@NonNull CardinalityVariable>> sumOfProducts = new ArrayList<>();
 

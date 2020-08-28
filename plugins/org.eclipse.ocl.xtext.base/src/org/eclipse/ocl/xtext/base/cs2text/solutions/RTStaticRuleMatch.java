@@ -103,15 +103,19 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
 
-	protected abstract @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis);
-
-	public @NonNull EStructuralFeature_CardinalityExpression @NonNull [] getEStructuralFeature2requiredSlotsExpression() {
+	public @NonNull EStructuralFeature_CardinalityExpression @Nullable [] basicGetEStructuralFeature2requiredSlotsExpression() {
 		@NonNull EStructuralFeature_CardinalityExpression [] eStructuralFeatureDatas = new @NonNull EStructuralFeature_CardinalityExpression[eStructuralFeature2requiredSlotsExpression.size()];
 		int i = 0;
 		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
 			eStructuralFeatureDatas[i++] = new EStructuralFeature_CardinalityExpression(entry.getKey(), entry.getValue());
 		}
 		return eStructuralFeatureDatas;
+	}
+
+	protected abstract @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis);
+
+	public @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> getEStructuralFeature2requiredSlotsExpression() {
+		return eStructuralFeature2requiredSlotsExpression;
 	}
 
 	public @NonNull SerializationRuleAnalysis getSerializationRule() {

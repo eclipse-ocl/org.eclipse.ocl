@@ -22,8 +22,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
-import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 public class RTSerializationRule2 extends SerializationRule
 {
@@ -52,7 +50,7 @@ public class RTSerializationRule2 extends SerializationRule
 	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
-			serializationRuleAnalysis.getStaticRuleMatch().getEStructuralFeature2requiredSlotsExpression(),
+			serializationRuleAnalysis.getStaticRuleMatch().basicGetEStructuralFeature2requiredSlotsExpression(),
 			serializationRuleAnalysis.basicGetEAttribute2enumerationValue2multiplicativeCardinality(),
 			serializationRuleAnalysis.basicGetEReference2ruleValueIndex2multiplicativeCardinality());
 		this.serializationRuleAnalysis = serializationRuleAnalysis;

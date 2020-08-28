@@ -40,8 +40,9 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 	protected final @NonNull ParserRuleValue parserRuleValue;
 	private @NonNull Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> parserRuleValue2cardinalityExpression = new HashMap<>();
 
-	public EReferenceCardinalityExpression(@NonNull String name, @NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
+	public EReferenceCardinalityExpression(@NonNull String name, /*@NonNull*/ EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
 		super(name);
+		assert eReference != null;
 		this.eReference = eReference;
 		this.parserRuleValue = parserRuleValue;
 	}
@@ -82,7 +83,11 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		return parserRuleValue2cardinalityExpression.values();
 	}
 
-	public @Nullable ParserRuleValue getParserRuleValue() {
+	public @NonNull EReference getEReference() {
+		return eReference;
+	}
+
+	public @NonNull ParserRuleValue getParserRuleValue() {
 		return parserRuleValue;
 	}
 

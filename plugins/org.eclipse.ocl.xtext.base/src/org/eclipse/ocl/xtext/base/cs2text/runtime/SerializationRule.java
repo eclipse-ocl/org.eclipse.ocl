@@ -284,7 +284,7 @@ public class SerializationRule
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
-			@NonNull EStructuralFeature_CardinalityExpression @NonNull [] eStructuralFeature2cardinalityExpression,
+			@NonNull EStructuralFeature_CardinalityExpression @Nullable [] eStructuralFeature2cardinalityExpression,
 			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality,
 			@NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality) {
 		this.ruleValueIndex = ruleValueIndex;
@@ -293,6 +293,7 @@ public class SerializationRule
 		this.staticSegments = staticSegments;
 		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
 		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
+		assert eStructuralFeature2cardinalityExpression != null;
 		this.eStructuralFeature2cardinalityExpression = eStructuralFeature2cardinalityExpression;
 		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
 		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
@@ -429,14 +430,14 @@ public class SerializationRule
 			}
 			//
 			//	Evaluate the expressions to determine the required size of each slot.
-			//
+			/* -- re-evaluation is redundant - so no expression at run-time
 			for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
 				CardinalityExpression expression = eStructuralFeatureData.getCardinalityExpression();
 				assert expression != null;
 				if (!expression.checkSize(dynamicRuleMatch)) {
 					return null;
 				}
-			}
+			} */
 			//
 			//	Check that no 'unused' features are used.
 			//

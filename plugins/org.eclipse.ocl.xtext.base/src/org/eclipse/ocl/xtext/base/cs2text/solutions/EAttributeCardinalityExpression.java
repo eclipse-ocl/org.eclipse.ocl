@@ -28,7 +28,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 /**
- * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
+ * A CardinalityExpression equates the sum of CardinailtyVariable products to the number of elements in an eStrucuralFeature slot.
  *
  * Multiple CardinalityExpressions provide a set of simultaneous equations for which an integer solution mmust be found to
  * select a potential serialization option.
@@ -39,8 +39,9 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 	protected final @NonNull EnumerationValue enumerationValue;
 	private final @NonNull Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression = new HashMap<>();
 
-	public EAttributeCardinalityExpression(@NonNull String name, @NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+	public EAttributeCardinalityExpression(@NonNull String name, /*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		super(name);
+		assert eAttribute != null;
 		this.eAttribute = eAttribute;
 		this.enumerationValue = enumerationValue;
 	}
@@ -80,6 +81,10 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 	@Override
 	public @Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions() {
 		return enumerationValue2cardinalityExpression.values();
+	}
+
+	public @NonNull EAttribute getEAttribute() {
+		return eAttribute;
 	}
 
 	public @NonNull EnumerationValue getEnumerationValue() {
