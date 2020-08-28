@@ -166,25 +166,24 @@ public class SerializationRule
 	public static class EStructuralFeature_CardinalityExpression implements Nameable
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
-		protected final /*@NonNull*/ CardinalityExpression cardinalityExpression;
+	//	protected final /*@NonNull*/ CardinalityExpression cardinalityExpression;
+		protected final boolean needsDefault;
 
 		public EStructuralFeature_CardinalityExpression(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CardinalityExpression cardinalityExpression) {
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
-			this.cardinalityExpression = cardinalityExpression;
+		//	this.cardinalityExpression = cardinalityExpression;
+			this.needsDefault = cardinalityExpression.isOne();
 		}
 		public EStructuralFeature_CardinalityExpression(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull String cardinalityExpression) {
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
-			this.cardinalityExpression = null;//cardinalityExpression;		// XXX
+		//	this.cardinalityExpression = null;//cardinalityExpression;		// XXX
+			this.needsDefault = false;
 		}
 
 		public @NonNull EStructuralFeature getEStructuralFeature() {
 			return eStructuralFeature;
-		}
-
-		public @NonNull CardinalityExpression getCardinalityExpression() {
-			return cardinalityExpression;
 		}
 
 		@Override
@@ -192,9 +191,13 @@ public class SerializationRule
 			return XtextGrammarUtil.getName(eStructuralFeature);
 		}
 
+		public boolean needsDefault() {
+			return needsDefault;
+		}
+
 		@Override
 		public @NonNull String toString() {
-			return eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + " " + cardinalityExpression;
+			return eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName();
 		}
 	}
 
@@ -470,11 +473,7 @@ public class SerializationRule
 	public boolean needsDefault(@NonNull EAttribute eAttribute) {
 		for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
 			if (eStructuralFeatureData.getEStructuralFeature() == eAttribute) {
-				CardinalityExpression expression = eStructuralFeatureData.getCardinalityExpression();
-			//	if (expression == null) {
-			//		return false;
-			//	}
-				return expression.isOne();
+				return eStructuralFeatureData.needsDefault();
 			}
 		}
 		return false;

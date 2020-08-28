@@ -544,8 +544,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return variable2node.keySet();
 	}
 
-//	@Override
-	@Override
 	public @NonNull SerializationRuleAnalysis getSerializationRule() {
 		return serializationRule;
 	}

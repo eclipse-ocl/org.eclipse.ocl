@@ -20,13 +20,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EStructuralFeature_CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
@@ -34,11 +32,6 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
  */
 public abstract class RTStaticRuleMatch implements RuleMatch
 {
-	/**
-	 * The rule for which this is the static analysis.
-	 */
-//	protected final @NonNull RTSerializationRule serializationRule;
-
 	/**
 	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
 	 * cardinality variables. This is checked against the actual number of slots in an actual user element.
@@ -118,10 +111,6 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		return eStructuralFeature2requiredSlotsExpression;
 	}
 
-	public @NonNull SerializationRuleAnalysis getSerializationRule() {
-		throw new UnsupportedOperationException();		// XXX
-	}
-
 	@Override
 	public @Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature) {
 		return null;
@@ -141,7 +130,7 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		return steps;
 	}
 
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
+/*	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		//
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
@@ -180,5 +169,5 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 			}
 		}
 		return dynamicRuleMatch;
-	}
+	} */
 }

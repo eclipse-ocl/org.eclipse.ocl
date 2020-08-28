@@ -537,7 +537,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			new @NonNull «newTypeReference(EStructuralFeature_CardinalityExpression)» [] {
 				«FOR eStructuralFeatureData : eStructuralFeature2cardinalityExpression SEPARATOR ','»
 				new «newTypeReference(EStructuralFeature_CardinalityExpression)»(«emitLiteral(eStructuralFeatureData.getEStructuralFeature())»,
-					"getIndexVectorId(eStructuralFeatureData.getCardinalityExpression(), true)") /* «eStructuralFeatureData.getCardinalityExpression()» */
+					"getIndexVectorId(eStructuralFeatureData.getCardinalityExpression(), true)") /* «eStructuralFeatureData.needsDefault()» */
 				«ENDFOR»
 			},
 			«ELSE»
