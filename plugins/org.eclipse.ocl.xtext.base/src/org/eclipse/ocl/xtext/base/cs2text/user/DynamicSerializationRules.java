@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -38,11 +38,11 @@ import com.google.common.collect.Lists;
  */
 public class DynamicSerializationRules
 {
-	protected final @NonNull EClassData eClassData;
+	protected final @NonNull EClassValue eClassValue;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 
-	public DynamicSerializationRules(@NonNull EClassData eClassData, @NonNull SerializationRule @NonNull [] serializationRules) {
-		this.eClassData = eClassData;
+	public DynamicSerializationRules(@NonNull EClassValue eClassValue, @NonNull SerializationRule @NonNull [] serializationRules) {
+		this.eClassValue = eClassValue;
 		this.serializationRules = serializationRules;
 	}
 
@@ -183,7 +183,7 @@ public class DynamicSerializationRules
 	} */
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		EClass eClass = eClassData.getEClass();
+		EClass eClass = eClassValue.getEClass();
 		s.append(eClass.getEPackage().getName());
 		s.append("::");
 		s.append(eClass.getName());

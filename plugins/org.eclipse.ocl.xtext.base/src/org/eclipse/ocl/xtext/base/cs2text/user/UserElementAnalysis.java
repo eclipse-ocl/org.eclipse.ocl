@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
@@ -36,7 +36,7 @@ public class UserElementAnalysis implements Nameable
 	protected final @Nullable EReference eContainmentFeature;
 	protected final @NonNull EObject eObject;
 	protected final @NonNull EClass eClass;
-	protected final @NonNull EClassData eClassData;
+	protected final @NonNull EClassValue eClassValue;
 	protected final @NonNull String name;
 	protected final @NonNull DynamicSerializationRules serializationRules;
 	private @Nullable UserSlotsAnalysis slotsAnalysis = null;
@@ -51,7 +51,7 @@ public class UserElementAnalysis implements Nameable
 		this.eContainmentFeature = eContainmentFeature;
 		this.eObject = eObject;
 		this.eClass = UserModelAnalysis.eClass(eObject);
-		this.eClassData = grammarAnalysis.getEClassData(eClass);
+		this.eClassValue = grammarAnalysis.getEClassValue(eClass);
 		this.name = eClass.getName() + "@" + ++count;
 		this.serializationRules = analyzeSerializationRules();
 		modelAnalysis.debugAddUserElementAnalysis(this);
@@ -70,8 +70,8 @@ public class UserElementAnalysis implements Nameable
 		if (eContainmentFeature2 != null) {
 			UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
 			assert containingElementAnalysis2 != null;
-			EClassData parentEClassData = grammarAnalysis.getEClassData(containingElementAnalysis2.getEClass());
-			IndexVector targetRuleValues = parentEClassData.getAssignedTargetRuleValues(eContainmentFeature2);
+			EClassValue parentEClassValue = grammarAnalysis.getEClassValue(containingElementAnalysis2.getEClass());
+			IndexVector targetRuleValues = parentEClassValue.getAssignedTargetRuleValues(eContainmentFeature2);
 			if (targetRuleValues != null) {
 				targetRuleValueIndexes = new IndexVector();
 				for (int targetRuleValueIndex : targetRuleValues) {
@@ -86,8 +86,8 @@ public class UserElementAnalysis implements Nameable
 				}
 			}
 		}
-		EClassData parentEClassData = grammarAnalysis.getEClassData(eClass);
-		DynamicSerializationRules dynamicSerializationRules = parentEClassData.createDynamicSerializationRules(targetRuleValueIndexes);
+		EClassValue parentEClassValue = grammarAnalysis.getEClassValue(eClass);
+		DynamicSerializationRules dynamicSerializationRules = parentEClassValue.createDynamicSerializationRules(targetRuleValueIndexes);
 		modelAnalysis.debugAddDynamicSerializationRules(dynamicSerializationRules);
 		return dynamicSerializationRules;
 	}

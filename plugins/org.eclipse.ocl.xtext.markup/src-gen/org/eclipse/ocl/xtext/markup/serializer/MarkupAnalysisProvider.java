@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
 
 public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 {
@@ -25,7 +25,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	@Override
 	public RTGrammarAnalysis getAnalysis() {
 		if (analysis == null) {
-			analysis = new RTGrammarAnalysis(new @NonNull EClassData[] {}, new @NonNull AbstractRuleValue[] {});
+			analysis = new RTGrammarAnalysis(new @NonNull EClassValue[] {}, new @NonNull AbstractRuleValue[] {});
 		}
 		return analysis;
 	}

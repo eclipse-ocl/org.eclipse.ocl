@@ -50,7 +50,7 @@ import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySol
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -255,8 +255,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		if (eClass2id2 == null) {
 			eClass2id = eClass2id2 = new HashMap<>();
 		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			eClass2id2.put(eClassData.getEClass(), "");
+		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
+			eClass2id2.put(eClassValue.getEClass(), "");
 		}
 		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2id2.keySet());
 		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
@@ -273,13 +273,13 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		if (enumValue2id2 == null) {
 			enumValue2id = enumValue2id2 = new HashMap<>();
 		}
-	//	for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
+	//	for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
 			for (@NonNull EnumerationValue enumValue : grammarAnalysis.getEnumerationValues()) {
 				enumValue2id2.put(enumValue, "");
 	//		}
 		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for (@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
+			for (@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 				for (@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
@@ -305,6 +305,12 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		String id = enumValue2id.get(enumValue);
 		assert id != null;
 		return addQualifier ? "ev." + id : id;
+	}
+
+	protected @NonNull List<@NonNull EReference_RuleIndexes> getEReferenceDatasIterable(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EClass eClass) {
+		List<@NonNull EReference_RuleIndexes> eReferenceDatas = Lists.newArrayList(grammarAnalysis.getEReferenceDatas(eClass));
+		Collections.sort(eReferenceDatas, NameUtil.NAMEABLE_COMPARATOR);
+		return eReferenceDatas;
 	}
 
 	protected @NonNull GrammarAnalysis getGrammarAnalysis() {
@@ -404,8 +410,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		if (matchStep2id2 == null) {
 			matchStep2id = matchStep2id2 = new HashMap<>();
 		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for (@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
+			for (@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 				for (@NonNull CardinalitySolutionStep matchStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					matchStep2id2.put(matchStep, "");
@@ -434,8 +440,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		if (matchTerm2id2 == null) {
 			matchTerm2id = matchTerm2id2 = new HashMap<>();
 		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
+			for(@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 				for(@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution matchTerm : solutionStep.getSolutionClosure()) {
@@ -622,8 +628,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		if (serializationStep2id2 == null) {
 			serializationStep2id = serializationStep2id2 = new HashMap<>();
 		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
+			for(@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
 				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
 					serializationStep2id2.put(serializationStep, "");
 				}

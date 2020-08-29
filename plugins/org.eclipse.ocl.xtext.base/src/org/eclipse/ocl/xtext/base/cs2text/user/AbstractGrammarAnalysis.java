@@ -22,40 +22,40 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
 
 public abstract class AbstractGrammarAnalysis
 {
-	private final @NonNull Map<@NonNull EClass, @NonNull EClassData> eClass2eClassData = new HashMap<>();
+	private final @NonNull Map<@NonNull EClass, @NonNull EClassValue> eClass2eClassValue = new HashMap<>();
 
-	protected void addEClassData(@NonNull EClassData eClassData) {
-		assert eClassData != null;
-		EClassData old = eClass2eClassData.put(eClassData.getEClass(), eClassData);
+	protected void addEClassValue(@NonNull EClassValue eClassValue) {
+		assert eClassValue != null;
+		EClassValue old = eClass2eClassValue.put(eClassValue.getEClass(), eClassValue);
 		assert old == null;
 	}
 
-	public @NonNull EClassData getEClassData(@NonNull EClass eClass) {
-		assert eClass2eClassData.size() > 0;
-		return ClassUtil.nonNullState(eClass2eClassData.get(eClass));
+	public @NonNull EClassValue getEClassValue(@NonNull EClass eClass) {
+		assert eClass2eClassValue.size() > 0;
+		return ClassUtil.nonNullState(eClass2eClassValue.get(eClass));
 	}
 
 	public abstract @NonNull String getRuleName(int ruleValueIndex);
 
 	public abstract @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex);
 
-	public @NonNull Iterable<@NonNull EClassData> getSortedProducedEClassDatas() {
-		assert eClass2eClassData.size() > 0;
-		List<@NonNull EClassData> eClassDatas = new ArrayList<>(ClassUtil.nonNullState(eClass2eClassData.values()));
-		Collections.sort(eClassDatas, NameUtil.NAMEABLE_COMPARATOR);
-		return eClassDatas;
+	public @NonNull Iterable<@NonNull EClassValue> getSortedProducedEClassValues() {
+		assert eClass2eClassValue.size() > 0;
+		List<@NonNull EClassValue> eClassValues = new ArrayList<>(ClassUtil.nonNullState(eClass2eClassValue.values()));
+		Collections.sort(eClassValues, NameUtil.NAMEABLE_COMPARATOR);
+		return eClassValues;
 	}
 
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		for (@NonNull EClassData eClassData : getSortedProducedEClassDatas()) {
+		for (@NonNull EClassValue eClassValue : getSortedProducedEClassValues()) {
 			StringUtil.appendIndentation(s, 1);
-			eClassData.toString(s, 1);
+			eClassValue.toString(s, 1);
 		}
 		return s.toString();
 	}

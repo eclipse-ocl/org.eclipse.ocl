@@ -61,13 +61,13 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassData
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -94,7 +94,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 						/**
 						 *	The indexable per-produceable EClass meta data.
 						 */
-						new «newTypeReference(EClassData)» [] {
+						new «newTypeReference(EClassValue)» [] {
 							«FOR eClass : getEClassIterable(grammarAnalysis) SEPARATOR ','»
 							«getEClassId(eClass, true)»  /* «eClass.getEPackage().getName()»::«eClass.getName()» */
 							«ENDFOR»
@@ -188,7 +188,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _EClassValues
 		{
 			«FOR eClass : getEClassIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(EClassData)» «getEClassId(eClass, false)» // «eClass.getName()»
+			private final @NonNull «newTypeReference(EClassValue)» «getEClassId(eClass, false)» // «eClass.getName()»
 				= «generateEClassValue_EClass(grammarAnalysis, eClass)»;
 			«ENDFOR»
 		}
@@ -197,14 +197,14 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateEClassValue_EClass(GrammarAnalysis grammarAnalysis, EClass eClass) {
 		'''
-		new «newTypeReference(EClassData)»(«emitLiteral(eClass)»,
+		new «newTypeReference(EClassValue)»(«emitLiteral(eClass)»,
 			new @NonNull «newTypeReference(SerializationRule)» [] {
-				«FOR serializationRule : grammarAnalysis.getEClassData(eClass).getSerializationRules() SEPARATOR ','»
+				«FOR serializationRule : grammarAnalysis.getEClassValue(eClass).getSerializationRules() SEPARATOR ','»
 				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
 				«ENDFOR»
 			}, «IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null«ELSE»
 			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
-				«FOR eReferenceData : grammarAnalysis.getEReferenceDatas(eClass) SEPARATOR ','»
+				«FOR eReferenceData : getEReferenceDatasIterable(grammarAnalysis, eClass) SEPARATOR ','»
 				new «newTypeReference(EReference_RuleIndexes)»(«emitLiteral(eReferenceData.getEReference())»,
 					«getIndexVectorId(eReferenceData.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
 				«ENDFOR»

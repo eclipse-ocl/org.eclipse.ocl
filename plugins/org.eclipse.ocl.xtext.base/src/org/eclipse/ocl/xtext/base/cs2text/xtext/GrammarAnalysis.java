@@ -107,7 +107,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
 
 	private @Nullable RTGrammarAnalysis runtime = null;
-	private @Nullable Iterable<@NonNull EClassData> sortedProducedEClassDatas = null;
+	private @Nullable Iterable<@NonNull EClassValue> sortedProducedEClassValues = null;
 	private @Nullable Map<@NonNull SerializationRule, @NonNull SerializationRuleAnalysis> serializationRule2aserializationRuleAnalysis = null;
 
 	public GrammarAnalysis() {
@@ -379,7 +379,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				serializationRules[i++] = serializationRule;
 				serializationRule2aserializationRuleAnalysis2.put(serializationRule, serializationRuleAnalysis);
 			}
-			addEClassData(new EClassData(eClass, serializationRules, eReferenceData));
+			addEClassValue(new EClassValue(eClass, serializationRules, eReferenceData));
 		}
 		for (@NonNull SerializationRule serializationRule : serializationRule2aserializationRuleAnalysis2.keySet()) {
 			SerializationRuleAnalysis serializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2.get(serializationRule);
@@ -459,13 +459,13 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 //	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> basicGetEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
-//		EClassData eClassData = getEClassData(eClass);
-//		return eClassData.basicGetEContainmentFeature2assignedTargetRuleValues();
+//		EClassValue eClassValue = getEClassValue(eClass);
+//		return eClassValue.basicGetEContainmentFeature2assignedTargetRuleValues();
 //	}
 
 	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceDatas(@NonNull EClass eClass) {
-		EClassData eClassData = getEClassData(eClass);
-		return eClassData.basicGetEReferenceDatas();
+		EClassValue eClassValue = getEClassValue(eClass);
+		return eClassValue.basicGetEReferenceDatas();
 	}
 
 	public @NonNull EReference_RuleIndexes @NonNull [] getEReferenceDatas(@NonNull EClass eClass) {
@@ -599,13 +599,13 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	public @NonNull RTGrammarAnalysis getRuntime() {
 		RTGrammarAnalysis runtime2 = runtime;
 		if (runtime2 == null)  {
-			Iterable<? extends @NonNull EClassData> sortedProducedEClassDatas = getSortedProducedEClassDatas();
-			@NonNull EClassData @NonNull [] eClassDatas = Iterables.toArray(sortedProducedEClassDatas, EClassData.class);
+			Iterable<? extends @NonNull EClassValue> sortedProducedEClassValues = getSortedProducedEClassValues();
+			@NonNull EClassValue @NonNull [] eClassValues = Iterables.toArray(sortedProducedEClassValues, EClassValue.class);
 			@NonNull AbstractRuleValue @NonNull [] ruleValues = new @NonNull AbstractRuleValue [ruleAnalyses.size()];
 			for (int i = 0; i < ruleAnalyses.size(); i++) {
 				ruleValues[i] = ruleAnalyses.get(i).getRuleValue();
 			}
-			runtime = runtime2 = new RTGrammarAnalysis(eClassDatas, ruleValues);
+			runtime = runtime2 = new RTGrammarAnalysis(eClassValues, ruleValues);
 		}
 		return runtime2;
 	}
@@ -616,7 +616,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 //			getClass(); // XXX
 //		}
 	//	assert eClass2serializationRules != null;
-//		return getEClassData(eClass).getSerializationRules();
+//		return getEClassValue(eClass).getSerializationRules();
 //	}
 
 	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull SerializationRule serializationRule) {
@@ -629,12 +629,12 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull EClassData> getSortedProducedEClassDatas() {
-		Iterable<@NonNull EClassData> sortedProducedEClassDatas2 = sortedProducedEClassDatas;
-		if (sortedProducedEClassDatas2 == null) {
-			sortedProducedEClassDatas = sortedProducedEClassDatas2 = super.getSortedProducedEClassDatas();
+	public @NonNull Iterable<@NonNull EClassValue> getSortedProducedEClassValues() {
+		Iterable<@NonNull EClassValue> sortedProducedEClassValues2 = sortedProducedEClassValues;
+		if (sortedProducedEClassValues2 == null) {
+			sortedProducedEClassValues = sortedProducedEClassValues2 = super.getSortedProducedEClassValues();
 		}
-		return sortedProducedEClassDatas2;
+		return sortedProducedEClassValues2;
 	}
 
 	@Override

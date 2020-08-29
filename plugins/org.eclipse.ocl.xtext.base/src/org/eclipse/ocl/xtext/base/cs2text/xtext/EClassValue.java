@@ -23,14 +23,14 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
-public class EClassData implements Nameable
+public class EClassValue implements Nameable
 {
 	protected final @NonNull EClass eClass;
 	protected final @NonNull SerializationRule @NonNull [] serializationRules;
 	protected final @NonNull EReference_RuleIndexes @Nullable [] eReferenceDatas;
 //	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
 
-	public EClassData(/*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
+	public EClassValue(/*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
 			@NonNull EReference_RuleIndexes @Nullable [] eReferenceDatas) {
 		assert eClass != null;
 		this.eClass = eClass;
