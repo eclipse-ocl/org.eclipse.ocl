@@ -12,11 +12,9 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
@@ -56,10 +54,8 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
-			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
 		stepsList.add(new RTSerializationLiteralStep(staticRuleMatch.getCardinalityVariableIndex(this), values.get(0)));
-		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 
 	@Override

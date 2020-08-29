@@ -17,39 +17,50 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 public class RTSerializationRule2 extends SerializationRule
 {
 	public static @NonNull RTSerializationRule2 create(@NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
-		GrammarAnalysis grammarAnalysis = serializationRuleAnalysis.getRuleAnalysis().getGrammarAnalysis();
 		SerializationNode rootSerializationNode = serializationRuleAnalysis.getRootSerializationNode();
-	//	grammarAnalysis.getSerializationRuleAnalysis(rootSerializationNode);
 		StaticRuleMatch staticRuleMatch = serializationRuleAnalysis.getStaticRuleMatch();
 		List<@NonNull CardinalitySolutionStep> solutionStepsList = staticRuleMatch.getSteps();
 		@NonNull CardinalitySolutionStep @NonNull [] solutionSteps = solutionStepsList.toArray(new @NonNull CardinalitySolutionStep[solutionStepsList.size()]);
 		List<@NonNull RTSerializationStep> stepsList = new ArrayList<>();
-		List<@Nullable SubIdiom> subIdiomsList = new ArrayList<>();
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms = serializationRuleAnalysis.getSerializationNode2subIdioms();
-		rootSerializationNode.gatherRuntime(staticRuleMatch, stepsList, serializationNode2subIdioms, subIdiomsList);
+		rootSerializationNode.gatherSteps(staticRuleMatch, stepsList);
+		List<@Nullable SubIdiom> subIdiomsList = gatherSubIdioms(rootSerializationNode, serializationNode2subIdioms, new ArrayList<>());
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
 		@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
-	//	@Nullable SubIdiom @NonNull [] staticSubIdioms = subIdiomsList.toArray(new @Nullable SubIdiom[size]);
 		@Nullable Segment @NonNull [] @Nullable [] staticSegments = new @Nullable Segment @NonNull [size] @Nullable [];
 		for (int i = 0; i < size; i++) {
+			assert subIdiomsList != null;
 			SubIdiom subIdiom = subIdiomsList.get(i);
 			List<Segment> segments = subIdiom != null ? subIdiom.getSegments() : null;
 			staticSegments[i] = segments != null ? segments.toArray(new @Nullable Segment [segments.size()]) : null;
 		}
 		return new RTSerializationRule2(serializationRuleAnalysis, solutionSteps, serializationSteps, staticSegments);
 	}
+
+	private static @NonNull List<@Nullable SubIdiom> gatherSubIdioms(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
+		SubIdiom subIdioms = serializationNode2subIdioms.get(serializationNode);
+		subIdiomsList.add(subIdioms);
+		if (serializationNode instanceof SequenceSerializationNode) {
+			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
+				subIdiomsList = gatherSubIdioms(nestedSerializationNode, serializationNode2subIdioms, subIdiomsList);
+			}
+		}
+		return subIdiomsList;
+	}
+
+
 
 	private static final @NonNull Map<@NonNull SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
 	private final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;

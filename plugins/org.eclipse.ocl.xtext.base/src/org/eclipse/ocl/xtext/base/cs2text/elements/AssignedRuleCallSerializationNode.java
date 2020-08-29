@@ -12,11 +12,9 @@ package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
@@ -41,11 +39,9 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
-	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
-			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
 		int cardinalityVariableIndex = staticRuleMatch.getCardinalityVariableIndex(this);
 		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature, new ProxyRuleValue(calledRuleAnalysis)));
-		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 
 	@Override

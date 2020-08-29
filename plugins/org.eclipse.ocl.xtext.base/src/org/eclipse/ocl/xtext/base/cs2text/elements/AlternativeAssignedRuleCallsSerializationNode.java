@@ -11,11 +11,9 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
@@ -50,15 +48,13 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 	}
 
 	@Override
-	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList,
-			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
 		@NonNull AbstractRuleValue [] calledRuleValues = new @NonNull AbstractRuleValue [Iterables.size(calledRuleAnalyses)];
 		int i= 0;
 		for (@NonNull AbstractRuleAnalysis ruleAnalysis : calledRuleAnalyses) {
 			calledRuleValues[i++] = new ProxyRuleValue(ruleAnalysis);
 		}
 		stepsList.add(new RTSerializationAssignedRuleCallsStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, calledRuleValues));
-		subIdiomsList.add(serializationNode2subIdioms.get(this));
 	}
 
 	@Override
