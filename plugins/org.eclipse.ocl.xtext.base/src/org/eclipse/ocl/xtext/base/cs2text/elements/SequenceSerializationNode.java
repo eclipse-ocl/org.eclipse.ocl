@@ -29,6 +29,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 {
 	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
+	private @Nullable Integer semanticHashCode = null;
 
 	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
 		super(multiplicativeCardinality);
@@ -72,6 +73,41 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 
 	public @NonNull List<@NonNull SerializationNode> getSerializationNodes() {
 		return serializationNodes;
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode that) {
+		if (that == this) {
+			return true;
+		}
+		if (!(that instanceof SequenceSerializationNode)) {
+			return false;
+		}
+		List<@NonNull SerializationNode> theseNodes = this.serializationNodes;
+		List<@NonNull SerializationNode> thoseNodes = ((SequenceSerializationNode)that).serializationNodes;
+		int size = theseNodes.size();
+		if (size != thoseNodes.size()) {
+			return false;
+		}
+		for (int i = 0; i < size; i++) {
+			if (!theseNodes.get(i).semanticEquals(thoseNodes.get(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public int semanticHashCode() {
+		if (semanticHashCode == null) {
+			int hash = getClass().hashCode();
+			for (@NonNull SerializationNode serializationNode : serializationNodes) {
+				hash = 3*hash + + serializationNode.semanticHashCode();;
+			}
+			semanticHashCode = hash;
+		}
+		assert semanticHashCode != null;
+		return semanticHashCode.intValue();
 	}
 
 	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {

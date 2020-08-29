@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
@@ -167,7 +168,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		//	Create the disjunction of flattened SerializationRule comprising a conjunction of SerializationNode.
 		//
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
-			parserRuleAnalysis.getSerializationRules();		// Triggers lazy analyze();
+			parserRuleAnalysis.getSerializationRuleAnalyses();		// Triggers lazy analyze();
 		}
 		//
 		//	Determine the variables and expressions and their solutions to determine the cardinality of each term.
@@ -214,7 +215,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			if ("Base::MultiplicityBoundsCS".equals(ruleAnalysis.getName())) {		// XXX debugging
 				getClass();
 			}
-			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRules()) {
+			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRuleAnalyses()) {
 				EClass eClass = serializationRule.getProducedEClass();
 				List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = eClass2parserRules.get(eClass);
 				if (parserRuleAnalyses == null) {
@@ -335,17 +336,22 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		serializationRule2aserializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2 = new HashMap<>();
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> eClass2serializationRuleList = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			if ("EssentialOCL::SelfExpCS".equals(ruleAnalysis.getName())) {
+			if ("EssentialOCL::MapTypeCS".equals(ruleAnalysis.getName())) {
 				getClass(); // XXX debugging
 			}
-			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRules()) {
+			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRuleAnalyses()) {
 				EClass eClass = serializationRule.getProducedEClass();
+				if ("MapTypeCS".equals(eClass.getName())) {
+					getClass(); // XXX debugging
+				}
 				List<@NonNull SerializationRuleAnalysis> serializationRules = eClass2serializationRuleList.get(eClass);
 				if (serializationRules == null) {
 					serializationRules = new ArrayList<>();
 					eClass2serializationRuleList.put(eClass, serializationRules);
 				}
-				serializationRules.add(serializationRule);
+				if (!serializationRules.contains(serializationRule)) {
+					serializationRules.add(serializationRule);
+				}
 			}
 		}
 		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> entry : eClass2serializationRuleList.entrySet()) {
@@ -670,7 +676,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				if ("Base::TypeRefCS".equals(parserRuleAnalysis.getName())) {
 					getClass();		// XXX
 				}
-				for (@NonNull SerializationRuleAnalysis serializationRule : parserRuleAnalysis.getSerializationRules()) {
+				for (@NonNull SerializationRuleAnalysis serializationRule : parserRuleAnalysis.getSerializationRuleAnalyses()) {
 		//		SerializationNode rootSerializationNode = parserRuleAnalysis.getR();
 		//		if (rootSerializationNode != null) {
 				//	s.append("\n");
@@ -709,5 +715,46 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		s.append("\n\nUser EClass <=> Prioritized serialization rule(s)");
 		s.append(super.toString());
 		return s.toString();
+	}
+
+	private @NonNull Map<@NonNull Integer, @NonNull Object> semanticHash2serializationAnalysisOrAnalyses = new HashMap<>();
+
+	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull ParserRuleAnalysis parserRuleAnalysis, @NonNull SerializationNode thatSerializationNode) {
+		int hashCode = thatSerializationNode.semanticHashCode();
+		Object analysisOrAnalyses = semanticHash2serializationAnalysisOrAnalyses.get(hashCode);
+		SerializationRuleAnalysis oldSerializationRuleAnalysis = null;
+		if (analysisOrAnalyses instanceof SerializationRuleAnalysis) {
+			if (((SerializationRuleAnalysis)analysisOrAnalyses).getRootSerializationNode().semanticEquals(thatSerializationNode)) {
+				oldSerializationRuleAnalysis = (SerializationRuleAnalysis)analysisOrAnalyses;
+			}
+		}
+		else if (analysisOrAnalyses != null) {
+			@SuppressWarnings("unchecked")
+			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
+			for (@NonNull SerializationRuleAnalysis ruleAnalysis : ruleAnalyses) {
+				if (ruleAnalysis.getRootSerializationNode().semanticEquals(thatSerializationNode)) {
+					oldSerializationRuleAnalysis = ruleAnalysis;
+				}
+			}
+		}
+		if (oldSerializationRuleAnalysis != null) {
+			return oldSerializationRuleAnalysis;
+		}
+		SerializationRuleAnalysis serializationRuleAnalysis = new SerializationRuleAnalysis(parserRuleAnalysis, thatSerializationNode);
+		if (analysisOrAnalyses == null) {
+			semanticHash2serializationAnalysisOrAnalyses.put(hashCode, serializationRuleAnalysis);
+		}
+		else if (analysisOrAnalyses instanceof SerializationNode) {
+			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = new ArrayList<>();
+			ruleAnalyses.add((SerializationRuleAnalysis)analysisOrAnalyses);
+			ruleAnalyses.add(serializationRuleAnalysis);
+			semanticHash2serializationAnalysisOrAnalyses.put(hashCode, ruleAnalyses);
+		}
+		else {
+			@SuppressWarnings("unchecked")
+			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
+			ruleAnalyses.add(serializationRuleAnalysis);
+		}
+		return serializationRuleAnalysis;
 	}
 }

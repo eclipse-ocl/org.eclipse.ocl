@@ -479,7 +479,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			getStaticRuleMatch();
 			runtime2 = runtime;
 			if (runtime2 == null) {
-				runtime = runtime2 = RTSerializationRule2.create(this, getSerializationNode2subIdioms());
+				runtime = runtime2 = RTSerializationRule2.create(this);
 			}
 		}
 		return runtime2;
@@ -510,7 +510,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return getSerializationNode2subIdioms().get(serializationNode);
 	}
 
-	private @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms() {
+	public @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms() {
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
 			assert staticRuleMatch != null;

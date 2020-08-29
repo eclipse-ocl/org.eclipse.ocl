@@ -21,16 +21,23 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 public class RTSerializationRule2 extends SerializationRule
 {
-	public static @NonNull RTSerializationRule2 create(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms) {
-		List<@NonNull CardinalitySolutionStep> solutionStepsList = serializationRuleAnalysis.getStaticRuleMatch().getSteps();
+	public static @NonNull RTSerializationRule2 create(@NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+		GrammarAnalysis grammarAnalysis = serializationRuleAnalysis.getRuleAnalysis().getGrammarAnalysis();
+		SerializationNode rootSerializationNode = serializationRuleAnalysis.getRootSerializationNode();
+	//	grammarAnalysis.getSerializationRuleAnalysis(rootSerializationNode);
+		StaticRuleMatch staticRuleMatch = serializationRuleAnalysis.getStaticRuleMatch();
+		List<@NonNull CardinalitySolutionStep> solutionStepsList = staticRuleMatch.getSteps();
 		@NonNull CardinalitySolutionStep @NonNull [] solutionSteps = solutionStepsList.toArray(new @NonNull CardinalitySolutionStep[solutionStepsList.size()]);
 		List<@NonNull RTSerializationStep> stepsList = new ArrayList<>();
 		List<@Nullable SubIdiom> subIdiomsList = new ArrayList<>();
-		serializationRuleAnalysis.getRootSerializationNode().gatherRuntime(serializationRuleAnalysis.getStaticRuleMatch(), stepsList, serializationNode2subIdioms, subIdiomsList);
+		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms = serializationRuleAnalysis.getSerializationNode2subIdioms();
+		rootSerializationNode.gatherRuntime(staticRuleMatch, stepsList, serializationNode2subIdioms, subIdiomsList);
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
 		@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);

@@ -64,8 +64,6 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		return this;
 	}
 
-//	protected abstract @NonNull RTSerializationStep createRuntime(@NonNull StaticRuleMatch staticRuleMatch);
-
 	@Override
 	public @NonNull SerializationNode freezeAlternatives(@NonNull Alternatives alternatives) {
 		return this;
@@ -76,11 +74,6 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	//	return new SequenceSerializationNode(grammarAnalysis, compoundElement, MultiplicativeCardinality.toEnum(compoundElement), Collections.singletonList(this));
 		return createFrozenSequence(compoundElement, multiplicativeCardinality, Collections.singletonList(this));
 	}
-
-//	@Override
-//	public void gatherRuntime(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> steps) {
-//		steps.add(getRuntime(staticRuleMatch));
-//	}
 
 	@Override
 	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
@@ -100,6 +93,16 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	@Override
 	public boolean isRedundant() {
 		return false;
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
+		throw new UnsupportedOperationException("Missing " + getClass().getName() + ".semanticEquals implementation.");
+	}
+
+	@Override
+	public int semanticHashCode() {
+		throw new UnsupportedOperationException("Missing " + getClass().getName() + ".semanticHashCode implementation.");
 	}
 
 	@Override

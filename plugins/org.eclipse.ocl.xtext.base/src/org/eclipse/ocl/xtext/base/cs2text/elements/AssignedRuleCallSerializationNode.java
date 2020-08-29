@@ -27,6 +27,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
+	private @Nullable Integer semanticHashCode = null;
 
 	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
 		super(assignmentAnalysis, multiplicativeCardinality);
@@ -50,6 +51,34 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	@Override
 	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
 		return Collections.singletonList(calledRuleAnalysis);
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
+		if (serializationNode == this) {
+			return true;
+		}
+		if (!(serializationNode instanceof AssignedRuleCallSerializationNode)) {
+			return false;
+		}
+		AssignedRuleCallSerializationNode that = (AssignedRuleCallSerializationNode)serializationNode;
+		if (this.eStructuralFeature != that.eStructuralFeature) {
+			return false;
+		}
+		if (this.calledRuleAnalysis != that.calledRuleAnalysis) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int semanticHashCode() {
+		if (semanticHashCode == null) {
+			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleAnalysis.hashCode();
+			semanticHashCode = hash;
+		}
+		assert semanticHashCode != null;
+		return semanticHashCode.intValue();
 	}
 
 	@Override

@@ -35,6 +35,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 {
 	protected final @NonNull Iterable<@NonNull Keyword> keywords;
 	protected final @NonNull EnumerationValue enumerationValue;
+	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignedKeywordsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> keywords) {
@@ -66,6 +67,34 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	@Override
 	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
 		return null;
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
+		if (serializationNode == this) {
+			return true;
+		}
+		if (!(serializationNode instanceof AlternativeAssignedKeywordsSerializationNode)) {
+			return false;
+		}
+		AlternativeAssignedKeywordsSerializationNode that = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
+		if (this.eStructuralFeature != that.eStructuralFeature) {
+			return false;
+		}
+		if (this.enumerationValue != that.enumerationValue) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int semanticHashCode() {
+		if (semanticHashCode == null) {
+			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + enumerationValue.hashCode();
+			semanticHashCode = hash;
+		}
+		assert semanticHashCode != null;
+		return semanticHashCode.intValue();
 	}
 
 	@Override

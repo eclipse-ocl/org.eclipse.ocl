@@ -27,6 +27,7 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 {
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
+	private @Nullable Integer semanticHashCode = null;
 
 	public UnassignedKeywordSerializationNode(@NonNull Keyword keyword, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		super(multiplicativeCardinality);
@@ -50,6 +51,31 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 
 	public @NonNull String getValue() {
 		return value;
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
+		if (serializationNode == this) {
+			return true;
+		}
+		if (!(serializationNode instanceof UnassignedKeywordSerializationNode)) {
+			return false;
+		}
+		UnassignedKeywordSerializationNode that = (UnassignedKeywordSerializationNode)serializationNode;
+		if (!this.value.equals(that.value)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int semanticHashCode() {
+		if (semanticHashCode == null) {
+			int hash = getClass().hashCode() + value.hashCode();
+			semanticHashCode = hash;
+		}
+		assert semanticHashCode != null;
+		return semanticHashCode.intValue();
 	}
 
 	@Override

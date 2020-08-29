@@ -32,7 +32,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 {
 	protected final @NonNull CrossReference crossReference;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
-//	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
+	private @Nullable Integer semanticHashCode = null;
 
 	public AssignedCrossReferenceSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
 		super(assignmentAnalysis, multiplicativeCardinality);
@@ -40,7 +40,6 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
 		this.calledRuleAnalysis = assignmentAnalysis.getGrammarAnalysis().getRuleAnalysis(calledRule);
 		this.crossReference = crossReference;
-//		this.crossReferenceSerializer = assignmentAnalysis.getGrammarAnalysis().getCrossReferenceSerializer();
 		assert !((EReference)eStructuralFeature).isContainment();
 	}
 
@@ -60,6 +59,34 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
 		stepsList.add(new RTSerializationCrossReferenceStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, crossReference));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
+		if (serializationNode == this) {
+			return true;
+		}
+		if (!(serializationNode instanceof AssignedCrossReferenceSerializationNode)) {
+			return false;
+		}
+		AssignedCrossReferenceSerializationNode that = (AssignedCrossReferenceSerializationNode)serializationNode;
+		if (this.eStructuralFeature != that.eStructuralFeature) {
+			return false;
+		}
+		if (this.calledRuleAnalysis != that.calledRuleAnalysis) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int semanticHashCode() {
+		if (semanticHashCode == null) {
+			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleAnalysis.hashCode();
+			semanticHashCode = hash;
+		}
+		assert semanticHashCode != null;
+		return semanticHashCode.intValue();
 	}
 
 	@Override

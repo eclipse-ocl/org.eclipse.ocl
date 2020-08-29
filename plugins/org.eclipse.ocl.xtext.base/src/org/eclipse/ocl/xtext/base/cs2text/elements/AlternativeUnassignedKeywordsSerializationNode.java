@@ -33,6 +33,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
 	private @Nullable RTSerializationStep runtime = null;
+	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeUnassignedKeywordsSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
 		super(multiplicativeCardinality);
@@ -59,6 +60,31 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 			@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms, @NonNull List<@Nullable SubIdiom> subIdiomsList) {
 		stepsList.add(new RTSerializationLiteralStep(staticRuleMatch.getCardinalityVariableIndex(this), values.get(0)));
 		subIdiomsList.add(serializationNode2subIdioms.get(this));
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
+		if (serializationNode == this) {
+			return true;
+		}
+		if (!(serializationNode instanceof AlternativeUnassignedKeywordsSerializationNode)) {
+			return false;
+		}
+		AlternativeUnassignedKeywordsSerializationNode that = (AlternativeUnassignedKeywordsSerializationNode)serializationNode;
+		if (!this.values.equals(that.values)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int semanticHashCode() {
+		if (semanticHashCode == null) {
+			int hash = getClass().hashCode() + values.hashCode();
+			semanticHashCode = hash;
+		}
+		assert semanticHashCode != null;
+		return semanticHashCode.intValue();
 	}
 
 	@Override

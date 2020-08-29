@@ -14,12 +14,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.xtext.util.Strings;
 
 public class MultipleEnumerationValue extends AbstractEnumerationValue
 {
 	protected final @NonNull String @NonNull [] values;
 	protected final @NonNull String name;
+	private @Nullable Integer hashCode = null;
 
 	public MultipleEnumerationValue(@NonNull List<@NonNull String> values) {
 		this(values.toArray(new @NonNull String [values.size()]));
@@ -50,7 +52,16 @@ public class MultipleEnumerationValue extends AbstractEnumerationValue
 		if (!(obj instanceof MultipleEnumerationValue)) {
 			return false;
 		}
-		return values.equals(((MultipleEnumerationValue)obj).values);
+		MultipleEnumerationValue that = (MultipleEnumerationValue)obj;
+		if (this.values.length != that.values.length) {
+			return false;
+		}
+		for (int i = 0; i < this.values.length; i++) {
+			if (!this.values[i].equals(that.values[i])) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -64,7 +75,15 @@ public class MultipleEnumerationValue extends AbstractEnumerationValue
 
 	@Override
 	public int hashCode() {
-		return values.hashCode();
+		if (hashCode == null) {
+			int hash = getClass().hashCode();
+			for (@NonNull String value : values) {
+				hash += value.hashCode();
+			}
+			hashCode = hash;
+		}
+		assert hashCode != null;
+		return hashCode.intValue();
 	}
 
 	@Override

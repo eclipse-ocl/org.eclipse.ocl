@@ -35,6 +35,7 @@ import com.google.common.collect.Iterables;
 public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull Iterable<@NonNull AbstractRuleAnalysis> calledRuleAnalyses;
+	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignedRuleCallsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
 			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull AbstractRuleAnalysis> calledRuleAnalyses) {
@@ -63,6 +64,37 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 	@Override
 	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
 		return calledRuleAnalyses;
+	}
+
+	@Override
+	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
+		if (serializationNode == this) {
+			return true;
+		}
+		if (!(serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)) {
+			return false;
+		}
+		AlternativeAssignedRuleCallsSerializationNode that = (AlternativeAssignedRuleCallsSerializationNode)serializationNode;
+		if (this.eStructuralFeature != that.eStructuralFeature) {
+			return false;
+		}
+		if (!this.calledRuleAnalyses.equals(that.calledRuleAnalyses)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int semanticHashCode() {
+		if (semanticHashCode == null) {
+			int hash = getClass().hashCode() + eStructuralFeature.hashCode();
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : calledRuleAnalyses) {
+				hash = 3*hash + + ruleAnalysis.hashCode();;
+			}
+			semanticHashCode = hash;
+		}
+		assert semanticHashCode != null;
+		return semanticHashCode.intValue();
 	}
 
 	@Override

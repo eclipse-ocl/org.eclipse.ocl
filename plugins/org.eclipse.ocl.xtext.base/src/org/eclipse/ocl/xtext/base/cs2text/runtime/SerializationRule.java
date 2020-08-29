@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
@@ -240,8 +239,6 @@ public class SerializationRule
 	 */
 	private final @NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality;
 
-	private @Nullable Integer hashCode = null;
-
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
@@ -260,25 +257,9 @@ public class SerializationRule
 		this.needsDefaultEAttributes = needsDefaultEAttributes;
 		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
 		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
-		if (ruleValueIndex == 71) {
-			getClass();
-		}
 	}
 
-	private <T> int arrayHash(T @Nullable [] ts) {
-		int hash = 0;
-		if (ts != null) {
-			for (T t : ts) {
-				hash = 3 * hash;
-				if (t != null) {
-					hash += t.hashCode();
-				}
-			}
-		}
-		return hash;
-	}
-
-	@Override
+/*	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -315,7 +296,7 @@ public class SerializationRule
 			return false;
 		}
 		return true;
-	}
+	} */
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
 		if (eReference2assignedRuleValueIndexes != null) {
@@ -399,7 +380,7 @@ public class SerializationRule
 		return staticSegments;
 	}
 
-	@Override
+/*	@Override
 	public int hashCode() {
 		if (hashCode == null) {
 			int hash = getClass().hashCode() + ruleValueIndex;
@@ -415,7 +396,7 @@ public class SerializationRule
 		}
 		assert hashCode != null;
 		return hashCode.intValue();
-	}
+	} */
 
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		//

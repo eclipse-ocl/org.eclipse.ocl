@@ -71,6 +71,7 @@ import org.eclipse.xtext.xtext.generator.model.JavaFileAccess;
 import org.eclipse.xtext.xtext.generator.model.TypeReference;
 import org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 /**
@@ -592,6 +593,12 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return index >= 0 ? id.substring(index+1) : id;
 	}
 
+	protected @NonNull Iterable<@NonNull SerializationRule> getSerializationRulesIterable(@NonNull GrammarAnalysis grammarAnalysis, @NonNull ParserRuleValue parserRuleValue) {
+		List<@NonNull SerializationRule> serializationRules = Lists.newArrayList(grammarAnalysis.getSerializationRules(parserRuleValue));
+		Collections.sort(serializationRules, NameUtil.TO_STRING_COMPARATOR);	// XXX ?? Lowest slot usage first
+		return serializationRules;
+	}
+
 	private int getSerializationRulePage(int serializationRuleIndex) {
 		return serializationRuleIndex / RULES_PER_PAGE;
 	}
@@ -678,7 +685,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			Set<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesSet = new HashSet<>();
 			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					for (@NonNull SerializationRuleAnalysis serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
+					for (@NonNull SerializationRuleAnalysis serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRuleAnalyses()) {
 					//	System.out.println(NameUtil.debugSimpleName(serializationRule) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis()) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis().getRuntime()) + " : " + serializationRule.toString());
 						serializationRuleAnalysesSet.add(serializationRule);
 					}

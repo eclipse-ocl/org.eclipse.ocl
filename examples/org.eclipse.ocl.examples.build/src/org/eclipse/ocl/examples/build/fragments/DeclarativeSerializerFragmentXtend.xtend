@@ -200,7 +200,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		new «newTypeReference(EClassData)»(«emitLiteral(eClass)»,
 			new @NonNull «newTypeReference(SerializationRule)» [] {
 				«FOR serializationRule : grammarAnalysis.getEClassData(eClass).getSerializationRules() SEPARATOR ','»
-				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.hashCode()» «serializationRule.toRuleString()» */
+				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
 				«ENDFOR»
 			}, «IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null«ELSE»
 			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
@@ -266,29 +266,29 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 	}
 	
-	protected def generateGrammarRuleValue(GrammarAnalysis grammarAnalysis, AbstractRuleValue ruleValue) {
-		switch ruleValue {
-		DataTypeRuleValue: return generateGrammarRuleValue_DataTypeRule(grammarAnalysis, ruleValue)
-		ParserRuleValue: return generateGrammarRuleValue_ParserRuleValue(grammarAnalysis, ruleValue)
-		TerminalRuleValue: return generateGrammarRuleValue_TerminalRuleValue(grammarAnalysis, ruleValue)
+	protected def generateGrammarRuleValue(GrammarAnalysis grammarAnalysis, AbstractRuleValue grammarRuleValue) {
+		switch grammarRuleValue {
+		DataTypeRuleValue: return generateGrammarRuleValue_DataTypeRule(grammarAnalysis, grammarRuleValue)
+		ParserRuleValue: return generateGrammarRuleValue_ParserRuleValue(grammarAnalysis, grammarRuleValue)
+		TerminalRuleValue: return generateGrammarRuleValue_TerminalRuleValue(grammarAnalysis, grammarRuleValue)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateGrammarRuleValue_DataTypeRule(GrammarAnalysis grammarAnalysis, DataTypeRuleValue ruleValue) {
-		'''private final @NonNull «newTypeReference(DataTypeRuleValue)» «getGrammarRuleValueId(ruleValue, false)» // «ruleValue.getName()»
-	= new «newTypeReference(DataTypeRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»");'''
+	protected def generateGrammarRuleValue_DataTypeRule(GrammarAnalysis grammarAnalysis, DataTypeRuleValue dataTypeRuleValue) {
+		'''private final @NonNull «newTypeReference(DataTypeRuleValue)» «getGrammarRuleValueId(dataTypeRuleValue, false)» // «dataTypeRuleValue.getName()»
+	= new «newTypeReference(DataTypeRuleValue)»(«dataTypeRuleValue.getIndex()», "«dataTypeRuleValue.getName()»");'''
 	}
 	
-	protected def generateGrammarRuleValue_ParserRuleValue(GrammarAnalysis grammarAnalysis, ParserRuleValue ruleValue) {
+	protected def generateGrammarRuleValue_ParserRuleValue(GrammarAnalysis grammarAnalysis, ParserRuleValue parserRuleValue) {
 			// «FOR subParserRuleValue : subParserRuleValueClosure SEPARATOR ','» «getParserRuleValueId(subParserRuleValue, true)» /* «subParserRuleValue.getName()» */«ENDFOR» */'''
-		var subParserRuleValueIndexes = ruleValue.getSubParserRuleValueIndexes();
+		var subParserRuleValueIndexes = parserRuleValue.getSubParserRuleValueIndexes();
 		if (subParserRuleValueIndexes !== null) {
 			'''
-			private final @NonNull «newTypeReference(ParserRuleValue)» «getGrammarRuleValueId(ruleValue, false)» // «ruleValue.getName()»
-				= new «newTypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»",
+			private final @NonNull «newTypeReference(ParserRuleValue)» «getGrammarRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
+				= new «newTypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»",
 					new @NonNull «newTypeReference(SerializationRule)» [] {
-						«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
+						«FOR serializationRule : getSerializationRulesIterable(grammarAnalysis, parserRuleValue) SEPARATOR ','»
 						«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
 						«ENDFOR»
 					}, 
@@ -297,10 +297,10 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		}
 		else {
 			'''
-			private final @NonNull «newTypeReference(ParserRuleValue)» «getGrammarRuleValueId(ruleValue, false)» // «ruleValue.getName()»
-				= new «newTypeReference(ParserRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»", 
+			private final @NonNull «newTypeReference(ParserRuleValue)» «getGrammarRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
+				= new «newTypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", 
 					new @NonNull «newTypeReference(SerializationRule)» [] {
-						«FOR serializationRule : grammarAnalysis.getSerializationRules(ruleValue) SEPARATOR ','»
+						«FOR serializationRule : getSerializationRulesIterable(grammarAnalysis, parserRuleValue) SEPARATOR ','»
 						«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
 						«ENDFOR»
 					}, 
@@ -309,9 +309,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		}
 	}
 	
-	protected def generateGrammarRuleValue_TerminalRuleValue(GrammarAnalysis grammarAnalysis, TerminalRuleValue ruleValue) {
-		'''private final @NonNull «newTypeReference(TerminalRuleValue)» «getGrammarRuleValueId(ruleValue, false)» // «ruleValue.getName()»
-	= new «newTypeReference(TerminalRuleValue)»(«ruleValue.getIndex()», "«ruleValue.getName()»");'''
+	protected def generateGrammarRuleValue_TerminalRuleValue(GrammarAnalysis grammarAnalysis, TerminalRuleValue terminalRuleValue) {
+		'''private final @NonNull «newTypeReference(TerminalRuleValue)» «getGrammarRuleValueId(terminalRuleValue, false)» // «terminalRuleValue.getName()»
+	= new «newTypeReference(TerminalRuleValue)»(«terminalRuleValue.getIndex()», "«terminalRuleValue.getName()»");'''
 	}
 
 	/* ************************************************************************************************************************** */
