@@ -97,6 +97,22 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @Nullable GrammarAnalysis grammarAnalysis;
 	private @NonNull Set<@NonNull String> referredClassNames = new HashSet<>();
 
+	private @Nullable Map<@NonNull EClass, @NonNull String> eClass2id = null;
+	private @Nullable Map<@NonNull EnumerationValue, @NonNull String> enumValue2id = null;
+	private @Nullable Map<@NonNull AbstractRuleValue, @NonNull String> grammarRuleValue2id = null;
+	private @Nullable Map<@NonNull Integer, @NonNull String> grammarRuleValueIndex2ruleName = null;
+	private @Nullable Map<@NonNull IndexVector, @NonNull String> indexVector2id = null;
+	private @Nullable List<@NonNull IndexVector> indexVectors = null;
+	private @Nullable Map<@NonNull CardinalitySolutionStep, @NonNull String> matchStep2id = null;
+	private @Nullable Map<@NonNull CardinalitySolution, @NonNull String> matchTerm2id = null;
+	private @Nullable Map<@NonNull List<Segment>, @NonNull String> segments2id = null;
+	private @NonNull Map<@NonNull Segment [] [], @NonNull String> segmentsList2string = new HashMap<>();
+	private @NonNull Map<@NonNull String, @NonNull Segment [] []> segmentsListString2segmentsList = new HashMap<>();
+	private @Nullable Map<@NonNull String, @NonNull String> segmentsList2id = null;
+	private @Nullable Map<@NonNull SerializationRule, @NonNull String> serializationRule2id = null;
+	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = null;
+	private @Nullable Map<@NonNull RTSerializationStep, @NonNull String> serializationStep2id = null;
+
 	protected abstract StringConcatenationClient doGetAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis);
 
 	protected void doGenerateAnalysisStubFile() {
@@ -226,173 +242,32 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return "%0" + digits + "d";
 	}
 
-	protected @NonNull GrammarAnalysis getGrammarAnalysis() {
-		GrammarAnalysis grammarAnalysis2 = grammarAnalysis;
-		if (grammarAnalysis2 == null) {
-			Grammar grammar = getGrammar();
-			assert grammar != null;
-			GrammarAnalysis grammarAnalysis = grammarAnalysis2 = new GrammarAnalysis(grammar);
-			grammarAnalysis.analyze();
-		}
-		return grammarAnalysis2;
+	protected @NonNull String getEClassId(@NonNull EClass eClass, boolean addQualifier) {
+		assert eClass2id != null;
+		String id = eClass2id.get(eClass);
+		assert id != null;
+		return addQualifier ? "ec." + id : id;
 	}
 
-	@Override
-	protected String getGrammarConstraintsPath(final Grammar grammar) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected TypeReference getSemanticSequencerClass(final Grammar grammar) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected String getSerializerBasePackage(final Grammar grammar) {
-		return xtextGeneratorNaming.getRuntimeBasePackage(grammar) + ".serializer";
-	}
-
-	private @Nullable Map<@NonNull RTSerializationStep, @NonNull String> serializationStep2id = null;
-
-	protected @NonNull Iterable<@NonNull RTSerializationStep> getSortedSerializationSteps(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull RTSerializationStep, @NonNull String> serializationStep2id2 = serializationStep2id;
-		if (serializationStep2id2 == null) {
-			serializationStep2id = serializationStep2id2 = new HashMap<>();
+	protected @NonNull Iterable<@NonNull EClass> getEClassIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull EClass, @NonNull String> eClass2id2 = eClass2id;
+		if (eClass2id2 == null) {
+			eClass2id = eClass2id2 = new HashMap<>();
 		}
 		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
-					serializationStep2id2.put(serializationStep, "");
-				}
-			}
+			eClass2id2.put(eClassData.getEClass(), "");
 		}
-		List<@NonNull RTSerializationStep> steps = new ArrayList<>(serializationStep2id2.keySet());
-		Collections.sort(steps, NameUtil.TO_STRING_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(steps);
+		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2id2.keySet());
+		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		String formatString = "_" + getDigitsFormatString(eClasses);
 		int i = 0;
-		for (@NonNull RTSerializationStep step : steps) {
-			serializationStep2id2.put(step, String.format(formatString, i++));
+		for (@NonNull EClass eClass : eClasses) {
+			eClass2id2.put(eClass, String.format(formatString, i++));
 		}
-		return steps;
+		return eClasses;
 	}
 
-	protected @NonNull String getSerializationStepId(@NonNull RTSerializationStep step, boolean addQualifier) {
-		assert serializationStep2id != null;
-		String id = serializationStep2id.get(step);
-		assert id != null;
-		return addQualifier ? "st." + id : id;
-	}
-
-	private @Nullable Map<@NonNull List<Segment>, @NonNull String> segments2id = null;
-
-	protected @NonNull Iterable<@NonNull List<Segment>> getSortedSegments(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull List<Segment>, @NonNull String> segments2id2 = segments2id;
-		if (segments2id2 == null) {
-			segments2id = segments2id2 = new HashMap<>();
-		}
-		for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
-			List<SubIdiom> staticSubIdioms = idiom.getOwnedSubIdioms();
-			for(@NonNull SubIdiom subIdiom : staticSubIdioms) {
-				segments2id2.put(subIdiom.getSegments(), "");
-			}
-		}
-		List<@NonNull List<Segment>> segmentLists = new ArrayList<>(segments2id2.keySet());
-		Collections.sort(segmentLists, NameUtil.TO_STRING_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(segmentLists);
-		int i = 0;
-		for (@NonNull List<Segment> segmentList : segmentLists) {
-			segments2id2.put(segmentList, String.format(formatString, i++));
-		}
-		return segmentLists;
-	}
-
-	protected @NonNull String getSegmentsId(@NonNull List<Segment> segments, boolean addQualifier) {
-		assert segments2id != null;
-		String id = segments2id.get(segments);
-		assert id != null;
-		return addQualifier ? "ss." + id : id;
-	}
-
-	private @Nullable Map<@NonNull CardinalitySolutionStep, @NonNull String> solutionStep2id = null;
-
-	protected @NonNull Iterable<@NonNull CardinalitySolutionStep> getSortedSolutionSteps(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull CardinalitySolutionStep, @NonNull String> solutionStep2id2 = solutionStep2id;
-		if (solutionStep2id2 == null) {
-			solutionStep2id = solutionStep2id2 = new HashMap<>();
-		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for (@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
-				for (@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
-					solutionStep2id2.put(solutionStep, "");
-				}
-			}
-		}
-		List<@NonNull CardinalitySolutionStep> solutionSteps = new ArrayList<>(solutionStep2id2.keySet());
-		Collections.sort(solutionSteps, NameUtil.TO_STRING_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(solutionSteps);
-		int i = 0;
-		for (@NonNull CardinalitySolutionStep solutionStep : solutionSteps) {
-			solutionStep2id2.put(solutionStep, String.format(formatString, i++));
-		}
-		return solutionSteps;
-	}
-
-	protected @NonNull String getSolutionStepId(@NonNull CardinalitySolutionStep solutionStep, boolean addQualifier) {
-		assert solutionStep2id != null;
-		String id = solutionStep2id.get(solutionStep);
-		assert id != null;
-		return addQualifier ? "ms." + id : id;
-	}
-
-	private @Nullable Map<@NonNull CardinalitySolution, @NonNull String> solution2id = null;
-
-	protected @NonNull Iterable<@NonNull CardinalitySolution> getSortedSolutions(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull CardinalitySolution, @NonNull String> solution2id2 = solution2id;
-		if (solution2id2 == null) {
-			solution2id = solution2id2 = new HashMap<>();
-		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
-				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
-				for(@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
-					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
-						solution2id2.put(solution, "");
-					}
-				}
-			}
-		}
-		List<@NonNull CardinalitySolution> solutions = new ArrayList<>(solution2id2.keySet());
-		Collections.sort(solutions, new Comparator<@NonNull CardinalitySolution>()
-		{
-			@Override
-			public int compare(@NonNull CardinalitySolution o1, @NonNull CardinalitySolution o2) {
-				int s1 = o1.getChildClosure().size();
-				int s2 = o2.getChildClosure().size();
-				if (s1 != s2) {
-					return s1 - s2;
-				}
-				return o1.toString().compareTo(o2.toString());
-			}
-		});
-		String formatString = "_" + getDigitsFormatString(solutions);
-		int i = 0;
-		for (@NonNull CardinalitySolution solution : solutions) {
-			solution2id2.put(solution, String.format(formatString, i++));
-		}
-		return solutions;
-	}
-
-	protected @NonNull String getSolutionId(@NonNull CardinalitySolution solutionStep, boolean addQualifier) {
-		assert solution2id != null;
-		String id = solution2id.get(solutionStep);
-		assert id != null;
-		return addQualifier ? "mt." + id : id;
-	}
-
-	private @Nullable Map<@NonNull EnumerationValue, @NonNull String> enumValue2id = null;
-
-	protected @NonNull Iterable<@NonNull EnumerationValue> getSortedEnumValues(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected @NonNull Iterable<@NonNull EnumerationValue> getEnumValueIterable(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull EnumerationValue, @NonNull String> enumValue2id2 = enumValue2id;
 		if (enumValue2id2 == null) {
 			enumValue2id = enumValue2id2 = new HashMap<>();
@@ -431,155 +306,48 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "ev." + id : id;
 	}
 
-	private @Nullable Map<@NonNull AbstractRuleValue, @NonNull String> ruleValue2id = null;
-	private @Nullable Map<@NonNull Integer, @NonNull String> ruleValueIndex2ruleName = null;
-
-	protected void initRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull AbstractRuleValue, @NonNull String> ruleValue2id2 = ruleValue2id;
-		Map<@NonNull Integer, @NonNull String> ruleValueIndex2ruleName2 = ruleValueIndex2ruleName;
-		if (ruleValue2id2 == null) {
-			ruleValue2id = ruleValue2id2 = new HashMap<>();
+	protected @NonNull GrammarAnalysis getGrammarAnalysis() {
+		GrammarAnalysis grammarAnalysis2 = grammarAnalysis;
+		if (grammarAnalysis2 == null) {
+			Grammar grammar = getGrammar();
+			assert grammar != null;
+			GrammarAnalysis grammarAnalysis = grammarAnalysis2 = new GrammarAnalysis(grammar);
+			grammarAnalysis.analyze();
 		}
-		if (ruleValueIndex2ruleName2 == null) {
-			ruleValueIndex2ruleName = ruleValueIndex2ruleName2 = new HashMap<>();
-		}
-		for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
-		//	if (ruleAnalysis instanceof ParserRuleAnalysis) {
-			ruleValue2id2.put(ruleAnalysis.getRuleValue(), "");
-			ruleValueIndex2ruleName2.put(ruleAnalysis.getRuleValue().getIndex(), ruleAnalysis.getRuleName());
-		//	}
-		}
-		List<@NonNull AbstractRuleValue> ruleValues = new ArrayList<>(ruleValue2id2.keySet());
-		Collections.sort(ruleValues, NameUtil.NAMEABLE_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(ruleValues);
-		int i = 0;
-		for (@NonNull AbstractRuleValue ruleValue : ruleValues) {
-			ruleValue2id2.put(ruleValue, String.format(formatString, i++));
-		}
+		return grammarAnalysis2;
 	}
 
-	protected @NonNull Iterable<@NonNull AbstractRuleValue> getSortedRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
-		assert ruleValue2id != null;
-		List<@NonNull AbstractRuleValue> ruleValues = new ArrayList<>(ruleValue2id.keySet());
-		Collections.sort(ruleValues, NameUtil.NAMEABLE_COMPARATOR);
-		return ruleValues;
+	@Override
+	protected String getGrammarConstraintsPath(final Grammar grammar) {
+		throw new UnsupportedOperationException();
 	}
 
-	protected @NonNull String getRuleValueId(@NonNull AbstractRuleValue ruleValue, boolean addQualifier) {
-		assert ruleValue2id != null;
-		String id = ruleValue2id.get(ruleValue);
-		assert id != null;
-		return addQualifier ? "rv." + id : id;
-	}
-
-	protected @NonNull String getRuleName(@NonNull Integer ruleValueIndex) {
-		assert ruleValueIndex2ruleName != null;
-		String id = ruleValueIndex2ruleName.get(ruleValueIndex);
+	protected @NonNull String getGrammarRuleName(@NonNull Integer grammarRuleValueIndex) {
+		assert grammarRuleValueIndex2ruleName != null;
+		String id = grammarRuleValueIndex2ruleName.get(grammarRuleValueIndex);
 		assert id != null;
 		return id;
 	}
 
-	private @Nullable Map<@NonNull SerializationRule, @NonNull String> serializationRule2id = null;
-	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRules = null;
-
-	protected void initSerializationRule2id(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
-		if (serializationRule2id2 == null) {
-			Set<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = new HashSet<>();
-			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
-				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					for (@NonNull SerializationRuleAnalysis serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
-					//	System.out.println(NameUtil.debugSimpleName(serializationRule) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis()) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis().getRuntime()) + " : " + serializationRule.toString());
-						serializationRuleAnalyses.add(serializationRule);
-					}
-				}
-			}
-			List<@NonNull SerializationRuleAnalysis> serializationRules = new ArrayList<>(serializationRuleAnalyses);
-			Collections.sort(serializationRules, NameUtil.NAMEABLE_COMPARATOR);
-			serializationRule2id = serializationRule2id2 = new HashMap<>();
-			String formatString = "sr" + getDigitsFormatString(getSerializationRulePage(serializationRules.size())) + "._" + getDigitsFormatString(serializationRules);
-			int i = 0;
-			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
-				serializationRule2id2.put(serializationRule.getRuntime(), String.format(formatString, getSerializationRulePage(i), i));
-				i++;
-			}
-			this.serializationRules = serializationRules;
-		}
-	}
-
-	protected @NonNull Iterable<@NonNull Integer> getSortedSerializationRulePages(@NonNull GrammarAnalysis grammarAnalysis) {
-		assert serializationRules != null;
-		int maxPage = getSerializationRulePages(serializationRules.size());
-		List<@NonNull Integer> pages = new ArrayList<>();
-		for (int i = 0; i < maxPage; i++) {
-			pages.add(i);
-		}
-		return pages;
-	}
-
-	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis, int page) {
-		assert serializationRules != null;
-		int size = serializationRules.size();
-		int maxPage = getSerializationRulePage(size);
-		int firstIndex = RULES_PER_PAGE * page;
-		assert serializationRules != null;
-		return serializationRules.subList(firstIndex, Math.min(firstIndex+RULES_PER_PAGE, size));
-	}
-
-	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSortedSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
-		assert serializationRules != null;
-		return serializationRules;
-	}
-
-	protected @NonNull String getSerializationRuleId(@NonNull SerializationRule serializationRule, boolean addQualifier) {
-		assert serializationRule2id != null;
-		String id = serializationRule2id.get(serializationRule);
-	//	System.out.println("?? " + NameUtil.debugSimpleName(serializationRule) + " => " + id  + " : " + serializationRule.toRuleString());
+	protected @NonNull String getGrammarRuleValueId(@NonNull AbstractRuleValue grammarRuleValue, boolean addQualifier) {
+		assert grammarRuleValue2id != null;
+		String id = grammarRuleValue2id.get(grammarRuleValue);
 		assert id != null;
-		if (addQualifier) {
-			return id;
-		}
-		int index = id.indexOf('.');
-		return index >= 0 ? id.substring(index+1) : id;
+		return addQualifier ? "gr." + id : id;
 	}
 
-	private int getSerializationRulePage(int serializationRuleIndex) {
-		return serializationRuleIndex / RULES_PER_PAGE;
+	protected @NonNull Iterable<@NonNull AbstractRuleValue> getGrammarRuleValueIterator(@NonNull GrammarAnalysis grammarAnalysis) {
+		assert grammarRuleValue2id != null;
+		List<@NonNull AbstractRuleValue> grammarRuleValues = new ArrayList<>(grammarRuleValue2id.keySet());
+		Collections.sort(grammarRuleValues, NameUtil.NAMEABLE_COMPARATOR);
+		return grammarRuleValues;
 	}
 
-	private int getSerializationRulePages(int serializationRuleIndex) {
-		return (serializationRuleIndex + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
+	protected @NonNull Iterable<@NonNull String> getImportedClassNameIterable() {
+		List<@NonNull String> referredClassesList = new ArrayList<>(referredClassNames);
+		Collections.sort(referredClassesList);
+		return referredClassesList;
 	}
-
-	private @Nullable Map<@NonNull EClass, @NonNull String> eClass2id = null;
-
-	protected @NonNull Iterable<@NonNull EClass> getSortedEClasses(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull EClass, @NonNull String> eClass2id2 = eClass2id;
-		if (eClass2id2 == null) {
-			eClass2id = eClass2id2 = new HashMap<>();
-		}
-		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
-			eClass2id2.put(eClassData.getEClass(), "");
-		}
-		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2id2.keySet());
-		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-		String formatString = "_" + getDigitsFormatString(eClasses);
-		int i = 0;
-		for (@NonNull EClass eClass : eClasses) {
-			eClass2id2.put(eClass, String.format(formatString, i++));
-		}
-		return eClasses;
-	}
-
-	protected @NonNull String getEClassId(@NonNull EClass eClass, boolean addQualifier) {
-		assert eClass2id != null;
-		String id = eClass2id.get(eClass);
-		assert id != null;
-		return addQualifier ? "ec." + id : id;
-	}
-
-	private @Nullable Map<@NonNull IndexVector, @NonNull String> indexVector2id = null;
-	private @Nullable List<@NonNull IndexVector> indexVectors = null;
 
 	protected @NonNull String getIndexVectorId(@NonNull IndexVector indexVector, boolean addQualifier) {
 		assert indexVector2id != null;
@@ -587,12 +355,12 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "iv." + id : id;
 	}
 
-	protected @NonNull Iterable<@NonNull IndexVector> getSortedIndexVectors(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected @NonNull Iterable<@NonNull IndexVector> getIndexVectorIterable(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull IndexVector, @NonNull String> indexVector2id2 = indexVector2id;
 		List<@NonNull IndexVector> indexVectors2 = indexVectors;
 		if ((indexVector2id2 == null) || (indexVectors2 == null)) {
 			indexVector2id = indexVector2id2 = new HashMap<>();
-			for (@NonNull EClass eClass : getSortedEClasses(grammarAnalysis)) {
+			for (@NonNull EClass eClass : getEClassIterable(grammarAnalysis)) {
 				@NonNull EReference_RuleIndexes[] eReferenceDatas = grammarAnalysis.basicGetEReferenceDatas(eClass);
 				if (eReferenceDatas != null) {
 					for (@NonNull EReference_RuleIndexes eReferenceData : eReferenceDatas) {
@@ -601,17 +369,17 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					}
 				}
 			}
-			for (@NonNull AbstractRuleValue ruleValue : getSortedRuleValues(grammarAnalysis)) {
-				if (ruleValue instanceof ParserRuleValue) {
-					IndexVector subParserRuleValueIndexes = ((ParserRuleValue)ruleValue).getSubParserRuleValueIndexes();
+			for (@NonNull AbstractRuleValue grammarRuleValue : getGrammarRuleValueIterator(grammarAnalysis)) {
+				if (grammarRuleValue instanceof ParserRuleValue) {
+					IndexVector subParserRuleValueIndexes = ((ParserRuleValue)grammarRuleValue).getSubParserRuleValueIndexes();
 					if (subParserRuleValueIndexes != null) {
 						indexVector2id2.put(subParserRuleValueIndexes, "");
 					}
 				}
 			}
-			for (@NonNull CardinalitySolutionStep step : getSortedSolutionSteps(grammarAnalysis)) {
-				if (step instanceof CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck) {
-					indexVector2id2.put(((CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck)step).getRuleValueIndexes(), "");
+			for (@NonNull CardinalitySolutionStep matchStep : getMatchStepIterable(grammarAnalysis)) {
+				if (matchStep instanceof CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck) {
+					indexVector2id2.put(((CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck)matchStep).getRuleValueIndexes(), "");
 				}
 			}
 			indexVectors = indexVectors2 = new ArrayList<>(indexVector2id2.keySet());
@@ -630,26 +398,303 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return indexVectors2;
 	}
 
+	protected @NonNull Iterable<@NonNull CardinalitySolutionStep> getMatchStepIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull CardinalitySolutionStep, @NonNull String> matchStep2id2 = matchStep2id;
+		if (matchStep2id2 == null) {
+			matchStep2id = matchStep2id2 = new HashMap<>();
+		}
+		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
+			for (@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
+				for (@NonNull CardinalitySolutionStep matchStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
+					matchStep2id2.put(matchStep, "");
+				}
+			}
+		}
+		List<@NonNull CardinalitySolutionStep> matchSteps = new ArrayList<>(matchStep2id2.keySet());
+		Collections.sort(matchSteps, NameUtil.TO_STRING_COMPARATOR);
+		String formatString = "_" + getDigitsFormatString(matchSteps);
+		int i = 0;
+		for (@NonNull CardinalitySolutionStep matchStep : matchSteps) {
+			matchStep2id2.put(matchStep, String.format(formatString, i++));
+		}
+		return matchSteps;
+	}
+
+	protected @NonNull String getMatchStepId(@NonNull CardinalitySolutionStep matchStep, boolean addQualifier) {
+		assert matchStep2id != null;
+		String id = matchStep2id.get(matchStep);
+		assert id != null;
+		return addQualifier ? "ms." + id : id;
+	}
+
+	protected @NonNull Iterable<@NonNull CardinalitySolution> getMatchTermIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull CardinalitySolution, @NonNull String> matchTerm2id2 = matchTerm2id;
+		if (matchTerm2id2 == null) {
+			matchTerm2id = matchTerm2id2 = new HashMap<>();
+		}
+		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
+			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
+				for(@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
+					for (@NonNull CardinalitySolution matchTerm : solutionStep.getSolutionClosure()) {
+						matchTerm2id2.put(matchTerm, "");
+					}
+				}
+			}
+		}
+		List<@NonNull CardinalitySolution> matchTerms = new ArrayList<>(matchTerm2id2.keySet());
+		Collections.sort(matchTerms, new Comparator<@NonNull CardinalitySolution>()
+		{
+			@Override
+			public int compare(@NonNull CardinalitySolution o1, @NonNull CardinalitySolution o2) {
+				int s1 = o1.getChildClosure().size();
+				int s2 = o2.getChildClosure().size();
+				if (s1 != s2) {
+					return s1 - s2;
+				}
+				return o1.toString().compareTo(o2.toString());
+			}
+		});
+		String formatString = "_" + getDigitsFormatString(matchTerms);
+		int i = 0;
+		for (@NonNull CardinalitySolution matchTerm : matchTerms) {
+			matchTerm2id2.put(matchTerm, String.format(formatString, i++));
+		}
+		return matchTerms;
+	}
+
+	protected @NonNull String getMatchTermId(@NonNull CardinalitySolution solutionStep, boolean addQualifier) {
+		assert matchTerm2id != null;
+		String id = matchTerm2id.get(solutionStep);
+		assert id != null;
+		return addQualifier ? "mt." + id : id;
+	}
+
+	protected @NonNull String getSegmentsId(@NonNull List<Segment> segments, boolean addQualifier) {
+		assert segments2id != null;
+		String id = segments2id.get(segments);
+	//	assert id != null;
+		return addQualifier ? "ss." + id : id;
+	}
+
+	protected @NonNull Iterable<@NonNull List<Segment>> getSegmentsIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull List<Segment>, @NonNull String> segments2id2 = segments2id;
+		if (segments2id2 == null) {
+			segments2id = segments2id2 = new HashMap<>();
+		}
+		for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
+			List<SubIdiom> staticSubIdioms = idiom.getOwnedSubIdioms();
+			for(@NonNull SubIdiom subIdiom : staticSubIdioms) {
+				segments2id2.put(subIdiom.getSegments(), "");
+			}
+		}
+		List<@NonNull List<Segment>> segmentLists = new ArrayList<>(segments2id2.keySet());
+		Collections.sort(segmentLists, NameUtil.TO_STRING_COMPARATOR);
+		String formatString = "_" + getDigitsFormatString(segmentLists);
+		int i = 0;
+		for (@NonNull List<Segment> segmentList : segmentLists) {
+			segments2id2.put(segmentList, String.format(formatString, i++));
+		}
+		return segmentLists;
+	}
+
+	protected @NonNull String getSegmentsListId(@NonNull String segmentsList, boolean addQualifier) {
+		assert segmentsList2id != null;
+		String id = segmentsList2id.get(segmentsList);
+		assert id != null;
+		return addQualifier ? "sl." + id : id;
+	}
+
+	protected @NonNull Iterable<@NonNull Segment[][]> getSegmentsListIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
+		assert serializationRule2id2 != null;
+		Map<@NonNull String, @NonNull String> segmentsList2id2 = segmentsList2id;
+		if (segmentsList2id2 == null) {
+			segmentsList2id = segmentsList2id2 = new HashMap<>();
+		}
+		for (@NonNull SerializationRule serializationRule : serializationRule2id2.keySet()) {
+			segmentsList2id2.put(getSegmentsListString(serializationRule.getStaticSegments()), "");
+		}
+		List<@NonNull String> segmentsLists = new ArrayList<>(segmentsList2id2.keySet());
+		Collections.sort(segmentsLists);
+		String formatString = "_" + getDigitsFormatString(segmentsLists);
+		@NonNull List<@NonNull Segment[][]> segmentsListArray = new ArrayList<>();
+		int i = 0;
+		for (@NonNull String segmentsListString : segmentsLists) {
+			segmentsList2id2.put(segmentsListString, String.format(formatString, i++));
+			segmentsListArray.add(segmentsListString2segmentsList.get(segmentsListString));
+		}
+		return segmentsListArray;
+	}
+
+	protected @NonNull String getSegmentsListString(@NonNull Segment[][] segmentsList) {
+		String string = segmentsList2string.get(segmentsList);
+		if (string == null) {
+			StringBuilder s= new StringBuilder();
+			for (@NonNull Segment[] segments: segmentsList) {
+				if (segments != null) {
+					for (@NonNull Segment segment: segments) {
+						s.append(segment.toString());
+					}
+				}
+				s.append(",");
+			}
+			string = s.toString();
+			segmentsList2string.put(segmentsList, string);
+			segmentsListString2segmentsList.put(string, segmentsList);		// Any duplicate will do
+		}
+		return string;
+	}
+
+	@Override
+	protected TypeReference getSemanticSequencerClass(final Grammar grammar) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected String getSerializerBasePackage(final Grammar grammar) {
+		return xtextGeneratorNaming.getRuntimeBasePackage(grammar) + ".serializer";
+	}
+
+	protected @NonNull String getSerializationStepId(@NonNull RTSerializationStep step, boolean addQualifier) {
+		assert serializationStep2id != null;
+		String id = serializationStep2id.get(step);
+		assert id != null;
+		return addQualifier ? "st." + id : id;
+	}
+
+
+
+//	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSerializationRuleAnalysisIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+//		assert serializationRuleAnalyses != null;
+//		return serializationRuleAnalyses;
+//	}
+
+	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSerializationRuleAnalysisIterable(@NonNull GrammarAnalysis grammarAnalysis, int page) {
+		assert serializationRuleAnalyses != null;
+		int size = serializationRuleAnalyses.size();
+		int maxPage = getSerializationRulePage(size);
+		int firstIndex = RULES_PER_PAGE * page;
+		assert serializationRuleAnalyses != null;
+		return serializationRuleAnalyses.subList(firstIndex, Math.min(firstIndex+RULES_PER_PAGE, size));
+	}
+
+	protected @NonNull String getSerializationRuleId(@NonNull SerializationRule serializationRule, boolean addQualifier) {
+		assert serializationRule2id != null;
+		String id = serializationRule2id.get(serializationRule);
+	//	System.out.println("?? " + NameUtil.debugSimpleName(serializationRule) + " => " + id  + " : " + serializationRule.toRuleString());
+		assert id != null;
+		if (addQualifier) {
+			return id;
+		}
+		int index = id.indexOf('.');
+		return index >= 0 ? id.substring(index+1) : id;
+	}
+
+	private int getSerializationRulePage(int serializationRuleIndex) {
+		return serializationRuleIndex / RULES_PER_PAGE;
+	}
+
+	protected @NonNull Iterable<@NonNull Integer> getSerializationRulePageIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		assert serializationRuleAnalyses != null;
+		int maxPage = getSerializationRulePages(serializationRuleAnalyses.size());
+		List<@NonNull Integer> pages = new ArrayList<>();
+		for (int i = 0; i < maxPage; i++) {
+			pages.add(i);
+		}
+		return pages;
+	}
+
+	private int getSerializationRulePages(int serializationRuleIndex) {
+		return (serializationRuleIndex + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
+	}
+
+	protected @NonNull Iterable<@NonNull RTSerializationStep> getSerializationStepIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull RTSerializationStep, @NonNull String> serializationStep2id2 = serializationStep2id;
+		if (serializationStep2id2 == null) {
+			serializationStep2id = serializationStep2id2 = new HashMap<>();
+		}
+		for (@NonNull EClassData eClassData : grammarAnalysis.getSortedProducedEClassDatas()) {
+			for(@NonNull SerializationRule serializationRule : eClassData.getSerializationRules()) {
+				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
+					serializationStep2id2.put(serializationStep, "");
+				}
+			}
+		}
+		List<@NonNull RTSerializationStep> steps = new ArrayList<>(serializationStep2id2.keySet());
+		Collections.sort(steps, NameUtil.TO_STRING_COMPARATOR);
+		String formatString = "_" + getDigitsFormatString(steps);
+		int i = 0;
+		for (@NonNull RTSerializationStep step : steps) {
+			serializationStep2id2.put(step, String.format(formatString, i++));
+		}
+		return steps;
+	}
+
 	@Override
 	protected TypeReference getSyntacticSequencerClass(final Grammar grammar) {
 		throw new UnsupportedOperationException();
 	}
 
 	protected void initAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis) {
-		getSortedEnumValues(grammarAnalysis);
-		getSortedSegments(grammarAnalysis);
-		getSortedSerializationSteps(grammarAnalysis);
-		getSortedSolutions(grammarAnalysis);
-		getSortedSolutionSteps(grammarAnalysis);
-		initRuleValues(grammarAnalysis);
-		getSortedEClasses(grammarAnalysis);
-		initSerializationRule2id(grammarAnalysis);
+		getEnumValueIterable(grammarAnalysis);
+		getSegmentsIterable(grammarAnalysis);
+		getSerializationStepIterable(grammarAnalysis);
+		getMatchTermIterable(grammarAnalysis);
+		getMatchStepIterable(grammarAnalysis);
+		initGrammarRuleValues(grammarAnalysis);
+		getEClassIterable(grammarAnalysis);
+		initSerializationRules(grammarAnalysis);
 	}
 
-	protected @NonNull Iterable<@NonNull String> getSortedImportClassNames() {
-		List<@NonNull String> referredClassesList = new ArrayList<>(referredClassNames);
-		Collections.sort(referredClassesList);
-		return referredClassesList;
+	protected void initGrammarRuleValues(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull AbstractRuleValue, @NonNull String> grammarRuleValue2id2 = grammarRuleValue2id;
+		Map<@NonNull Integer, @NonNull String> grammarRuleValueIndex2ruleName2 = grammarRuleValueIndex2ruleName;
+		if (grammarRuleValue2id2 == null) {
+			grammarRuleValue2id = grammarRuleValue2id2 = new HashMap<>();
+		}
+		if (grammarRuleValueIndex2ruleName2 == null) {
+			grammarRuleValueIndex2ruleName = grammarRuleValueIndex2ruleName2 = new HashMap<>();
+		}
+		for (@NonNull AbstractRuleAnalysis grammarRuleAnalysis : grammarAnalysis.getRuleAnalyses()) {
+		//	if (grammarRuleAnalysis instanceof ParserRuleAnalysis) {
+			grammarRuleValue2id2.put(grammarRuleAnalysis.getRuleValue(), "");
+			grammarRuleValueIndex2ruleName2.put(grammarRuleAnalysis.getRuleValue().getIndex(), grammarRuleAnalysis.getRuleName());
+		//	}
+		}
+		List<@NonNull AbstractRuleValue> grammarRuleValues = new ArrayList<>(grammarRuleValue2id2.keySet());
+		Collections.sort(grammarRuleValues, NameUtil.NAMEABLE_COMPARATOR);
+		String formatString = "_" + getDigitsFormatString(grammarRuleValues);
+		int i = 0;
+		for (@NonNull AbstractRuleValue grammarRuleValue : grammarRuleValues) {
+			grammarRuleValue2id2.put(grammarRuleValue, String.format(formatString, i++));
+		}
+	}
+
+	protected void initSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
+		if (serializationRule2id2 == null) {
+			Set<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesSet = new HashSet<>();
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
+				if (ruleAnalysis instanceof ParserRuleAnalysis) {
+					for (@NonNull SerializationRuleAnalysis serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRules()) {
+					//	System.out.println(NameUtil.debugSimpleName(serializationRule) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis()) + " => " + NameUtil.debugSimpleName(serializationRule.getSerializationRuleAnalysis().getRuntime()) + " : " + serializationRule.toString());
+						serializationRuleAnalysesSet.add(serializationRule);
+					}
+				}
+			}
+			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesList = new ArrayList<>(serializationRuleAnalysesSet);
+			Collections.sort(serializationRuleAnalysesList, NameUtil.NAMEABLE_COMPARATOR);
+			serializationRule2id = serializationRule2id2 = new HashMap<>();
+			String formatString = "sr" + getDigitsFormatString(getSerializationRulePage(serializationRuleAnalysesSet.size())) + "._" + getDigitsFormatString(serializationRuleAnalysesList);
+			int i = 0;
+			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRuleAnalysesList) {
+				serializationRule2id2.put(serializationRule.getRuntime(), String.format(formatString, getSerializationRulePage(i), i));
+				i++;
+			}
+			this.serializationRuleAnalyses = serializationRuleAnalysesList;
+		}
 	}
 
 	//

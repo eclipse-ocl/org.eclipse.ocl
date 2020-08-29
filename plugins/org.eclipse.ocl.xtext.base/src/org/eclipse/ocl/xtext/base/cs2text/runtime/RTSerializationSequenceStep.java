@@ -75,8 +75,9 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		super.toString(s, depth);
-		s.append("next-");
-		s.append(getStepsRange());
-		s.append("-steps");
+		s.append("steps-");
+		s.append(startIndex);
+		s.append("..");
+		s.append(endIndex);
 	}
 }
