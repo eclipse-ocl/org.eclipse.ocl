@@ -68,6 +68,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -198,15 +199,16 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	protected def generateEClassValue_EClass(GrammarAnalysis grammarAnalysis, EClass eClass) {
 		'''
 		new «newTypeReference(EClassValue)»(«emitLiteral(eClass)»,
-			new @NonNull «newTypeReference(SerializationRule)» [] {
-				«FOR serializationRule : grammarAnalysis.getEClassValue(eClass).getSerializationRules() SEPARATOR ','»
-				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+			new @NonNull «newTypeReference(SerializationRule_SegmentsList)» [] {
+				«FOR serializationRuleSegmentsList : grammarAnalysis.getEClassValue(eClass).getSerializationRuleSegmentsLists() SEPARATOR ','»
+				«var serializationRule = serializationRuleSegmentsList.getSerializationRule()»
+				new «newTypeReference(SerializationRule_SegmentsList)»(«getSerializationRuleId(serializationRule, true)», «getSegmentsListId(getSegmentsListString(serializationRule.getStaticSegments()), true)») /* «serializationRule.toRuleString()» */
 				«ENDFOR»
-			}, «IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null«ELSE»
+			}, «IF grammarAnalysis.basicGetEReferenceRuleIndexes(eClass) === null »null«ELSE»
 			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
-				«FOR eReferenceData : getEReferenceDatasIterable(grammarAnalysis, eClass) SEPARATOR ','»
-				new «newTypeReference(EReference_RuleIndexes)»(«emitLiteral(eReferenceData.getEReference())»,
-					«getIndexVectorId(eReferenceData.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
+				«FOR eReferenceRuleIndex : getEReferenceRuleIndexesIterable(grammarAnalysis, eClass) SEPARATOR ','»
+				new «newTypeReference(EReference_RuleIndexes)»(«emitLiteral(eReferenceRuleIndex.getEReference())»,
+					«getIndexVectorId(eReferenceRuleIndex.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceRuleIndex.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
 				«ENDFOR»
 			}«ENDIF»
 		)'''
@@ -638,7 +640,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _SerializationSegmentsLists
 		{
 			«FOR segmentsList : getSegmentsListIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(Segment)» @Nullable [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(Segment)» @Nullable [] @Nullable [] {
+			private final @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] {
 				«FOR segments : segmentsList SEPARATOR ','»
 				«IF segments !== null»«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR '+'»«segment.toString()»«ENDFOR» */«ELSE»null«ENDIF»
 				«ENDFOR»

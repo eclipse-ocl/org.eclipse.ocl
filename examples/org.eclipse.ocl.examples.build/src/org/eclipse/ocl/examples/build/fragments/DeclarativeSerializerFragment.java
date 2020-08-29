@@ -51,6 +51,7 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -279,7 +280,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	//		}
 		}
 		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
-			for (@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
+			for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
+				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 				for (@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
@@ -307,10 +309,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "ev." + id : id;
 	}
 
-	protected @NonNull List<@NonNull EReference_RuleIndexes> getEReferenceDatasIterable(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EClass eClass) {
-		List<@NonNull EReference_RuleIndexes> eReferenceDatas = Lists.newArrayList(grammarAnalysis.getEReferenceDatas(eClass));
-		Collections.sort(eReferenceDatas, NameUtil.NAMEABLE_COMPARATOR);
-		return eReferenceDatas;
+	protected @NonNull List<@NonNull EReference_RuleIndexes> getEReferenceRuleIndexesIterable(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EClass eClass) {
+		List<@NonNull EReference_RuleIndexes> eReferenceRuleIndexes = Lists.newArrayList(grammarAnalysis.getEReferenceRuleIndexes(eClass));
+		Collections.sort(eReferenceRuleIndexes, NameUtil.NAMEABLE_COMPARATOR);
+		return eReferenceRuleIndexes;
 	}
 
 	protected @NonNull GrammarAnalysis getGrammarAnalysis() {
@@ -368,10 +370,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		if ((indexVector2id2 == null) || (indexVectors2 == null)) {
 			indexVector2id = indexVector2id2 = new HashMap<>();
 			for (@NonNull EClass eClass : getEClassIterable(grammarAnalysis)) {
-				@NonNull EReference_RuleIndexes[] eReferenceDatas = grammarAnalysis.basicGetEReferenceDatas(eClass);
-				if (eReferenceDatas != null) {
-					for (@NonNull EReference_RuleIndexes eReferenceData : eReferenceDatas) {
-						IndexVector assignedTargetRuleValues = eReferenceData.getAssignedTargetRuleValueIndexes();
+				@NonNull EReference_RuleIndexes[] eReferenceRuleIndexes = grammarAnalysis.basicGetEReferenceRuleIndexes(eClass);
+				if (eReferenceRuleIndexes != null) {
+					for (@NonNull EReference_RuleIndexes eReferenceRuleIndex : eReferenceRuleIndexes) {
+						IndexVector assignedTargetRuleValues = eReferenceRuleIndex.getAssignedTargetRuleValueIndexes();
 						indexVector2id2.put(assignedTargetRuleValues, "");
 					}
 				}
@@ -411,7 +413,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			matchStep2id = matchStep2id2 = new HashMap<>();
 		}
 		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
-			for (@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
+			for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
+				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 				for (@NonNull CardinalitySolutionStep matchStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					matchStep2id2.put(matchStep, "");
@@ -441,7 +444,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			matchTerm2id = matchTerm2id2 = new HashMap<>();
 		}
 		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
-			for(@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
+			for(@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
+				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 				for(@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					for (@NonNull CardinalitySolution matchTerm : solutionStep.getSolutionClosure()) {
@@ -629,7 +633,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			serializationStep2id = serializationStep2id2 = new HashMap<>();
 		}
 		for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
-			for(@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
+			for(@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
+				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
 					serializationStep2id2.put(serializationStep, "");
 				}

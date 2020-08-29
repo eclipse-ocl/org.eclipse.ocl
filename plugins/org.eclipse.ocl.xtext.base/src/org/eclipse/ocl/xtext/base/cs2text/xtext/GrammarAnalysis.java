@@ -46,6 +46,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.user.AbstractGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -358,9 +359,9 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			EClass eClass = entry.getKey();
 			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = entry.getValue();
 			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues(serializationRuleAnalyses);
-			@NonNull EReference_RuleIndexes[] eReferenceData = null;
+			@NonNull EReference_RuleIndexes[] eReferenceRuleIndexes = null;
 			if (eContainmentFeature2assignedTargetRuleValues != null) {
-				eReferenceData = new @NonNull EReference_RuleIndexes[eContainmentFeature2assignedTargetRuleValues.size()];
+				eReferenceRuleIndexes = new @NonNull EReference_RuleIndexes[eContainmentFeature2assignedTargetRuleValues.size()];
 				int i2 = 0;
 				for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> entry2 : eContainmentFeature2assignedTargetRuleValues.entrySet()) {
 					Set<@NonNull AbstractRuleValue> values = entry2.getValue();
@@ -369,17 +370,17 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 					for (AbstractRuleValue value : values) {
 						parserRuleValues[i3++] = (ParserRuleValue) value;
 					}
-					eReferenceData[i2++] = new EReference_RuleIndexes(entry2.getKey(), new IndexVector(parserRuleValues));
+					eReferenceRuleIndexes[i2++] = new EReference_RuleIndexes(entry2.getKey(), new IndexVector(parserRuleValues));
 				}
 			}
-			@NonNull SerializationRule [] serializationRules = new @NonNull SerializationRule [serializationRuleAnalyses.size()];
+			@NonNull SerializationRule_SegmentsList [] serializationRuleSegmentsLists = new @NonNull SerializationRule_SegmentsList [serializationRuleAnalyses.size()];
 			int i = 0;
 			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalyses) {
 				SerializationRule serializationRule = serializationRuleAnalysis.getRuntime();
-				serializationRules[i++] = serializationRule;
+				serializationRuleSegmentsLists[i++] = new SerializationRule_SegmentsList(serializationRule, serializationRule.getStaticSegments());
 				serializationRule2aserializationRuleAnalysis2.put(serializationRule, serializationRuleAnalysis);
 			}
-			addEClassValue(new EClassValue(eClass, serializationRules, eReferenceData));
+			addEClassValue(new EClassValue(eClass, serializationRuleSegmentsLists, eReferenceRuleIndexes));
 		}
 		for (@NonNull SerializationRule serializationRule : serializationRule2aserializationRuleAnalysis2.keySet()) {
 			SerializationRuleAnalysis serializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2.get(serializationRule);
@@ -463,13 +464,13 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 //		return eClassValue.basicGetEContainmentFeature2assignedTargetRuleValues();
 //	}
 
-	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceDatas(@NonNull EClass eClass) {
+	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceRuleIndexes(@NonNull EClass eClass) {
 		EClassValue eClassValue = getEClassValue(eClass);
-		return eClassValue.basicGetEReferenceDatas();
+		return eClassValue.basicGetEReferenceRuleIndexes();
 	}
 
-	public @NonNull EReference_RuleIndexes @NonNull [] getEReferenceDatas(@NonNull EClass eClass) {
-		return ClassUtil.nonNullState(basicGetEReferenceDatas(eClass));
+	public @NonNull EReference_RuleIndexes @NonNull [] getEReferenceRuleIndexes(@NonNull EClass eClass) {
+		return ClassUtil.nonNullState(basicGetEReferenceRuleIndexes(eClass));
 	}
 
 	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> getEContainmentFeature2assignedTargetRuleValues(

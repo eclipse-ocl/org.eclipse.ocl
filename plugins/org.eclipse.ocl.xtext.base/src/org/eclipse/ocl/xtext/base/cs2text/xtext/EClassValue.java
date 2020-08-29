@@ -19,58 +19,82 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
 
 public class EClassValue implements Nameable
 {
-	protected final @NonNull EClass eClass;
-	protected final @NonNull SerializationRule @NonNull [] serializationRules;
-	protected final @NonNull EReference_RuleIndexes @Nullable [] eReferenceDatas;
-//	private @Nullable Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = null;	// ?? does this do anything ??
+	public static class SerializationRule_SegmentsList //implements Nameable
+	{
+		protected final @NonNull SerializationRule serializationRule;
+		protected final @NonNull Segment @NonNull [] @Nullable [] segments;
 
-	public EClassValue(/*@NonNull*/ EClass eClass, @NonNull SerializationRule @NonNull [] serializationRules,
-			@NonNull EReference_RuleIndexes @Nullable [] eReferenceDatas) {
+		public SerializationRule_SegmentsList(@NonNull SerializationRule serializationRule, @NonNull Segment @NonNull [] @Nullable [] segments) {
+			this.serializationRule = serializationRule;
+			this.segments = segments;
+		}
+	//	public @NonNull IndexVector getAssignedTargetRuleValueIndexes() {
+	//		return parserRuleValueIndexes;
+	//	}
+
+	//	@Override
+	//	public @NonNull String getName() {
+	//		return XtextGrammarUtil.getName(eReference);
+	//	}
+
+		public @NonNull SerializationRule getSerializationRule() {
+			return serializationRule;
+		}
+
+	//	@Override
+	//	public @NonNull String toString() {
+	//		return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + parserRuleValueIndexes;
+	//	}
+	}
+	protected final @NonNull EClass eClass;
+	protected final @NonNull SerializationRule_SegmentsList @NonNull [] serializationRuleSegmentsLists;
+	protected final @NonNull EReference_RuleIndexes @Nullable [] eReferenceRuleIndexes;
+
+	public EClassValue(/*@NonNull*/ EClass eClass, @NonNull SerializationRule_SegmentsList @NonNull [] serializationRuleSegmentsLists,
+			@NonNull EReference_RuleIndexes @Nullable [] eReferenceRuleIndexes) {
 		assert eClass != null;
 		this.eClass = eClass;
-		this.serializationRules = serializationRules;
-		this.eReferenceDatas = eReferenceDatas;
+		this.serializationRuleSegmentsLists = serializationRuleSegmentsLists;
+		this.eReferenceRuleIndexes = eReferenceRuleIndexes;
 	}
 
-	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceDatas() {
-		return eReferenceDatas;
+//	public EClassValue(EClass  eClass, @NonNull SerializationRule[] serializationRules, @NonNull EReference_RuleIndexes[] eReferenceRuleIndexes) {
+//		this(eClass, convert(serializationRules), eReferenceRuleIndexes);
+//	}
+
+	private static @NonNull SerializationRule_SegmentsList @NonNull [] convert(@NonNull SerializationRule[] serializationRules) {	// XXX fixup
+		@NonNull SerializationRule_SegmentsList @NonNull [] serializationRuleSegmentsLists = new @NonNull SerializationRule_SegmentsList[serializationRules.length];
+		for (int i = 0; i < serializationRules.length; i++) {
+			SerializationRule serializationRule = serializationRules[i];
+			serializationRuleSegmentsLists[i] = new SerializationRule_SegmentsList(serializationRule, serializationRule.getStaticSegments());
+		}
+		return serializationRuleSegmentsLists;
+	}
+
+	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceRuleIndexes() {
+		return eReferenceRuleIndexes;
 	}
 
 	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable IndexVector targetRuleValueIndexes) {
 		if (targetRuleValueIndexes == null)  {
-			return new DynamicSerializationRules(this, serializationRules);
+			return new DynamicSerializationRules(this, serializationRuleSegmentsLists);
 		}
-		List<@NonNull SerializationRule> newSerializationRules = new ArrayList<>();
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		List<@NonNull SerializationRule_SegmentsList> newSerializationRuleSegmentsLists = new ArrayList<>();
+		for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
+			SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 			int ruleValueIndex = serializationRule.getRuleValueIndex();
 			if (targetRuleValueIndexes.test(ruleValueIndex)) {
-				newSerializationRules.add(serializationRule);
-			/*	Map<@NonNull EReference, @NonNull IndexVector> ruleDiscriminatingEReferences9 = serializationRule.getEReference2DiscriminatingRuleValueIndexes();
-				if (ruleDiscriminatingEReferences9 != null) {
-					Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes2 = eReference2discriminatingRuleValueIndexes;
-					if (eReference2discriminatingRuleValueIndexes2 == null) {
-						eReference2discriminatingRuleValueIndexes = eReference2discriminatingRuleValueIndexes2 = new HashMap<>();
-					}
-					for (Map.Entry<@NonNull EReference, @NonNull IndexVector> entry : ruleDiscriminatingEReferences9.entrySet()) {
-						EReference eReference = entry.getKey();
-						IndexVector discriminatingRuleValueIndexes = eReference2discriminatingRuleValueIndexes2.get(eReference);
-						if (discriminatingRuleValueIndexes == null) {
-							discriminatingRuleValueIndexes = new IndexVector();
-							assert eReference.isOrdered();
-							eReference2discriminatingRuleValueIndexes2.put(eReference, discriminatingRuleValueIndexes);
-						}
-						discriminatingRuleValueIndexes.setAll(entry.getValue());
-					}
-				} */
+				newSerializationRuleSegmentsLists.add(serializationRuleSegmentsList);
 			}
 		}
-		return new DynamicSerializationRules(this, newSerializationRules.toArray(new @NonNull SerializationRule[newSerializationRules.size()]));
+		return new DynamicSerializationRules(this, newSerializationRuleSegmentsLists.toArray(new @NonNull SerializationRule_SegmentsList[newSerializationRuleSegmentsLists.size()]));
 	}
 
 	/**
@@ -89,29 +113,15 @@ public class EClassValue implements Nameable
 			}
 		}
 		return targetRuleValues; */
-		if (eReferenceDatas != null) {
-			for (@NonNull EReference_RuleIndexes eReferenceData : eReferenceDatas) {
-				if (eReferenceData.getEReference() == eContainmentFeature) {
-					return eReferenceData.getAssignedTargetRuleValueIndexes();
+		if (eReferenceRuleIndexes != null) {
+			for (@NonNull EReference_RuleIndexes eReferenceRuleIndex : eReferenceRuleIndexes) {
+				if (eReferenceRuleIndex.getEReference() == eContainmentFeature) {
+					return eReferenceRuleIndex.getAssignedTargetRuleValueIndexes();
 				}
 			}
 		}
 		return null;
 	}
-/*	public @NonNull IndexVector getAssignedTargetRuleValueIndexes(@NonNull EReference eContainmentFeature) {
-		IndexVector targetRuleValueIndexes = new IndexVector();
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
-			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
-			if (assignedSerializationNodes != null) {
-				for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
-					for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
-						targetRuleValueIndexes.set(targetRuleAnalysis.getIndex());
-					}
-				}
-			}
-		}
-		return targetRuleValueIndexes;
-	} */
 
 	public @NonNull EClass getEClass() {
 		return eClass;
@@ -122,8 +132,8 @@ public class EClassValue implements Nameable
 		return XtextGrammarUtil.getName(eClass);
 	}
 
-	public @NonNull SerializationRule @NonNull [] getSerializationRules() {
-		return serializationRules;
+	public @NonNull SerializationRule_SegmentsList @NonNull [] getSerializationRuleSegmentsLists() {
+		return serializationRuleSegmentsLists;
 	}
 
 	@Override
@@ -146,7 +156,7 @@ public class EClassValue implements Nameable
 		s.append("::");
 		s.append(eClass.getName());
 	//	boolean isMany = Iterables.size(serializationRules) > 1;
-		for (@NonNull SerializationRule serializationRule : serializationRules) {
+		for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 	//		SerializationRule serializationRuleAnalysis = serializationRule;//.getSerializationRuleAnalysis();
 	//		if (isMany) {
 				StringUtil.appendIndentation(s, depth+1);
@@ -157,7 +167,7 @@ public class EClassValue implements Nameable
 //			s.append(serializationRule.getName());
 //			s.append(" - ");
 		//	serializationRuleAnalysis.toRuleString(s);
-			serializationRule.toSolutionString(s, depth+2);
+				serializationRuleSegmentsList.getSerializationRule().toSolutionString(s, depth+2);
 		}
 	}
 }
