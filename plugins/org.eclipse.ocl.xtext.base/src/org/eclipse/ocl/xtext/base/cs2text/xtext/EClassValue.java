@@ -29,15 +29,12 @@ public class EClassValue implements Nameable
 	public static class SerializationRule_SegmentsList //implements Nameable
 	{
 		protected final @NonNull SerializationRule serializationRule;
-		protected final @NonNull Segment @NonNull [] @Nullable [] segments;
+		protected final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 
-		public SerializationRule_SegmentsList(@NonNull SerializationRule serializationRule, @NonNull Segment @NonNull [] @Nullable [] segments) {
+		public SerializationRule_SegmentsList(@NonNull SerializationRule serializationRule, @NonNull Segment @NonNull [] @Nullable [] staticSegments) {
 			this.serializationRule = serializationRule;
-			this.segments = segments;
+			this.staticSegments = staticSegments;
 		}
-	//	public @NonNull IndexVector getAssignedTargetRuleValueIndexes() {
-	//		return parserRuleValueIndexes;
-	//	}
 
 	//	@Override
 	//	public @NonNull String getName() {
@@ -46,6 +43,10 @@ public class EClassValue implements Nameable
 
 		public @NonNull SerializationRule getSerializationRule() {
 			return serializationRule;
+		}
+
+		public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
+			return staticSegments;
 		}
 
 	//	@Override
@@ -63,19 +64,6 @@ public class EClassValue implements Nameable
 		this.eClass = eClass;
 		this.serializationRuleSegmentsLists = serializationRuleSegmentsLists;
 		this.eReferenceRuleIndexes = eReferenceRuleIndexes;
-	}
-
-//	public EClassValue(EClass  eClass, @NonNull SerializationRule[] serializationRules, @NonNull EReference_RuleIndexes[] eReferenceRuleIndexes) {
-//		this(eClass, convert(serializationRules), eReferenceRuleIndexes);
-//	}
-
-	private static @NonNull SerializationRule_SegmentsList @NonNull [] convert(@NonNull SerializationRule[] serializationRules) {	// XXX fixup
-		@NonNull SerializationRule_SegmentsList @NonNull [] serializationRuleSegmentsLists = new @NonNull SerializationRule_SegmentsList[serializationRules.length];
-		for (int i = 0; i < serializationRules.length; i++) {
-			SerializationRule serializationRule = serializationRules[i];
-			serializationRuleSegmentsLists[i] = new SerializationRule_SegmentsList(serializationRule, serializationRule.getStaticSegments());
-		}
-		return serializationRuleSegmentsLists;
 	}
 
 	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceRuleIndexes() {

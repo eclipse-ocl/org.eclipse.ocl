@@ -65,7 +65,7 @@ public class DynamicSerializationRules
 		for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 			SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 			if ((targetParserRuleValue == null) || targetParserRuleValue.subParserRuleValueClosureContains(serializationRule.getRuleValueIndex())) {
-				DynamicRuleMatch dynamicRuleMatch = serializationRule.match(slotsAnalysis);
+				DynamicRuleMatch dynamicRuleMatch = serializationRule.match(slotsAnalysis, serializationRuleSegmentsList.getStaticSegments());
 				if (dynamicRuleMatch != null) {
 					return dynamicRuleMatch;
 				}

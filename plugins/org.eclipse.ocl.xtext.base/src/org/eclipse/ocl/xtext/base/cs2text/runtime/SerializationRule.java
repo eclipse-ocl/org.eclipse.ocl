@@ -398,7 +398,7 @@ public class SerializationRule
 		return hashCode.intValue();
 	} */
 
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
+	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull Segment @NonNull [] @Nullable [] staticSegments) {
 		//
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
@@ -408,7 +408,7 @@ public class SerializationRule
 
 
 			assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
-			dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, this, solutionSteps, this);
+			dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, this, solutionSteps, staticSegments, this);
 			slotsAnalysis.addDynamicRuleMatch(dynamicRuleMatch);
 
 			if (!dynamicRuleMatch.analyze()) {
@@ -481,6 +481,7 @@ public class SerializationRule
 	}
 
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		@NonNull Segment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
 		for (int index = startIndex; index < endIndex; ) {
 			@NonNull Segment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
 			RTSerializationStep serializationStep = serializationSteps[index++];

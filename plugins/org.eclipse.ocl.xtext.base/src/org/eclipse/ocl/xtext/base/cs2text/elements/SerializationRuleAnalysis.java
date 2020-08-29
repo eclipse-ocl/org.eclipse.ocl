@@ -514,7 +514,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
 			assert staticRuleMatch != null;
-			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRule().getRuleAnalysis().getGrammarAnalysis().getIdioms();
+			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRuleAnalysis().getRuleAnalysis().getGrammarAnalysis().getIdioms();
 			//
 			//	Locate the matches for each idiom.
 			//

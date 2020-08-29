@@ -31,6 +31,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -48,7 +49,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	/**
 	 * The rule for which this is the static analysis.
 	 */
-	protected final @NonNull SerializationRuleAnalysis serializationRule;
+	protected final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;
 
 	/**
 	 * The CardinalityVariable for each node, unless always exactly 1.
@@ -72,8 +73,8 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	 */
 	private final @NonNull List<@NonNull AssignedSerializationNode> assignedSerializationNodes = new ArrayList<>();
 
-	public StaticRuleMatch(@NonNull SerializationRuleAnalysis serializationRule) {
-		this.serializationRule = serializationRule;
+	public StaticRuleMatch(@NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+		this.serializationRuleAnalysis = serializationRuleAnalysis;
 	}
 
 	/**
@@ -93,7 +94,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		if (eStructuralFeature instanceof EAttribute) {
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-			serializationRule.analyzeAssignment(eAttribute, enumerationValue, netMultiplicativeCardinality);
+			serializationRuleAnalysis.analyzeAssignment(eAttribute, enumerationValue, netMultiplicativeCardinality);
 		/*	Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 			if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
 				eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
@@ -125,7 +126,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			//	Add cardinalityVariables as a further product term to the sum of products.
 			//
 			if (enumerationValue != null) {
-				GrammarAnalysis grammarAnalysis = serializationRule.getRuleAnalysis().getGrammarAnalysis();
+				GrammarAnalysis grammarAnalysis = serializationRuleAnalysis.getRuleAnalysis().getGrammarAnalysis();
 				cardinalityExpression = cardinalityExpression.getCardinalityExpression(grammarAnalysis, enumerationValue);
 			}
 		}
@@ -135,7 +136,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		else {
 			EReference eReference = (EReference)eStructuralFeature;
 			Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-			serializationRule.analyzeAssignment(eReference, ruleAnalyses, netMultiplicativeCardinality);
+			serializationRuleAnalysis.analyzeAssignment(eReference, ruleAnalyses, netMultiplicativeCardinality);
 		/*	Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 			if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 				eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
@@ -173,10 +174,10 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSerialization() {
-		if ("EnumerationCS".equals(serializationRule.getRuleAnalysis().getRuleName())) {
+		if ("EnumerationCS".equals(serializationRuleAnalysis.getRuleAnalysis().getRuleName())) {
 			getClass();	// XXX
 		}
-		analyzeSerialization(serializationRule.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
+		analyzeSerialization(serializationRuleAnalysis.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
 	}
 	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
 		//
@@ -227,7 +228,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSolution() {
-		if ("EssentialOCL::ExpCS".equals(serializationRule.getName())) {
+		if ("EssentialOCL::ExpCS".equals(serializationRuleAnalysis.getName())) {
 			getClass();		// XXX debugging
 		}
 	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
@@ -240,7 +241,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			//	steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eReferenceType));
 			}
 		} */
-		serializationRule.analyzeSolution(steps);
+		serializationRuleAnalysis.analyzeSolution(steps);
 	/*	if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
 			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
 				EReference eReference = entry.getKey();
@@ -304,7 +305,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			}
 		}
 		Collections.sort(residualExpressions, NameUtil.NAMEABLE_COMPARATOR);
-		List<@NonNull CardinalityVariable> variables = Lists.newArrayList(serializationRule.getVariables());
+		List<@NonNull CardinalityVariable> variables = Lists.newArrayList(serializationRuleAnalysis.getVariables());
 		Collections.sort(variables, NameUtil.NAMEABLE_COMPARATOR);
 		//
 		//	Confirm that variables with a "1" solution were skipped.
@@ -529,8 +530,9 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	protected @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
 		List<@NonNull CardinalitySolutionStep> matchStepsList = getSteps();
-		@NonNull CardinalitySolutionStep [] matchStepsArray = matchStepsList.toArray(new CardinalitySolutionStep[matchStepsList.size()]);
-		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, getSerializationRule().getRuntime(), matchStepsArray, this);
+		@NonNull CardinalitySolutionStep [] matchStepsArray = matchStepsList.toArray(new @NonNull CardinalitySolutionStep[matchStepsList.size()]);
+		SerializationRule serializationRule = getSerializationRuleAnalysis().getRuntime();
+		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, serializationRule, matchStepsArray, serializationRule.getStaticSegments(), this);
 		slotsAnalysis.addDynamicRuleMatch(dynamicRuleMatch);
 		return dynamicRuleMatch;
 	}
@@ -544,8 +546,8 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return variable2node.keySet();
 	}
 
-	public @NonNull SerializationRuleAnalysis getSerializationRule() {
-		return serializationRule;
+	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis() {
+		return serializationRuleAnalysis;
 	}
 
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
@@ -573,9 +575,9 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
-		s.append(serializationRule.getName());
+		s.append(serializationRuleAnalysis.getName());
 		s.append(" : ");
-		serializationRule.toRuleString(s);
+		serializationRuleAnalysis.toRuleString(s);
 		List<@NonNull CardinalityExpression> expressions = new ArrayList<>(eStructuralFeature2requiredSlotsExpression.values());
 		Collections.sort(expressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityExpression expression : expressions) {

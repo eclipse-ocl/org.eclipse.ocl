@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -93,6 +94,10 @@ public class UserElementSerializer
 
 	public @NonNull SerializationRule getSerializationRule() {
 		return serializationRule;
+	}
+
+	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
+		return dynamicRuleMatch.getStaticSegments();
 	}
 
 	public int getValue(int cardinalityVariableIndex) {

@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
@@ -38,14 +39,17 @@ public class DynamicRuleMatch implements RuleMatch
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
 	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull CardinalitySolutionStep @NonNull [] matchSteps;
+	protected final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 	private final @NonNull Object debugStaticRuleMatch;
 	private final @NonNull Map<@NonNull Integer, @NonNull Integer> variableIndex2value = new HashMap<>();
 	private boolean checked = false;
 
-	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationRule serializationRule, @NonNull CardinalitySolutionStep @NonNull [] matchSteps, @NonNull Object debugStaticRuleMatch) {
+	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationRule serializationRule, @NonNull CardinalitySolutionStep @NonNull [] matchSteps,
+			@NonNull Segment @NonNull [] @Nullable [] staticSegments, @NonNull Object debugStaticRuleMatch) {
 		this.slotsAnalysis = slotsAnalysis;
 		this.serializationRule = serializationRule;
 		this.matchSteps = matchSteps;
+		this.staticSegments = staticSegments;
 		this.debugStaticRuleMatch = debugStaticRuleMatch;
 		slotsAnalysis.getModelAnalysis().debugAddDynamicRuleMatch(this);
 	}
@@ -99,6 +103,10 @@ public class DynamicRuleMatch implements RuleMatch
 
 	public @NonNull UserSlotsAnalysis getSlotsAnalysis() {
 		return slotsAnalysis;
+	}
+
+	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
+		return staticSegments;
 	}
 
 	public @NonNull Integer getValue(int cardinalityVariableIndex) {

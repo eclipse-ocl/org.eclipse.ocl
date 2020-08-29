@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.elements.ProxyRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
@@ -110,9 +111,10 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 			assert eReference.isContainment();
 			UserElementAnalysis elementAnalysis = serializer.getModelAnalysis().getElementAnalysis(eObject);
 			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
+			Segment[][] staticSegments = serializer.getStaticSegments();
 			for (@NonNull AbstractRuleValue calledRuleValue : getCalledRuleValues()) {		// search for matching rule
 				for (@NonNull SerializationRule serializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {
-					DynamicRuleMatch match = serializationRule.match(slotsAnalysis);
+					DynamicRuleMatch match = serializationRule.match(slotsAnalysis, staticSegments);
 					if (match != null) {
 						// XXX we could mark the serializationBuilder context and catch a backtracking exception/null return if needed here
 						serializer.serializeElement(serializationBuilder, eObject, calledRuleValue);
