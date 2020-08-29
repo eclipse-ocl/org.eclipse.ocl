@@ -114,10 +114,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	 * Perform the analysis to determine the locally produced EClassifiers and local base rules.
 	 */
 	protected void analyze() {
-		if ("EssentialOCL::RoundBracketedClauseCS".equals(getName())) {
-			getClass(); // XXX debugging
-		}
-		if ("OCLinEcore::TypedMultiplicityRefCS".equals(getName())) {
+		assert serializationRules == null;
+		if ("OCLinEcore::PackageCS".equals(getName())) {
 			getClass(); // XXX debugging
 		}
 		//

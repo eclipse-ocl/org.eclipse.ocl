@@ -202,7 +202,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		new «newTypeReference(EClassData)»(«emitLiteral(eClass)»,
 			new @NonNull «newTypeReference(SerializationRule)» [] {
 				«FOR serializationRule : grammarAnalysis.getEClassData(eClass).getSerializationRules() SEPARATOR ','»
-				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+				«getSerializationRuleId(serializationRule, true)» /* «serializationRule.hashCode()» «serializationRule.toRuleString()» */
 				«ENDFOR»
 			}, «IF grammarAnalysis.basicGetEReferenceDatas(eClass) === null »null«ELSE»
 			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {

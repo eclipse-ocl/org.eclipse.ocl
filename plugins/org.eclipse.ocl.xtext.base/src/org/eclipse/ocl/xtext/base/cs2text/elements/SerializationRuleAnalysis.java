@@ -39,7 +39,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
@@ -88,6 +87,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public SerializationRuleAnalysis(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
 		this.rootSerializationNode = rootSerializationNode;
+		if ("PackageCS".equals(ruleAnalysis.getRuleName()) ) {
+			getClass();
+		}
 	}
 
 	public void analyzeAssignment(@NonNull EAttribute eAttribute, @Nullable EnumerationValue enumerationValue, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
@@ -361,25 +363,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				getEReference2AssignedRuleIndexes(nestedSerializationNode, eReference2assignedRuleIndexes);
 			}
 		}
-	}
-
-/*	@Override
-	public @Nullable Map<@NonNull EReference, @NonNull IndexVector> getEReference2DiscriminatingRuleValueIndexes() {
-		ParserRuleAnalysis ruleAnalysis = getRuleAnalysis();
-		Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> ruleDiscriminatingEReferences = ruleAnalysis.getEReference2DiscriminatingRuleAnalyses();
-		if (ruleDiscriminatingEReferences == null) {
-			return null;
-		}
-		Map<@NonNull EReference, @NonNull IndexVector> eReference2discriminatingRuleValueIndexes = new HashMap<>();
-		for (Map.Entry<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> entry : ruleDiscriminatingEReferences.entrySet()) {
-			eReference2discriminatingRuleValueIndexes.put(entry.getKey(), new IndexVector(entry.getValue()));
-		}
-		return eReference2discriminatingRuleValueIndexes;
-	} */
-
-	private @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> zzgetEStructuralFeature2cardinalityExpression() {
-		assert staticRuleMatch != null;
-		return staticRuleMatch.getEStructuralFeature2requiredSlotsExpression();
 	}
 
 	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {

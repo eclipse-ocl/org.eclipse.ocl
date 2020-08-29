@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
@@ -239,6 +240,8 @@ public class SerializationRule
 	 */
 	private final @NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality;
 
+	private @Nullable Integer hashCode = null;
+
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
@@ -257,6 +260,61 @@ public class SerializationRule
 		this.needsDefaultEAttributes = needsDefaultEAttributes;
 		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
 		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
+		if (ruleValueIndex == 71) {
+			getClass();
+		}
+	}
+
+	private <T> int arrayHash(T @Nullable [] ts) {
+		int hash = 0;
+		if (ts != null) {
+			for (T t : ts) {
+				hash = 3 * hash;
+				if (t != null) {
+					hash += t.hashCode();
+				}
+			}
+		}
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof SerializationRule)) {
+			return false;
+		}
+		SerializationRule that = (SerializationRule)obj;
+		if (this.ruleValueIndex != that.ruleValueIndex) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.solutionSteps, that.solutionSteps)) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.serializationSteps, that.serializationSteps)) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.staticSegments, that.staticSegments)) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.eAttribute2enumerationValues, that.eAttribute2enumerationValues)) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.eReference2assignedRuleValueIndexes, that.eReference2assignedRuleValueIndexes)) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.needsDefaultEAttributes, that.needsDefaultEAttributes)) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.eAttribute2enumerationValue2multiplicativeCardinality, that.eAttribute2enumerationValue2multiplicativeCardinality)) {
+			return false;
+		}
+		if (!ClassUtil.safeEquals(this.eReference2ruleValueIndex2multiplicativeCardinality, that.eReference2ruleValueIndex2multiplicativeCardinality)) {
+			return false;
+		}
+		return true;
 	}
 
 	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
@@ -339,6 +397,24 @@ public class SerializationRule
 
 	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
 		return staticSegments;
+	}
+
+	@Override
+	public int hashCode() {
+		if (hashCode == null) {
+			int hash = getClass().hashCode() + ruleValueIndex;
+			hash += 3*arrayHash(solutionSteps);
+			hash += 7*arrayHash(serializationSteps);
+			hash += 11*arrayHash(staticSegments);
+			hash += 13*arrayHash(eAttribute2enumerationValues);
+			hash += 17*arrayHash(eReference2assignedRuleValueIndexes);
+			hash += 19*arrayHash(needsDefaultEAttributes);
+			hash += 23*arrayHash(eAttribute2enumerationValue2multiplicativeCardinality);
+			hash += 29*arrayHash(eReference2ruleValueIndex2multiplicativeCardinality);
+			this.hashCode = hash;
+		}
+		assert hashCode != null;
+		return hashCode.intValue();
 	}
 
 	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {

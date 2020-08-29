@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 
@@ -192,7 +192,11 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	@Override
 	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 		if (serializationNode instanceof AssignedSerializationNode) {
-			return eStructuralFeature == ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
+			EStructuralFeature assiignedEStructuralFeature = ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
+			if (eStructuralFeature == assiignedEStructuralFeature) {
+				getClass(); 	// XXX debugging
+			}
+			return eStructuralFeature == assiignedEStructuralFeature;
 		}
 		return false;
 	}

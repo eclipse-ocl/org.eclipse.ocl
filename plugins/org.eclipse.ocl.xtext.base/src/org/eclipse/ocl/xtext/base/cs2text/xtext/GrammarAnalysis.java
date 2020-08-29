@@ -167,7 +167,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		//	Create the disjunction of flattened SerializationRule comprising a conjunction of SerializationNode.
 		//
 		for (@NonNull ParserRuleAnalysis parserRuleAnalysis : parserRuleAnalyses) {
-			parserRuleAnalysis.analyze();
+			parserRuleAnalysis.getSerializationRules();		// Triggers lazy analyze();
 		}
 		//
 		//	Determine the variables and expressions and their solutions to determine the cardinality of each term.
@@ -374,6 +374,11 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				serializationRule2aserializationRuleAnalysis2.put(serializationRule, serializationRuleAnalysis);
 			}
 			addEClassData(new EClassData(eClass, serializationRules, eReferenceData));
+		}
+		for (@NonNull SerializationRule serializationRule : serializationRule2aserializationRuleAnalysis2.keySet()) {
+			SerializationRuleAnalysis serializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2.get(serializationRule);
+			assert serializationRuleAnalysis != null;
+			serializationRule = serializationRuleAnalysis.getRuntime();
 		}
 	}
 
