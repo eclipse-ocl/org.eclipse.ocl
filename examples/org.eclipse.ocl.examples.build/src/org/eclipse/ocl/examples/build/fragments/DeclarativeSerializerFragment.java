@@ -497,7 +497,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
 			List<SubIdiom> staticSubIdioms = idiom.getOwnedSubIdioms();
 			for(@NonNull SubIdiom subIdiom : staticSubIdioms) {
-				segments2id2.put(subIdiom.getSegments(), "");
+				List<Segment> segments = subIdiom.getSegments();
+				if (segments.size() > 0) {
+					segments2id2.put(segments, "");
+				}
 			}
 		}
 		List<@NonNull List<Segment>> segmentLists = new ArrayList<>(segments2id2.keySet());
