@@ -22,31 +22,84 @@ import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
  * SerializationBuilder builds the intermediate serialization as an interleaving of concrete strings and virtual
  * characters such as soft-space. The append merthods do the building.
  *
- * Finally the toRenderedString returns a simple string with the virtual characters converted to concrete equivalents where
+ * Finally the toString returns a simple string with the virtual characters converted to concrete equivalents where
  * appropriate.
  */
 public class SerializationBuilder implements ToDebugStringable
 {
+	/**
+	 * The virtual character/string to start a new line, but pairs of half new lines generate one
+	 * rather than two new lines.
+	 */
 	public static final @NonNull String HALF_NEW_LINE = new String("«½\\n»");
+
+	/**
+	 * The virtual character/string to start a new line.
+	 */
 	public static final @NonNull String NEW_LINE = new String("«\\n»");
+
+	/**
+	 * The virtual character/string to suppress soft space separation.
+	 */
 	public static final @NonNull String NO_SPACE = new String("«! »");
+
+	/**
+	 * The virtual character/string to start a new line,  but avoid multiple new lines.
+	 */
 	public static final @NonNull String SOFT_NEW_LINE = new String("«?\\n»");
+
+	/**
+	 * The virtual character/string to ensure space separation but avoid redundant spacing.
+	 */
 	public static final @NonNull String SOFT_SPACE = new String("«? »");
+
+	/**
+	 * The virtual character/string to push a standard indentation on the stack.
+	 */
 	public static final @NonNull String PUSH = new String("«+»");
+
+	/**
+	 * The virtual character/string to push the next string as indentation on the stack.
+	 */
 	public static final @NonNull String PUSH_NEXT = new String("«+?»");
+
+	/**
+	 * The virtual character/string to pop the most recent indenttatio push.
+	 */
 	public static final @NonNull String POP = new String("«-»");
 
-	private static final int HALF_NEW_LINE_PREVCH = -1;
-	private static final int FULL_NEW_LINE_PREVCH = -2;
-	private static final int NO_SPACE_PREVCH = -3;
-
+	/**
+	 * The string for a new-line; typically \n unless \r\n or \n\r really wanted.
+	 */
 	protected final @NonNull String newLineString;
+
+	/**
+	 * The string for an additional level of indentation; typically four spaces.
+	 */
 	protected final @NonNull String indentString;
+
+	/**
+	 * The strings to be rendered as output after resolving virtual character strings such as SOFT_SPACE.
+	 */
 	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
+
+	/**
+	 * The strings to be concatenated as indentation following a new line.
+	 */
 	private @NonNull Stack<@NonNull String> indents = new Stack<>();
+
+	/**
+	 * True if a new-line has been output, and that indentation must preceded further non-white output.
+	 */
+	private boolean indentsPending = false;
+
+	/**
+	 * Errors embedded in the output and also here.
+	 */
 	private @Nullable List<@NonNull String> errors = null;
+
 	@SuppressWarnings("unused")		// Used to obtain a raw debug representation
-	private @NonNull ToDebugString toDebugSring = new ToDebugString(this);
+	private @NonNull ToDebugString toDebugString = new ToDebugString(this);
 
 	public SerializationBuilder() {
 		this.newLineString = "\n";
@@ -74,18 +127,25 @@ public class SerializationBuilder implements ToDebugStringable
 	}
 
 	protected void appendIndents(StringBuilder s) {
+		assert indentsPending;
 		for (int i = 0; i < indents.size(); i++) {
 			s.append(indents.get(i));
 		}
+		indentsPending = false;
 	}
 
-	protected void appendNewLine(@NonNull StringBuilder s) {
+	protected String appendNewLine(@NonNull StringBuilder s) {
 		s.append(newLineString);
+		indentsPending = true;
+		return NO_SPACE;
 	}
 
-	protected int appendString(@NonNull StringBuilder s, @NonNull String string) {
+	protected String appendString(@NonNull StringBuilder s, @NonNull String string) {
+		if (indentsPending) {
+			appendIndents(s);
+		}
 		s.append(string);
-		return s.charAt(s.length()-1);
+		return null;
 	}
 
 	public boolean hasErrors() {
@@ -119,11 +179,10 @@ public class SerializationBuilder implements ToDebugStringable
 	@Override
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
-		int prevCh = FULL_NEW_LINE_PREVCH;
+		@Nullable String pendingString = NO_SPACE;
 		final int indexMax = strings.size();
 		for (int index = 0; index < indexMax; ) {
 			@NonNull String nextString = strings.get(index++);
-			@Nullable String nextNextString = index < indexMax ? strings.get(index) : null;
 			if (nextString == PUSH) {
 				indents.push(indentString);
 			}
@@ -135,112 +194,52 @@ public class SerializationBuilder implements ToDebugStringable
 			else if (nextString == POP) {
 				indents.pop();
 			}
-			else {
-				switch (prevCh) {
-					case ' ': {
-						if (nextString == NO_SPACE) {
-							prevCh = NO_SPACE_PREVCH;
-						}
-						else if (nextString == SOFT_SPACE) {}
-						else if (nextString == SOFT_NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else if (nextString == HALF_NEW_LINE) {
-							prevCh = HALF_NEW_LINE_PREVCH;
-						}
-						else if (nextString == NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else {
-							prevCh = appendString(s, nextString);
-						}
-						break;
-					}
-					case NO_SPACE_PREVCH: {
-						if (nextString == NO_SPACE) {}
-						else if (nextString == SOFT_SPACE) {}
-						else if (nextString == SOFT_NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else if (nextString == HALF_NEW_LINE) {
-							prevCh = HALF_NEW_LINE_PREVCH;
-						}
-						else if (nextString == NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else {
-							prevCh = appendString(s, nextString);
-						}
-						break;
-					}
-					case FULL_NEW_LINE_PREVCH: {	// FIXME system new line chars
-						if (nextString == NO_SPACE) {}
-						else if (nextString == SOFT_SPACE) {}
-						else if (nextString == SOFT_NEW_LINE) {}
-						else if (nextString == HALF_NEW_LINE) {
-						//	appendNewLine(s);
-							prevCh = HALF_NEW_LINE_PREVCH;
-						}
-						else if (nextString == NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else {
-							appendIndents(s);
-							prevCh = appendString(s, nextString);
-						}
-						break;
-					}
-					case HALF_NEW_LINE_PREVCH: {	// FIXME system new line chars
-						if (nextString == NO_SPACE) {}
-						else if (nextString == SOFT_SPACE) {}
-						else if (nextString == SOFT_NEW_LINE) {}
-						else if (nextString == HALF_NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else if (nextString == NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else {
-							appendIndents(s);
-							prevCh = appendString(s, nextString);
-						}
-						break;
-					}
-					default: {
-						if (nextString == NO_SPACE) {
-							prevCh = NO_SPACE_PREVCH;
-						}
-						else if (nextString == SOFT_SPACE) {
-							if (nextNextString != NO_SPACE) {
-								prevCh = appendString(s, " ");
-							}
-						}
-						else if (nextString == HALF_NEW_LINE) {
-							prevCh = HALF_NEW_LINE_PREVCH;
-						}
-						else if (nextString == SOFT_NEW_LINE) {}
-						else if (nextString == NEW_LINE) {
-							appendNewLine(s);
-							prevCh = FULL_NEW_LINE_PREVCH;
-						}
-						else {
-							prevCh = appendString(s, nextString);
-						}
-						break;
-					}
+			else if (nextString == NEW_LINE) {
+				pendingString = appendNewLine(s);
+			}
+			else if (nextString == HALF_NEW_LINE) {
+				if ((pendingString == null) || (pendingString == NO_SPACE)) {
+					pendingString = HALF_NEW_LINE;
+				}
+				else if ((pendingString == SOFT_NEW_LINE) || (pendingString == HALF_NEW_LINE)) {
+					appendNewLine(s);
+					pendingString = NO_SPACE;
 				}
 			}
+			else if (nextString == SOFT_NEW_LINE) {
+				if ((pendingString == null) || (pendingString == NO_SPACE) || (pendingString == SOFT_SPACE)) {
+					pendingString = SOFT_NEW_LINE;
+				}
+			}
+			else if (nextString == SOFT_SPACE) {
+				if (pendingString == null) {
+					pendingString = SOFT_SPACE;
+				}
+				else if (pendingString == SOFT_NEW_LINE) {
+					pendingString = appendNewLine(s);
+				}
+			}
+			else if (nextString == NO_SPACE) {
+				if ((pendingString == null) || (pendingString == SOFT_SPACE)) {
+					pendingString = NO_SPACE;
+				}
+				else  if (pendingString == SOFT_NEW_LINE) {
+					pendingString = appendNewLine(s);
+				}
+			}
+			else {	// nextString - hard text
+				if (pendingString == SOFT_NEW_LINE) {
+					pendingString = appendNewLine(s);
+				}
+				else if (pendingString == SOFT_SPACE) {
+					appendString(s, " ");
+				}
+				pendingString = appendString(s, nextString);
+			}
 		}
-	//	if (prevCh != FULL_NEW_LINE_PREVCH) {
-	//		appendNewLine(s);
-	//	}
+		if (!indentsPending) {
+			appendNewLine(s);
+		}
 		return String.valueOf(s);
 	}
 }
