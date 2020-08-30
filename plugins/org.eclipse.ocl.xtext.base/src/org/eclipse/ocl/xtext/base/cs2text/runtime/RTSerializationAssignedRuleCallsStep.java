@@ -16,24 +16,25 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.ProxyRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.conversion.ValueConverterException;
 
 public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstractFeatureStep
 {
-	private @NonNull AbstractRuleValue @NonNull [] calledRuleValues;
+	private @NonNull IndexVector calledRuleIndexes;
 
-	public RTSerializationAssignedRuleCallsStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull AbstractRuleValue @NonNull [] calledRuleValues) {
+	public RTSerializationAssignedRuleCallsStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull IndexVector calledRuleIndexes) {
 		super(variableIndex, eStructuralFeature);
-		this.calledRuleValues = calledRuleValues;
+		this.calledRuleIndexes = calledRuleIndexes;
 	}
 
 	@Override
@@ -51,53 +52,28 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 		if (!super.equalTo(that)) {
 			return false;
 		}
-		AbstractRuleValue[] theseCalledRuleValues = this.getCalledRuleValues();
-		AbstractRuleValue[] thoseCalledRuleValues = that.getCalledRuleValues();
-		if (theseCalledRuleValues.length != thoseCalledRuleValues.length) {
-			return false;
-		}
-		for (int i = 0; i < theseCalledRuleValues.length; i++) {
-			if (!theseCalledRuleValues[i].equals(thoseCalledRuleValues[i])) {
-				return false;
-			}
-		}
-		return true;
+		return this.calledRuleIndexes.equals(that.calledRuleIndexes);
 	}
 
-	public @NonNull AbstractRuleValue @NonNull [] getCalledRuleValues() {
-		for (int i = 0; i < calledRuleValues.length; i++) {
-			AbstractRuleValue calledRuleValue = calledRuleValues[i];
-			if (calledRuleValue instanceof ProxyRuleValue) {
-				calledRuleValues[i] = ((ProxyRuleValue)calledRuleValue).getRuleValue();
-			}
-		}
-		return calledRuleValues;
+	public @NonNull IndexVector getCalledRuleIndexes() {
+		return calledRuleIndexes;
 	}
 
 	@Override
 	public int hashCode() {
-		int hashCode = super.hashCode();
-		for (@NonNull AbstractRuleValue calledRuleValue : getCalledRuleValues()) {
-			hashCode += 5 * calledRuleValue.hashCode();
-		}
+		int hashCode = super.hashCode() + calledRuleIndexes.hashCode();
 		return hashCode;
-	}
-
-	public void init(@NonNull AbstractRuleValue @NonNull [] calledRuleValues) {
-		assert this.calledRuleValues.length == calledRuleValues.length;
-		for (int i = 0; i < calledRuleValues.length; i++) {
-			assert this.calledRuleValues[i] == null;
-			this.calledRuleValues[i] = calledRuleValues[i];
-		}
 	}
 
 	@Override
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		Object object = serializer.consumeNext(eStructuralFeature);
+		UserModelAnalysis modelAnalysis = serializer.getModelAnalysis();
 		if (eStructuralFeature instanceof EAttribute) {
-			for (@NonNull AbstractRuleValue calledRuleValue : getCalledRuleValues()) {
+			for (int calledRuleIndex : calledRuleIndexes) {
+				@NonNull AbstractRuleValue calledRuleValue = modelAnalysis.getGrammarAnalysis().getRuleValue(calledRuleIndex);
 				try {
-					String val = serializer.getModelAnalysis().getValueConverterService().toString(object, calledRuleValue.getRuleName());
+					String val = modelAnalysis.getValueConverterService().toString(object, calledRuleValue.getRuleName());
 					serializationBuilder.append(String.valueOf(val));
 					return;
 				}
@@ -109,10 +85,11 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 			EReference eReference = (EReference)eStructuralFeature;
 			EObject eObject = (EObject)object;
 			assert eReference.isContainment();
-			UserElementAnalysis elementAnalysis = serializer.getModelAnalysis().getElementAnalysis(eObject);
+			UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis(eObject);
 			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
 			Segment[][] staticSegments = serializer.getStaticSegments();
-			for (@NonNull AbstractRuleValue calledRuleValue : getCalledRuleValues()) {		// search for matching rule
+			for (int calledRuleIndex : calledRuleIndexes) {			// search for matching rule
+				@NonNull AbstractRuleValue calledRuleValue = modelAnalysis.getGrammarAnalysis().getRuleValue(calledRuleIndex);
 				for (@NonNull SerializationRule serializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {
 					DynamicRuleMatch match = serializationRule.match(slotsAnalysis, staticSegments);
 					if (match != null) {
@@ -135,11 +112,11 @@ public class RTSerializationAssignedRuleCallsStep extends RTSerializationAbstrac
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		boolean isFirst = true;
-		for (@NonNull AbstractRuleValue calledRuleValue : getCalledRuleValues()) {
+		for (int calledRuleIndex : calledRuleIndexes) {
 			if (!isFirst) {
 				s.append("|");
 			}
-			s.append(calledRuleValue.getRuleName());
+			s.append(calledRuleIndex);
 			isFirst = false;
 		}
 	}

@@ -41,7 +41,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	@Override
 	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
 		int cardinalityVariableIndex = staticRuleMatch.getCardinalityVariableIndex(this);
-		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature, new ProxyRuleValue(calledRuleAnalysis)));
+		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature,calledRuleAnalysis.getIndex()));
 	}
 
 	@Override

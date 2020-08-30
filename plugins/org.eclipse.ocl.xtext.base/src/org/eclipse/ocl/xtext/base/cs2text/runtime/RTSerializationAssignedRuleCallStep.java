@@ -15,66 +15,16 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.elements.ProxyRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstractFeatureStep
 {
-	private static class NullRuleValue extends AbstractRuleValue
-	{
-		private static final @NonNull NullRuleValue INSTANCE = new NullRuleValue();
+	private int calledRuleIndex;
 
-		private NullRuleValue() {
-			super(-999, "null");			// Index (and name) should never be used.
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			throw new IllegalStateException();		// Null should have been replaced.
-		}
-
-		public @NonNull AbstractRuleValue getRuleValue() {
-			throw new IllegalStateException();		// Null should have been replaced.
-		}
-
-		@Override
-		public int getIndex() {
-			throw new IllegalStateException();		// Null should have been replaced.
-		}
-
-		@Override
-		public @NonNull String getName() {
-			throw new IllegalStateException();		// Null should have been replaced.
-		}
-
-		@Override
-		public @NonNull String getRuleName() {
-			throw new IllegalStateException();		// Null should have been replaced.
-		}
-
-		@Override
-		public int hashCode() {
-			throw new IllegalStateException();		// Null should have been replaced.
-		}
-
-		@Override
-		public @NonNull String toString() {
-			throw new IllegalStateException();		// Null should have been replaced.
-		}
-	}
-
-	private @NonNull AbstractRuleValue calledRuleValue;
-
-	public RTSerializationAssignedRuleCallStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
+	public RTSerializationAssignedRuleCallStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, int calledValueIndex) {
 		super(variableIndex, eStructuralFeature);
-		this.calledRuleValue = NullRuleValue.INSTANCE;
-	}
-
-	public RTSerializationAssignedRuleCallStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull AbstractRuleValue calledRuleValue) {
-		super(variableIndex, eStructuralFeature);
-		this.calledRuleValue = calledRuleValue;
+		this.calledRuleIndex = calledValueIndex;
 	}
 
 	@Override
@@ -89,24 +39,16 @@ public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstract
 	}
 
 	protected boolean equalTo(@NonNull RTSerializationAssignedRuleCallStep that) {
-		return super.equalTo(that) && this.getCalledRuleValue().equals(that.getCalledRuleValue());
+		return super.equalTo(that) && (this.calledRuleIndex == that.calledRuleIndex);
 	}
 
-	public @NonNull AbstractRuleValue getCalledRuleValue() {
-		if (calledRuleValue instanceof ProxyRuleValue) {
-			calledRuleValue = ((ProxyRuleValue)calledRuleValue).getRuleValue();
-		}
-		return calledRuleValue;
+	public int getCalledRuleIndex() {
+		return calledRuleIndex;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() + 5 * getCalledRuleValue().hashCode();
-	}
-
-	public void init(@NonNull AbstractRuleValue calledRuleValue) {
-		assert this.calledRuleValue == NullRuleValue.INSTANCE;
-		this.calledRuleValue = calledRuleValue;
+		return super.hashCode() + 5 * calledRuleIndex;
 	}
 
 	@Override
@@ -117,11 +59,11 @@ public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstract
 		if (eStructuralFeature instanceof EReference) {
 			assert ((EReference)eStructuralFeature).isContainment();
 			if (eGet != null) {
-				serializer.serializeElement(serializationBuilder, (EObject)eGet, getCalledRuleValue());
+				serializer.serializeElement(serializationBuilder, (EObject)eGet, serializer.getModelAnalysis().getGrammarAnalysis().getRuleValue(calledRuleIndex));
 			}
 		}
 		else {
-			String val = serializer.getModelAnalysis().getValueConverterService().toString(eGet, getCalledRuleValue().getRuleName());
+			String val = serializer.getModelAnalysis().getValueConverterService().toString(eGet, serializer.getModelAnalysis().getGrammarAnalysis().getRuleValue(calledRuleIndex).getRuleName());
 			serializationBuilder.append(String.valueOf(val));
 		}
 	}
@@ -133,6 +75,6 @@ public class RTSerializationAssignedRuleCallStep extends RTSerializationAbstract
 		s.append("::");
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append(getCalledRuleValue().getRuleName());
+		s.append(calledRuleIndex);
 	}
 }

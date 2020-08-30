@@ -163,7 +163,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«ENDFOR»
 				gr = new _GrammarRuleValues();
 				ec = new _EClassValues();		
-				st.init();
 			}
 			
 		}
@@ -663,77 +662,51 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _SerializationTerms
 		{
 			«FOR step : getSerializationStepIterable(grammarAnalysis)»
-			«generateSerializationTerm1(step)»;
+			«generateSerializationTerm(step)»;
 			«ENDFOR»
-			
-			/**
-			 * Post constructor initialization that avoids recursions.
-			 */
-			private final void init() {
-				«FOR step : getSerializationStepIterable(grammarAnalysis)»«generateSerializationTerm2(step)»«ENDFOR»
-			}
 		}
 		'''
 	}
 	
-	protected def generateSerializationTerm1(RTSerializationStep serializationStep) {
+	protected def generateSerializationTerm(RTSerializationStep serializationStep) {
 		switch serializationStep {
-		RTSerializationAssignStep: return generateSerializationTerm1_Assign(serializationStep)
-		RTSerializationAssignedRuleCallStep: return generateSerializationTerm1_AssignedRuleCall(serializationStep)
-		RTSerializationAssignedRuleCallsStep: return generateSerializationTerm1_AssignedRuleCalls(serializationStep)
-		RTSerializationCrossReferenceStep: return generateSerializationTerm1_CrossReference(serializationStep)
-		RTSerializationLiteralStep: return generateSerializationTerm1_Literal(serializationStep)
-		RTSerializationSequenceStep: return generateSerializationTerm1_Sequence(serializationStep)
+		RTSerializationAssignStep: return generateSerializationTerm_Assign(serializationStep)
+		RTSerializationAssignedRuleCallStep: return generateSerializationTerm_AssignedRuleCall(serializationStep)
+		RTSerializationAssignedRuleCallsStep: return generateSerializationTerm_AssignedRuleCalls(serializationStep)
+		RTSerializationCrossReferenceStep: return generateSerializationTerm_CrossReference(serializationStep)
+		RTSerializationLiteralStep: return generateSerializationTerm_Literal(serializationStep)
+		RTSerializationSequenceStep: return generateSerializationTerm_Sequence(serializationStep)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateSerializationTerm1_Assign(RTSerializationAssignStep serializationStep) {
+	protected def generateSerializationTerm_Assign(RTSerializationAssignStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationAssignStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
 							= new «newTypeReference(RTSerializationAssignStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»)'''
 	}
 	
-	protected def generateSerializationTerm1_AssignedRuleCall(RTSerializationAssignedRuleCallStep serializationStep) {
+	protected def generateSerializationTerm_AssignedRuleCall(RTSerializationAssignedRuleCallStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationAssignedRuleCallStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
-							= new «newTypeReference(RTSerializationAssignedRuleCallStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»)'''
+							= new «newTypeReference(RTSerializationAssignedRuleCallStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», «serializationStep.getCalledRuleIndex()» /* «grammarAnalysis.getRuleValue(serializationStep.getCalledRuleIndex()).getName()» */)'''
 	}
 	
-	protected def generateSerializationTerm1_AssignedRuleCalls(RTSerializationAssignedRuleCallsStep serializationStep) {
+	protected def generateSerializationTerm_AssignedRuleCalls(RTSerializationAssignedRuleCallsStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationAssignedRuleCallsStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
-							= new «newTypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»,
-		 new @NonNull «newTypeReference(AbstractRuleValue)» [«serializationStep.getCalledRuleValues().size()»])'''
+							= new «newTypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», «getIndexVectorId(serializationStep.getCalledRuleIndexes(), true)» /* «FOR calledRuleIndex : serializationStep.getCalledRuleIndexes() SEPARATOR ', '»«grammarAnalysis.getRuleValue(calledRuleIndex).getName()»«ENDFOR» */)'''
 	}
 
-	protected def generateSerializationTerm1_CrossReference(RTSerializationCrossReferenceStep serializationStep) {
+	protected def generateSerializationTerm_CrossReference(RTSerializationCrossReferenceStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationCrossReferenceStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
 							= new «newTypeReference(RTSerializationCrossReferenceStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», getCrossReference(«emitLiteral(serializationStep.getEStructuralFeature())», "«emitCalledRule(serializationStep.getCrossReference())»"))'''
 	}
 	
-	protected def generateSerializationTerm1_Literal(RTSerializationLiteralStep serializationStep) {
+	protected def generateSerializationTerm_Literal(RTSerializationLiteralStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationLiteralStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
 							= new «newTypeReference(RTSerializationLiteralStep)»(«serializationStep.getVariableIndex()», "«Strings.convertToJavaString(serializationStep.getString())»")'''
 	}
 	
-	protected def generateSerializationTerm1_Sequence(RTSerializationSequenceStep serializationStep) {
+	protected def generateSerializationTerm_Sequence(RTSerializationSequenceStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationSequenceStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
 							= new «newTypeReference(RTSerializationSequenceStep)»(«serializationStep.getVariableIndex()», «serializationStep.getStartIndex()», «serializationStep.getEndIndex()»)'''
-	}
-	
-	protected def generateSerializationTerm2(RTSerializationStep serializationStep) {
-		switch serializationStep {
-		RTSerializationAssignedRuleCallStep: return generateSerializationTerm2_AssignedRuleCall(serializationStep)
-		RTSerializationAssignedRuleCallsStep: return generateSerializationTerm2_AssignedRuleCalls(serializationStep)
-		default: return ""
-		}
-	}
-	
-	protected def generateSerializationTerm2_AssignedRuleCall(RTSerializationAssignedRuleCallStep serializationStep) {
-		'''«getSerializationStepId(serializationStep, false)».init(«getGrammarRuleValueId(serializationStep.getCalledRuleValue(), true)/*«serializationStep.getCalledRuleValue().getName()»*/»);
-		'''
-	}
-	
-	protected def generateSerializationTerm2_AssignedRuleCalls(RTSerializationAssignedRuleCallsStep serializationStep) {
-		'''«getSerializationStepId(serializationStep, false)».init(new @NonNull «newTypeReference(AbstractRuleValue)» [] {«FOR calledRuleValue : serializationStep.getCalledRuleValues() SEPARATOR ', '»«getGrammarRuleValueId(calledRuleValue, true)»/*«calledRuleValue.getName()»*/«ENDFOR»});
-		'''
 	}
 }

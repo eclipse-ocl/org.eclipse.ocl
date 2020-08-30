@@ -42,6 +42,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
@@ -391,6 +392,16 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					indexVector2id2.put(((CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck)matchStep).getRuleValueIndexes(), "");
 				}
 			}
+			for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
+				for(@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
+					SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
+					for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
+						if (serializationStep instanceof RTSerializationAssignedRuleCallsStep) {
+							indexVector2id2.put(((RTSerializationAssignedRuleCallsStep)serializationStep).getCalledRuleIndexes(), "");
+						}
+					}
+				}
+			}
 			indexVectors = indexVectors2 = new ArrayList<>(indexVector2id2.keySet());
 			Collections.sort(indexVectors2);
 			int i = 0;
@@ -571,12 +582,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return xtextGeneratorNaming.getRuntimeBasePackage(grammar) + ".serializer";
 	}
 
-	protected @NonNull String getSerializationStepId(@NonNull RTSerializationStep step, boolean addQualifier) {
-		assert serializationStep2id != null;
-		String id = serializationStep2id.get(step);
-		assert id != null;
-		return addQualifier ? "st." + id : id;
-	}
+
 
 
 
@@ -628,6 +634,13 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 	private int getSerializationRulePages(int serializationRuleIndex) {
 		return (serializationRuleIndex + RULES_PER_PAGE - 1) / RULES_PER_PAGE;
+	}
+
+	protected @NonNull String getSerializationStepId(@NonNull RTSerializationStep step, boolean addQualifier) {
+		assert serializationStep2id != null;
+		String id = serializationStep2id.get(step);
+		assert id != null;
+		return addQualifier ? "st." + id : id;
 	}
 
 	protected @NonNull Iterable<@NonNull RTSerializationStep> getSerializationStepIterable(@NonNull GrammarAnalysis grammarAnalysis) {

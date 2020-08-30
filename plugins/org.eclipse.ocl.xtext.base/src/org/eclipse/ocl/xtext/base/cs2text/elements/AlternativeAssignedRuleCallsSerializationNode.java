@@ -18,11 +18,9 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCal
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
-
-import com.google.common.collect.Iterables;
 
 /**
  * An AlternativeAssignedKeywordsSerializationNode corresponds to the parsing specification of a variety of keywords
@@ -49,12 +47,7 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 
 	@Override
 	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
-		@NonNull AbstractRuleValue [] calledRuleValues = new @NonNull AbstractRuleValue [Iterables.size(calledRuleAnalyses)];
-		int i= 0;
-		for (@NonNull AbstractRuleAnalysis ruleAnalysis : calledRuleAnalyses) {
-			calledRuleValues[i++] = new ProxyRuleValue(ruleAnalysis);
-		}
-		stepsList.add(new RTSerializationAssignedRuleCallsStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, calledRuleValues));
+		stepsList.add(new RTSerializationAssignedRuleCallsStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, new IndexVector(calledRuleAnalyses)));
 	}
 
 	@Override
