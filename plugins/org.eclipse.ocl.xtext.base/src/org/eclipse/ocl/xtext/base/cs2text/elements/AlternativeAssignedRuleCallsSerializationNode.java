@@ -17,8 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -30,29 +30,29 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
  */
 public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssignedSerializationNode
 {
-	protected final @NonNull Iterable<@NonNull AbstractRuleAnalysis> calledRuleAnalyses;
+	protected final @NonNull IndexVector calledRuleIndexes;
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignedRuleCallsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
-			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull AbstractRuleAnalysis> calledRuleAnalyses) {
+			@NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull IndexVector calledRuleIndexes) {
 		super(assignmentAnalysis, multiplicativeCardinality);
-		this.calledRuleAnalyses = calledRuleAnalyses;
+		this.calledRuleIndexes = calledRuleIndexes;
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AlternativeAssignedRuleCallsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, calledRuleAnalyses);
+		return new AlternativeAssignedRuleCallsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, calledRuleIndexes);
 	}
 
 	@Override
 	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
-		stepsList.add(new RTSerializationAssignedRuleCallsStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, new IndexVector(calledRuleAnalyses)));
+		stepsList.add(new RTSerializationAssignedRuleCallsStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, calledRuleIndexes));
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
-		return calledRuleAnalyses;
+	public @Nullable IndexVector getAssignedRuleIndexes() {
+		return calledRuleIndexes;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 		if (this.eStructuralFeature != that.eStructuralFeature) {
 			return false;
 		}
-		if (!this.calledRuleAnalyses.equals(that.calledRuleAnalyses)) {
+		if (!this.calledRuleIndexes.equals(that.calledRuleIndexes)) {
 			return false;
 		}
 		return true;
@@ -76,10 +76,7 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
-			int hash = getClass().hashCode() + eStructuralFeature.hashCode();
-			for (@NonNull AbstractRuleAnalysis ruleAnalysis : calledRuleAnalyses) {
-				hash = 3*hash + + ruleAnalysis.hashCode();;
-			}
+			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleIndexes.hashCode();;
 			semanticHashCode = hash;
 		}
 		assert semanticHashCode != null;
@@ -88,15 +85,16 @@ public class AlternativeAssignedRuleCallsSerializationNode extends AbstractAssig
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
+		GrammarAnalysis grammarAnalysis = assignmentAnalysis.getGrammarAnalysis();
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("(");
 		boolean isFirst = true;
-		for (@NonNull AbstractRuleAnalysis calledRuleAnalysis : calledRuleAnalyses) {
+		for (@NonNull Integer calledRuleIndex : calledRuleIndexes) {
 			if (!isFirst) {
 				s.append("|");
 			}
-			s.append(calledRuleAnalysis.getRuleName());
+			s.append(grammarAnalysis.getRuleValue(calledRuleIndex).getName());
 			isFirst = false;
 		}
 		s.append(")");

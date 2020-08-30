@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -18,35 +17,35 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
-	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
+	protected final int calledRuleIndex;
 	private @Nullable Integer semanticHashCode = null;
 
-	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
+	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, int calledRuleIndex) {
 		super(assignmentAnalysis, multiplicativeCardinality);
-		this.calledRuleAnalysis = calledRuleAnalysis;
+		this.calledRuleIndex = calledRuleIndex;
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, calledRuleAnalysis);
+		return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, calledRuleIndex);
 	}
 
 	@Override
 	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
 		int cardinalityVariableIndex = staticRuleMatch.getCardinalityVariableIndex(this);
-		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature,calledRuleAnalysis.getIndex()));
+		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature, calledRuleIndex));
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
-		return Collections.singletonList(calledRuleAnalysis);
+	public @Nullable IndexVector getAssignedRuleIndexes() {
+		return new IndexVector().set(calledRuleIndex);
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		if (this.eStructuralFeature != that.eStructuralFeature) {
 			return false;
 		}
-		if (this.calledRuleAnalysis != that.calledRuleAnalysis) {
+		if (this.calledRuleIndex != that.calledRuleIndex) {
 			return false;
 		}
 		return true;
@@ -70,7 +69,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
-			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleAnalysis.hashCode();
+			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleIndex;
 			semanticHashCode = hash;
 		}
 		assert semanticHashCode != null;
@@ -81,7 +80,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append(calledRuleAnalysis.getRuleName());
+		s.append(assignmentAnalysis.getGrammarAnalysis().getRuleValue(calledRuleIndex).getRuleName());
 		appendCardinality(s, depth);
 	}
 }

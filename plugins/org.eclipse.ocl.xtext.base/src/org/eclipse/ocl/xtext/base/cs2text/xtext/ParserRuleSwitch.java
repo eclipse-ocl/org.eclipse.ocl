@@ -131,7 +131,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		}
 		else if (terminal instanceof RuleCall) {
 			AbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)terminal));
-			return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalysis2);
+			return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalysis2.getIndex());
 		}
 		else if (terminal instanceof Alternatives) {
 			Alternatives alternatives = (Alternatives)terminal;
@@ -166,10 +166,10 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 				}
 				else {
 					if (ruleAnalyses.size() == 1) {
-						return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses.get(0));
+						return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses.get(0).getIndex());
 					}
 					else {
-						return new AlternativeAssignedRuleCallsSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses);
+						return new AlternativeAssignedRuleCallsSerializationNode(assignmentAnalysis, multiplicativeCardinality, new IndexVector(ruleAnalyses));
 					}
 				}
 			}

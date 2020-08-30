@@ -18,12 +18,13 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSeriali
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 /**
@@ -75,9 +76,10 @@ public class DefaultLocatorImpl extends LocatorImpl implements DefaultLocator
 			return true;
 		}
 		else if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)){
-			Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalyses();
+			IndexVector assignedRuleAnalyses = ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes();
 			if (assignedRuleAnalyses != null) {
-				for (@NonNull AbstractRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
+				for (@NonNull Integer ruleIndex : assignedRuleAnalyses) {
+					AbstractRuleAnalysis assignedRuleAnalysis = serializationRule.getRuleAnalysis().getGrammarAnalysis().getRuleAnalysis(ruleIndex);
 					if (!(assignedRuleAnalysis instanceof ParserRuleAnalysis)) {
 						return true;
 					}

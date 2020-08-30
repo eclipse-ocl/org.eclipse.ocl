@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
@@ -25,7 +25,7 @@ public interface AssignedSerializationNode extends SerializationNode
 	/**
 	 * Return the possibly many RuleAnalysis that specify matches to this SerializationNode.
 	 */
-	@Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses();
+	@Nullable IndexVector getAssignedRuleIndexes();
 
 	@NonNull AssignmentAnalysis getAssignmentAnalysis();
 	@NonNull EStructuralFeature getEStructuralFeature();

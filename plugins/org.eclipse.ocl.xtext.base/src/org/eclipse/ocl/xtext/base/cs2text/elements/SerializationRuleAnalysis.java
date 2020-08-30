@@ -107,7 +107,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
 	}
 
-	public void analyzeAssignment(@NonNull EReference eReference, @Nullable Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
+	public void analyzeAssignment(@NonNull EReference eReference, @Nullable IndexVector ruleAnalyses, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
 		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 		if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 			eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
@@ -118,12 +118,13 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			eReference2ruleAnalysis2multiplicativeCardinality2.put(eReference, ruleAnalysis2multiplicativeCardinality);
 		}
 		if (ruleAnalyses != null) {
-			for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				if (ruleAnalysis instanceof ParserRuleAnalysis) {
-					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
+			for (@NonNull Integer ruleIndex : ruleAnalyses) {
+				@NonNull AbstractRuleAnalysis ruleAnalysis2 = ruleAnalysis.getGrammarAnalysis().getRuleAnalysis(ruleIndex);
+				assert (ruleAnalysis2 instanceof ParserRuleAnalysis);//{
+					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis2);
 					MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
-					ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis, newMultiplicativeCardinality);
-				}
+					ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis2, newMultiplicativeCardinality);
+			//	}
 			}
 		}
 	}
@@ -348,12 +349,12 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 					assignedRuleIndexes = new IndexVector();
 					eReference2assignedRuleIndexes.put(eReference, assignedRuleIndexes);
 				}
-				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-				if (ruleAnalyses != null) {
-					for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
-						if (ruleAnalysis instanceof ParserRuleAnalysis) {
-							assignedRuleIndexes.set(ruleAnalysis.getIndex());
-						}
+				IndexVector ruleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
+				if (ruleIndexes != null) {
+					for (@NonNull Integer ruleIndex : ruleIndexes) {
+					//	if (ruleAnalysis instanceof ParserRuleAnalysis) {
+							assignedRuleIndexes.set(ruleIndex);
+					//	}
 					}
 				}
 			}

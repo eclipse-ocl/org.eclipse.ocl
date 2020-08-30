@@ -35,8 +35,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -135,8 +135,8 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		//
 		else {
 			EReference eReference = (EReference)eStructuralFeature;
-			Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-			serializationRuleAnalysis.analyzeAssignment(eReference, ruleAnalyses, netMultiplicativeCardinality);
+			IndexVector ruleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
+			serializationRuleAnalysis.analyzeAssignment(eReference, ruleIndexes, netMultiplicativeCardinality);
 		/*	Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 			if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 				eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
@@ -190,8 +190,8 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 				int index = variable2node.size();
 				String name = String.format("C%02d", index);
 				assert name != null;
-				Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleAnalyses() : null;
-				cardinalityVariable = new CardinalityVariable(index, name, ruleAnalyses, multiplicativeCardinality);
+				IndexVector ruleIndexes = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes() : null;
+				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes, multiplicativeCardinality);
 				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 				assert old2 == null;
 				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);

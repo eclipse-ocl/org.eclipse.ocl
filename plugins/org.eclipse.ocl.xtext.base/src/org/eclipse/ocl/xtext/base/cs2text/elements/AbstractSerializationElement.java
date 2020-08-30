@@ -112,7 +112,7 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 				MultiplicativeCardinality multiplicativeCardinality2 = assignedCurrentSerializationNode.getMultiplicativeCardinality();
 				assert multiplicativeCardinality2.isOne();
 				AbstractRuleAnalysis calledRuleAnalysis = unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
-				AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality2, calledRuleAnalysis);
+				AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality2, calledRuleAnalysis.getIndex());
 				unassignedRuleContext.replace(assignedRuleCallSerializationNode);
 				assignedCurrentContext.remove();
 			}

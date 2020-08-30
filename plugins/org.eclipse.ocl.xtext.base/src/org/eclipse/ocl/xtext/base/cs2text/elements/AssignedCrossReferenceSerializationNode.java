@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
@@ -21,6 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
@@ -42,8 +42,8 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	}
 
 	@Override
-	public @Nullable Iterable<@NonNull AbstractRuleAnalysis> getAssignedRuleAnalyses() {
-		return Collections.singletonList(calledRuleAnalysis);
+	public @Nullable IndexVector getAssignedRuleIndexes() {
+		return new IndexVector().set(calledRuleAnalysis.getIndex());
 	}
 
 	@Override
