@@ -270,4 +270,16 @@ public class XtextGrammarUtil
 		}
 		return isEqual(thisEStructuralFeature.getEContainingClass(), thatEStructuralFeature.getEContainingClass());
 	}
+
+	public static boolean isSuperTypeOf(@Nullable EClass thisEClass, @NonNull EClass thatEClass) {
+		if (isEqual(thisEClass, thatEClass)) {
+			return true;
+		}
+		for (EClass thatSuperEClass : thatEClass.getEAllSuperTypes()) {
+			if (isEqual(thisEClass, thatSuperEClass)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

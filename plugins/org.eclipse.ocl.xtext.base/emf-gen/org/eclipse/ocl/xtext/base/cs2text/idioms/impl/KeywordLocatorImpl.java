@@ -15,11 +15,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.util.Strings;
 
 /**
@@ -261,7 +262,7 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 		if (":".equals(string) && (inEClass != null)) {
 			getClass();
 		}
-		if ((inEClass != null) && !inEClass.isSuperTypeOf(serializationRule.getProducedEClass())) {
+		if ((inEClass != null) && !XtextGrammarUtil.isSuperTypeOf(inEClass, serializationRule.getProducedEClass())) {
 			return false;
 		}
 		return true;
