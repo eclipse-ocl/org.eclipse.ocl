@@ -13,27 +13,22 @@ package org.eclipse.ocl.xtext.base.cs2text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 
 public abstract class AbstractIdiomsProvider implements IdiomsProvider
 {
-	protected /*@NonNull*/ IdiomModel getIdiomModel(@NonNull Class<?> contextClass, /*@NonNull*/ String path) {
+	protected /*@NonNull*/ IdiomModel getIdiomModel(@NonNull Class<?> contextClass, @NonNull ResourceSet resourceSet, /*@NonNull*/ String path) {
 		URL url = contextClass.getResource(path);
 		if (url == null) {
 			throw new IllegalStateException("Failed to locate " + path + " wrt " + contextClass.getName());
@@ -47,30 +42,30 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 			}
 		}
 		URI uri = URI.createFileURI(url.getPath());
-		return getIdiomModel(uri);
+		return getIdiomModel(resourceSet, uri);
 	}
 
-	public @NonNull IdiomModel getIdiomModel(@NonNull URI uri) {
-		ResourceSet resourceSet = new ResourceSetImpl();
+	public @NonNull IdiomModel getIdiomModel(@NonNull ResourceSet resourceSet, @NonNull URI uri) {
+		//	ResourceSet resourceSet = resourceSetProvider.get();//new ResourceSetImpl();
 		IdiomsPackage.eINSTANCE.getClass();
-	//	Resource resource = resourceSet.getResource(uri, true);
-		Resource resource = resourceSet.createResource(uri);
-		Map<Object,Object> options = new HashMap<>();
+		Resource resource = resourceSet.getResource(uri, true);
+	//	Resource resource = resourceSet.createResource(uri);
+	//	Map<Object,Object> options = new HashMap<>();
 	//	options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
-		try {
-			resource.load(options);
-			for (Idiom idiom : ((IdiomModel)resource.getContents().get(0)).getOwnedIdioms()) {
-				for (SubIdiom subIdiom : idiom.getOwnedSubIdioms()) {
-					for (Segment segment : subIdiom.getSegments()) {
-						segment.toString();		// XXX debugging
-					}
-				}
-			}
+	//	try {
+	//		resource.load(options);
+	//		for (Idiom idiom : ((IdiomModel)resource.getContents().get(0)).getOwnedIdioms()) {
+	//			for (SubIdiom subIdiom : idiom.getOwnedSubIdioms()) {
+	//				for (Segment segment : subIdiom.getSegments()) {
+	//					segment.toString();		// XXX debugging
+	//				}
+	//			}
+	//		}
 			EcoreUtil.resolveAll(resourceSet);				// Avoid no-equality of proxies
 			return (IdiomModel)resource.getContents().get(0);	//OPTION_DEFER_IDREF_RESOLUTION
-		} catch (IOException e) {
-			throw new IllegalStateException("Failed to load " + uri, e);
-		}
+	//	} catch (IOException e) {
+	//		throw new IllegalStateException("Failed to load " + uri, e);
+	//	}
 	}
 
 	protected /*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms(/*@NonNull*/ IdiomModel rootIdiomModel) {

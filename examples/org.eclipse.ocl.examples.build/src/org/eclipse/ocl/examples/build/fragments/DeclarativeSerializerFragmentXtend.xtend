@@ -478,14 +478,17 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«getMatchStepId(solutionStep, true)» /* «solutionStep.toString()» */
 				«ENDFOR»
 			}, 
+			«var serializationSteps = serializationRule.getSerializationSteps()»
+			«var segmentsList = serializationRule.getStaticSegments()»
 			new @NonNull «newTypeReference(RTSerializationStep)» @NonNull [] {
-				«FOR serializationStep : serializationRule.getSerializationSteps() SEPARATOR ','»
-				«getSerializationStepId(serializationStep, true)» /* «serializationStep.toString()» */
+				«FOR i : integersIterable(serializationSteps.length) SEPARATOR ','»
+				«var serializationStep = serializationSteps.get(i)»
+				«var segments = segmentsList.get(i)»
+				«getSerializationStepId(serializationStep, true)» /* «serializationStep.toString()» || «IF segments !== null»«FOR segment : segments SEPARATOR ' '»«segment.toString()»«ENDFOR»«ELSE»«"«null»"»«ENDIF» */
 				«ENDFOR»
 			}, 
-			«var segmentsList = serializationRule.getStaticSegments()»
 			«var segmentsListString = getSegmentsListString(segmentsList)»
-			«IF segmentsList !== null»«getSegmentsListId(segmentsListString, true)» /* «FOR segments : segmentsList SEPARATOR ' '»«IF segments !== null»«FOR segment : segments SEPARATOR '+'»«segment.toString()»«ENDFOR»«ELSE»«"«null»"»«ENDIF»«ENDFOR» */«ELSE»null«ENDIF»,
+			«IF segmentsList !== null»«getSegmentsListId(segmentsListString, true)»«ELSE»null«ENDIF»,
 			«var eAttribute2EnumerationValues = serializationRuleAnalysis.basicGetEAttribute2EnumerationValues()»
 			«IF eAttribute2EnumerationValues !== null»
 			new @NonNull «newTypeReference(EAttribute_EnumerationValues)» [] {
@@ -642,7 +645,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«FOR segmentsList : getSegmentsListIterable(grammarAnalysis)»
 			private final @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] {
 				«FOR segments : segmentsList SEPARATOR ','»
-				«IF segments !== null»«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR '+'»«segment.toString()»«ENDFOR» */«ELSE»null«ENDIF»
+				«IF segments !== null»«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' '»«segment.toString()»«ENDFOR» */«ELSE»null«ENDIF»
 				«ENDFOR»
 			};
 			«ENDFOR»

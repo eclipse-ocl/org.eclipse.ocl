@@ -34,7 +34,7 @@
     <ownedSubIdioms locator="//@ownedLocators.1" name="DEFAULT" segments="//@ownedSegments.8 //@ownedSegments.10 //@ownedSegments.9"/>
   </ownedIdioms>
   <ownedLocators xsi:type="idioms:AssignmentLocator" name="PackageCS::ownedClasses">
-    <eStructuralFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/ocl/2015/BaseCS#//PackageCS/ownedClasses"/>
+    <eStructuralFeature xsi:type="ecore:EReference" href="platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//PackageCS/ownedClasses"/>
   </ownedLocators>
   <ownedLocators xsi:type="idioms:DefaultLocator" name="DEFAULT"/>
   <ownedLocators xsi:type="idioms:KeywordLocator" name="CLOSE BRACE" string="}"/>

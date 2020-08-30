@@ -10,9 +10,11 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 
 public interface IdiomsProvider
 {
-	/*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms();
+	/*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms(@NonNull ResourceSet resourceSet);
 }

@@ -715,6 +715,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		}
 	}
 
+	protected @NonNull Integer @NonNull [] integersIterable(int size) {
+		@NonNull Integer @NonNull [] integers = new @NonNull Integer[size];
+		for (int i = 0; i < size; i++) {
+			integers[i] = i;
+		}
+		return integers;
+	}
+
 	//
 	//	Xtend does not support annotations so we need to manually format x.y.z @NonNull T
 	//

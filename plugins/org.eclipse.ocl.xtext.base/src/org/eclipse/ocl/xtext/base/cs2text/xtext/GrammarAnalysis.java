@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -60,6 +62,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * An XtextGrammarAnalysis provides the extended analysis of an Xtext (multi-)grammar.
@@ -71,6 +74,9 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 
 	@Inject
 	private @Nullable IdiomsProvider idiomsProvider;
+
+	@Inject
+	private @Nullable Provider<ResourceSet> resourceSetProvider;
 
 	private @Nullable Grammar grammar = null;
 
@@ -538,6 +544,15 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	public @NonNull Iterable<@NonNull Idiom> getIdioms() {
+		ResourceSet resourceSet = getGrammar().eResource().getResourceSet();
+		if (resourceSet == null) {
+			if (resourceSetProvider != null) {
+				resourceSet = resourceSetProvider.get();
+			}
+			else {
+				resourceSet = new ResourceSetImpl();
+			}
+		}
 		IdiomsProvider idiomsProvider2 = idiomsProvider;
 		if (idiomsProvider2 == null) {
 
@@ -546,18 +561,19 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				private Iterable<Idiom> idioms = null;
 
 				@Override
-				public Iterable<Idiom> getIdioms() {
+				public Iterable<Idiom> getIdioms(@NonNull ResourceSet resourceSet) {
 					if (idioms == null) {
 						URI xtextURI = getGrammar().eResource().getURI();
 						URI idiomsURI = xtextURI.trimFileExtension().appendFileExtension("idioms");
-						IdiomModel idiomModel = getIdiomModel(idiomsURI);
+						IdiomModel idiomModel = getIdiomModel(resourceSet, idiomsURI);
 						idioms = getIdioms(idiomModel);
 					}
 					return idioms;
 				}
 			};
 		}
-		return idiomsProvider2.getIdioms() != null ? idiomsProvider2.getIdioms() : Collections.emptyList();
+		Iterable<Idiom> idioms = idiomsProvider2.getIdioms(resourceSet);
+		return idioms != null ? idioms : Collections.emptyList();
 	}
 
 /*	public @NonNull Iterable<@NonNull EClass> getSortedProducedEClasses() {

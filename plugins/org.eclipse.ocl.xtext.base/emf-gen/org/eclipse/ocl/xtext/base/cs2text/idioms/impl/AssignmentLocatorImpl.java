@@ -20,6 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -192,11 +193,14 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	@Override
 	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 		if (serializationNode instanceof AssignedSerializationNode) {
-			EStructuralFeature assiignedEStructuralFeature = ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
-			if (eStructuralFeature == assiignedEStructuralFeature) {
+			EStructuralFeature assignedEStructuralFeature = ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
+			if ("ownedClasses".equals(assignedEStructuralFeature.getName())) {
 				getClass(); 	// XXX debugging
 			}
-			return eStructuralFeature == assiignedEStructuralFeature;
+			if (eStructuralFeature == assignedEStructuralFeature) {
+				getClass(); 	// XXX debugging
+			}
+			return XtextGrammarUtil.isEqual(eStructuralFeature, assignedEStructuralFeature);
 		}
 		return false;
 	}

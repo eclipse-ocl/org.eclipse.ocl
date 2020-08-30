@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclinecore.formatting;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
@@ -21,9 +22,9 @@ public class OCLinEcoreIdiomsProvider extends AbstractIdiomsProvider
 	private static Iterable<Idiom> idioms = null;
 
 	@Override
-	public Iterable<Idiom> getIdioms() {
+	public Iterable<Idiom> getIdioms(ResourceSet resourceSet) {
 		if (idioms == null) {
-			IdiomModel idiomModel = getIdiomModel(getClass(), "/org/eclipse/ocl/xtext/oclinecore/OCLinEcore.idioms");
+			IdiomModel idiomModel = getIdiomModel(getClass(), resourceSet, "/org/eclipse/ocl/xtext/oclinecore/OCLinEcore.idioms");
 			idioms = getIdioms(idiomModel);
 		}
 		return idioms;

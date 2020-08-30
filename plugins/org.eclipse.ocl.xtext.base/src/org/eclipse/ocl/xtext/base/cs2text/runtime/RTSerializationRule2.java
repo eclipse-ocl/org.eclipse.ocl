@@ -28,6 +28,9 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 public class RTSerializationRule2 extends SerializationRule
 {
 	public static @NonNull RTSerializationRule2 create(@NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+		if (serializationRuleAnalysis.getRuleValueIndex() == 71) {
+			RTSerializationRule2.class.getName();		// XXX
+		}
 		SerializationNode rootSerializationNode = serializationRuleAnalysis.getRootSerializationNode();
 		StaticRuleMatch staticRuleMatch = serializationRuleAnalysis.getStaticRuleMatch();
 		List<@NonNull CardinalitySolutionStep> solutionStepsList = staticRuleMatch.getSteps();
