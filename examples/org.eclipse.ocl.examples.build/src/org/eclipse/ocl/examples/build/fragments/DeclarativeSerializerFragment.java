@@ -240,7 +240,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return getDigitsFormatString(domain.size());
 	}
 	protected @NonNull String getDigitsFormatString(int domainSize) {
-		int digits = domainSize > 0 ? (int)Math.ceil(Math.log10(domainSize)) : 1;
+		int digits = Math.max(domainSize > 0 ? (int)Math.ceil(Math.log10(domainSize)) : 1, 1);
 		return "%0" + digits + "d";
 	}
 

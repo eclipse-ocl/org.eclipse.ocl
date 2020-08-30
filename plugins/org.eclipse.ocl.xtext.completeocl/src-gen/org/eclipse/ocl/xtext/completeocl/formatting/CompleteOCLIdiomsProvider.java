@@ -13,7 +13,6 @@
 package org.eclipse.ocl.xtext.completeocl.formatting;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
@@ -23,7 +22,7 @@ public class CompleteOCLIdiomsProvider extends AbstractIdiomsProvider
 	private static Iterable<Idiom> idioms = null;
 
 	@Override
-	public Iterable<Idiom> getIdioms(@NonNull ResourceSet resourceSet) {
+	public Iterable<Idiom> getIdioms(ResourceSet resourceSet) {
 		if (idioms == null) {
 			IdiomModel idiomModel = getIdiomModel(getClass(), resourceSet, "/org/eclipse/ocl/xtext/completeocl/CompleteOCL.idioms");
 			idioms = getIdioms(idiomModel);
