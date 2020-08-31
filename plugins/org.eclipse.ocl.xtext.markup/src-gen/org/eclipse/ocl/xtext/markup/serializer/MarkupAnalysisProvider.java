@@ -429,7 +429,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _01 // BulletElement
 			= new ParserRuleValue(1, "BulletElement",
 				new @NonNull SerializationRule [] {
-					sr0._00 /* { 'bullet' { ':' level=10 }[?] '[' elements+=13[*] ']' } */
+					sr0._00 /* { 'bullet' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull TerminalRuleValue _02 // ESCAPED
@@ -437,7 +437,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _03 // FigureElement
 			= new ParserRuleValue(3, "FigureElement",
 				new @NonNull SerializationRule [] {
-					sr0._01 /* { 'figure' { '#' def=9 }[?] '[' src=22 { ',' alt=22 { ',' requiredWidth=10 { ',' requiredHeight=10 }[?] }[?] }[?] ']' } */
+					sr0._01 /* { 'figure' { '#' def=ID }[?] '[' src=STRING { ',' alt=STRING { ',' requiredWidth=INT { ',' requiredHeight=INT }[?] }[?] }[?] ']' } */
 				},
 				null);
 		private final @NonNull ParserRuleValue _04 // FigureRefElement
@@ -449,13 +449,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _05 // FontElement
 			= new ParserRuleValue(5, "FontElement",
 				new @NonNull SerializationRule [] {
-					sr0._03 /* { font={'b|e'} '[' elements+=13[*] ']' } */
+					sr0._03 /* { font={'b|e'} '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull ParserRuleValue _06 // FootnoteElement
 			= new ParserRuleValue(6, "FootnoteElement",
 				new @NonNull SerializationRule [] {
-					sr0._04 /* { 'footnote' '[' elements+=13[*] ']' } */
+					sr0._04 /* { 'footnote' '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull TerminalRuleValue _07 // HORIZONTAL_WS
@@ -463,7 +463,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _08 // HeadingElement
 			= new ParserRuleValue(8, "HeadingElement",
 				new @NonNull SerializationRule [] {
-					sr0._05 /* { 'heading' { ':' level=10 }[?] '[' elements+=13[*] ']' } */
+					sr0._05 /* { 'heading' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull TerminalRuleValue _09 // ID
@@ -475,25 +475,25 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _12 // Markup
 			= new ParserRuleValue(12, "Markup",
 				new @NonNull SerializationRule [] {
-					sr0._06 /* elements+=13[*] */
+					sr0._06 /* elements+=MarkupElement[*] */
 				},
 				null);
 		private final @NonNull ParserRuleValue _13 // MarkupElement
 			= new ParserRuleValue(13, "MarkupElement",
 				new @NonNull SerializationRule [] {
-					sr0._00 /* { 'bullet' { ':' level=10 }[?] '[' elements+=13[*] ']' } */,
-					sr0._01 /* { 'figure' { '#' def=9 }[?] '[' src=22 { ',' alt=22 { ',' requiredWidth=10 { ',' requiredHeight=10 }[?] }[?] }[?] ']' } */,
+					sr0._00 /* { 'bullet' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' } */,
+					sr0._01 /* { 'figure' { '#' def=ID }[?] '[' src=STRING { ',' alt=STRING { ',' requiredWidth=INT { ',' requiredHeight=INT }[?] }[?] }[?] ']' } */,
 					sr0._02 /* { 'figureRef' '[' ref=ID ']' } */,
-					sr0._03 /* { font={'b|e'} '[' elements+=13[*] ']' } */,
-					sr0._04 /* { 'footnote' '[' elements+=13[*] ']' } */,
-					sr0._05 /* { 'heading' { ':' level=10 }[?] '[' elements+=13[*] ']' } */,
-					sr0._07 /* text=15 */,
-					sr0._08 /* { '[' elements+=13[*] ']' } */,
-					sr0._09 /* { 'oclCode' '[' elements+=13[*] ']' } */,
-					sr0._10 /* { 'oclEval' '[' elements+=13[*] ']' } */,
-					sr0._11 /* { 'oclText' '[' elements+=13[*] ']' } */,
-					sr0._12 /* text+=('#|,|:'|9|25|10|26)[+] */,
-					sr0._13 /* text+=14 */
+					sr0._03 /* { font={'b|e'} '[' elements+=MarkupElement[*] ']' } */,
+					sr0._04 /* { 'footnote' '[' elements+=MarkupElement[*] ']' } */,
+					sr0._05 /* { 'heading' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' } */,
+					sr0._07 /* text=NL */,
+					sr0._08 /* { '[' elements+=MarkupElement[*] ']' } */,
+					sr0._09 /* { 'oclCode' '[' elements+=MarkupElement[*] ']' } */,
+					sr0._10 /* { 'oclEval' '[' elements+=MarkupElement[*] ']' } */,
+					sr0._11 /* { 'oclText' '[' elements+=MarkupElement[*] ']' } */,
+					sr0._12 /* text+=('#|,|:'|ID|WORD|INT|WS)[+] */,
+					sr0._13 /* text+=MarkupKeyword */
 				},
 				iv._1); /* BulletElement|FigureElement|FigureRefElement|FontElement|FootnoteElement|HeadingElement|MarkupElement|NewLineElement|NullElement|OCLCodeElement|OCLEvalElement|OCLTextElement|TextElement */
 		private final @NonNull DataTypeRuleValue _14 // MarkupKeyword
@@ -505,31 +505,31 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _17 // NewLineElement
 			= new ParserRuleValue(17, "NewLineElement",
 				new @NonNull SerializationRule [] {
-					sr0._07 /* text=15 */
+					sr0._07 /* text=NL */
 				},
 				null);
 		private final @NonNull ParserRuleValue _18 // NullElement
 			= new ParserRuleValue(18, "NullElement",
 				new @NonNull SerializationRule [] {
-					sr0._08 /* { '[' elements+=13[*] ']' } */
+					sr0._08 /* { '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull ParserRuleValue _19 // OCLCodeElement
 			= new ParserRuleValue(19, "OCLCodeElement",
 				new @NonNull SerializationRule [] {
-					sr0._09 /* { 'oclCode' '[' elements+=13[*] ']' } */
+					sr0._09 /* { 'oclCode' '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull ParserRuleValue _20 // OCLEvalElement
 			= new ParserRuleValue(20, "OCLEvalElement",
 				new @NonNull SerializationRule [] {
-					sr0._10 /* { 'oclEval' '[' elements+=13[*] ']' } */
+					sr0._10 /* { 'oclEval' '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull ParserRuleValue _21 // OCLTextElement
 			= new ParserRuleValue(21, "OCLTextElement",
 				new @NonNull SerializationRule [] {
-					sr0._11 /* { 'oclText' '[' elements+=13[*] ']' } */
+					sr0._11 /* { 'oclText' '[' elements+=MarkupElement[*] ']' } */
 				},
 				null);
 		private final @NonNull TerminalRuleValue _22 // STRING
@@ -537,8 +537,8 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _23 // TextElement
 			= new ParserRuleValue(23, "TextElement",
 				new @NonNull SerializationRule [] {
-					sr0._12 /* text+=('#|,|:'|9|25|10|26)[+] */,
-					sr0._13 /* text+=14 */
+					sr0._12 /* text+=('#|,|:'|ID|WORD|INT|WS)[+] */,
+					sr0._13 /* text+=MarkupKeyword */
 				},
 				null);
 		private final @NonNull TerminalRuleValue _24 // VERTICAL_WS
@@ -557,7 +557,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _00 // BulletElement
 			= new EClassValue(MarkupPackage.Literals.BULLET_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._00, sl._2) /* { 'bullet' { ':' level=10 }[?] '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._00, sl._2) /* { 'bullet' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -567,7 +567,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _01 // FigureElement
 			= new EClassValue(MarkupPackage.Literals.FIGURE_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._01, sl._3) /* { 'figure' { '#' def=9 }[?] '[' src=22 { ',' alt=22 { ',' requiredWidth=10 { ',' requiredHeight=10 }[?] }[?] }[?] ']' } */
+					new SerializationRule_SegmentsList(sr0._01, sl._3) /* { 'figure' { '#' def=ID }[?] '[' src=STRING { ',' alt=STRING { ',' requiredWidth=INT { ',' requiredHeight=INT }[?] }[?] }[?] ']' } */
 				}, null
 			);
 		private final @NonNull EClassValue _02 // FigureRefElement
@@ -579,7 +579,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _03 // FontElement
 			= new EClassValue(MarkupPackage.Literals.FONT_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._03, sl._4) /* { font={'b|e'} '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._03, sl._4) /* { font={'b|e'} '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -589,7 +589,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _04 // FootnoteElement
 			= new EClassValue(MarkupPackage.Literals.FOOTNOTE_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._04, sl._4) /* { 'footnote' '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._04, sl._4) /* { 'footnote' '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -599,7 +599,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _05 // HeadingElement
 			= new EClassValue(MarkupPackage.Literals.HEADING_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._05, sl._2) /* { 'heading' { ':' level=10 }[?] '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._05, sl._2) /* { 'heading' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -609,7 +609,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _06 // Markup
 			= new EClassValue(MarkupPackage.Literals.MARKUP,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._06, sl._0) /* elements+=13[*] */
+					new SerializationRule_SegmentsList(sr0._06, sl._0) /* elements+=MarkupElement[*] */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -619,13 +619,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _07 // NewLineElement
 			= new EClassValue(MarkupPackage.Literals.NEW_LINE_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._07, sl._6) /* text=15 */
+					new SerializationRule_SegmentsList(sr0._07, sl._6) /* text=NL */
 				}, null
 			);
 		private final @NonNull EClassValue _08 // NullElement
 			= new EClassValue(MarkupPackage.Literals.NULL_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._08, sl._1) /* { '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._08, sl._1) /* { '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -635,7 +635,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _09 // OCLCodeElement
 			= new EClassValue(MarkupPackage.Literals.OCL_CODE_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._09, sl._4) /* { 'oclCode' '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._09, sl._4) /* { 'oclCode' '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -645,7 +645,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _10 // OCLEvalElement
 			= new EClassValue(MarkupPackage.Literals.OCL_EVAL_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._10, sl._4) /* { 'oclEval' '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._10, sl._4) /* { 'oclEval' '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -655,7 +655,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _11 // OCLTextElement
 			= new EClassValue(MarkupPackage.Literals.OCL_TEXT_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._11, sl._4) /* { 'oclText' '[' elements+=13[*] ']' } */
+					new SerializationRule_SegmentsList(sr0._11, sl._4) /* { 'oclText' '[' elements+=MarkupElement[*] ']' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
@@ -665,8 +665,8 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _12 // TextElement
 			= new EClassValue(MarkupPackage.Literals.TEXT_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._12, sl._6) /* text+=('#|,|:'|9|25|10|26)[+] */,
-					new SerializationRule_SegmentsList(sr0._13, sl._6) /* text+=14 */
+					new SerializationRule_SegmentsList(sr0._12, sl._6) /* text+=('#|,|:'|ID|WORD|INT|WS)[+] */,
+					new SerializationRule_SegmentsList(sr0._13, sl._6) /* text+=MarkupKeyword */
 				}, null
 			);
 	}
@@ -676,7 +676,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _SerializationRules0
 	{
-		// Markup::BulletElement : { 'bullet' { ':' level=10 }[?] '[' elements+=13[*] ']' }
+		// Markup::BulletElement : { 'bullet' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _00 = new SerializationRule(1,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -714,7 +714,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::FigureElement : { 'figure' { '#' def=9 }[?] '[' src=22 { ',' alt=22 { ',' requiredWidth=10 { ',' requiredHeight=10 }[?] }[?] }[?] ']' }
+		// Markup::FigureElement : { 'figure' { '#' def=ID }[?] '[' src=STRING { ',' alt=STRING { ',' requiredWidth=INT { ',' requiredHeight=INT }[?] }[?] }[?] ']' }
 		private @NonNull SerializationRule _01 = new SerializationRule(3,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._11 /* assign V1 = |FigureElement::alt| */,
@@ -749,9 +749,9 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				MarkupPackage.Literals.FIGURE_ELEMENT__SRC
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__DEF,
@@ -764,14 +764,14 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
 						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH,
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
 					}
 				)
 			},
@@ -799,7 +799,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::FontElement : { font={'b|e'} '[' elements+=13[*] ']' }
+		// Markup::FontElement : { font={'b|e'} '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _03 = new SerializationRule(5,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -837,7 +837,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::FootnoteElement : { 'footnote' '[' elements+=13[*] ']' }
+		// Markup::FootnoteElement : { 'footnote' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _04 = new SerializationRule(6,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -865,7 +865,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::HeadingElement : { 'heading' { ':' level=10 }[?] '[' elements+=13[*] ']' }
+		// Markup::HeadingElement : { 'heading' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _05 = new SerializationRule(8,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -903,7 +903,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::Markup : elements+=13[*]
+		// Markup::Markup : elements+=MarkupElement[*]
 		private @NonNull SerializationRule _06 = new SerializationRule(12,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -927,7 +927,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::NewLineElement : text=15
+		// Markup::NewLineElement : text=NL
 		private @NonNull SerializationRule _07 = new SerializationRule(17,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._03 /* assert (|NewLineElement::text| - 1) == 0 */
@@ -949,7 +949,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				)
 			},
 			null);
-		// Markup::NullElement : { '[' elements+=13[*] ']' }
+		// Markup::NullElement : { '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _08 = new SerializationRule(18,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -976,7 +976,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::OCLCodeElement : { 'oclCode' '[' elements+=13[*] ']' }
+		// Markup::OCLCodeElement : { 'oclCode' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _09 = new SerializationRule(19,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -1004,7 +1004,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::OCLEvalElement : { 'oclEval' '[' elements+=13[*] ']' }
+		// Markup::OCLEvalElement : { 'oclEval' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _10 = new SerializationRule(20,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -1032,7 +1032,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::OCLTextElement : { 'oclText' '[' elements+=13[*] ']' }
+		// Markup::OCLTextElement : { 'oclText' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _11 = new SerializationRule(21,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
@@ -1060,7 +1060,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::TextElement : text+=('#|,|:'|9|25|10|26)[+]
+		// Markup::TextElement : text+=('#|,|:'|ID|WORD|INT|WS)[+]
 		private @NonNull SerializationRule _12 = new SerializationRule(23,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._09 /* assign V0 = |TextElement::text.'#|,|:'| */
@@ -1083,7 +1083,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				)
 			},
 			null);
-		// Markup::TextElement : text+=14
+		// Markup::TextElement : text+=MarkupKeyword
 		private @NonNull SerializationRule _13 = new SerializationRule(23,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._04 /* assert (|TextElement::text| - 1) == 0 */
