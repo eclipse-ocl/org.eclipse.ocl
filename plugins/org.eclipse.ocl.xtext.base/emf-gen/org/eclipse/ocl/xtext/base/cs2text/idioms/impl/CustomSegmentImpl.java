@@ -56,7 +56,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 * @ordered
 	 */
-	protected Class<CustomSegmentSupport> supportClass;
+	protected Class<?> supportClass;
 
 
 	/**
@@ -108,7 +108,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
-	public Class<CustomSegmentSupport> getSupportClass()
+	public Class<?> getSupportClass()
 	{
 		return supportClass;
 	}
@@ -119,9 +119,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
-	public void setSupportClass(Class<CustomSegmentSupport> newSupportClass)
+	public void setSupportClass(Class<?> newSupportClass)
 	{
-		Class<CustomSegmentSupport> oldSupportClass = supportClass;
+		Class<?> oldSupportClass = supportClass;
 		supportClass = newSupportClass;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldSupportClass, supportClass));
@@ -175,14 +175,13 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue)
 	{
 		switch (featureID)
 		{
 			case 1:
-				setSupportClass((Class<CustomSegmentSupport>)newValue);
+				setSupportClass((Class<?>)newValue);
 				return;
 			case 2:
 				setSupportClassName((String)newValue);
@@ -202,7 +201,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				setSupportClass((Class<CustomSegmentSupport>)null);
+				setSupportClass((Class<?>)null);
 				return;
 			case 2:
 				setSupportClassName(SUPPORT_CLASS_NAME_EDEFAULT);
@@ -233,18 +232,18 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 
 	protected @Nullable CustomSegmentSupport getSupport(Object contextObject) {
 		if (support == null) {
-			Class<CustomSegmentSupport> supportClass = this.supportClass;
+			Class<?> supportClass = this.supportClass;
 			if ((supportClass == null) && (supportClassName != null)) {
 				ClassLoader classLoader = contextObject.getClass().getClassLoader();
 				try {
-					supportClass = (Class<CustomSegmentSupport>) classLoader.loadClass(supportClassName);
+					supportClass = classLoader.loadClass(supportClassName);
 				} catch (ClassNotFoundException e) {
 					return null;
 				}
 			}
 			if (supportClass != null) {
 				try {
-					support = supportClass.newInstance();
+					support = (CustomSegmentSupport) supportClass.newInstance();
 				} catch (InstantiationException | IllegalAccessException e) {
 					return null;
 				}

@@ -18,19 +18,25 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.*;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsFactory;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +52,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static IdiomsFactory init()
+	public static @NonNull IdiomsFactory init()
 	{
 		try
 		{
@@ -86,21 +92,20 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 		{
 			case 0: return createAssignmentLocator();
 			case 2: return createCustomSegment();
-			case 4: return createDefaultLocator();
-			case 5: return createHalfNewLineSegment();
-			case 6: return createIdiom();
-			case 7: return createIdiomModel();
-			case 9: return createKeywordLocator();
-			case 10: return createNewLineSegment();
-			case 11: return createNoSpaceSegment();
-			case 12: return createPopSegment();
-			case 13: return createProducedEClassLocator();
-			case 14: return createPushSegment();
-			case 16: return createSoftNewLineSegment();
-			case 17: return createSoftSpaceSegment();
-			case 18: return createStringSegment();
-			case 19: return createSubIdiom();
-			case 20: return createValueSegment();
+			case 4: return createHalfNewLineSegment();
+			case 5: return createIdiom();
+			case 6: return createIdiomModel();
+			case 8: return createKeywordLocator();
+			case 9: return createNewLineSegment();
+			case 10: return createNoSpaceSegment();
+			case 11: return createPopSegment();
+			case 12: return createProducedEClassLocator();
+			case 13: return createPushSegment();
+			case 15: return createSoftNewLineSegment();
+			case 16: return createSoftSpaceSegment();
+			case 17: return createStringSegment();
+			case 18: return createSubIdiom();
+			case 19: return createValueSegment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -116,8 +121,10 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 24:
+			case 23:
 				return createSerializationNodeFromString(eDataType, initialValue);
+			case 25:
+				return createRTSerializationStepFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -133,8 +140,10 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 24:
+			case 23:
 				return convertSerializationNodeToString(eDataType, instanceValue);
+			case 25:
+				return convertRTSerializationStepToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -146,7 +155,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public AssignmentLocator createAssignmentLocator()
+	public @NonNull AssignmentLocator createAssignmentLocator()
 	{
 		AssignmentLocatorImpl assignmentLocator = new AssignmentLocatorImpl();
 		return assignmentLocator;
@@ -158,7 +167,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public CustomSegment createCustomSegment()
+	public @NonNull CustomSegment createCustomSegment()
 	{
 		CustomSegmentImpl customSegment = new CustomSegmentImpl();
 		return customSegment;
@@ -170,19 +179,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public DefaultLocator createDefaultLocator()
-	{
-		DefaultLocatorImpl defaultLocator = new DefaultLocatorImpl();
-		return defaultLocator;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public HalfNewLineSegment createHalfNewLineSegment()
+	public @NonNull HalfNewLineSegment createHalfNewLineSegment()
 	{
 		HalfNewLineSegmentImpl halfNewLineSegment = new HalfNewLineSegmentImpl();
 		return halfNewLineSegment;
@@ -194,7 +191,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public Idiom createIdiom()
+	public @NonNull Idiom createIdiom()
 	{
 		IdiomImpl idiom = new IdiomImpl();
 		return idiom;
@@ -206,7 +203,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public IdiomModel createIdiomModel()
+	public @NonNull IdiomModel createIdiomModel()
 	{
 		IdiomModelImpl idiomModel = new IdiomModelImpl();
 		return idiomModel;
@@ -218,7 +215,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public KeywordLocator createKeywordLocator()
+	public @NonNull KeywordLocator createKeywordLocator()
 	{
 		KeywordLocatorImpl keywordLocator = new KeywordLocatorImpl();
 		return keywordLocator;
@@ -230,7 +227,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public NewLineSegment createNewLineSegment()
+	public @NonNull NewLineSegment createNewLineSegment()
 	{
 		NewLineSegmentImpl newLineSegment = new NewLineSegmentImpl();
 		return newLineSegment;
@@ -242,7 +239,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public NoSpaceSegment createNoSpaceSegment()
+	public @NonNull NoSpaceSegment createNoSpaceSegment()
 	{
 		NoSpaceSegmentImpl noSpaceSegment = new NoSpaceSegmentImpl();
 		return noSpaceSegment;
@@ -254,7 +251,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public PopSegment createPopSegment()
+	public @NonNull PopSegment createPopSegment()
 	{
 		PopSegmentImpl popSegment = new PopSegmentImpl();
 		return popSegment;
@@ -266,7 +263,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public ProducedEClassLocator createProducedEClassLocator()
+	public @NonNull ProducedEClassLocator createProducedEClassLocator()
 	{
 		ProducedEClassLocatorImpl producedEClassLocator = new ProducedEClassLocatorImpl();
 		return producedEClassLocator;
@@ -278,7 +275,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public PushSegment createPushSegment()
+	public @NonNull PushSegment createPushSegment()
 	{
 		PushSegmentImpl pushSegment = new PushSegmentImpl();
 		return pushSegment;
@@ -290,7 +287,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public SoftNewLineSegment createSoftNewLineSegment()
+	public @NonNull SoftNewLineSegment createSoftNewLineSegment()
 	{
 		SoftNewLineSegmentImpl softNewLineSegment = new SoftNewLineSegmentImpl();
 		return softNewLineSegment;
@@ -302,7 +299,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public SoftSpaceSegment createSoftSpaceSegment()
+	public @NonNull SoftSpaceSegment createSoftSpaceSegment()
 	{
 		SoftSpaceSegmentImpl softSpaceSegment = new SoftSpaceSegmentImpl();
 		return softSpaceSegment;
@@ -314,7 +311,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public StringSegment createStringSegment()
+	public @NonNull StringSegment createStringSegment()
 	{
 		StringSegmentImpl stringSegment = new StringSegmentImpl();
 		return stringSegment;
@@ -326,7 +323,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public SubIdiom createSubIdiom()
+	public @NonNull SubIdiom createSubIdiom()
 	{
 		SubIdiomImpl subIdiom = new SubIdiomImpl();
 		return subIdiom;
@@ -338,7 +335,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * @generated
 	 */
 	@Override
-	public ValueSegment createValueSegment()
+	public @NonNull ValueSegment createValueSegment()
 	{
 		ValueSegmentImpl valueSegment = new ValueSegmentImpl();
 		return valueSegment;
@@ -369,8 +366,29 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public RTSerializationStep createRTSerializationStepFromString(EDataType eDataType, String initialValue)
+	{
+		return (RTSerializationStep)super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertRTSerializationStepToString(EDataType eDataType, Object instanceValue)
+	{
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("null")
 	@Override
-	public IdiomsPackage getIdiomsPackage()
+	public @NonNull IdiomsPackage getIdiomsPackage()
 	{
 		return (IdiomsPackage)getEPackage();
 	}

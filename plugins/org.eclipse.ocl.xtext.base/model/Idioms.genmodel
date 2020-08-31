@@ -21,6 +21,7 @@
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationNode"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//UserElementSerializer"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//RTSerializationStep"/>
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
     </genClasses>
@@ -38,12 +39,11 @@
     </genClasses>
     <genClasses image="false" ecoreClass="Idioms.ecore#//CustomSegmentSupport">
       <genOperations ecoreOperation="Idioms.ecore#//CustomSegmentSupport/serialize">
-        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationStep"/>
         <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializer"/>
         <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationBuilder"/>
       </genOperations>
     </genClasses>
-    <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
     <genClasses ecoreClass="Idioms.ecore#//HalfNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//Idiom">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Idiom/name"/>
@@ -81,7 +81,7 @@
     <genClasses image="false" ecoreClass="Idioms.ecore#//Segment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Segment/name"/>
       <genOperations ecoreOperation="Idioms.ecore#//Segment/serialize">
-        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializationNode"/>
+        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializationStep"/>
         <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializer"/>
         <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializationBuilder"/>
       </genOperations>
@@ -99,11 +99,6 @@
       <genOperations ecoreOperation="Idioms.ecore#//SubIdiom/matches">
         <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/matches/serializationNode"/>
         <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/matches/serializationRule"/>
-      </genOperations>
-      <genOperations ecoreOperation="Idioms.ecore#//SubIdiom/serialize">
-        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/serialize/serializationNode"/>
-        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/serialize/serializer"/>
-        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/serialize/serializationBuilder"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//ValueSegment"/>

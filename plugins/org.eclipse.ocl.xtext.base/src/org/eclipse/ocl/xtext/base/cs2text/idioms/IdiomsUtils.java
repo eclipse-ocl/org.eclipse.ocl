@@ -96,7 +96,7 @@ public class IdiomsUtils
 
 	public static @NonNull CustomSegment createCustomSegment(@Nullable IdiomModel idiomModel, @NonNull Class<? extends CustomSegmentSupport> customSegmentClass) {
 		CustomSegmentImpl segment = (CustomSegmentImpl) IdiomsFactory.eINSTANCE.createCustomSegment();
-		segment.setSupportClass((Class<CustomSegmentSupport>) customSegmentClass);
+		segment.setSupportClass(customSegmentClass);
 		if (idiomModel != null) {
 			idiomModel.getOwnedSegments().add(segment);
 		}
@@ -109,12 +109,6 @@ public class IdiomsUtils
 			idiom.getOwnedSubIdioms().add(subIdiom);
 		}
 		return idiom;
-	}
-
-	public static @NonNull DefaultLocator createDefaultLocator(@NonNull IdiomModel idiomModel) {
-		DefaultLocator locator = IdiomsFactory.eINSTANCE.createDefaultLocator();
-		idiomModel.getOwnedLocators().add(locator);
-		return locator;
 	}
 
 	public static @NonNull Idiom createIdiom(@NonNull IdiomModel idiomModel, @NonNull SubIdiom @NonNull ... subIdioms) {

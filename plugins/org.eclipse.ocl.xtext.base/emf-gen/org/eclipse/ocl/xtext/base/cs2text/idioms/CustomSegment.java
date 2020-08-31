@@ -43,7 +43,7 @@ public interface CustomSegment extends Segment
 	 * @model
 	 * @generated
 	 */
-	Class<CustomSegmentSupport> getSupportClass();
+	Class<?> getSupportClass();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getSupportClass <em>Support Class</em>}' attribute.
@@ -53,7 +53,7 @@ public interface CustomSegment extends Segment
 	 * @see #getSupportClass()
 	 * @generated
 	 */
-	void setSupportClass(Class<CustomSegmentSupport> value);
+	void setSupportClass(Class<?> value);
 
 	/**
 	 * Returns the value of the '<em><b>Support Class Name</b></em>' attribute.

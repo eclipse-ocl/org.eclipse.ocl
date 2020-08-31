@@ -20,7 +20,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportClass">
       <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
-        <eTypeArguments eClassifier="#//CustomSegmentSupport"/>
+        <eTypeArguments/>
       </eGenericType>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportClassName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -28,12 +28,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegmentSupport" abstract="true"
       interface="true">
     <eOperations name="serialize">
-      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializationStep" lowerBound="1" eType="#//RTSerializationStep"/>
       <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
       <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
     </eOperations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DefaultLocator" eSuperTypes="#//Locator"/>
   <eClassifiers xsi:type="ecore:EClass" name="HalfNewLineSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="Idiom">
     <eOperations name="firstMatch" lowerBound="1" eType="#//IdiomMatch">
@@ -77,7 +76,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="PushSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="Segment" abstract="true">
     <eOperations name="serialize">
-      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
+      <eParameters name="serializationStep" lowerBound="1" eType="#//RTSerializationStep"/>
       <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
       <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
     </eOperations>
@@ -96,11 +95,6 @@
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
     </eOperations>
-    <eOperations name="serialize">
-      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
-      <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
-      <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
-    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="locator" eType="#//Locator"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="segments" unique="false"
@@ -116,4 +110,5 @@
   <eClassifiers xsi:type="ecore:EDataType" name="SerializationNode" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode"/>
   <eClassifiers xsi:type="ecore:EDataType" name="UserElementSerializer" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="RTSerializationStep" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep"/>
 </ecore:EPackage>

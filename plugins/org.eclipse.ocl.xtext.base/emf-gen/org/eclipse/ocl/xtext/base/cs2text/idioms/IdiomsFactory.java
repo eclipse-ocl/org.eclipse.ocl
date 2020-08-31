@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +29,7 @@ public interface IdiomsFactory extends EFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	IdiomsFactory eINSTANCE = org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsFactoryImpl.init();
+	@NonNull IdiomsFactory eINSTANCE = org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Assignment Locator</em>'.
@@ -37,7 +38,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Assignment Locator</em>'.
 	 * @generated
 	 */
-	AssignmentLocator createAssignmentLocator();
+	@NonNull AssignmentLocator createAssignmentLocator();
 
 	/**
 	 * Returns a new object of class '<em>Custom Segment</em>'.
@@ -46,16 +47,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Custom Segment</em>'.
 	 * @generated
 	 */
-	CustomSegment createCustomSegment();
-
-	/**
-	 * Returns a new object of class '<em>Default Locator</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Default Locator</em>'.
-	 * @generated
-	 */
-	DefaultLocator createDefaultLocator();
+	@NonNull CustomSegment createCustomSegment();
 
 	/**
 	 * Returns a new object of class '<em>Half New Line Segment</em>'.
@@ -64,7 +56,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Half New Line Segment</em>'.
 	 * @generated
 	 */
-	HalfNewLineSegment createHalfNewLineSegment();
+	@NonNull HalfNewLineSegment createHalfNewLineSegment();
 
 	/**
 	 * Returns a new object of class '<em>Idiom</em>'.
@@ -73,7 +65,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Idiom</em>'.
 	 * @generated
 	 */
-	Idiom createIdiom();
+	@NonNull Idiom createIdiom();
 
 	/**
 	 * Returns a new object of class '<em>Idiom Model</em>'.
@@ -82,7 +74,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Idiom Model</em>'.
 	 * @generated
 	 */
-	IdiomModel createIdiomModel();
+	@NonNull IdiomModel createIdiomModel();
 
 	/**
 	 * Returns a new object of class '<em>Keyword Locator</em>'.
@@ -91,7 +83,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Keyword Locator</em>'.
 	 * @generated
 	 */
-	KeywordLocator createKeywordLocator();
+	@NonNull KeywordLocator createKeywordLocator();
 
 	/**
 	 * Returns a new object of class '<em>New Line Segment</em>'.
@@ -100,7 +92,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>New Line Segment</em>'.
 	 * @generated
 	 */
-	NewLineSegment createNewLineSegment();
+	@NonNull NewLineSegment createNewLineSegment();
 
 	/**
 	 * Returns a new object of class '<em>No Space Segment</em>'.
@@ -109,7 +101,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>No Space Segment</em>'.
 	 * @generated
 	 */
-	NoSpaceSegment createNoSpaceSegment();
+	@NonNull NoSpaceSegment createNoSpaceSegment();
 
 	/**
 	 * Returns a new object of class '<em>Pop Segment</em>'.
@@ -118,7 +110,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Pop Segment</em>'.
 	 * @generated
 	 */
-	PopSegment createPopSegment();
+	@NonNull PopSegment createPopSegment();
 
 	/**
 	 * Returns a new object of class '<em>Produced EClass Locator</em>'.
@@ -127,7 +119,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Produced EClass Locator</em>'.
 	 * @generated
 	 */
-	ProducedEClassLocator createProducedEClassLocator();
+	@NonNull ProducedEClassLocator createProducedEClassLocator();
 
 	/**
 	 * Returns a new object of class '<em>Push Segment</em>'.
@@ -136,7 +128,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Push Segment</em>'.
 	 * @generated
 	 */
-	PushSegment createPushSegment();
+	@NonNull PushSegment createPushSegment();
 
 	/**
 	 * Returns a new object of class '<em>Soft New Line Segment</em>'.
@@ -145,7 +137,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Soft New Line Segment</em>'.
 	 * @generated
 	 */
-	SoftNewLineSegment createSoftNewLineSegment();
+	@NonNull SoftNewLineSegment createSoftNewLineSegment();
 
 	/**
 	 * Returns a new object of class '<em>Soft Space Segment</em>'.
@@ -154,7 +146,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Soft Space Segment</em>'.
 	 * @generated
 	 */
-	SoftSpaceSegment createSoftSpaceSegment();
+	@NonNull SoftSpaceSegment createSoftSpaceSegment();
 
 	/**
 	 * Returns a new object of class '<em>String Segment</em>'.
@@ -163,7 +155,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>String Segment</em>'.
 	 * @generated
 	 */
-	StringSegment createStringSegment();
+	@NonNull StringSegment createStringSegment();
 
 	/**
 	 * Returns a new object of class '<em>Sub Idiom</em>'.
@@ -172,7 +164,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Sub Idiom</em>'.
 	 * @generated
 	 */
-	SubIdiom createSubIdiom();
+	@NonNull SubIdiom createSubIdiom();
 
 	/**
 	 * Returns a new object of class '<em>Value Segment</em>'.
@@ -181,7 +173,7 @@ public interface IdiomsFactory extends EFactory
 	 * @return a new object of class '<em>Value Segment</em>'.
 	 * @generated
 	 */
-	ValueSegment createValueSegment();
+	@NonNull ValueSegment createValueSegment();
 
 	/**
 	 * Returns the package supported by this factory.
@@ -190,6 +182,6 @@ public interface IdiomsFactory extends EFactory
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	IdiomsPackage getIdiomsPackage();
+	@NonNull IdiomsPackage getIdiomsPackage();
 
 } //IdiomsFactory

@@ -22,6 +22,7 @@ Workflow {
   component = @GenerateAnnotationModel {}
   component = @GenerateCSModels {}
   component = @GenerateCGModels {}
+  component = @GenerateIdiomsModel {}
   component = @GenerateAllEditors {}
   component = @GenerateValuesModels {}
   component = @GenerateTestModels {}
