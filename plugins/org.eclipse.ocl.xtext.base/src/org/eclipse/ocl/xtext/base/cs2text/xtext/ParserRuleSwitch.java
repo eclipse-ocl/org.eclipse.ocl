@@ -175,7 +175,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 			}
 			else if (keywords != null) {
 				if (keywords.size() > 1) {
-					return new AlternativeAssignsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords, null);
+					return new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords);
 				}
 				else {
 					return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords.get(0));

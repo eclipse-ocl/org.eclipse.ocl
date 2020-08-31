@@ -14,11 +14,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedRuleCallsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
@@ -75,8 +74,12 @@ public class DefaultLocatorImpl extends LocatorImpl implements DefaultLocator
 		else if (serializationNode instanceof AssignedCrossReferenceSerializationNode) {
 			return true;
 		}
-		else if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)){
-			@NonNull Integer @Nullable [] assignedRuleAnalyses = ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes();
+		else if (serializationNode instanceof AlternativeAssignsSerializationNode) {
+			AlternativeAssignsSerializationNode alternativeAssignsSerializationNode = (AlternativeAssignsSerializationNode)serializationNode;
+			if (alternativeAssignsSerializationNode.getEnumerationValue() != null) {
+				return true;
+			}
+			@NonNull Integer @Nullable [] assignedRuleAnalyses = alternativeAssignsSerializationNode.getAssignedRuleIndexes();
 			if (assignedRuleAnalyses != null) {
 				for (@NonNull Integer ruleIndex : assignedRuleAnalyses) {
 					AbstractRuleAnalysis assignedRuleAnalysis = serializationRule.getRuleAnalysis().getGrammarAnalysis().getRuleAnalysis(ruleIndex);
@@ -84,6 +87,14 @@ public class DefaultLocatorImpl extends LocatorImpl implements DefaultLocator
 						return true;
 					}
 				}
+			}
+			return false;		// XXX Is this still right ??
+		}
+		else if (serializationNode instanceof AssignedRuleCallSerializationNode) {
+			int assignedRuleIndex = ((AssignedRuleCallSerializationNode)serializationNode).getAssignedRuleIndex();
+			AbstractRuleAnalysis assignedRuleAnalysis = serializationRule.getRuleAnalysis().getGrammarAnalysis().getRuleAnalysis(assignedRuleIndex);
+			if (!(assignedRuleAnalysis instanceof ParserRuleAnalysis)) {
+				return true;
 			}
 			return false;		// XXX Is this still right ??
 		}

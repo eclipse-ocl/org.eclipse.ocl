@@ -64,10 +64,10 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 		if (serializationNode == this) {
 			return true;
 		}
-		if (!(serializationNode instanceof AlternativeAssignedKeywordsSerializationNode)) {
+		if (!(serializationNode instanceof AssignedKeywordSerializationNode)) {
 			return false;
 		}
-		AlternativeAssignedKeywordsSerializationNode that = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
+		AssignedKeywordSerializationNode that = (AssignedKeywordSerializationNode)serializationNode;
 		if (this.eStructuralFeature != that.eStructuralFeature) {
 			return false;
 		}

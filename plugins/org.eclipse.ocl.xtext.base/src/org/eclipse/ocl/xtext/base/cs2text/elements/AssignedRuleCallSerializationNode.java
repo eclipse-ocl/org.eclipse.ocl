@@ -44,6 +44,10 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature, calledRuleIndex));
 	}
 
+	public int getAssignedRuleIndex() {
+		return calledRuleIndex;
+	}
+
 	@Override
 	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
 		return calledRuleIndexes;

@@ -297,6 +297,19 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			EnumerationValue enumerationValue = assignedKeywordsSerializationNode.getEnumerationValue();
 			enumerationValues.add(enumerationValue);
 		}
+		else if (serializationNode instanceof AlternativeAssignsSerializationNode) {
+			AlternativeAssignsSerializationNode assignsSerializationNode = (AlternativeAssignsSerializationNode)serializationNode;
+			EAttribute eAttribute = (EAttribute)assignsSerializationNode.getEStructuralFeature();
+			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+			if (enumerationValues == null) {
+				enumerationValues = new HashSet<>();
+				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
+			}
+			EnumerationValue enumerationValue = assignsSerializationNode.getEnumerationValue();
+			if (enumerationValue != null) {
+				enumerationValues.add(enumerationValue);
+			}
+		}
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
 			EAttribute eAttribute = (EAttribute)assignedKeywordSerializationNode.getEStructuralFeature();
@@ -339,7 +352,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				}
 			}
 		}
-		else*/ if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignedRuleCallsSerializationNode)) {
+		else*/ if ((serializationNode instanceof AssignedRuleCallSerializationNode) || (serializationNode instanceof AlternativeAssignsSerializationNode)) {
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
 			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
