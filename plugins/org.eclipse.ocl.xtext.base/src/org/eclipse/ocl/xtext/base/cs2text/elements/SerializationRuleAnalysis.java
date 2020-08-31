@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
@@ -150,7 +152,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		@NonNull EAttribute_EnumerationValues[] eAttributeDatas = new @NonNull EAttribute_EnumerationValues[size];
 		int i = 0;
 		for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues.entrySet()) {
-			eAttributeDatas[i++] = new EAttribute_EnumerationValues(entry.getKey(), entry.getValue());
+			@NonNull Set<@NonNull EnumerationValue> enumerationValuesSet = entry.getValue();
+			@NonNull EnumerationValue @NonNull [] enumerationValuesArray = enumerationValuesSet.toArray(new @NonNull EnumerationValue[enumerationValuesSet.size()]);
+			Arrays.sort(enumerationValuesArray, NameUtil.NAMEABLE_COMPARATOR);
+			eAttributeDatas[i++] = new EAttribute_EnumerationValues(entry.getKey(), enumerationValuesArray);
 		}
 		return eAttributeDatas;
 	}
@@ -470,6 +475,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		if (producedEClass2 == null) {
 			EClass returnedEClass = ruleAnalysis.getReturnedEClass();
 			producedEClass = producedEClass2 = refineProducedEClass(rootSerializationNode, returnedEClass);
+			if ("EnumerationCS".equals(producedEClass2.getName())) {		// XXX debugging
+				refineProducedEClass(rootSerializationNode, returnedEClass);
+				getClass();
+			}
 		}
 		return producedEClass2;
 	}
@@ -501,6 +510,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @NonNull StaticRuleMatch getStaticRuleMatch() {
 		StaticRuleMatch staticRuleMatch2 = staticRuleMatch;
 		if (staticRuleMatch2 == null) {
+			if ("EssentialOCL::TupleTypeCS".equals(ruleAnalysis.getName())) {
+				getClass();	// XXX debugging
+			}
 			//
 			staticRuleMatch = staticRuleMatch2 = new StaticRuleMatch(this);
 			//

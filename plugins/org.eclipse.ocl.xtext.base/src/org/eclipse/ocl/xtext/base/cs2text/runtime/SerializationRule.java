@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
-import java.util.Set;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -32,32 +30,24 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
-import com.google.common.collect.Sets;
-
 public class SerializationRule
 {
 	public static class EAttribute_EnumerationValues implements Nameable
 	{
 		protected final @NonNull EAttribute eAttribute;
-		protected final @NonNull Set<@NonNull EnumerationValue> enumerationValues;
-
-		public EAttribute_EnumerationValues(/*@NonNull*/ EAttribute eAttribute, @NonNull Set<@NonNull EnumerationValue> enumerationValues) {
-			assert eAttribute != null;
-			this.eAttribute = eAttribute;
-			this.enumerationValues = enumerationValues;
-		}
+		protected final @NonNull EnumerationValue @NonNull [] enumerationValues;
 
 		public EAttribute_EnumerationValues(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue @NonNull ... enumerationValues) {
 			assert eAttribute != null;
 			this.eAttribute = eAttribute;
-			this.enumerationValues = Sets.newHashSet(enumerationValues);		// XXX Prefer array
+			this.enumerationValues = enumerationValues;
 		}
 
 		public @NonNull EAttribute getEAttribute() {
 			return eAttribute;
 		}
 
-		public @NonNull Set<@NonNull EnumerationValue> getEnumerationValues() {
+		public @NonNull EnumerationValue @NonNull [] getEnumerationValues() {
 			return enumerationValues;
 		}
 
@@ -309,7 +299,7 @@ public class SerializationRule
 		return null;
 	}
 
-	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+	public @NonNull EnumerationValue @Nullable [] getEnumerationValues(@NonNull EAttribute eAttribute) {
 		if (eAttribute2enumerationValues != null) {
 			for (@NonNull EAttribute_EnumerationValues eAttributeData : eAttribute2enumerationValues) {
 				if (eAttributeData.getEAttribute() == eAttribute) {

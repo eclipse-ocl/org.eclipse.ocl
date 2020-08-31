@@ -47,11 +47,6 @@ public class DynamicSerializationRules
 		this.serializationRuleSegmentsLists = serializationRuleSegmentsLists;
 	}
 
-//	public DynamicSerializationRules(@NonNull EClass eClass2,
-//			@NonNull SerializationRule @NonNull [] serializationRules2) {
-		// TODO Auto-generated constructor stub
-//	}
-
 	public boolean allRulesNeedDefault(@NonNull EAttribute eAttribute) {
 		for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 			if (!serializationRuleSegmentsList.getSerializationRule().needsDefault(eAttribute)) {
@@ -163,12 +158,14 @@ public class DynamicSerializationRules
 		Set<@NonNull EnumerationValue> allEnumerationValues = null;
 		for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 			SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
-			Set<@NonNull EnumerationValue> enumerationValues = serializationRule.getEnumerationValues(eAttribute);
+			@NonNull EnumerationValue[] enumerationValues = serializationRule.getEnumerationValues(eAttribute);
 			if (enumerationValues != null) {
 				if (allEnumerationValues == null) {
 					allEnumerationValues = new HashSet<>();
 				}
-				allEnumerationValues.addAll(enumerationValues);
+				for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
+					allEnumerationValues.add(enumerationValue);
+				}
 			}
 		}
 		return allEnumerationValues;
