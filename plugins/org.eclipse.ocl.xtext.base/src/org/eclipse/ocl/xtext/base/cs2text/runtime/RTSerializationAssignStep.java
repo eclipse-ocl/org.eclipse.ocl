@@ -14,19 +14,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class RTSerializationAssignStep extends RTSerializationAbstractFeatureStep
 {
-	protected final @NonNull EnumerationValue enumerationValue;		// XXX @NonNull
-
-	@Deprecated
-	public RTSerializationAssignStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
-		super(variableIndex, eStructuralFeature);
-		this.enumerationValue = OthersEnumerationValue.INSTANCE;
-	}
+	protected final @NonNull EnumerationValue enumerationValue;
 
 	public RTSerializationAssignStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		super(variableIndex, eStructuralFeature);

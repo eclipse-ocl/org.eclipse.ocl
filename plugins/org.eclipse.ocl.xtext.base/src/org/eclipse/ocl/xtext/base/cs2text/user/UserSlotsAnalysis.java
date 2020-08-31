@@ -98,7 +98,7 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleValue parserRuleValue) {
+		public int asDiscriminated(@NonNull ParserRuleValue parserRuleValue) {
 			throw new IllegalStateException();
 		}
 
@@ -163,10 +163,10 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(/* XXX @Nullable*/ ParserRuleValue parserRuleValue) {
+		public int asDiscriminated(@NonNull ParserRuleValue parserRuleValue) {
 			Integer value = parserRuleValue2count.get(parserRuleValue);
-		//	return value != null ? value.intValue() : 0;			// XXX
-			return count;
+			return value != null ? value.intValue() : 0;			// XXX
+		//	return count;
 		}
 
 		@Override
@@ -229,7 +229,7 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(/* XXX @Nullable*/  ParserRuleValue parserRuleValue) {
+		public int asDiscriminated(@NonNull ParserRuleValue parserRuleValue) {
 			throw new IllegalStateException();
 		}
 
