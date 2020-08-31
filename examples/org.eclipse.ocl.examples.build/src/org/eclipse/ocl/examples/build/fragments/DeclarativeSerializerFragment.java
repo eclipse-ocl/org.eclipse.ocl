@@ -42,9 +42,9 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
@@ -416,9 +416,9 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			int i = 0;
 			for (@NonNull GrammarRuleVector grammarRuleVector : grammarRuleVectors2) {
 				if (i > 0) {
-					GrammarRuleVector prevIndexVector = grammarRuleVectors2.get(i-1);
-					if (!(grammarRuleVector.compareTo(prevIndexVector) > 0)) {
-						assert grammarRuleVector.compareTo(prevIndexVector) > 0;
+					GrammarRuleVector prevGrammarRuleVector = grammarRuleVectors2.get(i-1);
+					if (!(grammarRuleVector.compareTo(prevGrammarRuleVector) > 0)) {
+						assert grammarRuleVector.compareTo(prevGrammarRuleVector) > 0;
 					}
 				}
 				grammarRuleVector2id2.put(grammarRuleVector, "_" + i++);

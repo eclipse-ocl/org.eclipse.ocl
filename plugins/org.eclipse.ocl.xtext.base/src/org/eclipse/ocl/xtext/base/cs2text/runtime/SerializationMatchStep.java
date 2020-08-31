@@ -65,7 +65,7 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
-		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
+		public @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure() {
 			return cardinalitySolution.getChildClosure();
 		}
 
@@ -125,7 +125,7 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
-		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
+		public @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure() {
 			return cardinalitySolution.getChildClosure();
 		}
 
@@ -215,7 +215,7 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
-		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
+		public @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure() {
 			return Collections.emptySet();
 		}
 
@@ -368,7 +368,7 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
-		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
+		public @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure() {
 			return cardinalitySolution.getChildClosure();
 		}
 
@@ -400,7 +400,7 @@ public abstract class SerializationMatchStep
 	/**
 	 * Return all solutions to be evaluated.
 	 */
-	public abstract @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure();
+	public abstract @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure();
 
 	/**
 	 * Return true if this is an assignment step to cardinalityVariable.

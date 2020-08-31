@@ -18,7 +18,7 @@ import com.google.common.collect.Sets;
 
 public class GrammarRuleVectorTests extends XtextTestCase
 {
-	public void testIndexVector_Ctor() throws Exception {
+	public void testGrammarRuleVector_Ctor() throws Exception {
 		assertEquals(new GrammarRuleVector().toString(), "[]");
 		assertEquals(new GrammarRuleVector().setCapacity(5).toString(), "[]");
 		assertEquals(new GrammarRuleVector().set(5).toString(), "[5]");
@@ -35,11 +35,11 @@ public class GrammarRuleVectorTests extends XtextTestCase
 		assertEquals(new GrammarRuleVector().set(62).set(63).setAll(new GrammarRuleVector().setCapacity(200).set(64).set(62)).toString(), "[62,63,64]");
 	}
 
-	public void testIndexVector_CompareTo() throws Exception {
+	public void testGrammarRuleVector_CompareTo() throws Exception {
 		assertTrue(new GrammarRuleVector().set(64).compareTo(new GrammarRuleVector().set(63)) > 0);
 	}
 
-	public void testIndexVector_Equals() throws Exception {
+	public void testGrammarRuleVector_Equals() throws Exception {
 		assertTrue(new GrammarRuleVector().set(63).equals(new GrammarRuleVector().set(63)));
 		assertFalse(new GrammarRuleVector().set(63).set(64).equals(new GrammarRuleVector().set(64)));
 		assertTrue(new GrammarRuleVector().set(63).set(64).equals(new GrammarRuleVector().set(64).set(63)));
@@ -47,15 +47,15 @@ public class GrammarRuleVectorTests extends XtextTestCase
 		assertTrue(new GrammarRuleVector().setCapacity(256).set(63).set(64).equals(new GrammarRuleVector().set(64).set(63)));
 	}
 
-	public void testIndexVector_HashCode() throws Exception {
+	public void testGrammarRuleVector_HashCode() throws Exception {
 		assertEquals(Sets.newHashSet(new GrammarRuleVector().set(63).set(64), new GrammarRuleVector().setCapacity(256).set(64).set(63)).size(), 1);
 	}
 
-	public void testIndexVector_Iterable() throws Exception {
+	public void testGrammarRuleVector_Iterable() throws Exception {
 		assertEquals(Lists.newArrayList(new GrammarRuleVector().set(63).set(64)), Lists.newArrayList(63, 64));
 	}
 
-	public void testIndexVector_Test() throws Exception {
+	public void testGrammarRuleVector_Test() throws Exception {
 		GrammarRuleVector testValue = new GrammarRuleVector().set(62).set(63).setAll(new GrammarRuleVector().setCapacity(200).set(64).set(62));
 		assertFalse(testValue.test(0));
 		assertFalse(testValue.test(1));

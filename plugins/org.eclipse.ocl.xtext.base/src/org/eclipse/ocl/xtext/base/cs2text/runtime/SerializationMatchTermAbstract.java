@@ -28,7 +28,7 @@ public abstract class SerializationMatchTermAbstract implements SerializationMat
 	public abstract boolean equals(Object obj);
 
 	@Override
-	public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getChildClosure() {
+	public @NonNull Set<@NonNull SerializationMatchTerm> getChildClosure() {
 		return Collections.singleton(this);
 	}
 

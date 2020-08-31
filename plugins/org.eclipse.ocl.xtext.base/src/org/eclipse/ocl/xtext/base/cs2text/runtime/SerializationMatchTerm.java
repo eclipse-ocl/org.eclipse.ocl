@@ -33,7 +33,7 @@ public interface SerializationMatchTerm
 	/**
 	 * Return the closure of this and all child solutions.
 	 */
-	@NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getChildClosure();
+	@NonNull Set<@NonNull SerializationMatchTerm> getChildClosure();
 
 	/**
 	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.

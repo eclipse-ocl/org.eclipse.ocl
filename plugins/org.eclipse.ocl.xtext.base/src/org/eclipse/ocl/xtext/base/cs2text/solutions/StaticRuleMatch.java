@@ -30,8 +30,8 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermRuntime;
@@ -464,8 +464,8 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	@Override
 	protected @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
-		List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> matchStepsList = getSteps();
-		@NonNull SerializationMatchStep [] matchStepsArray = matchStepsList.toArray(new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep[matchStepsList.size()]);
+		List<@NonNull SerializationMatchStep> matchStepsList = getSteps();
+		@NonNull SerializationMatchStep [] matchStepsArray = matchStepsList.toArray(new @NonNull SerializationMatchStep[matchStepsList.size()]);
 		SerializationRule serializationRule = getSerializationRuleAnalysis().getRuntime();
 		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, serializationRule, matchStepsArray, serializationRule.getStaticSegments(), this);
 		slotsAnalysis.addDynamicRuleMatch(dynamicRuleMatch);

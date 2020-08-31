@@ -21,7 +21,7 @@ public abstract class SerializationMatchTermAbstractBinary extends Serialization
 {
 	protected final @NonNull SerializationMatchTerm left;
 	protected final @NonNull SerializationMatchTerm right;
-	private @Nullable Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> childClosure = null;
+	private @Nullable Set<@NonNull SerializationMatchTerm> childClosure = null;
 
 	public SerializationMatchTermAbstractBinary(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
 		this.left = left;
@@ -29,8 +29,8 @@ public abstract class SerializationMatchTermAbstractBinary extends Serialization
 	}
 
 	@Override
-	public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getChildClosure() {
-		Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> childClosure2 = childClosure;
+	public @NonNull Set<@NonNull SerializationMatchTerm> getChildClosure() {
+		Set<@NonNull SerializationMatchTerm> childClosure2 = childClosure;
 		if (childClosure2 == null) {
 			childClosure = childClosure2 = new HashSet<>();
 			childClosure2.add(this);

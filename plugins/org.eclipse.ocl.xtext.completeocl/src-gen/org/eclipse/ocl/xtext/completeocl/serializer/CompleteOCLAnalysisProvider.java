@@ -5525,8 +5525,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(68, GrammarCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(29, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(29, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(68, GrammarCardinality.ONE)
 					}
 				)
 			});
@@ -5927,8 +5927,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(68, GrammarCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(29, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(29, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(68, GrammarCardinality.ONE)
 					}
 				)
 			});
@@ -7083,10 +7083,10 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(58, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(56, GrammarCardinality.ZERO_OR_MORE),
 					new RuleIndex_MultiplicativeCardinality(54, GrammarCardinality.ZERO_OR_ONE),
-					new RuleIndex_MultiplicativeCardinality(57, GrammarCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(56, GrammarCardinality.ZERO_OR_MORE),
+					new RuleIndex_MultiplicativeCardinality(57, GrammarCardinality.ZERO_OR_MORE),
+					new RuleIndex_MultiplicativeCardinality(58, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -7151,8 +7151,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(68, GrammarCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(29, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(29, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(68, GrammarCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY,

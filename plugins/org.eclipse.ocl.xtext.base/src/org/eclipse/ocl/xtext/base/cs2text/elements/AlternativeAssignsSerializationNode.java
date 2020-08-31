@@ -36,7 +36,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 {
 	protected final @Nullable Iterable<@NonNull Keyword> keywords;
 	protected final @Nullable EnumerationValue enumerationValue;
-	protected final @NonNull Integer @Nullable [] calledRuleIndexes;			// Cannot use INdexVEctor since need to preseve declaration order
+	protected final @NonNull Integer @Nullable [] calledRuleIndexes;			// Cannot use GrammarRuleVector since need to preseve declaration order
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,

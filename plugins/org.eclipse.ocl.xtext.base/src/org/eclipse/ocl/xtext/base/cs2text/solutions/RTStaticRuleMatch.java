@@ -45,13 +45,13 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 	 *
 	 * Lazily populated as solutions found.
 	 */
-	protected final @NonNull Map<@NonNull Integer, org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> variableIndex2solution = new HashMap<>();
+	protected final @NonNull Map<@NonNull Integer, @NonNull SerializationMatchTerm> variableIndex2solution = new HashMap<>();
 
 	/**
 	 * The ordered sequence of assign/check instructions to evaluate at run-time to realize the computation of
 	 * each solution for its variable.
 	 */
-	protected final @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> steps = new ArrayList<>();
+	protected final @NonNull List<@NonNull SerializationMatchStep> steps = new ArrayList<>();
 
 	/**
 	 * Accumulate an additional cardinalitySolution expression for a cardinalityVariable.
@@ -141,7 +141,7 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		return null;
 	}
 
-	public @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> getSteps() {
+	public @NonNull List<@NonNull SerializationMatchStep> getSteps() {
 		return steps;
 	}
 

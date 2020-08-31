@@ -5303,7 +5303,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._124 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._125 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._95,
 			null,
@@ -5615,8 +5615,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(67, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(31, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(31, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(67, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -7811,10 +7811,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(64, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(62, GrammarCardinality.ZERO_OR_MORE),
 					new RuleIndex_MultiplicativeCardinality(63, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(60, GrammarCardinality.ZERO_OR_ONE)
+					new RuleIndex_MultiplicativeCardinality(60, GrammarCardinality.ZERO_OR_ONE),
+					new RuleIndex_MultiplicativeCardinality(62, GrammarCardinality.ZERO_OR_MORE),
+					new RuleIndex_MultiplicativeCardinality(64, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -8736,7 +8736,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._125 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._124 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._95,
 			null,

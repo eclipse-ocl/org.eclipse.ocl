@@ -55,8 +55,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.AbstractGrammarAnalysis;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -332,14 +332,14 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	} */
 
 	protected void analyzeSerializations(@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
-		Map<@NonNull SerializationRule, org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis> serializationRule2aserializationRuleAnalysis2 = serializationRule2aserializationRuleAnalysis;
+		Map<@NonNull SerializationRule, @NonNull SerializationRuleAnalysis> serializationRule2aserializationRuleAnalysis2 = serializationRule2aserializationRuleAnalysis;
 		assert serializationRule2aserializationRuleAnalysis2 == null;
 		serializationRule2aserializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2 = new HashMap<>();
-		Map<@NonNull EClass, @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis>> eClass2serializationRuleList = new HashMap<>();
+		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> eClass2serializationRuleList = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
 			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRuleAnalyses()) {
 				EClass eClass = serializationRule.getProducedEClass();
-				List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis> serializationRules = eClass2serializationRuleList.get(eClass);
+				List<@NonNull SerializationRuleAnalysis> serializationRules = eClass2serializationRuleList.get(eClass);
 				if (serializationRules == null) {
 					serializationRules = new ArrayList<>();
 					eClass2serializationRuleList.put(eClass, serializationRules);
@@ -349,9 +349,9 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				}
 			}
 		}
-		for (Map.Entry<@NonNull EClass, @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis>> entry : eClass2serializationRuleList.entrySet()) {
+		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> entry : eClass2serializationRuleList.entrySet()) {
 			EClass eClass = entry.getKey();
-			List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis> serializationRuleAnalyses = entry.getValue();
+			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = entry.getValue();
 			Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues(serializationRuleAnalyses);
 			@NonNull EReference_RuleIndexes[] eReferenceRuleIndexes = null;
 			if (eContainmentFeature2assignedTargetRuleValues != null) {
@@ -473,7 +473,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> getEContainmentFeature2assignedTargetRuleValues(
-			@NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis> serializationRules) {
+			@NonNull Iterable<@NonNull SerializationRuleAnalysis> serializationRules) {
 		Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> eContainmentFeature2assignedTargetRuleValues = null;
 		for (EReference eContainmentFeature : containment2assignmentAnalyses.keySet()) {	// FIXME this is needlessly broad
 			Set<@NonNull GrammarRuleValue> targetRuleValues = null;
@@ -651,7 +651,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		}
 		else if (analysisOrAnalyses != null) {
 			@SuppressWarnings("unchecked")
-			List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis> ruleAnalyses = (List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis>)analysisOrAnalyses;
+			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
 			for (@NonNull SerializationRuleAnalysis ruleAnalysis : ruleAnalyses) {
 				if (ruleAnalysis.getRootSerializationNode().semanticEquals(thatSerializationNode)) {
 					oldSerializationRuleAnalysis = ruleAnalysis;
@@ -666,14 +666,14 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			semanticHash2serializationAnalysisOrAnalyses.put(hashCode, serializationRuleAnalysis);
 		}
 		else if (analysisOrAnalyses instanceof SerializationNode) {
-			List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis> ruleAnalyses = new ArrayList<>();
+			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = new ArrayList<>();
 			ruleAnalyses.add((SerializationRuleAnalysis)analysisOrAnalyses);
 			ruleAnalyses.add(serializationRuleAnalysis);
 			semanticHash2serializationAnalysisOrAnalyses.put(hashCode, ruleAnalyses);
 		}
 		else {
 			@SuppressWarnings("unchecked")
-			List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis> ruleAnalyses = (List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis>)analysisOrAnalyses;
+			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
 			ruleAnalyses.add(serializationRuleAnalysis);
 		}
 		return serializationRuleAnalysis;

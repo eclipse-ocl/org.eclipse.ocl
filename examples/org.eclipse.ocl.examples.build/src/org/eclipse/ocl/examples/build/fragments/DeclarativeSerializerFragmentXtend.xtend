@@ -309,9 +309,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		 */
 		private class _GrammarRuleVectors
 		{
-			«FOR indexVector : getGrammarRuleVectorIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(GrammarRuleVector)» «getGrammarRuleVectorId(indexVector, false)» // «FOR index : indexVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»
-				= new «newTypeReference(GrammarRuleVector)»(«indexVector.toWordsString()»);
+			«FOR grammarRuleVector : getGrammarRuleVectorIterable(grammarAnalysis)»
+			private final @NonNull «newTypeReference(GrammarRuleVector)» «getGrammarRuleVectorId(grammarRuleVector, false)» // «FOR index : grammarRuleVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»
+				= new «newTypeReference(GrammarRuleVector)»(«grammarRuleVector.toWordsString()»);
 			«ENDFOR»
 		}
 		'''

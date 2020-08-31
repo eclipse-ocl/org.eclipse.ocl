@@ -31,7 +31,7 @@ import org.eclipse.xtext.conversion.ValueConverterException;
 public class SerializationStepAssigns extends SerializationStepAbstractFeature
 {
 	private @Nullable EnumerationValue enumerationValue;
-	private @NonNull Integer @Nullable [] calledRuleIndexes;	// Cannot use INdexVector since must preserve declaration order
+	private @NonNull Integer @Nullable [] calledRuleIndexes;	// Cannot use GrammarRuleVEctor since must preserve declaration order
 
 	public SerializationStepAssigns(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @Nullable EnumerationValue enumerationValue, @NonNull Integer @Nullable [] calledRuleIndexes) {
 		super(variableIndex, eStructuralFeature);

@@ -39,7 +39,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 {
 	protected final @NonNull EReference eReference;
 	protected final @NonNull ParserRuleValue parserRuleValue;
-	private @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue, @NonNull CardinalityExpression> parserRuleValue2cardinalityExpression = new HashMap<>();
+	private @NonNull Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> parserRuleValue2cardinalityExpression = new HashMap<>();
 
 	public EReferenceCardinalityExpression(@NonNull String name, /*@NonNull*/ EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
 		super(name);
@@ -51,7 +51,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 	@Override
 	public boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
-		for (Entry<org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue, @NonNull CardinalityExpression> entry : parserRuleValue2cardinalityExpression.entrySet()) {
+		for (Entry<@NonNull ParserRuleValue, @NonNull CardinalityExpression> entry : parserRuleValue2cardinalityExpression.entrySet()) {
 			ParserRuleValue value = entry.getKey();
 			CardinalityExpression nestedExpression = entry.getValue();
 			int requiredCount = nestedExpression.solve(dynamicRuleMatch);
@@ -92,7 +92,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		return parserRuleValue;
 	}
 
-	public @Nullable Map<org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue, @NonNull CardinalityExpression> getParserRuleValue2cardinalityExpression() {
+	public @Nullable Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> getParserRuleValue2cardinalityExpression() {
 		return parserRuleValue2cardinalityExpression;
 	}
 
