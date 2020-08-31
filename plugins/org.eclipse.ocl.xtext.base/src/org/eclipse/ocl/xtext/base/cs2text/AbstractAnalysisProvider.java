@@ -49,7 +49,7 @@ public abstract class AbstractAnalysisProvider implements AnalysisProvider
 	 *
 	 * (Better if an alternative API didn't need the CrossReference.)
 	 */
-	public @NonNull CrossReference getCrossReference(/*@NonNull*/ EReference assignedEReference, @NonNull String assignedRuleName) {	// XXX proxyURIs could be better
+	public @NonNull CrossReference getCrossReference(/*@NonNull*/ EReference assignedEReference, @NonNull String assignedRuleName) {
 		Map<@NonNull EReference, @NonNull Map<@NonNull String, @NonNull CrossReference>> eReference2ruleName2crossReference2 = eReference2ruleName2crossReference;
 		if (eReference2ruleName2crossReference2 == null) {
 			eReference2ruleName2crossReference = eReference2ruleName2crossReference2 = new HashMap<>();

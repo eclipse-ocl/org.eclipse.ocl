@@ -614,106 +614,6 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 //		return getEClassValue(eClass).getSerializationRules();
 //	}
 
-	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull SerializationRule serializationRule) {
-		assert serializationRule2aserializationRuleAnalysis != null;
-		return ClassUtil.nonNullState(serializationRule2aserializationRuleAnalysis.get(serializationRule));
-	}
-
-	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull ParserRuleValue ruleValue) {
-		return ruleValue.getSerializationRules();
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull EClassValue> getSortedProducedEClassValues() {
-		Iterable<@NonNull EClassValue> sortedProducedEClassValues2 = sortedProducedEClassValues;
-		if (sortedProducedEClassValues2 == null) {
-			sortedProducedEClassValues = sortedProducedEClassValues2 = super.getSortedProducedEClassValues();
-		}
-		return sortedProducedEClassValues2;
-	}
-
-	@Override
-	public @NonNull String toString() {
-		Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = this.rule2ruleAnalysis;
-	//	if (rule2ruleAnalysis == null) {
-	//		return "«not-ready»";
-	//	}
-		StringBuilder s = new StringBuilder();
-		s.append("Xtext production rule -> Xtext base rules <=> User EClass - User EStructuralFeatures");
-		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
-			s.append("\n  ");
-			s.append(abstractRuleAnalysis);
-			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {
-				ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)abstractRuleAnalysis;
-				s.append(" -");
-				Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = parserRuleAnalysis.getEFeature2assignmentAnalyses();
-				List<@NonNull EStructuralFeature> eFeatures = new ArrayList<>(eFeature2assignmentAnalyses.keySet());
-				Collections.sort(eFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-				boolean isFirstFeature = true;
-				for (@NonNull EStructuralFeature eFeature : eFeatures) {
-					if (isFirstFeature) {
-						s.append(" ");
-					}
-					else {
-						s.append(",");
-					}
-					List<@NonNull AssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eFeature);
-					assert assignmentAnalyses != null;
-					int size = assignmentAnalyses.size();
-					if (size != 1) {
-						s.append(size);
-						s.append("*");
-					}
-					s.append(eFeature.getName());
-					isFirstFeature = false;
-				}
-				//
-				if ("Base::TypeRefCS".equals(parserRuleAnalysis.getName())) {
-					getClass();		// XXX
-				}
-				for (@NonNull SerializationRuleAnalysis serializationRule : parserRuleAnalysis.getSerializationRuleAnalyses()) {
-		//		SerializationNode rootSerializationNode = parserRuleAnalysis.getR();
-		//		if (rootSerializationNode != null) {
-				//	s.append("\n");
-				//	StringUtil.appendIndentation(s, rootSerializationNode instanceof CompositeSerializationNode ? 1 : 2, "\t");
-				//	rootSerializationNode.toString(s, 2);
-				//	serializationRule.getPreSerializer();		// XXX redundant/lazy
-							StringUtil.appendIndentation(s, 2);
-							s.append("|& ");
-							serializationRule.toString(s, -1);
-						}
-					/*	s.append("\n");
-						StringUtil.appendIndentation(s, 2, "\t");
-						s.append("|& ");
-						requiredSlots.toString(s, 2); * /
-					} */
-		//		}
-			}
-		}
-/*		s.append("\n\nUser EClass <=> Active Xtext production rule(s)");
-		Map<@NonNull EClassifier, List<@NonNull XtextAbstractRuleAnalysis>> eClassifier2ruleAnalyses2 = eClassifier2ruleAnalyses;
-		assert eClassifier2ruleAnalyses2 != null;
-		List<@NonNull EClassifier> eClassifiers2 = new ArrayList<>(eClassifier2ruleAnalyses2.keySet());
-		Collections.sort(eClassifiers2, NameUtil.ENAMED_ELEMENT_COMPARATOR);
-		for (@NonNull EClassifier eClassifier : eClassifiers2) {
-			List<@NonNull XtextAbstractRuleAnalysis> parserRuleAnalyses2 = new ArrayList<>(eClassifier2ruleAnalyses2.get(eClassifier));
-		//	assert parserRuleAnalyses2 != null;
-			Collections.sort(parserRuleAnalyses2, NameUtil.NAMEABLE_COMPARATOR);
-			s.append("\n\t");;
-			s.append(eClassifier.getName());
-			s.append(" <=>");;
-			for (@NonNull XtextAbstractRuleAnalysis parserRuleAnalysis : parserRuleAnalyses2) {
-				s.append(" ");;
-				s.append(parserRuleAnalysis.getName());;
-			}
-		} */
-		s.append("\n\nUser EClass <=> Prioritized serialization rule(s)");
-		s.append(super.toString());
-		return s.toString();
-	}
-
-	private @NonNull Map<@NonNull Integer, @NonNull Object> semanticHash2serializationAnalysisOrAnalyses = new HashMap<>();
-
 	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull ParserRuleAnalysis parserRuleAnalysis, @NonNull SerializationNode thatSerializationNode) {
 		int hashCode = thatSerializationNode.semanticHashCode();
 		Object analysisOrAnalyses = semanticHash2serializationAnalysisOrAnalyses.get(hashCode);
@@ -751,5 +651,73 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			ruleAnalyses.add(serializationRuleAnalysis);
 		}
 		return serializationRuleAnalysis;
+	}
+
+	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull SerializationRule serializationRule) {
+		assert serializationRule2aserializationRuleAnalysis != null;
+		return ClassUtil.nonNullState(serializationRule2aserializationRuleAnalysis.get(serializationRule));
+	}
+
+	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull ParserRuleValue ruleValue) {
+		return ruleValue.getSerializationRules();
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull EClassValue> getSortedProducedEClassValues() {
+		Iterable<@NonNull EClassValue> sortedProducedEClassValues2 = sortedProducedEClassValues;
+		if (sortedProducedEClassValues2 == null) {
+			sortedProducedEClassValues = sortedProducedEClassValues2 = super.getSortedProducedEClassValues();
+		}
+		return sortedProducedEClassValues2;
+	}
+
+	private @NonNull Map<@NonNull Integer, @NonNull Object> semanticHash2serializationAnalysisOrAnalyses = new HashMap<>();
+
+	@Override
+	public @NonNull String toString() {
+		Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis = this.rule2ruleAnalysis;
+		StringBuilder s = new StringBuilder();
+		s.append("Xtext production rule -> Xtext base rules <=> User EClass - User EStructuralFeatures");
+		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
+			s.append("\n  ");
+			s.append(abstractRuleAnalysis);
+			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {
+				ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)abstractRuleAnalysis;
+				s.append(" -");
+				Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = parserRuleAnalysis.getEFeature2assignmentAnalyses();
+				List<@NonNull EStructuralFeature> eFeatures = new ArrayList<>(eFeature2assignmentAnalyses.keySet());
+				Collections.sort(eFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+				boolean isFirstFeature = true;
+				for (@NonNull EStructuralFeature eFeature : eFeatures) {
+					if (isFirstFeature) {
+						s.append(" ");
+					}
+					else {
+						s.append(",");
+					}
+					List<@NonNull AssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eFeature);
+					assert assignmentAnalyses != null;
+					int size = assignmentAnalyses.size();
+					if (size != 1) {
+						s.append(size);
+						s.append("*");
+					}
+					s.append(eFeature.getName());
+					isFirstFeature = false;
+				}
+				//
+				if ("Base::TypeRefCS".equals(parserRuleAnalysis.getName())) {
+					getClass();		// XXX
+				}
+				for (@NonNull SerializationRuleAnalysis serializationRule : parserRuleAnalysis.getSerializationRuleAnalyses()) {
+					StringUtil.appendIndentation(s, 2);
+					s.append("|& ");
+					serializationRule.toString(s, -1);
+				}
+			}
+		}
+		s.append("\n\nUser EClass <=> Prioritized serialization rule(s)");
+		s.append(super.toString());
+		return s.toString();
 	}
 }

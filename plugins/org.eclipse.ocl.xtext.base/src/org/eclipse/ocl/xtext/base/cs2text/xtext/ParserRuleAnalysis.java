@@ -252,7 +252,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			analyzeSerializations(rootSerializationNode, eReference2ruleAnalysisOrAnalyses);
 		}
 		/**
-		 * Father the EReferences for which any ParserRuleAnalyses conflict between distinct assignments.
+		 * Gather the EReferences for which any ParserRuleAnalyses conflict between distinct assignments.
 		 */
 		for (Map.Entry<@NonNull EReference, @NonNull Object> entry : eReference2ruleAnalysisOrAnalyses.entrySet()) {
 			EReference eReference = entry.getKey();
