@@ -85,7 +85,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append(assignmentAnalysis.getGrammarAnalysis().getRuleValue(calledRuleIndex).getRuleName());
+	//	s.append(assignmentAnalysis.getGrammarAnalysis().getRuleValue(calledRuleIndex).getRuleName());
+		s.append(calledRuleIndex);
 		appendCardinality(s, depth);
 	}
 }

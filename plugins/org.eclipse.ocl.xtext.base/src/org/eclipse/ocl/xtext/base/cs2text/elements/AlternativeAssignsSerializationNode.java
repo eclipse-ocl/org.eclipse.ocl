@@ -120,7 +120,8 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 				if (!isFirst) {
 					s.append("|");
 				}
-				s.append(grammarAnalysis.getRuleValue(calledRuleIndex).getName());
+			//	s.append(grammarAnalysis.getRuleValue(calledRuleIndex).getName());
+				s.append(calledRuleIndex);
 				isFirst = false;
 			}
 		}

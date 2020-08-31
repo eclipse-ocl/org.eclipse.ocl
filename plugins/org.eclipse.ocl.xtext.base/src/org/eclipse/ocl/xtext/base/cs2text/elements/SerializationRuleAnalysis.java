@@ -120,11 +120,11 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		if (ruleIndexes != null) {
 			for (@NonNull Integer ruleIndex : ruleIndexes) {
 				@NonNull AbstractRuleAnalysis ruleAnalysis2 = ruleAnalysis.getGrammarAnalysis().getRuleAnalysis(ruleIndex);
-				assert (ruleAnalysis2 instanceof ParserRuleAnalysis);//{
+				if (ruleAnalysis2 instanceof ParserRuleAnalysis) {
 					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis2);
 					MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 					ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis2, newMultiplicativeCardinality);
-			//	}
+				}
 			}
 		}
 	}
@@ -299,15 +299,18 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		else if (serializationNode instanceof AlternativeAssignsSerializationNode) {
 			AlternativeAssignsSerializationNode assignsSerializationNode = (AlternativeAssignsSerializationNode)serializationNode;
-			EAttribute eAttribute = (EAttribute)assignsSerializationNode.getEStructuralFeature();
-			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
-			if (enumerationValues == null) {
-				enumerationValues = new HashSet<>();
-				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
-			}
-			EnumerationValue enumerationValue = assignsSerializationNode.getEnumerationValue();
-			if (enumerationValue != null) {
-				enumerationValues.add(enumerationValue);
+			EStructuralFeature eStructuralFeature = assignsSerializationNode.getEStructuralFeature();
+			if (eStructuralFeature instanceof EAttribute) {
+				EAttribute eAttribute = (EAttribute)eStructuralFeature;
+				EnumerationValue enumerationValue = assignsSerializationNode.getEnumerationValue();
+				if (enumerationValue != null) {
+					Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+					if (enumerationValues == null) {
+						enumerationValues = new HashSet<>();
+						eAttribute2enumerationValues.put(eAttribute, enumerationValues);
+					}
+					enumerationValues.add(enumerationValue);
+				}
 			}
 		}
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {

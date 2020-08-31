@@ -69,6 +69,7 @@ import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue
 import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignsStep
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -673,6 +674,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		RTSerializationAssignStep: return generateSerializationTerm_Assign(serializationStep)
 		RTSerializationAssignedRuleCallStep: return generateSerializationTerm_AssignedRuleCall(serializationStep)
 		RTSerializationAssignedRuleCallsStep: return generateSerializationTerm_AssignedRuleCalls(serializationStep)
+		RTSerializationAssignsStep: return generateSerializationTerm_AssignsStep(serializationStep)
 		RTSerializationCrossReferenceStep: return generateSerializationTerm_CrossReference(serializationStep)
 		RTSerializationLiteralStep: return generateSerializationTerm_Literal(serializationStep)
 		RTSerializationSequenceStep: return generateSerializationTerm_Sequence(serializationStep)
@@ -693,6 +695,13 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	protected def generateSerializationTerm_AssignedRuleCalls(RTSerializationAssignedRuleCallsStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationAssignedRuleCallsStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
 							= new «newTypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», «getIndexVectorId(serializationStep.getCalledRuleIndexes(), true)» /* «FOR calledRuleIndex : serializationStep.getCalledRuleIndexes() SEPARATOR ', '»«grammarAnalysis.getRuleValue(calledRuleIndex).getName()»«ENDFOR» */)'''
+	}
+	
+	protected def generateSerializationTerm_AssignsStep(RTSerializationAssignsStep serializationStep) {
+		var enumerationValue = serializationStep.getEnumerationValue();
+		var calledRuleIndexes = serializationStep.getCalledRuleIndexes();
+		'''private final @NonNull «newTypeReference(RTSerializationAssignsStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
+							= new «newTypeReference(RTSerializationAssignsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», «IF enumerationValue !== null»«getEnumValueId(enumerationValue, true)»«ELSE»null«ENDIF», «IF calledRuleIndexes !== null»new @NonNull Integer [] { «FOR calledRuleIndex : calledRuleIndexes SEPARATOR ','»«calledRuleIndex»/*«grammarAnalysis.getRuleValue(calledRuleIndex).getName()»*/«ENDFOR»}«ELSE»null«ENDIF»)'''
 	}
 
 	protected def generateSerializationTerm_CrossReference(RTSerializationCrossReferenceStep serializationStep) {

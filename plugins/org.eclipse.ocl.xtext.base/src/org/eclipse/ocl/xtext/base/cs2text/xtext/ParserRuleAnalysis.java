@@ -351,10 +351,10 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			}
 		}
 		else {
-			String string = serializationNode.toString();
-			if (string.contains("name='Map'")) {
-				getClass();		// XXX
-			}
+		//	String string = serializationNode.toString();
+		//	if (string.contains("name='Map'")) {
+		//		getClass();		// XXX
+		//	}
 			SerializationRuleAnalysis serializationRuleAnalysis = new SerializationRuleAnalysis(this, serializationNode);
 			serializationRuleAnalyses.add(serializationRuleAnalysis);
 		}
