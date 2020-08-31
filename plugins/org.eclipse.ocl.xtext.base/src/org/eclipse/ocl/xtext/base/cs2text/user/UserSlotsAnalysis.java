@@ -46,7 +46,7 @@ public class UserSlotsAnalysis
 		/**
 		 * Return the number of ruleAnalysis slot elements for an DiscriminatedSlotAnalysis or throw an IllegalStateException otherwose.
 		 */
-		int asDiscriminated(/* XXX @Nullable*/ ParserRuleValue parserRuleValue);
+		int asDiscriminated(@NonNull ParserRuleValue parserRuleValue);
 
 		/**
 		 * Return the number of enumerationValue slot elements for an EnmeratedSlotAnalysis or throw an IllegalStateException otherwose.
@@ -475,12 +475,6 @@ public class UserSlotsAnalysis
 		if (slotAnalysis.isCounted()) {
 			return slotAnalysis.asCounted();
 		}
-	//	else if (slotAnalysis.isEnumerated()) {
-	//		return slotAnalysis.asEnumerated(NullEnumerationValue.INSTANCE);
-	//	}
-		else if (slotAnalysis.isDiscriminated()) {
-			return slotAnalysis.asDiscriminated(null);		// XXX
-		}
 		else {
 			throw new UnsupportedOperationException();
 		}
@@ -497,9 +491,6 @@ public class UserSlotsAnalysis
 		else if (slotAnalysis.isEnumerated()) {
 			return slotAnalysis.asEnumerated(enumerationValue);
 		}
-		else if (slotAnalysis.isDiscriminated()) {
-			return slotAnalysis.asDiscriminated(null);		// XXX
-		}
 		else {
 			throw new UnsupportedOperationException();
 		}
@@ -513,11 +504,8 @@ public class UserSlotsAnalysis
 		if (slotAnalysis.isCounted()) {
 			return slotAnalysis.asCounted();
 		}
-		/*else if (slotAnalysis.isEnumerated()) {
-			return slotAnalysis.asEnumerated(enumerationValue);
-		}
-		else */if (slotAnalysis.isDiscriminated()) {
-			return slotAnalysis.asDiscriminated(parserRuleValue);		// XXX
+		if (slotAnalysis.isDiscriminated()) {
+			return slotAnalysis.asDiscriminated(parserRuleValue);
 		}
 		else {
 			throw new UnsupportedOperationException();

@@ -18,22 +18,19 @@ import java.io.Writer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
-import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.resource.SaveOptions;
-import org.eclipse.xtext.serializer.impl.Serializer;
+import org.eclipse.xtext.serializer.ISerializer;
+import org.eclipse.xtext.util.ReplaceRegion;
 
 import com.google.inject.Inject;
 
-public class DeclarativeSerializer extends Serializer
+public class DeclarativeSerializer implements ISerializer //extends Serializer
 {
 	@Inject
 	private @NonNull UserModelAnalysis modelAnalysis;
 
 	@Inject
 	private @NonNull SerializationBuilder serializationBuilder;
-
-	@Inject
-	private IGrammarAccess grammarAccess;
 
 	@Override
 	public void serialize(EObject obj, Writer writer, SaveOptions options) throws IOException {
@@ -44,11 +41,20 @@ public class DeclarativeSerializer extends Serializer
 	//	String s1 = grammarAnalysis.toString();
 	//	System.out.println(s1);
 	//	System.out.println("\n");
+		//
+		//	Analyze each eleemnt of the user model to determine the serialization rules.
+		//
 		modelAnalysis.analyze(obj);
 	//	String s2 = modelAnalysis.toString();
 	//	System.out.println(s2);
+		//
+		//	Serialize the user model tree as a (virtual) String concatenation to the serializationBuilder.
+		//
 		modelAnalysis.serialize(serializationBuilder, obj, null);
-		System.out.println(modelAnalysis.diagnose());
+	//	System.out.println(modelAnalysis.diagnose());
+		//
+		//	Render (virtual) String concatenation as a pure string for output.
+		//
 		String s3 = serializationBuilder.toString();
 	//	System.out.println(s3);
 		writer.append(s3);
@@ -56,5 +62,20 @@ public class DeclarativeSerializer extends Serializer
 		if (serializationBuilder.hasErrors()) {
 			serializationBuilder.throwErrors();
 		}
+	}
+
+	@Override
+	public String serialize(EObject obj) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String serialize(EObject obj, SaveOptions options) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ReplaceRegion serializeReplacement(EObject obj, SaveOptions options) {
+		throw new UnsupportedOperationException();
 	}
 }
