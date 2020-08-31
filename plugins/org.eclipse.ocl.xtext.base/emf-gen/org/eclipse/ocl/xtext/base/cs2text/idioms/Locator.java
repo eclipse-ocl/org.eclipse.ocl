@@ -12,7 +12,7 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->

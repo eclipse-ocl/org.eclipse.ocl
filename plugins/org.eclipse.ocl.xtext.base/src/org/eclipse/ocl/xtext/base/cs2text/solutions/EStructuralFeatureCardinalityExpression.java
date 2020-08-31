@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEStructuralFeatureSize;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -46,8 +47,8 @@ public class EStructuralFeatureCardinalityExpression extends AbstractCardinality
 	}
 
 	@Override
-	protected @NonNull EStructuralFeatureSizeCardinalitySolution createSizeCardinalitySolution() {
-		return new EStructuralFeatureSizeCardinalitySolution(eStructuralFeature);
+	protected @NonNull SerializationMatchTermEStructuralFeatureSize createSizeCardinalitySolution() {
+		return new SerializationMatchTermEStructuralFeatureSize(eStructuralFeature);
 	}
 
 	@Override

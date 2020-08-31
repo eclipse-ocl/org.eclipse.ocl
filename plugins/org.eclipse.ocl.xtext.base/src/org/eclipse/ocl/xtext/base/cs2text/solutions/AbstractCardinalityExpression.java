@@ -17,6 +17,13 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermDivide;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermGreaterThan;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermMultiply;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermVariable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 
@@ -65,8 +72,8 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 			for (@NonNull Integer cardinalityVariable : intersection) {
 				if (mayBeMany /*|| !cardinalityVariable.mayBeMany()*/) {
 				//	assert cardinalityVariable.mayBeNone();
-					CardinalitySolution solution = createSizeCardinalitySolution();
-					solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
+					SerializationMatchTerm solution = createSizeCardinalitySolution();
+					solution = new SerializationMatchTermGreaterThan(solution, new SerializationMatchTermInteger(0));
 					ruleMatch.addSolution(cardinalityVariable, solution);
 					return true;
 				}
@@ -249,15 +256,15 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 			for (@NonNull CardinalityVariable variable : products) {
 				if (ruleMatch.basicGetSolution(variable) == null) {
 					if (products != manyProducts) {
-						ruleMatch.addSolution(variable.getIndex(), new IntegerCardinalitySolution(0));
+						ruleMatch.addSolution(variable.getIndex(), new SerializationMatchTermInteger(0));
 					}
 					else if (variable == manyVariable) {
-						CardinalitySolution solution = createSizeCardinalitySolution();
+						SerializationMatchTerm solution = createSizeCardinalitySolution();
 						ruleMatch.addSolution(variable.getIndex(), solution);
 					}
 					else {
-						CardinalitySolution solution = createSizeCardinalitySolution();
-						solution = new GreaterThanCardinalitySolution(solution, new IntegerCardinalitySolution(0));
+						SerializationMatchTerm solution = createSizeCardinalitySolution();
+						solution = new SerializationMatchTermGreaterThan(solution, new SerializationMatchTermInteger(0));
 						ruleMatch.addSolution(variable.getIndex(), solution);
 					}
 				}
@@ -352,7 +359,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 				}
 			}
 		}
-		CardinalitySolution resultsSolution = createSolution(ruleMatch, trivialVariable, mayBeMany);
+		SerializationMatchTerm resultsSolution = createSolution(ruleMatch, trivialVariable, mayBeMany);
 		ruleMatch.addSolution(trivialVariable, resultsSolution);
 		return true;
 	}
@@ -446,7 +453,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		return (intersection != null) && !intersection.isEmpty() ? intersection : null;
 	}
 
-	protected abstract @NonNull CardinalitySolution createSizeCardinalitySolution();
+	protected abstract @NonNull SerializationMatchTerm createSizeCardinalitySolution();
 
 	/**
 	 * Create the solution for solvedVariable by inverting this expression, which is linear in in a non-null solvedVariable
@@ -459,7 +466,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	 *
 	 * If solved varable is null everything is known.
 	 */
-	public @NonNull CardinalitySolution createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable Integer solvedVariable, boolean mayBeMany) {
+	public @NonNull SerializationMatchTerm createSolution(@NonNull StaticRuleMatch ruleMatch, @Nullable Integer solvedVariable, boolean mayBeMany) {
 		//
 		// Determine slots = constantSumOfProducts + factorSumOfProducts * solvedVariable
 		//
@@ -507,23 +514,23 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		//	Convert the residual constantSumOfProducts, factorSumOfProducts to
 		//	solvedVariable = (slots - constantSumOfProducts) / factorSumOfProducts
 		//
-		CardinalitySolution resultSolution = createSizeCardinalitySolution();
+		SerializationMatchTerm resultSolution = createSizeCardinalitySolution();
 		for (@NonNull Iterable<@NonNull CardinalityVariable> constantProduct : constantSumOfProducts) {
-			CardinalitySolution sumSolution = null;
+			SerializationMatchTerm sumSolution = null;
 			for (@NonNull CardinalityVariable constantTerm : constantProduct) {
-				CardinalitySolution termSolution = new VariableCardinalitySolution(constantTerm.getIndex());
-				sumSolution = sumSolution != null ? new MultiplyCardinalitySolution(sumSolution, termSolution) : termSolution;
+				SerializationMatchTerm termSolution = new SerializationMatchTermVariable(constantTerm.getIndex());
+				sumSolution = sumSolution != null ? new SerializationMatchTermMultiply(sumSolution, termSolution) : termSolution;
 			}
-			resultSolution = new SubtractCardinalitySolution(resultSolution, sumSolution != null ? sumSolution : new IntegerCardinalitySolution(1));
+			resultSolution = new SerializationMatchTermSubtract(resultSolution, sumSolution != null ? sumSolution : new SerializationMatchTermInteger(1));
 		}
 		for (@NonNull Iterable<@NonNull CardinalityVariable> factorProduct : factorSumOfProducts) {
-			CardinalitySolution sumSolution = null;
+			SerializationMatchTerm sumSolution = null;
 			for (@NonNull CardinalityVariable factorTerm : factorProduct) {
-				CardinalitySolution termSolution = new VariableCardinalitySolution(factorTerm.getIndex());
-				sumSolution = sumSolution != null ? new MultiplyCardinalitySolution(sumSolution, termSolution) : termSolution;
+				SerializationMatchTerm termSolution = new SerializationMatchTermVariable(factorTerm.getIndex());
+				sumSolution = sumSolution != null ? new SerializationMatchTermMultiply(sumSolution, termSolution) : termSolution;
 			}
 			if (sumSolution != null) {
-				resultSolution = new DivideCardinalitySolution(resultSolution, sumSolution);
+				resultSolution = new SerializationMatchTermDivide(resultSolution, sumSolution);
 			}
 		}
 		return resultSolution;
@@ -557,7 +564,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	protected @Nullable List<@NonNull CardinalityVariable> getKnownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
 		List<@NonNull CardinalityVariable> knownVariables = null;
 		for (@NonNull CardinalityVariable variable : product) {
-			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+			SerializationMatchTerm solution = ruleMatch.basicGetSolution(variable);
 			if (solution != null) {
 				if (knownVariables == null) {
 					knownVariables = new ArrayList<>();
@@ -601,7 +608,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 		List<@NonNull Integer> unknownVariables = null;
 		for (@NonNull List<@NonNull CardinalityVariable> products : sumOfProducts) {
 			for (@NonNull CardinalityVariable variable : products) {
-				CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+				SerializationMatchTerm solution = ruleMatch.basicGetSolution(variable);
 				if (solution == null) {
 					if (unknownVariables == null) {
 						unknownVariables = new ArrayList<>();
@@ -620,7 +627,7 @@ public abstract class AbstractCardinalityExpression implements CardinalityExpres
 	public @Nullable List<@NonNull Integer> getUnknownVariables(@NonNull StaticRuleMatch ruleMatch, @NonNull Iterable<@NonNull CardinalityVariable> product) {
 		List<@NonNull Integer> unknownVariables = null;
 		for (@NonNull CardinalityVariable variable : product) {
-			CardinalitySolution solution = ruleMatch.basicGetSolution(variable);
+			SerializationMatchTerm solution = ruleMatch.basicGetSolution(variable);
 			if (solution == null) {
 				if (unknownVariables == null) {
 					unknownVariables = new ArrayList<>();

@@ -8,21 +8,23 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
 /**
  * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
  * expression determining the cardinality of a SerializationRule term.
  */
-public class EStructuralFeatureSizeCardinalitySolution extends AbstractCardinalitySolution
+public class SerializationMatchTermEStructuralFeatureSize extends SerializationMatchTermAbstract
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	public EStructuralFeatureSizeCardinalitySolution(/*@NonNull*/ EStructuralFeature eStructuralFeature) {
+	public SerializationMatchTermEStructuralFeatureSize(/*@NonNull*/ EStructuralFeature eStructuralFeature) {
 		assert eStructuralFeature != null;
 		this.eStructuralFeature = eStructuralFeature;
 	}
@@ -37,10 +39,10 @@ public class EStructuralFeatureSizeCardinalitySolution extends AbstractCardinali
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof EStructuralFeatureSizeCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermEStructuralFeatureSize)) {
 			return false;
 		}
-		EStructuralFeatureSizeCardinalitySolution that = (EStructuralFeatureSizeCardinalitySolution)obj;
+		SerializationMatchTermEStructuralFeatureSize that = (SerializationMatchTermEStructuralFeatureSize)obj;
 		if (this.eStructuralFeature != that.eStructuralFeature) return false;
 		return true;
 	}

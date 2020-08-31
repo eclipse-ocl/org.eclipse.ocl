@@ -16,7 +16,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-public class IndexVectorTests extends XtextTestCase
+public class GrammarRuleVectorTests extends XtextTestCase
 {
 	public void testIndexVector_Ctor() throws Exception {
 		assertEquals(new GrammarRuleVector().toString(), "[]");

@@ -8,14 +8,15 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 
-public class SubtractCardinalitySolution extends AbstractBinaryCardinalitySolution
+public class SerializationMatchTermAdd extends SerializationMatchTermAbstractBinary
 {
-	public SubtractCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+	public SerializationMatchTermAdd(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
 		super(left, right);
 	}
 
@@ -29,7 +30,7 @@ public class SubtractCardinalitySolution extends AbstractBinaryCardinalitySoluti
 		if (intRight == null) {
 			return null;
 		}
-		return intLeft - intRight;
+		return intLeft + intRight;
 	}
 
 	@Override
@@ -37,10 +38,10 @@ public class SubtractCardinalitySolution extends AbstractBinaryCardinalitySoluti
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof SubtractCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermAdd)) {
 			return false;
 		}
-		SubtractCardinalitySolution that = (SubtractCardinalitySolution) obj;
+		SerializationMatchTermAdd that = (SerializationMatchTermAdd) obj;
 		if (!this.left.equals(that.left)) return false;
 		if (!this.right.equals(that.right)) return false;
 		return true;
@@ -50,7 +51,7 @@ public class SubtractCardinalitySolution extends AbstractBinaryCardinalitySoluti
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("(");
 		left.toString(s, depth);
-		s.append(" - ");
+		s.append(" + ");
 		right.toString(s, depth);
 		s.append(")");
 	}

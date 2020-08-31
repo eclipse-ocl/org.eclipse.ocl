@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
@@ -27,10 +26,21 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_Assert;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_Assign;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_RuleCheck;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEStructuralFeatureSize;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermGreaterThan;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
@@ -45,16 +55,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepCrossReferenc
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assert;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assign;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 
 public class BaseAnalysisProvider extends AbstractAnalysisProvider
@@ -171,62 +171,62 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _MatchTerms
 	{
-		private final @NonNull CardinalitySolution _00 // 0
-			= new IntegerCardinalitySolution(0);
-		private final @NonNull CardinalitySolution _01 // 1
-			= new IntegerCardinalitySolution(1);
-		private final @NonNull CardinalitySolution _02 // |MultiplicityBoundsCS::lowerBound|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
-		private final @NonNull CardinalitySolution _03 // |MultiplicityBoundsCS::upperBound|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
-		private final @NonNull CardinalitySolution _04 // |MultiplicityCS::isNullFree.'|1'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, ev._1);
-		private final @NonNull CardinalitySolution _05 // |MultiplicityStringCS::stringBounds.'*|+|?'|
-			= new EAttributeSizeCardinalitySolution(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, ev._0);
-		private final @NonNull CardinalitySolution _06 // |NamedElementCS::name|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
-		private final @NonNull CardinalitySolution _07 // |PathElementCS::referredElement|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
-		private final @NonNull CardinalitySolution _08 // |PathNameCS::ownedPathElements|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
-		private final @NonNull CardinalitySolution _09 // |TemplateBindingCS::ownedMultiplicity|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
-		private final @NonNull CardinalitySolution _10 // |TemplateBindingCS::ownedSubstitutions|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
-		private final @NonNull CardinalitySolution _11 // |TemplateParameterSubstitutionCS::ownedActualParameter|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
-		private final @NonNull CardinalitySolution _12 // |TemplateSignatureCS::ownedParameters|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
-		private final @NonNull CardinalitySolution _13 // |TypeParameterCS::ownedExtends|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
-		private final @NonNull CardinalitySolution _14 // |TypedTypeRefCS::ownedBinding|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
-		private final @NonNull CardinalitySolution _15 // |TypedTypeRefCS::ownedPathName|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
-		private final @NonNull CardinalitySolution _16 // |WildcardTypeRefCS::ownedExtends|
-			= new EStructuralFeatureSizeCardinalitySolution(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
-		private final @NonNull CardinalitySolution _17 // (|MultiplicityBoundsCS::lowerBound| - 1)
-			= new SubtractCardinalitySolution(_02, _01);
-		private final @NonNull CardinalitySolution _18 // (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1)
-			= new SubtractCardinalitySolution(_05, _01);
-		private final @NonNull CardinalitySolution _19 // (|NamedElementCS::name| - 1)
-			= new SubtractCardinalitySolution(_06, _01);
-		private final @NonNull CardinalitySolution _20 // (|PathElementCS::referredElement| - 1)
-			= new SubtractCardinalitySolution(_07, _01);
-		private final @NonNull CardinalitySolution _21 // (|PathNameCS::ownedPathElements| - 1)
-			= new SubtractCardinalitySolution(_08, _01);
-		private final @NonNull CardinalitySolution _22 // (|TemplateBindingCS::ownedSubstitutions| - 1)
-			= new SubtractCardinalitySolution(_10, _01);
-		private final @NonNull CardinalitySolution _23 // (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1)
-			= new SubtractCardinalitySolution(_11, _01);
-		private final @NonNull CardinalitySolution _24 // (|TemplateSignatureCS::ownedParameters| - 1)
-			= new SubtractCardinalitySolution(_12, _01);
-		private final @NonNull CardinalitySolution _25 // (|TypeParameterCS::ownedExtends| - 1)
-			= new SubtractCardinalitySolution(_13, _01);
-		private final @NonNull CardinalitySolution _26 // (|TypeParameterCS::ownedExtends| > 0)
-			= new GreaterThanCardinalitySolution(_13, _00);
-		private final @NonNull CardinalitySolution _27 // (|TypedTypeRefCS::ownedPathName| - 1)
-			= new SubtractCardinalitySolution(_15, _01);
+		private final @NonNull SerializationMatchTerm _00 // 0
+			= new SerializationMatchTermInteger(0);
+		private final @NonNull SerializationMatchTerm _01 // 1
+			= new SerializationMatchTermInteger(1);
+		private final @NonNull SerializationMatchTerm _02 // |MultiplicityBoundsCS::lowerBound|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
+		private final @NonNull SerializationMatchTerm _03 // |MultiplicityBoundsCS::upperBound|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
+		private final @NonNull SerializationMatchTerm _04 // |MultiplicityCS::isNullFree.'|1'|
+			= new SerializationMatchTermEAttributeSize(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, ev._1);
+		private final @NonNull SerializationMatchTerm _05 // |MultiplicityStringCS::stringBounds.'*|+|?'|
+			= new SerializationMatchTermEAttributeSize(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, ev._0);
+		private final @NonNull SerializationMatchTerm _06 // |NamedElementCS::name|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		private final @NonNull SerializationMatchTerm _07 // |PathElementCS::referredElement|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
+		private final @NonNull SerializationMatchTerm _08 // |PathNameCS::ownedPathElements|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
+		private final @NonNull SerializationMatchTerm _09 // |TemplateBindingCS::ownedMultiplicity|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
+		private final @NonNull SerializationMatchTerm _10 // |TemplateBindingCS::ownedSubstitutions|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
+		private final @NonNull SerializationMatchTerm _11 // |TemplateParameterSubstitutionCS::ownedActualParameter|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
+		private final @NonNull SerializationMatchTerm _12 // |TemplateSignatureCS::ownedParameters|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
+		private final @NonNull SerializationMatchTerm _13 // |TypeParameterCS::ownedExtends|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
+		private final @NonNull SerializationMatchTerm _14 // |TypedTypeRefCS::ownedBinding|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
+		private final @NonNull SerializationMatchTerm _15 // |TypedTypeRefCS::ownedPathName|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
+		private final @NonNull SerializationMatchTerm _16 // |WildcardTypeRefCS::ownedExtends|
+			= new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
+		private final @NonNull SerializationMatchTerm _17 // (|MultiplicityBoundsCS::lowerBound| - 1)
+			= new SerializationMatchTermSubtract(_02, _01);
+		private final @NonNull SerializationMatchTerm _18 // (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1)
+			= new SerializationMatchTermSubtract(_05, _01);
+		private final @NonNull SerializationMatchTerm _19 // (|NamedElementCS::name| - 1)
+			= new SerializationMatchTermSubtract(_06, _01);
+		private final @NonNull SerializationMatchTerm _20 // (|PathElementCS::referredElement| - 1)
+			= new SerializationMatchTermSubtract(_07, _01);
+		private final @NonNull SerializationMatchTerm _21 // (|PathNameCS::ownedPathElements| - 1)
+			= new SerializationMatchTermSubtract(_08, _01);
+		private final @NonNull SerializationMatchTerm _22 // (|TemplateBindingCS::ownedSubstitutions| - 1)
+			= new SerializationMatchTermSubtract(_10, _01);
+		private final @NonNull SerializationMatchTerm _23 // (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1)
+			= new SerializationMatchTermSubtract(_11, _01);
+		private final @NonNull SerializationMatchTerm _24 // (|TemplateSignatureCS::ownedParameters| - 1)
+			= new SerializationMatchTermSubtract(_12, _01);
+		private final @NonNull SerializationMatchTerm _25 // (|TypeParameterCS::ownedExtends| - 1)
+			= new SerializationMatchTermSubtract(_13, _01);
+		private final @NonNull SerializationMatchTerm _26 // (|TypeParameterCS::ownedExtends| > 0)
+			= new SerializationMatchTermGreaterThan(_13, _00);
+		private final @NonNull SerializationMatchTerm _27 // (|TypedTypeRefCS::ownedPathName| - 1)
+			= new SerializationMatchTermSubtract(_15, _01);
 	}
 
 	/**
@@ -234,58 +234,58 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _MatchSteps
 	{
-		private final @NonNull CardinalitySolutionStep _00 // assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._17);
-		private final @NonNull CardinalitySolutionStep _01 // assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._18);
-		private final @NonNull CardinalitySolutionStep _02 // assert (|NamedElementCS::name| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._19);
-		private final @NonNull CardinalitySolutionStep _03 // assert (|PathElementCS::referredElement| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._20);
-		private final @NonNull CardinalitySolutionStep _04 // assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._23);
-		private final @NonNull CardinalitySolutionStep _05 // assert (|TypedTypeRefCS::ownedPathName| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._27);
-		private final @NonNull CardinalitySolutionStep _06 // assign V0 = (|PathNameCS::ownedPathElements| - 1)
-			= new CardinalitySolutionStep_Assign(0, mt._21);
-		private final @NonNull CardinalitySolutionStep _07 // assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1)
-			= new CardinalitySolutionStep_Assign(0, mt._22);
-		private final @NonNull CardinalitySolutionStep _08 // assign V0 = (|TemplateSignatureCS::ownedParameters| - 1)
-			= new CardinalitySolutionStep_Assign(0, mt._24);
-		private final @NonNull CardinalitySolutionStep _09 // assign V0 = (|TypeParameterCS::ownedExtends| > 0)
-			= new CardinalitySolutionStep_Assign(0, mt._26);
-		private final @NonNull CardinalitySolutionStep _10 // assign V0 = |MultiplicityBoundsCS::upperBound|
-			= new CardinalitySolutionStep_Assign(0, mt._03);
-		private final @NonNull CardinalitySolutionStep _11 // assign V0 = |MultiplicityCS::isNullFree.'|1'|
-			= new CardinalitySolutionStep_Assign(0, mt._04);
-		private final @NonNull CardinalitySolutionStep _12 // assign V0 = |TypedTypeRefCS::ownedBinding|
-			= new CardinalitySolutionStep_Assign(0, mt._14);
-		private final @NonNull CardinalitySolutionStep _13 // assign V0 = |WildcardTypeRefCS::ownedExtends|
-			= new CardinalitySolutionStep_Assign(0, mt._16);
-		private final @NonNull CardinalitySolutionStep _14 // assign V1 = (|TypeParameterCS::ownedExtends| - 1)
-			= new CardinalitySolutionStep_Assign(1, mt._25);
-		private final @NonNull CardinalitySolutionStep _15 // assign V1 = |MultiplicityCS::isNullFree.'|1'|
-			= new CardinalitySolutionStep_Assign(1, mt._04);
-		private final @NonNull CardinalitySolutionStep _16 // assign V1 = |TemplateBindingCS::ownedMultiplicity|
-			= new CardinalitySolutionStep_Assign(1, mt._09);
-		private final @NonNull CardinalitySolutionStep _17 // check-rule basecs::PathNameCS.ownedPathElements : 4|16
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, iv._1/*FirstPathElementCS|NextPathElementCS*/);
-		private final @NonNull CardinalitySolutionStep _18 // check-rule basecs::TemplateBindingCS.ownedMultiplicity : 13
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, iv._0/*MultiplicityCS*/);
-		private final @NonNull CardinalitySolutionStep _19 // check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, iv._4/*TemplateParameterSubstitutionCS*/);
-		private final @NonNull CardinalitySolutionStep _20 // check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 26
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, iv._6/*TypeRefCS*/);
-		private final @NonNull CardinalitySolutionStep _21 // check-rule basecs::TemplateSignatureCS.ownedParameters : 25
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, iv._5/*TypeParameterCS*/);
-		private final @NonNull CardinalitySolutionStep _22 // check-rule basecs::TypeParameterCS.ownedExtends : 27
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, iv._7/*TypedRefCS*/);
-		private final @NonNull CardinalitySolutionStep _23 // check-rule basecs::TypedTypeRefCS.ownedBinding : 22
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, iv._3/*TemplateBindingCS*/);
-		private final @NonNull CardinalitySolutionStep _24 // check-rule basecs::TypedTypeRefCS.ownedPathName : 17
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, iv._2/*PathNameCS*/);
-		private final @NonNull CardinalitySolutionStep _25 // check-rule basecs::WildcardTypeRefCS.ownedExtends : 27
-			= new CardinalitySolutionStep_RuleCheck(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, iv._7/*TypedRefCS*/);
+		private final @NonNull SerializationMatchStep _00 // assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0
+			= new MatchStep_Assert(mt._17);
+		private final @NonNull SerializationMatchStep _01 // assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0
+			= new MatchStep_Assert(mt._18);
+		private final @NonNull SerializationMatchStep _02 // assert (|NamedElementCS::name| - 1) == 0
+			= new MatchStep_Assert(mt._19);
+		private final @NonNull SerializationMatchStep _03 // assert (|PathElementCS::referredElement| - 1) == 0
+			= new MatchStep_Assert(mt._20);
+		private final @NonNull SerializationMatchStep _04 // assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0
+			= new MatchStep_Assert(mt._23);
+		private final @NonNull SerializationMatchStep _05 // assert (|TypedTypeRefCS::ownedPathName| - 1) == 0
+			= new MatchStep_Assert(mt._27);
+		private final @NonNull SerializationMatchStep _06 // assign V0 = (|PathNameCS::ownedPathElements| - 1)
+			= new MatchStep_Assign(0, mt._21);
+		private final @NonNull SerializationMatchStep _07 // assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1)
+			= new MatchStep_Assign(0, mt._22);
+		private final @NonNull SerializationMatchStep _08 // assign V0 = (|TemplateSignatureCS::ownedParameters| - 1)
+			= new MatchStep_Assign(0, mt._24);
+		private final @NonNull SerializationMatchStep _09 // assign V0 = (|TypeParameterCS::ownedExtends| > 0)
+			= new MatchStep_Assign(0, mt._26);
+		private final @NonNull SerializationMatchStep _10 // assign V0 = |MultiplicityBoundsCS::upperBound|
+			= new MatchStep_Assign(0, mt._03);
+		private final @NonNull SerializationMatchStep _11 // assign V0 = |MultiplicityCS::isNullFree.'|1'|
+			= new MatchStep_Assign(0, mt._04);
+		private final @NonNull SerializationMatchStep _12 // assign V0 = |TypedTypeRefCS::ownedBinding|
+			= new MatchStep_Assign(0, mt._14);
+		private final @NonNull SerializationMatchStep _13 // assign V0 = |WildcardTypeRefCS::ownedExtends|
+			= new MatchStep_Assign(0, mt._16);
+		private final @NonNull SerializationMatchStep _14 // assign V1 = (|TypeParameterCS::ownedExtends| - 1)
+			= new MatchStep_Assign(1, mt._25);
+		private final @NonNull SerializationMatchStep _15 // assign V1 = |MultiplicityCS::isNullFree.'|1'|
+			= new MatchStep_Assign(1, mt._04);
+		private final @NonNull SerializationMatchStep _16 // assign V1 = |TemplateBindingCS::ownedMultiplicity|
+			= new MatchStep_Assign(1, mt._09);
+		private final @NonNull SerializationMatchStep _17 // check-rule basecs::PathNameCS.ownedPathElements : 4|16
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, iv._1/*FirstPathElementCS|NextPathElementCS*/);
+		private final @NonNull SerializationMatchStep _18 // check-rule basecs::TemplateBindingCS.ownedMultiplicity : 13
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, iv._0/*MultiplicityCS*/);
+		private final @NonNull SerializationMatchStep _19 // check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, iv._4/*TemplateParameterSubstitutionCS*/);
+		private final @NonNull SerializationMatchStep _20 // check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 26
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, iv._6/*TypeRefCS*/);
+		private final @NonNull SerializationMatchStep _21 // check-rule basecs::TemplateSignatureCS.ownedParameters : 25
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, iv._5/*TypeParameterCS*/);
+		private final @NonNull SerializationMatchStep _22 // check-rule basecs::TypeParameterCS.ownedExtends : 27
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, iv._7/*TypedRefCS*/);
+		private final @NonNull SerializationMatchStep _23 // check-rule basecs::TypedTypeRefCS.ownedBinding : 22
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, iv._3/*TemplateBindingCS*/);
+		private final @NonNull SerializationMatchStep _24 // check-rule basecs::TypedTypeRefCS.ownedPathName : 17
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, iv._2/*PathNameCS*/);
+		private final @NonNull SerializationMatchStep _25 // check-rule basecs::WildcardTypeRefCS.ownedExtends : 27
+			= new MatchStep_RuleCheck(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, iv._7/*TypedRefCS*/);
 	}
 
 	/**
@@ -778,7 +778,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 	{
 		// Base::FirstPathElementCS : referredElement=UnrestrictedName
 		private @NonNull SerializationRule _00 = new SerializationRule(4,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._03 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -797,7 +797,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			});
 		// Base::MultiplicityBoundsCS : { lowerBound=LOWER { '..' upperBound=UPPER }[?] }
 		private @NonNull SerializationRule _01 = new SerializationRule(12,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._10 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._00 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
@@ -817,19 +817,19 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			null);
 		// Base::MultiplicityCS : { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] ']' }
 		private @NonNull SerializationRule _02 = new SerializationRule(13,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._10 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._00 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
@@ -851,19 +851,19 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			null);
 		// Base::MultiplicityCS : { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] '|?' ']' }
 		private @NonNull SerializationRule _03 = new SerializationRule(13,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._10 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._00 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
@@ -886,19 +886,19 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			null);
 		// Base::MultiplicityCS : { '[' lowerBound=LOWER { '..' upperBound=UPPER }[?] isNullFree='|1'[?] ']' }
 		private @NonNull SerializationRule _04 = new SerializationRule(13,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._15 /* assign V1 = |MultiplicityCS::isNullFree.'|1'| */,
 				ms._10 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._00 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
@@ -923,26 +923,26 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._1, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			null);
 		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} ']' }
 		private @NonNull SerializationRule _05 = new SerializationRule(13,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._01 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -961,14 +961,14 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(ev._0, GrammarCardinality.ONE)
 					}
 				)
 			},
 			null);
 		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} '|?' ']' }
 		private @NonNull SerializationRule _06 = new SerializationRule(13,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._01 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -988,14 +988,14 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(ev._0, GrammarCardinality.ONE)
 					}
 				)
 			},
 			null);
 		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' }
 		private @NonNull SerializationRule _07 = new SerializationRule(13,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._11 /* assign V0 = |MultiplicityCS::isNullFree.'|1'| */,
 				ms._01 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
@@ -1016,21 +1016,21 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(ev._0, GrammarCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._1, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			null);
 		// Base::MultiplicityStringCS : stringBounds={'*|+|?'}
 		private @NonNull SerializationRule _08 = new SerializationRule(14,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._01 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -1046,14 +1046,14 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(ev._0, GrammarCardinality.ONE)
 					}
 				)
 			},
 			null);
 		// Base::NextPathElementCS : referredElement=UnreservedName
 		private @NonNull SerializationRule _09 = new SerializationRule(16,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._03 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -1072,7 +1072,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			});
 		// Base::PathNameCS : { ownedPathElements+=FirstPathElementCS { '::' ownedPathElements+=NextPathElementCS }[*] }
 		private @NonNull SerializationRule _10 = new SerializationRule(17,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._17 /* check-rule basecs::PathNameCS.ownedPathElements : 4|16 */,
 				ms._06 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
@@ -1094,14 +1094,14 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(4, MultiplicativeCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(16, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(4, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(16, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Base::TemplateBindingCS : { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _11 = new SerializationRule(22,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._19 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23 */,
 				ms._18 /* check-rule basecs::TemplateBindingCS.ownedMultiplicity : 13 */,
 				ms._16 /* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
@@ -1126,20 +1126,20 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(23, MultiplicativeCardinality.ONE_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(23, GrammarCardinality.ONE_OR_MORE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			});
 		// Base::TemplateParameterSubstitutionCS : ownedActualParameter=TypeRefCS
 		private @NonNull SerializationRule _12 = new SerializationRule(23,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._20 /* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 26 */,
 				ms._04 /* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			},
@@ -1157,13 +1157,13 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(26, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(26, GrammarCardinality.ONE)
 					}
 				)
 			});
 		// Base::TemplateSignatureCS : { '(' ownedParameters+=TypeParameterCS { ',' ownedParameters+=TypeParameterCS }[*] ')' }
 		private @NonNull SerializationRule _13 = new SerializationRule(24,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._21 /* check-rule basecs::TemplateSignatureCS.ownedParameters : 25 */,
 				ms._08 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
@@ -1187,13 +1187,13 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(25, MultiplicativeCardinality.ONE_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(25, GrammarCardinality.ONE_OR_MORE)
 					}
 				)
 			});
 		// Base::TypeParameterCS : { name=UnrestrictedName { 'extends' ownedExtends+=TypedRefCS { '&&' ownedExtends+=TypedRefCS }[*] }[?] }
 		private @NonNull SerializationRule _14 = new SerializationRule(25,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._22 /* check-rule basecs::TypeParameterCS.ownedExtends : 27 */,
 				ms._02 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._09 /* assign V0 = (|TypeParameterCS::ownedExtends| > 0) */,
@@ -1221,20 +1221,20 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(27, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(27, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Base::TypedTypeRefCS : { ownedPathName=PathNameCS { '(' ownedBinding=TemplateBindingCS ')' }[?] }
 		private @NonNull SerializationRule _15 = new SerializationRule(28,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._24 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 17 */,
 				ms._23 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 22 */,
 				ms._12 /* assign V0 = |TypedTypeRefCS::ownedBinding| */,
@@ -1259,20 +1259,20 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(22, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(17, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(17, GrammarCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(22, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			});
 		// Base::WildcardTypeRefCS : { '?' { 'extends' ownedExtends=TypedRefCS }[?] }
 		private @NonNull SerializationRule _16 = new SerializationRule(34,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._25 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : 27 */,
 				ms._13 /* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			},
@@ -1294,7 +1294,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(27, MultiplicativeCardinality.ZERO_OR_ONE)
+					new RuleIndex_MultiplicativeCardinality(27, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			});
@@ -1334,7 +1334,6 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import MultiplicativeCardinality;
 //	import EnumerationValue;
 //	import MultipleEnumerationValue;
 //	import SingleEnumerationValue;
@@ -1344,10 +1343,21 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
+//	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;
 //	import ParserRuleValue;
 //	import SerializationGrammarAnalysis;
+//	import SerializationMatchStep;
+//	import MatchStep_Assert;
+//	import MatchStep_Assign;
+//	import MatchStep_RuleCheck;
+//	import SerializationMatchTerm;
+//	import SerializationMatchTermEAttributeSize;
+//	import SerializationMatchTermEStructuralFeatureSize;
+//	import SerializationMatchTermGreaterThan;
+//	import SerializationMatchTermInteger;
+//	import SerializationMatchTermSubtract;
 //	import SerializationRule;
 //	import EAttribute_EnumerationValue_MultiplicativeCardinality;
 //	import EAttribute_EnumerationValues;
@@ -1362,14 +1372,4 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 //	import SerializationStepLiteral;
 //	import SerializationStepSequence;
 //	import TerminalRuleValue;
-//	import CardinalitySolution;
-//	import EAttributeSizeCardinalitySolution;
-//	import EStructuralFeatureSizeCardinalitySolution;
-//	import GreaterThanCardinalitySolution;
-//	import IntegerCardinalitySolution;
-//	import SubtractCardinalitySolution;
-//	import CardinalitySolutionStep;
-//	import CardinalitySolutionStep_Assert;
-//	import CardinalitySolutionStep_Assign;
-//	import CardinalitySolutionStep_RuleCheck;
 //	import BaseCSPackage;

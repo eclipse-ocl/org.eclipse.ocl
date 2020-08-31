@@ -8,20 +8,21 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
-public class UnsupportedCardinalitySolution extends AbstractCardinalitySolution
+public class SerializationMatchTermUnsupported extends SerializationMatchTermAbstract
 {
-	public UnsupportedCardinalitySolution() {}
+	public SerializationMatchTermUnsupported() {}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof UnsupportedCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermUnsupported)) {
 			return false;
 		}
 		return true;

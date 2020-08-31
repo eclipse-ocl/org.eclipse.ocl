@@ -15,14 +15,15 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
 public abstract class AbstractSerializationNode extends AbstractSerializationElement implements SerializationNode
 {
-	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
+	protected final @NonNull GrammarCardinality multiplicativeCardinality;
 
-	protected AbstractSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	protected AbstractSerializationNode(@NonNull GrammarCardinality multiplicativeCardinality) {
 		this.multiplicativeCardinality = multiplicativeCardinality;
 	}
 
@@ -70,12 +71,12 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) { // is this needed ?
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) { // is this needed ?
 		return createFrozenSequence(compoundElement, multiplicativeCardinality, Collections.singletonList(this));
 	}
 
 	@Override
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
+	public @NonNull GrammarCardinality getMultiplicativeCardinality() {
 		return multiplicativeCardinality;
 	}
 
@@ -105,7 +106,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
 		if (this.multiplicativeCardinality.isZeroOrMore()) {
 			return this;
 		}

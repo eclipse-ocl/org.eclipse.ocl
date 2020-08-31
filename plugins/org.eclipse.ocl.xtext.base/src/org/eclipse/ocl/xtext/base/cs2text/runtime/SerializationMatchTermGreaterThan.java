@@ -8,32 +8,29 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 
-public class DivideCardinalitySolution extends AbstractBinaryCardinalitySolution
+public class SerializationMatchTermGreaterThan extends SerializationMatchTermAbstractBinary
 {
-	public DivideCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+	public SerializationMatchTermGreaterThan(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
 		super(left, right);
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-		Integer intRight = right.basicGetIntegerSolution(ruleMatch);
-		if ((intRight == null) || (intRight == 0)) {
-			return null;
-		}
 		Integer intLeft = left.basicGetIntegerSolution(ruleMatch);
 		if (intLeft == null) {
 			return null;
 		}
-		int result = Math.floorDiv(intLeft, intRight);
-		if (result * intRight != intLeft) {
+		Integer intRight = right.basicGetIntegerSolution(ruleMatch);
+		if (intRight == null) {
 			return null;
 		}
-		return result;
+		return intLeft > intRight ? 1 : 0;
 	}
 
 	@Override
@@ -41,19 +38,20 @@ public class DivideCardinalitySolution extends AbstractBinaryCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof DivideCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermGreaterThan)) {
 			return false;
 		}
-		DivideCardinalitySolution that = (DivideCardinalitySolution) obj;
+		SerializationMatchTermGreaterThan that = (SerializationMatchTermGreaterThan) obj;
 		if (!this.left.equals(that.left)) return false;
 		if (!this.right.equals(that.right)) return false;
 		return true;
 	}
+
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("(");
 		left.toString(s, depth);
-		s.append(" / ");
+		s.append(" > ");
 		right.toString(s, depth);
 		s.append(")");
 	}

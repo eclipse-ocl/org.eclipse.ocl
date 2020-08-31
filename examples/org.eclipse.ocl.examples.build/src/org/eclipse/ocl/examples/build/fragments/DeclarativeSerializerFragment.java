@@ -36,8 +36,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
@@ -46,15 +44,17 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignKeyword;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -107,8 +107,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @Nullable Map<@NonNull Integer, @NonNull String> grammarRuleValueIndex2ruleName = null;
 	private @Nullable Map<@NonNull GrammarRuleVector, @NonNull String> grammarRuleVector2id = null;
 	private @Nullable List<@NonNull GrammarRuleVector> grammarRuleVectors = null;
-	private @Nullable Map<@NonNull CardinalitySolutionStep, @NonNull String> matchStep2id = null;
-	private @Nullable Map<@NonNull CardinalitySolution, @NonNull String> matchTerm2id = null;
+	private @Nullable Map<@NonNull SerializationMatchStep, @NonNull String> matchStep2id = null;
+	private @Nullable Map<@NonNull SerializationMatchTerm, @NonNull String> matchTerm2id = null;
 	private @Nullable Map<@NonNull List<Segment>, @NonNull String> segments2id = null;
 	private @NonNull Map<@NonNull Segment [] [], @NonNull String> segmentsList2string = new HashMap<>();
 	private @NonNull Map<@NonNull String, @NonNull Segment [] []> segmentsListString2segmentsList = new HashMap<>();
@@ -162,18 +162,18 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return newTypeReference(genModelHelper.getQualifiedPackageInterfaceName(eStructuralFeature.getEContainingClass().getEPackage())) + ".Literals." + genModelHelper.getEcoreLiteralName(eStructuralFeature);
 	}
 
-	protected @NonNull String emitMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality.equals(MultiplicativeCardinality.ONE)) {
-			return newTypeReference(MultiplicativeCardinality.class) + ".ONE";
+	protected @NonNull String emitMultiplicativeCardinality(@NonNull GrammarCardinality multiplicativeCardinality) {
+		if (multiplicativeCardinality.equals(GrammarCardinality.ONE)) {
+			return newTypeReference(GrammarCardinality.class) + ".ONE";
 		}
-		else if (multiplicativeCardinality.equals(MultiplicativeCardinality.ZERO_OR_ONE)) {
-			return newTypeReference(MultiplicativeCardinality.class) + ".ZERO_OR_ONE";
+		else if (multiplicativeCardinality.equals(GrammarCardinality.ZERO_OR_ONE)) {
+			return newTypeReference(GrammarCardinality.class) + ".ZERO_OR_ONE";
 		}
-		else if (multiplicativeCardinality.equals(MultiplicativeCardinality.ZERO_OR_MORE)) {
-			return newTypeReference(MultiplicativeCardinality.class) + ".ZERO_OR_MORE";
+		else if (multiplicativeCardinality.equals(GrammarCardinality.ZERO_OR_MORE)) {
+			return newTypeReference(GrammarCardinality.class) + ".ZERO_OR_MORE";
 		}
-		else if (multiplicativeCardinality.equals(MultiplicativeCardinality.ONE_OR_MORE)) {
-			return newTypeReference(MultiplicativeCardinality.class) + ".ONE_OR_MORE";
+		else if (multiplicativeCardinality.equals(GrammarCardinality.ONE_OR_MORE)) {
+			return newTypeReference(GrammarCardinality.class) + ".ONE_OR_MORE";
 		}
 		return multiplicativeCardinality.toString();
 	}
@@ -285,10 +285,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
 				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
-				for (@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
-					for (@NonNull CardinalitySolution solution : solutionStep.getSolutionClosure()) {
-						if (solution instanceof EAttributeSizeCardinalitySolution) {
-							enumValue2id2.put(((EAttributeSizeCardinalitySolution)solution).getEnumerationValue(), "");
+				for (@NonNull SerializationMatchStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
+					for (@NonNull SerializationMatchTerm solution : solutionStep.getSolutionClosure()) {
+						if (solution instanceof SerializationMatchTermEAttributeSize) {
+							enumValue2id2.put(((SerializationMatchTermEAttributeSize)solution).getEnumerationValue(), "");
 						}
 					}
 				}
@@ -393,9 +393,9 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					}
 				}
 			}
-			for (@NonNull CardinalitySolutionStep matchStep : getMatchStepIterable(grammarAnalysis)) {
-				if (matchStep instanceof CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck) {
-					grammarRuleVector2id2.put(((CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck)matchStep).getRuleValueIndexes(), "");
+			for (@NonNull SerializationMatchStep matchStep : getMatchStepIterable(grammarAnalysis)) {
+				if (matchStep instanceof SerializationMatchStep.MatchStep_RuleCheck) {
+					grammarRuleVector2id2.put(((SerializationMatchStep.MatchStep_RuleCheck)matchStep).getRuleValueIndexes(), "");
 				}
 			}
 			for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
@@ -427,8 +427,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return grammarRuleVectors2;
 	}
 
-	protected @NonNull Iterable<@NonNull CardinalitySolutionStep> getMatchStepIterable(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull CardinalitySolutionStep, @NonNull String> matchStep2id2 = matchStep2id;
+	protected @NonNull Iterable<@NonNull SerializationMatchStep> getMatchStepIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull SerializationMatchStep, @NonNull String> matchStep2id2 = matchStep2id;
 		if (matchStep2id2 == null) {
 			matchStep2id = matchStep2id2 = new HashMap<>();
 		}
@@ -436,30 +436,30 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
 				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
-				for (@NonNull CardinalitySolutionStep matchStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
+				for (@NonNull SerializationMatchStep matchStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
 					matchStep2id2.put(matchStep, "");
 				}
 			}
 		}
-		List<@NonNull CardinalitySolutionStep> matchSteps = new ArrayList<>(matchStep2id2.keySet());
+		List<@NonNull SerializationMatchStep> matchSteps = new ArrayList<>(matchStep2id2.keySet());
 		Collections.sort(matchSteps, NameUtil.TO_STRING_COMPARATOR);
 		String formatString = "_" + getDigitsFormatString(matchSteps);
 		int i = 0;
-		for (@NonNull CardinalitySolutionStep matchStep : matchSteps) {
+		for (@NonNull SerializationMatchStep matchStep : matchSteps) {
 			matchStep2id2.put(matchStep, String.format(formatString, i++));
 		}
 		return matchSteps;
 	}
 
-	protected @NonNull String getMatchStepId(@NonNull CardinalitySolutionStep matchStep, boolean addQualifier) {
+	protected @NonNull String getMatchStepId(@NonNull SerializationMatchStep matchStep, boolean addQualifier) {
 		assert matchStep2id != null;
 		String id = matchStep2id.get(matchStep);
 		assert id != null;
 		return addQualifier ? "ms." + id : id;
 	}
 
-	protected @NonNull Iterable<@NonNull CardinalitySolution> getMatchTermIterable(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull CardinalitySolution, @NonNull String> matchTerm2id2 = matchTerm2id;
+	protected @NonNull Iterable<@NonNull SerializationMatchTerm> getMatchTermIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull SerializationMatchTerm, @NonNull String> matchTerm2id2 = matchTerm2id;
 		if (matchTerm2id2 == null) {
 			matchTerm2id = matchTerm2id2 = new HashMap<>();
 		}
@@ -467,18 +467,18 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			for(@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
 				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 				SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
-				for(@NonNull CardinalitySolutionStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
-					for (@NonNull CardinalitySolution matchTerm : solutionStep.getSolutionClosure()) {
+				for(@NonNull SerializationMatchStep solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps()) {
+					for (@NonNull SerializationMatchTerm matchTerm : solutionStep.getSolutionClosure()) {
 						matchTerm2id2.put(matchTerm, "");
 					}
 				}
 			}
 		}
-		List<@NonNull CardinalitySolution> matchTerms = new ArrayList<>(matchTerm2id2.keySet());
-		Collections.sort(matchTerms, new Comparator<@NonNull CardinalitySolution>()
+		List<@NonNull SerializationMatchTerm> matchTerms = new ArrayList<>(matchTerm2id2.keySet());
+		Collections.sort(matchTerms, new Comparator<@NonNull SerializationMatchTerm>()
 		{
 			@Override
-			public int compare(@NonNull CardinalitySolution o1, @NonNull CardinalitySolution o2) {
+			public int compare(@NonNull SerializationMatchTerm o1, @NonNull SerializationMatchTerm o2) {
 				int s1 = o1.getChildClosure().size();
 				int s2 = o2.getChildClosure().size();
 				if (s1 != s2) {
@@ -489,13 +489,13 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		});
 		String formatString = "_" + getDigitsFormatString(matchTerms);
 		int i = 0;
-		for (@NonNull CardinalitySolution matchTerm : matchTerms) {
+		for (@NonNull SerializationMatchTerm matchTerm : matchTerms) {
 			matchTerm2id2.put(matchTerm, String.format(formatString, i++));
 		}
 		return matchTerms;
 	}
 
-	protected @NonNull String getMatchTermId(@NonNull CardinalitySolution solutionStep, boolean addQualifier) {
+	protected @NonNull String getMatchTermId(@NonNull SerializationMatchTerm solutionStep, boolean addQualifier) {
 		assert matchTerm2id != null;
 		String id = matchTerm2id.get(solutionStep);
 		assert id != null;

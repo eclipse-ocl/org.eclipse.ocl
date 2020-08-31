@@ -27,14 +27,17 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermRuntime;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermUnsupported;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -83,7 +86,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	 * a product for assignedSerializationNode's cardinality variable and for all surrounding sequences in outerVariables.
 	 */
 	protected void analyzeAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> cardinalityVariables,
-			@NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
+			@NonNull GrammarCardinality netMultiplicativeCardinality) {
 		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 		//
 		//	Accumulate enumerated attributes
@@ -172,15 +175,15 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSerialization() {
-		analyzeSerialization(serializationRuleAnalysis.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
+		analyzeSerialization(serializationRuleAnalysis.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), GrammarCardinality.ONE);
 	}
-	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {
+	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull GrammarCardinality outerMultiplicativeCardinality) {
 		//
 		//	Allocate a CardinalityVariable for an indeterminate multiplicity.
 		//
 		CardinalityVariable cardinalityVariable = null;
 		if (!serializationNode.isRedundant()) {
-			MultiplicativeCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
+			GrammarCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
 			if (!multiplicativeCardinality.isOne()) {
 				int index = variable2node.size();
 				String name = String.format("C%02d", index);
@@ -195,8 +198,8 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 				assert old4 == null;
 			}
 		}
-		MultiplicativeCardinality innerMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-		MultiplicativeCardinality netMultiplicativeCardinality = MultiplicativeCardinality.max(innerMultiplicativeCardinality, outerMultiplicativeCardinality);
+		GrammarCardinality innerMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
+		GrammarCardinality netMultiplicativeCardinality = GrammarCardinality.max(innerMultiplicativeCardinality, outerMultiplicativeCardinality);
 		//
 		//	Create the feature size expressions for an assignment
 		//
@@ -337,7 +340,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 						// ok
 					}
 					else {
-						RuntimeCardinalitySolution runtimeSolution = new RuntimeCardinalitySolution(unsolvedVariableGroup, unresolvedExpressions);
+						SerializationMatchTermRuntime runtimeSolution = new SerializationMatchTermRuntime(unsolvedVariableGroup, unresolvedExpressions);
 						for (@NonNull Integer unresolvedVariable : unsolvedVariableGroup) {
 							addSolution(unresolvedVariable, runtimeSolution);
 						}
@@ -347,7 +350,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 					//
 					//	assign run-time search solution to remaining expressions.
 					//
-					RuntimeCardinalitySolution runtimeSolution = new RuntimeCardinalitySolution(unsolvedVariableGroup, unresolvedExpressions);
+					SerializationMatchTermRuntime runtimeSolution = new SerializationMatchTermRuntime(unsolvedVariableGroup, unresolvedExpressions);
 					for (@NonNull Integer unresolvedVariable : unsolvedVariableGroup) {
 						addSolution(unresolvedVariable, runtimeSolution);
 					}
@@ -362,10 +365,10 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 			assert !variable.isOne();
 			if (basicGetSolution(variable) == null) {
 				if (residualExpressions.isEmpty()) {
-					addSolution(variable.getIndex(), new IntegerCardinalitySolution(variable.mayBeNone() ? 0 : 1));
+					addSolution(variable.getIndex(), new SerializationMatchTermInteger(variable.mayBeNone() ? 0 : 1));
 				}
 				else {
-					addSolution(variable.getIndex(), new UnsupportedCardinalitySolution());
+					addSolution(variable.getIndex(), new SerializationMatchTermUnsupported());
 				}
 			}
 		}
@@ -461,8 +464,8 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	@Override
 	protected @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
-		List<@NonNull CardinalitySolutionStep> matchStepsList = getSteps();
-		@NonNull CardinalitySolutionStep [] matchStepsArray = matchStepsList.toArray(new @NonNull CardinalitySolutionStep[matchStepsList.size()]);
+		List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> matchStepsList = getSteps();
+		@NonNull SerializationMatchStep [] matchStepsArray = matchStepsList.toArray(new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep[matchStepsList.size()]);
 		SerializationRule serializationRule = getSerializationRuleAnalysis().getRuntime();
 		DynamicRuleMatch dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, serializationRule, matchStepsArray, serializationRule.getStaticSegments(), this);
 		slotsAnalysis.addDynamicRuleMatch(dynamicRuleMatch);
@@ -526,7 +529,7 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 			s.append(": ");
 			serializationNode.toString(s, -1);
 		}
-		for (CardinalitySolutionStep step : steps) {
+		for (SerializationMatchStep step : steps) {
 			StringUtil.appendIndentation(s, depth);
 			step.toString(s, depth+1);
 			s.append(";");

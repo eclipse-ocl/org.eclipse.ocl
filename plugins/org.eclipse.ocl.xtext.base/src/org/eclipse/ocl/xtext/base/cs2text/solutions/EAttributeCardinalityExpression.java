@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
@@ -62,8 +63,8 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 	}
 
 	@Override
-	protected @NonNull EAttributeSizeCardinalitySolution createSizeCardinalitySolution() {
-		return new EAttributeSizeCardinalitySolution(eAttribute, enumerationValue);
+	protected @NonNull SerializationMatchTermEAttributeSize createSizeCardinalitySolution() {
+		return new SerializationMatchTermEAttributeSize(eAttribute, enumerationValue);
 	}
 
 	@Override

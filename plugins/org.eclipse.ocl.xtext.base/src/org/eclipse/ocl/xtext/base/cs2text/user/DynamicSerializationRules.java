@@ -23,10 +23,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
@@ -99,7 +99,7 @@ public class DynamicSerializationRules
 			s.append(String.format("%-30.30s%8d", eStructuralFeature.getName(), size));
 			for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 				SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
-				MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature);
+				GrammarCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eStructuralFeature);
 				s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 			}
 			if (eStructuralFeature instanceof EAttribute) {
@@ -113,7 +113,7 @@ public class DynamicSerializationRules
 						s.append(String.format("\n %-29.29s%8d", "'" + enumerationValue.getName() + "'", size2));
 						for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 							SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
-							MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eAttribute, enumerationValue);
+							GrammarCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eAttribute, enumerationValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 						}
 					}
@@ -130,7 +130,7 @@ public class DynamicSerializationRules
 						s.append(String.format("\n %-29.29s%8d", "'" + ruleValue.getName() + "'", size2));
 						for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 							SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
-							MultiplicativeCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eReference, ruleValue);
+							GrammarCardinality multiplicativeCardinality = serializationRule.getMultiplicativeCardinality(eReference, ruleValue);
 							s.append(String.format("%4s", multiplicativeCardinality != null ? multiplicativeCardinality.toString() : "0"));
 						}
 					}

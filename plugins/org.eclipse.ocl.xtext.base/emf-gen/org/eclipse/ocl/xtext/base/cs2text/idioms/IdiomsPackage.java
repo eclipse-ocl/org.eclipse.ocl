@@ -272,7 +272,7 @@ public interface IdiomsPackage extends EPackage
 	 * The meta object id for the '<em>Serialization Rule Analysis</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
+	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationRuleAnalysis()
 	 * @generated
 	 */
@@ -792,11 +792,11 @@ public interface IdiomsPackage extends EPackage
 	EClass getValueSegment();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis <em>Serialization Rule Analysis</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis <em>Serialization Rule Analysis</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Serialization Rule Analysis</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
+	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
 	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis" serializeable="false"
 	 * @generated
 	 */
@@ -1278,7 +1278,7 @@ public interface IdiomsPackage extends EPackage
 		 * The meta object literal for the '<em>Serialization Rule Analysis</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
+		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
 		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationRuleAnalysis()
 		 * @generated
 		 */

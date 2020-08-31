@@ -8,28 +8,29 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 
-public class AddCardinalitySolution extends AbstractBinaryCardinalitySolution
+public class SerializationMatchTermMultiply extends SerializationMatchTermAbstractBinary
 {
-	public AddCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+	public SerializationMatchTermMultiply(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
 		super(left, right);
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
+		Integer intRight = right.basicGetIntegerSolution(ruleMatch);
+		if ((intRight == null) || (intRight == 0)) {
+			return null;
+		}
 		Integer intLeft = left.basicGetIntegerSolution(ruleMatch);
 		if (intLeft == null) {
 			return null;
 		}
-		Integer intRight = right.basicGetIntegerSolution(ruleMatch);
-		if (intRight == null) {
-			return null;
-		}
-		return intLeft + intRight;
+		return intLeft * intRight;
 	}
 
 	@Override
@@ -37,20 +38,19 @@ public class AddCardinalitySolution extends AbstractBinaryCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof AddCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermMultiply)) {
 			return false;
 		}
-		AddCardinalitySolution that = (AddCardinalitySolution) obj;
+		SerializationMatchTermMultiply that = (SerializationMatchTermMultiply) obj;
 		if (!this.left.equals(that.left)) return false;
 		if (!this.right.equals(that.right)) return false;
 		return true;
 	}
-
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("(");
 		left.toString(s, depth);
-		s.append(" + ");
+		s.append(" * ");
 		right.toString(s, depth);
 		s.append(")");
 	}

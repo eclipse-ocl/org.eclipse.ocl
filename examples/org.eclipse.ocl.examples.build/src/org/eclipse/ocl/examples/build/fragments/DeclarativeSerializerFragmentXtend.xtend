@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.jdt.annotation.NonNull
 import org.eclipse.jdt.annotation.Nullable
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue
@@ -39,18 +39,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality
-import org.eclipse.ocl.xtext.base.cs2text.solutions.AddCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.DivideCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EReferenceSizeCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.GreaterThanCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.MultiplyCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.solutions.VariableCardinalitySolution
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
@@ -69,6 +57,18 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermVariable
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermDivide
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermAdd
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermGreaterThan
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermMultiply
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEReferenceSize
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEStructuralFeatureSize
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -328,37 +328,37 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _MatchSteps
 		{
 			«FOR matchStep : getMatchStepIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(CardinalitySolutionStep)» «getMatchStepId(matchStep, false)» // «matchStep.toString()»
+			private final @NonNull «newTypeReference(SerializationMatchStep)» «getMatchStepId(matchStep, false)» // «matchStep.toString()»
 				= «generateMatchStep(matchStep)»;
 			«ENDFOR»
 		}
 		'''
 	}
 	
-	protected def generateMatchStep(CardinalitySolutionStep matchStep) {
+	protected def generateMatchStep(SerializationMatchStep matchStep) {
 		switch matchStep {
-		CardinalitySolutionStep.CardinalitySolutionStep_Assert: return generateMatchStep_Assert(matchStep)
-		CardinalitySolutionStep.CardinalitySolutionStep_Assign: return generateMatchStep_Assign(matchStep)
-		CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck: return generateMatchStep_RuleCheck(matchStep)
-		CardinalitySolutionStep.CardinalitySolutionStep_ValueCheck: return generateMatchStep_ValueCheck(matchStep)
+		SerializationMatchStep.MatchStep_Assert: return generateMatchStep_Assert(matchStep)
+		SerializationMatchStep.MatchStep_Assign: return generateMatchStep_Assign(matchStep)
+		SerializationMatchStep.MatchStep_RuleCheck: return generateMatchStep_RuleCheck(matchStep)
+		SerializationMatchStep.MatchStep_ValueCheck: return generateMatchStep_ValueCheck(matchStep)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateMatchStep_Assert(CardinalitySolutionStep.CardinalitySolutionStep_Assert matchStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.CardinalitySolutionStep_Assert)»(«getMatchTermId(matchStep.getCardinalitySolution(), true)»)'''
+	protected def generateMatchStep_Assert(SerializationMatchStep.MatchStep_Assert matchStep) {
+		'''new «newTypeReference(SerializationMatchStep.MatchStep_Assert)»(«getMatchTermId(matchStep.getCardinalitySolution(), true)»)'''
 	}
 	
-	protected def generateMatchStep_Assign(CardinalitySolutionStep.CardinalitySolutionStep_Assign matchStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.CardinalitySolutionStep_Assign)»(«matchStep.getVariableIndex()», «getMatchTermId(matchStep.getCardinalitySolution(), true)»)'''
+	protected def generateMatchStep_Assign(SerializationMatchStep.MatchStep_Assign matchStep) {
+		'''new «newTypeReference(SerializationMatchStep.MatchStep_Assign)»(«matchStep.getVariableIndex()», «getMatchTermId(matchStep.getCardinalitySolution(), true)»)'''
 	}
 	
-	protected def generateMatchStep_RuleCheck(CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck matchStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck)»(«emitLiteral(matchStep.getEReference())», «getGrammarRuleVectorId(matchStep.getRuleValueIndexes(), true)»/*«FOR index : matchStep.getRuleValueIndexes() SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/)'''
+	protected def generateMatchStep_RuleCheck(SerializationMatchStep.MatchStep_RuleCheck matchStep) {
+		'''new «newTypeReference(SerializationMatchStep.MatchStep_RuleCheck)»(«emitLiteral(matchStep.getEReference())», «getGrammarRuleVectorId(matchStep.getRuleValueIndexes(), true)»/*«FOR index : matchStep.getRuleValueIndexes() SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/)'''
 	}
 	
-	protected def generateMatchStep_ValueCheck(CardinalitySolutionStep.CardinalitySolutionStep_ValueCheck matchStep) {
-		'''new «newTypeReference(CardinalitySolutionStep.CardinalitySolutionStep_ValueCheck)»(«matchStep.getVariableIndex()», «getMatchTermId(matchStep.getCardinalitySolution(), true)»)'''
+	protected def generateMatchStep_ValueCheck(SerializationMatchStep.MatchStep_ValueCheck matchStep) {
+		'''new «newTypeReference(SerializationMatchStep.MatchStep_ValueCheck)»(«matchStep.getVariableIndex()», «getMatchTermId(matchStep.getCardinalitySolution(), true)»)'''
 	}
 	
 	/* ************************************************************************************************************************** */
@@ -371,67 +371,67 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _MatchTerms
 		{
 			«FOR matchTerm : getMatchTermIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(CardinalitySolution)» «getMatchTermId(matchTerm, false)» // «matchTerm.toString()»
+			private final @NonNull «newTypeReference(SerializationMatchTerm)» «getMatchTermId(matchTerm, false)» // «matchTerm.toString()»
 				= «generateMatchTerm(matchTerm)»;
 			«ENDFOR»
 		}
 		'''
 	}
 
-	protected def generateMatchTerm(CardinalitySolution matchTerm) {
+	protected def generateMatchTerm(SerializationMatchTerm matchTerm) {
 		switch matchTerm {
-		AddCardinalitySolution: return generateMatchTerm_AddCardinalitySolution(matchTerm)
-		DivideCardinalitySolution: return generateMatchTerm_DivideCardinalitySolution(matchTerm)
-		EAttributeSizeCardinalitySolution: return generateMatchTerm_EAttributeSizeCardinalitySolution(matchTerm)
-		EReferenceSizeCardinalitySolution: return generateMatchTerm_EReferenceSizeCardinalitySolution(matchTerm)
-		EStructuralFeatureSizeCardinalitySolution: return generateMatchTerm_EStructuralFeatureSizeCardinalitySolution(matchTerm)
-		GreaterThanCardinalitySolution: return generateMatchTerm_GreaterThanCardinalitySolution(matchTerm)
-		IntegerCardinalitySolution: return generateMatchTerm_IntegerSolution(matchTerm)
-		MultiplyCardinalitySolution: return generateMatchTerm_MultiplyCardinalitySolution(matchTerm)
-		SubtractCardinalitySolution: return generateMatchTerm_SubtractCardinalitySolution(matchTerm)
-		VariableCardinalitySolution: return generateMatchTerm_VariableCardinalitySolution(matchTerm)
+		SerializationMatchTermAdd: return generateMatchTerm_Add(matchTerm)
+		SerializationMatchTermDivide: return generateMatchTerm_Divide(matchTerm)
+		SerializationMatchTermEAttributeSize: return generateMatchTerm_EAttributeSize(matchTerm)
+		SerializationMatchTermEReferenceSize: return generateMatchTerm_EReferenceSize(matchTerm)
+		SerializationMatchTermEStructuralFeatureSize: return generateMatchTerm_EStructuralFeatureSize(matchTerm)
+		SerializationMatchTermGreaterThan: return generateMatchTerm_GreaterThan(matchTerm)
+		SerializationMatchTermInteger: return generateMatchTerm_IntegerSolution(matchTerm)
+		SerializationMatchTermMultiply: return generateMatchTerm_Multiply(matchTerm)
+		SerializationMatchTermSubtract: return generateMatchTerm_Subtract(matchTerm)
+		SerializationMatchTermVariable: return generateMatchTerm_Variable(matchTerm)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateMatchTerm_AddCardinalitySolution(AddCardinalitySolution matchTerm) {
-		'''new «newTypeReference(AddCardinalitySolution)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
+	protected def generateMatchTerm_Add(SerializationMatchTermAdd matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermAdd)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
 	}
 	
-	protected def generateMatchTerm_DivideCardinalitySolution(DivideCardinalitySolution matchTerm) {
-		'''new «newTypeReference(DivideCardinalitySolution)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
+	protected def generateMatchTerm_Divide(SerializationMatchTermDivide matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermDivide)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
 	}
 	
-	protected def generateMatchTerm_EAttributeSizeCardinalitySolution(EAttributeSizeCardinalitySolution matchTerm) {
-		'''new «newTypeReference(EAttributeSizeCardinalitySolution)»(«emitLiteral(matchTerm.getEAttribute())», «getEnumValueId(matchTerm.getEnumerationValue(), true)»)'''
+	protected def generateMatchTerm_EAttributeSize(SerializationMatchTermEAttributeSize matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermEAttributeSize)»(«emitLiteral(matchTerm.getEAttribute())», «getEnumValueId(matchTerm.getEnumerationValue(), true)»)'''
 	}
 	
-	protected def generateMatchTerm_EReferenceSizeCardinalitySolution(EReferenceSizeCardinalitySolution matchTerm) {
-		'''new «newTypeReference(EReferenceSizeCardinalitySolution)»(«emitLiteral(matchTerm.getEReference())», "«matchTerm.getParserRuleValue().getName()»")'''
+	protected def generateMatchTerm_EReferenceSize(SerializationMatchTermEReferenceSize matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermEReferenceSize)»(«emitLiteral(matchTerm.getEReference())», "«matchTerm.getParserRuleValue().getName()»")'''
 	}
 	
-	protected def generateMatchTerm_EStructuralFeatureSizeCardinalitySolution(EStructuralFeatureSizeCardinalitySolution matchTerm) {
-		'''new «newTypeReference(EStructuralFeatureSizeCardinalitySolution)»(«emitLiteral(matchTerm.getEStructuralFeature())»)'''
+	protected def generateMatchTerm_EStructuralFeatureSize(SerializationMatchTermEStructuralFeatureSize matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermEStructuralFeatureSize)»(«emitLiteral(matchTerm.getEStructuralFeature())»)'''
 	}
 	
-	protected def generateMatchTerm_GreaterThanCardinalitySolution(GreaterThanCardinalitySolution matchTerm) {
-		'''new «newTypeReference(GreaterThanCardinalitySolution)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
+	protected def generateMatchTerm_GreaterThan(SerializationMatchTermGreaterThan matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermGreaterThan)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
 	}
 	
-	protected def generateMatchTerm_IntegerSolution(IntegerCardinalitySolution matchTerm) {
-		'''new «newTypeReference(IntegerCardinalitySolution)»(«matchTerm.getValue()»)'''
+	protected def generateMatchTerm_IntegerSolution(SerializationMatchTermInteger matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermInteger)»(«matchTerm.getValue()»)'''
 	}
 	
-	protected def generateMatchTerm_MultiplyCardinalitySolution(MultiplyCardinalitySolution matchTerm) {
-		'''new «newTypeReference(MultiplyCardinalitySolution)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
+	protected def generateMatchTerm_Multiply(SerializationMatchTermMultiply matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermMultiply)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
 	}
 	
-	protected def generateMatchTerm_SubtractCardinalitySolution(SubtractCardinalitySolution matchTerm) {
-		'''new «newTypeReference(SubtractCardinalitySolution)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
+	protected def generateMatchTerm_Subtract(SerializationMatchTermSubtract matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermSubtract)»(«getMatchTermId(matchTerm.getLeft(), false)», «getMatchTermId(matchTerm.getRight(), false)»)'''
 	}
 	
-	protected def generateMatchTerm_VariableCardinalitySolution(VariableCardinalitySolution matchTerm) {
-		'''new «newTypeReference(VariableCardinalitySolution)»(«matchTerm.getVariableIndex()»)'''
+	protected def generateMatchTerm_Variable(SerializationMatchTermVariable matchTerm) {
+		'''new «newTypeReference(SerializationMatchTermVariable)»(«matchTerm.getVariableIndex()»)'''
 	}
 	
 	/* ************************************************************************************************************************** */	
@@ -457,7 +457,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 		// «serializationRuleAnalysis.getName()» : «serializationRule.toRuleString()»
 		private @NonNull «newTypeReference(SerializationRule)» «getSerializationRuleId(serializationRuleAnalysis.getRuntime(), false)» = new «newTypeReference(SerializationRule)»(«serializationRuleAnalysis.getRuleValueIndex()»,
-			new @NonNull «newTypeReference(CardinalitySolutionStep)» @NonNull [] {
+			new @NonNull «newTypeReference(SerializationMatchStep)» @NonNull [] {
 				«FOR solutionStep : serializationRuleAnalysis.getStaticRuleMatch().getSteps() SEPARATOR ','»
 				«getMatchStepId(solutionStep, true)» /* «solutionStep.toString()» */
 				«ENDFOR»

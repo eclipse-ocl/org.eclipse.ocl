@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -33,7 +34,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	private @Nullable SerializationStep runtime = null;
 	private @Nullable Integer semanticHashCode = null;
 
-	public AlternativeUnassignedKeywordsSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
+	public AlternativeUnassignedKeywordsSerializationNode(@NonNull GrammarCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
 		super(multiplicativeCardinality);
 		if (values != null) {
 			for (@NonNull String value : values) {
@@ -48,7 +49,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
 		return new AlternativeUnassignedKeywordsSerializationNode(multiplicativeCardinality, values);
 	}

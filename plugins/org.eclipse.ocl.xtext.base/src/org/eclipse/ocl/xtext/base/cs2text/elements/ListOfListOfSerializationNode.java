@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -130,11 +131,11 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 			assert listOfNodes.size() == 1;
 			newList.add(listOfNodes.get(0));
 		}
-		return new AlternativesSerializationNode(alternatives, MultiplicativeCardinality.toEnum(alternatives), newList);
+		return new AlternativesSerializationNode(alternatives, GrammarCardinality.toEnum(alternatives), newList);
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
 		List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
 			SerializationElement frozenSequence = createFrozenSequence(compoundElement, multiplicativeCardinality, listOfNodes);
@@ -171,7 +172,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 //	}
 
 	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality.isOne()) {
 			return this;
 		}

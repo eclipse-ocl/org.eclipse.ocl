@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,23 +17,24 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
+import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.
  * An expression may be assigned to or checked against some variable
  */
-public abstract class CardinalitySolutionStep
+public abstract class SerializationMatchStep
 {
 	/**
 	 * An Assert step requires a given expression to be zero-valued to allow the invoking DynamicRuleMatch to succeed.
 	 */
-	public static class CardinalitySolutionStep_Assert extends CardinalitySolutionStep
+	public static class MatchStep_Assert extends SerializationMatchStep
 	{
-		protected final @NonNull CardinalitySolution cardinalitySolution;
+		protected final @NonNull SerializationMatchTerm cardinalitySolution;
 
-		public CardinalitySolutionStep_Assert(@NonNull CardinalitySolution cardinalitySolution) {
+		public MatchStep_Assert(@NonNull SerializationMatchTerm cardinalitySolution) {
 			this.cardinalitySolution = cardinalitySolution;
 		}
 
@@ -42,10 +43,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof CardinalitySolutionStep_Assert)) {
+			if (!(obj instanceof MatchStep_Assert)) {
 				return false;
 			}
-			CardinalitySolutionStep_Assert that = (CardinalitySolutionStep_Assert)obj;
+			MatchStep_Assert that = (MatchStep_Assert)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution);
 		}
 
@@ -59,12 +60,12 @@ public abstract class CardinalitySolutionStep
 			return newIntegerSolution.equals(0);
 		}
 
-		public @NonNull CardinalitySolution getCardinalitySolution() {
+		public @NonNull SerializationMatchTerm getCardinalitySolution() {
 			return cardinalitySolution;
 		}
 
 		@Override
-		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
 			return cardinalitySolution.getChildClosure();
 		}
 
@@ -84,12 +85,12 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * An Assign step computes the value of a variable on behalf of the invoking DynamicRuleMatch.
 	 */
-	public static class CardinalitySolutionStep_Assign extends CardinalitySolutionStep
+	public static class MatchStep_Assign extends SerializationMatchStep
 	{
 		protected final int cardinalityVariableIndex;
-		protected final @NonNull CardinalitySolution cardinalitySolution;
+		protected final @NonNull SerializationMatchTerm cardinalitySolution;
 
-		public CardinalitySolutionStep_Assign(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
+		public MatchStep_Assign(int cardinalityVariableIndex, @NonNull SerializationMatchTerm cardinalitySolution) {
 			this.cardinalityVariableIndex = cardinalityVariableIndex;
 			this.cardinalitySolution = cardinalitySolution;
 		}
@@ -99,10 +100,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof CardinalitySolutionStep_Assign)) {
+			if (!(obj instanceof MatchStep_Assign)) {
 				return false;
 			}
-			CardinalitySolutionStep_Assign that = (CardinalitySolutionStep_Assign)obj;
+			MatchStep_Assign that = (MatchStep_Assign)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution)
 				&& (this.cardinalityVariableIndex == that.cardinalityVariableIndex);
 		}
@@ -119,12 +120,12 @@ public abstract class CardinalitySolutionStep
 			return true;
 		}
 
-		public @NonNull CardinalitySolution getCardinalitySolution() {
+		public @NonNull SerializationMatchTerm getCardinalitySolution() {
 			return cardinalitySolution;
 		}
 
 		@Override
-		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
 			return cardinalitySolution.getChildClosure();
 		}
 
@@ -154,12 +155,12 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * A RuleCheck step checks that a slot value conforms to a rule required by a rule assignment on behalf of the invoking DynamicRuleMatch=.
 	 */
-	public static class CardinalitySolutionStep_RuleCheck extends CardinalitySolutionStep
+	public static class MatchStep_RuleCheck extends SerializationMatchStep
 	{
 		protected final @NonNull EReference eReference;
 		protected final @NonNull GrammarRuleVector ruleValueIndexes;
 
-		public CardinalitySolutionStep_RuleCheck(/*@NonNull*/ EReference eReference, @NonNull GrammarRuleVector ruleValueIndexes) {
+		public MatchStep_RuleCheck(/*@NonNull*/ EReference eReference, @NonNull GrammarRuleVector ruleValueIndexes) {
 			assert eReference != null;
 			this.eReference = eReference;
 			this.ruleValueIndexes = ruleValueIndexes;
@@ -171,10 +172,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof CardinalitySolutionStep_RuleCheck)) {
+			if (!(obj instanceof MatchStep_RuleCheck)) {
 				return false;
 			}
-			CardinalitySolutionStep_RuleCheck that = (CardinalitySolutionStep_RuleCheck)obj;
+			MatchStep_RuleCheck that = (MatchStep_RuleCheck)obj;
 			return (this.eReference == that.eReference)
 				&& this.ruleValueIndexes.equals(that.ruleValueIndexes);
 		}
@@ -214,7 +215,7 @@ public abstract class CardinalitySolutionStep
 		}
 
 		@Override
-		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
 			return Collections.emptySet();
 		}
 
@@ -258,12 +259,12 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * A TypeCheck step checks that a slot value conforms to a type required by a rule assignment on behalf of the invoking DynamicRuleMatch=.
 	 *
-	public static class CardinalitySolutionStep_TypeCheck extends CardinalitySolutionStep
+	public static class MatchStep_TypeCheck extends CardinalitySolutionStep
 	{
 		protected final @NonNull EReference eReference;
 		protected final @NonNull Iterable<@NonNull EClass> eClasses;
 
-		public CardinalitySolutionStep_TypeCheck(@NonNull EReference eReference, @NonNull Iterable<@NonNull EClass> eClasses) {
+		public MatchStep_TypeCheck(@NonNull EReference eReference, @NonNull Iterable<@NonNull EClass> eClasses) {
 			this.eReference = eReference;
 			this.eClasses = eClasses;
 			assert Iterables.size(eClasses) >= 1;
@@ -328,12 +329,12 @@ public abstract class CardinalitySolutionStep
 	 * A ValueCheck step re-computes the value of a variable on behalf of the invoking DynamicRuleMatch and requires it to be
 	 * consistent with the previous computation.
 	 */
-	public static class CardinalitySolutionStep_ValueCheck extends CardinalitySolutionStep
+	public static class MatchStep_ValueCheck extends SerializationMatchStep
 	{
 		protected final int cardinalityVariableIndex;
-		protected final @NonNull CardinalitySolution cardinalitySolution;
+		protected final @NonNull SerializationMatchTerm cardinalitySolution;
 
-		public CardinalitySolutionStep_ValueCheck(int cardinalityVariableIndex, @NonNull CardinalitySolution cardinalitySolution) {
+		public MatchStep_ValueCheck(int cardinalityVariableIndex, @NonNull SerializationMatchTerm cardinalitySolution) {
 			this.cardinalityVariableIndex = cardinalityVariableIndex;
 			this.cardinalitySolution = cardinalitySolution;
 		}
@@ -343,10 +344,10 @@ public abstract class CardinalitySolutionStep
 			if (obj == this) {
 				return true;
 			}
-			if (!(obj instanceof CardinalitySolutionStep_ValueCheck)) {
+			if (!(obj instanceof MatchStep_ValueCheck)) {
 				return false;
 			}
-			CardinalitySolutionStep_ValueCheck that = (CardinalitySolutionStep_ValueCheck)obj;
+			MatchStep_ValueCheck that = (MatchStep_ValueCheck)obj;
 			return this.cardinalitySolution.equals(that.cardinalitySolution)
 				&& (this.cardinalityVariableIndex == that.cardinalityVariableIndex);
 		}
@@ -362,12 +363,12 @@ public abstract class CardinalitySolutionStep
 			return newIntegerSolution.equals(integer);
 		}
 
-		public @NonNull CardinalitySolution getCardinalitySolution() {
+		public @NonNull SerializationMatchTerm getCardinalitySolution() {
 			return cardinalitySolution;
 		}
 
 		@Override
-		public @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure() {
+		public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure() {
 			return cardinalitySolution.getChildClosure();
 		}
 
@@ -399,7 +400,7 @@ public abstract class CardinalitySolutionStep
 	/**
 	 * Return all solutions to be evaluated.
 	 */
-	public abstract @NonNull Set<@NonNull CardinalitySolution> getSolutionClosure();
+	public abstract @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getSolutionClosure();
 
 	/**
 	 * Return true if this is an assignment step to cardinalityVariable.

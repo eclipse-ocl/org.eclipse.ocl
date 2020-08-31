@@ -8,11 +8,13 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityExpression;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
-public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
+public class SerializationMatchTermRuntime extends SerializationMatchTermAbstract
 {
 //	protected final @NonNull CardinalityExpression cardinalityExpression;
 //	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
@@ -24,7 +26,7 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 //		this.unresolvedVariables = unresolvedVariables;
 //	}
 
-	public RuntimeCardinalitySolution(@NonNull Iterable<@NonNull Integer> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
+	public SerializationMatchTermRuntime(@NonNull Iterable<@NonNull Integer> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
 		this.unresolvedVariables = unresolvedVariables;
 		this.unresolvedExpressions = unresolvedExpressions;
 	}
@@ -34,10 +36,10 @@ public class RuntimeCardinalitySolution extends AbstractCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof RuntimeCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermRuntime)) {
 			return false;
 		}
-		RuntimeCardinalitySolution that = (RuntimeCardinalitySolution) obj;
+		SerializationMatchTermRuntime that = (SerializationMatchTermRuntime) obj;
 		return this.unresolvedVariables.equals(that.unresolvedVariables) && this.unresolvedExpressions.equals(that.unresolvedExpressions);
 	}
 

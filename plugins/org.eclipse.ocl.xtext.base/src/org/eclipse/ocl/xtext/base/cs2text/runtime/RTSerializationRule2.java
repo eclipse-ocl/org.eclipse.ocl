@@ -19,19 +19,17 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 
 public class RTSerializationRule2 extends SerializationRule
 {
 	public static @NonNull RTSerializationRule2 create(@NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
 		SerializationNode rootSerializationNode = serializationRuleAnalysis.getRootSerializationNode();
 		StaticRuleMatch staticRuleMatch = serializationRuleAnalysis.getStaticRuleMatch();
-		List<@NonNull CardinalitySolutionStep> solutionStepsList = staticRuleMatch.getSteps();
-		@NonNull CardinalitySolutionStep @NonNull [] solutionSteps = solutionStepsList.toArray(new @NonNull CardinalitySolutionStep[solutionStepsList.size()]);
+		List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> solutionStepsList = staticRuleMatch.getSteps();
+		@NonNull SerializationMatchStep @NonNull [] solutionSteps = solutionStepsList.toArray(new org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep[solutionStepsList.size()]);
 		List<@NonNull SerializationStep> stepsList = new ArrayList<>();
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms = serializationRuleAnalysis.getSerializationNode2subIdioms();
 		rootSerializationNode.gatherSteps(staticRuleMatch, stepsList);
@@ -62,10 +60,10 @@ public class RTSerializationRule2 extends SerializationRule
 
 
 
-	private static final @NonNull Map<@NonNull SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
+	private static final @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
 	private final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;
 
-	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull SerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
+	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull SerializationMatchStep @NonNull [] solutionSteps, @NonNull SerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
 			serializationRuleAnalysis.getStaticRuleMatch().basicGetNeedsDefaultEAttributes(),

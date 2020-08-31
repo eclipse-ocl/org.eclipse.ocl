@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 
 /**
  * A RuleMatch identifoes some common expression evaluation functionality for constant folding by the compile-time StaticRuleMatch
@@ -32,7 +33,7 @@ public interface RuleMatch
 	/**#
 	 * Return thevalue of ca rdinalityVariable which may be null if no solution approach resolved so far..
 	 */
-	@Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex);
+	@Nullable SerializationMatchTerm basicGetSolution(int cardinalityVariableIndex);
 
 	/**
 	 * Return the number of eAttribute slot elements in the user model element. For a non-NullEnumerationValue, the

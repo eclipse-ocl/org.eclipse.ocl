@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.elements;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,14 +29,17 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality;
@@ -45,7 +48,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationV
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
@@ -76,13 +78,13 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
 
 
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
 	 */
-	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> eReference2ruleAnalysis2multiplicativeCardinality = null;
 
 	private @Nullable SerializationRule runtime = null;
 
@@ -94,27 +96,27 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 	}
 
-	public void analyzeAssignment(@NonNull EAttribute eAttribute, @Nullable EnumerationValue enumerationValue, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
-		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+	public void analyzeAssignment(@NonNull EAttribute eAttribute, @Nullable EnumerationValue enumerationValue, @NonNull GrammarCardinality netMultiplicativeCardinality) {
+		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 		if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
 			eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
 		}
-		Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
+		Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
 		if (enumerationValue2multiplicativeCardinality == null) {
 			enumerationValue2multiplicativeCardinality = new HashMap<>();
 			eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
 		}
-		MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
-		MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
+		GrammarCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
+		GrammarCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 		enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
 	}
 
-	public void analyzeAssignment(@NonNull EReference eReference, @NonNull Integer @Nullable [] ruleIndexes, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
-		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
+	public void analyzeAssignment(@NonNull EReference eReference, @NonNull Integer @Nullable [] ruleIndexes, @NonNull GrammarCardinality netMultiplicativeCardinality) {
+		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 		if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 			eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
 		}
-		Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2.get(eReference);
+		Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2.get(eReference);
 		if (ruleAnalysis2multiplicativeCardinality == null) {
 			ruleAnalysis2multiplicativeCardinality = new HashMap<>();
 			eReference2ruleAnalysis2multiplicativeCardinality2.put(eReference, ruleAnalysis2multiplicativeCardinality);
@@ -123,21 +125,21 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			for (@NonNull Integer ruleIndex : ruleIndexes) {
 				@NonNull AbstractRuleAnalysis ruleAnalysis2 = ruleAnalysis.getGrammarAnalysis().getRuleAnalysis(ruleIndex);
 				if (ruleAnalysis2 instanceof ParserRuleAnalysis) {
-					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis2);
-					MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
+					GrammarCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis2);
+					GrammarCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
 					ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis2, newMultiplicativeCardinality);
 				}
 			}
 		}
 	}
 
-	public void analyzeSolution(@NonNull List<@NonNull CardinalitySolutionStep> steps) {
+	public void analyzeSolution(@NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> steps) {
 		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
+			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
 				EReference eReference = entry.getKey();
 				if (eReference.isContainment()) {
 					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();
-					steps.add(new CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck(eReference, new GrammarRuleVector(assignedRuleAnalyses)));
+					steps.add(new SerializationMatchStep.MatchStep_RuleCheck(eReference, new GrammarRuleVector(assignedRuleAnalyses)));
 				}
 			}
 		}
@@ -161,24 +163,23 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	}
 
 	public @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
-		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 		if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
 			return null;
 		}
 		@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] eAttribute2enumerationValue2multiplicativeCardinality = new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality[eAttribute2enumerationValue2multiplicativeCardinality2.size()];
 		int i1 = 0;
-		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> entry1 : eAttribute2enumerationValue2multiplicativeCardinality2.entrySet()) {
+		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> entry1 : eAttribute2enumerationValue2multiplicativeCardinality2.entrySet()) {
 			EAttribute eAttribute = entry1.getKey();
-			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> value = entry1.getValue();
+			Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> value = entry1.getValue();
 			@NonNull EnumerationValue_MultiplicativeCardinality [] enumerationValue_MultiplicativeCardinality = new @NonNull EnumerationValue_MultiplicativeCardinality [value.size()];
 			int i2 = 0;
-			for (Map.Entry<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> entry2 : value.entrySet()) {
+			for (Map.Entry<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> entry2 : value.entrySet()) {
 				EnumerationValue enumerationValue = entry2.getKey();
 				enumerationValue_MultiplicativeCardinality[i2++] = new EnumerationValue_MultiplicativeCardinality(enumerationValue, entry2.getValue());
 			}
 			eAttribute2enumerationValue2multiplicativeCardinality[i1++] = new EAttribute_EnumerationValue_MultiplicativeCardinality(eAttribute, enumerationValue_MultiplicativeCardinality);
 		}
-		Arrays.sort(eAttribute2enumerationValue2multiplicativeCardinality, NameUtil.NAMEABLE_COMPARATOR);
 		return eAttribute2enumerationValue2multiplicativeCardinality;
 	}
 //	public @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
@@ -187,25 +188,24 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 
 //	public @Nullable Map<@NonNull EReference, @NonNull Map<@Nullable Integer, @NonNull MultiplicativeCardinality>> basicGetEReference2ruleValueIndex2multiplicativeCardinality() {
 	public @NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] basicGetEReference2ruleValueIndex2multiplicativeCardinality() {
-		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
+		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 		if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 			return null;
 		}
 		@NonNull EReference_RuleIndex_MultiplicativeCardinality [] eReference2ruleValueIndex2multiplicativeCardinality = new @NonNull EReference_RuleIndex_MultiplicativeCardinality[eReference2ruleAnalysis2multiplicativeCardinality2.size()];
 		int i1 = 0;
-		for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry1 : eReference2ruleAnalysis2multiplicativeCardinality2.entrySet()) {
+		for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality>> entry1 : eReference2ruleAnalysis2multiplicativeCardinality2.entrySet()) {
 			EReference eReference = entry1.getKey();
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> value = entry1.getValue();
+			Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> value = entry1.getValue();
 			@NonNull RuleIndex_MultiplicativeCardinality [] ruleValueIndex2multiplicativeCardinality = new @NonNull RuleIndex_MultiplicativeCardinality [value.size()];
 			int i2 = 0;
-			for (Map.Entry<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> entry2 : value.entrySet()) {
+			for (Map.Entry<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> entry2 : value.entrySet()) {
 				ParserRuleAnalysis ruleAnalysis = entry2.getKey();
 				Integer ruleValueIndex = ruleAnalysis != null ? ruleAnalysis.getIndex() : null;
 				ruleValueIndex2multiplicativeCardinality[i2++] = new RuleIndex_MultiplicativeCardinality(ruleValueIndex, entry2.getValue());
 			}
 			eReference2ruleValueIndex2multiplicativeCardinality[i1++] = new EReference_RuleIndex_MultiplicativeCardinality(eReference, ruleValueIndex2multiplicativeCardinality);
 		}
-		Arrays.sort(eReference2ruleValueIndex2multiplicativeCardinality, NameUtil.NAMEABLE_COMPARATOR);
 		return eReference2ruleValueIndex2multiplicativeCardinality;
 	}
 
@@ -413,16 +413,16 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 	}
 
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
+	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		assert staticRuleMatch != null;
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
+			Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
 			if (enumerationValue2multiplicativeCardinality != null) {
 				return enumerationValue2multiplicativeCardinality.get(null);
 			}
 		}
 		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
+			Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eStructuralFeature);
 			if (ruleAnalysis2multiplicativeCardinality != null) {
 				return ruleAnalysis2multiplicativeCardinality.get(null);
 			}
@@ -430,10 +430,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return null;
 	}
 
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		assert staticRuleMatch != null;
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
+			Map<@Nullable EnumerationValue, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
 			if (enumerationValue2multiplicativeCardinality != null) {
 				return enumerationValue2multiplicativeCardinality.get(enumerationValue);
 			}
@@ -441,10 +441,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return null;
 	}
 
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
+	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		assert staticRuleMatch != null;
 		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
+			Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
 			if (ruleAnalysis2multiplicativeCardinality != null) {
 				return ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
 			}
@@ -452,10 +452,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return null;
 	}
 
-	public @Nullable MultiplicativeCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
+	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
 		assert staticRuleMatch != null;
 		if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
+			Map<@Nullable ParserRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality.get(eReference);
 			if (ruleAnalysis2multiplicativeCardinality != null) {
 				for (@Nullable ParserRuleAnalysis parserRuleAnalysis : ruleAnalysis2multiplicativeCardinality.keySet()) {
 					if ((parserRuleAnalysis != null) && (parserRuleAnalysis.getRuleValue() == ruleValue)) {
@@ -523,16 +523,13 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return staticRuleMatch2;
 	}
 
-///	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
-//		return getSerializationNode2subIdioms().get(serializationNode);
-//	}
+	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
+		return getSerializationNode2subIdioms().get(serializationNode);
+	}
 
 	public @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms() {
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
-			if ("OCLinEcore::InvariantConstraintCS".equals(getName())) {
-				getClass(); // XXX
-			}
 			assert staticRuleMatch != null;
 			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRuleAnalysis().getRuleAnalysis().getGrammarAnalysis().getIdioms();
 			//
@@ -559,7 +556,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return staticRuleMatch.getCardinalityVariables();
 	}
 
-	private @NonNull MultiplicativeCardinality refineMultiplicativeCardinality(@NonNull MultiplicativeCardinality netMultiplicativeCardinality, @Nullable MultiplicativeCardinality oldMultiplicativeCardinality) {
+	private @NonNull GrammarCardinality refineMultiplicativeCardinality(@NonNull GrammarCardinality netMultiplicativeCardinality, @Nullable GrammarCardinality oldMultiplicativeCardinality) {
 		if (oldMultiplicativeCardinality == null) {
 			return netMultiplicativeCardinality;
 		}
@@ -574,8 +571,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			newMayBeMany = true;
 		}
 		return newMayBeMany
-			? newMayBeZero ? MultiplicativeCardinality.ZERO_OR_MORE : MultiplicativeCardinality.ONE_OR_MORE
-			: newMayBeZero ? MultiplicativeCardinality.ZERO_OR_ONE : MultiplicativeCardinality.ONE;
+			? newMayBeZero ? GrammarCardinality.ZERO_OR_MORE : GrammarCardinality.ONE_OR_MORE
+			: newMayBeZero ? GrammarCardinality.ZERO_OR_ONE : GrammarCardinality.ONE;
 	}
 
 	protected @NonNull EClass refineProducedEClass(@NonNull SerializationNode serializationNode, @NonNull EClass producedEClass) {

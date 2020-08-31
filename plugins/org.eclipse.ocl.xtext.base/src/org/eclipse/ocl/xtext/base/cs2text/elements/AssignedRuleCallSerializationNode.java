@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignedRuleCall;
@@ -27,14 +28,14 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	protected final @NonNull Integer [] calledRuleIndexes;
 	private @Nullable Integer semanticHashCode = null;
 
-	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, int calledRuleIndex) {
+	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality multiplicativeCardinality, int calledRuleIndex) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleIndex = calledRuleIndex;
 		this.calledRuleIndexes = new @NonNull Integer[] { calledRuleIndex };
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
 		return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, calledRuleIndex);
 	}

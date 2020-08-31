@@ -8,15 +8,16 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 
-public abstract class AbstractCardinalitySolution implements CardinalitySolution
+public abstract class SerializationMatchTermAbstract implements SerializationMatchTerm
 {
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
@@ -27,7 +28,7 @@ public abstract class AbstractCardinalitySolution implements CardinalitySolution
 	public abstract boolean equals(Object obj);
 
 	@Override
-	public @NonNull Set<@NonNull CardinalitySolution> getChildClosure() {
+	public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getChildClosure() {
 		return Collections.singleton(this);
 	}
 

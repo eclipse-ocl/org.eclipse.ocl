@@ -24,7 +24,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
@@ -44,56 +45,56 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 	 *
 	 * Lazily populated as solutions found.
 	 */
-	protected final @NonNull Map<@NonNull Integer, @NonNull CardinalitySolution> variableIndex2solution = new HashMap<>();
+	protected final @NonNull Map<@NonNull Integer, org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> variableIndex2solution = new HashMap<>();
 
 	/**
 	 * The ordered sequence of assign/check instructions to evaluate at run-time to realize the computation of
 	 * each solution for its variable.
 	 */
-	protected final @NonNull List<@NonNull CardinalitySolutionStep> steps = new ArrayList<>();
+	protected final @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> steps = new ArrayList<>();
 
 	/**
 	 * Accumulate an additional cardinalitySolution expression for a cardinalityVariable.
 	 */
-	public void addSolution(@Nullable Integer cardinalityVariable, @NonNull CardinalitySolution cardinalitySolution) {
-		CardinalitySolutionStep newStep;
+	public void addSolution(@Nullable Integer cardinalityVariable, @NonNull SerializationMatchTerm cardinalitySolution) {
+		SerializationMatchStep newStep;
 		if (cardinalityVariable != null) {
 		//	assert !cardinalityVariable.isOne();
 			boolean isAssigned = true;
-			for (@NonNull CardinalitySolutionStep step : steps) {
+			for (@NonNull SerializationMatchStep step : steps) {
 				if (step.isAssignTo(cardinalityVariable)) {
 					isAssigned = false;
 					break;
 				}
 			}
 			if (isAssigned) {
-				newStep = new CardinalitySolutionStep.CardinalitySolutionStep_Assign(cardinalityVariable, cardinalitySolution);
+				newStep = new SerializationMatchStep.MatchStep_Assign(cardinalityVariable, cardinalitySolution);
 			//	variable2solution.put(cardinalityVariable, cardinalitySolution);
 				variableIndex2solution.put(cardinalityVariable, cardinalitySolution);
 			}
 			else {
-				newStep = new CardinalitySolutionStep.CardinalitySolutionStep_ValueCheck(cardinalityVariable, cardinalitySolution);
+				newStep = new SerializationMatchStep.MatchStep_ValueCheck(cardinalityVariable, cardinalitySolution);
 			}
 		}
 		else {
-			newStep = new CardinalitySolutionStep.CardinalitySolutionStep_Assert(cardinalitySolution);
+			newStep = new SerializationMatchStep.MatchStep_Assert(cardinalitySolution);
 		}
 		steps.add(newStep);
 	}
 
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
-		CardinalitySolution solution = variableIndex2solution.get(cardinalityVariableIndex);
+		SerializationMatchTerm solution = variableIndex2solution.get(cardinalityVariableIndex);
 		return solution != null ? solution.basicGetIntegerSolution(this) : null;
 	}
 
 	@Override
-	public @Nullable CardinalitySolution basicGetSolution(int cardinalityVariableIndex) {
+	public @Nullable SerializationMatchTerm basicGetSolution(int cardinalityVariableIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public @Nullable CardinalitySolution basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
+	public @Nullable SerializationMatchTerm basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
 		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
 
@@ -140,7 +141,7 @@ public abstract class RTStaticRuleMatch implements RuleMatch
 		return null;
 	}
 
-	public @NonNull List<@NonNull CardinalitySolutionStep> getSteps() {
+	public @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep> getSteps() {
 		return steps;
 	}
 

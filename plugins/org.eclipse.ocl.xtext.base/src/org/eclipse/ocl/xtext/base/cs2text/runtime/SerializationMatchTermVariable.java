@@ -8,20 +8,22 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
 /**
  * A VariableCardinalitySolution contributes the already computed value of a cardinality variable to an
  * expression determining the cardinality of a SerializationRule term.
  */
-public class VariableCardinalitySolution extends AbstractCardinalitySolution
+public class SerializationMatchTermVariable extends SerializationMatchTermAbstract
 {
 	protected final int cardinalityVariableIndex;
 
-	public VariableCardinalitySolution(int cardinalityVariableIndex) {
+	public SerializationMatchTermVariable(int cardinalityVariableIndex) {
 		this.cardinalityVariableIndex = cardinalityVariableIndex;
 	}
 
@@ -35,10 +37,10 @@ public class VariableCardinalitySolution extends AbstractCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof VariableCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermVariable)) {
 			return false;
 		}
-		VariableCardinalitySolution that = (VariableCardinalitySolution) obj;
+		SerializationMatchTermVariable that = (SerializationMatchTermVariable) obj;
 		return this.cardinalityVariableIndex == that.cardinalityVariableIndex;
 	}
 
@@ -53,13 +55,13 @@ public class VariableCardinalitySolution extends AbstractCardinalitySolution
 
 	@Override
 	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
-		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
+		SerializationMatchTerm solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
 		return solution != null ? solution.isConstant(ruleMatch) : false;
 	}
 
 	@Override
 	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
-		CardinalitySolution solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
+		SerializationMatchTerm solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
 		return solution != null ? solution.isKnown(ruleMatch) : false;
 	}
 

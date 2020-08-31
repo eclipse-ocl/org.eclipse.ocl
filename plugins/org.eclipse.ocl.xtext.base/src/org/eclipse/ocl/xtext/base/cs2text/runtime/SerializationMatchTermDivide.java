@@ -8,14 +8,15 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 
-public class MultiplyCardinalitySolution extends AbstractBinaryCardinalitySolution
+public class SerializationMatchTermDivide extends SerializationMatchTermAbstractBinary
 {
-	public MultiplyCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+	public SerializationMatchTermDivide(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
 		super(left, right);
 	}
 
@@ -29,7 +30,11 @@ public class MultiplyCardinalitySolution extends AbstractBinaryCardinalitySoluti
 		if (intLeft == null) {
 			return null;
 		}
-		return intLeft * intRight;
+		int result = Math.floorDiv(intLeft, intRight);
+		if (result * intRight != intLeft) {
+			return null;
+		}
+		return result;
 	}
 
 	@Override
@@ -37,10 +42,10 @@ public class MultiplyCardinalitySolution extends AbstractBinaryCardinalitySoluti
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof MultiplyCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermDivide)) {
 			return false;
 		}
-		MultiplyCardinalitySolution that = (MultiplyCardinalitySolution) obj;
+		SerializationMatchTermDivide that = (SerializationMatchTermDivide) obj;
 		if (!this.left.equals(that.left)) return false;
 		if (!this.right.equals(that.right)) return false;
 		return true;
@@ -49,7 +54,7 @@ public class MultiplyCardinalitySolution extends AbstractBinaryCardinalitySoluti
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append("(");
 		left.toString(s, depth);
-		s.append(" * ");
+		s.append(" / ");
 		right.toString(s, depth);
 		s.append(")");
 	}

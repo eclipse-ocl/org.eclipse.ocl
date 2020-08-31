@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns;
@@ -39,7 +40,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
-			@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull Keyword> keywords, @NonNull Integer @Nullable [] calledRuleIndexes) {
+			@NonNull GrammarCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull Keyword> keywords, @NonNull Integer @Nullable [] calledRuleIndexes) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.keywords = keywords;
 		this.enumerationValue = keywords != null ? assignmentAnalysis.getGrammarAnalysis().getEnumerationValue(keywords) : null;
@@ -47,7 +48,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
 		if (multiplicativeCardinality == null) {
 			multiplicativeCardinality = this.multiplicativeCardinality;
 		}

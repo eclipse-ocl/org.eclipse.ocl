@@ -8,15 +8,17 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
-public class IntegerCardinalitySolution extends AbstractCardinalitySolution
+public class SerializationMatchTermInteger extends SerializationMatchTermAbstract
 {
 	protected final int value;
 
-	public IntegerCardinalitySolution(int value) {
+	public SerializationMatchTermInteger(int value) {
 		this.value = value;
 	}
 
@@ -25,10 +27,10 @@ public class IntegerCardinalitySolution extends AbstractCardinalitySolution
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof IntegerCardinalitySolution)) {
+		if (!(obj instanceof SerializationMatchTermInteger)) {
 			return false;
 		}
-		IntegerCardinalitySolution that = (IntegerCardinalitySolution) obj;
+		SerializationMatchTermInteger that = (SerializationMatchTermInteger) obj;
 		if (this.value != that.value) return false;
 		return true;
 	}

@@ -13,8 +13,8 @@ package org.eclipse.ocl.xtext.base.cs2text.solutions;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 
 /**
  * A CardinalityVariable represents the unknown cardinality of a grammar term for which a constant value must be deduced prior
@@ -40,9 +40,9 @@ public class CardinalityVariable implements Nameable
 	/**
 	 * The possible cardinalities of the variable. ?/+/*. Unit variables are known/redundant and so excluded from computations.
 	 */
-	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
+	protected final @NonNull GrammarCardinality multiplicativeCardinality;
 
-	public CardinalityVariable(int index, @NonNull String name, @Nullable GrammarRuleVector ruleAnalyses, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public CardinalityVariable(int index, @NonNull String name, @Nullable GrammarRuleVector ruleAnalyses, @NonNull GrammarCardinality multiplicativeCardinality) {
 		this.index = index;
 		this.name = name;
 		this.ruleAnalyses = ruleAnalyses;

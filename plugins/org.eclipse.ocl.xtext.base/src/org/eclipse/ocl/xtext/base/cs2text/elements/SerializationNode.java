@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.xtext.CompoundElement;
@@ -25,12 +26,12 @@ public interface SerializationNode extends SerializationElement
 	 * with a changed multiplicativeCardinality. This accommodates the need to change the
 	 * multiplicity when flattening one-or-more alternatives and to avoid duplicates when flattening,
 	 */
-	@NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality);
+	@NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality);
 
 	/**
 	 * Return the (outer) configured multiplicative cardinality.
 	 */
-	@NonNull MultiplicativeCardinality getMultiplicativeCardinality();
+	@NonNull GrammarCardinality getMultiplicativeCardinality();
 
 	/**
 	 * Gather the runtime represetation of the nodes in steps.
@@ -64,5 +65,5 @@ public interface SerializationNode extends SerializationElement
 //	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
 	@Override
-	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality);
+	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality);
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.elements;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.AbstractElement;
@@ -16,14 +16,14 @@ import org.eclipse.xtext.AbstractElement;
 /**
  * MultiplicativeCardinality enacodes the alternative multiplicities in an Xtext grammar as an enumeration value.
  */
-public enum MultiplicativeCardinality
+public enum GrammarCardinality
 {
 	ONE("1", 0),
 	ZERO_OR_ONE("?", 1),
 	ZERO_OR_MORE("*", 3),
 	ONE_OR_MORE("+", 2);
 
-	public static @NonNull MultiplicativeCardinality toEnum(@NonNull AbstractElement abstractElement) {
+	public static @NonNull GrammarCardinality toEnum(@NonNull AbstractElement abstractElement) {
 		String cardinality = abstractElement.getCardinality();
 		if ("*".equals(cardinality)) {
 			return ZERO_OR_MORE;
@@ -45,7 +45,7 @@ public enum MultiplicativeCardinality
 		}
 	}
 
-	public static @NonNull MultiplicativeCardinality max(@NonNull MultiplicativeCardinality multiplicativeCardinality1, @NonNull MultiplicativeCardinality multiplicativeCardinality2) {
+	public static @NonNull GrammarCardinality max(@NonNull GrammarCardinality multiplicativeCardinality1, @NonNull GrammarCardinality multiplicativeCardinality2) {
 		int newState = multiplicativeCardinality1.state | multiplicativeCardinality2.state;
 		switch (newState) {
 			case 0: return ONE;
@@ -59,7 +59,7 @@ public enum MultiplicativeCardinality
 	private final @NonNull String name;
 	private final int state;
 
-	private MultiplicativeCardinality(@NonNull String name, int state) {
+	private GrammarCardinality(@NonNull String name, int state) {
 		this.name = name;
 		this.state = state;
 	}

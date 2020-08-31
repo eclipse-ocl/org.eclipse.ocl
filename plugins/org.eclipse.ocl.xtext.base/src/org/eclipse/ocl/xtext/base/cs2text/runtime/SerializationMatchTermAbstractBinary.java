@@ -8,28 +8,29 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
-public abstract class AbstractBinaryCardinalitySolution extends AbstractCardinalitySolution
+public abstract class SerializationMatchTermAbstractBinary extends SerializationMatchTermAbstract
 {
-	protected final @NonNull CardinalitySolution left;
-	protected final @NonNull CardinalitySolution right;
-	private @Nullable Set<@NonNull CardinalitySolution> childClosure = null;
+	protected final @NonNull SerializationMatchTerm left;
+	protected final @NonNull SerializationMatchTerm right;
+	private @Nullable Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> childClosure = null;
 
-	public AbstractBinaryCardinalitySolution(@NonNull CardinalitySolution left, @NonNull CardinalitySolution right) {
+	public SerializationMatchTermAbstractBinary(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
 		this.left = left;
 		this.right = right;
 	}
 
 	@Override
-	public @NonNull Set<@NonNull CardinalitySolution> getChildClosure() {
-		Set<@NonNull CardinalitySolution> childClosure2 = childClosure;
+	public @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getChildClosure() {
+		Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> childClosure2 = childClosure;
 		if (childClosure2 == null) {
 			childClosure = childClosure2 = new HashSet<>();
 			childClosure2.add(this);
@@ -39,11 +40,11 @@ public abstract class AbstractBinaryCardinalitySolution extends AbstractCardinal
 		return childClosure2;
 	}
 
-	public @NonNull CardinalitySolution getLeft() {
+	public @NonNull SerializationMatchTerm getLeft() {
 		return left;
 	}
 
-	public @NonNull CardinalitySolution getRight() {
+	public @NonNull SerializationMatchTerm getRight() {
 		return right;
 	}
 

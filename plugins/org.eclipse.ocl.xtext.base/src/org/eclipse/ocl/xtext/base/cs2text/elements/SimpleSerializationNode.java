@@ -11,10 +11,11 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 
 public abstract class SimpleSerializationNode extends AbstractSerializationNode
 {
-	protected SimpleSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	protected SimpleSerializationNode(@NonNull GrammarCardinality multiplicativeCardinality) {
 		super(multiplicativeCardinality);
 	}
 }

@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
@@ -26,10 +25,20 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_Assert;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_Assign;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_RuleCheck;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEStructuralFeatureSize;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
@@ -45,15 +54,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepCrossReferenc
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.IntegerCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.SubtractCardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assert;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assign;
-import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck;
 import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
 
 public class MarkupAnalysisProvider extends AbstractAnalysisProvider
@@ -151,44 +151,44 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _MatchTerms
 	{
-		private final @NonNull CardinalitySolution _00 // 1
-			= new IntegerCardinalitySolution(1);
-		private final @NonNull CardinalitySolution _01 // |BulletElement::level|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.BULLET_ELEMENT__LEVEL);
-		private final @NonNull CardinalitySolution _02 // |CompoundElement::elements|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS);
-		private final @NonNull CardinalitySolution _03 // |FigureElement::alt|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.FIGURE_ELEMENT__ALT);
-		private final @NonNull CardinalitySolution _04 // |FigureElement::def|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.FIGURE_ELEMENT__DEF);
-		private final @NonNull CardinalitySolution _05 // |FigureElement::requiredHeight|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT);
-		private final @NonNull CardinalitySolution _06 // |FigureElement::requiredWidth|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH);
-		private final @NonNull CardinalitySolution _07 // |FigureElement::src|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.FIGURE_ELEMENT__SRC);
-		private final @NonNull CardinalitySolution _08 // |FigureRefElement::ref|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF);
-		private final @NonNull CardinalitySolution _09 // |FontElement::font.'b|e'|
-			= new EAttributeSizeCardinalitySolution(MarkupPackage.Literals.FONT_ELEMENT__FONT, ev._1);
-		private final @NonNull CardinalitySolution _10 // |HeadingElement::level|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.HEADING_ELEMENT__LEVEL);
-		private final @NonNull CardinalitySolution _11 // |NewLineElement::text|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT);
-		private final @NonNull CardinalitySolution _12 // |TextElement::text.'#|,|:'|
-			= new EAttributeSizeCardinalitySolution(MarkupPackage.Literals.TEXT_ELEMENT__TEXT, ev._0);
-		private final @NonNull CardinalitySolution _13 // |TextElement::text|
-			= new EStructuralFeatureSizeCardinalitySolution(MarkupPackage.Literals.TEXT_ELEMENT__TEXT);
-		private final @NonNull CardinalitySolution _14 // (|FigureElement::src| - 1)
-			= new SubtractCardinalitySolution(_07, _00);
-		private final @NonNull CardinalitySolution _15 // (|FigureRefElement::ref| - 1)
-			= new SubtractCardinalitySolution(_08, _00);
-		private final @NonNull CardinalitySolution _16 // (|FontElement::font.'b|e'| - 1)
-			= new SubtractCardinalitySolution(_09, _00);
-		private final @NonNull CardinalitySolution _17 // (|NewLineElement::text| - 1)
-			= new SubtractCardinalitySolution(_11, _00);
-		private final @NonNull CardinalitySolution _18 // (|TextElement::text| - 1)
-			= new SubtractCardinalitySolution(_13, _00);
+		private final @NonNull SerializationMatchTerm _00 // 1
+			= new SerializationMatchTermInteger(1);
+		private final @NonNull SerializationMatchTerm _01 // |BulletElement::level|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.BULLET_ELEMENT__LEVEL);
+		private final @NonNull SerializationMatchTerm _02 // |CompoundElement::elements|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS);
+		private final @NonNull SerializationMatchTerm _03 // |FigureElement::alt|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.FIGURE_ELEMENT__ALT);
+		private final @NonNull SerializationMatchTerm _04 // |FigureElement::def|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.FIGURE_ELEMENT__DEF);
+		private final @NonNull SerializationMatchTerm _05 // |FigureElement::requiredHeight|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT);
+		private final @NonNull SerializationMatchTerm _06 // |FigureElement::requiredWidth|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH);
+		private final @NonNull SerializationMatchTerm _07 // |FigureElement::src|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.FIGURE_ELEMENT__SRC);
+		private final @NonNull SerializationMatchTerm _08 // |FigureRefElement::ref|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF);
+		private final @NonNull SerializationMatchTerm _09 // |FontElement::font.'b|e'|
+			= new SerializationMatchTermEAttributeSize(MarkupPackage.Literals.FONT_ELEMENT__FONT, ev._1);
+		private final @NonNull SerializationMatchTerm _10 // |HeadingElement::level|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.HEADING_ELEMENT__LEVEL);
+		private final @NonNull SerializationMatchTerm _11 // |NewLineElement::text|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT);
+		private final @NonNull SerializationMatchTerm _12 // |TextElement::text.'#|,|:'|
+			= new SerializationMatchTermEAttributeSize(MarkupPackage.Literals.TEXT_ELEMENT__TEXT, ev._0);
+		private final @NonNull SerializationMatchTerm _13 // |TextElement::text|
+			= new SerializationMatchTermEStructuralFeatureSize(MarkupPackage.Literals.TEXT_ELEMENT__TEXT);
+		private final @NonNull SerializationMatchTerm _14 // (|FigureElement::src| - 1)
+			= new SerializationMatchTermSubtract(_07, _00);
+		private final @NonNull SerializationMatchTerm _15 // (|FigureRefElement::ref| - 1)
+			= new SerializationMatchTermSubtract(_08, _00);
+		private final @NonNull SerializationMatchTerm _16 // (|FontElement::font.'b|e'| - 1)
+			= new SerializationMatchTermSubtract(_09, _00);
+		private final @NonNull SerializationMatchTerm _17 // (|NewLineElement::text| - 1)
+			= new SerializationMatchTermSubtract(_11, _00);
+		private final @NonNull SerializationMatchTerm _18 // (|TextElement::text| - 1)
+			= new SerializationMatchTermSubtract(_13, _00);
 	}
 
 	/**
@@ -196,36 +196,36 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _MatchSteps
 	{
-		private final @NonNull CardinalitySolutionStep _00 // assert (|FigureElement::src| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._14);
-		private final @NonNull CardinalitySolutionStep _01 // assert (|FigureRefElement::ref| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._15);
-		private final @NonNull CardinalitySolutionStep _02 // assert (|FontElement::font.'b|e'| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._16);
-		private final @NonNull CardinalitySolutionStep _03 // assert (|NewLineElement::text| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._17);
-		private final @NonNull CardinalitySolutionStep _04 // assert (|TextElement::text| - 1) == 0
-			= new CardinalitySolutionStep_Assert(mt._18);
-		private final @NonNull CardinalitySolutionStep _05 // assign V0 = |BulletElement::level|
-			= new CardinalitySolutionStep_Assign(0, mt._01);
-		private final @NonNull CardinalitySolutionStep _06 // assign V0 = |CompoundElement::elements|
-			= new CardinalitySolutionStep_Assign(0, mt._02);
-		private final @NonNull CardinalitySolutionStep _07 // assign V0 = |FigureElement::def|
-			= new CardinalitySolutionStep_Assign(0, mt._04);
-		private final @NonNull CardinalitySolutionStep _08 // assign V0 = |HeadingElement::level|
-			= new CardinalitySolutionStep_Assign(0, mt._10);
-		private final @NonNull CardinalitySolutionStep _09 // assign V0 = |TextElement::text.'#|,|:'|
-			= new CardinalitySolutionStep_Assign(0, mt._12);
-		private final @NonNull CardinalitySolutionStep _10 // assign V1 = |CompoundElement::elements|
-			= new CardinalitySolutionStep_Assign(1, mt._02);
-		private final @NonNull CardinalitySolutionStep _11 // assign V1 = |FigureElement::alt|
-			= new CardinalitySolutionStep_Assign(1, mt._03);
-		private final @NonNull CardinalitySolutionStep _12 // assign V2 = |FigureElement::requiredWidth|
-			= new CardinalitySolutionStep_Assign(2, mt._06);
-		private final @NonNull CardinalitySolutionStep _13 // assign V3 = |FigureElement::requiredHeight|
-			= new CardinalitySolutionStep_Assign(3, mt._05);
-		private final @NonNull CardinalitySolutionStep _14 // check-rule markupcs::CompoundElement.elements : 13
-			= new CardinalitySolutionStep_RuleCheck(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS, iv._0/*MarkupElement*/);
+		private final @NonNull SerializationMatchStep _00 // assert (|FigureElement::src| - 1) == 0
+			= new MatchStep_Assert(mt._14);
+		private final @NonNull SerializationMatchStep _01 // assert (|FigureRefElement::ref| - 1) == 0
+			= new MatchStep_Assert(mt._15);
+		private final @NonNull SerializationMatchStep _02 // assert (|FontElement::font.'b|e'| - 1) == 0
+			= new MatchStep_Assert(mt._16);
+		private final @NonNull SerializationMatchStep _03 // assert (|NewLineElement::text| - 1) == 0
+			= new MatchStep_Assert(mt._17);
+		private final @NonNull SerializationMatchStep _04 // assert (|TextElement::text| - 1) == 0
+			= new MatchStep_Assert(mt._18);
+		private final @NonNull SerializationMatchStep _05 // assign V0 = |BulletElement::level|
+			= new MatchStep_Assign(0, mt._01);
+		private final @NonNull SerializationMatchStep _06 // assign V0 = |CompoundElement::elements|
+			= new MatchStep_Assign(0, mt._02);
+		private final @NonNull SerializationMatchStep _07 // assign V0 = |FigureElement::def|
+			= new MatchStep_Assign(0, mt._04);
+		private final @NonNull SerializationMatchStep _08 // assign V0 = |HeadingElement::level|
+			= new MatchStep_Assign(0, mt._10);
+		private final @NonNull SerializationMatchStep _09 // assign V0 = |TextElement::text.'#|,|:'|
+			= new MatchStep_Assign(0, mt._12);
+		private final @NonNull SerializationMatchStep _10 // assign V1 = |CompoundElement::elements|
+			= new MatchStep_Assign(1, mt._02);
+		private final @NonNull SerializationMatchStep _11 // assign V1 = |FigureElement::alt|
+			= new MatchStep_Assign(1, mt._03);
+		private final @NonNull SerializationMatchStep _12 // assign V2 = |FigureElement::requiredWidth|
+			= new MatchStep_Assign(2, mt._06);
+		private final @NonNull SerializationMatchStep _13 // assign V3 = |FigureElement::requiredHeight|
+			= new MatchStep_Assign(3, mt._05);
+		private final @NonNull SerializationMatchStep _14 // check-rule markupcs::CompoundElement.elements : 13
+			= new MatchStep_RuleCheck(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS, iv._0/*MarkupElement*/);
 	}
 
 	/**
@@ -678,7 +678,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	{
 		// Markup::BulletElement : { 'bullet' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _00 = new SerializationRule(1,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._10 /* assign V1 = |CompoundElement::elements| */,
 				ms._05 /* assign V0 = |BulletElement::level| */
@@ -703,20 +703,20 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.BULLET_ELEMENT__LEVEL,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::FigureElement : { 'figure' { '#' def=ID }[?] '[' src=STRING { ',' alt=STRING { ',' requiredWidth=INT { ',' requiredHeight=INT }[?] }[?] }[?] ']' }
 		private @NonNull SerializationRule _01 = new SerializationRule(3,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._11 /* assign V1 = |FigureElement::alt| */,
 				ms._00 /* assert (|FigureElement::src| - 1) == 0 */,
 				ms._07 /* assign V0 = |FigureElement::def| */,
@@ -749,36 +749,36 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				MarkupPackage.Literals.FIGURE_ELEMENT__SRC
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__DEF,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			null);
 		// Markup::FigureRefElement : { 'figureRef' '[' ref=ID ']' }
 		private @NonNull SerializationRule _02 = new SerializationRule(4,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._01 /* assert (|FigureRefElement::ref| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -801,7 +801,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			});
 		// Markup::FontElement : { font={'b|e'} '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _03 = new SerializationRule(5,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */,
 				ms._02 /* assert (|FontElement::font.'b|e'| - 1) == 0 */
@@ -826,20 +826,20 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FONT_ELEMENT__FONT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(ev._1, GrammarCardinality.ONE)
 					}
 				)
 			},
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::FootnoteElement : { 'footnote' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _04 = new SerializationRule(6,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
@@ -861,13 +861,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::HeadingElement : { 'heading' { ':' level=INT }[?] '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _05 = new SerializationRule(8,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._10 /* assign V1 = |CompoundElement::elements| */,
 				ms._08 /* assign V0 = |HeadingElement::level| */
@@ -892,20 +892,20 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.HEADING_ELEMENT__LEVEL,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::Markup : elements+=MarkupElement[*]
 		private @NonNull SerializationRule _06 = new SerializationRule(12,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
@@ -923,13 +923,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::NewLineElement : text=NL
 		private @NonNull SerializationRule _07 = new SerializationRule(17,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._03 /* assert (|NewLineElement::text| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -944,14 +944,14 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
 			null);
 		// Markup::NullElement : { '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _08 = new SerializationRule(18,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
@@ -972,13 +972,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::OCLCodeElement : { 'oclCode' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _09 = new SerializationRule(19,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
@@ -1000,13 +1000,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::OCLEvalElement : { 'oclEval' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _10 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
@@ -1028,13 +1028,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::OCLTextElement : { 'oclText' '[' elements+=MarkupElement[*] ']' }
 		private @NonNull SerializationRule _11 = new SerializationRule(21,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
@@ -1056,13 +1056,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
 		// Markup::TextElement : text+=('#|,|:'|ID|WORD|INT|WS)[+]
 		private @NonNull SerializationRule _12 = new SerializationRule(23,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._09 /* assign V0 = |TextElement::text.'#|,|:'| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -1078,14 +1078,14 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE_OR_MORE)
+						new EnumerationValue_MultiplicativeCardinality(ev._0, GrammarCardinality.ONE_OR_MORE)
 					}
 				)
 			},
 			null);
 		// Markup::TextElement : text+=MarkupKeyword
 		private @NonNull SerializationRule _13 = new SerializationRule(23,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
+			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._04 /* assert (|TextElement::text| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
@@ -1100,7 +1100,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -1141,7 +1141,6 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import MultiplicativeCardinality;
 //	import EnumerationValue;
 //	import MultipleEnumerationValue;
 //	import BaseCommentSegmentSupport;
@@ -1150,10 +1149,20 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
+//	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;
 //	import ParserRuleValue;
 //	import SerializationGrammarAnalysis;
+//	import SerializationMatchStep;
+//	import MatchStep_Assert;
+//	import MatchStep_Assign;
+//	import MatchStep_RuleCheck;
+//	import SerializationMatchTerm;
+//	import SerializationMatchTermEAttributeSize;
+//	import SerializationMatchTermEStructuralFeatureSize;
+//	import SerializationMatchTermInteger;
+//	import SerializationMatchTermSubtract;
 //	import SerializationRule;
 //	import EAttribute_EnumerationValue_MultiplicativeCardinality;
 //	import EAttribute_EnumerationValues;
@@ -1169,13 +1178,4 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import SerializationStepLiteral;
 //	import SerializationStepSequence;
 //	import TerminalRuleValue;
-//	import CardinalitySolution;
-//	import EAttributeSizeCardinalitySolution;
-//	import EStructuralFeatureSizeCardinalitySolution;
-//	import IntegerCardinalitySolution;
-//	import SubtractCardinalitySolution;
-//	import CardinalitySolutionStep;
-//	import CardinalitySolutionStep_Assert;
-//	import CardinalitySolutionStep_Assign;
-//	import CardinalitySolutionStep_RuleCheck;
 //	import MarkupPackage;

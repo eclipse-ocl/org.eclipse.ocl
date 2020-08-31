@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.xtext.AbstractElement;
 
 /**
@@ -110,8 +110,8 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 		return grammarAnalysis;
 	}
 
-	public @NonNull MultiplicativeCardinality getMultiplicativeCardinality() {
-		return MultiplicativeCardinality.toEnum(actionOrAssignment);
+	public @NonNull GrammarCardinality getMultiplicativeCardinality() {
+		return GrammarCardinality.toEnum(actionOrAssignment);
 	}
 
 	@Override

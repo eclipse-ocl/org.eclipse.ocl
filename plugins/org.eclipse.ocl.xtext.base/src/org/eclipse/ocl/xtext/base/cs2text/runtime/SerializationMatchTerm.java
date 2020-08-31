@@ -8,19 +8,21 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
 /**
  * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the
  * limited capability to compute the cardinalities of SerilaizationRule terms from the actual
  * feture slot sizes of an actual element to be serialized.
  */
-public interface CardinalitySolution
+public interface SerializationMatchTerm
 {
 	/**
 	 * Return the value of the expression value using the actual characteristic of the user element slots if available.
@@ -31,7 +33,7 @@ public interface CardinalitySolution
 	/**
 	 * Return the closure of this and all child solutions.
 	 */
-	@NonNull Set<@NonNull CardinalitySolution> getChildClosure();
+	@NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm> getChildClosure();
 
 	/**
 	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.

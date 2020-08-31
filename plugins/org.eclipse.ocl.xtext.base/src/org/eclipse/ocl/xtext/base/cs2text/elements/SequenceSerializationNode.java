@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
@@ -29,7 +30,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Integer semanticHashCode = null;
 
-	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
 		super(multiplicativeCardinality);
 		this.compoundElement = compoundElement;
 		this.serializationNodes = groupSerializationNodes;
@@ -47,7 +48,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable MultiplicativeCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
 		List<@NonNull SerializationNode> newList = new ArrayList<>(serializationNodes.size());
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			newList.add(serializationNode.clone(null));
