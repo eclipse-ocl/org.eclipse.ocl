@@ -17,7 +17,7 @@ import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.xtext.AbstractRule;
 
 /**
- * An XtextAbstractRuleAnalysis provides the extended analysis of an Xtext AbstractRule
+ * An AbstractRuleAnalysis provides the extended analysis of an Xtext AbstractRule
  */
 public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebugStringable
 {
@@ -38,21 +38,6 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 	 */
 	protected final @NonNull String name;
 
-	/**
-	 * RuleAnalyses that this RuleAnalysis may be directly used as an alternative for.
-	 */
-//	private @Nullable List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses = null;		// XXX obsolete
-
-	/**
-	 * Lazily computed closure of RuleAnalyses that this RuleAnalysis may be used as an alternative for.
-	 */
-//	private @Nullable UniqueList<@NonNull AbstractRuleAnalysis> baseRuleAnalysesClosure = null;
-
-	/**
-	 * The terms for each possible permutation of alternatives.
-	 */
-//	private @Nullable List<@NonNull XtextTermsAnalysis> termsAnalyses = null;
-
 	@SuppressWarnings("unused")			// Used in the debugger
 	private final @NonNull ToDebugString toDebugSring = new ToDebugString(this){};
 
@@ -67,47 +52,6 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 		}
 		this.name = grammarName + "::" + XtextGrammarUtil.getName(abstractRule);
 	}
-
-/*	public void addBaseRuleAnalysis(@NonNull AbstractRuleAnalysis baseRuleAnalysis) {
-		List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses2 = baseRuleAnalyses;
-		if (baseRuleAnalyses2 == null) {
-			baseRuleAnalyses = baseRuleAnalyses2 = new ArrayList<>();
-		}
-		if (!baseRuleAnalyses2.contains(baseRuleAnalysis)) {
-			baseRuleAnalyses2.add(baseRuleAnalysis);
-		}
-	} */
-
-//	public void addTermsAnalysis(@NonNull XtextTermsAnalysis termsAnalysis) {
-//		assert termsAnalyses != null;
-//		termsAnalyses.add(termsAnalysis);
-//	}
-
-/*	public @Nullable List<@NonNull AbstractRuleAnalysis> basicGetBaseRuleAnalyses() {
-		return baseRuleAnalyses;
-	} */
-
-//	public @Nullable List<@NonNull XtextTermsAnalysis> basicGetTermsAnalyses() {
-//		return termsAnalyses;
-//	}
-
-/*	public @NonNull UniqueList<@NonNull AbstractRuleAnalysis> getBaseRuleAnalysisClosure() {
-		UniqueList<@NonNull AbstractRuleAnalysis> baseRuleAnalysesClosure = this.baseRuleAnalysesClosure;
-		if (baseRuleAnalysesClosure == null) {
-			baseRuleAnalysesClosure = new UniqueList<>();
-			baseRuleAnalysesClosure.add(this);
-			for (int i = 0; i < baseRuleAnalysesClosure.size(); i++) {
-				AbstractRuleAnalysis ruleAnalysis = baseRuleAnalysesClosure.get(i);
-				List<@NonNull AbstractRuleAnalysis> baseRuleAnalyses = ruleAnalysis.basicGetBaseRuleAnalyses();
-				if (baseRuleAnalyses != null) {
-					baseRuleAnalysesClosure.addAll(baseRuleAnalyses);
-				}
-			}
-		}
-		Collections.sort(baseRuleAnalysesClosure, NameUtil.NAMEABLE_COMPARATOR);
-		this.baseRuleAnalysesClosure = baseRuleAnalysesClosure;
-		return baseRuleAnalysesClosure;
-	} */
 
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
@@ -132,32 +76,6 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 	}
 
 	public abstract @NonNull AbstractRuleValue getRuleValue();
-
-//	public @NonNull List<@NonNull XtextTermsAnalysis> getTermsAnalyses() {
-//		assert termsAnalyses != null;
-//		return termsAnalyses;
-//	}
-
-	/**
-	 * Perform the inter analysis to determine the base rule closure.
-	 *
-	public void interAnalyze() {
-		if ("TypedTypeRefCS".equals(abstractRule.getName())) {
-			getClass(); //XXX
-		}
-		List<@NonNull XtextAbstractRuleAnalysis> baseRuleAnalyses2 = baseRuleAnalyses;
-		if (baseRuleAnalyses2 != null) {
-			UniqueList<@NonNull XtextAbstractRuleAnalysis> baseRuleAnalysisClosure = new UniqueList<>(baseRuleAnalyses2);
-			for (int i = 0; i < baseRuleAnalysisClosure.size(); i++) {
-				XtextAbstractRuleAnalysis baseRuleAnalysis = baseRuleAnalysisClosure.get(i);
-				List<@NonNull XtextAbstractRuleAnalysis> nestedBaseRuleAnalyses = baseRuleAnalysis.getBaseRuleAnalyses();
-				if (nestedBaseRuleAnalyses != null) {
-					baseRuleAnalysisClosure.addAll(nestedBaseRuleAnalyses);
-				}
-			}
-			this.baseRuleAnalyses = baseRuleAnalysisClosure;
-		}
-	}*/
 
 	@Override
 	public void toDebugString(@NonNull StringBuilder s, int depth) {

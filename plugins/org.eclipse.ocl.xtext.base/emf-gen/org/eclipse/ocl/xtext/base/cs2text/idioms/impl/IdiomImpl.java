@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
@@ -301,16 +301,6 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 
 			};
 		}
-
-		@Override
-		public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
-			IdiomMatch firstMatch = super.firstMatch(serializationNode, serializationRule);
-			if (firstMatch != null) {
-				getClass(); 		// XXX debugging
-			}
-			return firstMatch;
-		}
-
 	}
 
 } //IdiomImpl

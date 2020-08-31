@@ -282,32 +282,17 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateGrammarRuleValue_ParserRuleValue(GrammarAnalysis grammarAnalysis, ParserRuleValue parserRuleValue) {
-			// «FOR subParserRuleValue : subParserRuleValueClosure SEPARATOR ','» «getParserRuleValueId(subParserRuleValue, true)» /* «subParserRuleValue.getName()» */«ENDFOR» */'''
 		var subParserRuleValueIndexes = parserRuleValue.getSubParserRuleValueIndexes();
-		if (subParserRuleValueIndexes !== null) {
-			'''
-			private final @NonNull «newTypeReference(ParserRuleValue)» «getGrammarRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
-				= new «newTypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»",
-					new @NonNull «newTypeReference(SerializationRule)» [] {
-						«FOR serializationRule : getSerializationRulesIterable(grammarAnalysis, parserRuleValue) SEPARATOR ','»
-						«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
-						«ENDFOR»
-					}, 
-					«getIndexVectorId(subParserRuleValueIndexes, true)»); /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getGrammarRuleName(index)»«ENDFOR» */
-			'''
-		}
-		else {
-			'''
-			private final @NonNull «newTypeReference(ParserRuleValue)» «getGrammarRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
-				= new «newTypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", 
-					new @NonNull «newTypeReference(SerializationRule)» [] {
-						«FOR serializationRule : getSerializationRulesIterable(grammarAnalysis, parserRuleValue) SEPARATOR ','»
-						«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
-						«ENDFOR»
-					}, 
-					(«newTypeReference(IndexVector)»)null);
-			'''
-		}
+		'''
+		private final @NonNull «newTypeReference(ParserRuleValue)» «getGrammarRuleValueId(parserRuleValue, false)» // «parserRuleValue.getName()»
+			= new «newTypeReference(ParserRuleValue)»(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»",
+				new @NonNull «newTypeReference(SerializationRule)» [] {
+					«FOR serializationRule : getSerializationRulesIterable(grammarAnalysis, parserRuleValue) SEPARATOR ','»
+					«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
+					«ENDFOR»
+				}, 
+				«IF subParserRuleValueIndexes !== null»«getIndexVectorId(subParserRuleValueIndexes, true)»); /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getGrammarRuleName(index)»«ENDFOR» */«ELSE»null);«ENDIF»
+		'''
 	}
 	
 	protected def generateGrammarRuleValue_TerminalRuleValue(GrammarAnalysis grammarAnalysis, TerminalRuleValue terminalRuleValue) {

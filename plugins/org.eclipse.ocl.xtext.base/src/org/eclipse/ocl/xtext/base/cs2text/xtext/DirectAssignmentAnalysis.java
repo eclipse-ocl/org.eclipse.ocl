@@ -31,9 +31,6 @@ public class DirectAssignmentAnalysis extends AbstractAssignmentAnalysis<@NonNul
 
 	@Override
 	public void analyzeContainmentAndTargets() {
-		if ("ownedMultiplicity".equals(eStructuralFeature.getName())) {
-			getClass();		// XXX debugging
-		}
 		analyzeContainment();
 		AbstractElement terminal = XtextGrammarUtil.getTerminal(actionOrAssignment);
 		computeTargetRuleAnalyses(terminal);

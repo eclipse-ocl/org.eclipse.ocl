@@ -431,7 +431,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._00 /* { 'bullet' { ':' level=10 }[?] '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _02 // ESCAPED
 			= new TerminalRuleValue(2, "ESCAPED");
 		private final @NonNull ParserRuleValue _03 // FigureElement
@@ -439,25 +439,25 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._01 /* { 'figure' { '#' def=9 }[?] '[' src=22 { ',' alt=22 { ',' requiredWidth=10 { ',' requiredHeight=10 }[?] }[?] }[?] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _04 // FigureRefElement
 			= new ParserRuleValue(4, "FigureRefElement",
 				new @NonNull SerializationRule [] {
 					sr0._02 /* { 'figureRef' '[' ref=ID ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _05 // FontElement
 			= new ParserRuleValue(5, "FontElement",
 				new @NonNull SerializationRule [] {
 					sr0._03 /* { font={'b|e'} '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _06 // FootnoteElement
 			= new ParserRuleValue(6, "FootnoteElement",
 				new @NonNull SerializationRule [] {
 					sr0._04 /* { 'footnote' '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _07 // HORIZONTAL_WS
 			= new TerminalRuleValue(7, "HORIZONTAL_WS");
 		private final @NonNull ParserRuleValue _08 // HeadingElement
@@ -465,7 +465,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._05 /* { 'heading' { ':' level=10 }[?] '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _09 // ID
 			= new TerminalRuleValue(9, "ID");
 		private final @NonNull TerminalRuleValue _10 // INT
@@ -477,7 +477,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._06 /* elements+=13[*] */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _13 // MarkupElement
 			= new ParserRuleValue(13, "MarkupElement",
 				new @NonNull SerializationRule [] {
@@ -507,31 +507,31 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._07 /* text=15 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _18 // NullElement
 			= new ParserRuleValue(18, "NullElement",
 				new @NonNull SerializationRule [] {
 					sr0._08 /* { '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _19 // OCLCodeElement
 			= new ParserRuleValue(19, "OCLCodeElement",
 				new @NonNull SerializationRule [] {
 					sr0._09 /* { 'oclCode' '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _20 // OCLEvalElement
 			= new ParserRuleValue(20, "OCLEvalElement",
 				new @NonNull SerializationRule [] {
 					sr0._10 /* { 'oclEval' '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _21 // OCLTextElement
 			= new ParserRuleValue(21, "OCLTextElement",
 				new @NonNull SerializationRule [] {
 					sr0._11 /* { 'oclText' '[' elements+=13[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _22 // STRING
 			= new TerminalRuleValue(22, "STRING");
 		private final @NonNull ParserRuleValue _23 // TextElement
@@ -540,7 +540,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					sr0._12 /* text+=('#|,|:'|9|25|10|26)[+] */,
 					sr0._13 /* text+=14 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _24 // VERTICAL_WS
 			= new TerminalRuleValue(24, "VERTICAL_WS");
 		private final @NonNull TerminalRuleValue _25 // WORD

@@ -544,7 +544,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._00 /* referredElement=UnrestrictedName */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _05 // ID
 			= new DataTypeRuleValue(5, "ID");
 		private final @NonNull TerminalRuleValue _06 // INT
@@ -564,7 +564,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._01 /* { lowerBound=9 { '..' upperBound=29 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _13 // MultiplicityCS
 			= new ParserRuleValue(13, "MultiplicityCS",
 				new @NonNull SerializationRule [] {
@@ -575,13 +575,13 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 					sr0._06 /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
 					sr0._07 /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _14 // MultiplicityStringCS
 			= new ParserRuleValue(14, "MultiplicityStringCS",
 				new @NonNull SerializationRule [] {
 					sr0._08 /* stringBounds={'*|+|?'} */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _15 // NUMBER_LITERAL
 			= new DataTypeRuleValue(15, "NUMBER_LITERAL");
 		private final @NonNull ParserRuleValue _16 // NextPathElementCS
@@ -589,13 +589,13 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._09 /* referredElement=UnreservedName */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _17 // PathNameCS
 			= new ParserRuleValue(17, "PathNameCS",
 				new @NonNull SerializationRule [] {
 					sr0._10 /* { ownedPathElements+=4 { '::' ownedPathElements+=16 }[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _18 // SIMPLE_ID
 			= new TerminalRuleValue(18, "SIMPLE_ID");
 		private final @NonNull TerminalRuleValue _19 // SINGLE_QUOTED_STRING
@@ -609,25 +609,25 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._11 /* { ownedSubstitutions+=23 { ',' ownedSubstitutions+=23 }[*] ownedMultiplicity=13[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _23 // TemplateParameterSubstitutionCS
 			= new ParserRuleValue(23, "TemplateParameterSubstitutionCS",
 				new @NonNull SerializationRule [] {
 					sr0._12 /* ownedActualParameter=26 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _24 // TemplateSignatureCS
 			= new ParserRuleValue(24, "TemplateSignatureCS",
 				new @NonNull SerializationRule [] {
 					sr0._13 /* { '(' ownedParameters+=25 { ',' ownedParameters+=25 }[*] ')' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _25 // TypeParameterCS
 			= new ParserRuleValue(25, "TypeParameterCS",
 				new @NonNull SerializationRule [] {
 					sr0._14 /* { name=32 { 'extends' ownedExtends+=27 { '&&' ownedExtends+=27 }[*] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _26 // TypeRefCS
 			= new ParserRuleValue(26, "TypeRefCS",
 				new @NonNull SerializationRule [] {
@@ -646,7 +646,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._15 /* { ownedPathName=17 { '(' ownedBinding=22 ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _29 // UPPER
 			= new DataTypeRuleValue(29, "UPPER");
 		private final @NonNull DataTypeRuleValue _30 // URI
@@ -662,7 +662,7 @@ public class BaseAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._16 /* { '?' { 'extends' ownedExtends=27 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 	}
 
 	/**

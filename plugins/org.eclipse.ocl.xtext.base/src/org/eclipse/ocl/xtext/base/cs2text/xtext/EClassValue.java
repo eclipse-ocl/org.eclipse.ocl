@@ -134,9 +134,6 @@ public class EClassValue implements Nameable
 		s.append(eClass.getEPackage(). getName());
 		s.append("::");;
 		s.append(eClass.getName());
-		if ("PackageCS".equals(eClass.getName())) {
-			getClass(); // XXX debugging
-		}
 		s.append(" <=>");;
 //		int depth = 2;
 //		serializationRules.toString(s, depth);

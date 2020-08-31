@@ -115,9 +115,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	 */
 	protected void analyze() {
 		assert serializationRuleAnalyses == null;
-		if ("OCLinEcore::PackageCS".equals(getName())) {
-			getClass(); // XXX debugging
-		}
 		//
 		//	Convert the parser element tree to a normalized/flattened disjunction of conjunctions of nodes.
 		//

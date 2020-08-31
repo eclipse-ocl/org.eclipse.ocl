@@ -46,26 +46,10 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 	}
 
 	public @NonNull IdiomModel getIdiomModel(@NonNull ResourceSet resourceSet, @NonNull URI uri) {
-		//	ResourceSet resourceSet = resourceSetProvider.get();//new ResourceSetImpl();
 		IdiomsPackage.eINSTANCE.getClass();
 		Resource resource = resourceSet.getResource(uri, true);
-	//	Resource resource = resourceSet.createResource(uri);
-	//	Map<Object,Object> options = new HashMap<>();
-	//	options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
-	//	try {
-	//		resource.load(options);
-	//		for (Idiom idiom : ((IdiomModel)resource.getContents().get(0)).getOwnedIdioms()) {
-	//			for (SubIdiom subIdiom : idiom.getOwnedSubIdioms()) {
-	//				for (Segment segment : subIdiom.getSegments()) {
-	//					segment.toString();		// XXX debugging
-	//				}
-	//			}
-	//		}
-			EcoreUtil.resolveAll(resourceSet);				// Avoid no-equality of proxies
-			return (IdiomModel)resource.getContents().get(0);	//OPTION_DEFER_IDREF_RESOLUTION
-	//	} catch (IOException e) {
-	//		throw new IllegalStateException("Failed to load " + uri, e);
-	//	}
+		EcoreUtil.resolveAll(resourceSet);				// Avoid no-equality of proxies
+		return (IdiomModel)resource.getContents().get(0);
 	}
 
 	protected /*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms(/*@NonNull*/ IdiomModel rootIdiomModel) {

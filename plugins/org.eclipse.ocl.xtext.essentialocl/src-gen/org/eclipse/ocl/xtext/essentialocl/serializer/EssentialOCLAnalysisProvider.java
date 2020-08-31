@@ -1848,38 +1848,38 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._17 /* symbol={'false|true'} */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _03 // CoIteratorVariableCS
 			= new ParserRuleValue(3, "CoIteratorVariableCS",
 				new @NonNull SerializationRule [] {
 					sr0._18 /* { name=96 { ':' ownedType=79 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _04 // CollectionLiteralExpCS
 			= new ParserRuleValue(4, "CollectionLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr0._19 /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _05 // CollectionLiteralPartCS
 			= new ParserRuleValue(5, "CollectionLiteralPartCS",
 				new @NonNull SerializationRule [] {
 					sr0._21 /* ownedExpression=55 */,
 					sr0._20 /* { ownedExpression=20 { '..' ownedLastExpression=20 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _06 // CollectionPatternCS
 			= new ParserRuleValue(6, "CollectionPatternCS",
 				new @NonNull SerializationRule [] {
 					sr0._22 /* { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _07 // CollectionTypeCS
 			= new ParserRuleValue(7, "CollectionTypeCS",
 				new @NonNull SerializationRule [] {
 					sr0._23 /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _08 // CollectionTypeIdentifier
 			= new DataTypeRuleValue(8, "CollectionTypeIdentifier");
 		private final @NonNull ParserRuleValue _09 // CurlyBracketedClauseCS
@@ -1887,7 +1887,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._24 /* { '{' { ownedParts+=67 { ',' ownedParts+=67 }[*] }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _10 // DOUBLE_QUOTED_STRING
 			= new TerminalRuleValue(10, "DOUBLE_QUOTED_STRING");
 		private final @NonNull TerminalRuleValue _11 // ESCAPED_CHARACTER
@@ -1899,7 +1899,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._25 /* { 'elseif' ownedCondition=20 'then' ownedThenExpression=20 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _14 // EssentialOCLInfixOperatorName
 			= new DataTypeRuleValue(14, "EssentialOCLInfixOperatorName");
 		private final @NonNull DataTypeRuleValue _15 // EssentialOCLNavigationOperatorName
@@ -1915,23 +1915,23 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _20 // ExpCS
 			= new ParserRuleValue(20, "ExpCS",
 				new @NonNull SerializationRule [] {
-					sr0._31 /* symbol={'false|true'} */,
-					sr0._26 /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */,
-					sr0._41 /* '*' */,
-					sr0._38 /* 'invalid' */,
-					sr0._30 /* 'null' */,
-					sr0._39 /* 'self' */,
-					sr0._33 /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */,
-					sr0._29 /* { ownedLeft=57 name=1 ownedRight=20 } */,
-					sr0._36 /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */,
-					sr0._42 /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */,
-					sr0._37 /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */,
-					sr0._32 /* { '(' ownedExpression=20 ')' } */,
-					sr0._35 /* symbol=42 */,
-					sr0._40 /* { name=93 ownedRight=57 } */,
-					sr0._28 /* segments+=70[+] */,
-					sr0._34 /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */,
-					sr0._27 /* ownedType=83 */,
+					sr0._36 /* symbol={'false|true'} */,
+					sr0._29 /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */,
+					sr0._31 /* '*' */,
+					sr0._30 /* 'invalid' */,
+					sr0._39 /* 'null' */,
+					sr0._27 /* 'self' */,
+					sr0._35 /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */,
+					sr0._34 /* { ownedLeft=57 name=1 ownedRight=20 } */,
+					sr0._38 /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */,
+					sr0._32 /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */,
+					sr0._26 /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */,
+					sr0._33 /* { '(' ownedExpression=20 ')' } */,
+					sr0._28 /* symbol=42 */,
+					sr0._37 /* { name=93 ownedRight=57 } */,
+					sr0._41 /* segments+=70[+] */,
+					sr0._42 /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */,
+					sr0._40 /* ownedType=83 */,
 					sr0._46 /* { 'let' ownedVariables+=32 { ',' ownedVariables+=32 }[*] 'in' ownedInExpression=20 } */,
 					sr1._68 /* { name=93 ownedRight=56 } */
 				},
@@ -1941,7 +1941,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._00 /* referredElement=UnrestrictedName */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _22 // ID
 			= new DataTypeRuleValue(22, "ID");
 		private final @NonNull TerminalRuleValue _23 // INT
@@ -1953,7 +1953,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._43 /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _26 // InfixOperatorName
 			= new DataTypeRuleValue(26, "InfixOperatorName");
 		private final @NonNull ParserRuleValue _27 // InvalidLiteralExpCS
@@ -1961,7 +1961,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._44 /* 'invalid' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _28 // LETTER_CHARACTER
 			= new TerminalRuleValue(28, "LETTER_CHARACTER");
 		private final @NonNull DataTypeRuleValue _29 // LOWER
@@ -1971,19 +1971,19 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._45 /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _31 // LetExpCS
 			= new ParserRuleValue(31, "LetExpCS",
 				new @NonNull SerializationRule [] {
 					sr0._46 /* { 'let' ownedVariables+=32 { ',' ownedVariables+=32 }[*] 'in' ownedInExpression=20 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _32 // LetVariableCS
 			= new ParserRuleValue(32, "LetVariableCS",
 				new @NonNull SerializationRule [] {
 					sr0._47 /* { name=96 ownedRoundBracketedClause=62[?] { ':' ownedType=79 }[?] '=' ownedInitExpression=20 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _33 // ML_COMMENT
 			= new TerminalRuleValue(33, "ML_COMMENT");
 		private final @NonNull TerminalRuleValue _34 // ML_SINGLE_QUOTED_STRING
@@ -1993,48 +1993,48 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._48 /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _36 // MapLiteralPartCS
 			= new ParserRuleValue(36, "MapLiteralPartCS",
 				new @NonNull SerializationRule [] {
 					sr0._49 /* { ownedKey=20 '<-' ownedValue=20 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _37 // MapTypeCS
 			= new ParserRuleValue(37, "MapTypeCS",
 				new @NonNull SerializationRule [] {
 					sr0._50 /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _38 // Model
 			= new ParserRuleValue(38, "Model",
 				new @NonNull SerializationRule [] {
 					sr0._51 /* ownedExpression=20 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _39 // MultiplicityBoundsCS
 			= new ParserRuleValue(39, "MultiplicityBoundsCS",
 				new @NonNull SerializationRule [] {
 					sr0._01 /* { lowerBound=29 { '..' upperBound=89 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _40 // MultiplicityCS
 			= new ParserRuleValue(40, "MultiplicityCS",
 				new @NonNull SerializationRule [] {
-					sr0._02 /* { '[' lowerBound=29 { '..' upperBound=89 }[?] ']' } */,
-					sr0._04 /* { '[' lowerBound=29 { '..' upperBound=89 }[?] '|?' ']' } */,
+					sr0._07 /* { '[' lowerBound=29 { '..' upperBound=89 }[?] ']' } */,
+					sr0._02 /* { '[' lowerBound=29 { '..' upperBound=89 }[?] '|?' ']' } */,
 					sr0._05 /* { '[' lowerBound=29 { '..' upperBound=89 }[?] isNullFree='|1'[?] ']' } */,
-					sr0._03 /* { '[' stringBounds={'*|+|?'} ']' } */,
-					sr0._07 /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
-					sr0._06 /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */
+					sr0._06 /* { '[' stringBounds={'*|+|?'} ']' } */,
+					sr0._04 /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
+					sr0._03 /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _41 // MultiplicityStringCS
 			= new ParserRuleValue(41, "MultiplicityStringCS",
 				new @NonNull SerializationRule [] {
 					sr0._08 /* stringBounds={'*|+|?'} */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _42 // NUMBER_LITERAL
 			= new DataTypeRuleValue(42, "NUMBER_LITERAL");
 		private final @NonNull ParserRuleValue _43 // NameExpCS
@@ -2042,37 +2042,37 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._52 /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _44 // NavigatingArgCS
 			= new ParserRuleValue(44, "NavigatingArgCS",
 				new @NonNull SerializationRule [] {
-					sr0._55 /* ownedNameExpression=45 */,
-					sr0._54 /* { ':' ownedType=79 } */,
-					sr0._53 /* { ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
-					sr0._56 /* { ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
-					sr0._57 /* { ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */
+					sr0._57 /* ownedNameExpression=45 */,
+					sr0._55 /* { ':' ownedType=79 } */,
+					sr0._56 /* { ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
+					sr0._54 /* { ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
+					sr0._53 /* { ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _45 // NavigatingArgExpCS
 			= new ParserRuleValue(45, "NavigatingArgExpCS",
 				new @NonNull SerializationRule [] {
-					sr0._31 /* symbol={'false|true'} */,
-					sr0._26 /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */,
-					sr0._41 /* '*' */,
-					sr0._38 /* 'invalid' */,
-					sr0._30 /* 'null' */,
-					sr0._39 /* 'self' */,
-					sr0._33 /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */,
-					sr0._29 /* { ownedLeft=57 name=1 ownedRight=20 } */,
-					sr0._36 /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */,
-					sr0._42 /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */,
-					sr0._37 /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */,
-					sr0._32 /* { '(' ownedExpression=20 ')' } */,
-					sr0._35 /* symbol=42 */,
-					sr0._40 /* { name=93 ownedRight=57 } */,
-					sr0._28 /* segments+=70[+] */,
-					sr0._34 /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */,
-					sr0._27 /* ownedType=83 */,
+					sr0._36 /* symbol={'false|true'} */,
+					sr0._29 /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */,
+					sr0._31 /* '*' */,
+					sr0._30 /* 'invalid' */,
+					sr0._39 /* 'null' */,
+					sr0._27 /* 'self' */,
+					sr0._35 /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */,
+					sr0._34 /* { ownedLeft=57 name=1 ownedRight=20 } */,
+					sr0._38 /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */,
+					sr0._32 /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */,
+					sr0._26 /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */,
+					sr0._33 /* { '(' ownedExpression=20 ')' } */,
+					sr0._28 /* symbol=42 */,
+					sr0._37 /* { name=93 ownedRight=57 } */,
+					sr0._41 /* segments+=70[+] */,
+					sr0._42 /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */,
+					sr0._40 /* ownedType=83 */,
 					sr0._46 /* { 'let' ownedVariables+=32 { ',' ownedVariables+=32 }[*] 'in' ownedInExpression=20 } */,
 					sr1._68 /* { name=93 ownedRight=56 } */
 				},
@@ -2082,22 +2082,22 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._58 /* { prefix='|' ownedNameExpression=45 { ':' ownedType=79 { '=' ownedInitExpression=20 }[?] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _47 // NavigatingCommaArgCS
 			= new ParserRuleValue(47, "NavigatingCommaArgCS",
 				new @NonNull SerializationRule [] {
-					sr0._60 /* { prefix=',' ownedNameExpression=45 } */,
-					sr0._59 /* { prefix=',' ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
-					sr0._61 /* { prefix=',' ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
-					sr0._62 /* { prefix=',' ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */
+					sr0._61 /* { prefix=',' ownedNameExpression=45 } */,
+					sr0._62 /* { prefix=',' ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
+					sr0._60 /* { prefix=',' ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
+					sr0._59 /* { prefix=',' ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _48 // NavigatingSemiArgCS
 			= new ParserRuleValue(48, "NavigatingSemiArgCS",
 				new @NonNull SerializationRule [] {
 					sr0._63 /* { prefix=';' ownedNameExpression=45 { ':' ownedType=79 { '=' ownedInitExpression=20 }[?] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _49 // NavigationOperatorName
 			= new DataTypeRuleValue(49, "NavigationOperatorName");
 		private final @NonNull ParserRuleValue _50 // NestedExpCS
@@ -2105,37 +2105,37 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._64 /* { '(' ownedExpression=20 ')' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _51 // NextPathElementCS
 			= new ParserRuleValue(51, "NextPathElementCS",
 				new @NonNull SerializationRule [] {
 					sr0._09 /* referredElement=UnreservedName */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _52 // NullLiteralExpCS
 			= new ParserRuleValue(52, "NullLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._65 /* 'null' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _53 // NumberLiteralExpCS
 			= new ParserRuleValue(53, "NumberLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._66 /* symbol=42 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _54 // PathNameCS
 			= new ParserRuleValue(54, "PathNameCS",
 				new @NonNull SerializationRule [] {
 					sr0._10 /* { ownedPathElements+=21 { '::' ownedPathElements+=51 }[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _55 // PatternExpCS
 			= new ParserRuleValue(55, "PatternExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._67 /* { patternVariableName=96[?] ':' ownedPatternType=79 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _56 // PrefixedLetExpCS
 			= new ParserRuleValue(56, "PrefixedLetExpCS",
 				new @NonNull SerializationRule [] {
@@ -2200,7 +2200,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._70 /* name=61 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _61 // PrimitiveTypeIdentifier
 			= new DataTypeRuleValue(61, "PrimitiveTypeIdentifier");
 		private final @NonNull ParserRuleValue _62 // RoundBracketedClauseCS
@@ -2208,7 +2208,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._71 /* { '(' { ownedArguments+=44 ownedArguments+=(47|48|46)[*] }[?] ')' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _63 // SIMPLE_ID
 			= new TerminalRuleValue(63, "SIMPLE_ID");
 		private final @NonNull TerminalRuleValue _64 // SINGLE_QUOTED_STRING
@@ -2220,26 +2220,26 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._72 /* 'self' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _67 // ShadowPartCS
 			= new ParserRuleValue(67, "ShadowPartCS",
 				new @NonNull SerializationRule [] {
-					sr1._74 /* ownedInitExpression=71 */,
-					sr1._73 /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(20|55) } */
+					sr1._73 /* ownedInitExpression=71 */,
+					sr1._74 /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(20|55) } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _68 // SimplePathNameCS
 			= new ParserRuleValue(68, "SimplePathNameCS",
 				new @NonNull SerializationRule [] {
 					sr1._75 /* ownedPathElements+=21 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _69 // SquareBracketedClauseCS
 			= new ParserRuleValue(69, "SquareBracketedClauseCS",
 				new @NonNull SerializationRule [] {
 					sr1._76 /* { '[' ownedTerms+=20 { ',' ownedTerms+=20 }[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _70 // StringLiteral
 			= new DataTypeRuleValue(70, "StringLiteral");
 		private final @NonNull ParserRuleValue _71 // StringLiteralExpCS
@@ -2247,58 +2247,58 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._77 /* segments+=70[+] */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _72 // TemplateBindingCS
 			= new ParserRuleValue(72, "TemplateBindingCS",
 				new @NonNull SerializationRule [] {
 					sr0._11 /* { ownedSubstitutions+=73 { ',' ownedSubstitutions+=73 }[*] ownedMultiplicity=40[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _73 // TemplateParameterSubstitutionCS
 			= new ParserRuleValue(73, "TemplateParameterSubstitutionCS",
 				new @NonNull SerializationRule [] {
 					sr0._12 /* ownedActualParameter=86 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _74 // TemplateSignatureCS
 			= new ParserRuleValue(74, "TemplateSignatureCS",
 				new @NonNull SerializationRule [] {
 					sr0._13 /* { '(' ownedParameters+=85 { ',' ownedParameters+=85 }[*] ')' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _75 // TupleLiteralExpCS
 			= new ParserRuleValue(75, "TupleLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._78 /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _76 // TupleLiteralPartCS
 			= new ParserRuleValue(76, "TupleLiteralPartCS",
 				new @NonNull SerializationRule [] {
 					sr1._79 /* { name=96 { ':' ownedType=79 }[?] '=' ownedInitExpression=20 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _77 // TuplePartCS
 			= new ParserRuleValue(77, "TuplePartCS",
 				new @NonNull SerializationRule [] {
 					sr1._80 /* { name=96 ':' ownedType=79 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _78 // TupleTypeCS
 			= new ParserRuleValue(78, "TupleTypeCS",
 				new @NonNull SerializationRule [] {
 					sr1._81 /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _79 // TypeExpCS
 			= new ParserRuleValue(79, "TypeExpCS",
 				new @NonNull SerializationRule [] {
-					sr1._87 /* { name=61 ownedMultiplicity=40[?] } */,
+					sr1._82 /* { name=61 ownedMultiplicity=40[?] } */,
 					sr1._86 /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] ownedMultiplicity=40[?] } */,
-					sr1._85 /* { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' ownedMultiplicity=40[?] } */,
-					sr1._82 /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */,
+					sr1._87 /* { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' ownedMultiplicity=40[?] } */,
+					sr1._83 /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */,
 					sr1._84 /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] } */,
-					sr1._83 /* { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] ownedMultiplicity=40[?] } */
+					sr1._85 /* { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] ownedMultiplicity=40[?] } */
 				},
 				iv._35); /* CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS */
 		private final @NonNull ParserRuleValue _80 // TypeExpWithoutMultiplicityCS
@@ -2326,14 +2326,14 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._88 /* ownedType=83 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _83 // TypeLiteralWithMultiplicityCS
 			= new ParserRuleValue(83, "TypeLiteralWithMultiplicityCS",
 				new @NonNull SerializationRule [] {
-					sr1._91 /* { name=61 ownedMultiplicity=40[?] } */,
-					sr1._92 /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] ownedMultiplicity=40[?] } */,
-					sr1._90 /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */,
-					sr1._89 /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] } */
+					sr1._90 /* { name=61 ownedMultiplicity=40[?] } */,
+					sr1._91 /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] ownedMultiplicity=40[?] } */,
+					sr1._89 /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */,
+					sr1._92 /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] } */
 				},
 				iv._33); /* CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeLiteralWithMultiplicityCS */
 		private final @NonNull ParserRuleValue _84 // TypeNameExpCS
@@ -2341,13 +2341,13 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._93 /* { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _85 // TypeParameterCS
 			= new ParserRuleValue(85, "TypeParameterCS",
 				new @NonNull SerializationRule [] {
 					sr0._14 /* { name=96 { 'extends' ownedExtends+=87 { '&&' ownedExtends+=87 }[*] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _86 // TypeRefCS
 			= new ParserRuleValue(86, "TypeRefCS",
 				new @NonNull SerializationRule [] {
@@ -2366,7 +2366,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._15 /* { ownedPathName=54 { '(' ownedBinding=72 ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _89 // UPPER
 			= new DataTypeRuleValue(89, "UPPER");
 		private final @NonNull DataTypeRuleValue _90 // URI
@@ -2377,13 +2377,13 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					sr1._94 /* referredElement=UnrestrictedName */,
 					sr1._95 /* referredElement=URI */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _92 // URIPathNameCS
 			= new ParserRuleValue(92, "URIPathNameCS",
 				new @NonNull SerializationRule [] {
 					sr1._96 /* { ownedPathElements+=91 { '::' ownedPathElements+=51 }[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _93 // UnaryOperatorName
 			= new DataTypeRuleValue(93, "UnaryOperatorName");
 		private final @NonNull ParserRuleValue _94 // UnlimitedNaturalLiteralExpCS
@@ -2391,7 +2391,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._97 /* '*' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _95 // UnreservedName
 			= new DataTypeRuleValue(95, "UnreservedName");
 		private final @NonNull DataTypeRuleValue _96 // UnrestrictedName
@@ -2403,7 +2403,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._16 /* { '?' { 'extends' ownedExtends=87 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 	}
 
 	/**
@@ -2415,14 +2415,14 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			= new EClassValue(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr0._17, sl._24) /* symbol={'false|true'} */,
-					new SerializationRule_SegmentsList(sr0._31, sl._24) /* symbol={'false|true'} */
+					new SerializationRule_SegmentsList(sr0._36, sl._24) /* symbol={'false|true'} */
 				}, null
 			);
 		private final @NonNull EClassValue _01 // CollectionLiteralExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr0._19, sl._28) /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */,
-					new SerializationRule_SegmentsList(sr0._26, sl._28) /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */
+					new SerializationRule_SegmentsList(sr0._29, sl._28) /* { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS,
@@ -2448,7 +2448,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			= new EClassValue(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr0._22, sl._06) /* { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' } */,
-					new SerializationRule_SegmentsList(sr1._85, sl._07) /* { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' ownedMultiplicity=40[?] } */
+					new SerializationRule_SegmentsList(sr1._87, sl._07) /* { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' ownedMultiplicity=40[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
@@ -2463,8 +2463,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			= new EClassValue(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr0._23, sl._18) /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] } */,
-					new SerializationRule_SegmentsList(sr1._82, sl._19) /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */,
-					new SerializationRule_SegmentsList(sr1._90, sl._19) /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */
+					new SerializationRule_SegmentsList(sr1._83, sl._19) /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */,
+					new SerializationRule_SegmentsList(sr1._89, sl._19) /* { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY,
@@ -2498,16 +2498,16 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _07 // ExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._41, sl._24) /* '*' */,
-					new SerializationRule_SegmentsList(sr0._38, sl._24) /* 'invalid' */,
-					new SerializationRule_SegmentsList(sr0._30, sl._24) /* 'null' */,
-					new SerializationRule_SegmentsList(sr0._39, sl._24) /* 'self' */
+					new SerializationRule_SegmentsList(sr0._31, sl._24) /* '*' */,
+					new SerializationRule_SegmentsList(sr0._30, sl._24) /* 'invalid' */,
+					new SerializationRule_SegmentsList(sr0._39, sl._24) /* 'null' */,
+					new SerializationRule_SegmentsList(sr0._27, sl._24) /* 'self' */
 				}, null
 			);
 		private final @NonNull EClassValue _08 // IfExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.IF_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._33, sl._45) /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */,
+					new SerializationRule_SegmentsList(sr0._35, sl._45) /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */,
 					new SerializationRule_SegmentsList(sr0._43, sl._45) /* { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2536,7 +2536,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _10 // InfixExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.INFIX_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._29, sl._29) /* { ownedLeft=57 name=1 ownedRight=20 } */
+					new SerializationRule_SegmentsList(sr0._34, sl._29) /* { ownedLeft=57 name=1 ownedRight=20 } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT,
@@ -2554,7 +2554,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _12 // LambdaLiteralExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._36, sl._48) /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */,
+					new SerializationRule_SegmentsList(sr0._38, sl._48) /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */,
 					new SerializationRule_SegmentsList(sr0._45, sl._48) /* { 'Lambda' '{' ownedExpressionCS=20 '}' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2591,7 +2591,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _15 // MapLiteralExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._42, sl._28) /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */,
+					new SerializationRule_SegmentsList(sr0._32, sl._28) /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */,
 					new SerializationRule_SegmentsList(sr0._48, sl._28) /* { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2618,7 +2618,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr0._50, sl._20) /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] } */,
 					new SerializationRule_SegmentsList(sr1._84, sl._21) /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] } */,
-					new SerializationRule_SegmentsList(sr1._89, sl._21) /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] } */
+					new SerializationRule_SegmentsList(sr1._92, sl._21) /* { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
@@ -2633,24 +2633,24 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			= new EClassValue(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr0._01, sl._23) /* { lowerBound=29 { '..' upperBound=89 }[?] } */,
-					new SerializationRule_SegmentsList(sr0._02, sl._10) /* { '[' lowerBound=29 { '..' upperBound=89 }[?] ']' } */,
-					new SerializationRule_SegmentsList(sr0._04, sl._11) /* { '[' lowerBound=29 { '..' upperBound=89 }[?] '|?' ']' } */,
+					new SerializationRule_SegmentsList(sr0._07, sl._10) /* { '[' lowerBound=29 { '..' upperBound=89 }[?] ']' } */,
+					new SerializationRule_SegmentsList(sr0._02, sl._11) /* { '[' lowerBound=29 { '..' upperBound=89 }[?] '|?' ']' } */,
 					new SerializationRule_SegmentsList(sr0._05, sl._11) /* { '[' lowerBound=29 { '..' upperBound=89 }[?] isNullFree='|1'[?] ']' } */
 				}, null
 			);
 		private final @NonNull EClassValue _19 // MultiplicityStringCS
 			= new EClassValue(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._03, sl._12) /* { '[' stringBounds={'*|+|?'} ']' } */,
-					new SerializationRule_SegmentsList(sr0._07, sl._13) /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
-					new SerializationRule_SegmentsList(sr0._06, sl._13) /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */,
+					new SerializationRule_SegmentsList(sr0._06, sl._12) /* { '[' stringBounds={'*|+|?'} ']' } */,
+					new SerializationRule_SegmentsList(sr0._04, sl._13) /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
+					new SerializationRule_SegmentsList(sr0._03, sl._13) /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */,
 					new SerializationRule_SegmentsList(sr0._08, sl._50) /* stringBounds={'*|+|?'} */
 				}, null
 			);
 		private final @NonNull EClassValue _20 // NameExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.NAME_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._37, sl._25) /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */,
+					new SerializationRule_SegmentsList(sr0._26, sl._25) /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */,
 					new SerializationRule_SegmentsList(sr0._52, sl._25) /* { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2667,16 +2667,16 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _21 // NavigatingArgCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._55, sl._24) /* ownedNameExpression=45 */,
-					new SerializationRule_SegmentsList(sr0._54, sl._39) /* { ':' ownedType=79 } */,
-					new SerializationRule_SegmentsList(sr0._56, sl._30) /* { ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
-					new SerializationRule_SegmentsList(sr0._53, sl._31) /* { ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
-					new SerializationRule_SegmentsList(sr0._57, sl._27) /* { ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */,
+					new SerializationRule_SegmentsList(sr0._57, sl._24) /* ownedNameExpression=45 */,
+					new SerializationRule_SegmentsList(sr0._55, sl._39) /* { ':' ownedType=79 } */,
+					new SerializationRule_SegmentsList(sr0._54, sl._30) /* { ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
+					new SerializationRule_SegmentsList(sr0._56, sl._31) /* { ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
+					new SerializationRule_SegmentsList(sr0._53, sl._27) /* { ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */,
 					new SerializationRule_SegmentsList(sr0._58, sl._41) /* { prefix='|' ownedNameExpression=45 { ':' ownedType=79 { '=' ownedInitExpression=20 }[?] }[?] } */,
-					new SerializationRule_SegmentsList(sr0._60, sl._34) /* { prefix=',' ownedNameExpression=45 } */,
-					new SerializationRule_SegmentsList(sr0._61, sl._36) /* { prefix=',' ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
-					new SerializationRule_SegmentsList(sr0._59, sl._37) /* { prefix=',' ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
-					new SerializationRule_SegmentsList(sr0._62, sl._35) /* { prefix=',' ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */,
+					new SerializationRule_SegmentsList(sr0._61, sl._34) /* { prefix=',' ownedNameExpression=45 } */,
+					new SerializationRule_SegmentsList(sr0._60, sl._36) /* { prefix=',' ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] } */,
+					new SerializationRule_SegmentsList(sr0._62, sl._37) /* { prefix=',' ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] } */,
+					new SerializationRule_SegmentsList(sr0._59, sl._35) /* { prefix=',' ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 } */,
 					new SerializationRule_SegmentsList(sr0._63, sl._38) /* { prefix=';' ownedNameExpression=45 { ':' ownedType=79 { '=' ownedInitExpression=20 }[?] }[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2693,7 +2693,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _22 // NestedExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.NESTED_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._32, sl._33) /* { '(' ownedExpression=20 ')' } */,
+					new SerializationRule_SegmentsList(sr0._33, sl._33) /* { '(' ownedExpression=20 ')' } */,
 					new SerializationRule_SegmentsList(sr1._64, sl._33) /* { '(' ownedExpression=20 ')' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2710,7 +2710,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _24 // NumberLiteralExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._35, sl._24) /* symbol=42 */,
+					new SerializationRule_SegmentsList(sr0._28, sl._24) /* symbol=42 */,
 					new SerializationRule_SegmentsList(sr1._66, sl._24) /* symbol=42 */
 				}, null
 			);
@@ -2753,7 +2753,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _29 // PrefixExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.PREFIX_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._40, sl._39) /* { name=93 ownedRight=57 } */,
+					new SerializationRule_SegmentsList(sr0._37, sl._39) /* { name=93 ownedRight=57 } */,
 					new SerializationRule_SegmentsList(sr1._68, sl._39) /* { name=93 ownedRight=56 } */,
 					new SerializationRule_SegmentsList(sr1._69, sl._39) /* { name=93 ownedRight=57 } */
 				},
@@ -2766,8 +2766,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			= new EClassValue(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr1._70, sl._50) /* name=61 */,
-					new SerializationRule_SegmentsList(sr1._87, sl._15) /* { name=61 ownedMultiplicity=40[?] } */,
-					new SerializationRule_SegmentsList(sr1._91, sl._15) /* { name=61 ownedMultiplicity=40[?] } */
+					new SerializationRule_SegmentsList(sr1._82, sl._15) /* { name=61 ownedMultiplicity=40[?] } */,
+					new SerializationRule_SegmentsList(sr1._90, sl._15) /* { name=61 ownedMultiplicity=40[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
@@ -2793,8 +2793,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _33 // ShadowPartCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.SHADOW_PART_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr1._74, sl._24) /* ownedInitExpression=71 */,
-					new SerializationRule_SegmentsList(sr1._73, sl._49) /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(20|55) } */
+					new SerializationRule_SegmentsList(sr1._73, sl._24) /* ownedInitExpression=71 */,
+					new SerializationRule_SegmentsList(sr1._74, sl._49) /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(20|55) } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
@@ -2814,7 +2814,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _35 // StringLiteralExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._28, sl._24) /* segments+=70[+] */,
+					new SerializationRule_SegmentsList(sr0._41, sl._24) /* segments+=70[+] */,
 					new SerializationRule_SegmentsList(sr1._77, sl._24) /* segments+=70[+] */
 				}, null
 			);
@@ -2853,7 +2853,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _39 // TupleLiteralExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._34, sl._47) /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */,
+					new SerializationRule_SegmentsList(sr0._42, sl._47) /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */,
 					new SerializationRule_SegmentsList(sr1._78, sl._47) /* { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2888,7 +2888,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule_SegmentsList [] {
 					new SerializationRule_SegmentsList(sr1._81, sl._16) /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] } */,
 					new SerializationRule_SegmentsList(sr1._86, sl._17) /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] ownedMultiplicity=40[?] } */,
-					new SerializationRule_SegmentsList(sr1._92, sl._17) /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] ownedMultiplicity=40[?] } */
+					new SerializationRule_SegmentsList(sr1._91, sl._17) /* { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] ownedMultiplicity=40[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
 					new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
@@ -2900,7 +2900,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _43 // TypeLiteralExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._27, sl._24) /* ownedType=83 */,
+					new SerializationRule_SegmentsList(sr0._40, sl._24) /* ownedType=83 */,
 					new SerializationRule_SegmentsList(sr1._88, sl._24) /* ownedType=83 */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2911,7 +2911,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _44 // TypeNameExpCS
 			= new EClassValue(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr1._83, sl._02) /* { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] ownedMultiplicity=40[?] } */,
+					new SerializationRule_SegmentsList(sr1._85, sl._02) /* { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] ownedMultiplicity=40[?] } */,
 					new SerializationRule_SegmentsList(sr1._93, sl._01) /* { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] } */
 				},
 				new @NonNull EReference_RuleIndexes [] {
@@ -2986,7 +2986,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._033 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._082 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._081 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._50,
 			null,
@@ -3031,68 +3031,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				)
 			},
 			null);
-		// Base::MultiplicityCS : { '[' lowerBound=29 { '..' upperBound=89 }[?] ']' }
-		private @NonNull SerializationRule _02 = new SerializationRule(40,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._065 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
-				ms._020 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._116 /* 1*steps-1..7 || «null» */,
-				st._017 /* 1*'[' || «! » «value» «! » */,
-				st._064 /* 1*MultiplicityBoundsCS::lowerBound=29 || «? » «value» «? » */,
-				st._132 /* V00*steps-4..6 || «null» */,
-				st._006 /* 1*'..' || «? » «value» «? » */,
-				st._065 /* 1*MultiplicityBoundsCS::upperBound=89 || «? » «value» «? » */,
-				st._018 /* 1*']' || «! » «value» */
-			},
-			sl._10,
-			null,
-			null,
-			new /*@NonNull*/ EAttribute [] {
-				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
-			},
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				)
-			},
-			null);
-		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} ']' }
-		private @NonNull SerializationRule _03 = new SerializationRule(40,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._021 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || «null» */,
-				st._017 /* 1*'[' || «! » «value» «! » */,
-				st._066 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
-				st._018 /* 1*']' || «! » «value» */
-			},
-			sl._12,
-			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-					ev._0)
-			},
-			null,
-			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			null);
 		// Base::MultiplicityCS : { '[' lowerBound=29 { '..' upperBound=89 }[?] '|?' ']' }
-		private @NonNull SerializationRule _04 = new SerializationRule(40,
+		private @NonNull SerializationRule _02 = new SerializationRule(40,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._065 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._020 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
@@ -3122,6 +3062,68 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
 						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				)
+			},
+			null);
+		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' }
+		private @NonNull SerializationRule _03 = new SerializationRule(40,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._066 /* assign V0 = |MultiplicityCS::isNullFree.'|1'| */,
+				ms._021 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._114 /* 1*steps-1..5 || «null» */,
+				st._017 /* 1*'[' || «! » «value» «! » */,
+				st._066 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
+				st._119 /* V00*'|1' || «? » «value» «? » */,
+				st._018 /* 1*']' || «! » «value» */
+			},
+			sl._13,
+			new @NonNull EAttribute_EnumerationValues [] {
+				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
+					ev._8),
+				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					ev._0)
+			},
+			null,
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._8, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			null);
+		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} '|?' ']' }
+		private @NonNull SerializationRule _04 = new SerializationRule(40,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._021 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._114 /* 1*steps-1..5 || «null» */,
+				st._017 /* 1*'[' || «! » «value» «! » */,
+				st._066 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
+				st._033 /* 1*'|?' || «? » «value» «? » */,
+				st._018 /* 1*']' || «! » «value» */
+			},
+			sl._13,
+			new @NonNull EAttribute_EnumerationValues [] {
+				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					ev._0)
+			},
+			null,
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
 					}
 				)
 			},
@@ -3170,34 +3172,25 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				)
 			},
 			null);
-		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' }
+		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} ']' }
 		private @NonNull SerializationRule _06 = new SerializationRule(40,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._066 /* assign V0 = |MultiplicityCS::isNullFree.'|1'| */,
 				ms._021 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || «null» */,
+				st._113 /* 1*steps-1..4 || «null» */,
 				st._017 /* 1*'[' || «! » «value» «! » */,
 				st._066 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
-				st._119 /* V00*'|1' || «? » «value» «? » */,
 				st._018 /* 1*']' || «! » «value» */
 			},
-			sl._13,
+			sl._12,
 			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-					ev._8),
 				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					ev._0)
 			},
 			null,
 			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._8, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
 						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
@@ -3205,29 +3198,36 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				)
 			},
 			null);
-		// Base::MultiplicityCS : { '[' stringBounds={'*|+|?'} '|?' ']' }
+		// Base::MultiplicityCS : { '[' lowerBound=29 { '..' upperBound=89 }[?] ']' }
 		private @NonNull SerializationRule _07 = new SerializationRule(40,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._021 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
+				ms._065 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				ms._020 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || «null» */,
+				st._116 /* 1*steps-1..7 || «null» */,
 				st._017 /* 1*'[' || «! » «value» «! » */,
-				st._066 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
-				st._033 /* 1*'|?' || «? » «value» «? » */,
+				st._064 /* 1*MultiplicityBoundsCS::lowerBound=29 || «? » «value» «? » */,
+				st._132 /* V00*steps-4..6 || «null» */,
+				st._006 /* 1*'..' || «? » «value» «? » */,
+				st._065 /* 1*MultiplicityBoundsCS::upperBound=89 || «? » «value» «? » */,
 				st._018 /* 1*']' || «! » «value» */
 			},
-			sl._13,
-			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-					ev._0)
+			sl._10,
+			null,
+			null,
+			new /*@NonNull*/ EAttribute [] {
+				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
-			null,
-			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -3298,8 +3298,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(51, MultiplicativeCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(21, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(21, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(51, MultiplicativeCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -3832,343 +3832,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::ExpCS : { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' }
-		private @NonNull SerializationRule _26 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._117 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 7 */,
-				ms._116 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 5 */,
-				ms._002 /* assert (|CollectionLiteralExpCS::ownedType| - 1) == 0 */,
-				ms._046 /* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
-				ms._077 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._038 /* 1*CollectionLiteralExpCS::ownedType=7 || «null» */,
-				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._133 /* V00*steps-4..8 || «null» */,
-				st._037 /* 1*CollectionLiteralExpCS::ownedParts+=5 || «null» */,
-				st._147 /* V01*steps-6..8 || «null» */,
-				st._005 /* 1*',' || «! » «value» «? » */,
-				st._037 /* 1*CollectionLiteralExpCS::ownedParts+=5 || «null» */,
-				st._034 /* 1*'}' || «-» «? » «value» «?\n» */
-			},
-			sl._28,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
-					iv._2) /* CollectionTypeCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS,
-					iv._1) /* CollectionLiteralPartCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(7, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(5, MultiplicativeCardinality.ZERO_OR_MORE)
-					}
-				)
-			});
-		// EssentialOCL::ExpCS : ownedType=83
-		private @NonNull SerializationRule _27 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._158 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 83 */,
-				ms._041 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._098 /* 1*TypeLiteralExpCS::ownedType=83 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
-			},
-			sl._24,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE,
-					iv._32) /* TypeLiteralWithMultiplicityCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(83, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::ExpCS : segments+=70[+]
-		private @NonNull SerializationRule _28 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._071 /* assign V0 = |StringLiteralExpCS::segments| */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._124 /* V00*StringLiteralExpCS::segments+=70 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
-			},
-			sl._24,
-			null,
-			null,
-			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE_OR_MORE)
-					}
-				)
-			},
-			null);
-		// EssentialOCL::ExpCS : { ownedLeft=57 name=1 ownedRight=20 }
-		private @NonNull SerializationRule _29 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._133 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : 57 */,
-				ms._149 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 20 */,
-				ms._032 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
-				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */,
-				ms._012 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._054 /* 1*InfixExpCS::ownedLeft=57 || «null» */,
-				st._067 /* 1*NamedElementCS::name=1 || «? » «value» «? » */,
-				st._076 /* 1*OperatorExpCS::ownedRight=20 || «null» */
-			},
-			sl._29,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT,
-					iv._20) /* PrefixedPrimaryExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
-					iv._5) /* ExpCS */
-			},
-			new /*@NonNull*/ EAttribute [] {
-				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
-			},
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(57, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::ExpCS : 'null'
-		private @NonNull SerializationRule _30 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._027 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
-			},
-			sl._24,
-			null,
-			null,
-			null,
-			null,
-			null);
-		// EssentialOCL::ExpCS : symbol={'false|true'}
-		private @NonNull SerializationRule _31 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._001 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._036 /* 1*BooleanLiteralExpCS::symbol || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
-			},
-			sl._24,
-			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL,
-					ev._6)
-			},
-			null,
-			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._6, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			null);
-		// EssentialOCL::ExpCS : { '(' ownedExpression=20 ')' }
-		private @NonNull SerializationRule _32 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._148 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 20 */,
-				ms._030 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._074 /* 1*NestedExpCS::ownedExpression=20 || «null» */,
-				st._002 /* 1*')' || «! » «value» */
-			},
-			sl._33,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION,
-					iv._5) /* ExpCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::ExpCS : { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' }
-		private @NonNull SerializationRule _33 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._127 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 20|55 */,
-				ms._129 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 13 */,
-				ms._128 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 20 */,
-				ms._130 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 20 */,
-				ms._008 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
-				ms._062 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
-				ms._009 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
-				ms._007 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._023 /* 1*'if' || «? » «value» «? » */,
-				st._049 /* 1*IfExpCS::ownedCondition=20|55 || «null» */,
-				st._030 /* 1*'then' || «? » «value» «? » */,
-				st._051 /* 1*IfExpCS::ownedThenExpression=20 || «null» */,
-				st._121 /* V00*IfExpCS::ownedIfThenExpressions+=13 || «null» */,
-				st._019 /* 1*'else' || «? » «value» «? » */,
-				st._050 /* 1*IfExpCS::ownedElseExpression=20 || «null» */,
-				st._021 /* 1*'endif' || «? » «value» «? » */
-			},
-			sl._45,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
-					iv._17) /* ExpCS|PatternExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
-					iv._4) /* ElseIfThenExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
-					iv._5) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
-					iv._5) /* ExpCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::ExpCS : { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' }
-		private @NonNull SerializationRule _34 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._157 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 76 */,
-				ms._055 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._016 /* 1*'Tuple' || «? » «value» «? » */,
-				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._096 /* 1*TupleLiteralExpCS::ownedParts+=76 || «null» */,
-				st._135 /* V00*steps-5..7 || «null» */,
-				st._005 /* 1*',' || «! » «value» «? » */,
-				st._096 /* 1*TupleLiteralExpCS::ownedParts+=76 || «null» */,
-				st._034 /* 1*'}' || «-» «? » «value» «?\n» */
-			},
-			sl._47,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
-					iv._27) /* TupleLiteralPartCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(76, MultiplicativeCardinality.ONE_OR_MORE)
-					}
-				)
-			});
-		// EssentialOCL::ExpCS : symbol=42
-		private @NonNull SerializationRule _35 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._031 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._075 /* 1*NumberLiteralExpCS::symbol=42 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
-			},
-			sl._24,
-			null,
-			null,
-			new /*@NonNull*/ EAttribute [] {
-				EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL
-			},
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			null);
-		// EssentialOCL::ExpCS : { 'Lambda' '{' ownedExpressionCS=20 '}' }
-		private @NonNull SerializationRule _36 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._134 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 20 */,
-				ms._013 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._014 /* 1*'Lambda' || «? » «value» «? » */,
-				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._055 /* 1*LambdaLiteralExpCS::ownedExpressionCS=20 || «null» */,
-				st._034 /* 1*'}' || «-» «? » «value» «?\n» */
-			},
-			sl._48,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS,
-					iv._5) /* ExpCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
 		// EssentialOCL::ExpCS : { ownedPathName=54 ownedSquareBracketedClauses+=69[*] ownedRoundBracketedClause=62[?] ownedCurlyBracketedClause=9[?] { isPre='@' 'pre' }[?] }
-		private @NonNull SerializationRule _37 = new SerializationRule(20,
+		private @NonNull SerializationRule _26 = new SerializationRule(20,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._115 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 69 */,
 				ms._113 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : 54 */,
@@ -4235,21 +3900,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::ExpCS : 'invalid'
-		private @NonNull SerializationRule _38 = new SerializationRule(20,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._025 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
-			},
-			sl._24,
-			null,
-			null,
-			null,
-			null,
-			null);
 		// EssentialOCL::ExpCS : 'self'
-		private @NonNull SerializationRule _39 = new SerializationRule(20,
+		private @NonNull SerializationRule _27 = new SerializationRule(20,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -4261,43 +3913,85 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			null);
-		// EssentialOCL::ExpCS : { name=93 ownedRight=57 }
-		private @NonNull SerializationRule _40 = new SerializationRule(20,
+		// EssentialOCL::ExpCS : symbol=42
+		private @NonNull SerializationRule _28 = new SerializationRule(20,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._151 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 57 */,
-				ms._032 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
-				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
+				ms._031 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._068 /* 1*NamedElementCS::name=93 || «? » «value» «? » */,
-				st._078 /* 1*OperatorExpCS::ownedRight=57 || «null» */
+				st._075 /* 1*NumberLiteralExpCS::symbol=42 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
-			sl._39,
+			sl._24,
 			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
-					iv._20) /* PrefixedPrimaryExpCS */
-			},
+			null,
 			new /*@NonNull*/ EAttribute [] {
-				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
+				EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
 						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
 					}
 				)
 			},
+			null);
+		// EssentialOCL::ExpCS : { ownedType=7 '{' { ownedParts+=5 { ',' ownedParts+=5 }[*] }[?] '}' }
+		private @NonNull SerializationRule _29 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._117 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedType : 7 */,
+				ms._116 /* check-rule essentialoclcs::CollectionLiteralExpCS.ownedParts : 5 */,
+				ms._002 /* assert (|CollectionLiteralExpCS::ownedType| - 1) == 0 */,
+				ms._046 /* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
+				ms._077 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._038 /* 1*CollectionLiteralExpCS::ownedType=7 || «null» */,
+				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
+				st._133 /* V00*steps-4..8 || «null» */,
+				st._037 /* 1*CollectionLiteralExpCS::ownedParts+=5 || «null» */,
+				st._147 /* V01*steps-6..8 || «null» */,
+				st._005 /* 1*',' || «! » «value» «? » */,
+				st._037 /* 1*CollectionLiteralExpCS::ownedParts+=5 || «null» */,
+				st._034 /* 1*'}' || «-» «? » «value» «?\n» */
+			},
+			sl._28,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
+					iv._2) /* CollectionTypeCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS,
+					iv._1) /* CollectionLiteralPartCS */
+			},
+			null,
+			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(57, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(7, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(5, MultiplicativeCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
+		// EssentialOCL::ExpCS : 'invalid'
+		private @NonNull SerializationRule _30 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._025 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			},
+			sl._24,
+			null,
+			null,
+			null,
+			null,
+			null);
 		// EssentialOCL::ExpCS : '*'
-		private @NonNull SerializationRule _41 = new SerializationRule(20,
+		private @NonNull SerializationRule _31 = new SerializationRule(20,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
@@ -4310,7 +4004,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null);
 		// EssentialOCL::ExpCS : { ownedType=37 '{' { ownedParts+=36 { ',' ownedParts+=36 }[*] }[?] '}' }
-		private @NonNull SerializationRule _42 = new SerializationRule(20,
+		private @NonNull SerializationRule _32 = new SerializationRule(20,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._139 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 37 */,
 				ms._138 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 36 */,
@@ -4348,6 +4042,312 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
 					new RuleIndex_MultiplicativeCardinality(36, MultiplicativeCardinality.ZERO_OR_MORE)
+					}
+				)
+			});
+		// EssentialOCL::ExpCS : { '(' ownedExpression=20 ')' }
+		private @NonNull SerializationRule _33 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._148 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 20 */,
+				ms._030 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._001 /* 1*'(' || «! » «value» «! » */,
+				st._074 /* 1*NestedExpCS::ownedExpression=20 || «null» */,
+				st._002 /* 1*')' || «! » «value» */
+			},
+			sl._33,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION,
+					iv._5) /* ExpCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::ExpCS : { ownedLeft=57 name=1 ownedRight=20 }
+		private @NonNull SerializationRule _34 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._133 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : 57 */,
+				ms._149 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 20 */,
+				ms._032 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
+				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */,
+				ms._012 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._054 /* 1*InfixExpCS::ownedLeft=57 || «null» */,
+				st._067 /* 1*NamedElementCS::name=1 || «? » «value» «? » */,
+				st._076 /* 1*OperatorExpCS::ownedRight=20 || «null» */
+			},
+			sl._29,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT,
+					iv._20) /* PrefixedPrimaryExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
+					iv._5) /* ExpCS */
+			},
+			new /*@NonNull*/ EAttribute [] {
+				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
+			},
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(57, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::ExpCS : { 'if' ownedCondition=(20|55) 'then' ownedThenExpression=20 ownedIfThenExpressions+=13[*] 'else' ownedElseExpression=20 'endif' }
+		private @NonNull SerializationRule _35 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._127 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 20|55 */,
+				ms._129 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 13 */,
+				ms._128 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 20 */,
+				ms._130 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 20 */,
+				ms._008 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
+				ms._062 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
+				ms._009 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
+				ms._007 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._023 /* 1*'if' || «? » «value» «? » */,
+				st._049 /* 1*IfExpCS::ownedCondition=20|55 || «null» */,
+				st._030 /* 1*'then' || «? » «value» «? » */,
+				st._051 /* 1*IfExpCS::ownedThenExpression=20 || «null» */,
+				st._121 /* V00*IfExpCS::ownedIfThenExpressions+=13 || «null» */,
+				st._019 /* 1*'else' || «? » «value» «? » */,
+				st._050 /* 1*IfExpCS::ownedElseExpression=20 || «null» */,
+				st._021 /* 1*'endif' || «? » «value» «? » */
+			},
+			sl._45,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
+					iv._17) /* ExpCS|PatternExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
+					iv._4) /* ElseIfThenExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
+					iv._5) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
+					iv._5) /* ExpCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(13, MultiplicativeCardinality.ZERO_OR_MORE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::ExpCS : symbol={'false|true'}
+		private @NonNull SerializationRule _36 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._001 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._036 /* 1*BooleanLiteralExpCS::symbol || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			},
+			sl._24,
+			new @NonNull EAttribute_EnumerationValues [] {
+				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL,
+					ev._6)
+			},
+			null,
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._6, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			null);
+		// EssentialOCL::ExpCS : { name=93 ownedRight=57 }
+		private @NonNull SerializationRule _37 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._151 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 57 */,
+				ms._032 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
+				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._068 /* 1*NamedElementCS::name=93 || «? » «value» «? » */,
+				st._078 /* 1*OperatorExpCS::ownedRight=57 || «null» */
+			},
+			sl._39,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
+					iv._20) /* PrefixedPrimaryExpCS */
+			},
+			new /*@NonNull*/ EAttribute [] {
+				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
+			},
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(57, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::ExpCS : { 'Lambda' '{' ownedExpressionCS=20 '}' }
+		private @NonNull SerializationRule _38 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._134 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 20 */,
+				ms._013 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._014 /* 1*'Lambda' || «? » «value» «? » */,
+				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
+				st._055 /* 1*LambdaLiteralExpCS::ownedExpressionCS=20 || «null» */,
+				st._034 /* 1*'}' || «-» «? » «value» «?\n» */
+			},
+			sl._48,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS,
+					iv._5) /* ExpCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::ExpCS : 'null'
+		private @NonNull SerializationRule _39 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._027 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			},
+			sl._24,
+			null,
+			null,
+			null,
+			null,
+			null);
+		// EssentialOCL::ExpCS : ownedType=83
+		private @NonNull SerializationRule _40 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._158 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 83 */,
+				ms._041 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._098 /* 1*TypeLiteralExpCS::ownedType=83 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			},
+			sl._24,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE,
+					iv._32) /* TypeLiteralWithMultiplicityCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(83, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::ExpCS : segments+=70[+]
+		private @NonNull SerializationRule _41 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._071 /* assign V0 = |StringLiteralExpCS::segments| */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._124 /* V00*StringLiteralExpCS::segments+=70 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			},
+			sl._24,
+			null,
+			null,
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE_OR_MORE)
+					}
+				)
+			},
+			null);
+		// EssentialOCL::ExpCS : { 'Tuple' '{' ownedParts+=76 { ',' ownedParts+=76 }[*] '}' }
+		private @NonNull SerializationRule _42 = new SerializationRule(20,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._157 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 76 */,
+				ms._055 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._016 /* 1*'Tuple' || «? » «value» «? » */,
+				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
+				st._096 /* 1*TupleLiteralExpCS::ownedParts+=76 || «null» */,
+				st._135 /* V00*steps-5..7 || «null» */,
+				st._005 /* 1*',' || «! » «value» «? » */,
+				st._096 /* 1*TupleLiteralExpCS::ownedParts+=76 || «null» */,
+				st._034 /* 1*'}' || «-» «? » «value» «?\n» */
+			},
+			sl._47,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
+					iv._27) /* TupleLiteralPartCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(76, MultiplicativeCardinality.ONE_OR_MORE)
 					}
 				)
 			});
@@ -4391,8 +4391,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
@@ -4770,8 +4770,142 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] }
+		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 }
 		private @NonNull SerializationRule _53 = new SerializationRule(44,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
+				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
+				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
+				ms._147 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 79 */,
+				ms._024 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
+				ms._087 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
+				ms._069 /* assign V0 = |NavigatingArgCS::ownedType| */,
+				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._109 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
+				st._127 /* V00*steps-3..5 || «null» */,
+				st._007 /* 1*':' || «? » «value» «? » */,
+				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */,
+				st._147 /* V01*steps-6..8 || «null» */,
+				st._010 /* 1*'<-' || «? » «value» «? » */,
+				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
+				st._024 /* 1*'in' || «? » «value» «? » */,
+				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
+			},
+			sl._27,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._11) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._0) /* CoIteratorVariableCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					iv._5) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._29) /* TypeExpCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				)
+			});
+		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] }
+		private @NonNull SerializationRule _54 = new SerializationRule(44,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
+				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
+				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
+				ms._068 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
+				ms._023 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
+				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
+				st._010 /* 1*'<-' || «? » «value» «? » */,
+				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
+				st._135 /* V00*steps-5..7 || «null» */,
+				st._011 /* 1*'=' || «? » «value» «? » */,
+				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
+			},
+			sl._30,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._11) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._0) /* CoIteratorVariableCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					iv._5) /* ExpCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				)
+			});
+		// EssentialOCL::NavigatingArgCS : { ':' ownedType=79 }
+		private @NonNull SerializationRule _55 = new SerializationRule(44,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._147 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 79 */,
+				ms._026 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._007 /* 1*':' || «? » «value» «? » */,
+				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */
+			},
+			sl._39,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._29) /* TypeExpCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] }
+		private @NonNull SerializationRule _56 = new SerializationRule(44,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
 				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
@@ -4830,34 +4964,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::NavigatingArgCS : { ':' ownedType=79 }
-		private @NonNull SerializationRule _54 = new SerializationRule(44,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._147 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 79 */,
-				ms._026 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._007 /* 1*':' || «? » «value» «? » */,
-				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */
-			},
-			sl._39,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._29) /* TypeExpCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
 		// EssentialOCL::NavigatingArgCS : ownedNameExpression=45
-		private @NonNull SerializationRule _55 = new SerializationRule(44,
+		private @NonNull SerializationRule _57 = new SerializationRule(44,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
 				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
@@ -4877,114 +4985,6 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
 					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] }
-		private @NonNull SerializationRule _56 = new SerializationRule(44,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
-				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
-				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
-				ms._068 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
-				ms._023 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
-				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
-				st._010 /* 1*'<-' || «? » «value» «? » */,
-				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
-				st._135 /* V00*steps-5..7 || «null» */,
-				st._011 /* 1*'=' || «? » «value» «? » */,
-				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
-			},
-			sl._30,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._11) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._0) /* CoIteratorVariableCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._5) /* ExpCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				)
-			});
-		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 }
-		private @NonNull SerializationRule _57 = new SerializationRule(44,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
-				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
-				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
-				ms._147 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 79 */,
-				ms._024 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
-				ms._087 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
-				ms._069 /* assign V0 = |NavigatingArgCS::ownedType| */,
-				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._109 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
-				st._127 /* V00*steps-3..5 || «null» */,
-				st._007 /* 1*':' || «? » «value» «? » */,
-				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */,
-				st._147 /* V01*steps-6..8 || «null» */,
-				st._010 /* 1*'<-' || «? » «value» «? » */,
-				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
-				st._024 /* 1*'in' || «? » «value» «? » */,
-				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
-			},
-			sl._27,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._11) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._0) /* CoIteratorVariableCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._5) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._29) /* TypeExpCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				)
 			});
@@ -5048,174 +5048,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] }
-		private @NonNull SerializationRule _59 = new SerializationRule(47,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
-				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
-				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
-				ms._147 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 79 */,
-				ms._088 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
-				ms._067 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
-				ms._026 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
-				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
-				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._110 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._005 /* 1*',' || «! » «value» «? » */,
-				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
-				st._007 /* 1*':' || «? » «value» «? » */,
-				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */,
-				st._136 /* V00*steps-6..8 || «null» */,
-				st._010 /* 1*'<-' || «? » «value» «? » */,
-				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
-				st._150 /* V01*steps-9..11 || «null» */,
-				st._011 /* 1*'=' || «? » «value» «? » */,
-				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
-			},
-			sl._37,
-			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
-					ev._1)
-			},
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._11) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._0) /* CoIteratorVariableCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._5) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._29) /* TypeExpCS */
-			},
-			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=45 }
-		private @NonNull SerializationRule _60 = new SerializationRule(47,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
-				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
-				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._005 /* 1*',' || «! » «value» «? » */,
-				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */
-			},
-			sl._34,
-			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
-					ev._1)
-			},
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._11) /* NavigatingArgExpCS */
-			},
-			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] }
-		private @NonNull SerializationRule _61 = new SerializationRule(47,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
-				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
-				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
-				ms._068 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
-				ms._023 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
-				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
-				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-				st._005 /* 1*',' || «! » «value» «? » */,
-				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
-				st._010 /* 1*'<-' || «? » «value» «? » */,
-				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
-				st._136 /* V00*steps-6..8 || «null» */,
-				st._011 /* 1*'=' || «? » «value» «? » */,
-				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
-			},
-			sl._36,
-			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
-					ev._1)
-			},
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._11) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._0) /* CoIteratorVariableCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._5) /* ExpCS */
-			},
-			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				)
-			});
 		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=45 { ':' ownedType=79 }[?] { '<-' ownedCoIterator=3 }[?] 'in' ownedInitExpression=20 }
-		private @NonNull SerializationRule _62 = new SerializationRule(47,
+		private @NonNull SerializationRule _59 = new SerializationRule(47,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
 				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
@@ -5282,6 +5116,172 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
 					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				)
+			});
+		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=45 '<-' ownedCoIterator=3 { '=' ownedInitExpression=20 }[?] }
+		private @NonNull SerializationRule _60 = new SerializationRule(47,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
+				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
+				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
+				ms._068 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
+				ms._023 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
+				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._005 /* 1*',' || «! » «value» «? » */,
+				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
+				st._010 /* 1*'<-' || «? » «value» «? » */,
+				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
+				st._136 /* V00*steps-6..8 || «null» */,
+				st._011 /* 1*'=' || «? » «value» «? » */,
+				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
+			},
+			sl._36,
+			new @NonNull EAttribute_EnumerationValues [] {
+				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
+					ev._1)
+			},
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._11) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._0) /* CoIteratorVariableCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					iv._5) /* ExpCS */
+			},
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				)
+			});
+		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=45 }
+		private @NonNull SerializationRule _61 = new SerializationRule(47,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
+				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._005 /* 1*',' || «! » «value» «? » */,
+				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */
+			},
+			sl._34,
+			new @NonNull EAttribute_EnumerationValues [] {
+				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
+					ev._1)
+			},
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._11) /* NavigatingArgExpCS */
+			},
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=45 ':' ownedType=79 { '<-' ownedCoIterator=3 }[?] { '=' ownedInitExpression=20 }[?] }
+		private @NonNull SerializationRule _62 = new SerializationRule(47,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._146 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 45 */,
+				ms._144 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 3 */,
+				ms._145 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 20 */,
+				ms._147 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 79 */,
+				ms._088 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
+				ms._067 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
+				ms._026 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
+				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
+				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._110 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._005 /* 1*',' || «! » «value» «? » */,
+				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
+				st._007 /* 1*':' || «? » «value» «? » */,
+				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */,
+				st._136 /* V00*steps-6..8 || «null» */,
+				st._010 /* 1*'<-' || «? » «value» «? » */,
+				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
+				st._150 /* V01*steps-9..11 || «null» */,
+				st._011 /* 1*'=' || «? » «value» «? » */,
+				st._071 /* 1*NavigatingArgCS::ownedInitExpression=20 || «null» */
+			},
+			sl._37,
+			new @NonNull EAttribute_EnumerationValues [] {
+				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
+					ev._1)
+			},
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._11) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._0) /* CoIteratorVariableCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					iv._5) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._29) /* TypeExpCS */
+			},
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__PREFIX,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._1, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(45, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(3, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ONE)
 					}
 				)
 			});
@@ -5562,10 +5562,10 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(47, MultiplicativeCardinality.ZERO_OR_MORE),
+					new RuleIndex_MultiplicativeCardinality(44, MultiplicativeCardinality.ZERO_OR_ONE),
 					new RuleIndex_MultiplicativeCardinality(48, MultiplicativeCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(46, MultiplicativeCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(44, MultiplicativeCardinality.ZERO_OR_ONE)
+					new RuleIndex_MultiplicativeCardinality(47, MultiplicativeCardinality.ZERO_OR_MORE),
+					new RuleIndex_MultiplicativeCardinality(46, MultiplicativeCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -5582,8 +5582,32 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			null);
-		// EssentialOCL::ShadowPartCS : { referredProperty=UnrestrictedName '=' ownedInitExpression=(20|55) }
+		// EssentialOCL::ShadowPartCS : ownedInitExpression=71
 		private @NonNull SerializationRule _73 = new SerializationRule(67,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._155 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 71 */,
+				ms._037 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._090 /* 1*ShadowPartCS::ownedInitExpression=71 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			},
+			sl._24,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
+					iv._24) /* StringLiteralExpCS */
+			},
+			null,
+			null,
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(71, MultiplicativeCardinality.ONE)
+					}
+				)
+			});
+		// EssentialOCL::ShadowPartCS : { referredProperty=UnrestrictedName '=' ownedInitExpression=(20|55) }
+		private @NonNull SerializationRule _74 = new SerializationRule(67,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._154 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 20|55 */,
 				ms._037 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */,
@@ -5610,32 +5634,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ONE)
-					}
-				)
-			});
-		// EssentialOCL::ShadowPartCS : ownedInitExpression=71
-		private @NonNull SerializationRule _74 = new SerializationRule(67,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._155 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 71 */,
-				ms._037 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._090 /* 1*ShadowPartCS::ownedInitExpression=71 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
-			},
-			sl._24,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
-					iv._24) /* StringLiteralExpCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(71, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ONE)
 					}
 				)
 			});
@@ -5873,8 +5873,43 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::TypeExpCS : { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] }
+		// EssentialOCL::TypeExpCS : { name=61 ownedMultiplicity=40[?] }
 		private @NonNull SerializationRule _82 = new SerializationRule(79,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
+				ms._073 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
+				ms._036 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._112 /* 1*steps-1..3 || «null» */,
+				st._087 /* 1*PrimitiveTypeRefCS::name=61 || «? » «value» «? » */,
+				st._125 /* V00*TypedRefCS::ownedMultiplicity=40 || «null» */
+			},
+			sl._15,
+			null,
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
+					iv._10) /* MultiplicityCS */
+			},
+			new /*@NonNull*/ EAttribute [] {
+				BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME
+			},
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(40, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				)
+			});
+		// EssentialOCL::TypeExpCS : { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] }
+		private @NonNull SerializationRule _83 = new SerializationRule(79,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._123 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 40 */,
 				ms._124 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 80 */,
@@ -5923,65 +5958,6 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
 					new RuleIndex_MultiplicativeCardinality(80, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(40, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				)
-			});
-		// EssentialOCL::TypeExpCS : { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] ownedMultiplicity=40[?] }
-		private @NonNull SerializationRule _83 = new SerializationRule(79,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._159 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 9 */,
-				ms._160 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 54 */,
-				ms._161 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 20 */,
-				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
-				ms._095 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
-				ms._072 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
-				ms._042 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
-				ms._090 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || «null» */,
-				st._100 /* 1*TypeNameExpCS::ownedPathName=54 || «null» */,
-				st._130 /* V00*steps-3..8 || «null» */,
-				st._099 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=9 || «null» */,
-				st._145 /* V01*steps-5..8 || «null» */,
-				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._101 /* 1*TypeNameExpCS::ownedPatternGuard=20 || «null» */,
-				st._034 /* 1*'}' || «-» «? » «value» «?\n» */,
-				st._152 /* V02*TypedRefCS::ownedMultiplicity=40 || «null» */
-			},
-			sl._02,
-			null,
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
-					iv._3) /* CurlyBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._15) /* PathNameCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
-					iv._5) /* ExpCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._10) /* MultiplicityCS */
-			},
-			null,
-			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(9, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(54, MultiplicativeCardinality.ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
@@ -6050,58 +6026,57 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::TypeExpCS : { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' ownedMultiplicity=40[?] }
+		// EssentialOCL::TypeExpCS : { ownedPathName=54 { ownedCurlyBracketedClause=9 { '{' ownedPatternGuard=20 '}' }[?] }[?] ownedMultiplicity=40[?] }
 		private @NonNull SerializationRule _85 = new SerializationRule(79,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._122 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 7 */,
-				ms._121 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 55 */,
+				ms._159 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 9 */,
+				ms._160 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 54 */,
+				ms._161 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 20 */,
 				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
 				ms._095 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
-				ms._060 /* assign V0 = |CollectionPatternCS::restVariableName| */,
-				ms._078 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
-				ms._004 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
+				ms._072 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
+				ms._042 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
+				ms._090 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._111 /* 1*steps-1..12 || «null» */,
-				st._043 /* 1*CollectionPatternCS::ownedType=7 || «null» */,
+				st._118 /* 1*steps-1..9 || «null» */,
+				st._100 /* 1*TypeNameExpCS::ownedPathName=54 || «null» */,
+				st._130 /* V00*steps-3..8 || «null» */,
+				st._099 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=9 || «null» */,
+				st._145 /* V01*steps-5..8 || «null» */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._131 /* V00*steps-4..10 || «null» */,
-				st._042 /* 1*CollectionPatternCS::ownedParts+=55 || «null» */,
-				st._147 /* V01*steps-6..8 || «null» */,
-				st._005 /* 1*',' || «! » «value» «? » */,
-				st._042 /* 1*CollectionPatternCS::ownedParts+=55 || «null» */,
-				st._004 /* 1*'++' || «? » «value» «? » */,
-				st._044 /* 1*CollectionPatternCS::restVariableName=24 || «? » «value» «? » */,
+				st._101 /* 1*TypeNameExpCS::ownedPatternGuard=20 || «null» */,
 				st._034 /* 1*'}' || «-» «? » «value» «?\n» */,
 				st._152 /* V02*TypedRefCS::ownedMultiplicity=40 || «null» */
 			},
-			sl._07,
+			sl._02,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
-					iv._2) /* CollectionTypeCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS,
-					iv._16) /* PatternExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
+					iv._3) /* CurlyBracketedClauseCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
+					iv._15) /* PathNameCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
+					iv._5) /* ExpCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._10) /* MultiplicityCS */
 			},
 			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				)
-			},
+			null,
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(7, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(9, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS,
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(54, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(20, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
@@ -6165,35 +6140,60 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::TypeExpCS : { name=61 ownedMultiplicity=40[?] }
+		// EssentialOCL::TypeExpCS : { ownedType=7 '{' { ownedParts+=55 { ',' ownedParts+=55 }[*] '++' restVariableName=24 }[?] '}' ownedMultiplicity=40[?] }
 		private @NonNull SerializationRule _87 = new SerializationRule(79,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._122 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 7 */,
+				ms._121 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 55 */,
 				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
-				ms._073 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
-				ms._036 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
+				ms._095 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
+				ms._060 /* assign V0 = |CollectionPatternCS::restVariableName| */,
+				ms._078 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
+				ms._004 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || «null» */,
-				st._087 /* 1*PrimitiveTypeRefCS::name=61 || «? » «value» «? » */,
-				st._125 /* V00*TypedRefCS::ownedMultiplicity=40 || «null» */
+				st._111 /* 1*steps-1..12 || «null» */,
+				st._043 /* 1*CollectionPatternCS::ownedType=7 || «null» */,
+				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
+				st._131 /* V00*steps-4..10 || «null» */,
+				st._042 /* 1*CollectionPatternCS::ownedParts+=55 || «null» */,
+				st._147 /* V01*steps-6..8 || «null» */,
+				st._005 /* 1*',' || «! » «value» «? » */,
+				st._042 /* 1*CollectionPatternCS::ownedParts+=55 || «null» */,
+				st._004 /* 1*'++' || «? » «value» «? » */,
+				st._044 /* 1*CollectionPatternCS::restVariableName=24 || «? » «value» «? » */,
+				st._034 /* 1*'}' || «-» «? » «value» «?\n» */,
+				st._152 /* V02*TypedRefCS::ownedMultiplicity=40 || «null» */
 			},
-			sl._15,
+			sl._07,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
+					iv._2) /* CollectionTypeCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS,
+					iv._16) /* PatternExpCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._10) /* MultiplicityCS */
 			},
-			new /*@NonNull*/ EAttribute [] {
-				BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME
-			},
+			null,
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME,
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(7, MultiplicativeCardinality.ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(55, MultiplicativeCardinality.ZERO_OR_MORE)
+					}
+				),
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
 					new RuleIndex_MultiplicativeCardinality(40, MultiplicativeCardinality.ZERO_OR_ONE)
@@ -6224,68 +6224,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] }
-		private @NonNull SerializationRule _89 = new SerializationRule(83,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._143 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 79 */,
-				ms._142 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 79 */,
-				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
-				ms._091 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
-				ms._064 /* assign V0 = |MapTypeCS::ownedValueType| */,
-				ms._019 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
-				ms._018 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || «null» */,
-				st._015 /* 1*'Map' || «? » «value» «? » */,
-				st._130 /* V00*steps-3..8 || «null» */,
-				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._062 /* 1*MapTypeCS::ownedKeyType=79 || «null» */,
-				st._005 /* 1*',' || «! » «value» «? » */,
-				st._063 /* 1*MapTypeCS::ownedValueType=79 || «null» */,
-				st._002 /* 1*')' || «! » «value» */,
-				st._142 /* V01*TypedRefCS::ownedMultiplicity=40 || «null» */
-			},
-			sl._21,
-			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
-					ev._4)
-			},
-			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
-					iv._29) /* TypeExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
-					iv._29) /* TypeExpCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._10) /* MultiplicityCS */
-			},
-			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._4, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(40, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				)
-			});
 		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name=8 { '(' ownedType=80 ownedCollectionMultiplicity=40[?] ')' }[?] ownedMultiplicity=40[?] }
-		private @NonNull SerializationRule _90 = new SerializationRule(83,
+		private @NonNull SerializationRule _89 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._123 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 40 */,
 				ms._124 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 80 */,
@@ -6343,7 +6283,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				)
 			});
 		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name=61 ownedMultiplicity=40[?] }
-		private @NonNull SerializationRule _91 = new SerializationRule(83,
+		private @NonNull SerializationRule _90 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
 				ms._073 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
@@ -6378,7 +6318,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				)
 			});
 		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name='Tuple' { '(' { ownedParts+=77 { ',' ownedParts+=77 }[*] }[?] ')' }[?] ownedMultiplicity=40[?] }
-		private @NonNull SerializationRule _92 = new SerializationRule(83,
+		private @NonNull SerializationRule _91 = new SerializationRule(83,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._105 /* check-rule basecs::TupleTypeCS.ownedParts : 77 */,
 				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
@@ -6424,6 +6364,66 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
 					new RuleIndex_MultiplicativeCardinality(77, MultiplicativeCardinality.ZERO_OR_MORE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(40, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				)
+			});
+		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name='Map' { '(' ownedKeyType=79 ',' ownedValueType=79 ')' }[?] ownedMultiplicity=40[?] }
+		private @NonNull SerializationRule _92 = new SerializationRule(83,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._143 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 79 */,
+				ms._142 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 79 */,
+				ms._108 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 40 */,
+				ms._091 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
+				ms._064 /* assign V0 = |MapTypeCS::ownedValueType| */,
+				ms._019 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
+				ms._018 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._118 /* 1*steps-1..9 || «null» */,
+				st._015 /* 1*'Map' || «? » «value» «? » */,
+				st._130 /* V00*steps-3..8 || «null» */,
+				st._001 /* 1*'(' || «! » «value» «! » */,
+				st._062 /* 1*MapTypeCS::ownedKeyType=79 || «null» */,
+				st._005 /* 1*',' || «! » «value» «? » */,
+				st._063 /* 1*MapTypeCS::ownedValueType=79 || «null» */,
+				st._002 /* 1*')' || «! » «value» */,
+				st._142 /* V01*TypedRefCS::ownedMultiplicity=40 || «null» */
+			},
+			sl._21,
+			new @NonNull EAttribute_EnumerationValues [] {
+				new EAttribute_EnumerationValues(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
+					ev._4)
+			},
+			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
+					iv._29) /* TypeExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
+					iv._29) /* TypeExpCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
+					iv._10) /* MultiplicityCS */
+			},
+			null,
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__NAME,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(ev._4, MultiplicativeCardinality.ONE)
+					}
+				)
+			},
+			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
+					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+					new RuleIndex_MultiplicativeCardinality(79, MultiplicativeCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
@@ -6487,7 +6487,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._033 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull RTSerializationStep @NonNull [] {
-				st._081 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._082 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._50,
 			null,
@@ -6543,8 +6543,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(51, MultiplicativeCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(91, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(91, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(51, MultiplicativeCardinality.ZERO_OR_MORE)
 					}
 				)
 			});

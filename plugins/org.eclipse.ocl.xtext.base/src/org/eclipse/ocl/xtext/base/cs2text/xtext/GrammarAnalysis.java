@@ -204,24 +204,8 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	 */
 	protected @NonNull Map<@NonNull EClass, @NonNull List<@NonNull ParserRuleAnalysis>> analyzeProductions(
 			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
-//			@NonNull Map<@NonNull AbstractRule, @NonNull AbstractRuleAnalysis> rule2ruleAnalysis) {
-/*		Map<@NonNull EClassifier, @NonNull List<@NonNull AbstractRuleAnalysis>> eClassifier2ruleAnalyses = new HashMap<>();
-		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : rule2ruleAnalysis.values()) {
-			for (@NonNull EClassifier eClassifier : abstractRuleAnalysis.getEClassifiers()) {
-				List<@NonNull AbstractRuleAnalysis> ruleAnalyses = eClassifier2ruleAnalyses.get(eClassifier);
-				if (ruleAnalyses == null) {
-					ruleAnalyses = new ArrayList<>();
-					eClassifier2ruleAnalyses.put(eClassifier, ruleAnalyses);
-				}
-				ruleAnalyses.add(abstractRuleAnalysis);
-			}
-		}
-		return eClassifier2ruleAnalyses; */
 		Map<@NonNull EClass, @NonNull List<@NonNull ParserRuleAnalysis>> eClass2parserRules = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			if ("Base::MultiplicityBoundsCS".equals(ruleAnalysis.getName())) {		// XXX debugging
-				getClass();
-			}
 			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRuleAnalyses()) {
 				EClass eClass = serializationRule.getProducedEClass();
 				List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = eClass2parserRules.get(eClass);
@@ -343,14 +327,8 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		serializationRule2aserializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2 = new HashMap<>();
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> eClass2serializationRuleList = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			if ("EssentialOCL::MapTypeCS".equals(ruleAnalysis.getName())) {
-				getClass(); // XXX debugging
-			}
 			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRuleAnalyses()) {
 				EClass eClass = serializationRule.getProducedEClass();
-				if ("MapTypeCS".equals(eClass.getName())) {
-					getClass(); // XXX debugging
-				}
 				List<@NonNull SerializationRuleAnalysis> serializationRules = eClass2serializationRuleList.get(eClass);
 				if (serializationRules == null) {
 					serializationRules = new ArrayList<>();

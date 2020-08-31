@@ -118,7 +118,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 				if (enumerationValue == null) {
 					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
 				}
-				else {		// XXX RuleAnalysis
+				else {
 					cardinalityExpression = new EAttributeCardinalityExpression(name, (EAttribute)eStructuralFeature, enumerationValue);
 				}
 				eStructuralFeature2requiredSlotsExpression.put(eStructuralFeature, cardinalityExpression);
@@ -229,70 +229,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSolution() {
-		if ("EssentialOCL::ExpCS".equals(serializationRuleAnalysis.getName())) {
-			getClass();		// XXX debugging
-		}
-	/*	for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
-			EStructuralFeature eStructuralFeature = entry.getKey();
-			if (eStructuralFeature instanceof EReference) {
-				EReference eReference = (EReference)eStructuralFeature;
-				CardinalityExpression cardinalityExpression = entry.getValue();
-			//	cardinalityExpression.get
-				EClass eReferenceType = eReference.getEReferenceType();
-			//	steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eReferenceType));
-			}
-		} */
 		serializationRuleAnalysis.analyzeSolution(steps);
-	/*	if (eReference2ruleAnalysis2multiplicativeCardinality != null) {
-			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> entry : eReference2ruleAnalysis2multiplicativeCardinality.entrySet()) {
-				EReference eReference = entry.getKey();
-				if (eReference.isContainment()) {
-					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();		// XXX exclude null
-					@NonNull ParserRuleValue[] assignedRuleValues = new @NonNull ParserRuleValue[assignedRuleAnalyses.size()];
-					int i = 0;
-					for (@Nullable ParserRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
-						if (assignedRuleAnalysis != null) {
-							assignedRuleValues[i++] = assignedRuleAnalysis.getRuleValue();		// XXX exclude null
-						}
-					}
-					steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleValues));
-				}
-			}
-		} */
-	/*	for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
-			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
-			if (eStructuralFeature instanceof EReference) {
-				EReference eReference = (EReference)eStructuralFeature;
-				EClass eReferenceType = eReference.getEReferenceType();
-				Iterable<@NonNull AbstractRuleAnalysis> assignedRuleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
-				if (assignedRuleAnalyses != null) {
-					if (eReference.isContainment()) {
-						steps.add(new CardinalitySolutionStep.RuleCheck(eReference, assignedRuleAnalyses));
-					}
-					Set<@NonNull EClass> eClasses = null;
-					for (@NonNull AbstractRuleAnalysis assignedRuleAnalysis : assignedRuleAnalyses) {
-						if (assignedRuleAnalysis instanceof ParserRuleAnalysis) {
-							EClass returnedEClass = ((ParserRuleAnalysis)assignedRuleAnalysis).getReturnedEClass();		// XXX sub rule closure
-						//	if (returnedEClass != eReferenceType) {
-								if (eClasses == null) {
-									eClasses = new HashSet<>();
-								}
-								eClasses.add(returnedEClass);
-						//	}
-						}
-					}
-					if ((eClasses != null) && !eClasses.contains(eReferenceType)) {		// Prune derivations
-						steps.add(new CardinalitySolutionStep.TypeCheck(eReference, eClasses));
-					}
-				}
-			}
-		} */
-		//
-		//	Prepare to restructure the variables/expressions as solutions.
-		//
-//		Map<@NonNull CardinalityVariable, @NonNull CardinalitySolution> variable2solution2 = variable2solution;
-//		assert variable2solution2 == null;
-//		variable2solution = variable2solution2 = new HashMap<>();
 		List<@NonNull CardinalityExpression> residualExpressions = new ArrayList<>();
 		for (@NonNull CardinalityExpression expression : eStructuralFeature2requiredSlotsExpression.values()) {
 			Iterable<@NonNull CardinalityExpression> cardinalityExpressions = expression.getCardinalityExpressions();

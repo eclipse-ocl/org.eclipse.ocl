@@ -309,9 +309,6 @@ public class UserSlotsAnalysis
 			EClass eClass = eObject.eClass();
 			for (EStructuralFeature eFeature : eClass.getEAllStructuralFeatures()) {
 				assert eFeature != null;
-				if ("prefix".equals(eFeature.getName())) {
-					getClass();			// XXX debugging
-				}
 				if (!eFeature.isDerived() && !eFeature.isTransient() && !eFeature.isVolatile()) {
 					UserSlotAnalysis slotAnalysis = null;
 					if (eFeature instanceof EReference) {
@@ -377,9 +374,6 @@ public class UserSlotsAnalysis
 						enumeratedSlotAnalysis.put(enumerationValue, 1);
 						gotOne = true;
 					}
-				}
-				if (!gotOne) {
-					getClass();		// XXX debugging
 				}
 				enumeratedSlotAnalysis.put(OthersEnumerationValue.INSTANCE, gotOne ? 0 : 1);
 				slotAnalysis = enumeratedSlotAnalysis;

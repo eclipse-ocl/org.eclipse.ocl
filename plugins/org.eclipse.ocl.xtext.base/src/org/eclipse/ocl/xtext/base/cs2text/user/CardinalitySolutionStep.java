@@ -183,9 +183,6 @@ public abstract class CardinalitySolutionStep
 		public boolean execute(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 			UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
 			EObject eObject = slotsAnalysis.getEObject();
-			if ("ownedRight".equals(eReference.getName()) && "PrefixExpCS".equals(eObject.eClass().getName())) {
-				getClass();		// XXX debugging
-			}
 			if (!eReference.getEContainingClass().isInstance(eObject)) {
 				return false;
 			}
@@ -234,12 +231,6 @@ public abstract class CardinalitySolutionStep
 					return true;
 				}
 			}
-			for (@NonNull Integer ruleValueIndex : ruleValueIndexes) {		// XXX debugging
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(ruleValueIndex);
-				if (dynamicRuleMatch != null) {
-					return true;
-				}
-			}
 			return false;
 		}
 
@@ -276,9 +267,6 @@ public abstract class CardinalitySolutionStep
 			this.eReference = eReference;
 			this.eClasses = eClasses;
 			assert Iterables.size(eClasses) >= 1;
-			if ("ownedType".equals(eReference.getName())) {
-				getClass();			// XXX debugging
-			}
 		}
 
 		@Override

@@ -126,7 +126,6 @@ public class RTSerializationAssignsStep extends RTSerializationAbstractFeatureSt
 				for (@NonNull SerializationRule serializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {
 					DynamicRuleMatch match = serializationRule.match(slotsAnalysis, staticSegments);
 					if (match != null) {
-						// XXX we could mark the serializationBuilder context and catch a backtracking exception/null return if needed here
 						serializer.serializeElement(serializationBuilder, eObject, calledRuleValue);
 						return;
 					}

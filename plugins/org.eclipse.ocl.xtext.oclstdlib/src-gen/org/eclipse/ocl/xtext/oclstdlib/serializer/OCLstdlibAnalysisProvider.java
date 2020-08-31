@@ -2907,14 +2907,14 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._096 /* { name=31 ':' ownedType=118 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _002 // AnnotationCS
 			= new ParserRuleValue(2, "AnnotationCS",
 				new @NonNull SerializationRule [] {
 					sr1._098 /* { 'annotation' name=(31|94) { '(' ownedDetails+=16 { ',' ownedDetails+=16 }[*] ')' }[?] ';' } */,
 					sr1._097 /* { 'annotation' name=(31|94) { '(' ownedDetails+=16 { ',' ownedDetails+=16 }[*] ')' }[?] '{' ownedAnnotations+=3 '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _003 // AnnotationElementCS
 			= new ParserRuleValue(3, "AnnotationElementCS",
 				new @NonNull SerializationRule [] {
@@ -2932,7 +2932,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._016 /* symbol={'false|true'} */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _007 // ClassCS
 			= new ParserRuleValue(7, "ClassCS",
 				new @NonNull SerializationRule [] {
@@ -2944,32 +2944,32 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._017 /* { name=128 { ':' ownedType=110 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _009 // CollectionLiteralExpCS
 			= new ParserRuleValue(9, "CollectionLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr0._018 /* { ownedType=12 '{' { ownedParts+=10 { ',' ownedParts+=10 }[*] }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _010 // CollectionLiteralPartCS
 			= new ParserRuleValue(10, "CollectionLiteralPartCS",
 				new @NonNull SerializationRule [] {
 					sr0._020 /* ownedExpression=81 */,
 					sr0._019 /* { ownedExpression=27 { '..' ownedLastExpression=27 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _011 // CollectionPatternCS
 			= new ParserRuleValue(11, "CollectionPatternCS",
 				new @NonNull SerializationRule [] {
 					sr0._021 /* { ownedType=12 '{' { ownedParts+=81 { ',' ownedParts+=81 }[*] '++' restVariableName=31 }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _012 // CollectionTypeCS
 			= new ParserRuleValue(12, "CollectionTypeCS",
 				new @NonNull SerializationRule [] {
 					sr0._022 /* { name=13 { '(' ownedType=111 ownedCollectionMultiplicity=62[?] ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _013 // CollectionTypeIdentifier
 			= new DataTypeRuleValue(13, "CollectionTypeIdentifier");
 		private final @NonNull ParserRuleValue _014 // CurlyBracketedClauseCS
@@ -2977,7 +2977,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._023 /* { '{' { ownedParts+=97 { ',' ownedParts+=97 }[*] }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _015 // DOUBLE_QUOTED_STRING
 			= new TerminalRuleValue(15, "DOUBLE_QUOTED_STRING");
 		private final @NonNull ParserRuleValue _016 // DetailCS
@@ -2985,13 +2985,13 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._099 /* { name=(65|94) '=' values+=(94|56)[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _017 // DocumentationCS
 			= new ParserRuleValue(17, "DocumentationCS",
 				new @NonNull SerializationRule [] {
 					sr1._100 /* { 'documentation' value=94[?] { '(' ownedDetails+=16 { ',' ownedDetails+=16 }[*] ')' }[?] ';' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _018 // ESCAPED_CHARACTER
 			= new TerminalRuleValue(18, "ESCAPED_CHARACTER");
 		private final @NonNull TerminalRuleValue _019 // ESCAPED_ID
@@ -3001,7 +3001,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._024 /* { 'elseif' ownedCondition=27 'then' ownedThenExpression=27 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _021 // EssentialOCLInfixOperatorName
 			= new DataTypeRuleValue(21, "EssentialOCLInfixOperatorName");
 		private final @NonNull DataTypeRuleValue _022 // EssentialOCLNavigationOperatorName
@@ -3043,7 +3043,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._000 /* referredElement=UnrestrictedName */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _029 // ID
 			= new DataTypeRuleValue(29, "ID");
 		private final @NonNull TerminalRuleValue _030 // INT
@@ -3055,13 +3055,13 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._042 /* { 'if' ownedCondition=(27|81) 'then' ownedThenExpression=27 ownedIfThenExpressions+=20[*] 'else' ownedElseExpression=27 'endif' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _033 // ImportCS
 			= new ParserRuleValue(33, "ImportCS",
 				new @NonNull SerializationRule [] {
 					sr1._101 /* { 'import' { name=31 ':' }[?] ownedPathName=124 isAll='::*'[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _034 // InfixOperatorName
 			= new DataTypeRuleValue(34, "InfixOperatorName");
 		private final @NonNull ParserRuleValue _035 // InvCS
@@ -3069,19 +3069,19 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._102 /* { stereotype='inv' { name=128 { '(' ownedMessageSpecification=99 ')' }[?] }[?] ':' ownedSpecification=99 ';' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _036 // InvalidLiteralExpCS
 			= new ParserRuleValue(36, "InvalidLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr0._043 /* 'invalid' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _037 // IteratorCS
 			= new ParserRuleValue(37, "IteratorCS",
 				new @NonNull SerializationRule [] {
 					sr1._103 /* { name=31 ':' ownedType=118 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _038 // LETTER_CHARACTER
 			= new TerminalRuleValue(38, "LETTER_CHARACTER");
 		private final @NonNull DataTypeRuleValue _039 // LOWER
@@ -3091,95 +3091,95 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._104 /* ownedPathName=52 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _041 // LambdaLiteralExpCS
 			= new ParserRuleValue(41, "LambdaLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr0._044 /* { 'Lambda' '{' ownedExpressionCS=27 '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _042 // LambdaTypeCS
 			= new ParserRuleValue(42, "LambdaTypeCS",
 				new @NonNull SerializationRule [] {
 					sr1._105 /* { name='Lambda' ownedSignature=105[?] ownedContextType=40 '(' { ownedParameterTypes+=118 { ',' ownedParameterTypes+=118 }[*] }[?] ')' ':' ownedResultType=119 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _043 // LetExpCS
 			= new ParserRuleValue(43, "LetExpCS",
 				new @NonNull SerializationRule [] {
 					sr0._045 /* { 'let' ownedVariables+=44 { ',' ownedVariables+=44 }[*] 'in' ownedInExpression=27 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _044 // LetVariableCS
 			= new ParserRuleValue(44, "LetVariableCS",
 				new @NonNull SerializationRule [] {
 					sr0._046 /* { name=128 ownedRoundBracketedClause=92[?] { ':' ownedType=110 }[?] '=' ownedInitExpression=27 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _045 // LibClassCS
 			= new ParserRuleValue(45, "LibClassCS",
 				new @NonNull SerializationRule [] {
 					sr1._106 /* { isAbstract='abstract'[?] 'type' name=4 ownedSignature=105[?] { ':' metaclassName=AnyName }[?] { 'conformsTo' ownedSuperTypes+=119 { ',' ownedSuperTypes+=119 }[*] }[?] '{' ownedOperations+=77[*] ownedProperties+=53[*] ownedConstraints+=35[*] ownedAnnotations+=3[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _046 // LibCoercionCS
 			= new ParserRuleValue(46, "LibCoercionCS",
 				new @NonNull SerializationRule [] {
 					sr1._108 /* { 'coercion' name=65 '(' ')' ':' ownedType=118 { '=>' implementation=SINGLE_QUOTED_STRING }[?] ';' } */,
 					sr1._107 /* { 'coercion' name=65 '(' ')' ':' ownedType=118 { '=>' implementation=SINGLE_QUOTED_STRING }[?] '{' ownedAnnotations+=3[*] ownedPreconditions+=82[*] ownedPostconditions+=83[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _047 // LibIterationCS
 			= new ParserRuleValue(47, "LibIterationCS",
 				new @NonNull SerializationRule [] {
 					sr1._110 /* { 'iteration' name=65 ownedSignature=105[?] '(' ownedIterators+=37 { ',' ownedIterators+=37 }[*] { ';' ownedAccumulators+=1 { ',' ownedAccumulators+=1 }[*] }[?] { '|' ownedParameters+=79 { ',' ownedParameters+=79 }[*] }[?] ')' ':' ownedType=118 isInvalidating='invalidating'[?] isValidating='validating'[?] { '=>' implementation=SINGLE_QUOTED_STRING }[?] ';' } */,
 					sr1._109 /* { 'iteration' name=65 ownedSignature=105[?] '(' ownedIterators+=37 { ',' ownedIterators+=37 }[*] { ';' ownedAccumulators+=1 { ',' ownedAccumulators+=1 }[*] }[?] { '|' ownedParameters+=79 { ',' ownedParameters+=79 }[*] }[?] ')' ':' ownedType=118 isInvalidating='invalidating'[?] isValidating='validating'[?] { '=>' implementation=SINGLE_QUOTED_STRING }[?] '{' ownedAnnotations+=3[*] ownedPreconditions+=82[*] ownedPostconditions+=83[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _048 // LibOperationCS
 			= new ParserRuleValue(48, "LibOperationCS",
 				new @NonNull SerializationRule [] {
 					sr1._111 /* { isStatic='static'[?] 'operation' name=65 ownedSignature=105[?] '(' { ownedParameters+=79 { ',' ownedParameters+=79 }[*] }[?] ')' ':' ownedType=118 isValidating='validating'[?] isInvalidating='invalidating'[?] { 'precedence' '=' precedence=Name }[?] { '=>' implementation=SINGLE_QUOTED_STRING }[?] ';' } */,
 					sr1._112 /* { isStatic='static'[?] 'operation' name=65 ownedSignature=105[?] '(' { ownedParameters+=79 { ',' ownedParameters+=79 }[*] }[?] ')' ':' ownedType=118 isValidating='validating'[?] isInvalidating='invalidating'[?] { 'precedence' '=' precedence=Name }[?] { '=>' implementation=SINGLE_QUOTED_STRING }[?] '{' ownedAnnotations+=3[*] { 'body' ':' ownedBodyExpressions+=99 ';' }[*] ownedPostconditions+=82[*] ownedPreconditions+=83[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _049 // LibOppositeCS
 			= new ParserRuleValue(49, "LibOppositeCS",
 				new @NonNull SerializationRule [] {
 					sr1._113 /* { 'opposite' name=65 ':' ownedType=118 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _050 // LibPackageCS
 			= new ParserRuleValue(50, "LibPackageCS",
 				new @NonNull SerializationRule [] {
 					sr1._114 /* { 'library' name=65 { ':' nsPrefix=31 '=' nsURI=122 }[?] '{' ownedPackages+=78[*] { 'precedence' ownedPrecedences+=84[+] ';' }[*] ownedClasses+=7[*] ownedAnnotations+=3[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _051 // LibPathElementCS
 			= new ParserRuleValue(51, "LibPathElementCS",
 				new @NonNull SerializationRule [] {
 					sr1._115 /* referredElement=Name */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _052 // LibPathNameCS
 			= new ParserRuleValue(52, "LibPathNameCS",
 				new @NonNull SerializationRule [] {
 					sr1._116 /* { ownedPathElements+=51 { '::' ownedPathElements+=51 }[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _053 // LibPropertyCS
 			= new ParserRuleValue(53, "LibPropertyCS",
 				new @NonNull SerializationRule [] {
 					sr1._117 /* { isStatic='static'[?] 'property' name=65 ':' ownedType=118 ownedOpposite=49[?] { '=>' implementation=SINGLE_QUOTED_STRING }[?] ';' } */,
 					sr1._118 /* { isStatic='static'[?] 'property' name=65 ':' ownedType=118 ownedOpposite=49[?] { '=>' implementation=SINGLE_QUOTED_STRING }[?] '{' ownedAnnotations+=3[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _054 // Library
 			= new ParserRuleValue(54, "Library",
 				new @NonNull SerializationRule [] {
 					sr1._119 /* { { ownedImports+=33 ';' }[*] ownedPackages+=50[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _055 // ML_COMMENT
 			= new TerminalRuleValue(55, "ML_COMMENT");
 		private final @NonNull TerminalRuleValue _056 // ML_SINGLE_QUOTED_STRING
@@ -3189,31 +3189,31 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._047 /* { ownedType=59 '{' { ownedParts+=58 { ',' ownedParts+=58 }[*] }[?] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _058 // MapLiteralPartCS
 			= new ParserRuleValue(58, "MapLiteralPartCS",
 				new @NonNull SerializationRule [] {
 					sr0._048 /* { ownedKey=27 '<-' ownedValue=27 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _059 // MapTypeCS
 			= new ParserRuleValue(59, "MapTypeCS",
 				new @NonNull SerializationRule [] {
 					sr0._049 /* { name='Map' { '(' ownedKeyType=110 ',' ownedValueType=110 ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _060 // Model
 			= new ParserRuleValue(60, "Model",
 				new @NonNull SerializationRule [] {
 					sr0._050 /* ownedExpression=27 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _061 // MultiplicityBoundsCS
 			= new ParserRuleValue(61, "MultiplicityBoundsCS",
 				new @NonNull SerializationRule [] {
 					sr0._001 /* { lowerBound=39 { '..' upperBound=121 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _062 // MultiplicityCS
 			= new ParserRuleValue(62, "MultiplicityCS",
 				new @NonNull SerializationRule [] {
@@ -3224,13 +3224,13 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 					sr0._004 /* { '[' stringBounds={'*|+|?'} '|?' ']' } */,
 					sr0._002 /* { '[' stringBounds={'*|+|?'} isNullFree='|1'[?] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _063 // MultiplicityStringCS
 			= new ParserRuleValue(63, "MultiplicityStringCS",
 				new @NonNull SerializationRule [] {
 					sr0._008 /* stringBounds={'*|+|?'} */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _064 // NUMBER_LITERAL
 			= new DataTypeRuleValue(64, "NUMBER_LITERAL");
 		private final @NonNull DataTypeRuleValue _065 // Name
@@ -3240,7 +3240,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._051 /* { ownedPathName=80 ownedSquareBracketedClauses+=100[*] ownedRoundBracketedClause=92[?] ownedCurlyBracketedClause=14[?] { isPre='@' 'pre' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _067 // NavigatingArgCS
 			= new ParserRuleValue(67, "NavigatingArgCS",
 				new @NonNull SerializationRule [] {
@@ -3250,7 +3250,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 					sr0._053 /* { ownedNameExpression=68 '<-' ownedCoIterator=8 { '=' ownedInitExpression=27 }[?] } */,
 					sr0._054 /* { ownedNameExpression=68 { ':' ownedType=110 }[?] { '<-' ownedCoIterator=8 }[?] 'in' ownedInitExpression=27 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _068 // NavigatingArgExpCS
 			= new ParserRuleValue(68, "NavigatingArgExpCS",
 				new @NonNull SerializationRule [] {
@@ -3280,7 +3280,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._057 /* { prefix='|' ownedNameExpression=68 { ':' ownedType=110 { '=' ownedInitExpression=27 }[?] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _070 // NavigatingCommaArgCS
 			= new ParserRuleValue(70, "NavigatingCommaArgCS",
 				new @NonNull SerializationRule [] {
@@ -3289,13 +3289,13 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 					sr0._061 /* { prefix=',' ownedNameExpression=68 '<-' ownedCoIterator=8 { '=' ownedInitExpression=27 }[?] } */,
 					sr0._058 /* { prefix=',' ownedNameExpression=68 { ':' ownedType=110 }[?] { '<-' ownedCoIterator=8 }[?] 'in' ownedInitExpression=27 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _071 // NavigatingSemiArgCS
 			= new ParserRuleValue(71, "NavigatingSemiArgCS",
 				new @NonNull SerializationRule [] {
 					sr0._062 /* { prefix=';' ownedNameExpression=68 { ':' ownedType=110 { '=' ownedInitExpression=27 }[?] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _072 // NavigationOperatorName
 			= new DataTypeRuleValue(72, "NavigationOperatorName");
 		private final @NonNull ParserRuleValue _073 // NestedExpCS
@@ -3303,25 +3303,25 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._063 /* { '(' ownedExpression=27 ')' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _074 // NextPathElementCS
 			= new ParserRuleValue(74, "NextPathElementCS",
 				new @NonNull SerializationRule [] {
 					sr0._009 /* referredElement=UnreservedName */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _075 // NullLiteralExpCS
 			= new ParserRuleValue(75, "NullLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._064 /* 'null' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _076 // NumberLiteralExpCS
 			= new ParserRuleValue(76, "NumberLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._065 /* symbol=64 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _077 // OperationCS
 			= new ParserRuleValue(77, "OperationCS",
 				new @NonNull SerializationRule [] {
@@ -3338,44 +3338,44 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._120 /* { 'package' name=65 { ':' nsPrefix=31 '=' nsURI=122 }[?] '{' ownedPackages+=78[*] ownedClasses+=7[*] ownedAnnotations+=3[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _079 // ParameterCS
 			= new ParserRuleValue(79, "ParameterCS",
 				new @NonNull SerializationRule [] {
 					sr1._121 /* { name=31 ':' ownedType=118 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _080 // PathNameCS
 			= new ParserRuleValue(80, "PathNameCS",
 				new @NonNull SerializationRule [] {
 					sr0._010 /* { ownedPathElements+=28 { '::' ownedPathElements+=74 }[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _081 // PatternExpCS
 			= new ParserRuleValue(81, "PatternExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._066 /* { patternVariableName=128[?] ':' ownedPatternType=110 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _082 // PostCS
 			= new ParserRuleValue(82, "PostCS",
 				new @NonNull SerializationRule [] {
 					sr1._122 /* { stereotype='post' { name=128 { '(' ownedMessageSpecification=99 ')' }[?] }[?] ':' ownedSpecification=99 ';' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _083 // PreCS
 			= new ParserRuleValue(83, "PreCS",
 				new @NonNull SerializationRule [] {
 					sr1._123 /* { stereotype='pre' { name=128 { '(' ownedMessageSpecification=99 ')' }[?] }[?] ':' ownedSpecification=99 ';' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _084 // PrecedenceCS
 			= new ParserRuleValue(84, "PrecedenceCS",
 				new @NonNull SerializationRule [] {
 					sr1._124 /* { 'left' ':' name=65 } */,
 					sr1._125 /* { isRightAssociative='right' ':' name=65 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _085 // PrefixedLetExpCS
 			= new ParserRuleValue(85, "PrefixedLetExpCS",
 				new @NonNull SerializationRule [] {
@@ -3440,7 +3440,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._069 /* name=90 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _090 // PrimitiveTypeIdentifier
 			= new DataTypeRuleValue(90, "PrimitiveTypeIdentifier");
 		private final @NonNull DataTypeRuleValue _091 // RestrictedKeywords
@@ -3450,7 +3450,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._070 /* { '(' { ownedArguments+=67 ownedArguments+=(70|71|69)[*] }[?] ')' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull TerminalRuleValue _093 // SIMPLE_ID
 			= new TerminalRuleValue(93, "SIMPLE_ID");
 		private final @NonNull TerminalRuleValue _094 // SINGLE_QUOTED_STRING
@@ -3462,32 +3462,32 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._071 /* 'self' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _097 // ShadowPartCS
 			= new ParserRuleValue(97, "ShadowPartCS",
 				new @NonNull SerializationRule [] {
 					sr1._073 /* ownedInitExpression=102 */,
 					sr1._072 /* { referredProperty=UnrestrictedName '=' ownedInitExpression=(27|81) } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _098 // SimplePathNameCS
 			= new ParserRuleValue(98, "SimplePathNameCS",
 				new @NonNull SerializationRule [] {
 					sr1._074 /* ownedPathElements+=28 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _099 // SpecificationCS
 			= new ParserRuleValue(99, "SpecificationCS",
 				new @NonNull SerializationRule [] {
 					sr1._126 /* ownedExpression=27 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _100 // SquareBracketedClauseCS
 			= new ParserRuleValue(100, "SquareBracketedClauseCS",
 				new @NonNull SerializationRule [] {
 					sr1._075 /* { '[' ownedTerms+=27 { ',' ownedTerms+=27 }[*] ']' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _101 // StringLiteral
 			= new DataTypeRuleValue(101, "StringLiteral");
 		private final @NonNull ParserRuleValue _102 // StringLiteralExpCS
@@ -3495,49 +3495,49 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._076 /* segments+=101[+] */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _103 // TemplateBindingCS
 			= new ParserRuleValue(103, "TemplateBindingCS",
 				new @NonNull SerializationRule [] {
 					sr0._011 /* { ownedSubstitutions+=104 { ',' ownedSubstitutions+=104 }[*] ownedMultiplicity=62[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _104 // TemplateParameterSubstitutionCS
 			= new ParserRuleValue(104, "TemplateParameterSubstitutionCS",
 				new @NonNull SerializationRule [] {
 					sr0._012 /* ownedActualParameter=117 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _105 // TemplateSignatureCS
 			= new ParserRuleValue(105, "TemplateSignatureCS",
 				new @NonNull SerializationRule [] {
 					sr0._013 /* { '(' ownedParameters+=116 { ',' ownedParameters+=116 }[*] ')' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _106 // TupleLiteralExpCS
 			= new ParserRuleValue(106, "TupleLiteralExpCS",
 				new @NonNull SerializationRule [] {
 					sr1._077 /* { 'Tuple' '{' ownedParts+=107 { ',' ownedParts+=107 }[*] '}' } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _107 // TupleLiteralPartCS
 			= new ParserRuleValue(107, "TupleLiteralPartCS",
 				new @NonNull SerializationRule [] {
 					sr1._078 /* { name=128 { ':' ownedType=110 }[?] '=' ownedInitExpression=27 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _108 // TuplePartCS
 			= new ParserRuleValue(108, "TuplePartCS",
 				new @NonNull SerializationRule [] {
 					sr1._127 /* { name=31 ':' ownedType=118 } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _109 // TupleTypeCS
 			= new ParserRuleValue(109, "TupleTypeCS",
 				new @NonNull SerializationRule [] {
 					sr1._079 /* { name='Tuple' { '(' { ownedParts+=108 { ',' ownedParts+=108 }[*] }[?] ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _110 // TypeExpCS
 			= new ParserRuleValue(110, "TypeExpCS",
 				new @NonNull SerializationRule [] {
@@ -3574,7 +3574,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._086 /* ownedType=114 */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _114 // TypeLiteralWithMultiplicityCS
 			= new ParserRuleValue(114, "TypeLiteralWithMultiplicityCS",
 				new @NonNull SerializationRule [] {
@@ -3589,13 +3589,13 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._091 /* { ownedPathName=80 { ownedCurlyBracketedClause=14 { '{' ownedPatternGuard=27 '}' }[?] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _116 // TypeParameterCS
 			= new ParserRuleValue(116, "TypeParameterCS",
 				new @NonNull SerializationRule [] {
 					sr0._014 /* { name=128 { 'extends' ownedExtends+=119 { '&&' ownedExtends+=119 }[*] }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _117 // TypeRefCS
 			= new ParserRuleValue(117, "TypeRefCS",
 				new @NonNull SerializationRule [] {
@@ -3633,7 +3633,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 					sr2._133 /* { isTypeof='typeof' '(' ownedPathName=52 ')' } */,
 					sr2._134 /* { ownedPathName=52 { '(' ownedBinding=103 ')' }[?] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _121 // UPPER
 			= new DataTypeRuleValue(121, "UPPER");
 		private final @NonNull DataTypeRuleValue _122 // URI
@@ -3644,13 +3644,13 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 					sr1._092 /* referredElement=UnrestrictedName */,
 					sr1._093 /* referredElement=URI */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull ParserRuleValue _124 // URIPathNameCS
 			= new ParserRuleValue(124, "URIPathNameCS",
 				new @NonNull SerializationRule [] {
 					sr1._094 /* { ownedPathElements+=123 { '::' ownedPathElements+=74 }[*] } */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _125 // UnaryOperatorName
 			= new DataTypeRuleValue(125, "UnaryOperatorName");
 		private final @NonNull ParserRuleValue _126 // UnlimitedNaturalLiteralExpCS
@@ -3658,7 +3658,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr1._095 /* '*' */
 				},
-				(IndexVector)null);
+				null);
 		private final @NonNull DataTypeRuleValue _127 // UnreservedName
 			= new DataTypeRuleValue(127, "UnreservedName");
 		private final @NonNull DataTypeRuleValue _128 // UnrestrictedName
@@ -3670,7 +3670,7 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 				new @NonNull SerializationRule [] {
 					sr0._015 /* { '?' { 'extends' ownedExtends=119 }[?] } */
 				},
-				(IndexVector)null);
+				null);
 	}
 
 	/**

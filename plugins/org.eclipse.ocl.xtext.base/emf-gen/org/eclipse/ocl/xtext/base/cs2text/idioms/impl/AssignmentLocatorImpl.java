@@ -194,12 +194,6 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
 		if (serializationNode instanceof AssignedSerializationNode) {
 			EStructuralFeature assignedEStructuralFeature = ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
-			if ("ownedClasses".equals(assignedEStructuralFeature.getName())) {
-				getClass(); 	// XXX debugging
-			}
-			if (eStructuralFeature == assignedEStructuralFeature) {
-				getClass(); 	// XXX debugging
-			}
 			return XtextGrammarUtil.isEqual(eStructuralFeature, assignedEStructuralFeature);
 		}
 		return false;

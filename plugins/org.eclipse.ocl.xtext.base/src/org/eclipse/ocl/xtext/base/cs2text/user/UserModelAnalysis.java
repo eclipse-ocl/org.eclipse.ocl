@@ -186,7 +186,6 @@ public class UserModelAnalysis
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);		// XXX debugging
 			StringBuilder s = new StringBuilder();
 			s.append("\n\n«incompatible '" + eObject.eClass().getName() + "'");
 			userElementAnalysis.getSlotsAnalysis().diagnose(s);
