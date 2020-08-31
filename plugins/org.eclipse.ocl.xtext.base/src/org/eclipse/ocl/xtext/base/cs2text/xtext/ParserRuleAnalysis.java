@@ -306,7 +306,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
-				IndexVector assignedRuleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
+				@NonNull Integer @Nullable [] assignedRuleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
 				if (assignedRuleIndexes != null) {
 					for (@NonNull Integer ruleIndex : assignedRuleIndexes) {
 						AbstractRuleAnalysis newRuleAnalysis = grammarAnalysis.getRuleAnalysis(ruleIndex);

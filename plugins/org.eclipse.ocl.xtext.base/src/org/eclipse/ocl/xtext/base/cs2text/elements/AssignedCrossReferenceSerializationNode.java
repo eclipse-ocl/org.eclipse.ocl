@@ -20,7 +20,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
@@ -30,6 +29,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 {
 	protected final @NonNull CrossReference crossReference;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
+	protected final @NonNull Integer [] calledRuleIndexes;
 	private @Nullable Integer semanticHashCode = null;
 
 	public AssignedCrossReferenceSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, @NonNull CrossReference crossReference) {
@@ -37,13 +37,14 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
 		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
 		this.calledRuleAnalysis = assignmentAnalysis.getGrammarAnalysis().getRuleAnalysis(calledRule);
+		this.calledRuleIndexes = new @NonNull Integer[] { calledRuleAnalysis.getIndex() };
 		this.crossReference = crossReference;
 		assert !((EReference)eStructuralFeature).isContainment();
 	}
 
 	@Override
-	public @Nullable IndexVector getAssignedRuleIndexes() {
-		return new IndexVector().set(calledRuleAnalysis.getIndex());
+	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
+		return calledRuleIndexes;
 	}
 
 	@Override

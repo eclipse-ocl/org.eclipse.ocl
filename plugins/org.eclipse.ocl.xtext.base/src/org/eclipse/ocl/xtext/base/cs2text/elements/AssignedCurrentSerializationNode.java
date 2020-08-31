@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ActionAssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
@@ -37,7 +36,7 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
-	public @Nullable IndexVector getAssignedRuleIndexes() {
+	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
 		throw new UnsupportedOperationException();		// Should have been flattened away
 	}
 

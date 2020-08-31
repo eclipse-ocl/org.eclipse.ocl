@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedRuleCallsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeUnassignedKeywordsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCurrentSerializationNode;
@@ -160,30 +160,25 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 					throw new UnsupportedOperationException("Unsupported Assignment alternative terminal '" + alternative.eClass().getName() + "'");
 				}
 			}
-			if (keywords == null) {
-				if (ruleAnalyses == null) {
-					// drop through to UnsupportedOperationException
+			if (ruleAnalyses != null) {
+				if ((ruleAnalyses.size() > 1) || (keywords != null)) {
+					@NonNull Integer [] ruleIndexes = new @NonNull Integer[ruleAnalyses.size()];
+					int i = 0;
+					for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
+						ruleIndexes[i++] = ruleAnalysis.getIndex();
+					}
+					return new AlternativeAssignsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords, ruleIndexes);
 				}
 				else {
-					if (ruleAnalyses.size() == 1) {
-						return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses.get(0).getIndex());
-					}
-					else {
-						return new AlternativeAssignedRuleCallsSerializationNode(assignmentAnalysis, multiplicativeCardinality, new IndexVector(ruleAnalyses));
-					}
+					return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses.get(0).getIndex());
 				}
 			}
-			else{
-				if (ruleAnalyses == null) {
-					if (keywords.size() == 1) {
-						return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords.get(0));
-					}
-					else {
-						return new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords);
-					}
+			else if (keywords != null) {
+				if (keywords.size() > 1) {
+					return new AlternativeAssignsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords, null);
 				}
 				else {
-					throw new UnsupportedOperationException("Unsupported Assignment mix of keywords and rule calls");
+					return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords.get(0));
 				}
 			}
 		}

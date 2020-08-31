@@ -55,6 +55,13 @@ public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonN
 		}
 	}
 
+	public IndexVector(@NonNull Integer @NonNull [] indexes) {
+		this.longs = null;
+		for (@NonNull Integer index : indexes) {
+			set(index);
+		}
+	}
+
 	public IndexVector(@NonNull Iterable<@NonNull ? extends Indexed> indexes) {
 		this.longs = null;
 		for (@NonNull Indexed index : indexes) {

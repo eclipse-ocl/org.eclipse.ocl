@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 public class CardinalityVariable implements Nameable
 {
 	/**
-	 * Distinguishing index within the serailzation rule.
+	 * Distinguishing index within the seriailzation rule.
 	 */
 	protected final int index;
 

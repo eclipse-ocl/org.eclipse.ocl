@@ -19,7 +19,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
 
@@ -47,7 +46,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
-	public @Nullable IndexVector getAssignedRuleIndexes() {
+	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
 		return null;
 	}
 

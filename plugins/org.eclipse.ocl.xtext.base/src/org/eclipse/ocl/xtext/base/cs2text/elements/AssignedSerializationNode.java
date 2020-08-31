@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
@@ -25,7 +24,7 @@ public interface AssignedSerializationNode extends SerializationNode
 	/**
 	 * Return the possibly many RuleAnalysis that specify matches to this SerializationNode.
 	 */
-	@Nullable IndexVector getAssignedRuleIndexes();
+	@NonNull Integer @Nullable [] getAssignedRuleIndexes();
 
 	@NonNull AssignmentAnalysis getAssignmentAnalysis();
 	@NonNull EStructuralFeature getEStructuralFeature();

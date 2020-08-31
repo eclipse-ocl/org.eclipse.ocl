@@ -18,17 +18,18 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCal
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final int calledRuleIndex;
+	protected final @NonNull Integer [] calledRuleIndexes;
 	private @Nullable Integer semanticHashCode = null;
 
 	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull MultiplicativeCardinality multiplicativeCardinality, int calledRuleIndex) {
 		super(assignmentAnalysis, multiplicativeCardinality);
 		this.calledRuleIndex = calledRuleIndex;
+		this.calledRuleIndexes = new @NonNull Integer[] { calledRuleIndex };
 	}
 
 	@Override
@@ -44,8 +45,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
-	public @Nullable IndexVector getAssignedRuleIndexes() {
-		return new IndexVector().set(calledRuleIndex);
+	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
+		return calledRuleIndexes;
 	}
 
 	@Override

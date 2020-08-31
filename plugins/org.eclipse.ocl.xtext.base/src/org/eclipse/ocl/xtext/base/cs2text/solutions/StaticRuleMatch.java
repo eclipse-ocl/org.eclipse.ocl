@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
@@ -135,7 +136,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		//
 		else {
 			EReference eReference = (EReference)eStructuralFeature;
-			IndexVector ruleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
+			@NonNull Integer @Nullable [] ruleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
 			serializationRuleAnalysis.analyzeAssignment(eReference, ruleIndexes, netMultiplicativeCardinality);
 		/*	Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 			if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
@@ -190,8 +191,8 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 				int index = variable2node.size();
 				String name = String.format("C%02d", index);
 				assert name != null;
-				IndexVector ruleIndexes = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes() : null;
-				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes, multiplicativeCardinality);
+				@NonNull Integer @Nullable [] ruleIndexes = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes() : null;
+				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes != null ? new IndexVector(ruleIndexes) : null, multiplicativeCardinality);
 				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 				assert old2 == null;
 				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);

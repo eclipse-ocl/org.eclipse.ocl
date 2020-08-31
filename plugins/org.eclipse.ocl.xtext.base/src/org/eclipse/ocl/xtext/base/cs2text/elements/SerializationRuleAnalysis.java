@@ -107,7 +107,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality);
 	}
 
-	public void analyzeAssignment(@NonNull EReference eReference, @Nullable IndexVector ruleAnalyses, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
+	public void analyzeAssignment(@NonNull EReference eReference, @NonNull Integer @Nullable [] ruleIndexes, @NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
 		Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
 		if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
 			eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
@@ -117,8 +117,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			ruleAnalysis2multiplicativeCardinality = new HashMap<>();
 			eReference2ruleAnalysis2multiplicativeCardinality2.put(eReference, ruleAnalysis2multiplicativeCardinality);
 		}
-		if (ruleAnalyses != null) {
-			for (@NonNull Integer ruleIndex : ruleAnalyses) {
+		if (ruleIndexes != null) {
+			for (@NonNull Integer ruleIndex : ruleIndexes) {
 				@NonNull AbstractRuleAnalysis ruleAnalysis2 = ruleAnalysis.getGrammarAnalysis().getRuleAnalysis(ruleIndex);
 				assert (ruleAnalysis2 instanceof ParserRuleAnalysis);//{
 					MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis2);
@@ -349,7 +349,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 					assignedRuleIndexes = new IndexVector();
 					eReference2assignedRuleIndexes.put(eReference, assignedRuleIndexes);
 				}
-				IndexVector ruleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
+				@NonNull Integer @Nullable [] ruleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
 				if (ruleIndexes != null) {
 					for (@NonNull Integer ruleIndex : ruleIndexes) {
 					//	if (ruleAnalysis instanceof ParserRuleAnalysis) {
