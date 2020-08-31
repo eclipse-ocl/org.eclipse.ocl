@@ -14,21 +14,23 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class RTSerializationAssignStep extends RTSerializationAbstractFeatureStep
 {
-//	protected final @NonNull EnumerationValue enumerationValue;
+	protected final @NonNull EnumerationValue enumerationValue;		// XXX @NonNull
 
 	@Deprecated
 	public RTSerializationAssignStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
 		super(variableIndex, eStructuralFeature);
+		this.enumerationValue = OthersEnumerationValue.INSTANCE;
 	}
 
 	public RTSerializationAssignStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 		super(variableIndex, eStructuralFeature);
-//		this.enumerationValue = enumerationValue;
+		this.enumerationValue = enumerationValue;
 	}
 
 	@Override
@@ -44,6 +46,10 @@ public class RTSerializationAssignStep extends RTSerializationAbstractFeatureSte
 
 	protected boolean equalTo(@NonNull RTSerializationAssignStep that) {
 		return super.equalTo(that);
+	}
+
+	public @NonNull EnumerationValue getEnumerationValue() {
+		return enumerationValue;
 	}
 
 	@Override

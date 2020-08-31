@@ -684,7 +684,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSerializationTerm_Assign(RTSerializationAssignStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationAssignStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
-							= new «newTypeReference(RTSerializationAssignStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())»)'''
+							= new «newTypeReference(RTSerializationAssignStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», «getEnumValueId(serializationStep.getEnumerationValue(), true)»)'''
 	}
 	
 	protected def generateSerializationTerm_AssignedRuleCall(RTSerializationAssignedRuleCallStep serializationStep) {
