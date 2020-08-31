@@ -605,15 +605,6 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		return runtime2;
 	}
 
-//	@Override
-//	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull EClass eClass) {
-//		if ("PathElementWithURICS".equals(eClass.getName())) {
-//			getClass(); // XXX
-//		}
-	//	assert eClass2serializationRules != null;
-//		return getEClassValue(eClass).getSerializationRules();
-//	}
-
 	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull ParserRuleAnalysis parserRuleAnalysis, @NonNull SerializationNode thatSerializationNode) {
 		int hashCode = thatSerializationNode.semanticHashCode();
 		Object analysisOrAnalyses = semanticHash2serializationAnalysisOrAnalyses.get(hashCode);
@@ -706,9 +697,6 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 					isFirstFeature = false;
 				}
 				//
-				if ("Base::TypeRefCS".equals(parserRuleAnalysis.getName())) {
-					getClass();		// XXX
-				}
 				for (@NonNull SerializationRuleAnalysis serializationRule : parserRuleAnalysis.getSerializationRuleAnalyses()) {
 					StringUtil.appendIndentation(s, 2);
 					s.append("|& ");

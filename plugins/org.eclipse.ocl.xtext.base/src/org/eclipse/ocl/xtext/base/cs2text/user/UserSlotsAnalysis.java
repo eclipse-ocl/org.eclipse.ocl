@@ -44,11 +44,6 @@ public class UserSlotsAnalysis
 		int asCounted();
 
 		/**
-		 * Return the number of ruleAnalysis slot elements for an DiscriminatedSlotAnalysis or throw an IllegalStateException otherwose.
-		 */
-		int asDiscriminated(@NonNull ParserRuleValue parserRuleValue);
-
-		/**
 		 * Return the number of enumerationValue slot elements for an EnmeratedSlotAnalysis or throw an IllegalStateException otherwose.
 		 */
 		int asEnumerated(@NonNull EnumerationValue enumerationValue);
@@ -57,11 +52,6 @@ public class UserSlotsAnalysis
 		 * Return true if this is a CountedSlotAnalysis.
 		 */
 		boolean isCounted();
-
-		/**
-		 * Return true if this is a DiscriminatedSlotAnalysis.
-		 */
-		boolean isDiscriminated();
 
 		/**
 		 * Return true if this is an EnmeratedSlotAnalysis.
@@ -98,11 +88,6 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(@NonNull ParserRuleValue parserRuleValue) {
-			throw new IllegalStateException();
-		}
-
-		@Override
 		public int asEnumerated(@NonNull EnumerationValue enumerationValue) {
 			throw new IllegalStateException();
 		}
@@ -110,11 +95,6 @@ public class UserSlotsAnalysis
 		@Override
 		public boolean isCounted() {
 			return true;
-		}
-
-		@Override
-		public boolean isDiscriminated() {
-			return false;
 		}
 
 		@Override
@@ -125,88 +105,6 @@ public class UserSlotsAnalysis
 		@Override
 		public @NonNull String toString() {
 			return Integer.toString(count);
-		}
-	}
-
-	/**
-	 * A DiscriminatedSlotAnalysis provides the analysis of a (typically many)-valued EReference slot
-	 * whose values may match some but not all possible rules applicable to their congtaining asignment.
-	 */
-	public static class DiscriminatedSlotAnalysis implements UserSlotAnalysis
-	{
-		protected final @NonNull List<@NonNull ParserRuleValue> parserRuleValues;
-		protected final int count;
-		private final @NonNull Map<@NonNull ParserRuleValue, @NonNull Integer> parserRuleValue2count = new HashMap<>();
-
-		public DiscriminatedSlotAnalysis(@NonNull List<@NonNull ParserRuleValue> parserRuleValues, int count) {
-			this.parserRuleValues = parserRuleValues;
-			this.count = count;
-		}
-
-		public void analyzeEReference(@NonNull UserElementAnalysis elementAnalysis) {
-			for (@NonNull ParserRuleValue parserRuleValue : parserRuleValues) {
-				DynamicRuleMatch dynamicRuleMatch = elementAnalysis.createDynamicRuleMatch(parserRuleValue);
-				if (dynamicRuleMatch != null) {
-					Integer oldCount = parserRuleValue2count.get(parserRuleValue);
-					parserRuleValue2count.put(parserRuleValue, oldCount != null ? oldCount+1 : 1);
-				}
-			}
-		}
-
-		public @Nullable Integer basicGet(@NonNull ParserRuleValue parserRuleValue) {
-			return parserRuleValue2count.get(parserRuleValue);
-		}
-
-		@Override
-		public int asCounted() {
-			throw new IllegalStateException();
-		}
-
-		@Override
-		public int asDiscriminated(@NonNull ParserRuleValue parserRuleValue) {
-			Integer value = parserRuleValue2count.get(parserRuleValue);
-			return value != null ? value.intValue() : 0;			// XXX
-		//	return count;
-		}
-
-		@Override
-		public int asEnumerated(@NonNull EnumerationValue enumerationValue) {
-			throw new IllegalStateException();
-		}
-
-		@Override
-		public boolean isCounted() {
-			return false;
-		}
-
-		@Override
-		public boolean isDiscriminated() {
-			return true;
-		}
-
-		@Override
-		public boolean isEnumerated() {
-			return false;
-		}
-
-		@Override
-		public @NonNull String toString() {
-			StringBuilder s = new StringBuilder();
-			List<@NonNull ParserRuleValue> parserRuleValues = new ArrayList<>(this.parserRuleValues);
-			Collections.sort(parserRuleValues, NameUtil.NAMEABLE_COMPARATOR);
-			boolean isFirst = true;
-			for (@NonNull ParserRuleValue parserRuleValue : parserRuleValues) {
-				if (!isFirst) {
-					s.append("+");
-				}
-				s.append(parserRuleValue.getRuleName());
-				s.append("(");
-				Integer count = parserRuleValue2count.get(parserRuleValue);
-				s.append(count != null ? count.intValue() : 0);
-				s.append(")");
-				isFirst = false;
-			}
-			return s.toString();
 		}
 	}
 
@@ -229,11 +127,6 @@ public class UserSlotsAnalysis
 		}
 
 		@Override
-		public int asDiscriminated(@NonNull ParserRuleValue parserRuleValue) {
-			throw new IllegalStateException();
-		}
-
-		@Override
 		public int asEnumerated(@NonNull EnumerationValue enumerationValue) {
 			Integer value = enumerationValue2count.get(enumerationValue);
 			return value != null ? value.intValue() : 0;
@@ -241,11 +134,6 @@ public class UserSlotsAnalysis
 
 		@Override
 		public boolean isCounted() {
-			return false;
-		}
-
-		@Override
-		public boolean isDiscriminated() {
 			return false;
 		}
 
@@ -288,12 +176,10 @@ public class UserSlotsAnalysis
 	 */
 	private @NonNull List<@NonNull DynamicRuleMatch> dynamicRuleMatches = new ArrayList<>();
 
-	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject/*,
-			@Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2disciminatedRuleAnalyses*/) {
+	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject) {
 		this.modelAnalysis = modelAnalysis;
 		this.eObject = eObject;
 		this.serializationRules = serializationRules;
-	//	this.eReference2disciminatedRuleAnalyses = eReference2disciminatedRuleAnalyses;
 		this.eStructuralFeature2slotAnalysis = analyze();
 		modelAnalysis.debugAddUserSlotsAnalysis(this);
 	}
@@ -397,30 +283,6 @@ public class UserSlotsAnalysis
 			return null;
 		}
 		Object object = eObject.eGet(eReference);
-	/*	if (eReference2disciminatedRuleAnalyses != null) {
-			List<@NonNull ParserRuleAnalysis> ruleAnalyses = eReference2disciminatedRuleAnalyses.get(eReference);
-			if (ruleAnalyses != null) {
-				if (eReference.isMany()) {
-					List<?> elements = (List<?>)object;
-					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(ruleAnalyses, elements.size());
-					for (Object element : elements) {
-						if (element != null) {			// null is not serializeable/parseable
-							UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis((EObject)element);
-						//	UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
-						//	elementAnalysis.createSerializer(this, targetRuleAnalysis)
-							discriminatedSlotAnalysis.analyzeEReference(elementAnalysis);
-						}
-					}
-					return discriminatedSlotAnalysis;
-				}
-				else if (object != null){
-					DiscriminatedSlotAnalysis discriminatedSlotAnalysis = new DiscriminatedSlotAnalysis(ruleAnalyses, object != null ? 1 : 0);
-					UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis((EObject)object);
-					discriminatedSlotAnalysis.analyzeEReference(elementAnalysis);
-					return discriminatedSlotAnalysis;
-				}
-			}
-		} */
 		if (eReference.isMany()) {
 			List<?> elements = (List<?>)object;
 			assert elements != null;
@@ -504,12 +366,7 @@ public class UserSlotsAnalysis
 		if (slotAnalysis.isCounted()) {
 			return slotAnalysis.asCounted();
 		}
-		if (slotAnalysis.isDiscriminated()) {
-			return slotAnalysis.asDiscriminated(parserRuleValue);
-		}
-		else {
-			throw new UnsupportedOperationException();
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	public @NonNull UserSlotAnalysis getSlotAnalysis(@NonNull EStructuralFeature eStructuralFeature) {

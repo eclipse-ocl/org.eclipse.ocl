@@ -177,9 +177,6 @@ public class UserModelAnalysis
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable AbstractRuleValue targetRuleValue) {
 		debugSerializeCount++;
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
-		if ("PrefixExpCS".equals(eObject.eClass().getName())) {
-			getClass();	// XXX
-		}
 		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);
 		if (dynamicRuleMatch != null) {
 			UserElementSerializer serializer = new UserElementSerializer(dynamicRuleMatch, this, eObject);

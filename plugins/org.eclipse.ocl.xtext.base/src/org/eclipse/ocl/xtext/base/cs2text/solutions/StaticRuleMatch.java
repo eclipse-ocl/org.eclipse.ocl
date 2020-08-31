@@ -85,9 +85,6 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	protected void analyzeAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> cardinalityVariables,
 			@NonNull MultiplicativeCardinality netMultiplicativeCardinality) {
 		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
-		if ("ownedProperties".equals(eStructuralFeature.getName())) {
-			getClass();	// XXX
-		}
 		//
 		//	Accumulate enumerated attributes
 		//
@@ -175,9 +172,6 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 	}
 
 	public void analyzeSerialization() {
-		if ("EnumerationCS".equals(serializationRuleAnalysis.getRuleAnalysis().getRuleName())) {
-			getClass();	// XXX
-		}
 		analyzeSerialization(serializationRuleAnalysis.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), MultiplicativeCardinality.ONE);
 	}
 	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull MultiplicativeCardinality outerMultiplicativeCardinality) {

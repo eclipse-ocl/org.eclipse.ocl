@@ -348,10 +348,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			}
 		}
 		else {
-		//	String string = serializationNode.toString();
-		//	if (string.contains("name='Map'")) {
-		//		getClass();		// XXX
-		//	}
 			SerializationRuleAnalysis serializationRuleAnalysis = new SerializationRuleAnalysis(this, serializationNode);
 			serializationRuleAnalyses.add(serializationRuleAnalysis);
 		}
@@ -360,10 +356,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	public @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> getEFeature2assignmentAnalyses() {
 		return eFeature2assignmentAnalyses;
 	}
-
-//	public @Nullable Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> getEReference2DiscriminatingRuleAnalyses() {
-//		return eReference2discriminatingRuleAnalyses;
-//	}
 
 	@Override
 	public int getIndex() {
@@ -406,9 +398,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			// rtSerializationRules content defined after construction to allow recursive references
 			//
 			int i = 0;
-			if ("OCLinEcore::AnnotationCS".equals(name)) {
-				getClass();		// XXX
-			}
 			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalyses) {
 				rtSerializationRules[i++] = serializationRuleAnalysis.getRuntime();
 			}
@@ -425,9 +414,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	}
 
 	public void getStaticRuleMatch() {
-		if ("Base::MultiplicityCS".equals(name)) {
-			getClass();		// XXX
-		}
 		assert serializationRuleAnalyses != null;
 		for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalyses) {
 			serializationRuleAnalysis.getStaticRuleMatch();
@@ -440,9 +426,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	}
 
 	public @NonNull Iterable<@NonNull ParserRuleAnalysis> getSuperRuleAnalysisClosure() {
-		if ("SelfExpCS".equals(eClass.getName())) {
-			getClass();				// XXX
-		}
 		List<@NonNull ParserRuleAnalysis> superRuleAnalysesClosureList = this.superRuleAnalysesClosure;
 		if (superRuleAnalysesClosureList == null) {
 			UniqueList<@NonNull ParserRuleAnalysis> superRuleAnalysesClosureSet = new UniqueList<>();

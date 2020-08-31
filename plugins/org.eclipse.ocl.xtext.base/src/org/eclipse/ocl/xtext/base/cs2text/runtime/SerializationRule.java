@@ -257,9 +257,6 @@ public class SerializationRule
 		this.needsDefaultEAttributes = needsDefaultEAttributes;
 		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
 		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
-		if (ruleValueIndex == 71) {
-			getClass();		// XXX
-		}
 	}
 
 /*	@Override

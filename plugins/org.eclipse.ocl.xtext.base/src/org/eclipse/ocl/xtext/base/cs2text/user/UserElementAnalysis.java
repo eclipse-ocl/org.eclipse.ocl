@@ -62,9 +62,6 @@ public class UserElementAnalysis implements Nameable
 	 */
 	private @NonNull DynamicSerializationRules analyzeSerializationRules() {
 		String eClassName = eClass.getName();
-		if ("SelfExpCS".equals(eClassName)) {
-			getClass();				// XXX
-		}
 		IndexVector targetRuleValueIndexes = null;
 		EReference eContainmentFeature2 = eContainmentFeature;
 		if (eContainmentFeature2 != null) {
