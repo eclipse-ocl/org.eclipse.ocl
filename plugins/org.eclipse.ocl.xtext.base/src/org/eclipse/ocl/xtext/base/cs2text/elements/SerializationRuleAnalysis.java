@@ -475,10 +475,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		if (producedEClass2 == null) {
 			EClass returnedEClass = ruleAnalysis.getReturnedEClass();
 			producedEClass = producedEClass2 = refineProducedEClass(rootSerializationNode, returnedEClass);
-			if ("EnumerationCS".equals(producedEClass2.getName())) {		// XXX debugging
-				refineProducedEClass(rootSerializationNode, returnedEClass);
-				getClass();
-			}
 		}
 		return producedEClass2;
 	}
@@ -510,9 +506,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @NonNull StaticRuleMatch getStaticRuleMatch() {
 		StaticRuleMatch staticRuleMatch2 = staticRuleMatch;
 		if (staticRuleMatch2 == null) {
-			if ("EssentialOCL::TupleTypeCS".equals(ruleAnalysis.getName())) {
-				getClass();	// XXX debugging
-			}
 			//
 			staticRuleMatch = staticRuleMatch2 = new StaticRuleMatch(this);
 			//

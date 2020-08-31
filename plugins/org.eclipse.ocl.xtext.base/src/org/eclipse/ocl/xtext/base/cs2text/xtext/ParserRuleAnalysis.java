@@ -251,51 +251,6 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			SerializationNode rootSerializationNode = serializationRuleAnalysis.getRootSerializationNode();
 			analyzeSerializations(rootSerializationNode, eReference2ruleAnalysisOrAnalyses);
 		}
-		/**
-		 * Gather the EReferences for which any ParserRuleAnalyses conflict between distinct assignments.
-		 */
-		for (Map.Entry<@NonNull EReference, @NonNull Object> entry : eReference2ruleAnalysisOrAnalyses.entrySet()) {
-			EReference eReference = entry.getKey();
-			Object ruleAnalysisOrAnalyses = eReference2ruleAnalysisOrAnalyses.get(eReference);
-			ParserRuleAnalysis discriminatingRuleAnalysis = null;
-			List<@NonNull ParserRuleAnalysis> discriminatingRuleAnalyses = null;
-			if (ruleAnalysisOrAnalyses instanceof ParserRuleAnalysis) {
-				// ?? check that it is not a derived rule
-				ParserRuleAnalysis ruleAnalysis = (ParserRuleAnalysis)ruleAnalysisOrAnalyses;
-				EClass returnedEClass = ruleAnalysis.getReturnedEClass();
-				if (returnedEClass != eReference.getEReferenceType()) {
-					discriminatingRuleAnalysis  = ruleAnalysis;		// XXX can probably be much stricter
-				}
-			}
-			else {
-				@SuppressWarnings("unchecked")
-				List<@NonNull ParserRuleAnalysis> ruleAnalyses = (List<@NonNull ParserRuleAnalysis>)ruleAnalysisOrAnalyses;
-				assert ruleAnalyses != null;
-				assert ruleAnalyses.size() >= 2;
-				discriminatingRuleAnalyses = ruleAnalyses;		// XXX can probably be much stricter
-			}
-		/*	if ((discriminatingRuleAnalysis != null) || (discriminatingRuleAnalyses != null)) {
-				Map<@NonNull EReference, @NonNull List<@NonNull ParserRuleAnalysis>> eReference2discriminatingRuleAnalyses2 = eReference2discriminatingRuleAnalyses;
-				if (eReference2discriminatingRuleAnalyses2 == null) {
-					eReference2discriminatingRuleAnalyses = eReference2discriminatingRuleAnalyses2 = new HashMap<>();
-				}
-				List<@NonNull ParserRuleAnalysis> list = eReference2discriminatingRuleAnalyses2.get(eReference);
-				if (list == null) {
-					list = new ArrayList<>();
-					eReference2discriminatingRuleAnalyses2.put(eReference, list);
-				}
-				if ((discriminatingRuleAnalysis != null) && !list.contains(discriminatingRuleAnalysis)) {
-					list.add(discriminatingRuleAnalysis);
-				}
-				if (discriminatingRuleAnalyses != null) {
-					for (@NonNull ParserRuleAnalysis discriminatingRuleAnalysis2 : discriminatingRuleAnalyses) {
-						if (!list.contains(discriminatingRuleAnalysis2)) {
-							list.add(discriminatingRuleAnalysis2);
-						}
-					}
-				}
-			} */
-		}
 	}
 	private void analyzeSerializations(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EReference, @NonNull Object> eReference2ruleAnalysisOrAnalyses) {
 		if (serializationNode instanceof AssignedRuleCallSerializationNode) {
