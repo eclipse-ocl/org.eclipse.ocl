@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 
 public class UserSlotsAnalysis
 {

@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
-public class RTSerializationSequenceStep extends RTAbstractSerializationStep
+public class SerializationStepSequence extends SerializationStepAbstract
 {
 	/**
 	 * The number of steps within the linearized steps for the rule that support the sequence.
@@ -22,7 +22,7 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 	private int startIndex = 0;
 	private int endIndex = 0;
 
-	public RTSerializationSequenceStep(int variableIndex, int startIndex, int endIndex) {
+	public SerializationStepSequence(int variableIndex, int startIndex, int endIndex) {
 		super(variableIndex);
 		this.startIndex = startIndex;
 		this.endIndex = endIndex;
@@ -33,13 +33,13 @@ public class RTSerializationSequenceStep extends RTAbstractSerializationStep
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof RTSerializationSequenceStep)) {
+		if (!(obj instanceof SerializationStepSequence)) {
 			return false;
 		}
-		return equalTo((RTSerializationSequenceStep)obj);
+		return equalTo((SerializationStepSequence)obj);
 	}
 
-	protected boolean equalTo(@NonNull RTSerializationSequenceStep that) {
+	protected boolean equalTo(@NonNull SerializationStepSequence that) {
 		return super.equalTo(that) && (this.startIndex == that.startIndex) && (this.endIndex == that.endIndex);
 	}
 

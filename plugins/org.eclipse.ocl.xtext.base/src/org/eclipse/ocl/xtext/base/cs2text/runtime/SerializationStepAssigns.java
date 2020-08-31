@@ -21,22 +21,19 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserModelAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.conversion.ValueConverterException;
 
-public class RTSerializationAssignsStep extends RTSerializationAbstractFeatureStep
+public class SerializationStepAssigns extends SerializationStepAbstractFeature
 {
 	private @Nullable EnumerationValue enumerationValue;
 	private @NonNull Integer @Nullable [] calledRuleIndexes;	// Cannot use INdexVector since must preserve declaration order
 
-	public RTSerializationAssignsStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @Nullable EnumerationValue enumerationValue, @NonNull Integer @Nullable [] calledRuleIndexes) {
+	public SerializationStepAssigns(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @Nullable EnumerationValue enumerationValue, @NonNull Integer @Nullable [] calledRuleIndexes) {
 		super(variableIndex, eStructuralFeature);
 		this.enumerationValue = enumerationValue;
 		this.calledRuleIndexes = calledRuleIndexes;
@@ -47,13 +44,13 @@ public class RTSerializationAssignsStep extends RTSerializationAbstractFeatureSt
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof RTSerializationAssignsStep)) {
+		if (!(obj instanceof SerializationStepAssigns)) {
 			return false;
 		}
-		return equalTo((RTSerializationAssignsStep)obj);
+		return equalTo((SerializationStepAssigns)obj);
 	}
 
-	protected boolean equalTo(@NonNull RTSerializationAssignsStep that) {
+	protected boolean equalTo(@NonNull SerializationStepAssigns that) {
 		if (!super.equalTo(that)) {
 			return false;
 		}
@@ -90,7 +87,7 @@ public class RTSerializationAssignsStep extends RTSerializationAbstractFeatureSt
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		Object object = serializer.consumeNext(eStructuralFeature);
 		UserModelAnalysis modelAnalysis = serializer.getModelAnalysis();
-		RTGrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
+		SerializationGrammarAnalysis grammarAnalysis = modelAnalysis.getGrammarAnalysis();
 		@NonNull Integer[] calledRuleIndexes2 = calledRuleIndexes;
 		if (eStructuralFeature instanceof EAttribute) {
 			EnumerationValue enumerationValue2 = enumerationValue;
@@ -103,7 +100,7 @@ public class RTSerializationAssignsStep extends RTSerializationAbstractFeatureSt
 			}
 			if (calledRuleIndexes2 != null) {
 				for (int calledRuleIndex : calledRuleIndexes2) {
-					@NonNull AbstractRuleValue calledRuleValue = grammarAnalysis.getRuleValue(calledRuleIndex);
+					@NonNull GrammarRuleValue calledRuleValue = grammarAnalysis.getRuleValue(calledRuleIndex);
 					try {
 						String val = modelAnalysis.getValueConverterService().toString(object, calledRuleValue.getRuleName());
 						serializationBuilder.append(String.valueOf(val));
@@ -122,7 +119,7 @@ public class RTSerializationAssignsStep extends RTSerializationAbstractFeatureSt
 			UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
 			Segment[][] staticSegments = serializer.getStaticSegments();
 			for (int calledRuleIndex : calledRuleIndexes2) {			// search for matching rule
-				@NonNull AbstractRuleValue calledRuleValue = grammarAnalysis.getRuleValue(calledRuleIndex);
+				@NonNull GrammarRuleValue calledRuleValue = grammarAnalysis.getRuleValue(calledRuleIndex);
 				for (@NonNull SerializationRule serializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {
 					DynamicRuleMatch match = serializationRule.match(slotsAnalysis, staticSegments);
 					if (match != null) {

@@ -12,18 +12,18 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public abstract class RTAbstractSerializationStep implements RTSerializationStep
+public abstract class SerializationStepAbstract implements SerializationStep
 {
 	protected final int variableIndex;		// -ve not used
 
-	protected RTAbstractSerializationStep(int variableIndex) {
+	protected SerializationStepAbstract(int variableIndex) {
 		this.variableIndex = variableIndex;
 	}
 
 	@Override
 	public abstract boolean equals(Object obj);
 
-	protected boolean equalTo(@NonNull RTAbstractSerializationStep that) {
+	protected boolean equalTo(@NonNull SerializationStepAbstract that) {
 		return this.variableIndex == that.variableIndex;
 	}
 

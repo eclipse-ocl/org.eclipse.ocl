@@ -8,25 +8,17 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
-public class DataTypeRuleValue extends AbstractRuleValue
+public interface SerializationStep
 {
-	public DataTypeRuleValue(int ruleIndex, @NonNull String name) {
-		super(ruleIndex, name);
-	}
+	int getVariableIndex();
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof DataTypeRuleValue)) {
-			return false;
-		}
-		DataTypeRuleValue that = (DataTypeRuleValue)obj;
-		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name);
-	}
+	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) ;
+
+	void toString(@NonNull StringBuilder s, int depth);
 }

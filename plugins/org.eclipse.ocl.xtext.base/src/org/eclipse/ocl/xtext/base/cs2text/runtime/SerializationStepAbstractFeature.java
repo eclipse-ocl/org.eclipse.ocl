@@ -13,17 +13,17 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 
-public abstract class RTSerializationAbstractFeatureStep extends RTAbstractSerializationStep
+public abstract class SerializationStepAbstractFeature extends SerializationStepAbstract
 {
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	protected RTSerializationAbstractFeatureStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
+	protected SerializationStepAbstractFeature(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature) {
 		super(variableIndex);
 		assert eStructuralFeature != null;
 		this.eStructuralFeature = eStructuralFeature;
 	}
 
-	protected boolean equalTo(@NonNull RTSerializationAbstractFeatureStep that) {
+	protected boolean equalTo(@NonNull SerializationStepAbstractFeature that) {
 		return super.equalTo(that) && eStructuralFeature.equals(that.eStructuralFeature);
 	}
 

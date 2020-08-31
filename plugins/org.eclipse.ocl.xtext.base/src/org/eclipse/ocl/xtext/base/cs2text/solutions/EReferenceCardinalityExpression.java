@@ -23,10 +23,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 
 /**
  * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
@@ -38,7 +38,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 {
 	protected final @NonNull EReference eReference;
 	protected final @NonNull ParserRuleValue parserRuleValue;
-	private @NonNull Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> parserRuleValue2cardinalityExpression = new HashMap<>();
+	private @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue, @NonNull CardinalityExpression> parserRuleValue2cardinalityExpression = new HashMap<>();
 
 	public EReferenceCardinalityExpression(@NonNull String name, /*@NonNull*/ EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
 		super(name);
@@ -50,7 +50,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 	@Override
 	public boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
-		for (Entry<@NonNull ParserRuleValue, @NonNull CardinalityExpression> entry : parserRuleValue2cardinalityExpression.entrySet()) {
+		for (Entry<org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue, @NonNull CardinalityExpression> entry : parserRuleValue2cardinalityExpression.entrySet()) {
 			ParserRuleValue value = entry.getKey();
 			CardinalityExpression nestedExpression = entry.getValue();
 			int requiredCount = nestedExpression.solve(dynamicRuleMatch);
@@ -91,7 +91,7 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 		return parserRuleValue;
 	}
 
-	public @Nullable Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> getParserRuleValue2cardinalityExpression() {
+	public @Nullable Map<org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue, @NonNull CardinalityExpression> getParserRuleValue2cardinalityExpression() {
 		return parserRuleValue2cardinalityExpression;
 	}
 

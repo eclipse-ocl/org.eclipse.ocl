@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 
 /**
  * A RuleMatch identifoes some common expression evaluation functionality for constant folding by the compile-time StaticRuleMatch

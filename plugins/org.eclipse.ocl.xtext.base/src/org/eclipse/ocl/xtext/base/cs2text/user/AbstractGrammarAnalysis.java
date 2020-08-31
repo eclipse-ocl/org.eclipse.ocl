@@ -21,8 +21,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 
 public abstract class AbstractGrammarAnalysis
 {
@@ -41,7 +41,7 @@ public abstract class AbstractGrammarAnalysis
 
 	public abstract @NonNull String getRuleName(int ruleValueIndex);
 
-	public abstract @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex);
+	public abstract @NonNull GrammarRuleValue getRuleValue(int ruleValueIndex);
 
 	public @NonNull Iterable<@NonNull EClassValue> getSortedProducedEClassValues() {
 		assert eClass2eClassValue.size() > 0;

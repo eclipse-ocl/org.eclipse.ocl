@@ -11,22 +11,20 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
-import org.eclipse.xtext.CrossReference;
-import org.eclipse.xtext.RuleCall;
 
-public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFeatureStep
+public class SerializationStepAssignedRuleCall extends SerializationStepAbstractFeature
 {
-	protected final @NonNull CrossReference crossReference;
+	private int calledRuleIndex;
 
-	public RTSerializationCrossReferenceStep(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
+	public SerializationStepAssignedRuleCall(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, int calledValueIndex) {
 		super(variableIndex, eStructuralFeature);
-		assert eStructuralFeature != null;
-		this.crossReference = crossReference;
+		this.calledRuleIndex = calledValueIndex;
 	}
 
 	@Override
@@ -34,31 +32,40 @@ public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFe
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof RTSerializationCrossReferenceStep)) {
+		if (!(obj instanceof SerializationStepAssignedRuleCall)) {
 			return false;
 		}
-		return equalTo((RTSerializationCrossReferenceStep)obj);
+		return equalTo((SerializationStepAssignedRuleCall)obj);
 	}
 
-	protected boolean equalTo(@NonNull RTSerializationCrossReferenceStep that) {
-		return super.equalTo(that) && crossReference.equals(that.crossReference);
+	protected boolean equalTo(@NonNull SerializationStepAssignedRuleCall that) {
+		return super.equalTo(that) && (this.calledRuleIndex == that.calledRuleIndex);
 	}
 
-	public @NonNull CrossReference getCrossReference() {
-		return crossReference;
+	public int getCalledRuleIndex() {
+		return calledRuleIndex;
 	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() + 5 * crossReference.hashCode();
+		return super.hashCode() + 5 * calledRuleIndex;
 	}
 
 	@Override
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		EObject eGet = (EObject)serializer.consumeNext(eStructuralFeature);
-		EObject context = serializer.getElement();
-		String string = serializer.getModelAnalysis().getCrossReferenceSerializer().serializeCrossRef(context, crossReference, eGet, null, null);
-		serializationBuilder.append(string);
+	//	Object object = serializer.consumeNext(eStructuralFeature);
+	//	serializationBuilder.append(String.valueOf(object));
+		Object eGet = serializer.consumeNext(eStructuralFeature);
+		if (eStructuralFeature instanceof EReference) {
+			assert ((EReference)eStructuralFeature).isContainment();
+			if (eGet != null) {
+				serializer.serializeElement(serializationBuilder, (EObject)eGet, serializer.getModelAnalysis().getGrammarAnalysis().getRuleValue(calledRuleIndex));
+			}
+		}
+		else {
+			String val = serializer.getModelAnalysis().getValueConverterService().toString(eGet, serializer.getModelAnalysis().getGrammarAnalysis().getRuleValue(calledRuleIndex).getRuleName());
+			serializationBuilder.append(String.valueOf(val));
+		}
 	}
 
 	@Override
@@ -68,6 +75,6 @@ public class RTSerializationCrossReferenceStep extends RTSerializationAbstractFe
 		s.append("::");
 		s.append(XtextGrammarUtil.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		s.append(((RuleCall)crossReference.getTerminal()).getRule().getName());
+		s.append(calledRuleIndex);
 	}
 }

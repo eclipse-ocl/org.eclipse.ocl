@@ -32,12 +32,12 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -186,7 +186,7 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 				String name = String.format("C%02d", index);
 				assert name != null;
 				@NonNull Integer @Nullable [] ruleIndexes = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes() : null;
-				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes != null ? new IndexVector(ruleIndexes) : null, multiplicativeCardinality);
+				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes != null ? new GrammarRuleVector(ruleIndexes) : null, multiplicativeCardinality);
 				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 				assert old2 == null;
 				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);

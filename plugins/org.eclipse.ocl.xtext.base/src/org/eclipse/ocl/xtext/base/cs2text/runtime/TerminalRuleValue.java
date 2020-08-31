@@ -11,14 +11,22 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
-public interface RTSerializationStep
+public class TerminalRuleValue extends GrammarRuleValue
 {
-	int getVariableIndex();
+	public TerminalRuleValue(int ruleIndex, @NonNull String name) {
+		super(ruleIndex, name);
+	}
 
-	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) ;
-
-	void toString(@NonNull StringBuilder s, int depth);
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof TerminalRuleValue)) {
+			return false;
+		}
+		TerminalRuleValue that = (TerminalRuleValue)obj;
+		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name);
+	}
 }

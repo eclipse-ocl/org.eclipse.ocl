@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
@@ -253,7 +253,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	}
 
 	@Override
-	public void serialize(RTSerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
+	public void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
 		assert serializationBuilder != null;
 		EObject eObject = serializer.getElement();
 		CustomSegmentSupport support = getSupport(eObject);

@@ -17,10 +17,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -31,7 +32,7 @@ public class UserElementAnalysis implements Nameable
 	private static int count = 0;
 
 	protected final @NonNull UserModelAnalysis modelAnalysis;
-	protected final @NonNull RTGrammarAnalysis grammarAnalysis;
+	protected final @NonNull SerializationGrammarAnalysis grammarAnalysis;
 	protected final @Nullable UserElementAnalysis containingElementAnalysis;
 	protected final @Nullable EReference eContainmentFeature;
 	protected final @NonNull EObject eObject;
@@ -62,20 +63,20 @@ public class UserElementAnalysis implements Nameable
 	 */
 	private @NonNull DynamicSerializationRules analyzeSerializationRules() {
 		String eClassName = eClass.getName();
-		IndexVector targetRuleValueIndexes = null;
+		GrammarRuleVector targetRuleValueIndexes = null;
 		EReference eContainmentFeature2 = eContainmentFeature;
 		if (eContainmentFeature2 != null) {
 			UserElementAnalysis containingElementAnalysis2 = containingElementAnalysis;
 			assert containingElementAnalysis2 != null;
 			EClassValue parentEClassValue = grammarAnalysis.getEClassValue(containingElementAnalysis2.getEClass());
-			IndexVector targetRuleValues = parentEClassValue.getAssignedTargetRuleValues(eContainmentFeature2);
+			GrammarRuleVector targetRuleValues = parentEClassValue.getAssignedTargetRuleValues(eContainmentFeature2);
 			if (targetRuleValues != null) {
-				targetRuleValueIndexes = new IndexVector();
+				targetRuleValueIndexes = new GrammarRuleVector();
 				for (int targetRuleValueIndex : targetRuleValues) {
-					AbstractRuleValue targetRuleValue = grammarAnalysis.getRuleValue(targetRuleValueIndex);
+					GrammarRuleValue targetRuleValue = grammarAnalysis.getRuleValue(targetRuleValueIndex);
 					if (targetRuleValue instanceof ParserRuleValue) {
 						targetRuleValueIndexes.set(targetRuleValueIndex);
-						IndexVector subParserRuleValueIndexes = ((ParserRuleValue)targetRuleValue).getSubParserRuleValueIndexes();
+						GrammarRuleVector subParserRuleValueIndexes = ((ParserRuleValue)targetRuleValue).getSubParserRuleValueIndexes();
 						if (subParserRuleValueIndexes != null) {
 							targetRuleValueIndexes.setAll(subParserRuleValueIndexes);
 						}

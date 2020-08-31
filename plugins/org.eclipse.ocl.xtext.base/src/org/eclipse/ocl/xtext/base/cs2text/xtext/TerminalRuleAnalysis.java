@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
 import org.eclipse.xtext.TerminalRule;
 
 /**

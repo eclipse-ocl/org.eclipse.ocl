@@ -8,17 +8,18 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.Indexed;
 
-public abstract class AbstractRuleValue implements Indexed,Nameable
+public abstract class GrammarRuleValue implements Indexed,Nameable
 {
 	protected final int ruleIndex;
 	protected final @NonNull String name;
 
-	protected AbstractRuleValue(int ruleIndex, @NonNull String name) {
+	protected GrammarRuleValue(int ruleIndex, @NonNull String name) {
 		this.ruleIndex = ruleIndex;
 		this.name = name;
 	}

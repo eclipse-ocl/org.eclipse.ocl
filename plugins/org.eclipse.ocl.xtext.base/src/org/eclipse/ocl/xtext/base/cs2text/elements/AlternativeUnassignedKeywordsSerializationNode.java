@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
@@ -30,7 +30,7 @@ import org.eclipse.xtext.util.Strings;
 public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSerializationNode
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
-	private @Nullable RTSerializationStep runtime = null;
+	private @Nullable SerializationStep runtime = null;
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeUnassignedKeywordsSerializationNode(@NonNull MultiplicativeCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
@@ -54,8 +54,8 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
-		stepsList.add(new RTSerializationLiteralStep(staticRuleMatch.getCardinalityVariableIndex(this), values.get(0)));
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull SerializationStep> stepsList) {
+		stepsList.add(new SerializationStepLiteral(staticRuleMatch.getCardinalityVariableIndex(this), values.get(0)));
 	}
 
 	@Override

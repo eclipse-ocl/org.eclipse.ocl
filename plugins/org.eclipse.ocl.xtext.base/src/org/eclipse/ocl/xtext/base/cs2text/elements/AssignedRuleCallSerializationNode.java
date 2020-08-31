@@ -14,10 +14,10 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignedRuleCall;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -40,9 +40,9 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	}
 
 	@Override
-	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull SerializationStep> stepsList) {
 		int cardinalityVariableIndex = staticRuleMatch.getCardinalityVariableIndex(this);
-		stepsList.add(new RTSerializationAssignedRuleCallStep(cardinalityVariableIndex, eStructuralFeature, calledRuleIndex));
+		stepsList.add(new SerializationStepAssignedRuleCall(cardinalityVariableIndex, eStructuralFeature, calledRuleIndex));
 	}
 
 	public int getAssignedRuleIndex() {
@@ -86,7 +86,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-		AbstractRuleValue ruleValue = assignmentAnalysis.getGrammarAnalysis().basicGetRuleValue(calledRuleIndex);
+		GrammarRuleValue ruleValue = assignmentAnalysis.getGrammarAnalysis().basicGetRuleValue(calledRuleIndex);
 		s.append(ruleValue != null ? ruleValue.getRuleName() : calledRuleIndex);
 		appendCardinality(s, depth);
 	}

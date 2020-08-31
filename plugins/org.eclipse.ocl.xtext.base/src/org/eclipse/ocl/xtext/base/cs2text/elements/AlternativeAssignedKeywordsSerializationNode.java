@@ -15,8 +15,8 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignKeyword;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -50,8 +50,8 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	}
 
 	@Override
-	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
-		stepsList.add(new RTSerializationAssignStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, enumerationValue));
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull SerializationStep> stepsList) {
+		stepsList.add(new SerializationStepAssignKeyword(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, enumerationValue));
 	}
 
 	@Override

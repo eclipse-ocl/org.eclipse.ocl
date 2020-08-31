@@ -32,13 +32,13 @@ public class RTSerializationRule2 extends SerializationRule
 		StaticRuleMatch staticRuleMatch = serializationRuleAnalysis.getStaticRuleMatch();
 		List<@NonNull CardinalitySolutionStep> solutionStepsList = staticRuleMatch.getSteps();
 		@NonNull CardinalitySolutionStep @NonNull [] solutionSteps = solutionStepsList.toArray(new @NonNull CardinalitySolutionStep[solutionStepsList.size()]);
-		List<@NonNull RTSerializationStep> stepsList = new ArrayList<>();
+		List<@NonNull SerializationStep> stepsList = new ArrayList<>();
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdioms = serializationRuleAnalysis.getSerializationNode2subIdioms();
 		rootSerializationNode.gatherSteps(staticRuleMatch, stepsList);
 		List<@Nullable SubIdiom> subIdiomsList = gatherSubIdioms(rootSerializationNode, serializationNode2subIdioms, new ArrayList<>());
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
-		@NonNull RTSerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull RTSerializationStep[size]);
+		@NonNull SerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull SerializationStep[size]);
 		@Nullable Segment @NonNull [] @Nullable [] staticSegments = new @Nullable Segment @NonNull [size] @Nullable [];
 		for (int i = 0; i < size; i++) {
 			assert subIdiomsList != null;
@@ -65,7 +65,7 @@ public class RTSerializationRule2 extends SerializationRule
 	private static final @NonNull Map<@NonNull SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
 	private final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;
 
-	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull RTSerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
+	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull CardinalitySolutionStep @NonNull [] solutionSteps, @NonNull SerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
 			serializationRuleAnalysis.getStaticRuleMatch().basicGetNeedsDefaultEAttributes(),

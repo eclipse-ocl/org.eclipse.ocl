@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
 import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.xtext.AbstractRule;
 
 /**
@@ -54,7 +55,7 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 		this.name = grammarName + "::" + XtextGrammarUtil.getName(abstractRule);
 	}
 
-	public abstract @Nullable AbstractRuleValue basicGetRuleValue();
+	public abstract @Nullable GrammarRuleValue basicGetRuleValue();
 
 	public @NonNull GrammarAnalysis getGrammarAnalysis() {
 		return grammarAnalysis;
@@ -78,7 +79,7 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 		return XtextGrammarUtil.getName(abstractRule);
 	}
 
-	public abstract @NonNull AbstractRuleValue getRuleValue();
+	public abstract @NonNull GrammarRuleValue getRuleValue();
 
 	@Override
 	public void toDebugString(@NonNull StringBuilder s, int depth) {

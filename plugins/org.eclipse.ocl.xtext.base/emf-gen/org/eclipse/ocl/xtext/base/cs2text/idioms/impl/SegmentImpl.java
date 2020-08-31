@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 
 /**
@@ -117,7 +117,7 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 	 * @generated
 	 */
 	@Override
-	public void serialize(RTSerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder)
+	public void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder)
 	{
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT

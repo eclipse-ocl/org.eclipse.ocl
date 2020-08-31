@@ -16,10 +16,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignsStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -55,8 +55,8 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 	}
 
 	@Override
-	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
-		stepsList.add(new RTSerializationAssignsStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, enumerationValue, calledRuleIndexes));
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull SerializationStep> stepsList) {
+		stepsList.add(new SerializationStepAssigns(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, enumerationValue, calledRuleIndexes));
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 				if (!isFirst) {
 					s.append("|");
 				}
-				AbstractRuleValue ruleValue = grammarAnalysis.basicGetRuleValue(calledRuleIndex);
+				GrammarRuleValue ruleValue = grammarAnalysis.basicGetRuleValue(calledRuleIndex);
 				s.append(ruleValue != null ? ruleValue.getRuleName() : calledRuleIndex);
 				isFirst = false;
 			}

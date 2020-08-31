@@ -37,7 +37,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 
 /**
  * <!-- begin-user-doc -->
@@ -380,9 +380,9 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RTSerializationStep createRTSerializationStepFromString(EDataType eDataType, String initialValue)
+	public SerializationStep createRTSerializationStepFromString(EDataType eDataType, String initialValue)
 	{
-		return (RTSerializationStep)super.createFromString(eDataType, initialValue);
+		return (SerializationStep)super.createFromString(eDataType, initialValue);
 	}
 
 	/**

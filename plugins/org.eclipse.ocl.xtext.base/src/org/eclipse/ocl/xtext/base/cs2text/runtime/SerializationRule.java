@@ -26,8 +26,6 @@ import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis.UserSlotAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class SerializationRule
@@ -95,9 +93,9 @@ public class SerializationRule
 	public static class EReference_RuleIndexes implements Nameable
 	{
 		protected final @NonNull EReference eReference;
-		protected final @NonNull IndexVector parserRuleValueIndexes;
+		protected final @NonNull GrammarRuleVector parserRuleValueIndexes;
 
-		public EReference_RuleIndexes(/*@NonNull*/ EReference eReference, @NonNull IndexVector parserRuleValueIndexes) {
+		public EReference_RuleIndexes(/*@NonNull*/ EReference eReference, @NonNull GrammarRuleVector parserRuleValueIndexes) {
 			assert eReference != null;
 			this.eReference = eReference;
 			this.parserRuleValueIndexes = parserRuleValueIndexes;
@@ -107,7 +105,7 @@ public class SerializationRule
 			return eReference;
 		}
 
-		public @NonNull IndexVector getAssignedTargetRuleValueIndexes() {
+		public @NonNull GrammarRuleVector getAssignedTargetRuleValueIndexes() {
 			return parserRuleValueIndexes;
 		}
 
@@ -209,7 +207,7 @@ public class SerializationRule
 
 	private final int ruleValueIndex;
 	private final @NonNull CardinalitySolutionStep @NonNull [] solutionSteps;
-	private final @NonNull RTSerializationStep @NonNull [] serializationSteps;
+	private final @NonNull SerializationStep @NonNull [] serializationSteps;
 	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 	private final @NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues;
 	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
@@ -231,7 +229,7 @@ public class SerializationRule
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ CardinalitySolutionStep /*@NonNull*/ [] solutionSteps,
-			/*@NonNull*/ RTSerializationStep /*@NonNull*/ [] serializationSteps,
+			/*@NonNull*/ SerializationStep /*@NonNull*/ [] serializationSteps,
 			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
@@ -288,7 +286,7 @@ public class SerializationRule
 		return true;
 	} */
 
-	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
+	public @Nullable GrammarRuleVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
 		if (eReference2assignedRuleValueIndexes != null) {
 			for (@NonNull EReference_RuleIndexes eReferenceData : eReference2assignedRuleValueIndexes) {
 				if (eReferenceData.getEReference() == eReference) {
@@ -362,7 +360,7 @@ public class SerializationRule
 		return ruleValueIndex;
 	}
 
-	public @NonNull RTSerializationStep @NonNull [] getSerializationSteps() {
+	public @NonNull SerializationStep @NonNull [] getSerializationSteps() {
 		return serializationSteps;
 	}
 
@@ -474,11 +472,11 @@ public class SerializationRule
 		@NonNull Segment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
 		for (int index = startIndex; index < endIndex; ) {
 			@NonNull Segment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
-			RTSerializationStep serializationStep = serializationSteps[index++];
+			SerializationStep serializationStep = serializationSteps[index++];
 			int cardinalityVariableIndex = serializationStep.getVariableIndex();
 			int stepLoopCount = cardinalityVariableIndex >= 0 ? serializer.getValue(cardinalityVariableIndex) : 1;
-			if (serializationStep instanceof RTSerializationSequenceStep) {
-				int stepsRange = ((RTSerializationSequenceStep)serializationStep).getStepsRange();
+			if (serializationStep instanceof SerializationStepSequence) {
+				int stepsRange = ((SerializationStepSequence)serializationStep).getStepsRange();
 				if (segments != null) {
 					for (Segment segment : segments) {
 						segment.serialize(serializationStep, serializer, serializationBuilder);

@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 
 /**
  * A CardinalityVariable represents the unknown cardinality of a grammar term for which a constant value must be deduced prior
@@ -35,14 +35,14 @@ public class CardinalityVariable implements Nameable
 	/**
 	 * The rule analyses that type the variable. null for sequence variables.
 	 */
-	protected final @Nullable IndexVector ruleAnalyses;
+	protected final @Nullable GrammarRuleVector ruleAnalyses;
 
 	/**
 	 * The possible cardinalities of the variable. ?/+/*. Unit variables are known/redundant and so excluded from computations.
 	 */
 	protected final @NonNull MultiplicativeCardinality multiplicativeCardinality;
 
-	public CardinalityVariable(int index, @NonNull String name, @Nullable IndexVector ruleAnalyses, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
+	public CardinalityVariable(int index, @NonNull String name, @Nullable GrammarRuleVector ruleAnalyses, @NonNull MultiplicativeCardinality multiplicativeCardinality) {
 		this.index = index;
 		this.name = name;
 		this.ruleAnalyses = ruleAnalyses;
@@ -80,7 +80,7 @@ public class CardinalityVariable implements Nameable
 
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(name);
-		IndexVector ruleAnalyses2 = ruleAnalyses;
+		GrammarRuleVector ruleAnalyses2 = ruleAnalyses;
 		if (ruleAnalyses2 != null) {
 			s.append(":");
 			boolean isFirst = true;

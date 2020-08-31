@@ -24,13 +24,13 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignsStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationCrossReferenceStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
@@ -38,6 +38,14 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignKeyword;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignedRuleCall;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepCrossReference;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution;
@@ -49,14 +57,6 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assert;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assign;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck;
-import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -66,12 +66,12 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 	/**
 	 * The metadata resulting from static analysis of the grammar.
 	 */
-	private static RTGrammarAnalysis analysis = null;
+	private static SerializationGrammarAnalysis analysis = null;
 
 	@Override
-	public RTGrammarAnalysis getAnalysis() {
+	public SerializationGrammarAnalysis getAnalysis() {
 		if (analysis == null) {
-			analysis = new RTGrammarAnalysis(
+			analysis = new SerializationGrammarAnalysis(
 				/**
 				 *	The indexable per-produceable EClass meta data.
 				 */
@@ -141,7 +141,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				/**
 				 *	The indexable per-grammar rule meta data.
 				 */
-				new AbstractRuleValue [] {
+				new GrammarRuleValue [] {
 					gr._000  /* 0 : ANY_OTHER */,
 					gr._001  /* 1 : BinaryOperatorName */,
 					gr._002  /* 2 : BooleanLiteralExpCS */,
@@ -266,132 +266,132 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 	/**
 	 * Bit vectors of useful grammar rule combinations
 	 */
-	private class _IndexVectors
+	private class _GrammarRuleVectors
 	{
-		private final @NonNull IndexVector _0 // CoIteratorVariableCS
-			= new IndexVector(0x10L);
-		private final @NonNull IndexVector _1 // CollectionLiteralPartCS
-			= new IndexVector(0x40L);
-		private final @NonNull IndexVector _2 // CollectionTypeCS
-			= new IndexVector(0x100L);
-		private final @NonNull IndexVector _3 // ConstraintCS
-			= new IndexVector(0x1000L);
-		private final @NonNull IndexVector _4 // ContextDeclCS
-			= new IndexVector(0x2000L);
-		private final @NonNull IndexVector _5 // CurlyBracketedClauseCS
-			= new IndexVector(0x4000L);
-		private final @NonNull IndexVector _6 // DefCS
-			= new IndexVector(0x10000L);
-		private final @NonNull IndexVector _7 // DefParameterCS
-			= new IndexVector(0x40000L);
-		private final @NonNull IndexVector _8 // DefCS|DefOperationCS|DefPropertyCS
-			= new IndexVector(0xb0000L);
-		private final @NonNull IndexVector _9 // ElseIfThenExpCS
-			= new IndexVector(0x400000L);
-		private final @NonNull IndexVector _10 // ExpCS
-			= new IndexVector(0x20000000L);
-		private final @NonNull IndexVector _11 // FirstPathElementCS
-			= new IndexVector(0x40000000L);
-		private final @NonNull IndexVector _12 // ImportCS
-			= new IndexVector(0x800000000L);
-		private final @NonNull IndexVector _13 // LetVariableCS
-			= new IndexVector(0x40000000000L);
-		private final @NonNull IndexVector _14 // MapLiteralPartCS
-			= new IndexVector(0x400000000000L);
-		private final @NonNull IndexVector _15 // MapTypeCS
-			= new IndexVector(0x800000000000L);
-		private final @NonNull IndexVector _16 // MultiplicityCS
-			= new IndexVector(0x4000000000000L);
-		private final @NonNull IndexVector _17 // NavigatingArgExpCS
-			= new IndexVector(0x80000000000000L);
-		private final @NonNull IndexVector _18 // NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS
-			= new IndexVector(0x700000000000000L);
-		private final @NonNull IndexVector _19 // NavigatingArgCS|NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS
-			= new IndexVector(0x740000000000000L);
-		private final @NonNull IndexVector _20 // FirstPathElementCS|NextPathElementCS
-			= new IndexVector(0x2000000040000000L);
-		private final @NonNull IndexVector _21 // PackageDeclarationCS
-			= new IndexVector(0x0L,0x2L);
-		private final @NonNull IndexVector _22 // ParameterCS
-			= new IndexVector(0x0L,0x4L);
-		private final @NonNull IndexVector _23 // PathNameCS
-			= new IndexVector(0x0L,0x8L);
-		private final @NonNull IndexVector _24 // PatternExpCS
-			= new IndexVector(0x0L,0x10L);
-		private final @NonNull IndexVector _25 // ExpCS|PatternExpCS
-			= new IndexVector(0x20000000L,0x10L);
-		private final @NonNull IndexVector _26 // PrefixedLetExpCS
-			= new IndexVector(0x0L,0x20L);
-		private final @NonNull IndexVector _27 // LetExpCS|PrefixedLetExpCS
-			= new IndexVector(0x20000000000L,0x20L);
-		private final @NonNull IndexVector _28 // PrefixedPrimaryExpCS
-			= new IndexVector(0x0L,0x40L);
-		private final @NonNull IndexVector _29 // ClassifierContextDeclCS|ContextDeclCS|OperationContextDeclCS|PropertyContextDeclCS
-			= new IndexVector(0x2008L,0x801L);
-		private final @NonNull IndexVector _30 // RoundBracketedClauseCS
-			= new IndexVector(0x0L,0x1000L);
-		private final @NonNull IndexVector _31 // ShadowPartCS
-			= new IndexVector(0x0L,0x20000L);
-		private final @NonNull IndexVector _32 // SpecificationCS
-			= new IndexVector(0x0L,0x80000L);
-		private final @NonNull IndexVector _33 // SquareBracketedClauseCS
-			= new IndexVector(0x0L,0x100000L);
-		private final @NonNull IndexVector _34 // StringLiteralExpCS
-			= new IndexVector(0x0L,0x400000L);
-		private final @NonNull IndexVector _35 // TemplateBindingCS
-			= new IndexVector(0x0L,0x800000L);
-		private final @NonNull IndexVector _36 // TemplateParameterSubstitutionCS
-			= new IndexVector(0x0L,0x1000000L);
-		private final @NonNull IndexVector _37 // TemplateSignatureCS
-			= new IndexVector(0x0L,0x2000000L);
-		private final @NonNull IndexVector _38 // TupleLiteralPartCS
-			= new IndexVector(0x0L,0x8000000L);
-		private final @NonNull IndexVector _39 // TuplePartCS
-			= new IndexVector(0x0L,0x10000000L);
-		private final @NonNull IndexVector _40 // TypeExpCS
-			= new IndexVector(0x0L,0x40000000L);
-		private final @NonNull IndexVector _41 // TypeExpWithoutMultiplicityCS
-			= new IndexVector(0x0L,0x80000000L);
-		private final @NonNull IndexVector _42 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS
-			= new IndexVector(0x800000000100L,0x120000200L);
-		private final @NonNull IndexVector _43 // TypeLiteralWithMultiplicityCS
-			= new IndexVector(0x0L,0x400000000L);
-		private final @NonNull IndexVector _44 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeLiteralWithMultiplicityCS
-			= new IndexVector(0x800000000100L,0x520000200L);
-		private final @NonNull IndexVector _45 // CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS
-			= new IndexVector(0x800000000180L,0x9a0000200L);
-		private final @NonNull IndexVector _46 // CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS
-			= new IndexVector(0x800000000180L,0x9e0000200L);
-		private final @NonNull IndexVector _47 // TypeParameterCS
-			= new IndexVector(0x0L,0x1000000000L);
-		private final @NonNull IndexVector _48 // TypeRefCS
-			= new IndexVector(0x0L,0x2000000000L);
-		private final @NonNull IndexVector _49 // TypedRefCS
-			= new IndexVector(0x0L,0x4000000000L);
-		private final @NonNull IndexVector _50 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS
-			= new IndexVector(0x800000000100L,0xc120000200L);
-		private final @NonNull IndexVector _51 // NextPathElementCS|URIFirstPathElementCS
-			= new IndexVector(0x2000000000000000L,0x80000000000L);
-		private final @NonNull IndexVector _52 // FirstPathElementCS|NextPathElementCS|URIFirstPathElementCS
-			= new IndexVector(0x2000000040000000L,0x80000000000L);
-		private final @NonNull IndexVector _53 // URIPathNameCS
-			= new IndexVector(0x0L,0x100000000000L);
-		private final @NonNull IndexVector _54 // BooleanLiteralExpCS|InvalidLiteralExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimitiveLiteralExpCS|StringLiteralExpCS|UnlimitedNaturalLiteralExpCS
-			= new IndexVector(0xc000002000000004L,0x400000400100L);
-		private final @NonNull IndexVector _55 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
-			= new IndexVector(0xd020212400000024L,0x400204410180L);
-		private final @NonNull IndexVector _56 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
-			= new IndexVector(0xd020212400000024L,0x4002044101c0L);
-		private final @NonNull IndexVector _57 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
-			= new IndexVector(0xd020232400000024L,0x4002044101e0L);
-		private final @NonNull IndexVector _58 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
-			= new IndexVector(0xd020232420000024L,0x4002044101e0L);
-		private final @NonNull IndexVector _59 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
-			= new IndexVector(0xd0a0232420000024L,0x4002044101e0L);
-		private final @NonNull IndexVector _60 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
-			= new IndexVector(0xd020232420000024L,0x4002044101f0L);
-		private final @NonNull IndexVector _61 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS
-			= new IndexVector(0x800000000100L,0x400e120000200L);
+		private final @NonNull GrammarRuleVector _0 // CoIteratorVariableCS
+			= new GrammarRuleVector(0x10L);
+		private final @NonNull GrammarRuleVector _1 // CollectionLiteralPartCS
+			= new GrammarRuleVector(0x40L);
+		private final @NonNull GrammarRuleVector _2 // CollectionTypeCS
+			= new GrammarRuleVector(0x100L);
+		private final @NonNull GrammarRuleVector _3 // ConstraintCS
+			= new GrammarRuleVector(0x1000L);
+		private final @NonNull GrammarRuleVector _4 // ContextDeclCS
+			= new GrammarRuleVector(0x2000L);
+		private final @NonNull GrammarRuleVector _5 // CurlyBracketedClauseCS
+			= new GrammarRuleVector(0x4000L);
+		private final @NonNull GrammarRuleVector _6 // DefCS
+			= new GrammarRuleVector(0x10000L);
+		private final @NonNull GrammarRuleVector _7 // DefParameterCS
+			= new GrammarRuleVector(0x40000L);
+		private final @NonNull GrammarRuleVector _8 // DefCS|DefOperationCS|DefPropertyCS
+			= new GrammarRuleVector(0xb0000L);
+		private final @NonNull GrammarRuleVector _9 // ElseIfThenExpCS
+			= new GrammarRuleVector(0x400000L);
+		private final @NonNull GrammarRuleVector _10 // ExpCS
+			= new GrammarRuleVector(0x20000000L);
+		private final @NonNull GrammarRuleVector _11 // FirstPathElementCS
+			= new GrammarRuleVector(0x40000000L);
+		private final @NonNull GrammarRuleVector _12 // ImportCS
+			= new GrammarRuleVector(0x800000000L);
+		private final @NonNull GrammarRuleVector _13 // LetVariableCS
+			= new GrammarRuleVector(0x40000000000L);
+		private final @NonNull GrammarRuleVector _14 // MapLiteralPartCS
+			= new GrammarRuleVector(0x400000000000L);
+		private final @NonNull GrammarRuleVector _15 // MapTypeCS
+			= new GrammarRuleVector(0x800000000000L);
+		private final @NonNull GrammarRuleVector _16 // MultiplicityCS
+			= new GrammarRuleVector(0x4000000000000L);
+		private final @NonNull GrammarRuleVector _17 // NavigatingArgExpCS
+			= new GrammarRuleVector(0x80000000000000L);
+		private final @NonNull GrammarRuleVector _18 // NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS
+			= new GrammarRuleVector(0x700000000000000L);
+		private final @NonNull GrammarRuleVector _19 // NavigatingArgCS|NavigatingBarArgCS|NavigatingCommaArgCS|NavigatingSemiArgCS
+			= new GrammarRuleVector(0x740000000000000L);
+		private final @NonNull GrammarRuleVector _20 // FirstPathElementCS|NextPathElementCS
+			= new GrammarRuleVector(0x2000000040000000L);
+		private final @NonNull GrammarRuleVector _21 // PackageDeclarationCS
+			= new GrammarRuleVector(0x0L,0x2L);
+		private final @NonNull GrammarRuleVector _22 // ParameterCS
+			= new GrammarRuleVector(0x0L,0x4L);
+		private final @NonNull GrammarRuleVector _23 // PathNameCS
+			= new GrammarRuleVector(0x0L,0x8L);
+		private final @NonNull GrammarRuleVector _24 // PatternExpCS
+			= new GrammarRuleVector(0x0L,0x10L);
+		private final @NonNull GrammarRuleVector _25 // ExpCS|PatternExpCS
+			= new GrammarRuleVector(0x20000000L,0x10L);
+		private final @NonNull GrammarRuleVector _26 // PrefixedLetExpCS
+			= new GrammarRuleVector(0x0L,0x20L);
+		private final @NonNull GrammarRuleVector _27 // LetExpCS|PrefixedLetExpCS
+			= new GrammarRuleVector(0x20000000000L,0x20L);
+		private final @NonNull GrammarRuleVector _28 // PrefixedPrimaryExpCS
+			= new GrammarRuleVector(0x0L,0x40L);
+		private final @NonNull GrammarRuleVector _29 // ClassifierContextDeclCS|ContextDeclCS|OperationContextDeclCS|PropertyContextDeclCS
+			= new GrammarRuleVector(0x2008L,0x801L);
+		private final @NonNull GrammarRuleVector _30 // RoundBracketedClauseCS
+			= new GrammarRuleVector(0x0L,0x1000L);
+		private final @NonNull GrammarRuleVector _31 // ShadowPartCS
+			= new GrammarRuleVector(0x0L,0x20000L);
+		private final @NonNull GrammarRuleVector _32 // SpecificationCS
+			= new GrammarRuleVector(0x0L,0x80000L);
+		private final @NonNull GrammarRuleVector _33 // SquareBracketedClauseCS
+			= new GrammarRuleVector(0x0L,0x100000L);
+		private final @NonNull GrammarRuleVector _34 // StringLiteralExpCS
+			= new GrammarRuleVector(0x0L,0x400000L);
+		private final @NonNull GrammarRuleVector _35 // TemplateBindingCS
+			= new GrammarRuleVector(0x0L,0x800000L);
+		private final @NonNull GrammarRuleVector _36 // TemplateParameterSubstitutionCS
+			= new GrammarRuleVector(0x0L,0x1000000L);
+		private final @NonNull GrammarRuleVector _37 // TemplateSignatureCS
+			= new GrammarRuleVector(0x0L,0x2000000L);
+		private final @NonNull GrammarRuleVector _38 // TupleLiteralPartCS
+			= new GrammarRuleVector(0x0L,0x8000000L);
+		private final @NonNull GrammarRuleVector _39 // TuplePartCS
+			= new GrammarRuleVector(0x0L,0x10000000L);
+		private final @NonNull GrammarRuleVector _40 // TypeExpCS
+			= new GrammarRuleVector(0x0L,0x40000000L);
+		private final @NonNull GrammarRuleVector _41 // TypeExpWithoutMultiplicityCS
+			= new GrammarRuleVector(0x0L,0x80000000L);
+		private final @NonNull GrammarRuleVector _42 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS
+			= new GrammarRuleVector(0x800000000100L,0x120000200L);
+		private final @NonNull GrammarRuleVector _43 // TypeLiteralWithMultiplicityCS
+			= new GrammarRuleVector(0x0L,0x400000000L);
+		private final @NonNull GrammarRuleVector _44 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeLiteralWithMultiplicityCS
+			= new GrammarRuleVector(0x800000000100L,0x520000200L);
+		private final @NonNull GrammarRuleVector _45 // CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS
+			= new GrammarRuleVector(0x800000000180L,0x9a0000200L);
+		private final @NonNull GrammarRuleVector _46 // CollectionPatternCS|CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeExpCS|TypeExpWithoutMultiplicityCS|TypeLiteralCS|TypeNameExpCS
+			= new GrammarRuleVector(0x800000000180L,0x9e0000200L);
+		private final @NonNull GrammarRuleVector _47 // TypeParameterCS
+			= new GrammarRuleVector(0x0L,0x1000000000L);
+		private final @NonNull GrammarRuleVector _48 // TypeRefCS
+			= new GrammarRuleVector(0x0L,0x2000000000L);
+		private final @NonNull GrammarRuleVector _49 // TypedRefCS
+			= new GrammarRuleVector(0x0L,0x4000000000L);
+		private final @NonNull GrammarRuleVector _50 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypedRefCS|TypedTypeRefCS
+			= new GrammarRuleVector(0x800000000100L,0xc120000200L);
+		private final @NonNull GrammarRuleVector _51 // NextPathElementCS|URIFirstPathElementCS
+			= new GrammarRuleVector(0x2000000000000000L,0x80000000000L);
+		private final @NonNull GrammarRuleVector _52 // FirstPathElementCS|NextPathElementCS|URIFirstPathElementCS
+			= new GrammarRuleVector(0x2000000040000000L,0x80000000000L);
+		private final @NonNull GrammarRuleVector _53 // URIPathNameCS
+			= new GrammarRuleVector(0x0L,0x100000000000L);
+		private final @NonNull GrammarRuleVector _54 // BooleanLiteralExpCS|InvalidLiteralExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimitiveLiteralExpCS|StringLiteralExpCS|UnlimitedNaturalLiteralExpCS
+			= new GrammarRuleVector(0xc000002000000004L,0x400000400100L);
+		private final @NonNull GrammarRuleVector _55 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
+			= new GrammarRuleVector(0xd020212400000024L,0x400204410180L);
+		private final @NonNull GrammarRuleVector _56 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
+			= new GrammarRuleVector(0xd020212400000024L,0x4002044101c0L);
+		private final @NonNull GrammarRuleVector _57 // BooleanLiteralExpCS|CollectionLiteralExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
+			= new GrammarRuleVector(0xd020232400000024L,0x4002044101e0L);
+		private final @NonNull GrammarRuleVector _58 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
+			= new GrammarRuleVector(0xd020232420000024L,0x4002044101e0L);
+		private final @NonNull GrammarRuleVector _59 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NavigatingArgExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
+			= new GrammarRuleVector(0xd0a0232420000024L,0x4002044101e0L);
+		private final @NonNull GrammarRuleVector _60 // BooleanLiteralExpCS|CollectionLiteralExpCS|ExpCS|IfExpCS|InvalidLiteralExpCS|LambdaLiteralExpCS|LetExpCS|MapLiteralExpCS|NameExpCS|NestedExpCS|NullLiteralExpCS|NumberLiteralExpCS|PatternExpCS|PrefixedLetExpCS|PrefixedPrimaryExpCS|PrimaryExpCS|PrimitiveLiteralExpCS|SelfExpCS|StringLiteralExpCS|TupleLiteralExpCS|TypeLiteralExpCS|UnlimitedNaturalLiteralExpCS
+			= new GrammarRuleVector(0xd020232420000024L,0x4002044101f0L);
+		private final @NonNull GrammarRuleVector _61 // CollectionTypeCS|MapTypeCS|PrimitiveTypeCS|TupleTypeCS|TypeLiteralCS|TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS
+			= new GrammarRuleVector(0x800000000100L,0x400e120000200L);
 	}
 
 	/**
@@ -1242,432 +1242,432 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _SerializationTerms
 	{
-		private final @NonNull RTSerializationLiteralStep _000 // 1*'&&'
-									= new RTSerializationLiteralStep(-1, "&&");
-		private final @NonNull RTSerializationLiteralStep _001 // 1*'('
-									= new RTSerializationLiteralStep(-1, "(");
-		private final @NonNull RTSerializationLiteralStep _002 // 1*')'
-									= new RTSerializationLiteralStep(-1, ")");
-		private final @NonNull RTSerializationLiteralStep _003 // 1*'*'
-									= new RTSerializationLiteralStep(-1, "*");
-		private final @NonNull RTSerializationLiteralStep _004 // 1*'++'
-									= new RTSerializationLiteralStep(-1, "++");
-		private final @NonNull RTSerializationLiteralStep _005 // 1*','
-									= new RTSerializationLiteralStep(-1, ",");
-		private final @NonNull RTSerializationLiteralStep _006 // 1*'..'
-									= new RTSerializationLiteralStep(-1, "..");
-		private final @NonNull RTSerializationLiteralStep _007 // 1*':'
-									= new RTSerializationLiteralStep(-1, ":");
-		private final @NonNull RTSerializationLiteralStep _008 // 1*'::'
-									= new RTSerializationLiteralStep(-1, "::");
-		private final @NonNull RTSerializationLiteralStep _009 // 1*';'
-									= new RTSerializationLiteralStep(-1, ";");
-		private final @NonNull RTSerializationLiteralStep _010 // 1*'<'
-									= new RTSerializationLiteralStep(-1, "<");
-		private final @NonNull RTSerializationLiteralStep _011 // 1*'<-'
-									= new RTSerializationLiteralStep(-1, "<-");
-		private final @NonNull RTSerializationLiteralStep _012 // 1*'='
-									= new RTSerializationLiteralStep(-1, "=");
-		private final @NonNull RTSerializationLiteralStep _013 // 1*'>'
-									= new RTSerializationLiteralStep(-1, ">");
-		private final @NonNull RTSerializationLiteralStep _014 // 1*'?'
-									= new RTSerializationLiteralStep(-1, "?");
-		private final @NonNull RTSerializationLiteralStep _015 // 1*'@'
-									= new RTSerializationLiteralStep(-1, "@");
-		private final @NonNull RTSerializationLiteralStep _016 // 1*'Lambda'
-									= new RTSerializationLiteralStep(-1, "Lambda");
-		private final @NonNull RTSerializationLiteralStep _017 // 1*'Map'
-									= new RTSerializationLiteralStep(-1, "Map");
-		private final @NonNull RTSerializationLiteralStep _018 // 1*'Tuple'
-									= new RTSerializationLiteralStep(-1, "Tuple");
-		private final @NonNull RTSerializationLiteralStep _019 // 1*'['
-									= new RTSerializationLiteralStep(-1, "[");
-		private final @NonNull RTSerializationLiteralStep _020 // 1*']'
-									= new RTSerializationLiteralStep(-1, "]");
-		private final @NonNull RTSerializationLiteralStep _021 // 1*'body'
-									= new RTSerializationLiteralStep(-1, "body");
-		private final @NonNull RTSerializationLiteralStep _022 // 1*'context'
-									= new RTSerializationLiteralStep(-1, "context");
-		private final @NonNull RTSerializationLiteralStep _023 // 1*'def'
-									= new RTSerializationLiteralStep(-1, "def");
-		private final @NonNull RTSerializationLiteralStep _024 // 1*'derive'
-									= new RTSerializationLiteralStep(-1, "derive");
-		private final @NonNull RTSerializationLiteralStep _025 // 1*'else'
-									= new RTSerializationLiteralStep(-1, "else");
-		private final @NonNull RTSerializationLiteralStep _026 // 1*'elseif'
-									= new RTSerializationLiteralStep(-1, "elseif");
-		private final @NonNull RTSerializationLiteralStep _027 // 1*'endif'
-									= new RTSerializationLiteralStep(-1, "endif");
-		private final @NonNull RTSerializationLiteralStep _028 // 1*'endpackage'
-									= new RTSerializationLiteralStep(-1, "endpackage");
-		private final @NonNull RTSerializationLiteralStep _029 // 1*'extends'
-									= new RTSerializationLiteralStep(-1, "extends");
-		private final @NonNull RTSerializationLiteralStep _030 // 1*'if'
-									= new RTSerializationLiteralStep(-1, "if");
-		private final @NonNull RTSerializationLiteralStep _031 // 1*'import'
-									= new RTSerializationLiteralStep(-1, "import");
-		private final @NonNull RTSerializationLiteralStep _032 // 1*'in'
-									= new RTSerializationLiteralStep(-1, "in");
-		private final @NonNull RTSerializationLiteralStep _033 // 1*'init'
-									= new RTSerializationLiteralStep(-1, "init");
-		private final @NonNull RTSerializationLiteralStep _034 // 1*'inv'
-									= new RTSerializationLiteralStep(-1, "inv");
-		private final @NonNull RTSerializationLiteralStep _035 // 1*'invalid'
-									= new RTSerializationLiteralStep(-1, "invalid");
-		private final @NonNull RTSerializationLiteralStep _036 // 1*'let'
-									= new RTSerializationLiteralStep(-1, "let");
-		private final @NonNull RTSerializationLiteralStep _037 // 1*'null'
-									= new RTSerializationLiteralStep(-1, "null");
-		private final @NonNull RTSerializationLiteralStep _038 // 1*'package'
-									= new RTSerializationLiteralStep(-1, "package");
-		private final @NonNull RTSerializationLiteralStep _039 // 1*'post'
-									= new RTSerializationLiteralStep(-1, "post");
-		private final @NonNull RTSerializationLiteralStep _040 // 1*'pre'
-									= new RTSerializationLiteralStep(-1, "pre");
-		private final @NonNull RTSerializationLiteralStep _041 // 1*'self'
-									= new RTSerializationLiteralStep(-1, "self");
-		private final @NonNull RTSerializationLiteralStep _042 // 1*'then'
-									= new RTSerializationLiteralStep(-1, "then");
-		private final @NonNull RTSerializationLiteralStep _043 // 1*'{'
-									= new RTSerializationLiteralStep(-1, "{");
-		private final @NonNull RTSerializationLiteralStep _044 // 1*'|'
-									= new RTSerializationLiteralStep(-1, "|");
-		private final @NonNull RTSerializationLiteralStep _045 // 1*'|?'
-									= new RTSerializationLiteralStep(-1, "|?");
-		private final @NonNull RTSerializationLiteralStep _046 // 1*'}'
-									= new RTSerializationLiteralStep(-1, "}");
-		private final @NonNull RTSerializationAssignedRuleCallStep _047 // 1*AbstractNameExpCS::ownedPathName=67
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
-		private final @NonNull RTSerializationAssignStep _048 // 1*BooleanLiteralExpCS::symbol
-									= new RTSerializationAssignStep(-1, EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, ev._07);
-		private final @NonNull RTSerializationAssignedRuleCallStep _049 // 1*ClassifierContextDeclCS::ownedInvariants+=12
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS, 12 /* ConstraintCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _050 // 1*CollectionLiteralExpCS::ownedParts+=6
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, 6 /* CollectionLiteralPartCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _051 // 1*CollectionLiteralExpCS::ownedType=8
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, 8 /* CollectionTypeCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _052 // 1*CollectionLiteralPartCS::ownedExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _053 // 1*CollectionLiteralPartCS::ownedExpression=68
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 68 /* PatternExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _054 // 1*CollectionLiteralPartCS::ownedLastExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _055 // 1*CollectionPatternCS::ownedParts+=68
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, 68 /* PatternExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _056 // 1*CollectionPatternCS::ownedType=8
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, 8 /* CollectionTypeCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _057 // 1*CollectionPatternCS::restVariableName=33
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, 33 /* Identifier */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _058 // 1*CollectionTypeCS::name=9
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, 9 /* CollectionTypeIdentifier */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _059 // 1*CollectionTypeCS::ownedType=95
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, 95 /* TypeExpWithoutMultiplicityCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _060 // 1*ConstraintCS::ownedMessageSpecification=83
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, 83 /* SpecificationCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _061 // 1*ConstraintCS::ownedSpecification=83
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, 83 /* SpecificationCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _062 // 1*ContextCS::ownedExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _063 // 1*CurlyBracketedClauseCS::ownedParts+=81
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, 81 /* ShadowPartCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _064 // 1*DefCS::ownedSpecification=83
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.DEF_CS__OWNED_SPECIFICATION, 83 /* SpecificationCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _065 // 1*DefOperationCS::ownedParameters+=18
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.DEF_OPERATION_CS__OWNED_PARAMETERS, 18 /* DefParameterCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _066 // 1*ExpSpecificationCS::ownedExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _067 // 1*FeatureContextDeclCS::ownedType=94
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignsStep _068 // 1*IfExpCS::ownedCondition=29|68
-									= new RTSerializationAssignsStep(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, null, new @NonNull Integer [] { 29/*ExpCS*/,68/*PatternExpCS*/});
-		private final @NonNull RTSerializationAssignedRuleCallStep _069 // 1*IfExpCS::ownedElseExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _070 // 1*IfExpCS::ownedThenExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _071 // 1*IfThenExpCS::ownedCondition=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _072 // 1*IfThenExpCS::ownedThenExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _073 // 1*ImportCS::ownedPathName=108
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, 108 /* URIPathNameCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _074 // 1*InfixExpCS::ownedLeft=70
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, 70 /* PrefixedPrimaryExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _075 // 1*LambdaLiteralExpCS::ownedExpressionCS=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _076 // 1*LetExpCS::ownedInExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _077 // 1*LetExpCS::ownedVariables+=42
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, 42 /* LetVariableCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _078 // 1*MapLiteralExpCS::ownedParts+=46
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, 46 /* MapLiteralPartCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _079 // 1*MapLiteralExpCS::ownedType=47
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, 47 /* MapTypeCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _080 // 1*MapLiteralPartCS::ownedKey=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _081 // 1*MapLiteralPartCS::ownedValue=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _082 // 1*MapTypeCS::ownedKeyType=94
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _083 // 1*MapTypeCS::ownedValueType=94
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _084 // 1*MultiplicityBoundsCS::lowerBound=39
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, 39 /* LOWER */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _085 // 1*MultiplicityBoundsCS::upperBound=105
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, 105 /* UPPER */);
-		private final @NonNull RTSerializationAssignStep _086 // 1*MultiplicityStringCS::stringBounds
-									= new RTSerializationAssignStep(-1, BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, ev._00);
-		private final @NonNull RTSerializationAssignedRuleCallStep _087 // 1*NamedElementCS::name=1
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 1 /* BinaryOperatorName */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _088 // 1*NamedElementCS::name=109
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 109 /* UnaryOperatorName */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _089 // 1*NamedElementCS::name=112
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 112 /* UnrestrictedName */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _090 // 1*NamedElementCS::name=33
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 33 /* Identifier */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _091 // 1*NavigatingArgCS::ownedCoIterator=4
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 4 /* CoIteratorVariableCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _092 // 1*NavigatingArgCS::ownedInitExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _093 // 1*NavigatingArgCS::ownedNameExpression=55
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 55 /* NavigatingArgExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _094 // 1*NavigatingArgCS::ownedType=94
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _095 // 1*NestedExpCS::ownedExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _096 // 1*NumberLiteralExpCS::symbol=52
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, 52 /* NUMBER_LITERAL */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _097 // 1*OperationContextDeclCS::ownedBodies+=83
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES, 83 /* SpecificationCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _098 // 1*OperationContextDeclCS::ownedParameters+=66
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS, 66 /* ParameterCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _099 // 1*OperationContextDeclCS::ownedPostconditions+=12
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS, 12 /* ConstraintCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _100 // 1*OperationContextDeclCS::ownedPreconditions+=12
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS, 12 /* ConstraintCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _101 // 1*OperatorExpCS::ownedRight=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _102 // 1*OperatorExpCS::ownedRight=69
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 69 /* PrefixedLetExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _103 // 1*OperatorExpCS::ownedRight=70
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 70 /* PrefixedPrimaryExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _104 // 1*PackageDeclarationCS::ownedInvariants+=12
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS, 12 /* ConstraintCS */);
-		private final @NonNull RTSerializationCrossReferenceStep _105 // 1*PathElementCS::referredElement=URI
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "URI"));
-		private final @NonNull RTSerializationCrossReferenceStep _106 // 1*PathElementCS::referredElement=UnreservedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _107 // 1*PathElementCS::referredElement=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
-		private final @NonNull RTSerializationCrossReferenceStep _108 // 1*PathElementCS::referredElement=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
-		private final @NonNull RTSerializationAssignedRuleCallStep _109 // 1*PathNameCS::ownedPathElements+=107
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 107 /* URIFirstPathElementCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _110 // 1*PathNameCS::ownedPathElements+=30
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 30 /* FirstPathElementCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _111 // 1*PathNameCS::ownedPathElements+=61
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 61 /* NextPathElementCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _112 // 1*PathNameDeclCS::ownedPathName=67
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _113 // 1*PatternExpCS::ownedPatternType=94
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _114 // 1*PrimitiveTypeRefCS::name=74
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, 74 /* PrimitiveTypeIdentifier */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _115 // 1*PropertyContextDeclCS::ownedDefaultExpressions+=83
-									= new RTSerializationAssignedRuleCallStep(-1, CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS, 83 /* SpecificationCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _116 // 1*RoundBracketedClauseCS::ownedArguments+=54
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, 54 /* NavigatingArgCS */);
-		private final @NonNull RTSerializationAssignsStep _117 // 1*ShadowPartCS::ownedInitExpression=29|68
-									= new RTSerializationAssignsStep(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, null, new @NonNull Integer [] { 29/*ExpCS*/,68/*PatternExpCS*/});
-		private final @NonNull RTSerializationAssignedRuleCallStep _118 // 1*ShadowPartCS::ownedInitExpression=86
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 86 /* StringLiteralExpCS */);
-		private final @NonNull RTSerializationCrossReferenceStep _119 // 1*ShadowPartCS::referredProperty=UnrestrictedName
-									= new RTSerializationCrossReferenceStep(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, getCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, "UnrestrictedName"));
-		private final @NonNull RTSerializationAssignedRuleCallStep _120 // 1*SpecificationCS::exprString=104
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, 104 /* UNQUOTED_STRING */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _121 // 1*SquareBracketedClauseCS::ownedTerms+=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _122 // 1*TemplateBindingCS::ownedSubstitutions+=88
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 88 /* TemplateParameterSubstitutionCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _123 // 1*TemplateParameterSubstitutionCS::ownedActualParameter=101
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 101 /* TypeRefCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _124 // 1*TemplateSignatureCS::ownedParameters+=100
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 100 /* TypeParameterCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _125 // 1*TupleLiteralExpCS::ownedParts+=91
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 91 /* TupleLiteralPartCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _126 // 1*TupleTypeCS::ownedParts+=92
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, 92 /* TuplePartCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _127 // 1*TypeLiteralExpCS::ownedType=98
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 98 /* TypeLiteralWithMultiplicityCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _128 // 1*TypeNameExpCS::ownedCurlyBracketedClause=14
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 14 /* CurlyBracketedClauseCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _129 // 1*TypeNameExpCS::ownedPathName=67
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _130 // 1*TypeNameExpCS::ownedPatternGuard=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _131 // 1*TypeParameterCS::ownedExtends+=102
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 102 /* TypedRefCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _132 // 1*TypedElementCS::ownedType=94
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _133 // 1*TypedTypeRefCS::ownedBinding=87
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 87 /* TemplateBindingCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _134 // 1*TypedTypeRefCS::ownedPathName=67
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _135 // 1*VariableCS::ownedInitExpression=29
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _136 // 1*VariableCS::ownedType=94
-									= new RTSerializationAssignedRuleCallStep(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _137 // 1*WildcardTypeRefCS::ownedExtends=102
-									= new RTSerializationAssignedRuleCallStep(-1, BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 102 /* TypedRefCS */);
-		private final @NonNull RTSerializationSequenceStep _138 // 1*steps-1..10
-									= new RTSerializationSequenceStep(-1, 1, 10);
-		private final @NonNull RTSerializationSequenceStep _139 // 1*steps-1..11
-									= new RTSerializationSequenceStep(-1, 1, 11);
-		private final @NonNull RTSerializationSequenceStep _140 // 1*steps-1..12
-									= new RTSerializationSequenceStep(-1, 1, 12);
-		private final @NonNull RTSerializationSequenceStep _141 // 1*steps-1..13
-									= new RTSerializationSequenceStep(-1, 1, 13);
-		private final @NonNull RTSerializationSequenceStep _142 // 1*steps-1..17
-									= new RTSerializationSequenceStep(-1, 1, 17);
-		private final @NonNull RTSerializationSequenceStep _143 // 1*steps-1..23
-									= new RTSerializationSequenceStep(-1, 1, 23);
-		private final @NonNull RTSerializationSequenceStep _144 // 1*steps-1..3
-									= new RTSerializationSequenceStep(-1, 1, 3);
-		private final @NonNull RTSerializationSequenceStep _145 // 1*steps-1..4
-									= new RTSerializationSequenceStep(-1, 1, 4);
-		private final @NonNull RTSerializationSequenceStep _146 // 1*steps-1..5
-									= new RTSerializationSequenceStep(-1, 1, 5);
-		private final @NonNull RTSerializationSequenceStep _147 // 1*steps-1..6
-									= new RTSerializationSequenceStep(-1, 1, 6);
-		private final @NonNull RTSerializationSequenceStep _148 // 1*steps-1..7
-									= new RTSerializationSequenceStep(-1, 1, 7);
-		private final @NonNull RTSerializationSequenceStep _149 // 1*steps-1..8
-									= new RTSerializationSequenceStep(-1, 1, 8);
-		private final @NonNull RTSerializationSequenceStep _150 // 1*steps-1..9
-									= new RTSerializationSequenceStep(-1, 1, 9);
-		private final @NonNull RTSerializationLiteralStep _151 // V00*'static'
-									= new RTSerializationLiteralStep(0, "static");
-		private final @NonNull RTSerializationLiteralStep _152 // V00*'|1'
-									= new RTSerializationLiteralStep(0, "|1");
-		private final @NonNull RTSerializationAssignedRuleCallStep _153 // V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, 84 /* SquareBracketedClauseCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _154 // V00*IfExpCS::ownedIfThenExpressions+=22
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, 22 /* ElseIfThenExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _155 // V00*LetVariableCS::ownedRoundBracketedClause=76
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, 76 /* RoundBracketedClauseCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _156 // V00*PatternExpCS::patternVariableName=112
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, 112 /* UnrestrictedName */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _157 // V00*RootCS::ownedImports+=35
-									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, 35 /* ImportCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _158 // V00*StringLiteralExpCS::segments+=85
-									= new RTSerializationAssignedRuleCallStep(0, EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, 85 /* StringLiteral */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _159 // V00*TemplateableElementCS::ownedSignature=89
-									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 89 /* TemplateSignatureCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _160 // V00*TypedRefCS::ownedMultiplicity=50
-									= new RTSerializationAssignedRuleCallStep(0, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull RTSerializationSequenceStep _161 // V00*steps-2..4
-									= new RTSerializationSequenceStep(0, 2, 4);
-		private final @NonNull RTSerializationSequenceStep _162 // V00*steps-2..7
-									= new RTSerializationSequenceStep(0, 2, 7);
-		private final @NonNull RTSerializationSequenceStep _163 // V00*steps-3..10
-									= new RTSerializationSequenceStep(0, 3, 10);
-		private final @NonNull RTSerializationSequenceStep _164 // V00*steps-3..5
-									= new RTSerializationSequenceStep(0, 3, 5);
-		private final @NonNull RTSerializationSequenceStep _165 // V00*steps-3..6
-									= new RTSerializationSequenceStep(0, 3, 6);
-		private final @NonNull RTSerializationSequenceStep _166 // V00*steps-3..7
-									= new RTSerializationSequenceStep(0, 3, 7);
-		private final @NonNull RTSerializationSequenceStep _167 // V00*steps-3..8
-									= new RTSerializationSequenceStep(0, 3, 8);
-		private final @NonNull RTSerializationSequenceStep _168 // V00*steps-4..10
-									= new RTSerializationSequenceStep(0, 4, 10);
-		private final @NonNull RTSerializationSequenceStep _169 // V00*steps-4..6
-									= new RTSerializationSequenceStep(0, 4, 6);
-		private final @NonNull RTSerializationSequenceStep _170 // V00*steps-4..8
-									= new RTSerializationSequenceStep(0, 4, 8);
-		private final @NonNull RTSerializationSequenceStep _171 // V00*steps-4..9
-									= new RTSerializationSequenceStep(0, 4, 9);
-		private final @NonNull RTSerializationSequenceStep _172 // V00*steps-5..7
-									= new RTSerializationSequenceStep(0, 5, 7);
-		private final @NonNull RTSerializationSequenceStep _173 // V00*steps-6..8
-									= new RTSerializationSequenceStep(0, 6, 8);
-		private final @NonNull RTSerializationSequenceStep _174 // V00*steps-6..9
-									= new RTSerializationSequenceStep(0, 6, 9);
-		private final @NonNull RTSerializationLiteralStep _175 // V01*'::*'
-									= new RTSerializationLiteralStep(1, "::*");
-		private final @NonNull RTSerializationLiteralStep _176 // V01*'|1'
-									= new RTSerializationLiteralStep(1, "|1");
-		private final @NonNull RTSerializationAssignedRuleCallStep _177 // V01*AbstractNameExpCS::ownedRoundBracketedClause=76
-									= new RTSerializationAssignedRuleCallStep(1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, 76 /* RoundBracketedClauseCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _178 // V01*ClassifierContextDeclCS::selfName=112
-									= new RTSerializationAssignedRuleCallStep(1, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, 112 /* UnrestrictedName */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _179 // V01*CollectionTypeCS::ownedCollectionMultiplicity=50
-									= new RTSerializationAssignedRuleCallStep(1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _180 // V01*CompleteOCLDocumentCS::ownedPackages+=65
-									= new RTSerializationAssignedRuleCallStep(1, CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES, 65 /* PackageDeclarationCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _181 // V01*PackageDeclarationCS::ownedContexts+=13
-									= new RTSerializationAssignedRuleCallStep(1, CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS, 13 /* ContextDeclCS */);
-		private final @NonNull RTSerializationAssignsStep _182 // V01*RoundBracketedClauseCS::ownedArguments+=57|58|56
-									= new RTSerializationAssignsStep(1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, null, new @NonNull Integer [] { 57/*NavigatingCommaArgCS*/,58/*NavigatingSemiArgCS*/,56/*NavigatingBarArgCS*/});
-		private final @NonNull RTSerializationAssignedRuleCallStep _183 // V01*TemplateBindingCS::ownedMultiplicity=50
-									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _184 // V01*TemplateableElementCS::ownedSignature=89
-									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 89 /* TemplateSignatureCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _185 // V01*TypedRefCS::ownedMultiplicity=50
-									= new RTSerializationAssignedRuleCallStep(1, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull RTSerializationSequenceStep _186 // V01*steps-10..13
-									= new RTSerializationSequenceStep(1, 10, 13);
-		private final @NonNull RTSerializationSequenceStep _187 // V01*steps-4..6
-									= new RTSerializationSequenceStep(1, 4, 6);
-		private final @NonNull RTSerializationSequenceStep _188 // V01*steps-4..7
-									= new RTSerializationSequenceStep(1, 4, 7);
-		private final @NonNull RTSerializationSequenceStep _189 // V01*steps-5..7
-									= new RTSerializationSequenceStep(1, 5, 7);
-		private final @NonNull RTSerializationSequenceStep _190 // V01*steps-5..8
-									= new RTSerializationSequenceStep(1, 5, 8);
-		private final @NonNull RTSerializationSequenceStep _191 // V01*steps-5..9
-									= new RTSerializationSequenceStep(1, 5, 9);
-		private final @NonNull RTSerializationSequenceStep _192 // V01*steps-6..10
-									= new RTSerializationSequenceStep(1, 6, 10);
-		private final @NonNull RTSerializationSequenceStep _193 // V01*steps-6..8
-									= new RTSerializationSequenceStep(1, 6, 8);
-		private final @NonNull RTSerializationSequenceStep _194 // V01*steps-7..9
-									= new RTSerializationSequenceStep(1, 7, 9);
-		private final @NonNull RTSerializationSequenceStep _195 // V01*steps-8..10
-									= new RTSerializationSequenceStep(1, 8, 10);
-		private final @NonNull RTSerializationSequenceStep _196 // V01*steps-9..11
-									= new RTSerializationSequenceStep(1, 9, 11);
-		private final @NonNull RTSerializationAssignedRuleCallStep _197 // V02*AbstractNameExpCS::ownedCurlyBracketedClause=14
-									= new RTSerializationAssignedRuleCallStep(2, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 14 /* CurlyBracketedClauseCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _198 // V02*CompleteOCLDocumentCS::ownedContexts+=13
-									= new RTSerializationAssignedRuleCallStep(2, CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS, 13 /* ContextDeclCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _199 // V02*TypedRefCS::ownedMultiplicity=50
-									= new RTSerializationAssignedRuleCallStep(2, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull RTSerializationSequenceStep _200 // V02*steps-6..8
-									= new RTSerializationSequenceStep(2, 6, 8);
-		private final @NonNull RTSerializationSequenceStep _201 // V02*steps-7..9
-									= new RTSerializationSequenceStep(2, 7, 9);
-		private final @NonNull RTSerializationSequenceStep _202 // V02*steps-8..10
-									= new RTSerializationSequenceStep(2, 8, 10);
-		private final @NonNull RTSerializationSequenceStep _203 // V02*steps-8..12
-									= new RTSerializationSequenceStep(2, 8, 12);
-		private final @NonNull RTSerializationAssignedRuleCallStep _204 // V03*ClassifierContextDeclCS::ownedDefinitions+=16
-									= new RTSerializationAssignedRuleCallStep(3, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS, 16 /* DefCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _205 // V03*FeatureContextDeclCS::ownedType=94
-									= new RTSerializationAssignedRuleCallStep(3, CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _206 // V03*TypedRefCS::ownedMultiplicity=50
-									= new RTSerializationAssignedRuleCallStep(3, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull RTSerializationSequenceStep _207 // V03*steps-10..12
-									= new RTSerializationSequenceStep(3, 10, 12);
-		private final @NonNull RTSerializationSequenceStep _208 // V03*steps-6..8
-									= new RTSerializationSequenceStep(3, 6, 8);
-		private final @NonNull RTSerializationAssignedRuleCallStep _209 // V04*TypedElementCS::ownedType=94
-									= new RTSerializationAssignedRuleCallStep(4, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull RTSerializationSequenceStep _210 // V04*steps-14..16
-									= new RTSerializationSequenceStep(4, 14, 16);
-		private final @NonNull RTSerializationSequenceStep _211 // V05*steps-17..19
-									= new RTSerializationSequenceStep(5, 17, 19);
-		private final @NonNull RTSerializationSequenceStep _212 // V06*steps-20..23
-									= new RTSerializationSequenceStep(6, 20, 23);
+		private final @NonNull SerializationStepLiteral _000 // 1*'&&'
+									= new SerializationStepLiteral(-1, "&&");
+		private final @NonNull SerializationStepLiteral _001 // 1*'('
+									= new SerializationStepLiteral(-1, "(");
+		private final @NonNull SerializationStepLiteral _002 // 1*')'
+									= new SerializationStepLiteral(-1, ")");
+		private final @NonNull SerializationStepLiteral _003 // 1*'*'
+									= new SerializationStepLiteral(-1, "*");
+		private final @NonNull SerializationStepLiteral _004 // 1*'++'
+									= new SerializationStepLiteral(-1, "++");
+		private final @NonNull SerializationStepLiteral _005 // 1*','
+									= new SerializationStepLiteral(-1, ",");
+		private final @NonNull SerializationStepLiteral _006 // 1*'..'
+									= new SerializationStepLiteral(-1, "..");
+		private final @NonNull SerializationStepLiteral _007 // 1*':'
+									= new SerializationStepLiteral(-1, ":");
+		private final @NonNull SerializationStepLiteral _008 // 1*'::'
+									= new SerializationStepLiteral(-1, "::");
+		private final @NonNull SerializationStepLiteral _009 // 1*';'
+									= new SerializationStepLiteral(-1, ";");
+		private final @NonNull SerializationStepLiteral _010 // 1*'<'
+									= new SerializationStepLiteral(-1, "<");
+		private final @NonNull SerializationStepLiteral _011 // 1*'<-'
+									= new SerializationStepLiteral(-1, "<-");
+		private final @NonNull SerializationStepLiteral _012 // 1*'='
+									= new SerializationStepLiteral(-1, "=");
+		private final @NonNull SerializationStepLiteral _013 // 1*'>'
+									= new SerializationStepLiteral(-1, ">");
+		private final @NonNull SerializationStepLiteral _014 // 1*'?'
+									= new SerializationStepLiteral(-1, "?");
+		private final @NonNull SerializationStepLiteral _015 // 1*'@'
+									= new SerializationStepLiteral(-1, "@");
+		private final @NonNull SerializationStepLiteral _016 // 1*'Lambda'
+									= new SerializationStepLiteral(-1, "Lambda");
+		private final @NonNull SerializationStepLiteral _017 // 1*'Map'
+									= new SerializationStepLiteral(-1, "Map");
+		private final @NonNull SerializationStepLiteral _018 // 1*'Tuple'
+									= new SerializationStepLiteral(-1, "Tuple");
+		private final @NonNull SerializationStepLiteral _019 // 1*'['
+									= new SerializationStepLiteral(-1, "[");
+		private final @NonNull SerializationStepLiteral _020 // 1*']'
+									= new SerializationStepLiteral(-1, "]");
+		private final @NonNull SerializationStepLiteral _021 // 1*'body'
+									= new SerializationStepLiteral(-1, "body");
+		private final @NonNull SerializationStepLiteral _022 // 1*'context'
+									= new SerializationStepLiteral(-1, "context");
+		private final @NonNull SerializationStepLiteral _023 // 1*'def'
+									= new SerializationStepLiteral(-1, "def");
+		private final @NonNull SerializationStepLiteral _024 // 1*'derive'
+									= new SerializationStepLiteral(-1, "derive");
+		private final @NonNull SerializationStepLiteral _025 // 1*'else'
+									= new SerializationStepLiteral(-1, "else");
+		private final @NonNull SerializationStepLiteral _026 // 1*'elseif'
+									= new SerializationStepLiteral(-1, "elseif");
+		private final @NonNull SerializationStepLiteral _027 // 1*'endif'
+									= new SerializationStepLiteral(-1, "endif");
+		private final @NonNull SerializationStepLiteral _028 // 1*'endpackage'
+									= new SerializationStepLiteral(-1, "endpackage");
+		private final @NonNull SerializationStepLiteral _029 // 1*'extends'
+									= new SerializationStepLiteral(-1, "extends");
+		private final @NonNull SerializationStepLiteral _030 // 1*'if'
+									= new SerializationStepLiteral(-1, "if");
+		private final @NonNull SerializationStepLiteral _031 // 1*'import'
+									= new SerializationStepLiteral(-1, "import");
+		private final @NonNull SerializationStepLiteral _032 // 1*'in'
+									= new SerializationStepLiteral(-1, "in");
+		private final @NonNull SerializationStepLiteral _033 // 1*'init'
+									= new SerializationStepLiteral(-1, "init");
+		private final @NonNull SerializationStepLiteral _034 // 1*'inv'
+									= new SerializationStepLiteral(-1, "inv");
+		private final @NonNull SerializationStepLiteral _035 // 1*'invalid'
+									= new SerializationStepLiteral(-1, "invalid");
+		private final @NonNull SerializationStepLiteral _036 // 1*'let'
+									= new SerializationStepLiteral(-1, "let");
+		private final @NonNull SerializationStepLiteral _037 // 1*'null'
+									= new SerializationStepLiteral(-1, "null");
+		private final @NonNull SerializationStepLiteral _038 // 1*'package'
+									= new SerializationStepLiteral(-1, "package");
+		private final @NonNull SerializationStepLiteral _039 // 1*'post'
+									= new SerializationStepLiteral(-1, "post");
+		private final @NonNull SerializationStepLiteral _040 // 1*'pre'
+									= new SerializationStepLiteral(-1, "pre");
+		private final @NonNull SerializationStepLiteral _041 // 1*'self'
+									= new SerializationStepLiteral(-1, "self");
+		private final @NonNull SerializationStepLiteral _042 // 1*'then'
+									= new SerializationStepLiteral(-1, "then");
+		private final @NonNull SerializationStepLiteral _043 // 1*'{'
+									= new SerializationStepLiteral(-1, "{");
+		private final @NonNull SerializationStepLiteral _044 // 1*'|'
+									= new SerializationStepLiteral(-1, "|");
+		private final @NonNull SerializationStepLiteral _045 // 1*'|?'
+									= new SerializationStepLiteral(-1, "|?");
+		private final @NonNull SerializationStepLiteral _046 // 1*'}'
+									= new SerializationStepLiteral(-1, "}");
+		private final @NonNull SerializationStepAssignedRuleCall _047 // 1*AbstractNameExpCS::ownedPathName=67
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
+		private final @NonNull SerializationStepAssignKeyword _048 // 1*BooleanLiteralExpCS::symbol='false|true'
+									= new SerializationStepAssignKeyword(-1, EssentialOCLCSPackage.Literals.BOOLEAN_LITERAL_EXP_CS__SYMBOL, ev._07);
+		private final @NonNull SerializationStepAssignedRuleCall _049 // 1*ClassifierContextDeclCS::ownedInvariants+=12
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS, 12 /* ConstraintCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _050 // 1*CollectionLiteralExpCS::ownedParts+=6
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS, 6 /* CollectionLiteralPartCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _051 // 1*CollectionLiteralExpCS::ownedType=8
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE, 8 /* CollectionTypeCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _052 // 1*CollectionLiteralPartCS::ownedExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _053 // 1*CollectionLiteralPartCS::ownedExpression=68
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION, 68 /* PatternExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _054 // 1*CollectionLiteralPartCS::ownedLastExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _055 // 1*CollectionPatternCS::ownedParts+=68
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS, 68 /* PatternExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _056 // 1*CollectionPatternCS::ownedType=8
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE, 8 /* CollectionTypeCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _057 // 1*CollectionPatternCS::restVariableName=33
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__REST_VARIABLE_NAME, 33 /* Identifier */);
+		private final @NonNull SerializationStepAssignedRuleCall _058 // 1*CollectionTypeCS::name=9
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME, 9 /* CollectionTypeIdentifier */);
+		private final @NonNull SerializationStepAssignedRuleCall _059 // 1*CollectionTypeCS::ownedType=95
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE, 95 /* TypeExpWithoutMultiplicityCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _060 // 1*ConstraintCS::ownedMessageSpecification=83
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION, 83 /* SpecificationCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _061 // 1*ConstraintCS::ownedSpecification=83
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION, 83 /* SpecificationCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _062 // 1*ContextCS::ownedExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.CONTEXT_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _063 // 1*CurlyBracketedClauseCS::ownedParts+=81
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.CURLY_BRACKETED_CLAUSE_CS__OWNED_PARTS, 81 /* ShadowPartCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _064 // 1*DefCS::ownedSpecification=83
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.DEF_CS__OWNED_SPECIFICATION, 83 /* SpecificationCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _065 // 1*DefOperationCS::ownedParameters+=18
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.DEF_OPERATION_CS__OWNED_PARAMETERS, 18 /* DefParameterCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _066 // 1*ExpSpecificationCS::ownedExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.EXP_SPECIFICATION_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _067 // 1*FeatureContextDeclCS::ownedType=94
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssigns _068 // 1*IfExpCS::ownedCondition=29|68
+									= new SerializationStepAssigns(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION, null, new @NonNull Integer [] { 29/*ExpCS*/,68/*PatternExpCS*/});
+		private final @NonNull SerializationStepAssignedRuleCall _069 // 1*IfExpCS::ownedElseExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _070 // 1*IfExpCS::ownedThenExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _071 // 1*IfThenExpCS::ownedCondition=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _072 // 1*IfThenExpCS::ownedThenExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _073 // 1*ImportCS::ownedPathName=108
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.IMPORT_CS__OWNED_PATH_NAME, 108 /* URIPathNameCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _074 // 1*InfixExpCS::ownedLeft=70
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.INFIX_EXP_CS__OWNED_LEFT, 70 /* PrefixedPrimaryExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _075 // 1*LambdaLiteralExpCS::ownedExpressionCS=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.LAMBDA_LITERAL_EXP_CS__OWNED_EXPRESSION_CS, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _076 // 1*LetExpCS::ownedInExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _077 // 1*LetExpCS::ownedVariables+=42
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES, 42 /* LetVariableCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _078 // 1*MapLiteralExpCS::ownedParts+=46
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS, 46 /* MapLiteralPartCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _079 // 1*MapLiteralExpCS::ownedType=47
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE, 47 /* MapTypeCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _080 // 1*MapLiteralPartCS::ownedKey=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _081 // 1*MapLiteralPartCS::ownedValue=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _082 // 1*MapTypeCS::ownedKeyType=94
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _083 // 1*MapTypeCS::ownedValueType=94
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _084 // 1*MultiplicityBoundsCS::lowerBound=39
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, 39 /* LOWER */);
+		private final @NonNull SerializationStepAssignedRuleCall _085 // 1*MultiplicityBoundsCS::upperBound=105
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, 105 /* UPPER */);
+		private final @NonNull SerializationStepAssignKeyword _086 // 1*MultiplicityStringCS::stringBounds='*|+|?'
+									= new SerializationStepAssignKeyword(-1, BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, ev._00);
+		private final @NonNull SerializationStepAssignedRuleCall _087 // 1*NamedElementCS::name=1
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 1 /* BinaryOperatorName */);
+		private final @NonNull SerializationStepAssignedRuleCall _088 // 1*NamedElementCS::name=109
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 109 /* UnaryOperatorName */);
+		private final @NonNull SerializationStepAssignedRuleCall _089 // 1*NamedElementCS::name=112
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 112 /* UnrestrictedName */);
+		private final @NonNull SerializationStepAssignedRuleCall _090 // 1*NamedElementCS::name=33
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 33 /* Identifier */);
+		private final @NonNull SerializationStepAssignedRuleCall _091 // 1*NavigatingArgCS::ownedCoIterator=4
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR, 4 /* CoIteratorVariableCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _092 // 1*NavigatingArgCS::ownedInitExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _093 // 1*NavigatingArgCS::ownedNameExpression=55
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION, 55 /* NavigatingArgExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _094 // 1*NavigatingArgCS::ownedType=94
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _095 // 1*NestedExpCS::ownedExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.NESTED_EXP_CS__OWNED_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _096 // 1*NumberLiteralExpCS::symbol=52
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.NUMBER_LITERAL_EXP_CS__SYMBOL, 52 /* NUMBER_LITERAL */);
+		private final @NonNull SerializationStepAssignedRuleCall _097 // 1*OperationContextDeclCS::ownedBodies+=83
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES, 83 /* SpecificationCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _098 // 1*OperationContextDeclCS::ownedParameters+=66
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS, 66 /* ParameterCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _099 // 1*OperationContextDeclCS::ownedPostconditions+=12
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS, 12 /* ConstraintCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _100 // 1*OperationContextDeclCS::ownedPreconditions+=12
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS, 12 /* ConstraintCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _101 // 1*OperatorExpCS::ownedRight=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _102 // 1*OperatorExpCS::ownedRight=69
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 69 /* PrefixedLetExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _103 // 1*OperatorExpCS::ownedRight=70
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.OPERATOR_EXP_CS__OWNED_RIGHT, 70 /* PrefixedPrimaryExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _104 // 1*PackageDeclarationCS::ownedInvariants+=12
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS, 12 /* ConstraintCS */);
+		private final @NonNull SerializationStepCrossReference _105 // 1*PathElementCS::referredElement=URI
+									= new SerializationStepCrossReference(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "URI"));
+		private final @NonNull SerializationStepCrossReference _106 // 1*PathElementCS::referredElement=UnreservedName
+									= new SerializationStepCrossReference(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"));
+		private final @NonNull SerializationStepCrossReference _107 // 1*PathElementCS::referredElement=UnrestrictedName
+									= new SerializationStepCrossReference(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
+		private final @NonNull SerializationStepCrossReference _108 // 1*PathElementCS::referredElement=UnrestrictedName
+									= new SerializationStepCrossReference(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
+		private final @NonNull SerializationStepAssignedRuleCall _109 // 1*PathNameCS::ownedPathElements+=107
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 107 /* URIFirstPathElementCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _110 // 1*PathNameCS::ownedPathElements+=30
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 30 /* FirstPathElementCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _111 // 1*PathNameCS::ownedPathElements+=61
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 61 /* NextPathElementCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _112 // 1*PathNameDeclCS::ownedPathName=67
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _113 // 1*PatternExpCS::ownedPatternType=94
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _114 // 1*PrimitiveTypeRefCS::name=74
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, 74 /* PrimitiveTypeIdentifier */);
+		private final @NonNull SerializationStepAssignedRuleCall _115 // 1*PropertyContextDeclCS::ownedDefaultExpressions+=83
+									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS, 83 /* SpecificationCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _116 // 1*RoundBracketedClauseCS::ownedArguments+=54
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, 54 /* NavigatingArgCS */);
+		private final @NonNull SerializationStepAssigns _117 // 1*ShadowPartCS::ownedInitExpression=29|68
+									= new SerializationStepAssigns(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, null, new @NonNull Integer [] { 29/*ExpCS*/,68/*PatternExpCS*/});
+		private final @NonNull SerializationStepAssignedRuleCall _118 // 1*ShadowPartCS::ownedInitExpression=86
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 86 /* StringLiteralExpCS */);
+		private final @NonNull SerializationStepCrossReference _119 // 1*ShadowPartCS::referredProperty=UnrestrictedName
+									= new SerializationStepCrossReference(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, getCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, "UnrestrictedName"));
+		private final @NonNull SerializationStepAssignedRuleCall _120 // 1*SpecificationCS::exprString=104
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, 104 /* UNQUOTED_STRING */);
+		private final @NonNull SerializationStepAssignedRuleCall _121 // 1*SquareBracketedClauseCS::ownedTerms+=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _122 // 1*TemplateBindingCS::ownedSubstitutions+=88
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 88 /* TemplateParameterSubstitutionCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _123 // 1*TemplateParameterSubstitutionCS::ownedActualParameter=101
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 101 /* TypeRefCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _124 // 1*TemplateSignatureCS::ownedParameters+=100
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 100 /* TypeParameterCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _125 // 1*TupleLiteralExpCS::ownedParts+=91
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 91 /* TupleLiteralPartCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _126 // 1*TupleTypeCS::ownedParts+=92
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, 92 /* TuplePartCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _127 // 1*TypeLiteralExpCS::ownedType=98
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 98 /* TypeLiteralWithMultiplicityCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _128 // 1*TypeNameExpCS::ownedCurlyBracketedClause=14
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 14 /* CurlyBracketedClauseCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _129 // 1*TypeNameExpCS::ownedPathName=67
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _130 // 1*TypeNameExpCS::ownedPatternGuard=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _131 // 1*TypeParameterCS::ownedExtends+=102
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 102 /* TypedRefCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _132 // 1*TypedElementCS::ownedType=94
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _133 // 1*TypedTypeRefCS::ownedBinding=87
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 87 /* TemplateBindingCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _134 // 1*TypedTypeRefCS::ownedPathName=67
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _135 // 1*VariableCS::ownedInitExpression=29
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, 29 /* ExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _136 // 1*VariableCS::ownedType=94
+									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _137 // 1*WildcardTypeRefCS::ownedExtends=102
+									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 102 /* TypedRefCS */);
+		private final @NonNull SerializationStepSequence _138 // 1*steps-1..10
+									= new SerializationStepSequence(-1, 1, 10);
+		private final @NonNull SerializationStepSequence _139 // 1*steps-1..11
+									= new SerializationStepSequence(-1, 1, 11);
+		private final @NonNull SerializationStepSequence _140 // 1*steps-1..12
+									= new SerializationStepSequence(-1, 1, 12);
+		private final @NonNull SerializationStepSequence _141 // 1*steps-1..13
+									= new SerializationStepSequence(-1, 1, 13);
+		private final @NonNull SerializationStepSequence _142 // 1*steps-1..17
+									= new SerializationStepSequence(-1, 1, 17);
+		private final @NonNull SerializationStepSequence _143 // 1*steps-1..23
+									= new SerializationStepSequence(-1, 1, 23);
+		private final @NonNull SerializationStepSequence _144 // 1*steps-1..3
+									= new SerializationStepSequence(-1, 1, 3);
+		private final @NonNull SerializationStepSequence _145 // 1*steps-1..4
+									= new SerializationStepSequence(-1, 1, 4);
+		private final @NonNull SerializationStepSequence _146 // 1*steps-1..5
+									= new SerializationStepSequence(-1, 1, 5);
+		private final @NonNull SerializationStepSequence _147 // 1*steps-1..6
+									= new SerializationStepSequence(-1, 1, 6);
+		private final @NonNull SerializationStepSequence _148 // 1*steps-1..7
+									= new SerializationStepSequence(-1, 1, 7);
+		private final @NonNull SerializationStepSequence _149 // 1*steps-1..8
+									= new SerializationStepSequence(-1, 1, 8);
+		private final @NonNull SerializationStepSequence _150 // 1*steps-1..9
+									= new SerializationStepSequence(-1, 1, 9);
+		private final @NonNull SerializationStepLiteral _151 // V00*'static'
+									= new SerializationStepLiteral(0, "static");
+		private final @NonNull SerializationStepLiteral _152 // V00*'|1'
+									= new SerializationStepLiteral(0, "|1");
+		private final @NonNull SerializationStepAssignedRuleCall _153 // V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84
+									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, 84 /* SquareBracketedClauseCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _154 // V00*IfExpCS::ownedIfThenExpressions+=22
+									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, 22 /* ElseIfThenExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _155 // V00*LetVariableCS::ownedRoundBracketedClause=76
+									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, 76 /* RoundBracketedClauseCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _156 // V00*PatternExpCS::patternVariableName=112
+									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, 112 /* UnrestrictedName */);
+		private final @NonNull SerializationStepAssignedRuleCall _157 // V00*RootCS::ownedImports+=35
+									= new SerializationStepAssignedRuleCall(0, BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, 35 /* ImportCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _158 // V00*StringLiteralExpCS::segments+=85
+									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, 85 /* StringLiteral */);
+		private final @NonNull SerializationStepAssignedRuleCall _159 // V00*TemplateableElementCS::ownedSignature=89
+									= new SerializationStepAssignedRuleCall(0, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 89 /* TemplateSignatureCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _160 // V00*TypedRefCS::ownedMultiplicity=50
+									= new SerializationStepAssignedRuleCall(0, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
+		private final @NonNull SerializationStepSequence _161 // V00*steps-2..4
+									= new SerializationStepSequence(0, 2, 4);
+		private final @NonNull SerializationStepSequence _162 // V00*steps-2..7
+									= new SerializationStepSequence(0, 2, 7);
+		private final @NonNull SerializationStepSequence _163 // V00*steps-3..10
+									= new SerializationStepSequence(0, 3, 10);
+		private final @NonNull SerializationStepSequence _164 // V00*steps-3..5
+									= new SerializationStepSequence(0, 3, 5);
+		private final @NonNull SerializationStepSequence _165 // V00*steps-3..6
+									= new SerializationStepSequence(0, 3, 6);
+		private final @NonNull SerializationStepSequence _166 // V00*steps-3..7
+									= new SerializationStepSequence(0, 3, 7);
+		private final @NonNull SerializationStepSequence _167 // V00*steps-3..8
+									= new SerializationStepSequence(0, 3, 8);
+		private final @NonNull SerializationStepSequence _168 // V00*steps-4..10
+									= new SerializationStepSequence(0, 4, 10);
+		private final @NonNull SerializationStepSequence _169 // V00*steps-4..6
+									= new SerializationStepSequence(0, 4, 6);
+		private final @NonNull SerializationStepSequence _170 // V00*steps-4..8
+									= new SerializationStepSequence(0, 4, 8);
+		private final @NonNull SerializationStepSequence _171 // V00*steps-4..9
+									= new SerializationStepSequence(0, 4, 9);
+		private final @NonNull SerializationStepSequence _172 // V00*steps-5..7
+									= new SerializationStepSequence(0, 5, 7);
+		private final @NonNull SerializationStepSequence _173 // V00*steps-6..8
+									= new SerializationStepSequence(0, 6, 8);
+		private final @NonNull SerializationStepSequence _174 // V00*steps-6..9
+									= new SerializationStepSequence(0, 6, 9);
+		private final @NonNull SerializationStepLiteral _175 // V01*'::*'
+									= new SerializationStepLiteral(1, "::*");
+		private final @NonNull SerializationStepLiteral _176 // V01*'|1'
+									= new SerializationStepLiteral(1, "|1");
+		private final @NonNull SerializationStepAssignedRuleCall _177 // V01*AbstractNameExpCS::ownedRoundBracketedClause=76
+									= new SerializationStepAssignedRuleCall(1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, 76 /* RoundBracketedClauseCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _178 // V01*ClassifierContextDeclCS::selfName=112
+									= new SerializationStepAssignedRuleCall(1, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, 112 /* UnrestrictedName */);
+		private final @NonNull SerializationStepAssignedRuleCall _179 // V01*CollectionTypeCS::ownedCollectionMultiplicity=50
+									= new SerializationStepAssignedRuleCall(1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, 50 /* MultiplicityCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _180 // V01*CompleteOCLDocumentCS::ownedPackages+=65
+									= new SerializationStepAssignedRuleCall(1, CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES, 65 /* PackageDeclarationCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _181 // V01*PackageDeclarationCS::ownedContexts+=13
+									= new SerializationStepAssignedRuleCall(1, CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS, 13 /* ContextDeclCS */);
+		private final @NonNull SerializationStepAssigns _182 // V01*RoundBracketedClauseCS::ownedArguments+=57|58|56
+									= new SerializationStepAssigns(1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, null, new @NonNull Integer [] { 57/*NavigatingCommaArgCS*/,58/*NavigatingSemiArgCS*/,56/*NavigatingBarArgCS*/});
+		private final @NonNull SerializationStepAssignedRuleCall _183 // V01*TemplateBindingCS::ownedMultiplicity=50
+									= new SerializationStepAssignedRuleCall(1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _184 // V01*TemplateableElementCS::ownedSignature=89
+									= new SerializationStepAssignedRuleCall(1, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 89 /* TemplateSignatureCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _185 // V01*TypedRefCS::ownedMultiplicity=50
+									= new SerializationStepAssignedRuleCall(1, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
+		private final @NonNull SerializationStepSequence _186 // V01*steps-10..13
+									= new SerializationStepSequence(1, 10, 13);
+		private final @NonNull SerializationStepSequence _187 // V01*steps-4..6
+									= new SerializationStepSequence(1, 4, 6);
+		private final @NonNull SerializationStepSequence _188 // V01*steps-4..7
+									= new SerializationStepSequence(1, 4, 7);
+		private final @NonNull SerializationStepSequence _189 // V01*steps-5..7
+									= new SerializationStepSequence(1, 5, 7);
+		private final @NonNull SerializationStepSequence _190 // V01*steps-5..8
+									= new SerializationStepSequence(1, 5, 8);
+		private final @NonNull SerializationStepSequence _191 // V01*steps-5..9
+									= new SerializationStepSequence(1, 5, 9);
+		private final @NonNull SerializationStepSequence _192 // V01*steps-6..10
+									= new SerializationStepSequence(1, 6, 10);
+		private final @NonNull SerializationStepSequence _193 // V01*steps-6..8
+									= new SerializationStepSequence(1, 6, 8);
+		private final @NonNull SerializationStepSequence _194 // V01*steps-7..9
+									= new SerializationStepSequence(1, 7, 9);
+		private final @NonNull SerializationStepSequence _195 // V01*steps-8..10
+									= new SerializationStepSequence(1, 8, 10);
+		private final @NonNull SerializationStepSequence _196 // V01*steps-9..11
+									= new SerializationStepSequence(1, 9, 11);
+		private final @NonNull SerializationStepAssignedRuleCall _197 // V02*AbstractNameExpCS::ownedCurlyBracketedClause=14
+									= new SerializationStepAssignedRuleCall(2, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 14 /* CurlyBracketedClauseCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _198 // V02*CompleteOCLDocumentCS::ownedContexts+=13
+									= new SerializationStepAssignedRuleCall(2, CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS, 13 /* ContextDeclCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _199 // V02*TypedRefCS::ownedMultiplicity=50
+									= new SerializationStepAssignedRuleCall(2, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
+		private final @NonNull SerializationStepSequence _200 // V02*steps-6..8
+									= new SerializationStepSequence(2, 6, 8);
+		private final @NonNull SerializationStepSequence _201 // V02*steps-7..9
+									= new SerializationStepSequence(2, 7, 9);
+		private final @NonNull SerializationStepSequence _202 // V02*steps-8..10
+									= new SerializationStepSequence(2, 8, 10);
+		private final @NonNull SerializationStepSequence _203 // V02*steps-8..12
+									= new SerializationStepSequence(2, 8, 12);
+		private final @NonNull SerializationStepAssignedRuleCall _204 // V03*ClassifierContextDeclCS::ownedDefinitions+=16
+									= new SerializationStepAssignedRuleCall(3, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS, 16 /* DefCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _205 // V03*FeatureContextDeclCS::ownedType=94
+									= new SerializationStepAssignedRuleCall(3, CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepAssignedRuleCall _206 // V03*TypedRefCS::ownedMultiplicity=50
+									= new SerializationStepAssignedRuleCall(3, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
+		private final @NonNull SerializationStepSequence _207 // V03*steps-10..12
+									= new SerializationStepSequence(3, 10, 12);
+		private final @NonNull SerializationStepSequence _208 // V03*steps-6..8
+									= new SerializationStepSequence(3, 6, 8);
+		private final @NonNull SerializationStepAssignedRuleCall _209 // V04*TypedElementCS::ownedType=94
+									= new SerializationStepAssignedRuleCall(4, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 94 /* TypeExpCS */);
+		private final @NonNull SerializationStepSequence _210 // V04*steps-14..16
+									= new SerializationStepSequence(4, 14, 16);
+		private final @NonNull SerializationStepSequence _211 // V05*steps-17..19
+									= new SerializationStepSequence(5, 17, 19);
+		private final @NonNull SerializationStepSequence _212 // V06*steps-20..23
+									= new SerializationStepSequence(6, 20, 23);
 	}
 
 	/**
@@ -3725,7 +3725,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._038 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._107 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._61,
@@ -3745,7 +3745,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._073 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || «null» */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -3777,7 +3777,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._073 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
@@ -3811,7 +3811,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._073 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
@@ -3847,7 +3847,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._073 /* assign V0 = |MultiplicityBoundsCS::upperBound| */,
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
@@ -3889,10 +3889,10 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._026 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
-				st._086 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
+				st._086 /* 1*MultiplicityStringCS::stringBounds='*|+|?' || «? » «value» «? » */,
 				st._020 /* 1*']' || «! » «value» */
 			},
 			sl._12,
@@ -3915,10 +3915,10 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._026 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
-				st._086 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
+				st._086 /* 1*MultiplicityStringCS::stringBounds='*|+|?' || «? » «value» «? » */,
 				st._045 /* 1*'|?' || «? » «value» «? » */,
 				st._020 /* 1*']' || «! » «value» */
 			},
@@ -3943,10 +3943,10 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._074 /* assign V0 = |MultiplicityCS::isNullFree.'|1'| */,
 				ms._026 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
-				st._086 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */,
+				st._086 /* 1*MultiplicityStringCS::stringBounds='*|+|?' || «? » «value» «? » */,
 				st._152 /* V00*'|1' || «? » «value» «? » */,
 				st._020 /* 1*']' || «! » «value» */
 			},
@@ -3977,8 +3977,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._026 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._086 /* 1*MultiplicityStringCS::stringBounds || «? » «value» «? » */
+			new @NonNull SerializationStep @NonNull [] {
+				st._086 /* 1*MultiplicityStringCS::stringBounds='*|+|?' || «? » «value» «? » */
 			},
 			sl._61,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -4000,7 +4000,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._038 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._106 /* 1*PathElementCS::referredElement=UnreservedName || «? » «value» «? » */
 			},
 			sl._61,
@@ -4020,7 +4020,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._134 /* check-rule basecs::PathNameCS.ownedPathElements : 30|61 */,
 				ms._057 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || «null» */,
 				st._110 /* 1*PathNameCS::ownedPathElements+=30 || «null» */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -4051,7 +4051,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._109 /* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
 				ms._060 /* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._147 /* 1*steps-1..6 || «null» */,
 				st._122 /* 1*TemplateBindingCS::ownedSubstitutions+=88 || «null» */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -4087,7 +4087,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._139 /* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 101 */,
 				ms._046 /* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._123 /* 1*TemplateParameterSubstitutionCS::ownedActualParameter=101 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -4113,7 +4113,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._064 /* assign V0 = (|TypeParameterCS::ownedExtends| > 0) */,
 				ms._097 /* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._167 /* V00*steps-3..8 || «null» */,
@@ -4154,7 +4154,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._087 /* assign V0 = |TypedTypeRefCS::ownedBinding| */,
 				ms._051 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._147 /* 1*steps-1..6 || «null» */,
 				st._134 /* 1*TypedTypeRefCS::ownedPathName=67 || «null» */,
 				st._165 /* V00*steps-3..6 || «null» */,
@@ -4190,7 +4190,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._148 /* check-rule basecs::WildcardTypeRefCS.ownedExtends : 102 */,
 				ms._089 /* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || «null» */,
 				st._014 /* 1*'?' || «? » «value» «? » */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -4225,7 +4225,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._100 /* assign V1 = |ClassifierContextDeclCS::selfName| */,
 				ms._084 /* assign V0 = |TemplateableElementCS::ownedSignature| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
 				st._159 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
@@ -4291,7 +4291,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._100 /* assign V1 = |ClassifierContextDeclCS::selfName| */,
 				ms._084 /* assign V0 = |TemplateableElementCS::ownedSignature| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
 				st._159 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
@@ -4354,7 +4354,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._102 /* assign V1 = |CompleteOCLDocumentCS::ownedPackages| */,
 				ms._082 /* assign V0 = |RootCS::ownedImports| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._157 /* V00*RootCS::ownedImports+=35 || «null» */,
 				st._180 /* V01*CompleteOCLDocumentCS::ownedPackages+=65 || «null» */,
@@ -4398,7 +4398,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._075 /* assign V0 = |NamedElementCS::name| */,
 				ms._103 /* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._162 /* V00*steps-2..7 || «null» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
@@ -4452,7 +4452,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._114 /* assign V2 = (|DefOperationCS::ownedParameters| > 0) */,
 				ms._121 /* assign V3 = (|DefOperationCS::ownedParameters| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._142 /* 1*steps-1..17 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._151 /* V00*'static' || «? » «value» «? » */,
 				st._023 /* 1*'def' || «? » «value» «? » */,
@@ -4530,7 +4530,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._050 /* assert (|TypedElementCS::ownedType| - 1) == 0 */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -4569,7 +4569,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._069 /* assign V0 = |DefCS::isStatic.'static'| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._151 /* V00*'static' || «? » «value» «? » */,
 				st._023 /* 1*'def' || «? » «value» «? » */,
@@ -4626,7 +4626,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._016 /* assert (|ImportCS::ownedPathName| - 1) == 0 */,
 				ms._075 /* assign V0 = |NamedElementCS::name| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._031 /* 1*'import' || «null» */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -4668,7 +4668,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _024 = new SerializationRule(55,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._014 /* 1*'?' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -4696,7 +4696,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._094 /* assign V1 = (|OperationContextDeclCS::ownedParameters| > 0) */,
 				ms._115 /* assign V2 = (|OperationContextDeclCS::ownedParameters| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._143 /* 1*steps-1..23 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
 				st._159 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
@@ -4788,7 +4788,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._079 /* assign V0 = |PackageDeclarationCS::ownedInvariants| */,
 				ms._040 /* assert (|PathNameDeclCS::ownedPathName| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._038 /* 1*'package' || «? » «value» «? » */,
 				st._112 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
@@ -4834,7 +4834,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._050 /* assert (|TypedElementCS::ownedType| - 1) == 0 */,
 				ms._075 /* assign V0 = |NamedElementCS::name| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._161 /* V00*steps-2..4 || «null» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
@@ -4873,7 +4873,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._081 /* assign V0 = |PropertyContextDeclCS::ownedDefaultExpressions| */,
 				ms._098 /* assign V1 = 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._141 /* 1*steps-1..13 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
 				st._112 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
@@ -4922,7 +4922,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._045 /* assert (|SpecificationCS::exprString| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._120 /* 1*SpecificationCS::exprString=104 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -4945,7 +4945,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._179 /* check-rule essentialoclcs::ExpSpecificationCS.ownedExpression : 29 */,
 				ms._009 /* assert (|ExpSpecificationCS::ownedExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._066 /* 1*ExpSpecificationCS::ownedExpression=29 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -4969,7 +4969,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._140 /* check-rule basecs::TemplateSignatureCS.ownedParameters : 100 */,
 				ms._061 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._124 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
@@ -4999,7 +4999,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._140 /* check-rule basecs::TemplateSignatureCS.ownedParameters : 100 */,
 				ms._061 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._010 /* 1*'<' || «? » «value» «? » */,
 				st._124 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
@@ -5028,8 +5028,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._001 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._048 /* 1*BooleanLiteralExpCS::symbol || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			new @NonNull SerializationStep @NonNull [] {
+				st._048 /* 1*BooleanLiteralExpCS::symbol='false|true' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -5053,7 +5053,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._088 /* assign V0 = |VariableCS::ownedType| */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -5092,7 +5092,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._053 /* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
 				ms._090 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._051 /* 1*CollectionLiteralExpCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -5131,7 +5131,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._171 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 68 */,
 				ms._003 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._053 /* 1*CollectionLiteralPartCS::ownedExpression=68 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5157,7 +5157,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._066 /* assign V0 = |CollectionLiteralPartCS::ownedLastExpression| */,
 				ms._003 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._052 /* 1*CollectionLiteralPartCS::ownedExpression=29 || «null» */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -5195,7 +5195,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._091 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
 				ms._004 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._139 /* 1*steps-1..11 || «null» */,
 				st._056 /* 1*CollectionPatternCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -5245,7 +5245,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._005 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
 				ms._101 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || «null» */,
 				st._058 /* 1*CollectionTypeCS::name=9 || «? » «value» «? » */,
 				st._166 /* V00*steps-3..7 || «null» */,
@@ -5291,7 +5291,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._054 /* assign V0 = (|CurlyBracketedClauseCS::ownedParts| > 0) */,
 				ms._092 /* assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._166 /* V00*steps-3..7 || «null» */,
@@ -5324,7 +5324,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._015 /* assert (|IfThenExpCS::ownedThenExpression| - 1) == 0 */,
 				ms._014 /* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._026 /* 1*'elseif' || «? » «value» «? » */,
 				st._071 /* 1*IfThenExpCS::ownedCondition=29 || «null» */,
@@ -5358,8 +5358,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._001 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._048 /* 1*BooleanLiteralExpCS::symbol || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+			new @NonNull SerializationStep @NonNull [] {
+				st._048 /* 1*BooleanLiteralExpCS::symbol='false|true' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -5385,7 +5385,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._053 /* assign V0 = (|CollectionLiteralExpCS::ownedParts| > 0) */,
 				ms._090 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._051 /* 1*CollectionLiteralExpCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -5422,7 +5422,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _044 = new SerializationRule(29,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._003 /* 1*'*' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5435,7 +5435,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _045 = new SerializationRule(29,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._035 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5448,7 +5448,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _046 = new SerializationRule(29,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._037 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5461,7 +5461,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _047 = new SerializationRule(29,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._041 /* 1*'self' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5482,7 +5482,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._013 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
 				ms._011 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._030 /* 1*'if' || «? » «value» «? » */,
 				st._068 /* 1*IfExpCS::ownedCondition=29|68 || «null» */,
@@ -5510,8 +5510,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(29, MultiplicativeCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(68, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(68, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(29, MultiplicativeCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
@@ -5539,7 +5539,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._017 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._074 /* 1*InfixExpCS::ownedLeft=70 || «null» */,
 				st._087 /* 1*NamedElementCS::name=1 || «? » «value» «? » */,
@@ -5581,7 +5581,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._187 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 29 */,
 				ms._018 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._016 /* 1*'Lambda' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -5612,7 +5612,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._056 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
 				ms._093 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._079 /* 1*MapLiteralExpCS::ownedType=47 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -5658,7 +5658,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._065 /* assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses| */,
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._047 /* 1*AbstractNameExpCS::ownedPathName=67 || «null» */,
 				st._153 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84 || «null» */,
@@ -5719,7 +5719,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._201 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 29 */,
 				ms._035 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._095 /* 1*NestedExpCS::ownedExpression=29 || «null» */,
@@ -5745,7 +5745,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._036 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._096 /* 1*NumberLiteralExpCS::symbol=52 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5769,7 +5769,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._037 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._088 /* 1*NamedElementCS::name=109 || «? » «value» «? » */,
 				st._103 /* 1*OperatorExpCS::ownedRight=70 || «null» */
@@ -5802,7 +5802,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._083 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._158 /* V00*StringLiteralExpCS::segments+=85 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5823,7 +5823,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._210 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 91 */,
 				ms._062 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -5854,7 +5854,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._211 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 98 */,
 				ms._048 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._127 /* 1*TypeLiteralExpCS::ownedType=98 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5884,7 +5884,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._013 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
 				ms._011 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._030 /* 1*'if' || «? » «value» «? » */,
 				st._068 /* 1*IfExpCS::ownedCondition=29|68 || «null» */,
@@ -5912,8 +5912,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(29, MultiplicativeCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(68, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(68, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(29, MultiplicativeCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
@@ -5936,7 +5936,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _060 = new SerializationRule(37,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._035 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -5951,7 +5951,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._187 /* check-rule essentialoclcs::LambdaLiteralExpCS.ownedExpressionCS : 29 */,
 				ms._018 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._016 /* 1*'Lambda' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -5981,7 +5981,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._019 /* assert (|LetExpCS::ownedInExpression| - 1) == 0 */,
 				ms._055 /* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._036 /* 1*'let' || «? » «value» «? » */,
 				st._077 /* 1*LetExpCS::ownedVariables+=42 || «null» */,
@@ -6024,7 +6024,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._071 /* assign V0 = |LetVariableCS::ownedRoundBracketedClause| */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._155 /* V00*LetVariableCS::ownedRoundBracketedClause=76 || «null» */,
@@ -6083,7 +6083,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._056 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
 				ms._093 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._079 /* 1*MapLiteralExpCS::ownedType=47 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -6124,7 +6124,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|MapLiteralPartCS::ownedValue| - 1) == 0 */,
 				ms._021 /* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._080 /* 1*MapLiteralPartCS::ownedKey=29 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
@@ -6161,7 +6161,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				ms._023 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || «null» */,
 				st._017 /* 1*'Map' || «? » «value» «? » */,
 				st._167 /* V00*steps-3..8 || «null» */,
@@ -6208,7 +6208,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._177 /* check-rule essentialoclcs::ContextCS.ownedExpression : 29 */,
 				ms._007 /* assert (|ContextCS::ownedExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._062 /* 1*ContextCS::ownedExpression=29 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -6239,7 +6239,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._065 /* assign V0 = |AbstractNameExpCS::ownedSquareBracketedClauses| */,
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._047 /* 1*AbstractNameExpCS::ownedPathName=67 || «null» */,
 				st._153 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84 || «null» */,
@@ -6300,7 +6300,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -6324,7 +6324,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
 				ms._031 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */
@@ -6356,7 +6356,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._031 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._138 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -6414,7 +6414,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._028 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
@@ -6464,7 +6464,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._078 /* assign V0 = |NavigatingArgCS::ownedType| */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._138 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -6523,7 +6523,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._034 /* assert (|NavigatingArgCS::prefix.'|'| - 1) == 0 */,
 				ms._107 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._044 /* 1*'|' || «? » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
@@ -6585,7 +6585,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._139 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
@@ -6654,7 +6654,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
@@ -6715,7 +6715,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._139 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
@@ -6780,7 +6780,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */
@@ -6820,7 +6820,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._033 /* assert (|NavigatingArgCS::prefix.';'| - 1) == 0 */,
 				ms._107 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._009 /* 1*';' || «! » «value» «?\n» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
@@ -6875,7 +6875,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._201 /* check-rule essentialoclcs::NestedExpCS.ownedExpression : 29 */,
 				ms._035 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._095 /* 1*NestedExpCS::ownedExpression=29 || «null» */,
@@ -6900,7 +6900,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _081 = new SerializationRule(62,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._037 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -6914,7 +6914,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._036 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._096 /* 1*NumberLiteralExpCS::symbol=52 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -6938,7 +6938,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._041 /* assert (|PatternExpCS::ownedPatternType| - 1) == 0 */,
 				ms._080 /* assign V0 = |PatternExpCS::patternVariableName| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._156 /* V00*PatternExpCS::patternVariableName=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -6972,7 +6972,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._037 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._088 /* 1*NamedElementCS::name=109 || «? » «value» «? » */,
 				st._102 /* 1*OperatorExpCS::ownedRight=69 || «null» */
@@ -7007,7 +7007,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._037 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._088 /* 1*NamedElementCS::name=109 || «? » «value» «? » */,
 				st._103 /* 1*OperatorExpCS::ownedRight=70 || «null» */
@@ -7040,7 +7040,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._042 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._114 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */
 			},
 			sl._61,
@@ -7064,7 +7064,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._058 /* assign V0 = (|RoundBracketedClauseCS::ownedArguments| > 0) */,
 				ms._095 /* assign V1 = (|RoundBracketedClauseCS::ownedArguments| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._147 /* 1*steps-1..6 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -7083,10 +7083,10 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(54, MultiplicativeCardinality.ZERO_OR_ONE),
+					new RuleIndex_MultiplicativeCardinality(58, MultiplicativeCardinality.ZERO_OR_MORE),
 					new RuleIndex_MultiplicativeCardinality(56, MultiplicativeCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(57, MultiplicativeCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(58, MultiplicativeCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(54, MultiplicativeCardinality.ZERO_OR_ONE),
+					new RuleIndex_MultiplicativeCardinality(57, MultiplicativeCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -7094,7 +7094,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _088 = new SerializationRule(80,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._041 /* 1*'self' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -7109,7 +7109,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._208 /* check-rule essentialoclcs::ShadowPartCS.ownedInitExpression : 86 */,
 				ms._043 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._118 /* 1*ShadowPartCS::ownedInitExpression=86 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -7134,7 +7134,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._043 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */,
 				ms._044 /* assert (|ShadowPartCS::referredProperty| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._119 /* 1*ShadowPartCS::referredProperty=UnrestrictedName || «? » «value» «? » */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
@@ -7151,8 +7151,8 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(29, MultiplicativeCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(68, MultiplicativeCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(68, MultiplicativeCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(29, MultiplicativeCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY,
@@ -7166,7 +7166,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._133 /* check-rule basecs::PathNameCS.ownedPathElements : 30 */,
 				ms._039 /* assert (|PathNameCS::ownedPathElements| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._110 /* 1*PathNameCS::ownedPathElements+=30 || «null» */
 			},
 			sl._00,
@@ -7190,7 +7190,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._209 /* check-rule essentialoclcs::SquareBracketedClauseCS.ownedTerms : 29 */,
 				ms._059 /* assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._121 /* 1*SquareBracketedClauseCS::ownedTerms+=29 || «null» */,
@@ -7219,7 +7219,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._083 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._158 /* V00*StringLiteralExpCS::segments+=85 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -7240,7 +7240,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._210 /* check-rule essentialoclcs::TupleLiteralExpCS.ownedParts : 91 */,
 				ms._062 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -7274,7 +7274,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._088 /* assign V0 = |VariableCS::ownedType| */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -7320,7 +7320,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._050 /* assert (|TypedElementCS::ownedType| - 1) == 0 */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -7358,7 +7358,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._096 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
 				ms._116 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._138 /* 1*steps-1..10 || «null» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
 				st._163 /* V00*steps-3..10 || «null» */,
@@ -7401,7 +7401,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._086 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				ms._042 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._144 /* 1*steps-1..3 || «null» */,
 				st._114 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */,
 				st._160 /* V00*TypedRefCS::ownedMultiplicity=50 || «null» */
@@ -7440,7 +7440,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._096 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
 				ms._116 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._139 /* 1*steps-1..11 || «null» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
 				st._163 /* V00*steps-3..10 || «null» */,
@@ -7495,7 +7495,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._091 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
 				ms._004 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._140 /* 1*steps-1..12 || «null» */,
 				st._056 /* 1*CollectionPatternCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
@@ -7555,7 +7555,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._005 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
 				ms._101 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || «null» */,
 				st._058 /* 1*CollectionTypeCS::name=9 || «? » «value» «? » */,
 				st._166 /* V00*steps-3..7 || «null» */,
@@ -7613,7 +7613,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				ms._023 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || «null» */,
 				st._017 /* 1*'Map' || «? » «value» «? » */,
 				st._167 /* V00*steps-3..8 || «null» */,
@@ -7674,7 +7674,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._049 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
 				ms._111 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || «null» */,
 				st._129 /* 1*TypeNameExpCS::ownedPathName=67 || «null» */,
 				st._167 /* V00*steps-3..8 || «null» */,
@@ -7727,7 +7727,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._211 /* check-rule essentialoclcs::TypeLiteralExpCS.ownedType : 98 */,
 				ms._048 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._127 /* 1*TypeLiteralExpCS::ownedType=98 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -7752,7 +7752,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._086 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				ms._042 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._144 /* 1*steps-1..3 || «null» */,
 				st._114 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */,
 				st._160 /* V00*TypedRefCS::ownedMultiplicity=50 || «null» */
@@ -7791,7 +7791,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._096 /* assign V1 = (|TupleTypeCS::ownedParts| > 0) */,
 				ms._116 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._139 /* 1*steps-1..11 || «null» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
 				st._163 /* V00*steps-3..10 || «null» */,
@@ -7846,7 +7846,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._005 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
 				ms._101 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || «null» */,
 				st._058 /* 1*CollectionTypeCS::name=9 || «? » «value» «? » */,
 				st._166 /* V00*steps-3..7 || «null» */,
@@ -7904,7 +7904,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._024 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				ms._023 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._150 /* 1*steps-1..9 || «null» */,
 				st._017 /* 1*'Map' || «? » «value» «? » */,
 				st._167 /* V00*steps-3..8 || «null» */,
@@ -7963,7 +7963,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._049 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
 				ms._111 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._149 /* 1*steps-1..8 || «null» */,
 				st._129 /* 1*TypeNameExpCS::ownedPathName=67 || «null» */,
 				st._167 /* V00*steps-3..8 || «null» */,
@@ -8007,7 +8007,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._038 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._108 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._61,
@@ -8026,7 +8026,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._038 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._105 /* 1*PathElementCS::referredElement=URI || «? » «value» «? » */
 			},
 			sl._61,
@@ -8046,7 +8046,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._135 /* check-rule basecs::PathNameCS.ownedPathElements : 61|107 */,
 				ms._057 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._146 /* 1*steps-1..5 || «null» */,
 				st._109 /* 1*PathNameCS::ownedPathElements+=107 || «null» */,
 				st._164 /* V00*steps-3..5 || «null» */,
@@ -8073,7 +8073,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 		private @NonNull SerializationRule _113 = new SerializationRule(110,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._003 /* 1*'*' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
@@ -8086,7 +8086,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 
 	private _EClassValues ec;
 	private _EnumValues ev;
-	private _IndexVectors iv;
+	private _GrammarRuleVectors iv;
 	private _MatchSteps ms;
 	private _MatchTerms mt;
 	private _SerializationSegmentsLists sl;
@@ -8101,7 +8101,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	@Inject
 	public void init() {
-		iv = new _IndexVectors();
+		iv = new _GrammarRuleVectors();
 		ev = new _EnumValues();
 		mt = new _MatchTerms();
 		ms = new _MatchSteps();
@@ -8127,13 +8127,13 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import BaseCommentSegmentSupport;
 //	import IdiomsUtils;
 //	import Segment;
-//	import RTSerializationAssignStep;
-//	import RTSerializationAssignedRuleCallStep;
-//	import RTSerializationAssignsStep;
-//	import RTSerializationCrossReferenceStep;
-//	import RTSerializationLiteralStep;
-//	import RTSerializationSequenceStep;
-//	import RTSerializationStep;
+//	import DataTypeRuleValue;
+//	import EClassValue;
+//	import SerializationRule_SegmentsList;
+//	import GrammarRuleValue;
+//	import GrammarRuleVector;
+//	import ParserRuleValue;
+//	import SerializationGrammarAnalysis;
 //	import SerializationRule;
 //	import EAttribute_EnumerationValue_MultiplicativeCardinality;
 //	import EAttribute_EnumerationValues;
@@ -8141,6 +8141,14 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import EReference_RuleIndexes;
 //	import EnumerationValue_MultiplicativeCardinality;
 //	import RuleIndex_MultiplicativeCardinality;
+//	import SerializationStep;
+//	import SerializationStepAssignKeyword;
+//	import SerializationStepAssignedRuleCall;
+//	import SerializationStepAssigns;
+//	import SerializationStepCrossReference;
+//	import SerializationStepLiteral;
+//	import SerializationStepSequence;
+//	import TerminalRuleValue;
 //	import CardinalitySolution;
 //	import EAttributeSizeCardinalitySolution;
 //	import EStructuralFeatureSizeCardinalitySolution;
@@ -8152,14 +8160,6 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import CardinalitySolutionStep_Assert;
 //	import CardinalitySolutionStep_Assign;
 //	import CardinalitySolutionStep_RuleCheck;
-//	import RTGrammarAnalysis;
-//	import AbstractRuleValue;
-//	import DataTypeRuleValue;
-//	import EClassValue;
-//	import SerializationRule_SegmentsList;
-//	import IndexVector;
-//	import ParserRuleValue;
-//	import TerminalRuleValue;
 //	import BaseCSPackage;
 //	import CompleteOCLCSPackage;
 //	import EssentialOCLCSPackage;

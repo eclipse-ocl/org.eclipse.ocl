@@ -8,19 +8,18 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 
-public class ParserRuleValue extends AbstractRuleValue
+public class ParserRuleValue extends GrammarRuleValue
 {
-	protected final @Nullable IndexVector subParserRuleValueIndexes;	// Includes this if non-null
+	protected final @Nullable GrammarRuleVector subParserRuleValueIndexes;	// Includes this if non-null
 	protected final @NonNull SerializationRule @NonNull [] rtSerializationRules;
 
-	public ParserRuleValue(int ruleIndex, @NonNull String name, @NonNull SerializationRule @NonNull[] rtSerializationRules, @Nullable IndexVector subParserRuleValueIndexes) {
+	public ParserRuleValue(int ruleIndex, @NonNull String name, @NonNull SerializationRule @NonNull[] rtSerializationRules, @Nullable GrammarRuleVector subParserRuleValueIndexes) {
 		super(ruleIndex, name);
 		this.subParserRuleValueIndexes = subParserRuleValueIndexes;
 		this.rtSerializationRules = rtSerializationRules;
@@ -42,7 +41,7 @@ public class ParserRuleValue extends AbstractRuleValue
 		return rtSerializationRules;
 	}
 
-	public @Nullable IndexVector getSubParserRuleValueIndexes() {
+	public @Nullable GrammarRuleVector getSubParserRuleValueIndexes() {
 		return subParserRuleValueIndexes;
 	}
 

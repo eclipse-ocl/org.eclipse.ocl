@@ -1,10 +1,11 @@
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.Indexed;
 
-public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonNull IndexVector>
+public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable<@NonNull GrammarRuleVector>
 {
 	protected class IndexIterator implements Iterator<@NonNull Integer>
 	{
@@ -42,27 +43,27 @@ public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonN
 	private long longs[] = null;
 	private int hashCode;
 
-	public IndexVector() {}
+	public GrammarRuleVector() {}
 
-	public IndexVector(long @NonNull ... longs) {
+	public GrammarRuleVector(long @NonNull ... longs) {
 		this.longs = longs;
 	}
 
-	public IndexVector(@NonNull Indexed @NonNull [] indexes) {
+	public GrammarRuleVector(@NonNull Indexed @NonNull [] indexes) {
 		this.longs = null;
 		for (@NonNull Indexed index : indexes) {
 			set(index.getIndex());
 		}
 	}
 
-	public IndexVector(@NonNull Integer @NonNull [] indexes) {
+	public GrammarRuleVector(@NonNull Integer @NonNull [] indexes) {
 		this.longs = null;
 		for (@NonNull Integer index : indexes) {
 			set(index);
 		}
 	}
 
-	public IndexVector(@NonNull Iterable<@NonNull ? extends Indexed> indexes) {
+	public GrammarRuleVector(@NonNull Iterable<@NonNull ? extends Indexed> indexes) {
 		this.longs = null;
 		for (@NonNull Indexed index : indexes) {
 			set(index.getIndex());
@@ -70,7 +71,7 @@ public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonN
 	}
 
 	@Override
-	public int compareTo(@NonNull IndexVector that) {
+	public int compareTo(@NonNull GrammarRuleVector that) {
 		int iThis = this.getLength();
 		int iThat = that.getLength();
 		int iCommon = Math.min(iThis, iThat);
@@ -99,10 +100,10 @@ public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonN
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof IndexVector)) {
+		if (!(obj instanceof GrammarRuleVector)) {
 			return false;
 		}
-		IndexVector that = (IndexVector)obj;
+		GrammarRuleVector that = (GrammarRuleVector)obj;
 		int iThis = this.getLength();
 		int iThat = that.getLength();
 		int iCommon = Math.min(iThis, iThat);
@@ -151,14 +152,14 @@ public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonN
 		return new IndexIterator();
 	}
 
-	public @NonNull IndexVector set(int bitIndex) {
+	public @NonNull GrammarRuleVector set(int bitIndex) {
 		setCapacity(bitIndex+1);
 		long mask = 1L << (bitIndex % Long.SIZE);
 		longs[bitIndex / Long.SIZE] |= mask;
 		return this;
 	}
 
-	public @NonNull IndexVector setAll(@NonNull IndexVector bits) {
+	public @NonNull GrammarRuleVector setAll(@NonNull GrammarRuleVector bits) {
 		if (bits.longs != null) {
 			setCapacity(Long.SIZE * bits.longs.length);
 			for (int i = 0; i < bits.longs.length; i++) {
@@ -168,7 +169,7 @@ public class IndexVector implements Iterable<@NonNull Integer>, Comparable<@NonN
 		return this;
 	}
 
-	public @NonNull IndexVector setCapacity(int capacity) {
+	public @NonNull GrammarRuleVector setCapacity(int capacity) {
 		int newLength = (capacity + Long.SIZE - 1)/Long.SIZE;
 		if (longs == null) {
 			longs = new long[newLength];

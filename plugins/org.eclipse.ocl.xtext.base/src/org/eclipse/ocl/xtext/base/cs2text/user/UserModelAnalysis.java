@@ -26,9 +26,10 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
 import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
@@ -155,7 +156,7 @@ public class UserModelAnalysis
 		return ClassUtil.nonNullState(element2elementAnalysis.get(element));
 	}
 
-	public @NonNull RTGrammarAnalysis getGrammarAnalysis() {
+	public @NonNull SerializationGrammarAnalysis getGrammarAnalysis() {
 //		return grammarAnalysis.getRuntime();
 		return analysisProvider.getAnalysis();
 	}
@@ -174,7 +175,7 @@ public class UserModelAnalysis
 	 * Create a Serializer for the appropriate configuration of element, then use it to serialize it and its descendants
 	 * to the serializationBuilder.
 	 */
-	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable AbstractRuleValue targetRuleValue) {
+	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable GrammarRuleValue targetRuleValue) {
 		debugSerializeCount++;
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
 		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);

@@ -23,13 +23,13 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignsStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationCrossReferenceStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
@@ -37,6 +37,14 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignKeyword;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignedRuleCall;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepCrossReference;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EAttributeSizeCardinalitySolution;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.EStructuralFeatureSizeCardinalitySolution;
@@ -46,14 +54,6 @@ import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assert;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_Assign;
 import org.eclipse.ocl.xtext.base.cs2text.user.CardinalitySolutionStep.CardinalitySolutionStep_RuleCheck;
-import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.DataTypeRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.TerminalRuleValue;
 import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
 
 public class MarkupAnalysisProvider extends AbstractAnalysisProvider
@@ -61,12 +61,12 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	/**
 	 * The metadata resulting from static analysis of the grammar.
 	 */
-	private static RTGrammarAnalysis analysis = null;
+	private static SerializationGrammarAnalysis analysis = null;
 
 	@Override
-	public RTGrammarAnalysis getAnalysis() {
+	public SerializationGrammarAnalysis getAnalysis() {
 		if (analysis == null) {
-			analysis = new RTGrammarAnalysis(
+			analysis = new SerializationGrammarAnalysis(
 				/**
 				 *	The indexable per-produceable EClass meta data.
 				 */
@@ -88,7 +88,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				/**
 				 *	The indexable per-grammar rule meta data.
 				 */
-				new AbstractRuleValue [] {
+				new GrammarRuleValue [] {
 					gr._00  /* 0 : ANY_OTHER */,
 					gr._01  /* 1 : BulletElement */,
 					gr._02  /* 2 : ESCAPED */,
@@ -125,14 +125,14 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	/**
 	 * Bit vectors of useful grammar rule combinations
 	 */
-	private class _IndexVectors
+	private class _GrammarRuleVectors
 	{
-		private final @NonNull IndexVector _0 // MarkupElement
-			= new IndexVector(0x2000L);
-		private final @NonNull IndexVector _1 // BulletElement|FigureElement|FigureRefElement|FontElement|FootnoteElement|HeadingElement|MarkupElement|NewLineElement|NullElement|OCLCodeElement|OCLEvalElement|OCLTextElement|TextElement
-			= new IndexVector(0xbe217aL);
-		private final @NonNull IndexVector _2 // ID|INT|WORD|WS
-			= new IndexVector(0x6000600L);
+		private final @NonNull GrammarRuleVector _0 // MarkupElement
+			= new GrammarRuleVector(0x2000L);
+		private final @NonNull GrammarRuleVector _1 // BulletElement|FigureElement|FigureRefElement|FontElement|FootnoteElement|HeadingElement|MarkupElement|NewLineElement|NullElement|OCLCodeElement|OCLEvalElement|OCLTextElement|TextElement
+			= new GrammarRuleVector(0xbe217aL);
+		private final @NonNull GrammarRuleVector _2 // ID|INT|WORD|WS
+			= new GrammarRuleVector(0x6000600L);
 	}
 
 	/**
@@ -233,76 +233,76 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _SerializationTerms
 	{
-		private final @NonNull RTSerializationLiteralStep _00 // 1*'#'
-									= new RTSerializationLiteralStep(-1, "#");
-		private final @NonNull RTSerializationLiteralStep _01 // 1*','
-									= new RTSerializationLiteralStep(-1, ",");
-		private final @NonNull RTSerializationLiteralStep _02 // 1*':'
-									= new RTSerializationLiteralStep(-1, ":");
-		private final @NonNull RTSerializationLiteralStep _03 // 1*'['
-									= new RTSerializationLiteralStep(-1, "[");
-		private final @NonNull RTSerializationLiteralStep _04 // 1*']'
-									= new RTSerializationLiteralStep(-1, "]");
-		private final @NonNull RTSerializationLiteralStep _05 // 1*'bullet'
-									= new RTSerializationLiteralStep(-1, "bullet");
-		private final @NonNull RTSerializationLiteralStep _06 // 1*'figure'
-									= new RTSerializationLiteralStep(-1, "figure");
-		private final @NonNull RTSerializationLiteralStep _07 // 1*'figureRef'
-									= new RTSerializationLiteralStep(-1, "figureRef");
-		private final @NonNull RTSerializationLiteralStep _08 // 1*'footnote'
-									= new RTSerializationLiteralStep(-1, "footnote");
-		private final @NonNull RTSerializationLiteralStep _09 // 1*'heading'
-									= new RTSerializationLiteralStep(-1, "heading");
-		private final @NonNull RTSerializationLiteralStep _10 // 1*'oclCode'
-									= new RTSerializationLiteralStep(-1, "oclCode");
-		private final @NonNull RTSerializationLiteralStep _11 // 1*'oclEval'
-									= new RTSerializationLiteralStep(-1, "oclEval");
-		private final @NonNull RTSerializationLiteralStep _12 // 1*'oclText'
-									= new RTSerializationLiteralStep(-1, "oclText");
-		private final @NonNull RTSerializationAssignedRuleCallStep _13 // 1*BulletElement::level=10
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.BULLET_ELEMENT__LEVEL, 10 /* INT */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _14 // 1*FigureElement::alt=22
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.FIGURE_ELEMENT__ALT, 22 /* STRING */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _15 // 1*FigureElement::def=9
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.FIGURE_ELEMENT__DEF, 9 /* ID */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _16 // 1*FigureElement::requiredHeight=10
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT, 10 /* INT */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _17 // 1*FigureElement::requiredWidth=10
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH, 10 /* INT */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _18 // 1*FigureElement::src=22
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.FIGURE_ELEMENT__SRC, 22 /* STRING */);
-		private final @NonNull RTSerializationCrossReferenceStep _19 // 1*FigureRefElement::ref=ID
-									= new RTSerializationCrossReferenceStep(-1, MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF, getCrossReference(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF, "ID"));
-		private final @NonNull RTSerializationAssignStep _20 // 1*FontElement::font
-									= new RTSerializationAssignStep(-1, MarkupPackage.Literals.FONT_ELEMENT__FONT, ev._1);
-		private final @NonNull RTSerializationAssignedRuleCallStep _21 // 1*HeadingElement::level=10
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.HEADING_ELEMENT__LEVEL, 10 /* INT */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _22 // 1*NewLineElement::text=15
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT, 15 /* NL */);
-		private final @NonNull RTSerializationAssignedRuleCallStep _23 // 1*TextElement::text+=14
-									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.TEXT_ELEMENT__TEXT, 14 /* MarkupKeyword */);
-		private final @NonNull RTSerializationSequenceStep _24 // 1*steps-1..17
-									= new RTSerializationSequenceStep(-1, 1, 17);
-		private final @NonNull RTSerializationSequenceStep _25 // 1*steps-1..4
-									= new RTSerializationSequenceStep(-1, 1, 4);
-		private final @NonNull RTSerializationSequenceStep _26 // 1*steps-1..5
-									= new RTSerializationSequenceStep(-1, 1, 5);
-		private final @NonNull RTSerializationSequenceStep _27 // 1*steps-1..8
-									= new RTSerializationSequenceStep(-1, 1, 8);
-		private final @NonNull RTSerializationAssignedRuleCallStep _28 // V00*CompoundElement::elements+=13
-									= new RTSerializationAssignedRuleCallStep(0, MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS, 13 /* MarkupElement */);
-		private final @NonNull RTSerializationAssignsStep _29 // V00*TextElement::text+=9|25|10|26
-									= new RTSerializationAssignsStep(0, MarkupPackage.Literals.TEXT_ELEMENT__TEXT, ev._0, new @NonNull Integer [] { 9/*ID*/,25/*WORD*/,10/*INT*/,26/*WS*/});
-		private final @NonNull RTSerializationSequenceStep _30 // V00*steps-3..5
-									= new RTSerializationSequenceStep(0, 3, 5);
-		private final @NonNull RTSerializationAssignedRuleCallStep _31 // V01*CompoundElement::elements+=13
-									= new RTSerializationAssignedRuleCallStep(1, MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS, 13 /* MarkupElement */);
-		private final @NonNull RTSerializationSequenceStep _32 // V01*steps-8..16
-									= new RTSerializationSequenceStep(1, 8, 16);
-		private final @NonNull RTSerializationSequenceStep _33 // V02*steps-11..16
-									= new RTSerializationSequenceStep(2, 11, 16);
-		private final @NonNull RTSerializationSequenceStep _34 // V03*steps-14..16
-									= new RTSerializationSequenceStep(3, 14, 16);
+		private final @NonNull SerializationStepLiteral _00 // 1*'#'
+									= new SerializationStepLiteral(-1, "#");
+		private final @NonNull SerializationStepLiteral _01 // 1*','
+									= new SerializationStepLiteral(-1, ",");
+		private final @NonNull SerializationStepLiteral _02 // 1*':'
+									= new SerializationStepLiteral(-1, ":");
+		private final @NonNull SerializationStepLiteral _03 // 1*'['
+									= new SerializationStepLiteral(-1, "[");
+		private final @NonNull SerializationStepLiteral _04 // 1*']'
+									= new SerializationStepLiteral(-1, "]");
+		private final @NonNull SerializationStepLiteral _05 // 1*'bullet'
+									= new SerializationStepLiteral(-1, "bullet");
+		private final @NonNull SerializationStepLiteral _06 // 1*'figure'
+									= new SerializationStepLiteral(-1, "figure");
+		private final @NonNull SerializationStepLiteral _07 // 1*'figureRef'
+									= new SerializationStepLiteral(-1, "figureRef");
+		private final @NonNull SerializationStepLiteral _08 // 1*'footnote'
+									= new SerializationStepLiteral(-1, "footnote");
+		private final @NonNull SerializationStepLiteral _09 // 1*'heading'
+									= new SerializationStepLiteral(-1, "heading");
+		private final @NonNull SerializationStepLiteral _10 // 1*'oclCode'
+									= new SerializationStepLiteral(-1, "oclCode");
+		private final @NonNull SerializationStepLiteral _11 // 1*'oclEval'
+									= new SerializationStepLiteral(-1, "oclEval");
+		private final @NonNull SerializationStepLiteral _12 // 1*'oclText'
+									= new SerializationStepLiteral(-1, "oclText");
+		private final @NonNull SerializationStepAssignedRuleCall _13 // 1*BulletElement::level=10
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.BULLET_ELEMENT__LEVEL, 10 /* INT */);
+		private final @NonNull SerializationStepAssignedRuleCall _14 // 1*FigureElement::alt=22
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.FIGURE_ELEMENT__ALT, 22 /* STRING */);
+		private final @NonNull SerializationStepAssignedRuleCall _15 // 1*FigureElement::def=9
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.FIGURE_ELEMENT__DEF, 9 /* ID */);
+		private final @NonNull SerializationStepAssignedRuleCall _16 // 1*FigureElement::requiredHeight=10
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT, 10 /* INT */);
+		private final @NonNull SerializationStepAssignedRuleCall _17 // 1*FigureElement::requiredWidth=10
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH, 10 /* INT */);
+		private final @NonNull SerializationStepAssignedRuleCall _18 // 1*FigureElement::src=22
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.FIGURE_ELEMENT__SRC, 22 /* STRING */);
+		private final @NonNull SerializationStepCrossReference _19 // 1*FigureRefElement::ref=ID
+									= new SerializationStepCrossReference(-1, MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF, getCrossReference(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF, "ID"));
+		private final @NonNull SerializationStepAssignKeyword _20 // 1*FontElement::font='b|e'
+									= new SerializationStepAssignKeyword(-1, MarkupPackage.Literals.FONT_ELEMENT__FONT, ev._1);
+		private final @NonNull SerializationStepAssignedRuleCall _21 // 1*HeadingElement::level=10
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.HEADING_ELEMENT__LEVEL, 10 /* INT */);
+		private final @NonNull SerializationStepAssignedRuleCall _22 // 1*NewLineElement::text=15
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT, 15 /* NL */);
+		private final @NonNull SerializationStepAssignedRuleCall _23 // 1*TextElement::text+=14
+									= new SerializationStepAssignedRuleCall(-1, MarkupPackage.Literals.TEXT_ELEMENT__TEXT, 14 /* MarkupKeyword */);
+		private final @NonNull SerializationStepSequence _24 // 1*steps-1..17
+									= new SerializationStepSequence(-1, 1, 17);
+		private final @NonNull SerializationStepSequence _25 // 1*steps-1..4
+									= new SerializationStepSequence(-1, 1, 4);
+		private final @NonNull SerializationStepSequence _26 // 1*steps-1..5
+									= new SerializationStepSequence(-1, 1, 5);
+		private final @NonNull SerializationStepSequence _27 // 1*steps-1..8
+									= new SerializationStepSequence(-1, 1, 8);
+		private final @NonNull SerializationStepAssignedRuleCall _28 // V00*CompoundElement::elements+=13
+									= new SerializationStepAssignedRuleCall(0, MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS, 13 /* MarkupElement */);
+		private final @NonNull SerializationStepAssigns _29 // V00*TextElement::text+=9|25|10|26
+									= new SerializationStepAssigns(0, MarkupPackage.Literals.TEXT_ELEMENT__TEXT, ev._0, new @NonNull Integer [] { 9/*ID*/,25/*WORD*/,10/*INT*/,26/*WS*/});
+		private final @NonNull SerializationStepSequence _30 // V00*steps-3..5
+									= new SerializationStepSequence(0, 3, 5);
+		private final @NonNull SerializationStepAssignedRuleCall _31 // V01*CompoundElement::elements+=13
+									= new SerializationStepAssignedRuleCall(1, MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS, 13 /* MarkupElement */);
+		private final @NonNull SerializationStepSequence _32 // V01*steps-8..16
+									= new SerializationStepSequence(1, 8, 16);
+		private final @NonNull SerializationStepSequence _33 // V02*steps-11..16
+									= new SerializationStepSequence(2, 11, 16);
+		private final @NonNull SerializationStepSequence _34 // V03*steps-14..16
+									= new SerializationStepSequence(3, 14, 16);
 	}
 
 	/**
@@ -683,7 +683,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._10 /* assign V1 = |CompoundElement::elements| */,
 				ms._05 /* assign V0 = |BulletElement::level| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._27 /* 1*steps-1..8 || «null» */,
 				st._05 /* 1*'bullet' || «? » «value» «? » */,
 				st._30 /* V00*steps-3..5 || «null» */,
@@ -723,7 +723,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._12 /* assign V2 = |FigureElement::requiredWidth| */,
 				ms._13 /* assign V3 = |FigureElement::requiredHeight| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._24 /* 1*steps-1..17 || «null» */,
 				st._06 /* 1*'figure' || «? » «value» «? » */,
 				st._30 /* V00*steps-3..5 || «null» */,
@@ -781,7 +781,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._01 /* assert (|FigureRefElement::ref| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._26 /* 1*steps-1..5 || «null» */,
 				st._07 /* 1*'figureRef' || «? » «value» «? » */,
 				st._03 /* 1*'[' || «! » «value» «! » */,
@@ -806,9 +806,9 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._06 /* assign V0 = |CompoundElement::elements| */,
 				ms._02 /* assert (|FontElement::font.'b|e'| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._26 /* 1*steps-1..5 || «null» */,
-				st._20 /* 1*FontElement::font || «? » «value» «? » */,
+				st._20 /* 1*FontElement::font='b|e' || «? » «value» «? » */,
 				st._03 /* 1*'[' || «! » «value» «! » */,
 				st._28 /* V00*CompoundElement::elements+=13 || «null» */,
 				st._04 /* 1*']' || «! » «value» */
@@ -843,7 +843,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._26 /* 1*steps-1..5 || «null» */,
 				st._08 /* 1*'footnote' || «? » «value» «? » */,
 				st._03 /* 1*'[' || «! » «value» «! » */,
@@ -872,7 +872,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._10 /* assign V1 = |CompoundElement::elements| */,
 				ms._08 /* assign V0 = |HeadingElement::level| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._27 /* 1*steps-1..8 || «null» */,
 				st._09 /* 1*'heading' || «? » «value» «? » */,
 				st._30 /* V00*steps-3..5 || «null» */,
@@ -909,7 +909,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._28 /* V00*CompoundElement::elements+=13 || «null» */
 			},
 			sl._0,
@@ -932,7 +932,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._03 /* assert (|NewLineElement::text| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._22 /* 1*NewLineElement::text=15 || «? » «value» «? » */
 			},
 			sl._6,
@@ -955,7 +955,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._25 /* 1*steps-1..4 || «null» */,
 				st._03 /* 1*'[' || «! » «value» «! » */,
 				st._28 /* V00*CompoundElement::elements+=13 || «null» */,
@@ -982,7 +982,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._26 /* 1*steps-1..5 || «null» */,
 				st._10 /* 1*'oclCode' || «? » «value» «? » */,
 				st._03 /* 1*'[' || «! » «value» «! » */,
@@ -1010,7 +1010,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._26 /* 1*steps-1..5 || «null» */,
 				st._11 /* 1*'oclEval' || «? » «value» «? » */,
 				st._03 /* 1*'[' || «! » «value» «! » */,
@@ -1038,7 +1038,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				ms._14 /* check-rule markupcs::CompoundElement.elements : 13 */,
 				ms._06 /* assign V0 = |CompoundElement::elements| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._26 /* 1*steps-1..5 || «null» */,
 				st._12 /* 1*'oclText' || «? » «value» «? » */,
 				st._03 /* 1*'[' || «! » «value» «! » */,
@@ -1065,7 +1065,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._09 /* assign V0 = |TextElement::text.'#|,|:'| */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._29 /* V00*TextElement::text+=9|25|10|26 || «? » «value» «? » */
 			},
 			sl._6,
@@ -1088,7 +1088,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._04 /* assert (|TextElement::text| - 1) == 0 */
 			},
-			new @NonNull RTSerializationStep @NonNull [] {
+			new @NonNull SerializationStep @NonNull [] {
 				st._23 /* 1*TextElement::text+=14 || «? » «value» «? » */
 			},
 			sl._6,
@@ -1109,7 +1109,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 
 	private _EClassValues ec;
 	private _EnumValues ev;
-	private _IndexVectors iv;
+	private _GrammarRuleVectors iv;
 	private _MatchSteps ms;
 	private _MatchTerms mt;
 	private _SerializationSegmentsLists sl;
@@ -1123,7 +1123,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	@Inject
 	public void init() {
-		iv = new _IndexVectors();
+		iv = new _GrammarRuleVectors();
 		ev = new _EnumValues();
 		mt = new _MatchTerms();
 		ms = new _MatchSteps();
@@ -1147,13 +1147,13 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import BaseCommentSegmentSupport;
 //	import IdiomsUtils;
 //	import Segment;
-//	import RTSerializationAssignStep;
-//	import RTSerializationAssignedRuleCallStep;
-//	import RTSerializationAssignsStep;
-//	import RTSerializationCrossReferenceStep;
-//	import RTSerializationLiteralStep;
-//	import RTSerializationSequenceStep;
-//	import RTSerializationStep;
+//	import DataTypeRuleValue;
+//	import EClassValue;
+//	import SerializationRule_SegmentsList;
+//	import GrammarRuleValue;
+//	import GrammarRuleVector;
+//	import ParserRuleValue;
+//	import SerializationGrammarAnalysis;
 //	import SerializationRule;
 //	import EAttribute_EnumerationValue_MultiplicativeCardinality;
 //	import EAttribute_EnumerationValues;
@@ -1161,6 +1161,14 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import EReference_RuleIndexes;
 //	import EnumerationValue_MultiplicativeCardinality;
 //	import RuleIndex_MultiplicativeCardinality;
+//	import SerializationStep;
+//	import SerializationStepAssignKeyword;
+//	import SerializationStepAssignedRuleCall;
+//	import SerializationStepAssigns;
+//	import SerializationStepCrossReference;
+//	import SerializationStepLiteral;
+//	import SerializationStepSequence;
+//	import TerminalRuleValue;
 //	import CardinalitySolution;
 //	import EAttributeSizeCardinalitySolution;
 //	import EStructuralFeatureSizeCardinalitySolution;
@@ -1170,12 +1178,4 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import CardinalitySolutionStep_Assert;
 //	import CardinalitySolutionStep_Assign;
 //	import CardinalitySolutionStep_RuleCheck;
-//	import RTGrammarAnalysis;
-//	import AbstractRuleValue;
-//	import DataTypeRuleValue;
-//	import EClassValue;
-//	import SerializationRule_SegmentsList;
-//	import IndexVector;
-//	import ParserRuleValue;
-//	import TerminalRuleValue;
 //	import MarkupPackage;

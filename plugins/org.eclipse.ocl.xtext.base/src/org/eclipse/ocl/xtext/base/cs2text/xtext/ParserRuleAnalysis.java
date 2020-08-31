@@ -36,6 +36,8 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleComparator;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedRuleCallSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
@@ -334,7 +336,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	public @NonNull ParserRuleValue getRuleValue() {
 		ParserRuleValue parserRuleValue2 = parserRuleValue;
 		if (parserRuleValue2 == null) {
-			Collection<@NonNull ParserRuleValue> subParserRuleValueClosure = null;
+			Collection<org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue> subParserRuleValueClosure = null;
 			for (@NonNull ParserRuleAnalysis subParserRuleAnalysis : getSubRuleAnalysesClosure()) {
 				if (subParserRuleAnalysis != this) {
 					if (subParserRuleValueClosure == null) {
@@ -343,9 +345,9 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					subParserRuleValueClosure.add(subParserRuleAnalysis.getRuleValue());
 				}
 			}
-			IndexVector subParserRuleValueIndexes = null;
+			GrammarRuleVector subParserRuleValueIndexes = null;
 			if (subParserRuleValueClosure != null) {
-				subParserRuleValueIndexes = new IndexVector();
+				subParserRuleValueIndexes = new GrammarRuleVector();
 				subParserRuleValueIndexes.set(index);
 				for (@NonNull ParserRuleValue parserRuleValue : subParserRuleValueClosure) {
 					subParserRuleValueIndexes.set(parserRuleValue.getIndex());

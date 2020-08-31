@@ -8,24 +8,23 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.user.AbstractGrammarAnalysis;
 
-public class RTGrammarAnalysis extends AbstractGrammarAnalysis
+public class SerializationGrammarAnalysis extends AbstractGrammarAnalysis
 {
-	protected final @NonNull AbstractRuleValue @NonNull [] ruleValues;
+	protected final @NonNull GrammarRuleValue @NonNull [] ruleValues;
 
-	public RTGrammarAnalysis(/*@NonNull*/ EClassValue /*@NonNull*/ [] eClassValues, /*@NonNull*/ AbstractRuleValue /*@NonNull*/ [] ruleValues) {
+	public SerializationGrammarAnalysis(/*@NonNull*/ EClassValue /*@NonNull*/ [] eClassValues, /*@NonNull*/ GrammarRuleValue /*@NonNull*/ [] ruleValues) {
 		@SuppressWarnings("null")
 		@NonNull EClassValue @NonNull [] castEClassValues = (@NonNull EClassValue @NonNull [])eClassValues;
 		for (@NonNull EClassValue eClassValue : castEClassValues) {
 			addEClassValue(eClassValue);
 		}
 		@SuppressWarnings("null")
-		@NonNull AbstractRuleValue @NonNull [] castRuleValues = (@NonNull AbstractRuleValue @NonNull [])ruleValues;
+		@NonNull GrammarRuleValue @NonNull [] castRuleValues = (@NonNull GrammarRuleValue @NonNull [])ruleValues;
 		this.ruleValues = castRuleValues;
 	}
 
@@ -35,7 +34,7 @@ public class RTGrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	@Override
-	public @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex) {
+	public @NonNull GrammarRuleValue getRuleValue(int ruleValueIndex) {
 		return ruleValues[ruleValueIndex];
 	}
 }

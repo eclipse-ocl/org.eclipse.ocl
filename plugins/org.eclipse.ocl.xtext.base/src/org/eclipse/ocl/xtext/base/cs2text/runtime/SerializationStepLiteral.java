@@ -15,11 +15,11 @@ import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
 import org.eclipse.xtext.util.Strings;
 
-public class RTSerializationLiteralStep extends RTAbstractSerializationStep
+public class SerializationStepLiteral extends SerializationStepAbstract
 {
 	protected final @NonNull String string;
 
-	public RTSerializationLiteralStep(int variableIndex,  @NonNull String string) {
+	public SerializationStepLiteral(int variableIndex,  @NonNull String string) {
 		super(variableIndex);
 		this.string = string;
 	}
@@ -29,13 +29,13 @@ public class RTSerializationLiteralStep extends RTAbstractSerializationStep
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof RTSerializationLiteralStep)) {
+		if (!(obj instanceof SerializationStepLiteral)) {
 			return false;
 		}
-		return equalTo((RTSerializationLiteralStep)obj);
+		return equalTo((SerializationStepLiteral)obj);
 	}
 
-	protected boolean equalTo(@NonNull RTSerializationLiteralStep that) {
+	protected boolean equalTo(@NonNull SerializationStepLiteral that) {
 		return super.equalTo(that) && this.string.equals(that.string);
 	}
 

@@ -10,9 +10,9 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text;
 
-import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 
 public interface AnalysisProvider
 {
-	/*@NonNull*/ RTGrammarAnalysis getAnalysis();
+	/*@NonNull*/ SerializationGrammarAnalysis getAnalysis();
 }

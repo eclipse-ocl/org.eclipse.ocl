@@ -49,11 +49,15 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceFactoryImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceImpl;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.user.AbstractGrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.user.RTGrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -118,7 +122,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	private  final @NonNull Map<@NonNull String, @NonNull SingleEnumerationValue> value2enumerationValue = new HashMap<>();
 	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
 
-	private @Nullable RTGrammarAnalysis runtime = null;
+	private @Nullable SerializationGrammarAnalysis runtime = null;
 	private @Nullable Iterable<@NonNull EClassValue> sortedProducedEClassValues = null;
 	private @Nullable Map<@NonNull SerializationRule, @NonNull SerializationRuleAnalysis> serializationRule2aserializationRuleAnalysis = null;
 
@@ -348,19 +352,19 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> entry : eClass2serializationRuleList.entrySet()) {
 			EClass eClass = entry.getKey();
 			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = entry.getValue();
-			Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues(serializationRuleAnalyses);
+			Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues(serializationRuleAnalyses);
 			@NonNull EReference_RuleIndexes[] eReferenceRuleIndexes = null;
 			if (eContainmentFeature2assignedTargetRuleValues != null) {
 				eReferenceRuleIndexes = new @NonNull EReference_RuleIndexes[eContainmentFeature2assignedTargetRuleValues.size()];
 				int i2 = 0;
-				for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> entry2 : eContainmentFeature2assignedTargetRuleValues.entrySet()) {
-					Set<@NonNull AbstractRuleValue> values = entry2.getValue();
+				for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> entry2 : eContainmentFeature2assignedTargetRuleValues.entrySet()) {
+					Set<@NonNull GrammarRuleValue> values = entry2.getValue();
 					ParserRuleValue[] parserRuleValues = new ParserRuleValue[values.size()];
 					int i3 = 0;
-					for (AbstractRuleValue value : values) {
+					for (GrammarRuleValue value : values) {
 						parserRuleValues[i3++] = (ParserRuleValue) value;
 					}
-					eReferenceRuleIndexes[i2++] = new EReference_RuleIndexes(entry2.getKey(), new IndexVector(parserRuleValues));
+					eReferenceRuleIndexes[i2++] = new EReference_RuleIndexes(entry2.getKey(), new GrammarRuleVector(parserRuleValues));
 				}
 			}
 			@NonNull SerializationRule_SegmentsList [] serializationRuleSegmentsLists = new @NonNull SerializationRule_SegmentsList [serializationRuleAnalyses.size()];
@@ -384,7 +388,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		assert old == null;
 	}
 
-	public @Nullable AbstractRuleValue basicGetRuleValue(int ruleValueIndex) {
+	public @Nullable GrammarRuleValue basicGetRuleValue(int ruleValueIndex) {
 		AbstractRuleAnalysis ruleAnalysis = ruleAnalyses.get(ruleValueIndex);
 		return ruleAnalysis != null ? ruleAnalysis.basicGetRuleValue() : null;
 	}
@@ -454,7 +458,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
 	}
 
-//	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> basicGetEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
+//	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> basicGetEContainmentFeature2assignedTargetRuleValues(@NonNull EClass eClass) {
 //		EClassValue eClassValue = getEClassValue(eClass);
 //		return eClassValue.basicGetEContainmentFeature2assignedTargetRuleValues();
 //	}
@@ -468,11 +472,11 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		return ClassUtil.nonNullState(basicGetEReferenceRuleIndexes(eClass));
 	}
 
-	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> getEContainmentFeature2assignedTargetRuleValues(
+	public @Nullable Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> getEContainmentFeature2assignedTargetRuleValues(
 			@NonNull Iterable<@NonNull SerializationRuleAnalysis> serializationRules) {
-		Map<@NonNull EReference, @NonNull Set<@NonNull AbstractRuleValue>> eContainmentFeature2assignedTargetRuleValues = null;
+		Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> eContainmentFeature2assignedTargetRuleValues = null;
 		for (EReference eContainmentFeature : containment2assignmentAnalyses.keySet()) {	// FIXME this is needlessly broad
-			Set<@NonNull AbstractRuleValue> targetRuleValues = null;
+			Set<@NonNull GrammarRuleValue> targetRuleValues = null;
 			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRules) {
 				Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
 				if (assignedSerializationNodes != null) {
@@ -617,21 +621,21 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	@Override
-	public @NonNull AbstractRuleValue getRuleValue(int ruleValueIndex) {
+	public @NonNull GrammarRuleValue getRuleValue(int ruleValueIndex) {
 		return getRuleAnalysis(ruleValueIndex).getRuleValue();
 	}
 
 	@Deprecated
-	public @NonNull RTGrammarAnalysis getRuntime() {
-		RTGrammarAnalysis runtime2 = runtime;
+	public @NonNull SerializationGrammarAnalysis getRuntime() {
+		SerializationGrammarAnalysis runtime2 = runtime;
 		if (runtime2 == null)  {
 			Iterable<? extends @NonNull EClassValue> sortedProducedEClassValues = getSortedProducedEClassValues();
 			@NonNull EClassValue @NonNull [] eClassValues = Iterables.toArray(sortedProducedEClassValues, EClassValue.class);
-			@NonNull AbstractRuleValue @NonNull [] ruleValues = new @NonNull AbstractRuleValue [ruleAnalyses.size()];
+			@NonNull GrammarRuleValue @NonNull [] ruleValues = new @NonNull GrammarRuleValue [ruleAnalyses.size()];
 			for (int i = 0; i < ruleAnalyses.size(); i++) {
 				ruleValues[i] = ruleAnalyses.get(i).getRuleValue();
 			}
-			runtime = runtime2 = new RTGrammarAnalysis(eClassValues, ruleValues);
+			runtime = runtime2 = new SerializationGrammarAnalysis(eClassValues, ruleValues);
 		}
 		return runtime2;
 	}

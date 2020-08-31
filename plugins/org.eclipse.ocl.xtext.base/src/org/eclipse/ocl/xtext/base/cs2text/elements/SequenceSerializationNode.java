@@ -17,8 +17,8 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.xtext.CompoundElement;
@@ -57,8 +57,8 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	}
 
 	@Override
-	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
-		RTSerializationSequenceStep sequenceStep = new RTSerializationSequenceStep(staticRuleMatch.getCardinalityVariableIndex(this), 0, 0);
+	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull SerializationStep> stepsList) {
+		SerializationStepSequence sequenceStep = new SerializationStepSequence(staticRuleMatch.getCardinalityVariableIndex(this), 0, 0);
 		stepsList.add(sequenceStep);
 		int loopStartIndex = stepsList.size();
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {

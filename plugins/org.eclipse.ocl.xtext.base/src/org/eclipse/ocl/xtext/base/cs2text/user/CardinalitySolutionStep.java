@@ -17,8 +17,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalitySolution;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
 
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.
@@ -157,9 +157,9 @@ public abstract class CardinalitySolutionStep
 	public static class CardinalitySolutionStep_RuleCheck extends CardinalitySolutionStep
 	{
 		protected final @NonNull EReference eReference;
-		protected final @NonNull IndexVector ruleValueIndexes;
+		protected final @NonNull GrammarRuleVector ruleValueIndexes;
 
-		public CardinalitySolutionStep_RuleCheck(/*@NonNull*/ EReference eReference, @NonNull IndexVector ruleValueIndexes) {
+		public CardinalitySolutionStep_RuleCheck(/*@NonNull*/ EReference eReference, @NonNull GrammarRuleVector ruleValueIndexes) {
 			assert eReference != null;
 			this.eReference = eReference;
 			this.ruleValueIndexes = ruleValueIndexes;
@@ -209,7 +209,7 @@ public abstract class CardinalitySolutionStep
 			return eReference;
 		}
 
-		public @NonNull IndexVector getRuleValueIndexes() {
+		public @NonNull GrammarRuleVector getRuleValueIndexes() {
 			return ruleValueIndexes;
 		}
 

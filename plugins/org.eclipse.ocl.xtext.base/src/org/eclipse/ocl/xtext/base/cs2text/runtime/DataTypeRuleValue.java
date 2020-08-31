@@ -8,13 +8,13 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-public class TerminalRuleValue extends AbstractRuleValue
+public class DataTypeRuleValue extends GrammarRuleValue
 {
-	public TerminalRuleValue(int ruleIndex, @NonNull String name) {
+	public DataTypeRuleValue(int ruleIndex, @NonNull String name) {
 		super(ruleIndex, name);
 	}
 
@@ -23,10 +23,10 @@ public class TerminalRuleValue extends AbstractRuleValue
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof TerminalRuleValue)) {
+		if (!(obj instanceof DataTypeRuleValue)) {
 			return false;
 		}
-		TerminalRuleValue that = (TerminalRuleValue)obj;
+		DataTypeRuleValue that = (DataTypeRuleValue)obj;
 		return (this.ruleIndex == that.ruleIndex) && this.name.equals(that.name);
 	}
 }

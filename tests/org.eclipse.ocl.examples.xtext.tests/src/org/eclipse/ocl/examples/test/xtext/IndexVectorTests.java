@@ -11,7 +11,7 @@
 package org.eclipse.ocl.examples.test.xtext;
 
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -19,44 +19,44 @@ import com.google.common.collect.Sets;
 public class IndexVectorTests extends XtextTestCase
 {
 	public void testIndexVector_Ctor() throws Exception {
-		assertEquals(new IndexVector().toString(), "[]");
-		assertEquals(new IndexVector().setCapacity(5).toString(), "[]");
-		assertEquals(new IndexVector().set(5).toString(), "[5]");
-		assertEquals(new IndexVector().set(63).toString(), "[63]");
-		assertEquals(new IndexVector().set(32).toString(), "[32]");
-		assertEquals(new IndexVector().set(63).getCapacity(), 64);
-		assertEquals(new IndexVector().set(64).getCapacity(), 128);
-		assertEquals(new IndexVector().set(63).set(62).toString(), "[62,63]");
-		assertEquals(new IndexVector().set(62).set(63).toString(), "[62,63]");
-		assertEquals(new IndexVector().set(62).set(63).getCapacity(), 64);
-		assertEquals(new IndexVector().set(62).set(63).set(64).toString(), "[62,63,64]");
-		assertEquals(new IndexVector().set(62).set(63).set(64).getCapacity(), 128);
-		assertEquals(new IndexVector().setCapacity(200).set(62).set(63).getCapacity(), 256);
-		assertEquals(new IndexVector().set(62).set(63).setAll(new IndexVector().setCapacity(200).set(64).set(62)).toString(), "[62,63,64]");
+		assertEquals(new GrammarRuleVector().toString(), "[]");
+		assertEquals(new GrammarRuleVector().setCapacity(5).toString(), "[]");
+		assertEquals(new GrammarRuleVector().set(5).toString(), "[5]");
+		assertEquals(new GrammarRuleVector().set(63).toString(), "[63]");
+		assertEquals(new GrammarRuleVector().set(32).toString(), "[32]");
+		assertEquals(new GrammarRuleVector().set(63).getCapacity(), 64);
+		assertEquals(new GrammarRuleVector().set(64).getCapacity(), 128);
+		assertEquals(new GrammarRuleVector().set(63).set(62).toString(), "[62,63]");
+		assertEquals(new GrammarRuleVector().set(62).set(63).toString(), "[62,63]");
+		assertEquals(new GrammarRuleVector().set(62).set(63).getCapacity(), 64);
+		assertEquals(new GrammarRuleVector().set(62).set(63).set(64).toString(), "[62,63,64]");
+		assertEquals(new GrammarRuleVector().set(62).set(63).set(64).getCapacity(), 128);
+		assertEquals(new GrammarRuleVector().setCapacity(200).set(62).set(63).getCapacity(), 256);
+		assertEquals(new GrammarRuleVector().set(62).set(63).setAll(new GrammarRuleVector().setCapacity(200).set(64).set(62)).toString(), "[62,63,64]");
 	}
 
 	public void testIndexVector_CompareTo() throws Exception {
-		assertTrue(new IndexVector().set(64).compareTo(new IndexVector().set(63)) > 0);
+		assertTrue(new GrammarRuleVector().set(64).compareTo(new GrammarRuleVector().set(63)) > 0);
 	}
 
 	public void testIndexVector_Equals() throws Exception {
-		assertTrue(new IndexVector().set(63).equals(new IndexVector().set(63)));
-		assertFalse(new IndexVector().set(63).set(64).equals(new IndexVector().set(64)));
-		assertTrue(new IndexVector().set(63).set(64).equals(new IndexVector().set(64).set(63)));
-		assertTrue(new IndexVector().set(63).set(64).equals(new IndexVector().setCapacity(256).set(64).set(63)));
-		assertTrue(new IndexVector().setCapacity(256).set(63).set(64).equals(new IndexVector().set(64).set(63)));
+		assertTrue(new GrammarRuleVector().set(63).equals(new GrammarRuleVector().set(63)));
+		assertFalse(new GrammarRuleVector().set(63).set(64).equals(new GrammarRuleVector().set(64)));
+		assertTrue(new GrammarRuleVector().set(63).set(64).equals(new GrammarRuleVector().set(64).set(63)));
+		assertTrue(new GrammarRuleVector().set(63).set(64).equals(new GrammarRuleVector().setCapacity(256).set(64).set(63)));
+		assertTrue(new GrammarRuleVector().setCapacity(256).set(63).set(64).equals(new GrammarRuleVector().set(64).set(63)));
 	}
 
 	public void testIndexVector_HashCode() throws Exception {
-		assertEquals(Sets.newHashSet(new IndexVector().set(63).set(64), new IndexVector().setCapacity(256).set(64).set(63)).size(), 1);
+		assertEquals(Sets.newHashSet(new GrammarRuleVector().set(63).set(64), new GrammarRuleVector().setCapacity(256).set(64).set(63)).size(), 1);
 	}
 
 	public void testIndexVector_Iterable() throws Exception {
-		assertEquals(Lists.newArrayList(new IndexVector().set(63).set(64)), Lists.newArrayList(63, 64));
+		assertEquals(Lists.newArrayList(new GrammarRuleVector().set(63).set(64)), Lists.newArrayList(63, 64));
 	}
 
 	public void testIndexVector_Test() throws Exception {
-		IndexVector testValue = new IndexVector().set(62).set(63).setAll(new IndexVector().setCapacity(200).set(64).set(62));
+		GrammarRuleVector testValue = new GrammarRuleVector().set(62).set(63).setAll(new GrammarRuleVector().setCapacity(200).set(64).set(62));
 		assertFalse(testValue.test(0));
 		assertFalse(testValue.test(1));
 		assertFalse(testValue.test(61));

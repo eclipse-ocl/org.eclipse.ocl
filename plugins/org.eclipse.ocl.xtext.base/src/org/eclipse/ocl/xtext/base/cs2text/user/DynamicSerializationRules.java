@@ -25,11 +25,12 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.EClassValue.SerializationRule_SegmentsList;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IndexVector;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
 
 import com.google.common.collect.Lists;
 
@@ -120,9 +121,9 @@ public class DynamicSerializationRules
 			}
 			else {
 				EReference eReference = (EReference)eStructuralFeature;
-				IndexVector assignedRuleValueIndexes = getAssignedRuleValueIndexes(eReference);
+				GrammarRuleVector assignedRuleValueIndexes = getAssignedRuleValueIndexes(eReference);
 				if (assignedRuleValueIndexes != null) {
-					RTGrammarAnalysis grammarAnalysis = slotsAnalysis.getModelAnalysis().getGrammarAnalysis();
+					SerializationGrammarAnalysis grammarAnalysis = slotsAnalysis.getModelAnalysis().getGrammarAnalysis();
 					for (int ruleValueIndex : assignedRuleValueIndexes) {
 						ParserRuleValue ruleValue = (ParserRuleValue)grammarAnalysis.getRuleValue(ruleValueIndex);
 						int size2 = slotsAnalysis.getSize(eReference, ruleValue);
@@ -139,14 +140,14 @@ public class DynamicSerializationRules
 		s.append("\n");
 	}
 
-	public @Nullable IndexVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
-		IndexVector allAssignedRuleValueIndexes = null;
+	public @Nullable GrammarRuleVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
+		GrammarRuleVector allAssignedRuleValueIndexes = null;
 		for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 			SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
-			IndexVector assignedRuleValueIndexes = serializationRule.getAssignedRuleValueIndexes(eReference);
+			GrammarRuleVector assignedRuleValueIndexes = serializationRule.getAssignedRuleValueIndexes(eReference);
 			if (assignedRuleValueIndexes != null) {
 				if (allAssignedRuleValueIndexes == null) {
-					allAssignedRuleValueIndexes = new IndexVector();
+					allAssignedRuleValueIndexes = new GrammarRuleVector();
 				}
 				allAssignedRuleValueIndexes.setAll(assignedRuleValueIndexes);
 			}

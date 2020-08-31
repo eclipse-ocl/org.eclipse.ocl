@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicSerializationRules;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class EClassValue implements Nameable
 {
@@ -70,7 +70,7 @@ public class EClassValue implements Nameable
 		return eReferenceRuleIndexes;
 	}
 
-	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable IndexVector targetRuleValueIndexes) {
+	public @NonNull DynamicSerializationRules createDynamicSerializationRules(@Nullable GrammarRuleVector targetRuleValueIndexes) {
 		if (targetRuleValueIndexes == null)  {
 			return new DynamicSerializationRules(this, serializationRuleSegmentsLists);
 		}
@@ -88,8 +88,8 @@ public class EClassValue implements Nameable
 	/**
 	 * Return the rule analyses assigned by one or more of the serialization rules that can assign eContainmentFeature.
 	 */
-	public @Nullable IndexVector getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
-	/*	Set<@NonNull AbstractRuleValue> targetRuleValues = new HashSet<>();
+	public @Nullable GrammarRuleVector getAssignedTargetRuleValues(@NonNull EReference eContainmentFeature) {
+	/*	Set<@NonNull GrammarRuleValue> targetRuleValues = new HashSet<>();
 		for (@NonNull SerializationRule serializationRule : serializationRules) {
 			Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
 			if (assignedSerializationNodes != null) {
