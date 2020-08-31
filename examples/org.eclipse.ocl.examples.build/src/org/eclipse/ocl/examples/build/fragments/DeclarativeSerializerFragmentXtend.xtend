@@ -34,7 +34,6 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationCrossReferenceStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationLiteralStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationSequenceStep
@@ -673,7 +672,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		switch serializationStep {
 		RTSerializationAssignStep: return generateSerializationTerm_Assign(serializationStep)
 		RTSerializationAssignedRuleCallStep: return generateSerializationTerm_AssignedRuleCall(serializationStep)
-		RTSerializationAssignedRuleCallsStep: return generateSerializationTerm_AssignedRuleCalls(serializationStep)
 		RTSerializationAssignsStep: return generateSerializationTerm_AssignsStep(serializationStep)
 		RTSerializationCrossReferenceStep: return generateSerializationTerm_CrossReference(serializationStep)
 		RTSerializationLiteralStep: return generateSerializationTerm_Literal(serializationStep)
@@ -690,11 +688,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	protected def generateSerializationTerm_AssignedRuleCall(RTSerializationAssignedRuleCallStep serializationStep) {
 		'''private final @NonNull «newTypeReference(RTSerializationAssignedRuleCallStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
 							= new «newTypeReference(RTSerializationAssignedRuleCallStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», «serializationStep.getCalledRuleIndex()» /* «grammarAnalysis.getRuleValue(serializationStep.getCalledRuleIndex()).getName()» */)'''
-	}
-	
-	protected def generateSerializationTerm_AssignedRuleCalls(RTSerializationAssignedRuleCallsStep serializationStep) {
-		'''private final @NonNull «newTypeReference(RTSerializationAssignedRuleCallsStep)» «getSerializationStepId(serializationStep, false)» // «serializationStep.toString()»
-							= new «newTypeReference(RTSerializationAssignedRuleCallsStep)»(«serializationStep.getVariableIndex()», «emitLiteral(serializationStep.getEStructuralFeature())», «getIndexVectorId(serializationStep.getCalledRuleIndexes(), true)» /* «FOR calledRuleIndex : serializationStep.getCalledRuleIndexes() SEPARATOR ', '»«grammarAnalysis.getRuleValue(calledRuleIndex).getName()»«ENDFOR» */)'''
 	}
 	
 	protected def generateSerializationTerm_AssignsStep(RTSerializationAssignsStep serializationStep) {

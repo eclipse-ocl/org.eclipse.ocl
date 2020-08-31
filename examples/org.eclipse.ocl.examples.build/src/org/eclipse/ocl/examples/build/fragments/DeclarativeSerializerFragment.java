@@ -42,7 +42,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignsStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
@@ -292,6 +292,11 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 						}
 					}
 				}
+				for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
+					if (serializationStep instanceof RTSerializationAssignStep) {
+						enumValue2id2.put(((RTSerializationAssignStep)serializationStep).getEnumerationValue(), "");
+					}
+				}
 			}
 		}
 		List<@NonNull EnumerationValue> enumValues = new ArrayList<>(enumValue2id2.keySet());
@@ -397,10 +402,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
 					SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 					for (@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
-						if (serializationStep instanceof RTSerializationAssignedRuleCallsStep) {
-							indexVector2id2.put(((RTSerializationAssignedRuleCallsStep)serializationStep).getCalledRuleIndexes(), "");
-						}
-						else if (serializationStep instanceof RTSerializationAssignsStep) {
+						if (serializationStep instanceof RTSerializationAssignsStep) {
 							@NonNull Integer[] calledRuleIndexes = ((RTSerializationAssignsStep)serializationStep).getCalledRuleIndexes();
 							if (calledRuleIndexes != null) {
 								indexVector2id2.put(new IndexVector(calledRuleIndexes), "");

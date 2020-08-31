@@ -274,7 +274,7 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull RTSerializationCrossReferenceStep _19 // 1*FigureRefElement::ref=ID
 									= new RTSerializationCrossReferenceStep(-1, MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF, getCrossReference(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF, "ID"));
 		private final @NonNull RTSerializationAssignStep _20 // 1*FontElement::font
-									= new RTSerializationAssignStep(-1, MarkupPackage.Literals.FONT_ELEMENT__FONT);
+									= new RTSerializationAssignStep(-1, MarkupPackage.Literals.FONT_ELEMENT__FONT, ev._1);
 		private final @NonNull RTSerializationAssignedRuleCallStep _21 // 1*HeadingElement::level=10
 									= new RTSerializationAssignedRuleCallStep(-1, MarkupPackage.Literals.HEADING_ELEMENT__LEVEL, 10 /* INT */);
 		private final @NonNull RTSerializationAssignedRuleCallStep _22 // 1*NewLineElement::text=15
@@ -492,8 +492,8 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					sr0._09 /* { 'oclCode' '[' elements+=13[*] ']' } */,
 					sr0._10 /* { 'oclEval' '[' elements+=13[*] ']' } */,
 					sr0._11 /* { 'oclText' '[' elements+=13[*] ']' } */,
-					sr0._13 /* text+=('#|,|:'|9|25|10|26)[+] */,
-					sr0._12 /* text+=14 */
+					sr0._12 /* text+=('#|,|:'|9|25|10|26)[+] */,
+					sr0._13 /* text+=14 */
 				},
 				iv._1); /* BulletElement|FigureElement|FigureRefElement|FontElement|FootnoteElement|HeadingElement|MarkupElement|NewLineElement|NullElement|OCLCodeElement|OCLEvalElement|OCLTextElement|TextElement */
 		private final @NonNull DataTypeRuleValue _14 // MarkupKeyword
@@ -537,8 +537,8 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull ParserRuleValue _23 // TextElement
 			= new ParserRuleValue(23, "TextElement",
 				new @NonNull SerializationRule [] {
-					sr0._13 /* text+=('#|,|:'|9|25|10|26)[+] */,
-					sr0._12 /* text+=14 */
+					sr0._12 /* text+=('#|,|:'|9|25|10|26)[+] */,
+					sr0._13 /* text+=14 */
 				},
 				(IndexVector)null);
 		private final @NonNull TerminalRuleValue _24 // VERTICAL_WS
@@ -665,8 +665,8 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 		private final @NonNull EClassValue _12 // TextElement
 			= new EClassValue(MarkupPackage.Literals.TEXT_ELEMENT,
 				new @NonNull SerializationRule_SegmentsList [] {
-					new SerializationRule_SegmentsList(sr0._13, sl._6) /* text+=('#|,|:'|9|25|10|26)[+] */,
-					new SerializationRule_SegmentsList(sr0._12, sl._6) /* text+=14 */
+					new SerializationRule_SegmentsList(sr0._12, sl._6) /* text+=('#|,|:'|9|25|10|26)[+] */,
+					new SerializationRule_SegmentsList(sr0._13, sl._6) /* text+=14 */
 				}, null
 			);
 	}
@@ -749,6 +749,11 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				MarkupPackage.Literals.FIGURE_ELEMENT__SRC
 			},
 			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__DEF,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
 						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
@@ -757,11 +762,6 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
 						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
@@ -1060,30 +1060,8 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					}
 				)
 			});
-		// Markup::TextElement : text+=14
-		private @NonNull SerializationRule _12 = new SerializationRule(23,
-			new @NonNull CardinalitySolutionStep @NonNull [] {
-				ms._04 /* assert (|TextElement::text| - 1) == 0 */
-			},
-			new @NonNull RTSerializationStep @NonNull [] {
-				st._23 /* 1*TextElement::text+=14 || «? » «value» «? » */
-			},
-			sl._6,
-			null,
-			null,
-			new /*@NonNull*/ EAttribute [] {
-				MarkupPackage.Literals.TEXT_ELEMENT__TEXT
-			},
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
-					}
-				)
-			},
-			null);
 		// Markup::TextElement : text+=('#|,|:'|9|25|10|26)[+]
-		private @NonNull SerializationRule _13 = new SerializationRule(23,
+		private @NonNull SerializationRule _12 = new SerializationRule(23,
 			new @NonNull CardinalitySolutionStep @NonNull [] {
 				ms._09 /* assign V0 = |TextElement::text.'#|,|:'| */
 			},
@@ -1101,6 +1079,28 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
 					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
 						new EnumerationValue_MultiplicativeCardinality(ev._0, MultiplicativeCardinality.ONE_OR_MORE)
+					}
+				)
+			},
+			null);
+		// Markup::TextElement : text+=14
+		private @NonNull SerializationRule _13 = new SerializationRule(23,
+			new @NonNull CardinalitySolutionStep @NonNull [] {
+				ms._04 /* assert (|TextElement::text| - 1) == 0 */
+			},
+			new @NonNull RTSerializationStep @NonNull [] {
+				st._23 /* 1*TextElement::text+=14 || «? » «value» «? » */
+			},
+			sl._6,
+			null,
+			null,
+			new /*@NonNull*/ EAttribute [] {
+				MarkupPackage.Literals.TEXT_ELEMENT__TEXT
+			},
+			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
+				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
+					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
+						new EnumerationValue_MultiplicativeCardinality(null, MultiplicativeCardinality.ONE)
 					}
 				)
 			},
