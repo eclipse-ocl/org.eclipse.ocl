@@ -20,6 +20,19 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
  * A representation of the model object '<em><b>Idiom</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Idiom defines a formatting policy comprising one or more SubIdioms each of which
+ * identifies a grammar term at which formatting is to be applied. Thus a dual SubIdiom,
+ * may locate an opening brace in first SubIdiom and a closing brace in a second and impose
+ * new-lines as desired.
+ *
+ * The serialization variant of each grammar rule is analyzed to determine which Idioms
+ * configure the formatting of each term in the rule. Each Idiom has one or more SubIdioms
+ * whose locator may or may not match a term. Where all SubIdioms match, the corresponding
+ * segemnts format the matching term. Idioms can match recursively and sequentially. Partial
+ * Idiom matches are ignored.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>
@@ -69,6 +82,9 @@ public interface Idiom extends EObject
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The SubIdioms, each of which must match for the Idiom to match.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Owned Sub Idioms</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiom_OwnedSubIdioms()
 	 * @model containment="true"

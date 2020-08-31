@@ -17,6 +17,12 @@ import org.eclipse.emf.ecore.EClass;
  * A representation of the model object '<em><b>Produced EClass Locator</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A ProducedEClassLocator identifies a rule that prodices a specified EClass
+ * or derivation thereof. A custom segmwnt may precede the inner value to output
+ * a comment..
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

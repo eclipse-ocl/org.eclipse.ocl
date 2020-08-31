@@ -16,6 +16,12 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>Soft Space Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A SoftSpaceSegment contributes a soft space to the outer value of a SubIdiom.
+ * Multiple softspaces are merged to at most one space between hard text, and to nothing
+ * at new lines.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getSoftSpaceSegment()
  * @model

@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
@@ -309,12 +309,14 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 		s.append(locator != null ? locator.toString() : "«null»");
 		s.append(" ! ");
 		boolean isFirst = true;
-		for (Segment segment : segments) {
-			if (!isFirst) {
-				s.append(" + ");
+		if (segments != null) {
+			for (Segment segment : segments) {
+				if (!isFirst) {
+					s.append(" + ");
+				}
+				s.append(segment.toString());
+				isFirst = false;
 			}
-			s.append(segment.toString());
-			isFirst = false;
 		}
 		return s.toString();
 	}

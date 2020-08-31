@@ -20,6 +20,11 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
  * A representation of the model object '<em><b>Custom Segment Support</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * CustomSegmentSupport defines the interface that a user-defined class must implement
+ * to contribute custom strings to the overall output.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCustomSegmentSupport()
  * @model interface="true" abstract="true"

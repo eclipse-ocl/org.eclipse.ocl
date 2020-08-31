@@ -105,6 +105,11 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 				return createCustomSegmentSupportAdapter();
 			}
 			@Override
+			public Adapter caseDefaultLocator(DefaultLocator object)
+			{
+				return createDefaultLocatorAdapter();
+			}
+			@Override
 			public Adapter caseHalfNewLineSegment(HalfNewLineSegment object)
 			{
 				return createHalfNewLineSegmentAdapter();
@@ -262,6 +267,21 @@ public class IdiomsAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	public Adapter createCustomSegmentSupportAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator <em>Default Locator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator
+	 * @generated
+	 */
+	public Adapter createDefaultLocatorAdapter()
 	{
 		return null;
 	}

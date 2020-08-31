@@ -17,6 +17,11 @@ import org.eclipse.emf.ecore.EClass;
  * A representation of the model object '<em><b>Keyword Locator</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A KeywordLocator identifies a keyword, or more generally letter sequence, around which a
+ * SubIdiom wraps appropriate spacing.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>
@@ -39,6 +44,9 @@ public interface KeywordLocator extends Locator
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The letter-sequence to match a keyword/punctuation in the grammar.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>String</em>' attribute.
 	 * @see #setString(String)
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getKeywordLocator_String()
@@ -65,6 +73,10 @@ public interface KeywordLocator extends Locator
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * An optional scope restriction on the matching of the string. If specified matches are
+	 * only discovered in rules that produce the EClass or a derivation thereof.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>In EClass</em>' reference.
 	 * @see #setInEClass(EClass)
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getKeywordLocator_InEClass()

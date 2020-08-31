@@ -50,6 +50,15 @@ public interface IdiomsFactory extends EFactory
 	@NonNull CustomSegment createCustomSegment();
 
 	/**
+	 * Returns a new object of class '<em>Default Locator</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Default Locator</em>'.
+	 * @generated
+	 */
+	@NonNull DefaultLocator createDefaultLocator();
+
+	/**
 	 * Returns a new object of class '<em>Half New Line Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

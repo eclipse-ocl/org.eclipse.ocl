@@ -20,6 +20,11 @@ import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
  * A representation of the model object '<em><b>Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A Segment is a string or virtual string that may be concatenated to form the overall output.
+ * Each SubIdiom provides s sequence of SEfment to wrap the inner value as a formatted output value,
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

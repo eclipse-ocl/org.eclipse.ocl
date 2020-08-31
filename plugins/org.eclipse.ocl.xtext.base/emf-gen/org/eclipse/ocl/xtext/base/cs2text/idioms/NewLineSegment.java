@@ -16,6 +16,10 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>New Line Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A NewLineSegment contributes a new line to the overall output.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getNewLineSegment()
  * @model

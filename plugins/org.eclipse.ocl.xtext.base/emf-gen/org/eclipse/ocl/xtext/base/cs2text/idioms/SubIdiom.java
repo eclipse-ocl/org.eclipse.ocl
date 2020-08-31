@@ -20,6 +20,13 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
  * A representation of the model object '<em><b>Sub Idiom</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A SubIdiom defines the fomattimg to be applied at some position inthe Xtext grammar.
+ * A Locator matches the grammar location, then a sequence of virtual text strings may
+ * form an outer value that wraps the inner value of the location with virtual segments
+ * such as soft-spaces or indentation pushes.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

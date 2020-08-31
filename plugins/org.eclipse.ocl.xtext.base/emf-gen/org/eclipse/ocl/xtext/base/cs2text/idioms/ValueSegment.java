@@ -16,6 +16,11 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>Value Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A ValueSegment is the virtual string that makes the inner value of a grammar element available for
+ * embedding in the outer value.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getValueSegment()
  * @model

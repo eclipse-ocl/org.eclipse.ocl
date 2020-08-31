@@ -19,6 +19,10 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis;
  * A representation of the model object '<em><b>Locator</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A Locator identifies where a SubIdiom applies Segment formatting.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>
@@ -61,7 +65,7 @@ public interface Locator extends EObject
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model serializationNodeDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationNode" serializationNodeRequired="true" serializationRuleDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationRuleAnalysis" serializationRuleRequired="true"
+	 * @model required="true" serializationNodeDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationNode" serializationNodeRequired="true" serializationRuleDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationRuleAnalysis" serializationRuleRequired="true"
 	 * @generated
 	 */
 	boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule);

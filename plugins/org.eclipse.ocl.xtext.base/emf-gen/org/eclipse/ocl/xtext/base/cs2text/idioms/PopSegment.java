@@ -16,6 +16,10 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>Pop Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A PopSegment terminates the additional indentation level started by a PushSegment.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getPopSegment()
  * @model

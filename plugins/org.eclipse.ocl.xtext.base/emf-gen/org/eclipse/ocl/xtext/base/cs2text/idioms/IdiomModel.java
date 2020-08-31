@@ -19,6 +19,11 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Idiom Model</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * The IdiomModel prpvodes the root of the Idiom Model configuring an Xtext grammar and importing
+ * IdiomModels for other used Xtext grammars. Locators and Segemnts are shared by the Idioms.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>
@@ -45,6 +50,9 @@ public interface IdiomModel extends EObject
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The IdiomModels for extended grammars.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Imports</em>' reference list.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_Imports()
 	 * @model
@@ -60,6 +68,9 @@ public interface IdiomModel extends EObject
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A convenience name for the IdiomModel.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_Name()
@@ -87,6 +98,10 @@ public interface IdiomModel extends EObject
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The Idioms to be applied in lowest priority first order; an earlier matching idiom
+	 * inhibits the formatting of a later/imported SubIdiom's non-empty segements.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Owned Idioms</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_OwnedIdioms()
 	 * @model containment="true"
@@ -103,6 +118,9 @@ public interface IdiomModel extends EObject
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The locators that SubIdioms use to anchor themselves to grammar terms.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Owned Locators</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_OwnedLocators()
 	 * @model containment="true"
@@ -119,6 +137,12 @@ public interface IdiomModel extends EObject
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The segments that a SubIdiom may use to format an inner value as its outer value.
+	 * BEWARE due to an EMF bug, the same segment cannot be used more than once per SubIdiom;
+	 * it may therefore be neccessary to format an inner value as SoftSpaceA+Value+SoftSpaceB
+	 * rather than SoftSpace+Value+SoftSpace.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Owned Segments</em>' containment reference list.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getIdiomModel_OwnedSegments()
 	 * @model containment="true"

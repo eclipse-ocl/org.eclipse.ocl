@@ -13,19 +13,19 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Push Segment</b></em>'.
+ * A representation of the model object '<em><b>Default Locator</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A PushSegment configures an additional indentation level for all subsequent
- * start of linne text. THe additional indention persists until a PopSegment.
+ * The DefaultLocator identifies the default leaf contributions around which a
+ * typical default SubIdiom wraps soft spaces.
  * <!-- end-model-doc -->
  *
  *
- * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getPushSegment()
+ * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getDefaultLocator()
  * @model
  * @generated
  */
-public interface PushSegment extends Segment
+public interface DefaultLocator extends Locator
 {
-} // PushSegment
+} // DefaultLocator

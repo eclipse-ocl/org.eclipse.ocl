@@ -17,6 +17,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * A representation of the model object '<em><b>Assignment Locator</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An AssignmentLocator identifies an assignment around which a
+ * SubIdiom wraps appropriate spacing. A half-new line before and after
+ * an assignment usefully gives blank lines between similar 'paragraphs'
+ * without blank lines before or after.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

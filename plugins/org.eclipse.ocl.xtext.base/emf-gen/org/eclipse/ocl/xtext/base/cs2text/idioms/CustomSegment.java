@@ -15,6 +15,14 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>Custom Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A CustomSegment enables a user defined class to contribute segments to the
+ * overall output. This is most useful for implementing the appropriate code
+ * to locate comment text that may be hidden irregularly. The user class should
+ * derive from at least CustomSegmentSupport and may inherit some useful
+ * functionality by deriving from CommentSegmentSupport.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

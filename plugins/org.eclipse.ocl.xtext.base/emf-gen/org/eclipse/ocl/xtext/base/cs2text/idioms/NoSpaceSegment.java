@@ -16,6 +16,11 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>No Space Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A NoSpaceSegment inhibits the conversion of preceding of following soft spaces to
+ * an actual space. A no-space is useful to prevent a space before for instance a semi-colon.
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getNoSpaceSegment()
  * @model

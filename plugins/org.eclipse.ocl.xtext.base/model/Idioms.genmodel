@@ -44,6 +44,7 @@
         <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationBuilder"/>
       </genOperations>
     </genClasses>
+    <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
     <genClasses ecoreClass="Idioms.ecore#//HalfNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//Idiom">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Idiom/name"/>

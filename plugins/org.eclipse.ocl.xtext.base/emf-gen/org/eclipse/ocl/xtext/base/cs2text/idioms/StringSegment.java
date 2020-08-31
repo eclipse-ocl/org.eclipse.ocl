@@ -16,6 +16,10 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>String Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A StringSegment contributes an explicit character sequence to the outer value of a SubIdiom.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * </p>

@@ -16,6 +16,12 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * A representation of the model object '<em><b>Half New Line Segment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A HalfNewLineSegment is a variant of soft new-line that can accumulate, one actual new line
+ * per two soft or haldf new-lines. Apair of half new lines wrapping an assignment provides
+ * for blank lines between 'parapgraph's..
+ * <!-- end-model-doc -->
+ *
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getHalfNewLineSegment()
  * @model
