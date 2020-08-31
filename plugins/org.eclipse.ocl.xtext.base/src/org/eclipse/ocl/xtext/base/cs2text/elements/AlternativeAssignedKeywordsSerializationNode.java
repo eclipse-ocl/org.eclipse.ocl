@@ -51,7 +51,7 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 
 	@Override
 	public void gatherSteps(@NonNull StaticRuleMatch staticRuleMatch, @NonNull List<@NonNull RTSerializationStep> stepsList) {
-		stepsList.add(new RTSerializationAssignStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature));
+		stepsList.add(new RTSerializationAssignStep(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, enumerationValue));
 	}
 
 	@Override

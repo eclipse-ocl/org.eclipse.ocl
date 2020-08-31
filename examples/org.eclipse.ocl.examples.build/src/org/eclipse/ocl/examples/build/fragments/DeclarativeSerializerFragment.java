@@ -43,6 +43,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallsStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignsStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
@@ -393,11 +394,17 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 			for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
-				for(@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
+				for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : eClassValue.getSerializationRuleSegmentsLists()) {
 					SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
-					for(@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
+					for (@NonNull RTSerializationStep serializationStep : serializationRule.getSerializationSteps()) {
 						if (serializationStep instanceof RTSerializationAssignedRuleCallsStep) {
 							indexVector2id2.put(((RTSerializationAssignedRuleCallsStep)serializationStep).getCalledRuleIndexes(), "");
+						}
+						else if (serializationStep instanceof RTSerializationAssignsStep) {
+							@NonNull Integer[] calledRuleIndexes = ((RTSerializationAssignsStep)serializationStep).getCalledRuleIndexes();
+							if (calledRuleIndexes != null) {
+								indexVector2id2.put(new IndexVector(calledRuleIndexes), "");
+							}
 						}
 					}
 				}
