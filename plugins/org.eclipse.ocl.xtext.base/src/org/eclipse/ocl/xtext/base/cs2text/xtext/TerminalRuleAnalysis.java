@@ -29,6 +29,11 @@ public class TerminalRuleAnalysis extends AbstractRuleAnalysis
 	}
 
 	@Override
+	public @Nullable TerminalRuleValue basicGetRuleValue() {
+		return terminalRuleValue;
+	}
+
+	@Override
 	public @NonNull TerminalRuleValue getRuleValue() {
 		TerminalRuleValue terminalRuleValue2 = terminalRuleValue;
 		if (terminalRuleValue2 == null) {

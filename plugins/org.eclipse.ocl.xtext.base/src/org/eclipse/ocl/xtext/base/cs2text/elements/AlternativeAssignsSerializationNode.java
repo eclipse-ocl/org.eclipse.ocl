@@ -19,6 +19,7 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignsStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -34,7 +35,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 {
 	protected final @Nullable Iterable<@NonNull Keyword> keywords;
 	protected final @Nullable EnumerationValue enumerationValue;
-	protected final Integer @Nullable [] calledRuleIndexes;			// Cannot use INdexVEctor since need to preseve declaration order
+	protected final @NonNull Integer @Nullable [] calledRuleIndexes;			// Cannot use INdexVEctor since need to preseve declaration order
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
@@ -99,6 +100,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 			if (calledRuleIndexes != null) {
 				 hash += calledRuleIndexes.hashCode();
 			}
+			this.semanticHashCode = hash;
 		}
 		assert semanticHashCode != null;
 		return semanticHashCode.intValue();
@@ -120,8 +122,8 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 				if (!isFirst) {
 					s.append("|");
 				}
-			//	s.append(grammarAnalysis.getRuleValue(calledRuleIndex).getName());
-				s.append(calledRuleIndex);
+				AbstractRuleValue ruleValue = grammarAnalysis.basicGetRuleValue(calledRuleIndex);
+				s.append(ruleValue != null ? ruleValue.getRuleName() : calledRuleIndex);
 				isFirst = false;
 			}
 		}

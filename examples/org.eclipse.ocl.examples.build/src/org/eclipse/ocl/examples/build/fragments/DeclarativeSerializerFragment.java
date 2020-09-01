@@ -728,7 +728,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesList = new ArrayList<>(serializationRuleAnalysesSet);
-			Collections.sort(serializationRuleAnalysesList, NameUtil.NAMEABLE_COMPARATOR);
+			Collections.sort(serializationRuleAnalysesList, NameUtil.TO_STRING_COMPARATOR);
 			serializationRule2id = serializationRule2id2 = new HashMap<>();
 			String formatString = "sr" + getDigitsFormatString(getSerializationRulePage(serializationRuleAnalysesSet.size())) + "._" + getDigitsFormatString(serializationRuleAnalysesList);
 			int i = 0;

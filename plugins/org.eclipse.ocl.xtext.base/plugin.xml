@@ -29,4 +29,11 @@
             genModel="model/Idioms.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated Idioms -->
+      <parser
+            type="idioms"
+            class="org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceFactoryImpl"/>
+   </extension>
+
 </plugin>

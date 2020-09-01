@@ -294,6 +294,11 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		}
 	}
 
+	@Override
+	public @Nullable ParserRuleValue basicGetRuleValue() {
+		return parserRuleValue;
+	}
+
 	protected void createSerializationRules(@NonNull List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses, @NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
 			UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = (UnassignedRuleCallSerializationNode)serializationNode;

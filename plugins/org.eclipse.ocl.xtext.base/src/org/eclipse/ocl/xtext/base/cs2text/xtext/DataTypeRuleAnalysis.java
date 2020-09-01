@@ -29,6 +29,11 @@ public class DataTypeRuleAnalysis extends AbstractRuleAnalysis
 	}
 
 	@Override
+	public @Nullable DataTypeRuleValue basicGetRuleValue() {
+		return dataTypeRuleValue;
+	}
+
+	@Override
 	public @NonNull DataTypeRuleValue getRuleValue() {
 		DataTypeRuleValue dataTypeRuleValue2 = dataTypeRuleValue;
 		if (dataTypeRuleValue2 == null) {

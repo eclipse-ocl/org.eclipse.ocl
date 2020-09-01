@@ -178,6 +178,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			}
 			eAttribute2enumerationValue2multiplicativeCardinality[i1++] = new EAttribute_EnumerationValue_MultiplicativeCardinality(eAttribute, enumerationValue_MultiplicativeCardinality);
 		}
+		Arrays.sort(eAttribute2enumerationValue2multiplicativeCardinality, NameUtil.NAMEABLE_COMPARATOR);
 		return eAttribute2enumerationValue2multiplicativeCardinality;
 	}
 //	public @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
@@ -204,6 +205,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			}
 			eReference2ruleValueIndex2multiplicativeCardinality[i1++] = new EReference_RuleIndex_MultiplicativeCardinality(eReference, ruleValueIndex2multiplicativeCardinality);
 		}
+		Arrays.sort(eReference2ruleValueIndex2multiplicativeCardinality, NameUtil.NAMEABLE_COMPARATOR);
 		return eReference2ruleValueIndex2multiplicativeCardinality;
 	}
 
@@ -521,13 +523,16 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return staticRuleMatch2;
 	}
 
-	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
-		return getSerializationNode2subIdioms().get(serializationNode);
-	}
+///	public @Nullable SubIdiom getSubIdiom(@NonNull SerializationNode serializationNode) {
+//		return getSerializationNode2subIdioms().get(serializationNode);
+//	}
 
 	public @NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> getSerializationNode2subIdioms() {
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
+			if ("OCLinEcore::InvariantConstraintCS".equals(getName())) {
+				getClass(); // XXX
+			}
 			assert staticRuleMatch != null;
 			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRuleAnalysis().getRuleAnalysis().getGrammarAnalysis().getIdioms();
 			//

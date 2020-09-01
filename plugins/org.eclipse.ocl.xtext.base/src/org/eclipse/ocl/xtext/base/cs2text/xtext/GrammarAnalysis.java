@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,12 +27,14 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
@@ -44,6 +47,8 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceFactoryImpl;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceImpl;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.user.AbstractGrammarAnalysis;
@@ -139,7 +144,8 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	/**
-	 * Perform the analysis to determine and populate thae Assignment and Rule analyses.
+	 * Perform the analysis to determine and populate the Assignment and Rule analyses.
+	 * @throws IOException
 	 */
 	public void analyze() {
 		Map<@NonNull AbstractRule, @NonNull List<@NonNull RuleCall>> rule2ruleCalls = new HashMap<>();
@@ -378,6 +384,11 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		assert old == null;
 	}
 
+	public @Nullable AbstractRuleValue basicGetRuleValue(int ruleValueIndex) {
+		AbstractRuleAnalysis ruleAnalysis = ruleAnalyses.get(ruleValueIndex);
+		return ruleAnalysis != null ? ruleAnalysis.basicGetRuleValue() : null;
+	}
+
 	/**
 	 *	Create a RuleAnalysis for each distinct name.
 	 */
@@ -531,6 +542,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				resourceSet = new ResourceSetImpl();
 			}
 		}
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("idioms", new IdiomsResourceFactoryImpl());
 		IdiomsProvider idiomsProvider2 = idiomsProvider;
 		if (idiomsProvider2 == null) {
 
@@ -551,6 +563,25 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			};
 		}
 		Iterable<Idiom> idioms = idiomsProvider2.getIdioms(resourceSet);
+
+
+		StringBuilder s = null;
+		for (Resource resource : resourceSet.getResources()) {
+			if (resource instanceof IdiomsResourceImpl) {
+				List<Resource.Diagnostic> errors = ClassUtil.nonNullState(resource.getErrors());
+				if (errors.size() > 0) {
+					if (s == null) {
+						s = new StringBuilder();
+					}
+					s.append(PivotUtil.formatResourceDiagnostics(errors, "", "\n"));
+				}
+			}
+		}
+		if (s != null) {
+			throw new IllegalStateException("Failed to load idioms" + s.toString());
+		}
+
+
 		return idioms != null ? idioms : Collections.emptyList();
 	}
 

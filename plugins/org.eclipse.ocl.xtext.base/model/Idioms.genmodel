@@ -14,8 +14,9 @@
     <details key="Generate Classifier ints" value="true"/>
   </genAnnotations>
   <foreignModel>Idioms.ecore</foreignModel>
-  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base.cs2text" disposableProviderFactory="true"
-      generateExampleClass="false" ecorePackage="Idioms.ecore#/" publicationLocation="">
+  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base.cs2text" resource="XMI"
+      disposableProviderFactory="true" generateExampleClass="false" ecorePackage="Idioms.ecore#/"
+      publicationLocation="">
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationRuleAnalysis"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//IdiomMatch"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>

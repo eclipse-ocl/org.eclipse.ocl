@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationAssignedRuleCallStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -85,8 +86,8 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	public void toString(@NonNull StringBuilder s, int depth) {
 		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
-	//	s.append(assignmentAnalysis.getGrammarAnalysis().getRuleValue(calledRuleIndex).getRuleName());
-		s.append(calledRuleIndex);
+		AbstractRuleValue ruleValue = assignmentAnalysis.getGrammarAnalysis().basicGetRuleValue(calledRuleIndex);
+		s.append(ruleValue != null ? ruleValue.getRuleName() : calledRuleIndex);
 		appendCardinality(s, depth);
 	}
 }
