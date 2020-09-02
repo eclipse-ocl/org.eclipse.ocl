@@ -18,8 +18,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
 

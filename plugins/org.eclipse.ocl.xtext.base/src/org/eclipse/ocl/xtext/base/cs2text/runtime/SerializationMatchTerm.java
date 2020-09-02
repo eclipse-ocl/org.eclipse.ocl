@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 
 /**
  * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the

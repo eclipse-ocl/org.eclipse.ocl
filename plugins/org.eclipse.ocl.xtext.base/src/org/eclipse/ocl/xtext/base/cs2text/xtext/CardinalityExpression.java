@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 /**
  * A CardinalityExpression equates the sum of CardinalityVariable products to the number of elements in an eStructuralFeature slot.

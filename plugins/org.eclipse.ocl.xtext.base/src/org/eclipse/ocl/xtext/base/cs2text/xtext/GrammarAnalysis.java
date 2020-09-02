@@ -37,8 +37,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
-import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
-import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
@@ -116,7 +114,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	/**
 	 * The values of enumerated features
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = null;
 
 	private  final @NonNull Map<@NonNull String, @NonNull EnumerationValueSingle> value2enumerationValue = new HashMap<>();
 	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull EnumerationValueMultiple> values2enumerationValue = new HashMap<>();
@@ -134,11 +132,11 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
+		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
 		if (eAttribute2enumerationValues2 == null) {
 			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
 		}
-		Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = eAttribute2enumerationValues2.get(eAttribute);
+		Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues2.get(eAttribute);
 		if (enumerationValues == null) {
 			enumerationValues = new HashSet<>();
 			eAttribute2enumerationValues2.put(eAttribute, enumerationValues);
@@ -523,7 +521,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		return enumerationValue;
 	}
 
-	public @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> getEnumerationValues() {
+	public @NonNull Iterable<@NonNull EnumerationValue> getEnumerationValues() {
 		return new HashSet<>(values2enumerationValue.values());
 	}
 

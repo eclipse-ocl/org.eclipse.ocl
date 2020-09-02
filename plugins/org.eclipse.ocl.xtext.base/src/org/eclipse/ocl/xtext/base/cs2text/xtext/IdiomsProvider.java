@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.xtext.base.cs2text;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;

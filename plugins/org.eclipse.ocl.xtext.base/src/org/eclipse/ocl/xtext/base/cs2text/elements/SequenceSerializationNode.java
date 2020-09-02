@@ -20,8 +20,8 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.xtext.CompoundElement;
 
 public class SequenceSerializationNode extends CompositeSerializationNode

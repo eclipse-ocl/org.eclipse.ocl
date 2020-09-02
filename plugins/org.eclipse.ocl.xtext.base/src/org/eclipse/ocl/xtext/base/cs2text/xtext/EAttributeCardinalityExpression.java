@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,45 +17,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 
 /**
- * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.
+ * A CardinalityExpression equates the sum of CardinailtyVariable products to the number of elements in an eStrucuralFeature slot.
  *
  * Multiple CardinalityExpressions provide a set of simultaneous equations for which an integer solution mmust be found to
  * select a potential serialization option.
  */
-public class EReferenceCardinalityExpression extends AbstractCardinalityExpression
+public class EAttributeCardinalityExpression extends AbstractCardinalityExpression
 {
-	protected final @NonNull EReference eReference;
-	protected final @NonNull ParserRuleValue parserRuleValue;
-	private @NonNull Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> parserRuleValue2cardinalityExpression = new HashMap<>();
+	protected final @NonNull EAttribute eAttribute;
+	protected final @NonNull EnumerationValue enumerationValue;
+	private final @NonNull Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression = new HashMap<>();
 
-	public EReferenceCardinalityExpression(@NonNull String name, /*@NonNull*/ EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
+	public EAttributeCardinalityExpression(@NonNull String name, /*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		super(name);
-		assert eReference != null;
-		this.eReference = eReference;
-		this.parserRuleValue = parserRuleValue;
+		assert eAttribute != null;
+		this.eAttribute = eAttribute;
+		this.enumerationValue = enumerationValue;
 	}
 
 	@Override
 	public boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
-		for (Entry<@NonNull ParserRuleValue, @NonNull CardinalityExpression> entry : parserRuleValue2cardinalityExpression.entrySet()) {
-			ParserRuleValue value = entry.getKey();
+		for (Entry<@NonNull EnumerationValue, @NonNull CardinalityExpression> entry : enumerationValue2cardinalityExpression.entrySet()) {
+			EnumerationValue value = entry.getKey();
 			CardinalityExpression nestedExpression = entry.getValue();
 			int requiredCount = nestedExpression.solve(dynamicRuleMatch);
-			int actualCount = slotsAnalysis.getSize(eReference, value);
+			int actualCount = slotsAnalysis.getSize(eAttribute, value);
 			if (requiredCount != actualCount) {
 				return false;
 			}
@@ -64,48 +62,49 @@ public class EReferenceCardinalityExpression extends AbstractCardinalityExpressi
 	}
 
 	@Override
-	protected @NonNull SerializationMatchTermEReferenceSize createSizeCardinalitySolution() {
-		return new SerializationMatchTermEReferenceSize(eReference, parserRuleValue);
+	protected @NonNull SerializationMatchTermEAttributeSize createSizeCardinalitySolution() {
+		return new SerializationMatchTermEAttributeSize(eAttribute, enumerationValue);
 	}
 
 	@Override
 	public @NonNull CardinalityExpression getCardinalityExpression(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EnumerationValue enumerationValue) {
-		CardinalityExpression cardinalityExpression = parserRuleValue2cardinalityExpression.get(parserRuleValue);
+		CardinalityExpression cardinalityExpression = enumerationValue2cardinalityExpression.get(enumerationValue);
 		if (cardinalityExpression == null) {
-			String subName = name + "." + parserRuleValue2cardinalityExpression.size();
-			cardinalityExpression = new EReferenceCardinalityExpression(subName, eReference, parserRuleValue);
-			parserRuleValue2cardinalityExpression.put(parserRuleValue, cardinalityExpression);
+			grammarAnalysis.addEnumeration(eAttribute, enumerationValue);
+			String subName = name + "." + enumerationValue2cardinalityExpression.size();
+			cardinalityExpression = new EAttributeCardinalityExpression(subName, eAttribute, enumerationValue);
+			enumerationValue2cardinalityExpression.put(enumerationValue, cardinalityExpression);
 		}
 		return cardinalityExpression;
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull CardinalityExpression> getCardinalityExpressions() {
-		return parserRuleValue2cardinalityExpression.values();
+		return enumerationValue2cardinalityExpression.values();
 	}
 
-	public @NonNull EReference getEReference() {
-		return eReference;
+	public @NonNull EAttribute getEAttribute() {
+		return eAttribute;
 	}
 
-	public @NonNull ParserRuleValue getParserRuleValue() {
-		return parserRuleValue;
+	public @NonNull EnumerationValue getEnumerationValue() {
+		return enumerationValue;
 	}
 
-	public @Nullable Map<@NonNull ParserRuleValue, @NonNull CardinalityExpression> getParserRuleValue2cardinalityExpression() {
-		return parserRuleValue2cardinalityExpression;
+	public @Nullable Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> getEnumerationValue2cardinalityExpression() {
+		return enumerationValue2cardinalityExpression;
 	}
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		s.append(name);
 		s.append(": |");
-		s.append(eReference.getName());
+		s.append(eAttribute.getName());
 		s.append(".'");
-		s.append(parserRuleValue.getRuleName());
+		s.append(enumerationValue.getName());
 		s.append("'| = ");
 		appendSumOfProducts(s);
-		List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(parserRuleValue2cardinalityExpression.values());
+		List<@NonNull CardinalityExpression> sortedExpressions = new ArrayList<>(enumerationValue2cardinalityExpression.values());
 		Collections.sort(sortedExpressions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull CardinalityExpression cardinalityExpression : sortedExpressions) {
 			StringUtil.appendIndentation(s, depth);

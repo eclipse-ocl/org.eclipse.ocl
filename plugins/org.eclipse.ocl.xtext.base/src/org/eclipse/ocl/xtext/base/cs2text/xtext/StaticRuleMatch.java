@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,8 +42,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.Seriali
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermUnsupported;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.HashSet;

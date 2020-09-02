@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;

@@ -42,7 +42,7 @@ public class UserModelAnalysis
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
 	@Inject
-	private @NonNull AbstractSerializationMetaData analysisProvider;
+	private @NonNull AbstractSerializationMetaData serializationMetaData;
 
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eClass());
@@ -63,7 +63,7 @@ public class UserModelAnalysis
 	/**
 	 * The analysis of each user model element.
 	 */
-	private final @NonNull Map<@NonNull EObject, org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementAnalysis> element2elementAnalysis = new HashMap<>();
+	private final @NonNull Map<@NonNull EObject, @NonNull UserElementAnalysis> element2elementAnalysis = new HashMap<>();
 
 	private int debugUserElementAnalysisCount = 0;
 	private int debugUserSlotsAnalysisCount = 0;
@@ -141,7 +141,7 @@ public class UserModelAnalysis
 
 	public @NonNull SerializationGrammarAnalysis getGrammarAnalysis() {
 //		return grammarAnalysis.getRuntime();
-		return ClassUtil.nonNullState(analysisProvider.getAnalysis());
+		return ClassUtil.nonNullState(serializationMetaData.getAnalysis());
 	}
 
 	public @NonNull IValueConverterService getValueConverterService() {
@@ -173,7 +173,7 @@ public class UserModelAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("User object <=> Xtext containing assignment(s) : Xtext production rule\n");
-		List<org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
+		List<@NonNull UserElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
 		Collections.sort(elementAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 		boolean isFirst = true;
 		for (@NonNull UserElementAnalysis elementAnalysis : elementAnalyses) {

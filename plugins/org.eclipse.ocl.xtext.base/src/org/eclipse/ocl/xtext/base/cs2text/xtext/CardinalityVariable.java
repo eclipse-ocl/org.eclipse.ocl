@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;

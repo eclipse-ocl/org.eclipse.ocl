@@ -103,7 +103,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @NonNull Set<@NonNull String> referredClassNames = new HashSet<>();
 
 	private @Nullable Map<@NonNull EClass, @NonNull String> eClass2id = null;
-	private @Nullable Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull String> enumValue2id = null;
+	private @Nullable Map<@NonNull EnumerationValue, @NonNull String> enumValue2id = null;
 	private @Nullable Map<@NonNull GrammarRuleValue, @NonNull String> grammarRuleValue2id = null;
 	private @Nullable Map<@NonNull Integer, @NonNull String> grammarRuleValueIndex2ruleName = null;
 	private @Nullable Map<@NonNull GrammarRuleVector, @NonNull String> grammarRuleVector2id = null;
@@ -115,7 +115,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @NonNull Map<@NonNull String, @NonNull SerializationSegment [] []> segmentsListString2segmentsList = new HashMap<>();
 	private @Nullable Map<@NonNull String, @NonNull String> segmentsList2id = null;
 	private @Nullable Map<@NonNull SerializationRule, @NonNull String> serializationRule2id = null;
-	private @Nullable List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses = null;
+	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = null;
 	private @Nullable Map<@NonNull SerializationStep, @NonNull String> serializationStep2id = null;
 
 	protected abstract StringConcatenationClient doGetSerializationMetaDataContent(@NonNull GrammarAnalysis grammarAnalysis);
@@ -140,8 +140,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		IXtextGeneratorLanguage language = getLanguage();
 		Grammar grammar = getGrammar();
 		assert grammar != null;
-		TypeReference analysisProviderStub = getSerializationMetaDataClass(grammar);
-		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(analysisProviderStub);
+		TypeReference serializationMetaDataStub = getSerializationMetaDataClass(grammar);
+		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(serializationMetaDataStub);
 		javaFile.setResourceSet(language.getResourceSet());
 		GrammarAnalysis grammarAnalysis = getGrammarAnalysis();
 		javaFile.setContent(doGetSerializationMetaDataContent(grammarAnalysis));
@@ -264,8 +264,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return eClasses;
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> getEnumValueIterable(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull String> enumValue2id2 = enumValue2id;
+	protected @NonNull Iterable<@NonNull EnumerationValue> getEnumValueIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull EnumerationValue, @NonNull String> enumValue2id2 = enumValue2id;
 		if (enumValue2id2 == null) {
 			enumValue2id = enumValue2id2 = new HashMap<>();
 		}
@@ -292,7 +292,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 		}
-		List<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumValues = new ArrayList<>(enumValue2id2.keySet());
+		List<@NonNull EnumerationValue> enumValues = new ArrayList<>(enumValue2id2.keySet());
 		Collections.sort(enumValues, NameUtil.NAMEABLE_COMPARATOR);
 		String formatString = "_" + getDigitsFormatString(enumValues);
 		int i = 0;
@@ -601,7 +601,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return new TypeReference(AbstractSerializationMetaData.class);
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> getSerializationRuleAnalysisIterable(@NonNull GrammarAnalysis grammarAnalysis, int page) {
+	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSerializationRuleAnalysisIterable(@NonNull GrammarAnalysis grammarAnalysis, int page) {
 		assert serializationRuleAnalyses != null;
 		int size = serializationRuleAnalyses.size();
 		int maxPage = getSerializationRulePage(size);
@@ -719,7 +719,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected void initSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
 		if (serializationRule2id2 == null) {
-			Set<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalysesSet = new HashSet<>();
+			Set<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesSet = new HashSet<>();
 			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 				if (ruleAnalysis instanceof ParserRuleAnalysis) {
 					for (@NonNull SerializationRuleAnalysis serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRuleAnalyses()) {
@@ -728,7 +728,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					}
 				}
 			}
-			List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalysesList = new ArrayList<>(serializationRuleAnalysesSet);
+			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesList = new ArrayList<>(serializationRuleAnalysesSet);
 			Collections.sort(serializationRuleAnalysesList, NameUtil.TO_STRING_COMPARATOR);
 			serializationRule2id = serializationRule2id2 = new HashMap<>();
 			String formatString = "sr" + getDigitsFormatString(getSerializationRulePage(serializationRuleAnalysesSet.size())) + "._" + getDigitsFormatString(serializationRuleAnalysesList);

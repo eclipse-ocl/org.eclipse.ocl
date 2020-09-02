@@ -13,9 +13,9 @@
 package org.eclipse.ocl.xtext.essentialocl.formatting;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractIdiomsProvider;
 
 public class EssentialOCLIdiomsProvider extends AbstractIdiomsProvider
 {

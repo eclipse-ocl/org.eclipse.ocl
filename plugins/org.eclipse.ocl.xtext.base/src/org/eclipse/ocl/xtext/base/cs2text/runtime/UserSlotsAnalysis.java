@@ -113,7 +113,7 @@ public class UserSlotsAnalysis
 	 */
 	public static class EnumeratedSlotAnalysis implements UserSlotAnalysis
 	{
-		private final @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
+		private final @NonNull Map<@NonNull EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
 
 		public @Nullable Integer basicGet(@NonNull EnumerationValue enumerationValue) {
 			return enumerationValue2count.get(enumerationValue);
@@ -147,7 +147,7 @@ public class UserSlotsAnalysis
 		@Override
 		public @NonNull String toString() {
 			StringBuilder s = new StringBuilder();
-			List<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> keys  = new ArrayList<>(enumerationValue2count.keySet());
+			List<@NonNull EnumerationValue> keys  = new ArrayList<>(enumerationValue2count.keySet());
 			Collections.sort(keys, NameUtil.NAMEABLE_COMPARATOR);
 			boolean isFirst = true;
 			for (@NonNull EnumerationValue key : keys) {
@@ -172,7 +172,7 @@ public class UserSlotsAnalysis
 	 * Cache of DynamicRuleMatch per StaticRuleMatch. This cache reduces the DynamicRuleMatch per StaticRuleMatch ratio
 	 * from nearly 10 to less than 2 by re-using the lookahead from the tree descent.
 	 */
-	private @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch> dynamicRuleMatches = new ArrayList<>();
+	private @NonNull List<@NonNull DynamicRuleMatch> dynamicRuleMatches = new ArrayList<>();
 
 	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject) {
 		this.modelAnalysis = modelAnalysis;
@@ -216,7 +216,7 @@ public class UserSlotsAnalysis
 		UserSlotAnalysis slotAnalysis;
 		Object object = eObject.eGet(eAttribute);
 		if (eAttribute.isMany()) {
-			Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
+			Iterable<@NonNull EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
 			List<?> elements = (List<?>)object;
 			int size = elements.size();
 			if ((size > 0) && (enumerationValues != null)) {
@@ -248,7 +248,7 @@ public class UserSlotsAnalysis
 			slotAnalysis = CountedSlotAnalysis.valueOf(object == Boolean.TRUE ? 1 : 0);
 		}
 		else if (eObject.eIsSet(eAttribute)) {
-			Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
+			Iterable<@NonNull EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
 			if (enumerationValues != null) {
 				EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
 				String string = String.valueOf(object);
