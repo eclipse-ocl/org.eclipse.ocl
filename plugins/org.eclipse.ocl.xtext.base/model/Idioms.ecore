@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE ecore:EPackage [
-<!ENTITY _0 "http://www.eclipse.org/emf/2002/Ecore">
-]>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="idioms" nsURI="http://www.eclipse.org/ocl/2020/Idioms" nsPrefix="idioms">
   <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -15,33 +12,33 @@
       <details key="documentation" value="An AssignmentLocator identifies an assignment around which a&#xA;SubIdiom wraps appropriate spacing. A half-new line before and after&#xA;an assignment usefully gives blank lines between similar 'paragraphs'&#xA;without blank lines before or after."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
-        eType="ecore:EClass &_0;#//EStructuralFeature"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CommentSegmentSupport" abstract="true"
       eSuperTypes="#//CustomSegmentSupport">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="CommentSegmentSupport defines the framework for a user-defined class that supports&#xA;comment insertion. The derived class must implement getComment to locate the comment."/>
     </eAnnotations>
-    <eOperations name="getComment" eType="ecore:EDataType &_0;#//EString">
-      <eParameters name="eObject" eType="ecore:EClass &_0;#//EObject"/>
+    <eOperations name="getComment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="eObject" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="epilogue" lowerBound="1"
-        eType="ecore:EDataType &_0;#//EString"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="indentation" lowerBound="1"
-        eType="ecore:EDataType &_0;#//EString"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prologue" lowerBound="1"
-        eType="ecore:EDataType &_0;#//EString"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CustomSegment enables a user defined class to contribute segments to the&#xA;overall output. This is most useful for implementing the appropriate code&#xA;to locate comment text that may be hidden irregularly. The user class should&#xA;derive from at least CustomSegmentSupport and may inherit some useful&#xA;functionality by deriving from CommentSegmentSupport."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportClass">
-      <eGenericType eClassifier="ecore:EDataType &_0;#//EJavaClass">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaClass">
         <eTypeArguments/>
       </eGenericType>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportClassName" eType="ecore:EDataType &_0;#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportClassName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegmentSupport" abstract="true"
       interface="true">
@@ -49,7 +46,7 @@
       <details key="documentation" value="CustomSegmentSupport defines the interface that a user-defined class must implement&#xA;to contribute custom strings to the overall output."/>
     </eAnnotations>
     <eOperations name="serialize">
-      <eParameters name="serializationStep" lowerBound="1" eType="#//RTSerializationStep"/>
+      <eParameters name="serializationStep" lowerBound="1" eType="#//SerializationStep"/>
       <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
       <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
     </eOperations>
@@ -72,7 +69,7 @@
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType &_0;#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubIdioms" upperBound="-1"
         eType="#//SubIdiom" containment="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -90,7 +87,7 @@
         <details key="documentation" value="The IdiomModels for extended grammars."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType &_0;#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A convenience name for the IdiomModel."/>
       </eAnnotations>
@@ -118,23 +115,23 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Locator identifies where a SubIdiom applies Segment formatting."/>
     </eAnnotations>
-    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType &_0;#//EBoolean">
+    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType &_0;#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordLocator" eSuperTypes="#//Locator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A KeywordLocator identifies a keyword, or more generally letter sequence, around which a&#xA;SubIdiom wraps appropriate spacing."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
-        eType="ecore:EDataType &_0;#//EString">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The letter-sequence to match a keyword/punctuation in the grammar."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inEClass" eType="ecore:EClass &_0;#//EClass">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inEClass" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An optional scope restriction on the matching of the string. If specified matches are&#xA;only discovered in rules that produce the EClass or a derivation thereof."/>
       </eAnnotations>
@@ -160,7 +157,7 @@
       <details key="documentation" value="A ProducedEClassLocator identifies a rule that prodices a specified EClass&#xA;or derivation thereof. A custom segmwnt may precede the inner value to output&#xA;a comment.."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
-        eType="ecore:EClass &_0;#//EClass"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PushSegment" eSuperTypes="#//Segment">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -172,11 +169,11 @@
       <details key="documentation" value="A Segment is a string or virtual string that may be concatenated to form the overall output.&#xA;Each SubIdiom provides s sequence of SEfment to wrap the inner value as a formatted output value,"/>
     </eAnnotations>
     <eOperations name="serialize">
-      <eParameters name="serializationStep" lowerBound="1" eType="#//RTSerializationStep"/>
+      <eParameters name="serializationStep" lowerBound="1" eType="#//SerializationStep"/>
       <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
       <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType &_0;#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SoftNewLineSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="SoftSpaceSegment" eSuperTypes="#//Segment">
@@ -189,20 +186,20 @@
       <details key="documentation" value="A StringSegment contributes an explicit character sequence to the outer value of a SubIdiom."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="printable" lowerBound="1"
-        eType="ecore:EDataType &_0;#//EBoolean" defaultValueLiteral="true"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
-        eType="ecore:EDataType &_0;#//EString"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SubIdiom">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A SubIdiom defines the fomattimg to be applied at some position inthe Xtext grammar.&#xA;A Locator matches the grammar location, then a sequence of virtual text strings may&#xA;form an outer value that wraps the inner value of the location with virtual segments&#xA;such as soft-spaces or indentation pushes."/>
     </eAnnotations>
-    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType &_0;#//EBoolean">
+    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
       <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="locator" eType="#//Locator"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType &_0;#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="segments" unique="false"
         upperBound="-1" eType="#//Segment"/>
   </eClassifiers>
@@ -211,14 +208,14 @@
       <details key="documentation" value="A ValueSegment is the virtual string that makes the inner value of a grammar element available for&#xA;embedding in the outer value."/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="SerializationRuleAnalysis" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis"
+  <eClassifiers xsi:type="ecore:EDataType" name="SerializationRuleAnalysis" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IdiomMatch" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="SerializationBuilder" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="SerializationNode" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="SerializationStep" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep"/>
   <eClassifiers xsi:type="ecore:EDataType" name="UserElementSerializer" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer"
       serializable="false"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="RTSerializationStep" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep"/>
 </ecore:EPackage>

@@ -51,13 +51,13 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignKeyword;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.AbstractRule;
@@ -114,7 +114,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @NonNull Map<@NonNull String, @NonNull Segment [] []> segmentsListString2segmentsList = new HashMap<>();
 	private @Nullable Map<@NonNull String, @NonNull String> segmentsList2id = null;
 	private @Nullable Map<@NonNull SerializationRule, @NonNull String> serializationRule2id = null;
-	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = null;
+	private @Nullable List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses = null;
 	private @Nullable Map<@NonNull SerializationStep, @NonNull String> serializationStep2id = null;
 
 	protected abstract StringConcatenationClient doGetAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis);
@@ -600,7 +600,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 //		return serializationRuleAnalyses;
 //	}
 
-	protected @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSerializationRuleAnalysisIterable(@NonNull GrammarAnalysis grammarAnalysis, int page) {
+	protected @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> getSerializationRuleAnalysisIterable(@NonNull GrammarAnalysis grammarAnalysis, int page) {
 		assert serializationRuleAnalyses != null;
 		int size = serializationRuleAnalyses.size();
 		int maxPage = getSerializationRulePage(size);
@@ -718,7 +718,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	protected void initSerializationRules(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
 		if (serializationRule2id2 == null) {
-			Set<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesSet = new HashSet<>();
+			Set<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalysesSet = new HashSet<>();
 			for (@NonNull AbstractRuleAnalysis ruleAnalysis : grammarAnalysis.getRuleAnalyses()) {
 				if (ruleAnalysis instanceof ParserRuleAnalysis) {
 					for (@NonNull SerializationRuleAnalysis serializationRule : ((ParserRuleAnalysis)ruleAnalysis).getSerializationRuleAnalyses()) {
@@ -727,7 +727,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					}
 				}
 			}
-			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalysesList = new ArrayList<>(serializationRuleAnalysesSet);
+			List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalysesList = new ArrayList<>(serializationRuleAnalysesSet);
 			Collections.sort(serializationRuleAnalysesList, NameUtil.TO_STRING_COMPARATOR);
 			serializationRule2id = serializationRule2id2 = new HashMap<>();
 			String formatString = "sr" + getDigitsFormatString(getSerializationRulePage(serializationRuleAnalysesSet.size())) + "._" + getDigitsFormatString(serializationRuleAnalysesList);

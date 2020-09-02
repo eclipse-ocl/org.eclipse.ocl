@@ -44,9 +44,9 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->
@@ -236,14 +236,14 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType userElementSerializerEDataType = null;
+	private EDataType serializationStepEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType rtSerializationStepEDataType = null;
+	private EDataType userElementSerializerEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -842,9 +842,9 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EDataType getUserElementSerializer()
+	public EDataType getSerializationStep()
 	{
-		return userElementSerializerEDataType;
+		return serializationStepEDataType;
 	}
 
 	/**
@@ -853,9 +853,9 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EDataType getRTSerializationStep()
+	public EDataType getUserElementSerializer()
 	{
-		return rtSerializationStepEDataType;
+		return userElementSerializerEDataType;
 	}
 
 	/**
@@ -959,8 +959,8 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		idiomMatchEDataType = createEDataType(22);
 		serializationBuilderEDataType = createEDataType(23);
 		serializationNodeEDataType = createEDataType(24);
-		userElementSerializerEDataType = createEDataType(25);
-		rtSerializationStepEDataType = createEDataType(26);
+		serializationStepEDataType = createEDataType(25);
+		userElementSerializerEDataType = createEDataType(26);
 	}
 
 	/**
@@ -1030,7 +1030,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		initEClass(customSegmentSupportEClass, CustomSegmentSupport.class, "CustomSegmentSupport", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		op = addEOperation(customSegmentSupportEClass, null, "serialize", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getRTSerializationStep(), "serializationStep", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getSerializationStep(), "serializationStep", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getUserElementSerializer(), "serializer", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getSerializationBuilder(), "serializationBuilder", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
@@ -1079,7 +1079,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		initEAttribute(getSegment_Name(), ecorePackage.getEString(), "name", null, 1, 1, Segment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		op = addEOperation(segmentEClass, null, "serialize", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getRTSerializationStep(), "serializationStep", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getSerializationStep(), "serializationStep", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getUserElementSerializer(), "serializer", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getSerializationBuilder(), "serializationBuilder", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
@@ -1107,8 +1107,8 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		initEDataType(idiomMatchEDataType, IdiomMatch.class, "IdiomMatch", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(serializationBuilderEDataType, SerializationBuilder.class, "SerializationBuilder", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(serializationNodeEDataType, SerializationNode.class, "SerializationNode", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(serializationStepEDataType, SerializationStep.class, "SerializationStep", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(userElementSerializerEDataType, UserElementSerializer.class, "UserElementSerializer", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEDataType(rtSerializationStepEDataType, SerializationStep.class, "RTSerializationStep", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

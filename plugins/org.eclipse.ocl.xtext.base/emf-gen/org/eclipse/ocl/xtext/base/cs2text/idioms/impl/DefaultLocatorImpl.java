@@ -18,7 +18,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->

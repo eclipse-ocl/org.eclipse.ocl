@@ -178,7 +178,7 @@ public class SerializationRule
 		}
 	}
 
-	public static class RuleIndex_MultiplicativeCardinality
+	public static class RuleIndex_MultiplicativeCardinality implements Comparable<@NonNull RuleIndex_MultiplicativeCardinality>
 	{
 		protected final @NonNull Integer ruleIndex;
 		protected final @NonNull GrammarCardinality multiplicativeCardinality;
@@ -187,6 +187,11 @@ public class SerializationRule
 			assert ruleIndex != null;
 			this.ruleIndex = ruleIndex;
 			this.multiplicativeCardinality = multiplicativeCardinality;
+		}
+
+		@Override
+		public int compareTo(@NonNull RuleIndex_MultiplicativeCardinality that) {
+			return this.ruleIndex - that.ruleIndex;
 		}
 
 		public @NonNull GrammarCardinality getMultiplicativeCardinality() {

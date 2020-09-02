@@ -35,7 +35,7 @@ public interface CustomSegmentSupport extends EObject
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @model serializationStepDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.RTSerializationStep" serializationStepRequired="true" serializerDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.UserElementSerializer" serializerRequired="true" serializationBuilderDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationBuilder" serializationBuilderRequired="true"
+	 * @model serializationStepDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationStep" serializationStepRequired="true" serializerDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.UserElementSerializer" serializerRequired="true" serializationBuilderDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationBuilder" serializationBuilderRequired="true"
 	 * @generated
 	 */
 	void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder);

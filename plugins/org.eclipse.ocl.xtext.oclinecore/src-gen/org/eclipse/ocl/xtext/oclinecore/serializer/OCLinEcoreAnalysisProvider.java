@@ -6248,8 +6248,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(30, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(30, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
@@ -6650,8 +6650,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(30, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(30, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
@@ -7811,9 +7811,9 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(63, GrammarCardinality.ZERO_OR_MORE),
 					new RuleIndex_MultiplicativeCardinality(60, GrammarCardinality.ZERO_OR_ONE),
 					new RuleIndex_MultiplicativeCardinality(62, GrammarCardinality.ZERO_OR_MORE),
+					new RuleIndex_MultiplicativeCardinality(63, GrammarCardinality.ZERO_OR_MORE),
 					new RuleIndex_MultiplicativeCardinality(64, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
@@ -7879,8 +7879,8 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ONE),
-					new RuleIndex_MultiplicativeCardinality(30, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(30, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ONE)
 					}
 				),
 				new EReference_RuleIndex_MultiplicativeCardinality(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY,

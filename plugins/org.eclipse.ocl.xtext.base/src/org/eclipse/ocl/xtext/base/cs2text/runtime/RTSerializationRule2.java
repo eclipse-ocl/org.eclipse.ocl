@@ -22,6 +22,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 public class RTSerializationRule2 extends SerializationRule
 {
@@ -60,7 +61,7 @@ public class RTSerializationRule2 extends SerializationRule
 
 
 
-	private static final @NonNull Map<@NonNull SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
+	private static final @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
 	private final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;
 
 	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull SerializationMatchStep @NonNull [] solutionSteps, @NonNull SerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {

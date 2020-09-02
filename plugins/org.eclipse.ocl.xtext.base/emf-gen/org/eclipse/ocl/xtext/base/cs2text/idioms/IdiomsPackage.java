@@ -272,7 +272,7 @@ public interface IdiomsPackage extends EPackage
 	 * The meta object id for the '<em>Serialization Rule Analysis</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
+	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationRuleAnalysis()
 	 * @generated
 	 */
@@ -307,6 +307,16 @@ public interface IdiomsPackage extends EPackage
 	int SERIALIZATION_NODE = 24;
 
 	/**
+	 * The meta object id for the '<em>Serialization Step</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationStep()
+	 * @generated
+	 */
+	int SERIALIZATION_STEP = 25;
+
+	/**
 	 * The meta object id for the '<em>User Element Serializer</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -314,18 +324,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getUserElementSerializer()
 	 * @generated
 	 */
-	int USER_ELEMENT_SERIALIZER = 25;
-
-
-	/**
-	 * The meta object id for the '<em>RT Serialization Step</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getRTSerializationStep()
-	 * @generated
-	 */
-	int RT_SERIALIZATION_STEP = 26;
+	int USER_ELEMENT_SERIALIZER = 26;
 
 
 	/**
@@ -792,12 +791,12 @@ public interface IdiomsPackage extends EPackage
 	EClass getValueSegment();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis <em>Serialization Rule Analysis</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis <em>Serialization Rule Analysis</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Serialization Rule Analysis</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleAnalysis" serializeable="false"
+	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
+	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis" serializeable="false"
 	 * @generated
 	 */
 	EDataType getSerializationRuleAnalysis();
@@ -836,6 +835,17 @@ public interface IdiomsPackage extends EPackage
 	EDataType getSerializationNode();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep <em>Serialization Step</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Serialization Step</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
+	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep"
+	 * @generated
+	 */
+	EDataType getSerializationStep();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer <em>User Element Serializer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -845,17 +855,6 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EDataType getUserElementSerializer();
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep <em>RT Serialization Step</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>RT Serialization Step</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationStep"
-	 * @generated
-	 */
-	EDataType getRTSerializationStep();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1278,7 +1277,7 @@ public interface IdiomsPackage extends EPackage
 		 * The meta object literal for the '<em>Serialization Rule Analysis</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
+		 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
 		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationRuleAnalysis()
 		 * @generated
 		 */
@@ -1315,6 +1314,16 @@ public interface IdiomsPackage extends EPackage
 		EDataType SERIALIZATION_NODE = eINSTANCE.getSerializationNode();
 
 		/**
+		 * The meta object literal for the '<em>Serialization Step</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationStep()
+		 * @generated
+		 */
+		EDataType SERIALIZATION_STEP = eINSTANCE.getSerializationStep();
+
+		/**
 		 * The meta object literal for the '<em>User Element Serializer</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1323,16 +1332,6 @@ public interface IdiomsPackage extends EPackage
 		 * @generated
 		 */
 		EDataType USER_ELEMENT_SERIALIZER = eINSTANCE.getUserElementSerializer();
-
-		/**
-		 * The meta object literal for the '<em>RT Serialization Step</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getRTSerializationStep()
-		 * @generated
-		 */
-		EDataType RT_SERIALIZATION_STEP = eINSTANCE.getRTSerializationStep();
 
 	}
 

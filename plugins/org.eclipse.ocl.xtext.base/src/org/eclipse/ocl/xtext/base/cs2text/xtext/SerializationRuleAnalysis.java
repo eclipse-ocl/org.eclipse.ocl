@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.runtime;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +40,12 @@ import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RTSerializationRule2;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality;
@@ -48,8 +54,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationV
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.CardinalityVariable;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 
 import com.google.common.collect.Iterables;
 
@@ -204,6 +208,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				Integer ruleValueIndex = ruleAnalysis != null ? ruleAnalysis.getIndex() : null;
 				ruleValueIndex2multiplicativeCardinality[i2++] = new RuleIndex_MultiplicativeCardinality(ruleValueIndex, entry2.getValue());
 			}
+			Arrays.sort(ruleValueIndex2multiplicativeCardinality);
 			eReference2ruleValueIndex2multiplicativeCardinality[i1++] = new EReference_RuleIndex_MultiplicativeCardinality(eReference, ruleValueIndex2multiplicativeCardinality);
 		}
 		return eReference2ruleValueIndex2multiplicativeCardinality;

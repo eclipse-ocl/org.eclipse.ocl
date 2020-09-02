@@ -125,8 +125,8 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 		{
 			case 24:
 				return createSerializationNodeFromString(eDataType, initialValue);
-			case 26:
-				return createRTSerializationStepFromString(eDataType, initialValue);
+			case 25:
+				return createSerializationStepFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -144,8 +144,8 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 		{
 			case 24:
 				return convertSerializationNodeToString(eDataType, instanceValue);
-			case 26:
-				return convertRTSerializationStepToString(eDataType, instanceValue);
+			case 25:
+				return convertSerializationStepToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -380,7 +380,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SerializationStep createRTSerializationStepFromString(EDataType eDataType, String initialValue)
+	public SerializationStep createSerializationStepFromString(EDataType eDataType, String initialValue)
 	{
 		return (SerializationStep)super.createFromString(eDataType, initialValue);
 	}
@@ -390,7 +390,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertRTSerializationStepToString(EDataType eDataType, Object instanceValue)
+	public String convertSerializationStepToString(EDataType eDataType, Object instanceValue)
 	{
 		return super.convertToString(eDataType, instanceValue);
 	}

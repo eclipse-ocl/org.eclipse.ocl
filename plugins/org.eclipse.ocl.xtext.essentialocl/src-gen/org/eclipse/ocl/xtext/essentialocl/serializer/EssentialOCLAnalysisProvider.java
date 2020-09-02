@@ -3298,8 +3298,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(51, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(21, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(21, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(51, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -5564,8 +5564,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
 					new RuleIndex_MultiplicativeCardinality(44, GrammarCardinality.ZERO_OR_ONE),
 					new RuleIndex_MultiplicativeCardinality(46, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(48, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(47, GrammarCardinality.ZERO_OR_MORE)
+					new RuleIndex_MultiplicativeCardinality(47, GrammarCardinality.ZERO_OR_MORE),
+					new RuleIndex_MultiplicativeCardinality(48, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});

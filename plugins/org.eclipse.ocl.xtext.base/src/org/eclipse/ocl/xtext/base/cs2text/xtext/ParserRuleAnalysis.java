@@ -38,7 +38,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -58,7 +57,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 {
 	protected final @NonNull EClass eClass;
 	private final @NonNull Map<@NonNull EStructuralFeature, @NonNull List<@NonNull AssignmentAnalysis>> eFeature2assignmentAnalyses = new HashMap<>();
-	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = null;
+	private @Nullable List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses = null;
 
 	/**
 	 * The super rules directly call this rule as an undecorated unassigned alterative.
@@ -125,7 +124,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		//
 		//	Convert the disjunction of conjunctions of nodes to one or more rules.
 		//
-		List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = new ArrayList<>();
+		List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses = new ArrayList<>();
 		if (serializationResult.isListOfList()) {
 			for (@NonNull List<@NonNull SerializationNode> serializationNodes : serializationResult.asListOfList().getLists()) {
 				SerializationNode serializationNode;
@@ -244,7 +243,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return firstUnassignedRuleCall;
 	}
 
-	private void analyzeSerializations(@NonNull Iterable<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses) {
+	private void analyzeSerializations(@NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses) {
 		/**
 		 * Determine the ParserRuleAnalyses for each distinct EReference assignment.
 		 */
@@ -301,7 +300,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return parserRuleValue;
 	}
 
-	protected void createSerializationRules(@NonNull List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses, @NonNull SerializationNode serializationNode) {
+	protected void createSerializationRules(@NonNull List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses, @NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
 			UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = (UnassignedRuleCallSerializationNode)serializationNode;
 			ParserRuleAnalysis calledRuleAnalysis = (ParserRuleAnalysis)unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
@@ -353,7 +352,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					subParserRuleValueIndexes.set(parserRuleValue.getIndex());
 				}
 			}
-			Iterable<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = getSerializationRuleAnalyses();
+			Iterable<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses = getSerializationRuleAnalyses();
 			@NonNull SerializationRule @NonNull [] rtSerializationRules = new @NonNull SerializationRule [Iterables.size(serializationRuleAnalyses)];
 			parserRuleValue = parserRuleValue2 = new ParserRuleValue(index, getRuleName(), rtSerializationRules, subParserRuleValueIndexes);
 			//
@@ -367,7 +366,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		return parserRuleValue2;
 	}
 
-	public @NonNull Iterable<@NonNull SerializationRuleAnalysis> getSerializationRuleAnalyses() {
+	public @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> getSerializationRuleAnalyses() {
 		if (serializationRuleAnalyses == null) {
 			analyze();
 		}

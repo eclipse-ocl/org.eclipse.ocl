@@ -21,8 +21,8 @@
     <genDataTypes ecoreDataType="Idioms.ecore#//IdiomMatch"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationNode"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationStep"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//UserElementSerializer"/>
-    <genDataTypes ecoreDataType="Idioms.ecore#//RTSerializationStep"/>
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
     </genClasses>

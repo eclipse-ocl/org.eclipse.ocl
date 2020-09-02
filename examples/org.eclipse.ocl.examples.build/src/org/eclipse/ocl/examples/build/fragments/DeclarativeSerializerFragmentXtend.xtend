@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.jdt.annotation.NonNull
 import org.eclipse.jdt.annotation.Nullable
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue
 import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue
@@ -69,6 +68,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEReferen
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEStructuralFeatureSize
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality

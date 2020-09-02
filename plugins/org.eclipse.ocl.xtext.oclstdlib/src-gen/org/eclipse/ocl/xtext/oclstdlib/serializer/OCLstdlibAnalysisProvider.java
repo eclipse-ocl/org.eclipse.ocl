@@ -4828,8 +4828,8 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
 				new EReference_RuleIndex_MultiplicativeCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ZERO_OR_MORE),
-					new RuleIndex_MultiplicativeCardinality(28, GrammarCardinality.ONE)
+					new RuleIndex_MultiplicativeCardinality(28, GrammarCardinality.ONE),
+					new RuleIndex_MultiplicativeCardinality(74, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});

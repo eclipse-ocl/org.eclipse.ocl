@@ -37,10 +37,10 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermRuntime;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermUnsupported;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
