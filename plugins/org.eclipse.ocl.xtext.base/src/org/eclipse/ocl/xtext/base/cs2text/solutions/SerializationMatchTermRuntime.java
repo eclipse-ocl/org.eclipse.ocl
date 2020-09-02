@@ -11,9 +11,9 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermAbstract;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 
-public class SerializationMatchTermRuntime extends SerializationMatchTermAbstract
+public class SerializationMatchTermRuntime extends SerializationMatchTerm
 {
 //	protected final @NonNull CardinalityExpression cardinalityExpression;
 //	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;

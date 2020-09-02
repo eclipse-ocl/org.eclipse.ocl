@@ -36,12 +36,12 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchSt
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_Assign;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep.MatchStep_RuleCheck;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEStructuralFeatureSize;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermGreaterThan;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermVariable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermGreaterThan;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermSubtract;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermVariable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
@@ -2986,7 +2986,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._033 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._082 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._081 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._50,
 			null,
@@ -6487,7 +6487,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._033 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._081 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._082 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._50,
 			null,

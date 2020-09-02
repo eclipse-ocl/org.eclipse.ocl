@@ -48,7 +48,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;

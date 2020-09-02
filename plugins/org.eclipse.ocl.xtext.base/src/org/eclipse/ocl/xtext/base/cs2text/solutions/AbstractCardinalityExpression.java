@@ -18,12 +18,12 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermDivide;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermGreaterThan;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermMultiply;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermVariable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermDivide;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermGreaterThan;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermInteger;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermMultiply;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermSubtract;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermVariable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 
