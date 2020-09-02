@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -207,7 +206,7 @@ public class SerializationRule
 	private final int ruleValueIndex;
 	private final @NonNull SerializationMatchStep @NonNull [] solutionSteps;
 	private final @NonNull SerializationStep @NonNull [] serializationSteps;
-	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
+	private final @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments;
 	private final @NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues;
 	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
 
@@ -229,7 +228,7 @@ public class SerializationRule
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ SerializationMatchStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ SerializationStep /*@NonNull*/ [] serializationSteps,
-			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
+			/*@Nullable*/ SerializationSegment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
 			/*@NonNull*/ EAttribute @Nullable [] needsDefaultEAttributes,
@@ -363,7 +362,7 @@ public class SerializationRule
 		return serializationSteps;
 	}
 
-	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
+	public @NonNull SerializationSegment @NonNull [] @Nullable [] getStaticSegments() {
 		return staticSegments;
 	}
 
@@ -385,7 +384,7 @@ public class SerializationRule
 		return hashCode.intValue();
 	} */
 
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull Segment @NonNull [] @Nullable [] staticSegments) {
+	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments) {
 		//
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
@@ -468,16 +467,16 @@ public class SerializationRule
 	}
 
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		@NonNull Segment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
+		@NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
 		for (int index = startIndex; index < endIndex; ) {
-			@NonNull Segment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
+			@NonNull SerializationSegment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
 			SerializationStep serializationStep = serializationSteps[index++];
 			int cardinalityVariableIndex = serializationStep.getVariableIndex();
 			int stepLoopCount = cardinalityVariableIndex >= 0 ? serializer.getValue(cardinalityVariableIndex) : 1;
 			if (serializationStep instanceof SerializationStepSequence) {
 				int stepsRange = ((SerializationStepSequence)serializationStep).getStepsRange();
 				if (segments != null) {
-					for (Segment segment : segments) {
+					for (SerializationSegment segment : segments) {
 						segment.serialize(serializationStep, serializer, serializationBuilder);
 					}
 				}
@@ -491,7 +490,7 @@ public class SerializationRule
 			else {
 				for (int i = 0; i < stepLoopCount; i++) {
 					if (segments != null) {
-						for (Segment segment : segments) {
+						for (SerializationSegment segment : segments) {
 							segment.serialize(serializationStep, serializer, serializationBuilder);
 						}
 					}

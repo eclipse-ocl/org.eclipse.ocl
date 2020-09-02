@@ -8,16 +8,28 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.xtext.base.cs2text.idioms;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsFactory;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 
 public class IdiomsUtils
 {

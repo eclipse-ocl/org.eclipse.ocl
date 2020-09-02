@@ -16,9 +16,6 @@ import com.google.inject.Inject;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
@@ -29,6 +26,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationVa
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
@@ -49,6 +47,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_GrammarCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall;
@@ -57,6 +56,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.Serializatio
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
+import org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 
@@ -1327,47 +1327,47 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _SerializationSegments
 	{
-		private final @NonNull Segment [] _0 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.createCustomSegment(null, BaseCommentSegmentSupport.class) /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport */,
+		private final @NonNull SerializationSegment [] _0 = new @NonNull SerializationSegment @NonNull [] {
+			IdiomsUtils.createCustomSegment(null, BaseCommentSegmentSupport.class) /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport */,
 			IdiomsUtils.VALUE /* «value» */
 		};
-		private final @NonNull Segment [] _1 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _1 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.NO_SPACE /* «! » */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.NO_SPACE /* «! » */
 		};
-		private final @NonNull Segment [] _2 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _2 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.NO_SPACE /* «! » */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.SOFT_SPACE /* «? » */
 		};
-		private final @NonNull Segment [] _3 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _3 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.NO_SPACE /* «! » */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.SOFT_NEW_LINE /* «?\n» */
 		};
-		private final @NonNull Segment [] _4 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _4 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.NO_SPACE /* «! » */,
 			IdiomsUtils.VALUE /* «value» */
 		};
-		private final @NonNull Segment [] _5 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _5 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.POP /* «-» */,
 			IdiomsUtils.SOFT_SPACE /* «? » */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.SOFT_NEW_LINE /* «?\n» */
 		};
-		private final @NonNull Segment [] _6 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _6 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.SOFT_SPACE /* «? » */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.PUSH /* «+» */,
 			IdiomsUtils.SOFT_NEW_LINE /* «?\n» */
 		};
-		private final @NonNull Segment [] _7 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _7 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.SOFT_SPACE /* «? » */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.SOFT_SPACE /* «? » */
 		};
-		private final @NonNull Segment [] _8 = new @NonNull Segment @NonNull [] {
+		private final @NonNull SerializationSegment [] _8 = new @NonNull SerializationSegment @NonNull [] {
 			IdiomsUtils.HALF_NEW_LINE /* «½\n» */,
 			IdiomsUtils.VALUE /* «value» */,
 			IdiomsUtils.HALF_NEW_LINE /* «½\n» */
@@ -1379,10 +1379,10 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 	 */
 	private class _SerializationSegmentsLists
 	{
-		private final @NonNull Segment @NonNull [] @Nullable [] _00 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _00 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _01 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _01 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -1392,7 +1392,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _02 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _02 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -1403,14 +1403,14 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._5 /* «-» «? » «value» «?\n» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _03 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _03 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _04 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _04 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -1418,7 +1418,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _05 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _05 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -1426,7 +1426,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _06 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _06 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
@@ -1439,7 +1439,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _07 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _07 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
@@ -1453,7 +1453,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._5 /* «-» «? » «value» «?\n» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _08 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _08 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null,
@@ -1461,7 +1461,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _09 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _09 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null,
@@ -1470,7 +1470,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _10 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _10 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
@@ -1479,7 +1479,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _11 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _11 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
@@ -1489,20 +1489,20 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _12 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _12 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _13 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _13 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _14 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _14 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
 			null,
@@ -1512,12 +1512,12 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _15 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _15 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _16 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _16 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1529,7 +1529,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _17 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _17 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1542,7 +1542,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _18 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _18 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1551,7 +1551,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _19 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _19 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1561,7 +1561,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _20 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _20 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1571,7 +1571,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _21 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _21 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1582,25 +1582,25 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _22 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _22 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _23 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _23 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _24 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _24 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _25 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _25 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			null,
 			null,
@@ -1609,15 +1609,15 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _26 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _26 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _27 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _27 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			null,
 			ss._7 /* «? » «value» «? » */,
@@ -1628,8 +1628,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _28 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _28 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
 			null,
@@ -1639,26 +1639,14 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _29 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _29 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _30 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null
-		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _31 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _30 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1666,8 +1654,20 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _32 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _31 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null
+		};
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _32 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._1 /* «! » «value» «! » */,
 			null,
 			null,
@@ -1675,19 +1675,19 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _33 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _33 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._1 /* «! » «value» «! » */,
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _34 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _34 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._2 /* «! » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _35 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _35 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._2 /* «! » «value» «? » */,
 			null,
 			null,
@@ -1695,26 +1695,13 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			ss._7 /* «? » «value» «? » */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null
-		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _36 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
-			ss._2 /* «! » «value» «? » */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _37 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _36 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._2 /* «! » «value» «? » */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -1722,8 +1709,21 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _38 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _37 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+			ss._2 /* «! » «value» «? » */,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null
+		};
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _38 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._3 /* «! » «value» «?\n» */,
 			null,
 			null,
@@ -1733,13 +1733,13 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _39 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _39 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _40 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _40 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			null,
@@ -1748,8 +1748,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _41 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _41 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			null,
@@ -1759,8 +1759,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _42 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _42 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			null,
@@ -1769,15 +1769,15 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _43 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _43 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _44 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _44 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._7 /* «? » «value» «? » */,
@@ -1786,8 +1786,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _45 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _45 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._7 /* «? » «value» «? » */,
@@ -1797,8 +1797,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _46 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _46 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._7 /* «? » «value» «? » */,
@@ -1806,8 +1806,8 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _47 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _47 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._6 /* «? » «value» «+» «?\n» */,
 			null,
@@ -1816,20 +1816,20 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _48 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _48 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._6 /* «? » «value» «+» «?\n» */,
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _49 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _49 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _50 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _50 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._7 /* «? » «value» «? » */
 		};
 	}
@@ -3348,7 +3348,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._039 /* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._094 /* 1*TemplateParameterSubstitutionCS::ownedActualParameter=86 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._094 /* 1*TemplateParameterSubstitutionCS::ownedActualParameter=86 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -3372,7 +3372,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._054 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._095 /* 1*TemplateSignatureCS::ownedParameters+=85 || «null» */,
 				st._132 /* V00*steps-4..6 || «null» */,
@@ -3404,7 +3404,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._083 /* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._069 /* 1*NamedElementCS::name=96 || «? » «value» «? » */,
 				st._130 /* V00*steps-3..8 || «null» */,
 				st._022 /* 1*'extends' || «? » «value» «? » */,
@@ -3508,7 +3508,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._001 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._036 /* 1*BooleanLiteralExpCS::symbol='false|true' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._036 /* 1*BooleanLiteralExpCS::symbol='false|true' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -3533,7 +3533,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._069 /* 1*NamedElementCS::name=96 || «? » «value» «? » */,
 				st._127 /* V00*steps-3..5 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -3572,7 +3572,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._077 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._038 /* 1*CollectionLiteralExpCS::ownedType=7 || «null» */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._133 /* V00*steps-4..8 || «null» */,
@@ -3611,7 +3611,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._003 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._040 /* 1*CollectionLiteralPartCS::ownedExpression=55 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._040 /* 1*CollectionLiteralPartCS::ownedExpression=55 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -3637,7 +3637,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._003 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._039 /* 1*CollectionLiteralPartCS::ownedExpression=20 || «null» */,
 				st._127 /* V00*steps-3..5 || «null» */,
 				st._006 /* 1*'..' || «! » «value» «! » */,
@@ -3804,7 +3804,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._010 /* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._020 /* 1*'elseif' || «? » «value» «? » */,
 				st._052 /* 1*IfThenExpCS::ownedCondition=20 || «null» */,
 				st._030 /* 1*'then' || «? » «value» «? » */,
@@ -3838,7 +3838,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._001 /* assert (|BooleanLiteralExpCS::symbol.'false|true'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._036 /* 1*BooleanLiteralExpCS::symbol='false|true' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._036 /* 1*BooleanLiteralExpCS::symbol='false|true' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -3865,7 +3865,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._077 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._038 /* 1*CollectionLiteralExpCS::ownedType=7 || «null» */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._133 /* V00*steps-4..8 || «null» */,
@@ -3902,7 +3902,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._003 /* 1*'*' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._003 /* 1*'*' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -3915,7 +3915,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._025 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._025 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -3928,7 +3928,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._027 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._027 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -3941,7 +3941,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._029 /* 1*'self' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._029 /* 1*'self' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -3962,7 +3962,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._007 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._023 /* 1*'if' || «? » «value» «? » */,
 				st._049 /* 1*IfExpCS::ownedCondition=20|55 || «null» */,
 				st._030 /* 1*'then' || «? » «value» «? » */,
@@ -4019,7 +4019,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._012 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._054 /* 1*InfixExpCS::ownedLeft=57 || «null» */,
 				st._067 /* 1*NamedElementCS::name=1 || «? » «value» «? » */,
 				st._076 /* 1*OperatorExpCS::ownedRight=20 || «null» */
@@ -4061,7 +4061,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._013 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._014 /* 1*'Lambda' || «? » «value» «? » */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._055 /* 1*LambdaLiteralExpCS::ownedExpressionCS=20 || «null» */,
@@ -4092,7 +4092,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._080 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._059 /* 1*MapLiteralExpCS::ownedType=37 || «null» */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._133 /* V00*steps-4..8 || «null» */,
@@ -4138,7 +4138,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._035 /* 1*AbstractNameExpCS::ownedPathName=54 || «null» */,
 				st._120 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=69 || «null» */,
 				st._138 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=62 || «null» */,
@@ -4199,7 +4199,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._030 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._074 /* 1*NestedExpCS::ownedExpression=20 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
@@ -4225,7 +4225,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._031 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._075 /* 1*NumberLiteralExpCS::symbol=42 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._075 /* 1*NumberLiteralExpCS::symbol=42 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4249,7 +4249,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._068 /* 1*NamedElementCS::name=93 || «? » «value» «? » */,
 				st._078 /* 1*OperatorExpCS::ownedRight=57 || «null» */
 			},
@@ -4282,7 +4282,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._071 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._124 /* V00*StringLiteralExpCS::segments+=70 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._124 /* V00*StringLiteralExpCS::segments+=70 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4303,7 +4303,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._016 /* 1*'Tuple' || «? » «value» «? » */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._096 /* 1*TupleLiteralExpCS::ownedParts+=76 || «null» */,
@@ -4334,7 +4334,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._041 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._098 /* 1*TypeLiteralExpCS::ownedType=83 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._098 /* 1*TypeLiteralExpCS::ownedType=83 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4364,7 +4364,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._007 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._023 /* 1*'if' || «? » «value» «? » */,
 				st._049 /* 1*IfExpCS::ownedCondition=20|55 || «null» */,
 				st._030 /* 1*'then' || «? » «value» «? » */,
@@ -4416,7 +4416,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._025 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._025 /* 1*'invalid' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4431,7 +4431,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._013 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._114 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._014 /* 1*'Lambda' || «? » «value» «? » */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._055 /* 1*LambdaLiteralExpCS::ownedExpressionCS=20 || «null» */,
@@ -4461,7 +4461,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._048 /* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._026 /* 1*'let' || «? » «value» «? » */,
 				st._057 /* 1*LetExpCS::ownedVariables+=32 || «null» */,
 				st._132 /* V00*steps-4..6 || «null» */,
@@ -4504,7 +4504,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._069 /* 1*NamedElementCS::name=96 || «? » «value» «? » */,
 				st._122 /* V00*LetVariableCS::ownedRoundBracketedClause=62 || «null» */,
 				st._143 /* V01*steps-4..6 || «null» */,
@@ -4560,7 +4560,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._080 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._059 /* 1*MapLiteralExpCS::ownedType=37 || «null» */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._133 /* V00*steps-4..8 || «null» */,
@@ -4601,7 +4601,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._016 /* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._060 /* 1*MapLiteralPartCS::ownedKey=20 || «null» */,
 				st._010 /* 1*'<-' || «? » «value» «? » */,
 				st._061 /* 1*MapLiteralPartCS::ownedValue=20 || «null» */
@@ -4685,7 +4685,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._006 /* assert (|ContextCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._047 /* 1*ContextCS::ownedExpression=20 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._047 /* 1*ContextCS::ownedExpression=20 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4716,7 +4716,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._035 /* 1*AbstractNameExpCS::ownedPathName=54 || «null» */,
 				st._120 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=69 || «null» */,
 				st._138 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=62 || «null» */,
@@ -4777,7 +4777,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4801,7 +4801,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._026 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */
 			},
@@ -4833,7 +4833,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._109 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._109 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._073 /* 1*NavigatingArgCS::ownedType=79 || «null» */,
@@ -4891,7 +4891,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._010 /* 1*'<-' || «? » «value» «? » */,
 				st._070 /* 1*NavigatingArgCS::ownedCoIterator=3 || «null» */,
@@ -4941,7 +4941,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._025 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._109 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._109 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._127 /* V00*steps-3..5 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -5000,7 +5000,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._088 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._032 /* 1*'|' || «? » «value» «? » */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._134 /* V00*steps-4..9 || «null» */,
@@ -5062,7 +5062,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._110 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._110 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -5131,7 +5131,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._010 /* 1*'<-' || «? » «value» «? » */,
@@ -5192,7 +5192,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._110 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._110 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._132 /* V00*steps-4..6 || «null» */,
@@ -5257,7 +5257,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._027 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */
 			},
@@ -5297,7 +5297,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._088 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._009 /* 1*';' || «! » «value» «?\n» */,
 				st._072 /* 1*NavigatingArgCS::ownedNameExpression=45 || «null» */,
 				st._134 /* V00*steps-4..9 || «null» */,
@@ -5355,7 +5355,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._030 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._074 /* 1*NestedExpCS::ownedExpression=20 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
@@ -5380,7 +5380,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._027 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._027 /* 1*'null' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -5394,7 +5394,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._031 /* assert (|NumberLiteralExpCS::symbol| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._075 /* 1*NumberLiteralExpCS::symbol=42 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._075 /* 1*NumberLiteralExpCS::symbol=42 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -5418,7 +5418,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._070 /* assign V0 = |PatternExpCS::patternVariableName| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._123 /* V00*PatternExpCS::patternVariableName=96 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._086 /* 1*PatternExpCS::ownedPatternType=79 || «null» */
@@ -5452,7 +5452,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._068 /* 1*NamedElementCS::name=93 || «? » «value» «? » */,
 				st._077 /* 1*OperatorExpCS::ownedRight=56 || «null» */
 			},
@@ -5487,7 +5487,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._112 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._068 /* 1*NamedElementCS::name=93 || «? » «value» «? » */,
 				st._078 /* 1*OperatorExpCS::ownedRight=57 || «null» */
 			},
@@ -5574,7 +5574,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._029 /* 1*'self' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._029 /* 1*'self' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -5589,7 +5589,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._037 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._090 /* 1*ShadowPartCS::ownedInitExpression=71 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._090 /* 1*ShadowPartCS::ownedInitExpression=71 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -5614,7 +5614,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._038 /* assert (|ShadowPartCS::referredProperty| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._091 /* 1*ShadowPartCS::referredProperty=UnrestrictedName || «? » «value» «? » */,
 				st._011 /* 1*'=' || «? » «value» «? » */,
 				st._089 /* 1*ShadowPartCS::ownedInitExpression=20|55 || «null» */
@@ -5699,7 +5699,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._071 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._124 /* V00*StringLiteralExpCS::segments+=70 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._124 /* V00*StringLiteralExpCS::segments+=70 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -5720,7 +5720,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._055 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._117 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._016 /* 1*'Tuple' || «? » «value» «? » */,
 				st._031 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._096 /* 1*TupleLiteralExpCS::ownedParts+=76 || «null» */,
@@ -5754,7 +5754,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._116 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._069 /* 1*NamedElementCS::name=96 || «? » «value» «? » */,
 				st._127 /* V00*steps-3..5 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
@@ -5800,7 +5800,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._022 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */,
+				st._113 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._069 /* 1*NamedElementCS::name=96 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._103 /* 1*TypedElementCS::ownedType=79 || «null» */
@@ -6207,7 +6207,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._041 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._098 /* 1*TypeLiteralExpCS::ownedType=83 || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._098 /* 1*TypeLiteralExpCS::ownedType=83 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -6553,7 +6553,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 			new @NonNull SerializationMatchStep @NonNull [] {
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._003 /* 1*'*' || supported by org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport «value» */
+				st._003 /* 1*'*' || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -6599,9 +6599,6 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import BaseCommentSegmentSupport;
-//	import IdiomsUtils;
-//	import Segment;
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
@@ -6611,6 +6608,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;
+//	import IdiomsUtils;
 //	import ParserRuleValue;
 //	import SerializationGrammarAnalysis;
 //	import SerializationMatchStep;
@@ -6631,6 +6629,7 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import EReference_RuleIndexes;
 //	import EnumerationValue_GrammarCardinality;
 //	import RuleIndex_GrammarCardinality;
+//	import SerializationSegment;
 //	import SerializationStep;
 //	import SerializationStepAssignKeyword;
 //	import SerializationStepAssignedRuleCall;
@@ -6639,5 +6638,6 @@ public class EssentialOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import SerializationStepLiteral;
 //	import SerializationStepSequence;
 //	import TerminalRuleValue;
+//	import BaseCommentSegmentSupport;
 //	import BaseCSPackage;
 //	import EssentialOCLCSPackage;

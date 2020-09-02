@@ -50,7 +50,7 @@
   <ownedLocators xsi:type="idioms:ProducedEClassLocator" name="ModelElementCS">
     <eClass href="http://www.eclipse.org/ocl/2015/BaseCS#//ModelElementCS"/>
   </ownedLocators>
-  <ownedSegments xsi:type="idioms:CustomSegment" name="BASE COMMENT" supportClassName="org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport"/>
+  <ownedSegments xsi:type="idioms:CustomSegment" name="BASE COMMENT" supportClassName="org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport"/>
   <ownedSegments xsi:type="idioms:HalfNewLineSegment" name="HALF NEW LINE (a)"/>
   <ownedSegments xsi:type="idioms:HalfNewLineSegment" name="HALF NEW LINE (b)"/>
   <ownedSegments xsi:type="idioms:NoSpaceSegment" name="NO SPACE (a)"/>

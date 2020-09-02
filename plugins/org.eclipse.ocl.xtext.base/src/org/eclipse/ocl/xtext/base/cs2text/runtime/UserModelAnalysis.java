@@ -113,6 +113,11 @@ public class UserModelAnalysis
 		}
 	}
 
+	protected UserElementSerializer createUserElementSerializer(EObject eObject,
+			DynamicRuleMatch dynamicRuleMatch) {
+		return new UserElementSerializer(dynamicRuleMatch, this, eObject);
+	}
+
 	public void debugAddDynamicSerializationRules(@NonNull DynamicSerializationRules dynamicSerializationRules) {
 		debugDynamicSerializationRules++;
 	}
@@ -168,7 +173,7 @@ public class UserModelAnalysis
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
 		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);
 		if (dynamicRuleMatch != null) {
-			UserElementSerializer serializer = new UserElementSerializer(dynamicRuleMatch, this, eObject);
+			UserElementSerializer serializer = createUserElementSerializer(eObject, dynamicRuleMatch);
 			serializer.serialize(serializationBuilder);
 		}
 		else {

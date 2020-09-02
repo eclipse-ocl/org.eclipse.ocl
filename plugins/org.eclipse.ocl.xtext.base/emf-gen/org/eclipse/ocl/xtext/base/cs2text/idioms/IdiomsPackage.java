@@ -282,7 +282,7 @@ public interface IdiomsPackage extends EPackage
 	 * The meta object id for the '<em>Idiom Match</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch
+	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getIdiomMatch()
 	 * @generated
 	 */
@@ -802,11 +802,11 @@ public interface IdiomsPackage extends EPackage
 	EDataType getSerializationRuleAnalysis();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch <em>Idiom Match</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch <em>Idiom Match</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Idiom Match</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch
+	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch
 	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch" serializeable="false"
 	 * @generated
 	 */
@@ -1287,7 +1287,7 @@ public interface IdiomsPackage extends EPackage
 		 * The meta object literal for the '<em>Idiom Match</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch
+		 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch
 		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getIdiomMatch()
 		 * @generated
 		 */

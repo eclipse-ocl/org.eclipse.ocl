@@ -31,7 +31,6 @@ import org.eclipse.xtext.util.Strings;
 public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSerializationNode
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
-	private @Nullable SerializationStep runtime = null;
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeUnassignedKeywordsSerializationNode(@NonNull GrammarCardinality grammarCardinality, @Nullable Iterable<@NonNull String> values) {

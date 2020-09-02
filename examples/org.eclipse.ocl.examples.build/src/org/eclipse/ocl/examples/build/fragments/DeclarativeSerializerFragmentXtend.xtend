@@ -17,16 +17,38 @@ import org.eclipse.jdt.annotation.NonNull
 import org.eclipse.jdt.annotation.Nullable
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils
 import org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueOthers
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue
+import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector
+import org.eclipse.ocl.xtext.base.cs2text.runtime.IdiomsUtils
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermAdd
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermDivide
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEAttributeSize
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEReferenceSize
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermGreaterThan
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermInteger
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermMultiply
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermSubtract
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermVariable
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_GrammarCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues
@@ -34,41 +56,19 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_GrammarCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_GrammarCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssigns
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepCrossReference
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence
+import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepCrossReference
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssigns
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis
-import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue
-import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermVariable
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermDivide
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermAdd
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermGreaterThan
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEAttributeSize
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermMultiply
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEReferenceSize
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermSubtract
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermInteger
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueOthers
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -552,7 +552,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _SerializationSegments
 		{
 			«FOR segments : getSegmentsIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(Segment)» [] «getSegmentsId(segments, false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] {
+			private final @NonNull «newTypeReference(SerializationSegment)» [] «getSegmentsId(segments, false)» = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [] {
 				«FOR segment : segments SEPARATOR ','»
 				«generateSerializationSegment(segment)» /* «segment.toString()» */
 				«ENDFOR»
@@ -562,7 +562,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 	}
 
-	protected def generateSerializationSegment(Segment segment) {
+	protected def generateSerializationSegment(SerializationSegment segment) {
 		switch segment {
 		CustomSegment: return generateSerializationSegment_Custom(segment)
 		HalfNewLineSegment: return generateSerializationSegment_HalfNewLine(segment)
@@ -628,7 +628,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _SerializationSegmentsLists
 		{
 			«FOR segmentsList : getSegmentsListIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] {
+			private final @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @Nullable [] {
 				«FOR segments : segmentsList SEPARATOR ','»
 				«IF segments !== null»«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' '»«segment.toString()»«ENDFOR» */«ELSE»null«ENDIF»
 				«ENDFOR»

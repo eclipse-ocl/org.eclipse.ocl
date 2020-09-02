@@ -35,7 +35,6 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
@@ -539,7 +538,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			//
 			//	Locate the matches for each idiom.
 			//
-			@Nullable IdiomMatch @NonNull [] idiomMatches = new @Nullable IdiomMatch[Iterables.size(idioms)];
+			@Nullable IdiomMatch @NonNull [] idiomMatches = new org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch[Iterables.size(idioms)];
 			getIdiomMatches(rootSerializationNode, idioms, idiomMatches);
 			//
 			//	Install the subidioms for each first full idiom match.

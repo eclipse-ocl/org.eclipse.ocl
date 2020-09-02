@@ -26,7 +26,6 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsFactory;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
@@ -46,6 +45,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.idioms;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.Map;
 
@@ -17,7 +17,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 
 /**
  * An IdiomMatch is created after a first successful match of an idiom. It accumulates
