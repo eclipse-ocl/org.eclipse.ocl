@@ -26,10 +26,9 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 
 /**
  * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule
@@ -72,11 +71,6 @@ public class DynamicRuleMatch implements RuleMatch
 	@Override
 	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
 		return variableIndex2value.get(cardinalityVariableIndex);
-	}
-
-	@Override
-	public @Nullable SerializationMatchTerm basicGetSolution(int cardinalityVariableIndex) {
-		throw new IllegalStateException();		// run-time should use known values
 	}
 
 	public @NonNull Object getDebugStaticRuleMatch() {

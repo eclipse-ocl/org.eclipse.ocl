@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
 /**
@@ -55,14 +54,12 @@ public class SerializationMatchTermVariable extends SerializationMatchTermAbstra
 
 	@Override
 	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
-		SerializationMatchTerm solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
-		return solution != null ? solution.isConstant(ruleMatch) : false;
+		return false;
 	}
 
 	@Override
 	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
-		SerializationMatchTerm solution = ruleMatch.basicGetSolution(cardinalityVariableIndex);
-		return solution != null ? solution.isKnown(ruleMatch) : false;
+		return false;
 	}
 
 //	@Override

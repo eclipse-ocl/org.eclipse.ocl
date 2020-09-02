@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.runtime;
+package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +21,10 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 public class RTSerializationRule2 extends SerializationRule
 {
@@ -61,7 +63,7 @@ public class RTSerializationRule2 extends SerializationRule
 
 
 
-	private static final @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
+	private static final @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis, org.eclipse.ocl.xtext.base.cs2text.xtext.RTSerializationRule2> debugMap = new HashMap<>();
 	private final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;
 
 	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull SerializationMatchStep @NonNull [] solutionSteps, @NonNull SerializationStep @NonNull [] serializationSteps, @Nullable Segment @NonNull [] @Nullable [] staticSegments) {

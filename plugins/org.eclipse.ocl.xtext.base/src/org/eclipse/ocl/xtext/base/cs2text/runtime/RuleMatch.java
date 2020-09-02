@@ -8,19 +8,16 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.solutions;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 
 /**
- * A RuleMatch identifoes some common expression evaluation functionality for constant folding by the compile-time StaticRuleMatch
+ * A RuleMatch identifies some common expression evaluation functionality for constant folding by the compile-time StaticRuleMatch
  * and full evaluation by the run-time DynamicRuleMatch.
  */
 public interface RuleMatch
@@ -29,11 +26,6 @@ public interface RuleMatch
 	 * Return the known integer value of cardinalityVariable if known, or null if not yet knowable.
 	 */
 	@Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex);
-
-	/**#
-	 * Return thevalue of ca rdinalityVariable which may be null if no solution approach resolved so far..
-	 */
-	@Nullable SerializationMatchTerm basicGetSolution(int cardinalityVariableIndex);
 
 	/**
 	 * Return the number of eAttribute slot elements in the user model element. For a non-NullEnumerationValue, the

@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 
 public class SerializationMatchTermMultiply extends SerializationMatchTermAbstractBinary
 {

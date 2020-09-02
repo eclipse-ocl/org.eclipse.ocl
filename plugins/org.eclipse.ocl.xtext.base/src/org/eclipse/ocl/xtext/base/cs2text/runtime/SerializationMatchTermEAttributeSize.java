@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
 /**

@@ -50,12 +50,12 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignKeyword;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignedRuleCall;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepCrossReference;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssigns;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepCrossReference;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
@@ -5303,7 +5303,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._125 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._124 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._95,
 			null,
@@ -8736,7 +8736,7 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._124 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._125 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._95,
 			null,

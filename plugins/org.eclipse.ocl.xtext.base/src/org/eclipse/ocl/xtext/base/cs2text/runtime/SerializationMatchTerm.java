@@ -14,7 +14,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
 /**

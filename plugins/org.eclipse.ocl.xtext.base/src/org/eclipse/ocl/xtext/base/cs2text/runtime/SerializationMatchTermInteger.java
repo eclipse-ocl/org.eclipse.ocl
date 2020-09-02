@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.solutions.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.solutions.StaticRuleMatch;
 
 public class SerializationMatchTermInteger extends SerializationMatchTermAbstract

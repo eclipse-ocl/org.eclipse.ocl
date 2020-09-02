@@ -38,12 +38,12 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepSequence
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepLiteral
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepCrossReference
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssigns
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignedRuleCall
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStepAssignKeyword
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepCrossReference
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssigns
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis
@@ -388,6 +388,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		SerializationMatchTermGreaterThan: return generateMatchTerm_GreaterThan(matchTerm)
 		SerializationMatchTermInteger: return generateMatchTerm_IntegerSolution(matchTerm)
 		SerializationMatchTermMultiply: return generateMatchTerm_Multiply(matchTerm)
+	//	SerializationMatchTermRuntime: return generateMatchTerm_Runtime(matchTerm)
 		SerializationMatchTermSubtract: return generateMatchTerm_Subtract(matchTerm)
 		SerializationMatchTermVariable: return generateMatchTerm_Variable(matchTerm)
 		default: throw new UnsupportedOperationException()

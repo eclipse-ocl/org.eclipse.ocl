@@ -34,10 +34,10 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.RuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermRuntime;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermUnsupported;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
@@ -431,12 +431,6 @@ public class StaticRuleMatch implements RuleMatch
 		return solution != null ? solution.basicGetIntegerSolution(this) : null;
 	}
 
-	@Override
-	public @Nullable SerializationMatchTerm basicGetSolution(int cardinalityVariableIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public @Nullable SerializationMatchTerm basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
 		return variableIndex2solution.get(cardinalityVariable.getIndex());
 	}
@@ -575,17 +569,17 @@ public class StaticRuleMatch implements RuleMatch
 
 	@Override
 	public @Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature) {
-		return null;
+		throw new UnsupportedOperationException();// return null;
 	}
 
 	@Override
 	public @Nullable Integer getSize(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		return null;
+		throw new UnsupportedOperationException();// return null;
 	}
 
 	@Override
 	public @Nullable Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
-		return null;
+		throw new UnsupportedOperationException();// return null;
 	}
 
 	public @NonNull List<@NonNull SerializationMatchStep> getSteps() {
