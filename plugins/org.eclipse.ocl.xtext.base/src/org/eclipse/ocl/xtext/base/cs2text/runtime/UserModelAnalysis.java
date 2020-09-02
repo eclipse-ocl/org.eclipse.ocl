@@ -24,10 +24,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-//import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
-//import org.eclipse.xtext.service.GrammarProvider;
 
 import com.google.inject.Inject;
 
@@ -37,27 +35,14 @@ import com.google.inject.Inject;
  */
 public class UserModelAnalysis
 {
-	/**
-	 * The overall (multi-)grammar analysis.
-	 */
-//	@Inject
-//	private @NonNull GrammarAnalysis grammarAnalysis;
-
 	@Inject
 	private @NonNull IValueConverterService valueConverterService;
 
 	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
-//	@Inject
-//	private IGrammarAccess grammarAccess;
-
-//	@Inject
-//	private @NonNull GrammarProvider grammarProvider;
-
 	@Inject
-	private @NonNull AbstractAnalysisProvider analysisProvider;
-
+	private @NonNull AbstractSerializationMetaData analysisProvider;
 
 	public static @NonNull EClass eClass(@NonNull EObject eObject) {
 		return ClassUtil.nonNullState(eObject.eClass());
@@ -113,8 +98,7 @@ public class UserModelAnalysis
 		}
 	}
 
-	protected UserElementSerializer createUserElementSerializer(EObject eObject,
-			DynamicRuleMatch dynamicRuleMatch) {
+	protected UserElementSerializer createUserElementSerializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull EObject eObject) {
 		return new UserElementSerializer(dynamicRuleMatch, this, eObject);
 	}
 
@@ -173,7 +157,7 @@ public class UserModelAnalysis
 		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
 		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);
 		if (dynamicRuleMatch != null) {
-			UserElementSerializer serializer = createUserElementSerializer(eObject, dynamicRuleMatch);
+			UserElementSerializer serializer = createUserElementSerializer(dynamicRuleMatch, eObject);
 			serializer.serialize(serializationBuilder);
 		}
 		else {

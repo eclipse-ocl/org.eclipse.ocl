@@ -16,7 +16,7 @@ import com.google.inject.Inject;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractAnalysisProvider;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
@@ -61,7 +61,7 @@ import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 
-public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
+public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaData
 {
 	/**
 	 * The metadata resulting from static analysis of the grammar.
@@ -3726,7 +3726,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._038 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._108 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._107 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._61,
 			null,
@@ -8008,7 +8008,7 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 				ms._038 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._107 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._108 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._61,
 			null,

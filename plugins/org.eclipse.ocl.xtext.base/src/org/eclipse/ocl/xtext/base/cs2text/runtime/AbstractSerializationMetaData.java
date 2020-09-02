@@ -27,7 +27,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 
 import com.google.inject.Inject;
 
-public abstract class AbstractAnalysisProvider implements AnalysisProvider
+public abstract class AbstractSerializationMetaData implements SerializationMetaData
 {
 	@Inject
 	private GrammarProvider grammarProvider;

@@ -10,7 +10,7 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
-public interface AnalysisProvider
+public interface SerializationMetaData
 {
 	/*@NonNull*/ SerializationGrammarAnalysis getAnalysis();
 }

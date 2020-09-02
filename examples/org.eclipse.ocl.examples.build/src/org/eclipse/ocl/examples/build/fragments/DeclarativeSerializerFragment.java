@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 //import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractAnalysisProvider;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
@@ -118,7 +118,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @Nullable List<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> serializationRuleAnalyses = null;
 	private @Nullable Map<@NonNull SerializationStep, @NonNull String> serializationStep2id = null;
 
-	protected abstract StringConcatenationClient doGetAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis);
+	protected abstract StringConcatenationClient doGetSerializationMetaDataContent(@NonNull GrammarAnalysis grammarAnalysis);
 
 	protected void doGenerateAnalysisStubFile() {
 		JavaFileAccess javaFile = this.doGetAnalysisStubFile();
@@ -140,11 +140,11 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		IXtextGeneratorLanguage language = getLanguage();
 		Grammar grammar = getGrammar();
 		assert grammar != null;
-		TypeReference analysisProviderStub = getAnalysisProviderClass(grammar);
+		TypeReference analysisProviderStub = getSerializationMetaDataClass(grammar);
 		JavaFileAccess javaFile = fileAccessFactory.createJavaFile(analysisProviderStub);
 		javaFile.setResourceSet(language.getResourceSet());
 		GrammarAnalysis grammarAnalysis = getGrammarAnalysis();
-		javaFile.setContent(doGetAnalysisProviderContent(grammarAnalysis));
+		javaFile.setContent(doGetSerializationMetaDataContent(grammarAnalysis));
 		return javaFile;
 	}
 
@@ -189,7 +189,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		GuiceModuleAccess.BindingFactory bindingFactory = new GuiceModuleAccess.BindingFactory();
 		GuiceModuleAccess runtimeGenModule = this.getLanguage().getRuntimeGenModule();
 		bindingFactory.addTypeToType(TypeReference.typeRef(ISerializer.class), TypeReference.typeRef(DeclarativeSerializer.class)).contributeTo(runtimeGenModule);
-		bindingFactory.addTypeToType(TypeReference.typeRef(AbstractAnalysisProvider.class), getAnalysisProviderClass(grammar)).contributeTo(runtimeGenModule);
+		bindingFactory.addTypeToType(TypeReference.typeRef(AbstractSerializationMetaData.class), getSerializationMetaDataClass(grammar)).contributeTo(runtimeGenModule);
 		doGenerateAnalysisStubFile();
 	}
 
@@ -226,14 +226,6 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	@Override
 	protected TypeReference getAbstractSyntacticSequencerClass(final Grammar grammar) {
 		throw new UnsupportedOperationException();
-	}
-
-	protected TypeReference getAnalysisProviderClass(Grammar grammar) {
-		return new TypeReference(getSerializerBasePackage(grammar), GrammarUtil.getSimpleName(grammar) + "AnalysisProvider");
-	}
-
-	protected TypeReference getAnalysisProviderSuperClass(Grammar grammar) {
-		return new TypeReference(AbstractAnalysisProvider.class);
 	}
 
 	/**
@@ -601,6 +593,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 //		return serializationRuleAnalyses;
 //	}
 
+	protected TypeReference getSerializationMetaDataClass(Grammar grammar) {
+		return new TypeReference(getSerializerBasePackage(grammar), GrammarUtil.getSimpleName(grammar) + "SerializationMetaData");
+	}
+
+	protected TypeReference getSerializationMetaDataSuperClass(Grammar grammar) {
+		return new TypeReference(AbstractSerializationMetaData.class);
+	}
+
 	protected @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis> getSerializationRuleAnalysisIterable(@NonNull GrammarAnalysis grammarAnalysis, int page) {
 		assert serializationRuleAnalyses != null;
 		int size = serializationRuleAnalyses.size();
@@ -681,7 +681,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		throw new UnsupportedOperationException();
 	}
 
-	protected void initAnalysisProviderContent(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected void initSerializationMetaDataContent(@NonNull GrammarAnalysis grammarAnalysis) {
 		getEnumValueIterable(grammarAnalysis);
 		getSegmentsIterable(grammarAnalysis);
 		getSerializationStepIterable(grammarAnalysis);

@@ -16,7 +16,7 @@ import com.google.inject.Inject;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractAnalysisProvider;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
@@ -56,7 +56,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.TerminalRuleValue;
 import org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.markupcs.MarkupPackage;
 
-public class MarkupAnalysisProvider extends AbstractAnalysisProvider
+public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 {
 	/**
 	 * The metadata resulting from static analysis of the grammar.

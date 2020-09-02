@@ -16,7 +16,7 @@ import com.google.inject.Inject;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractAnalysisProvider;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
@@ -61,7 +61,7 @@ import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 
-public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
+public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaData
 {
 	/**
 	 * The metadata resulting from static analysis of the grammar.
@@ -12115,10 +12115,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				st._281 /* V05*ModelElementCS::ownedAnnotations+=2 || «null» */,
 				st._293 /* V06*steps-20..26 || «null» */,
 				st._042 /* 1*'key' || «? » «value» «? » */,
-				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
 				st._300 /* V07*steps-23..25 || «null» */,
 				st._007 /* 1*',' || «! » «value» «? » */,
-				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
 				st._011 /* 1*';' || «! » «value» «?\n» */,
 				st._308 /* V08*steps-27..31 || «null» */,
 				st._039 /* 1*'initial' || «? » «value» «? » */,
@@ -12325,10 +12325,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				st._289 /* V06*ModelElementCS::ownedAnnotations+=2 || «null» */,
 				st._298 /* V07*steps-22..28 || «null» */,
 				st._042 /* 1*'key' || «? » «value» «? » */,
-				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
 				st._307 /* V08*steps-25..27 || «null» */,
 				st._007 /* 1*',' || «! » «value» «? » */,
-				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
 				st._011 /* 1*';' || «! » «value» «?\n» */,
 				st._313 /* V09*steps-29..33 || «null» */,
 				st._039 /* 1*'initial' || «? » «value» «? » */,
@@ -12537,10 +12537,10 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 				st._289 /* V06*ModelElementCS::ownedAnnotations+=2 || «null» */,
 				st._298 /* V07*steps-22..28 || «null» */,
 				st._042 /* 1*'key' || «? » «value» «? » */,
-				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
+				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
 				st._307 /* V08*steps-25..27 || «null» */,
 				st._007 /* 1*',' || «! » «value» «? » */,
-				st._133 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
+				st._132 /* 1*ReferenceCS::referredKeys+=UnrestrictedName || «? » «value» «? » */,
 				st._011 /* 1*';' || «! » «value» «?\n» */,
 				st._313 /* V09*steps-29..33 || «null» */,
 				st._039 /* 1*'initial' || «? » «value» «? » */,

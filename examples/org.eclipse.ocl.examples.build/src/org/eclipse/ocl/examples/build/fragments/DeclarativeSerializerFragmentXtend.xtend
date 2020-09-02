@@ -76,12 +76,12 @@ import org.eclipse.xtext.xtext.generator.model.TypeReference
  */
 class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 {
-	protected override doGetAnalysisProviderContent(GrammarAnalysis grammarAnalysis) {
+	protected override doGetSerializationMetaDataContent(GrammarAnalysis grammarAnalysis) {
 		newTypeReference(NonNull);
 		newTypeReference(Nullable);
-		initAnalysisProviderContent(grammarAnalysis);
+		initSerializationMetaDataContent(grammarAnalysis);
 		'''		
-		public class «getAnalysisProviderClass(grammar).simpleName» extends «getAnalysisProviderSuperClass(grammar)»
+		public class «getSerializationMetaDataClass(grammar).simpleName» extends «getSerializationMetaDataSuperClass(grammar)»
 		{
 			/**
 			 * The metadata resulting from static analysis of the grammar.

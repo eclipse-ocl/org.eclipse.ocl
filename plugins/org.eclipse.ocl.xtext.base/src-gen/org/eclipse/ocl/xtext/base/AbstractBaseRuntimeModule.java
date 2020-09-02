@@ -17,14 +17,14 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
 import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractAnalysisProvider;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.base.formatting.BaseIdiomsProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseParser;
 import org.eclipse.ocl.xtext.base.parser.antlr.internal.InternalBaseLexer;
 import org.eclipse.ocl.xtext.base.scoping.BaseScopeProvider;
-import org.eclipse.ocl.xtext.base.serializer.BaseAnalysisProvider;
+import org.eclipse.ocl.xtext.base.serializer.BaseSerializationMetaData;
 import org.eclipse.ocl.xtext.base.services.BaseGrammarAccess;
 import org.eclipse.ocl.xtext.base.validation.BaseValidator;
 import org.eclipse.xtext.Constants;
@@ -97,8 +97,8 @@ public abstract class AbstractBaseRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
-	public Class<? extends AbstractAnalysisProvider> bindAbstractAnalysisProvider() {
-		return BaseAnalysisProvider.class;
+	public Class<? extends AbstractSerializationMetaData> bindAbstractSerializationMetaData() {
+		return BaseSerializationMetaData.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
