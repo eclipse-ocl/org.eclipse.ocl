@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.solutions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,7 +33,9 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermRuntime;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermUnsupported;
@@ -48,8 +51,27 @@ import com.google.common.collect.Lists;
 /**
  * A StaticRuleMatch accumulates the variables and expressions that determine the cardinalities of the various SerializationRule terms.
  */
-public class StaticRuleMatch extends RTStaticRuleMatch
+public class StaticRuleMatch implements RuleMatch
 {
+	/**
+	 * The per-feature expression that (re-)computes the required number of assigned slots from the solved
+	 * cardinality variables. This is checked against the actual number of slots in an actual user element.
+	 */
+	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> eStructuralFeature2requiredSlotsExpression = new HashMap<>();
+
+	/**
+	 * The per-variable solution expression that computes the variable's value from the actual number of slots of an actual user element.
+	 *
+	 * Lazily populated as solutions found.
+	 */
+	protected final @NonNull Map<@NonNull Integer, @NonNull SerializationMatchTerm> variableIndex2solution = new HashMap<>();
+
+	/**
+	 * The ordered sequence of assign/check instructions to evaluate at run-time to realize the computation of
+	 * each solution for its variable.
+	 */
+	protected final @NonNull List<@NonNull SerializationMatchStep> steps = new ArrayList<>();
+
 	/**
 	 * The rule for which this is the static analysis.
 	 */
@@ -79,6 +101,35 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 
 	public StaticRuleMatch(@NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
 		this.serializationRuleAnalysis = serializationRuleAnalysis;
+	}
+
+	/**
+	 * Accumulate an additional cardinalitySolution expression for a cardinalityVariable.
+	 */
+	public void addSolution(@Nullable Integer cardinalityVariable, @NonNull SerializationMatchTerm cardinalitySolution) {
+		SerializationMatchStep newStep;
+		if (cardinalityVariable != null) {
+		//	assert !cardinalityVariable.isOne();
+			boolean isAssigned = true;
+			for (@NonNull SerializationMatchStep step : steps) {
+				if (step.isAssignTo(cardinalityVariable)) {
+					isAssigned = false;
+					break;
+				}
+			}
+			if (isAssigned) {
+				newStep = new SerializationMatchStep.MatchStep_Assign(cardinalityVariable, cardinalitySolution);
+			//	variable2solution.put(cardinalityVariable, cardinalitySolution);
+				variableIndex2solution.put(cardinalityVariable, cardinalitySolution);
+			}
+			else {
+				newStep = new SerializationMatchStep.MatchStep_ValueCheck(cardinalityVariable, cardinalitySolution);
+			}
+		}
+		else {
+			newStep = new SerializationMatchStep.MatchStep_Assert(cardinalitySolution);
+		}
+		steps.add(newStep);
 	}
 
 	/**
@@ -374,19 +425,57 @@ public class StaticRuleMatch extends RTStaticRuleMatch
 		}
 	}
 
-	/**
- * Return all the expressions that use any of variableGroup.
- */
-protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@NonNull Set<@NonNull Integer> variableGroup,
-		@NonNull Map<@NonNull Integer, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions) {
-	Set<@NonNull CardinalityExpression> unresolvedExpressions = new HashSet<>();
-	for (@NonNull Integer variable : variableGroup) {
-		Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
-		assert expressions != null;
-		unresolvedExpressions.addAll(expressions);
+	@Override
+	public @Nullable Integer basicGetIntegerSolution(int cardinalityVariableIndex) {
+		SerializationMatchTerm solution = variableIndex2solution.get(cardinalityVariableIndex);
+		return solution != null ? solution.basicGetIntegerSolution(this) : null;
 	}
-	return unresolvedExpressions;
-}
+
+	@Override
+	public @Nullable SerializationMatchTerm basicGetSolution(int cardinalityVariableIndex) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public @Nullable SerializationMatchTerm basicGetSolution(@NonNull CardinalityVariable cardinalityVariable) {
+		return variableIndex2solution.get(cardinalityVariable.getIndex());
+	}
+
+	public @NonNull EAttribute @Nullable [] basicGetNeedsDefaultEAttributes() {
+		int needsDefaultCount = 0;
+		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
+			if (entry.getValue().isOne() && (entry.getKey() instanceof EAttribute)) {
+				needsDefaultCount++;
+			}
+		}
+		if (needsDefaultCount <= 0) {
+			return null;
+		}
+		@NonNull EAttribute [] needsDefaultEAttributes = new @NonNull EAttribute[needsDefaultCount];
+		int needsDefaultIndex = 0;
+		for (Map.Entry<@NonNull EStructuralFeature, @NonNull CardinalityExpression> entry : eStructuralFeature2requiredSlotsExpression.entrySet()) {
+			EStructuralFeature eStructuralFeature = entry.getKey();
+			if (entry.getValue().isOne() && (eStructuralFeature instanceof EAttribute)) {
+				needsDefaultEAttributes[needsDefaultIndex++] = (EAttribute)eStructuralFeature;
+			}
+		}
+		Arrays.sort(needsDefaultEAttributes, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		return needsDefaultEAttributes;
+	}
+
+	/**
+	 * Return all the expressions that use any of variableGroup.
+	 */
+	protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@NonNull Set<@NonNull Integer> variableGroup,
+			@NonNull Map<@NonNull Integer, @NonNull Set<@NonNull CardinalityExpression>> variable2expressions) {
+		Set<@NonNull CardinalityExpression> unresolvedExpressions = new HashSet<>();
+		for (@NonNull Integer variable : variableGroup) {
+			Set<@NonNull CardinalityExpression> expressions = variable2expressions.get(variable);
+			assert expressions != null;
+			unresolvedExpressions.addAll(expressions);
+		}
+		return unresolvedExpressions;
+	}
 
 	/**
 	 * Return the Map from each of expressions to its variables that lack a solution.
@@ -461,7 +550,6 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 		return variable2expressions;
 	}
 
-	@Override
 	protected @NonNull DynamicRuleMatch createDynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis) {
 		assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
 		List<@NonNull SerializationMatchStep> matchStepsList = getSteps();
@@ -484,6 +572,70 @@ protected @NonNull Iterable<@NonNull CardinalityExpression> computeExpressions(@
 	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis() {
 		return serializationRuleAnalysis;
 	}
+
+	@Override
+	public @Nullable Integer getSize(@NonNull EStructuralFeature eStructuralFeature) {
+		return null;
+	}
+
+	@Override
+	public @Nullable Integer getSize(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		return null;
+	}
+
+	@Override
+	public @Nullable Integer getSize(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
+		return null;
+	}
+
+	public @NonNull List<@NonNull SerializationMatchStep> getSteps() {
+		return steps;
+	}
+
+	public @NonNull Map<@NonNull EStructuralFeature, @NonNull CardinalityExpression> getEStructuralFeature2requiredSlotsExpression() {
+		return eStructuralFeature2requiredSlotsExpression;
+	}
+
+/*	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
+		//
+		//	Compute the solutions and assign to/check against each CardinalityVariable
+		//
+		DynamicRuleMatch dynamicRuleMatch = slotsAnalysis.basicGetDynamicRuleMatch(this); // new DynamicRuleMatch(this, slotsAnalysis);
+		if (dynamicRuleMatch == null) {
+			dynamicRuleMatch = createDynamicRuleMatch(slotsAnalysis);
+			if (!dynamicRuleMatch.analyze()) {
+				return null;
+			}
+			//
+			//	Evaluate the expressions to determine the required size of each slot.
+			//
+			for (@NonNull EStructuralFeature eStructuralFeature : eStructuralFeature2requiredSlotsExpression.keySet()) {
+				CardinalityExpression expression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
+				assert expression != null;
+				if (!expression.checkSize(dynamicRuleMatch)) {
+					return null;
+				}
+			}
+			//
+			//	Check that no 'unused' features are used.
+			//
+			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
+				if (!eStructuralFeature2requiredSlotsExpression.containsKey(eStructuralFeature)) {
+					UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
+					if (!object.isCounted() || (object.asCounted() != 0)) {
+						return null;
+					}
+				}
+			}
+			dynamicRuleMatch.setChecked();
+		}
+		else {
+			if (!dynamicRuleMatch.isChecked()) {
+				return null;
+			}
+		}
+		return dynamicRuleMatch;
+	} */
 
 	public void toSolutionString(@NonNull StringBuilder s, int depth) {
 		List<@NonNull Integer> variables = new ArrayList<>(variableIndex2node.keySet());
