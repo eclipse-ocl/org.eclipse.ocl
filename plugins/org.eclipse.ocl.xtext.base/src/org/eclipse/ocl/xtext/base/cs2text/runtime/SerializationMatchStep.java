@@ -17,9 +17,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserElementAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
 
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.

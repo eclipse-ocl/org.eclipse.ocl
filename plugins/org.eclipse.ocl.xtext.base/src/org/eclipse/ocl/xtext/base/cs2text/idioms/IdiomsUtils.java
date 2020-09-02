@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 
 public class IdiomsUtils
 {

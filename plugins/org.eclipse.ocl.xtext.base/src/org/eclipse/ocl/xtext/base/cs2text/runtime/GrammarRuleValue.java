@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.Indexed;
 
 public abstract class GrammarRuleValue implements Indexed,Nameable
 {

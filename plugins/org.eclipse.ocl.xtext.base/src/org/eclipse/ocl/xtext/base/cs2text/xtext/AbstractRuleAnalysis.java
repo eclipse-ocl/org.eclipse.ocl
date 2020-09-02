@@ -13,9 +13,10 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.ToDebugString;
-import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.Indexed;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ToDebugString;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ToDebugString.ToDebugStringable;
 import org.eclipse.xtext.AbstractRule;
 
 /**

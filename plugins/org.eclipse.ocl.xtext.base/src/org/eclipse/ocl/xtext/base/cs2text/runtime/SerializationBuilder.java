@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.ToDebugString.ToDebugStringable;
 
 /**
  * SerializationBuilder builds the intermediate serialization as an interleaving of concrete strings and virtual

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,16 +24,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.xtext.IGrammarAccess;
+//import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
-import org.eclipse.xtext.service.GrammarProvider;
+//import org.eclipse.xtext.service.GrammarProvider;
 
 import com.google.inject.Inject;
 
@@ -55,11 +49,11 @@ public class UserModelAnalysis
 	@Inject
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
-	@Inject
-	private IGrammarAccess grammarAccess;
+//	@Inject
+//	private IGrammarAccess grammarAccess;
 
-	@Inject
-	private @NonNull GrammarProvider grammarProvider;
+//	@Inject
+//	private @NonNull GrammarProvider grammarProvider;
 
 	@Inject
 	private @NonNull AbstractAnalysisProvider analysisProvider;
@@ -84,7 +78,7 @@ public class UserModelAnalysis
 	/**
 	 * The analysis of each user model element.
 	 */
-	private final @NonNull Map<@NonNull EObject, @NonNull UserElementAnalysis> element2elementAnalysis = new HashMap<>();
+	private final @NonNull Map<@NonNull EObject, org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementAnalysis> element2elementAnalysis = new HashMap<>();
 
 	private int debugUserElementAnalysisCount = 0;
 	private int debugUserSlotsAnalysisCount = 0;
@@ -158,13 +152,7 @@ public class UserModelAnalysis
 
 	public @NonNull SerializationGrammarAnalysis getGrammarAnalysis() {
 //		return grammarAnalysis.getRuntime();
-		return analysisProvider.getAnalysis();
-	}
-
-	@Deprecated
-	public @NonNull GrammarAnalysis getInjectedGrammarAnalysis() {
-//		return grammarAnalysis;
-		throw new UnsupportedOperationException();
+		return ClassUtil.nonNullState(analysisProvider.getAnalysis());
 	}
 
 	public @NonNull IValueConverterService getValueConverterService() {
@@ -196,7 +184,7 @@ public class UserModelAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("User object <=> Xtext containing assignment(s) : Xtext production rule\n");
-		List<@NonNull UserElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
+		List<org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
 		Collections.sort(elementAnalyses, NameUtil.NAMEABLE_COMPARATOR);
 		boolean isFirst = true;
 		for (@NonNull UserElementAnalysis elementAnalysis : elementAnalyses) {

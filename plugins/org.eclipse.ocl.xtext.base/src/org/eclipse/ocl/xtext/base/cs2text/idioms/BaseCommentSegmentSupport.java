@@ -16,8 +16,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 
 public class BaseCommentSegmentSupport extends CommentSegmentSupportImpl
 {

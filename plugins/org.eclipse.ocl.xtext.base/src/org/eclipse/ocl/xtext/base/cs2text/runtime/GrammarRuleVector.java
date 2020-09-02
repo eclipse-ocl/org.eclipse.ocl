@@ -3,7 +3,6 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.Indexed;
 
 public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable<@NonNull GrammarRuleVector>
 {

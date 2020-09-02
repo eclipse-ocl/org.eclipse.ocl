@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,11 +24,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.RuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 
 /**
  * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule

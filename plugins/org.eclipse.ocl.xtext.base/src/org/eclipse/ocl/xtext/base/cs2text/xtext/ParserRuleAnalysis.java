@@ -36,6 +36,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationRuleComparator;
 import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.Indexed;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.xtext.AbstractElement;

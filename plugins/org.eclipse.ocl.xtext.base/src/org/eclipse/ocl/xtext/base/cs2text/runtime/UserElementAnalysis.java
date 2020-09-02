@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -17,11 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 
 /**
  * A UserElementAnalysis provides the working context to assist in the determination of the Xtext grammar rule
@@ -62,7 +57,6 @@ public class UserElementAnalysis implements Nameable
 	 * Determine the rules able to produce this element and the containing assignments by which it can be contained.
 	 */
 	private @NonNull DynamicSerializationRules analyzeSerializationRules() {
-		String eClassName = eClass.getName();
 		GrammarRuleVector targetRuleValueIndexes = null;
 		EReference eContainmentFeature2 = eContainmentFeature;
 		if (eContainmentFeature2 != null) {

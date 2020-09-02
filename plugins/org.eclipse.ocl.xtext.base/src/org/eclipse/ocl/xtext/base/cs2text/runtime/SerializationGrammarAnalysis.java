@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.user.AbstractGrammarAnalysis;
 
 public class SerializationGrammarAnalysis extends AbstractGrammarAnalysis
 {

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,11 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 /**
  * A Serializer supports the serialization of a user model element, automatocally creating a hierarchy
@@ -130,7 +126,7 @@ public class UserElementSerializer
 				if (!isFirst) {
 					s.append(",");
 				}
-				s.append(XtextGrammarUtil.getName(feature));
+				s.append(feature.getName());
 				Integer consumed = feature2consumptions2.get(feature);
 				assert consumed != null;
 				s.append("[");

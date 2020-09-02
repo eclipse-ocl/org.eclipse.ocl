@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.xtext.base.cs2text.user;
+package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,9 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueOthers;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 
 public class UserSlotsAnalysis
 {
@@ -174,7 +172,7 @@ public class UserSlotsAnalysis
 	 * Cache of DynamicRuleMatch per StaticRuleMatch. This cache reduces the DynamicRuleMatch per StaticRuleMatch ratio
 	 * from nearly 10 to less than 2 by re-using the lookahead from the tree descent.
 	 */
-	private @NonNull List<@NonNull DynamicRuleMatch> dynamicRuleMatches = new ArrayList<>();
+	private @NonNull List<org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch> dynamicRuleMatches = new ArrayList<>();
 
 	public UserSlotsAnalysis(@NonNull UserModelAnalysis modelAnalysis, @Nullable DynamicSerializationRules serializationRules, @NonNull EObject eObject) {
 		this.modelAnalysis = modelAnalysis;
