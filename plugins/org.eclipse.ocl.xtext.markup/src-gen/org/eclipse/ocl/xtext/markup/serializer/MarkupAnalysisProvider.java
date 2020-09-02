@@ -17,14 +17,14 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
@@ -141,9 +141,9 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 	private class _EnumValues
 	{
 		private final @NonNull EnumerationValue _0 // '#|,|:'
-			= new MultipleEnumerationValue(new @NonNull String[]{"#", ",", ":"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"#", ",", ":"});
 		private final @NonNull EnumerationValue _1 // 'b|e'
-			= new MultipleEnumerationValue(new @NonNull String[]{"b", "e"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"b", "e"});
 	}
 
 	/**
@@ -1141,14 +1141,14 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import EnumerationValue;
-//	import MultipleEnumerationValue;
 //	import BaseCommentSegmentSupport;
 //	import IdiomsUtils;
 //	import Segment;
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
+//	import EnumerationValue;
+//	import EnumerationValueMultiple;
 //	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;

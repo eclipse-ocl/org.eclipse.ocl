@@ -36,11 +36,11 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
 import org.eclipse.ocl.xtext.base.cs2text.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
@@ -102,7 +102,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @NonNull Set<@NonNull String> referredClassNames = new HashSet<>();
 
 	private @Nullable Map<@NonNull EClass, @NonNull String> eClass2id = null;
-	private @Nullable Map<@NonNull EnumerationValue, @NonNull String> enumValue2id = null;
+	private @Nullable Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull String> enumValue2id = null;
 	private @Nullable Map<@NonNull GrammarRuleValue, @NonNull String> grammarRuleValue2id = null;
 	private @Nullable Map<@NonNull Integer, @NonNull String> grammarRuleValueIndex2ruleName = null;
 	private @Nullable Map<@NonNull GrammarRuleVector, @NonNull String> grammarRuleVector2id = null;
@@ -271,8 +271,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return eClasses;
 	}
 
-	protected @NonNull Iterable<@NonNull EnumerationValue> getEnumValueIterable(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull EnumerationValue, @NonNull String> enumValue2id2 = enumValue2id;
+	protected @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> getEnumValueIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull String> enumValue2id2 = enumValue2id;
 		if (enumValue2id2 == null) {
 			enumValue2id = enumValue2id2 = new HashMap<>();
 		}
@@ -299,7 +299,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				}
 			}
 		}
-		List<@NonNull EnumerationValue> enumValues = new ArrayList<>(enumValue2id2.keySet());
+		List<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumValues = new ArrayList<>(enumValue2id2.keySet());
 		Collections.sort(enumValues, NameUtil.NAMEABLE_COMPARATOR);
 		String formatString = "_" + getDigitsFormatString(enumValues);
 		int i = 0;

@@ -25,8 +25,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueOthers;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 
 public class UserSlotsAnalysis
@@ -115,7 +115,7 @@ public class UserSlotsAnalysis
 	 */
 	public static class EnumeratedSlotAnalysis implements UserSlotAnalysis
 	{
-		private final @NonNull Map<@NonNull EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
+		private final @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull Integer> enumerationValue2count = new HashMap<>();
 
 		public @Nullable Integer basicGet(@NonNull EnumerationValue enumerationValue) {
 			return enumerationValue2count.get(enumerationValue);
@@ -149,7 +149,7 @@ public class UserSlotsAnalysis
 		@Override
 		public @NonNull String toString() {
 			StringBuilder s = new StringBuilder();
-			List<@NonNull EnumerationValue> keys  = new ArrayList<>(enumerationValue2count.keySet());
+			List<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> keys  = new ArrayList<>(enumerationValue2count.keySet());
 			Collections.sort(keys, NameUtil.NAMEABLE_COMPARATOR);
 			boolean isFirst = true;
 			for (@NonNull EnumerationValue key : keys) {
@@ -218,7 +218,7 @@ public class UserSlotsAnalysis
 		UserSlotAnalysis slotAnalysis;
 		Object object = eObject.eGet(eAttribute);
 		if (eAttribute.isMany()) {
-			Iterable<@NonNull EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
+			Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
 			List<?> elements = (List<?>)object;
 			int size = elements.size();
 			if ((size > 0) && (enumerationValues != null)) {
@@ -238,7 +238,7 @@ public class UserSlotsAnalysis
 						others++;
 					}
 				}
-				enumeratedSlotAnalysis.put(OthersEnumerationValue.INSTANCE, others);
+				enumeratedSlotAnalysis.put(EnumerationValueOthers.INSTANCE, others);
 				slotAnalysis = enumeratedSlotAnalysis;
 			}
 			else {
@@ -250,7 +250,7 @@ public class UserSlotsAnalysis
 			slotAnalysis = CountedSlotAnalysis.valueOf(object == Boolean.TRUE ? 1 : 0);
 		}
 		else if (eObject.eIsSet(eAttribute)) {
-			Iterable<@NonNull EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
+			Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
 			if (enumerationValues != null) {
 				EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
 				String string = String.valueOf(object);
@@ -261,7 +261,7 @@ public class UserSlotsAnalysis
 						gotOne = true;
 					}
 				}
-				enumeratedSlotAnalysis.put(OthersEnumerationValue.INSTANCE, gotOne ? 0 : 1);
+				enumeratedSlotAnalysis.put(EnumerationValueOthers.INSTANCE, gotOne ? 0 : 1);
 				slotAnalysis = enumeratedSlotAnalysis;
 			}
 			else {

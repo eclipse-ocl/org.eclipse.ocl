@@ -23,8 +23,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
@@ -104,9 +104,9 @@ public class DynamicSerializationRules
 			}
 			if (eStructuralFeature instanceof EAttribute) {
 				EAttribute eAttribute = (EAttribute)eStructuralFeature;
-				Iterable<@NonNull EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
+				Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = getEnumerationValues(eAttribute);
 				if (enumerationValues != null) {
-					List<@NonNull EnumerationValue> sortedEnumerationValues = Lists.newArrayList(enumerationValues);
+					List<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> sortedEnumerationValues = Lists.newArrayList(enumerationValues);
 					Collections.sort(sortedEnumerationValues, NameUtil.NAMEABLE_COMPARATOR);
 					for (@NonNull EnumerationValue enumerationValue : sortedEnumerationValues) {
 						int size2 = slotsAnalysis.getSize(eAttribute, enumerationValue);
@@ -155,8 +155,8 @@ public class DynamicSerializationRules
 		return allAssignedRuleValueIndexes;
 	}
 
-	public @Nullable Iterable<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
-		Set<@NonNull EnumerationValue> allEnumerationValues = null;
+	public @Nullable Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+		Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> allEnumerationValues = null;
 		for (@NonNull SerializationRule_SegmentsList serializationRuleSegmentsList : serializationRuleSegmentsLists) {
 			SerializationRule serializationRule = serializationRuleSegmentsList.getSerializationRule();
 			@NonNull EnumerationValue[] enumerationValues = serializationRule.getEnumerationValues(eAttribute);

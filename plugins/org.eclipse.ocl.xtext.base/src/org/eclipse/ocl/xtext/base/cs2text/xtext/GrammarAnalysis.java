@@ -41,15 +41,15 @@ import org.eclipse.ocl.xtext.base.cs2text.AbstractIdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceFactoryImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceImpl;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
@@ -116,10 +116,10 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	/**
 	 * The values of enumerated features
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues = null;
 
-	private  final @NonNull Map<@NonNull String, @NonNull SingleEnumerationValue> value2enumerationValue = new HashMap<>();
-	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull MultipleEnumerationValue> values2enumerationValue = new HashMap<>();
+	private  final @NonNull Map<@NonNull String, @NonNull EnumerationValueSingle> value2enumerationValue = new HashMap<>();
+	private  final @NonNull Map<@NonNull List<@NonNull String>, @NonNull EnumerationValueMultiple> values2enumerationValue = new HashMap<>();
 
 	private @Nullable SerializationGrammarAnalysis runtime = null;
 	private @Nullable Iterable<@NonNull EClassValue> sortedProducedEClassValues = null;
@@ -134,11 +134,11 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	public void addEnumeration(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
+		Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
 		if (eAttribute2enumerationValues2 == null) {
 			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
 		}
-		Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues2.get(eAttribute);
+		Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = eAttribute2enumerationValues2.get(eAttribute);
 		if (enumerationValues == null) {
 			enumerationValues = new HashSet<>();
 			eAttribute2enumerationValues2.put(eAttribute, enumerationValues);
@@ -501,9 +501,9 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 
 	public @NonNull EnumerationValue getEnumerationValue(@NonNull Keyword keyword) {
 		String value = XtextGrammarUtil.getValue(keyword);
-		SingleEnumerationValue enumerationValue = value2enumerationValue.get(value);
+		EnumerationValueSingle enumerationValue = value2enumerationValue.get(value);
 		if (enumerationValue == null) {
-			enumerationValue = new SingleEnumerationValue(value);
+			enumerationValue = new EnumerationValueSingle(value);
 			value2enumerationValue.put(value, enumerationValue);
 		}
 		return enumerationValue;
@@ -515,15 +515,15 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			values.add(XtextGrammarUtil.getValue(keyword));
 		}
 		Collections.sort(values);
-		MultipleEnumerationValue enumerationValue = values2enumerationValue.get(values);
+		EnumerationValueMultiple enumerationValue = values2enumerationValue.get(values);
 		if (enumerationValue == null) {
-			enumerationValue = new MultipleEnumerationValue(values);
+			enumerationValue = new EnumerationValueMultiple(values);
 			values2enumerationValue.put(values, enumerationValue);
 		}
 		return enumerationValue;
 	}
 
-	public @NonNull Iterable<@NonNull EnumerationValue> getEnumerationValues() {
+	public @NonNull Iterable<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> getEnumerationValues() {
 		return new HashSet<>(values2enumerationValue.values());
 	}
 

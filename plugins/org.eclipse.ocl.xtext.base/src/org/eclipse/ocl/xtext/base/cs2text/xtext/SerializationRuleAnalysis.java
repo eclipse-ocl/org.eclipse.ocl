@@ -36,10 +36,10 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerialization
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
@@ -76,13 +76,13 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	 */
 	private @Nullable Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom = null;
 
-	private @Nullable Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues = null;
 	private @Nullable Map<@NonNull EReference, @NonNull GrammarRuleVector> eReference2assignedRuleIndexes = null;
 
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
-	private @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
+	private @Nullable Map<@NonNull EAttribute, @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality = null;
 
 
 	/**
@@ -101,11 +101,11 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	}
 
 	public void analyzeAssignment(@NonNull EAttribute eAttribute, @Nullable EnumerationValue enumerationValue, @NonNull GrammarCardinality netMultiplicativeCardinality) {
-		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+		Map<@NonNull EAttribute, @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 		if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
 			eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
 		}
-		Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
+		Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
 		if (enumerationValue2multiplicativeCardinality == null) {
 			enumerationValue2multiplicativeCardinality = new HashMap<>();
 			eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
@@ -150,16 +150,16 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	}
 
 	public @NonNull EAttribute_EnumerationValues @Nullable [] basicGetEAttribute2EnumerationValues() {
-		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues = getEAttribute2EnumerationValues();
+		Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues = getEAttribute2EnumerationValues();
 		int size = eAttribute2enumerationValues.size();
 		if (size <= 0) {
 			return null;
 		}
 		@NonNull EAttribute_EnumerationValues[] eAttributeDatas = new @NonNull EAttribute_EnumerationValues[size];
 		int i = 0;
-		for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues.entrySet()) {
-			@NonNull Set<@NonNull EnumerationValue> enumerationValuesSet = entry.getValue();
-			@NonNull EnumerationValue @NonNull [] enumerationValuesArray = enumerationValuesSet.toArray(new @NonNull EnumerationValue[enumerationValuesSet.size()]);
+		for (Map.Entry<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> entry : eAttribute2enumerationValues.entrySet()) {
+			@NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValuesSet = entry.getValue();
+			@NonNull EnumerationValue @NonNull [] enumerationValuesArray = enumerationValuesSet.toArray(new org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue[enumerationValuesSet.size()]);
 			Arrays.sort(enumerationValuesArray, NameUtil.NAMEABLE_COMPARATOR);
 			eAttributeDatas[i++] = new EAttribute_EnumerationValues(entry.getKey(), enumerationValuesArray);
 		}
@@ -167,18 +167,18 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	}
 
 	public @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] basicGetEAttribute2enumerationValue2multiplicativeCardinality() {
-		Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
+		Map<@NonNull EAttribute, @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
 		if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
 			return null;
 		}
 		@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] eAttribute2enumerationValue2multiplicativeCardinality = new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality[eAttribute2enumerationValue2multiplicativeCardinality2.size()];
 		int i1 = 0;
-		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> entry1 : eAttribute2enumerationValue2multiplicativeCardinality2.entrySet()) {
+		for (Map.Entry<@NonNull EAttribute, @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality>> entry1 : eAttribute2enumerationValue2multiplicativeCardinality2.entrySet()) {
 			EAttribute eAttribute = entry1.getKey();
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> value = entry1.getValue();
+			Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality> value = entry1.getValue();
 			@NonNull EnumerationValue_MultiplicativeCardinality [] enumerationValue_MultiplicativeCardinality = new @NonNull EnumerationValue_MultiplicativeCardinality [value.size()];
 			int i2 = 0;
-			for (Map.Entry<@Nullable EnumerationValue, @NonNull GrammarCardinality> entry2 : value.entrySet()) {
+			for (Map.Entry<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality> entry2 : value.entrySet()) {
 				EnumerationValue enumerationValue = entry2.getKey();
 				enumerationValue_MultiplicativeCardinality[i2++] = new EnumerationValue_MultiplicativeCardinality(enumerationValue, entry2.getValue());
 			}
@@ -274,15 +274,15 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return eReferenceDatas;
 	} */
 
-	public @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> getEAttribute2EnumerationValues() {
-		Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
+	public @NonNull Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> getEAttribute2EnumerationValues() {
+		Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues2 = eAttribute2enumerationValues;
 		if (eAttribute2enumerationValues2 == null) {
 			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
 			getEAttribute2EnumerationValues(getRootSerializationNode(), eAttribute2enumerationValues2);
 		}
 		if (eAttribute2enumerationValues2.size() > 0) {
-			for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues2.entrySet()) {
-				Set<@NonNull EnumerationValue> assignedRuleIndexes = entry.getValue();
+			for (Map.Entry<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> entry : eAttribute2enumerationValues2.entrySet()) {
+				Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> assignedRuleIndexes = entry.getValue();
 				eAttribute2enumerationValues2.put(entry.getKey(), assignedRuleIndexes);
 			}
 		}
@@ -297,11 +297,11 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		return eAttribute2enumerationValues2;
 	} */
-	private void getEAttribute2EnumerationValues(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> eAttribute2enumerationValues) {
+	private void getEAttribute2EnumerationValues(@NonNull SerializationNode serializationNode, @NonNull Map<@NonNull EAttribute, @NonNull Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue>> eAttribute2enumerationValues) {
 		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
 			EAttribute eAttribute = (EAttribute)assignedKeywordsSerializationNode.getEStructuralFeature();
-			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+			Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
 			if (enumerationValues == null) {
 				enumerationValues = new HashSet<>();
 				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -316,7 +316,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				EAttribute eAttribute = (EAttribute)eStructuralFeature;
 				EnumerationValue enumerationValue = assignsSerializationNode.getEnumerationValue();
 				if (enumerationValue != null) {
-					Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+					Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
 					if (enumerationValues == null) {
 						enumerationValues = new HashSet<>();
 						eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -328,7 +328,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
 			EAttribute eAttribute = (EAttribute)assignedKeywordSerializationNode.getEStructuralFeature();
-			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+			Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
 			if (enumerationValues == null) {
 				enumerationValues = new HashSet<>();
 				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -394,7 +394,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 	}
 
-	public @Nullable Set<@NonNull EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
+	public @Nullable Set<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue> getEnumerationValues(@NonNull EAttribute eAttribute) {
 		return getEAttribute2EnumerationValues().get(eAttribute);
 	}
 
@@ -421,7 +421,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		assert staticRuleMatch != null;
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
+			Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eStructuralFeature);
 			if (enumerationValue2multiplicativeCardinality != null) {
 				return enumerationValue2multiplicativeCardinality.get(null);
 			}
@@ -438,7 +438,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		assert staticRuleMatch != null;
 		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
+			Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull GrammarCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality.get(eAttribute);
 			if (enumerationValue2multiplicativeCardinality != null) {
 				return enumerationValue2multiplicativeCardinality.get(enumerationValue);
 			}

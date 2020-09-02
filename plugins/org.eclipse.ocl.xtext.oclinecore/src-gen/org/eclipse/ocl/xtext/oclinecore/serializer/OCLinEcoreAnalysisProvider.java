@@ -17,15 +17,15 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
@@ -451,53 +451,53 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 	private class _EnumValues
 	{
 		private final @NonNull EnumerationValue _00 // '!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'
-			= new MultipleEnumerationValue(new @NonNull String[]{"!composes", "!derived", "!ordered", "!readonly", "!resolve", "!transient", "!unique", "!unsettable", "!volatile", "composes", "derived", "ordered", "readonly", "resolve", "transient", "unique", "unsettable", "volatile"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"!composes", "!derived", "!ordered", "!readonly", "!resolve", "!transient", "!unique", "!unsettable", "!volatile", "composes", "derived", "ordered", "readonly", "resolve", "transient", "unique", "unsettable", "volatile"});
 		private final @NonNull EnumerationValue _01 // '!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'
-			= new MultipleEnumerationValue(new @NonNull String[]{"!derived", "!id", "!ordered", "!readonly", "!transient", "!unique", "!unsettable", "!volatile", "derived", "id", "ordered", "readonly", "transient", "unique", "unsettable", "volatile"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"!derived", "!id", "!ordered", "!readonly", "!transient", "!unique", "!unsettable", "!volatile", "derived", "id", "ordered", "readonly", "transient", "unique", "unsettable", "volatile"});
 		private final @NonNull EnumerationValue _02 // '!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'
-			= new MultipleEnumerationValue(new @NonNull String[]{"!derived", "!ordered", "!transient", "!unique", "derived", "ordered", "transient", "unique"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"!derived", "!ordered", "!transient", "!unique", "derived", "ordered", "transient", "unique"});
 		private final @NonNull EnumerationValue _03 // '!ordered|!unique|ordered|unique'
-			= new MultipleEnumerationValue(new @NonNull String[]{"!ordered", "!unique", "ordered", "unique"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"!ordered", "!unique", "ordered", "unique"});
 		private final @NonNull EnumerationValue _04 // '*|+|?'
-			= new MultipleEnumerationValue(new @NonNull String[]{"*", "+", "?"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"*", "+", "?"});
 		private final @NonNull EnumerationValue _05 // ','
-			= new SingleEnumerationValue(",");
+			= new EnumerationValueSingle(",");
 		private final @NonNull EnumerationValue _06 // '::*'
-			= new SingleEnumerationValue("::*");
+			= new EnumerationValueSingle("::*");
 		private final @NonNull EnumerationValue _07 // ';'
-			= new SingleEnumerationValue(";");
+			= new EnumerationValueSingle(";");
 		private final @NonNull EnumerationValue _08 // '@'
-			= new SingleEnumerationValue("@");
+			= new EnumerationValueSingle("@");
 		private final @NonNull EnumerationValue _09 // 'Map'
-			= new SingleEnumerationValue("Map");
+			= new EnumerationValueSingle("Map");
 		private final @NonNull EnumerationValue _10 // 'Tuple'
-			= new SingleEnumerationValue("Tuple");
+			= new EnumerationValueSingle("Tuple");
 		private final @NonNull EnumerationValue _11 // 'abstract'
-			= new SingleEnumerationValue("abstract");
+			= new EnumerationValueSingle("abstract");
 		private final @NonNull EnumerationValue _12 // 'callable'
-			= new SingleEnumerationValue("callable");
+			= new EnumerationValueSingle("callable");
 		private final @NonNull EnumerationValue _13 // 'definition'
-			= new SingleEnumerationValue("definition");
+			= new EnumerationValueSingle("definition");
 		private final @NonNull EnumerationValue _14 // 'false|true'
-			= new MultipleEnumerationValue(new @NonNull String[]{"false", "true"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"false", "true"});
 		private final @NonNull EnumerationValue _15 // 'interface'
-			= new SingleEnumerationValue("interface");
+			= new EnumerationValueSingle("interface");
 		private final @NonNull EnumerationValue _16 // 'invariant'
-			= new SingleEnumerationValue("invariant");
+			= new EnumerationValueSingle("invariant");
 		private final @NonNull EnumerationValue _17 // 'postcondition'
-			= new SingleEnumerationValue("postcondition");
+			= new EnumerationValueSingle("postcondition");
 		private final @NonNull EnumerationValue _18 // 'precondition'
-			= new SingleEnumerationValue("precondition");
+			= new EnumerationValueSingle("precondition");
 		private final @NonNull EnumerationValue _19 // 'primitive'
-			= new SingleEnumerationValue("primitive");
+			= new EnumerationValueSingle("primitive");
 		private final @NonNull EnumerationValue _20 // 'serializable'
-			= new SingleEnumerationValue("serializable");
+			= new EnumerationValueSingle("serializable");
 		private final @NonNull EnumerationValue _21 // 'static'
-			= new SingleEnumerationValue("static");
+			= new EnumerationValueSingle("static");
 		private final @NonNull EnumerationValue _22 // '|'
-			= new SingleEnumerationValue("|");
+			= new EnumerationValueSingle("|");
 		private final @NonNull EnumerationValue _23 // '|1'
-			= new SingleEnumerationValue("|1");
+			= new EnumerationValueSingle("|1");
 	}
 
 	/**
@@ -13511,15 +13511,15 @@ public class OCLinEcoreAnalysisProvider extends AbstractAnalysisProvider
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import EnumerationValue;
-//	import MultipleEnumerationValue;
-//	import SingleEnumerationValue;
 //	import BaseCommentSegmentSupport;
 //	import IdiomsUtils;
 //	import Segment;
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
+//	import EnumerationValue;
+//	import EnumerationValueMultiple;
+//	import EnumerationValueSingle;
 //	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;

@@ -17,15 +17,15 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
@@ -400,27 +400,27 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 	private class _EnumValues
 	{
 		private final @NonNull EnumerationValue _00 // '*|+|?'
-			= new MultipleEnumerationValue(new @NonNull String[]{"*", "+", "?"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"*", "+", "?"});
 		private final @NonNull EnumerationValue _01 // ','
-			= new SingleEnumerationValue(",");
+			= new EnumerationValueSingle(",");
 		private final @NonNull EnumerationValue _02 // '::*'
-			= new SingleEnumerationValue("::*");
+			= new EnumerationValueSingle("::*");
 		private final @NonNull EnumerationValue _03 // ';'
-			= new SingleEnumerationValue(";");
+			= new EnumerationValueSingle(";");
 		private final @NonNull EnumerationValue _04 // '@'
-			= new SingleEnumerationValue("@");
+			= new EnumerationValueSingle("@");
 		private final @NonNull EnumerationValue _05 // 'Map'
-			= new SingleEnumerationValue("Map");
+			= new EnumerationValueSingle("Map");
 		private final @NonNull EnumerationValue _06 // 'Tuple'
-			= new SingleEnumerationValue("Tuple");
+			= new EnumerationValueSingle("Tuple");
 		private final @NonNull EnumerationValue _07 // 'false|true'
-			= new MultipleEnumerationValue(new @NonNull String[]{"false", "true"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"false", "true"});
 		private final @NonNull EnumerationValue _08 // 'static'
-			= new SingleEnumerationValue("static");
+			= new EnumerationValueSingle("static");
 		private final @NonNull EnumerationValue _09 // '|'
-			= new SingleEnumerationValue("|");
+			= new EnumerationValueSingle("|");
 		private final @NonNull EnumerationValue _10 // '|1'
-			= new SingleEnumerationValue("|1");
+			= new EnumerationValueSingle("|1");
 	}
 
 	/**
@@ -8120,15 +8120,15 @@ public class CompleteOCLAnalysisProvider extends AbstractAnalysisProvider
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import EnumerationValue;
-//	import MultipleEnumerationValue;
-//	import SingleEnumerationValue;
 //	import BaseCommentSegmentSupport;
 //	import IdiomsUtils;
 //	import Segment;
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
+//	import EnumerationValue;
+//	import EnumerationValueMultiple;
+//	import EnumerationValueSingle;
 //	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;

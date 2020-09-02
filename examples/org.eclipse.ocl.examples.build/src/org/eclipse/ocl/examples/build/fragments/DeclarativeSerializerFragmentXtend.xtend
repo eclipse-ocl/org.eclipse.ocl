@@ -15,10 +15,6 @@ import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.jdt.annotation.NonNull
 import org.eclipse.jdt.annotation.Nullable
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.OthersEnumerationValue
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils
@@ -69,6 +65,10 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEStructu
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermSubtract
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermInteger
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueOthers
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -232,23 +232,23 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateEnumValue(EnumerationValue enumValue) {
 		switch enumValue {
-		MultipleEnumerationValue: return generateEnumValue_MultipleEnumerationValue(enumValue)
-		OthersEnumerationValue: return generateEnumValue_OthersEnumerationValue(enumValue)
-		SingleEnumerationValue: return generateEnumValue_SingleEnumerationValue(enumValue)
+		EnumerationValueMultiple: return generateEnumValue_EnumerationValueMultiple(enumValue)
+		EnumerationValueOthers: return generateEnumValue_EnumerationValueOthers(enumValue)
+		EnumerationValueSingle: return generateEnumValue_EnumerationValueSingle(enumValue)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateEnumValue_MultipleEnumerationValue(MultipleEnumerationValue enumValue) {
-		'''new «newTypeReference(MultipleEnumerationValue)»(new @NonNull String[]{«FOR value : enumValue.getValues() SEPARATOR ', '»"«value»"«ENDFOR»})'''
+	protected def generateEnumValue_EnumerationValueMultiple(EnumerationValueMultiple enumValue) {
+		'''new «newTypeReference(EnumerationValueMultiple)»(new @NonNull String[]{«FOR value : enumValue.getValues() SEPARATOR ', '»"«value»"«ENDFOR»})'''
 	}
 	
-	protected def generateEnumValue_OthersEnumerationValue(OthersEnumerationValue enumValue) {
-		'''new «newTypeReference(OthersEnumerationValue)»()'''
+	protected def generateEnumValue_EnumerationValueOthers(EnumerationValueOthers enumValue) {
+		'''new «newTypeReference(EnumerationValueOthers)»()'''
 	}
 	
-	protected def generateEnumValue_SingleEnumerationValue(SingleEnumerationValue enumValue) {
-		'''new «newTypeReference(SingleEnumerationValue)»("«enumValue.getName()»")'''
+	protected def generateEnumValue_EnumerationValueSingle(EnumerationValueSingle enumValue) {
+		'''new «newTypeReference(EnumerationValueSingle)»("«enumValue.getName()»")'''
 	}
 	
 	/* ************************************************************************************************************************** */

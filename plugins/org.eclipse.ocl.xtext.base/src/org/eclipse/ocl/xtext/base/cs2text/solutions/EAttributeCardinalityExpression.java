@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTermEAttributeSize;
 import org.eclipse.ocl.xtext.base.cs2text.user.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.user.UserSlotsAnalysis;
@@ -38,7 +38,7 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 {
 	protected final @NonNull EAttribute eAttribute;
 	protected final @NonNull EnumerationValue enumerationValue;
-	private final @NonNull Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression = new HashMap<>();
+	private final @NonNull Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull CardinalityExpression> enumerationValue2cardinalityExpression = new HashMap<>();
 
 	public EAttributeCardinalityExpression(@NonNull String name, /*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		super(name);
@@ -50,7 +50,7 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 	@Override
 	public boolean checkSize(@NonNull DynamicRuleMatch dynamicRuleMatch) {
 		UserSlotsAnalysis slotsAnalysis = dynamicRuleMatch.getSlotsAnalysis();
-		for (Entry<@NonNull EnumerationValue, @NonNull CardinalityExpression> entry : enumerationValue2cardinalityExpression.entrySet()) {
+		for (Entry<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull CardinalityExpression> entry : enumerationValue2cardinalityExpression.entrySet()) {
 			EnumerationValue value = entry.getKey();
 			CardinalityExpression nestedExpression = entry.getValue();
 			int requiredCount = nestedExpression.solve(dynamicRuleMatch);
@@ -92,7 +92,7 @@ public class EAttributeCardinalityExpression extends AbstractCardinalityExpressi
 		return enumerationValue;
 	}
 
-	public @Nullable Map<@NonNull EnumerationValue, @NonNull CardinalityExpression> getEnumerationValue2cardinalityExpression() {
+	public @Nullable Map<org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue, @NonNull CardinalityExpression> getEnumerationValue2cardinalityExpression() {
 		return enumerationValue2cardinalityExpression;
 	}
 

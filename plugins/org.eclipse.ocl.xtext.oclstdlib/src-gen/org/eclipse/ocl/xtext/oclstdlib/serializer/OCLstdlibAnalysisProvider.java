@@ -17,15 +17,15 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.AbstractAnalysisProvider;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.MultipleEnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.enumerations.SingleEnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.BaseCommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
@@ -459,45 +459,45 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 	private class _EnumValues
 	{
 		private final @NonNull EnumerationValue _00 // '*|+|?'
-			= new MultipleEnumerationValue(new @NonNull String[]{"*", "+", "?"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"*", "+", "?"});
 		private final @NonNull EnumerationValue _01 // ','
-			= new SingleEnumerationValue(",");
+			= new EnumerationValueSingle(",");
 		private final @NonNull EnumerationValue _02 // '::*'
-			= new SingleEnumerationValue("::*");
+			= new EnumerationValueSingle("::*");
 		private final @NonNull EnumerationValue _03 // ';'
-			= new SingleEnumerationValue(";");
+			= new EnumerationValueSingle(";");
 		private final @NonNull EnumerationValue _04 // '@'
-			= new SingleEnumerationValue("@");
+			= new EnumerationValueSingle("@");
 		private final @NonNull EnumerationValue _05 // 'Lambda'
-			= new SingleEnumerationValue("Lambda");
+			= new EnumerationValueSingle("Lambda");
 		private final @NonNull EnumerationValue _06 // 'Map'
-			= new SingleEnumerationValue("Map");
+			= new EnumerationValueSingle("Map");
 		private final @NonNull EnumerationValue _07 // 'Tuple'
-			= new SingleEnumerationValue("Tuple");
+			= new EnumerationValueSingle("Tuple");
 		private final @NonNull EnumerationValue _08 // 'abstract'
-			= new SingleEnumerationValue("abstract");
+			= new EnumerationValueSingle("abstract");
 		private final @NonNull EnumerationValue _09 // 'false|true'
-			= new MultipleEnumerationValue(new @NonNull String[]{"false", "true"});
+			= new EnumerationValueMultiple(new @NonNull String[]{"false", "true"});
 		private final @NonNull EnumerationValue _10 // 'inv'
-			= new SingleEnumerationValue("inv");
+			= new EnumerationValueSingle("inv");
 		private final @NonNull EnumerationValue _11 // 'invalidating'
-			= new SingleEnumerationValue("invalidating");
+			= new EnumerationValueSingle("invalidating");
 		private final @NonNull EnumerationValue _12 // 'post'
-			= new SingleEnumerationValue("post");
+			= new EnumerationValueSingle("post");
 		private final @NonNull EnumerationValue _13 // 'pre'
-			= new SingleEnumerationValue("pre");
+			= new EnumerationValueSingle("pre");
 		private final @NonNull EnumerationValue _14 // 'right'
-			= new SingleEnumerationValue("right");
+			= new EnumerationValueSingle("right");
 		private final @NonNull EnumerationValue _15 // 'static'
-			= new SingleEnumerationValue("static");
+			= new EnumerationValueSingle("static");
 		private final @NonNull EnumerationValue _16 // 'typeof'
-			= new SingleEnumerationValue("typeof");
+			= new EnumerationValueSingle("typeof");
 		private final @NonNull EnumerationValue _17 // 'validating'
-			= new SingleEnumerationValue("validating");
+			= new EnumerationValueSingle("validating");
 		private final @NonNull EnumerationValue _18 // '|'
-			= new SingleEnumerationValue("|");
+			= new EnumerationValueSingle("|");
 		private final @NonNull EnumerationValue _19 // '|1'
-			= new SingleEnumerationValue("|1");
+			= new EnumerationValueSingle("|1");
 	}
 
 	/**
@@ -10358,15 +10358,15 @@ public class OCLstdlibAnalysisProvider extends AbstractAnalysisProvider
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import EnumerationValue;
-//	import MultipleEnumerationValue;
-//	import SingleEnumerationValue;
 //	import BaseCommentSegmentSupport;
 //	import IdiomsUtils;
 //	import Segment;
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
+//	import EnumerationValue;
+//	import EnumerationValueMultiple;
+//	import EnumerationValueSingle;
 //	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;
