@@ -25,16 +25,16 @@ public class AlternativesSerializationNode extends CompositeSerializationNode
 	protected final @NonNull Alternatives alternatives;
 	protected final @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes;
 
-	public AlternativesSerializationNode(@NonNull Alternatives alternatives, @NonNull GrammarCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
-		super(multiplicativeCardinality);
+	public AlternativesSerializationNode(@NonNull Alternatives alternatives, @NonNull GrammarCardinality grammarCardinality, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
+		super(grammarCardinality);
 		this.alternatives = alternatives;
 		this.alternativeSerializationNodes = alternativeSerializationNodes;
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
-		return new AlternativesSerializationNode(alternatives, multiplicativeCardinality, alternativeSerializationNodes);
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
+		return new AlternativesSerializationNode(alternatives, grammarCardinality, alternativeSerializationNodes);
 	}
 
 	@Override

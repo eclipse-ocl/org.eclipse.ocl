@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.AbstractElement;
 
 /**
- * MultiplicativeCardinality enacodes the alternative multiplicities in an Xtext grammar as an enumeration value.
+ * GrammarCardinality enacodes the alternative multiplicities in an Xtext grammar as an enumeration value.
  */
 public enum GrammarCardinality
 {
@@ -45,8 +45,8 @@ public enum GrammarCardinality
 		}
 	}
 
-	public static @NonNull GrammarCardinality max(@NonNull GrammarCardinality multiplicativeCardinality1, @NonNull GrammarCardinality multiplicativeCardinality2) {
-		int newState = multiplicativeCardinality1.state | multiplicativeCardinality2.state;
+	public static @NonNull GrammarCardinality max(@NonNull GrammarCardinality grammarCardinality1, @NonNull GrammarCardinality grammarCardinality2) {
+		int newState = grammarCardinality1.state | grammarCardinality2.state;
 		switch (newState) {
 			case 0: return ONE;
 			case 1: return ZERO_OR_ONE;

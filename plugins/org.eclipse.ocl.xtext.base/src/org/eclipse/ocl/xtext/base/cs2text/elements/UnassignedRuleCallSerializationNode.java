@@ -25,16 +25,16 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	protected final @NonNull RuleCall ruleCall;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedRuleCallSerializationNode(@NonNull RuleCall ruleCall, @NonNull GrammarCardinality multiplicativeCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
-		super(multiplicativeCardinality);
+	public UnassignedRuleCallSerializationNode(@NonNull RuleCall ruleCall, @NonNull GrammarCardinality grammarCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
+		super(grammarCardinality);
 		this.ruleCall = ruleCall;
 		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
-		return new UnassignedRuleCallSerializationNode(ruleCall, multiplicativeCardinality, calledRuleAnalysis);
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
+		return new UnassignedRuleCallSerializationNode(ruleCall, grammarCardinality, calledRuleAnalysis);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 
 	@Override
 	public boolean isRedundant() {
-		return multiplicativeCardinality.mayBeZero();
+		return grammarCardinality.mayBeZero();
 	}
 
 	@Override

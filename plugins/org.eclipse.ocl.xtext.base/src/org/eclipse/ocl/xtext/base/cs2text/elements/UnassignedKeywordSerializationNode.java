@@ -28,17 +28,17 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 	protected final @NonNull String value;
 	private @Nullable Integer semanticHashCode = null;
 
-	public UnassignedKeywordSerializationNode(@NonNull Keyword keyword, @NonNull GrammarCardinality multiplicativeCardinality) {
-		super(multiplicativeCardinality);
+	public UnassignedKeywordSerializationNode(@NonNull Keyword keyword, @NonNull GrammarCardinality grammarCardinality) {
+		super(grammarCardinality);
 		this.keyword = keyword;
 		this.value = XtextGrammarUtil.getValue(keyword);
-		assert !multiplicativeCardinality.mayBeZero();
+		assert !grammarCardinality.mayBeZero();
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new UnassignedKeywordSerializationNode(keyword, multiplicativeCardinality);
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) grammarCardinality = this.grammarCardinality;
+		return new UnassignedKeywordSerializationNode(keyword, grammarCardinality);
 	}
 
 	@Override

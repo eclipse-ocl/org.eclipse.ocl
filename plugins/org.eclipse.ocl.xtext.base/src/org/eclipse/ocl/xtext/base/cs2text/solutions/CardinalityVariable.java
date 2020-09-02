@@ -40,14 +40,14 @@ public class CardinalityVariable implements Nameable
 	/**
 	 * The possible cardinalities of the variable. ?/+/*. Unit variables are known/redundant and so excluded from computations.
 	 */
-	protected final @NonNull GrammarCardinality multiplicativeCardinality;
+	protected final @NonNull GrammarCardinality grammarCardinality;
 
-	public CardinalityVariable(int index, @NonNull String name, @Nullable GrammarRuleVector ruleAnalyses, @NonNull GrammarCardinality multiplicativeCardinality) {
+	public CardinalityVariable(int index, @NonNull String name, @Nullable GrammarRuleVector ruleAnalyses, @NonNull GrammarCardinality grammarCardinality) {
 		this.index = index;
 		this.name = name;
 		this.ruleAnalyses = ruleAnalyses;
-		this.multiplicativeCardinality = multiplicativeCardinality;
-		assert !multiplicativeCardinality.isOne();
+		this.grammarCardinality = grammarCardinality;
+		assert !grammarCardinality.isOne();
 	}
 
 	public int getIndex() {
@@ -60,15 +60,15 @@ public class CardinalityVariable implements Nameable
 	}
 
 	public boolean isOne() {
-		return multiplicativeCardinality.isOne();
+		return grammarCardinality.isOne();
 	}
 
 	public boolean mayBeMany() {
-		return multiplicativeCardinality.mayBeMany();
+		return grammarCardinality.mayBeMany();
 	}
 
 	public boolean mayBeNone() {
-		return multiplicativeCardinality.mayBeZero();
+		return grammarCardinality.mayBeZero();
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class CardinalityVariable implements Nameable
 			}
 		}
 		s.append("[");
-		s.append(multiplicativeCardinality);
+		s.append(grammarCardinality);
 		s.append("]");
 	}
 }

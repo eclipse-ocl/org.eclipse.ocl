@@ -223,15 +223,15 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			List<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements((Group)abstractElement);
 			AbstractElement nonOptionalElement = null;
 			for (@NonNull AbstractElement nestedElement : elements) {
-				GrammarCardinality multiplicativeCardinality = GrammarCardinality.toEnum(nestedElement);
-				if (multiplicativeCardinality.isOne()) {
+				GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(nestedElement);
+				if (grammarCardinality.isOne()) {
 					if (nonOptionalElement != null) {
 						nonOptionalElement = null;
 						break;
 					}
 					nonOptionalElement = nestedElement;
 				}
-				else if (!multiplicativeCardinality.mayBeZero()) {
+				else if (!grammarCardinality.mayBeZero()) {
 					nonOptionalElement = null;
 					break;
 				}

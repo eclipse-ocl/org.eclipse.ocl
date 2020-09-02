@@ -28,16 +28,16 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 	protected final @NonNull Integer [] calledRuleIndexes;
 	private @Nullable Integer semanticHashCode = null;
 
-	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality multiplicativeCardinality, int calledRuleIndex) {
-		super(assignmentAnalysis, multiplicativeCardinality);
+	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, int calledRuleIndex) {
+		super(assignmentAnalysis, grammarCardinality);
 		this.calledRuleIndex = calledRuleIndex;
 		this.calledRuleIndexes = new @NonNull Integer[] { calledRuleIndex };
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, calledRuleIndex);
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) grammarCardinality = this.grammarCardinality;
+		return new AssignedRuleCallSerializationNode(assignmentAnalysis, grammarCardinality, calledRuleIndex);
 	}
 
 	@Override

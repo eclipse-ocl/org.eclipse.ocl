@@ -72,12 +72,12 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences( @NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement freezeSequences( @NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
 		if (listOfNodes.isEmpty()) {
 			return NullSerializationNode.INSTANCE;
 		}
 		else {
-			return createFrozenSequence(compoundElement, multiplicativeCardinality, listOfNodes);
+			return createFrozenSequence(compoundElement, grammarCardinality, listOfNodes);
 		}
 	}
 
@@ -91,12 +91,12 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality.isOne()) {
+	public @NonNull SerializationElement setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
+		if (grammarCardinality.isOne()) {
 			return this;
 		}
 		else {
-			return new SequenceSerializationNode(compoundElement, multiplicativeCardinality, getNodes());
+			return new SequenceSerializationNode(compoundElement, grammarCardinality, getNodes());
 		}
 	}
 

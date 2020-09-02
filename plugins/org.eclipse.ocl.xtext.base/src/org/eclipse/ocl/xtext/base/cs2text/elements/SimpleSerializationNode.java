@@ -15,7 +15,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 
 public abstract class SimpleSerializationNode extends AbstractSerializationNode
 {
-	protected SimpleSerializationNode(@NonNull GrammarCardinality multiplicativeCardinality) {
-		super(multiplicativeCardinality);
+	protected SimpleSerializationNode(@NonNull GrammarCardinality grammarCardinality) {
+		super(grammarCardinality);
 	}
 }

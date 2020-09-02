@@ -98,7 +98,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	 */
 	public @NonNull ListOfListOfSerializationNode addConjunction(@NonNull SerializationElement additionalSerializationElement) {
 		if (additionalSerializationElement.isNull()) {
-		//	multiplicativeCardinality = MultiplicativeCardinality.max(multiplicativeCardinality, MultiplicativeCardinality.ZERO_OR_ONE);
+		//	grammarCardinality = GrammarCardinality.max(grammarCardinality, GrammarCardinality.ZERO_OR_ONE);
 			listOfListOfNodes.add(new ArrayList<>());
 			return this;
 		}
@@ -135,10 +135,10 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
 		List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-			SerializationElement frozenSequence = createFrozenSequence(compoundElement, multiplicativeCardinality, listOfNodes);
+			SerializationElement frozenSequence = createFrozenSequence(compoundElement, grammarCardinality, listOfNodes);
 			if (frozenSequence.isListOfList()) {
 				newListOfList.addAll(frozenSequence.asListOfList().getLists());
 			}
@@ -166,14 +166,14 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 //	@Override
-//	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull MultiplicativeCardinality multiplicativeCardinality) {
-//		this.multiplicativeCardinality = MultiplicativeCardinality.max(this.multiplicativeCardinality, multiplicativeCardinality);
+//	public @NonNull SerializationElement setGrammarCardinality(@NonNull GrammarCardinality grammarCardinality) {
+//		this.grammarCardinality = GrammarCardinality.max(this.grammarCardinality, grammarCardinality);
 //		return this;
 //	}
 
 	@Override
-	public @NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality.isOne()) {
+	public @NonNull SerializationElement setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
+		if (grammarCardinality.isOne()) {
 			return this;
 		}
 		else {
@@ -182,7 +182,7 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 				for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
 					List<@NonNull SerializationNode> newList = new ArrayList<>(listOfNodes.size());
 					for (@NonNull SerializationNode node : listOfNodes) {
-						newList.add(node.setMultiplicativeCardinality(compoundElement, multiplicativeCardinality));
+						newList.add(node.setGrammarCardinality(compoundElement, grammarCardinality));
 						newListOfList.add(newList);
 					}
 				}

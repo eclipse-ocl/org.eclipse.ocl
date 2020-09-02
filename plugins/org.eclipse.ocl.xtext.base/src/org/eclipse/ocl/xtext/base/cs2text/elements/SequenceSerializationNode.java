@@ -30,31 +30,31 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
 	private @Nullable Integer semanticHashCode = null;
 
-	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(multiplicativeCardinality);
+	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
+		super(grammarCardinality);
 		this.compoundElement = compoundElement;
 		this.serializationNodes = groupSerializationNodes;
 		assert !groupSerializationNodes.isEmpty();
-		assert multiplicativeCardinality.isOne() || noAssignedCurrent(this);
+		assert grammarCardinality.isOne() || noAssignedCurrent(this);
 		assert noUnassignedParserRuleCall(this);
 		assert groupSerializationNodes.size() == new HashSet<>(groupSerializationNodes).size();
 	}
 
 	public SequenceSerializationNode(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(sequenceSerializationNode.multiplicativeCardinality);
+		super(sequenceSerializationNode.grammarCardinality);
 		this.compoundElement = sequenceSerializationNode.compoundElement;
 		this.serializationNodes = groupSerializationNodes;
 	//	assert !groupSerializationNodes.isEmpty();
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
 		List<@NonNull SerializationNode> newList = new ArrayList<>(serializationNodes.size());
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
 			newList.add(serializationNode.clone(null));
 		}
-		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new SequenceSerializationNode(compoundElement, multiplicativeCardinality, newList);
+		if (grammarCardinality == null) grammarCardinality = this.grammarCardinality;
+		return new SequenceSerializationNode(compoundElement, grammarCardinality, newList);
 	}
 
 	@Override

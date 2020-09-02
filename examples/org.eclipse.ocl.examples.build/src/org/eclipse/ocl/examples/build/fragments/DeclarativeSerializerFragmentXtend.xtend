@@ -28,12 +28,12 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_GrammarCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_GrammarCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_GrammarCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_GrammarCardinality
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
@@ -506,15 +506,15 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ELSE»
 			null,
 			«ENDIF»
-			«var eAttribute2enumerationValue2multiplicativeCardinalityArray = serializationRuleAnalysis.basicGetEAttribute2enumerationValue2multiplicativeCardinality()»
-			«IF eAttribute2enumerationValue2multiplicativeCardinalityArray !== null»
-			new @NonNull «newTypeReference(EAttribute_EnumerationValue_MultiplicativeCardinality)» [] {
-				«FOR eAttribute2enumerationValue2multiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinalityArray SEPARATOR ','»
-				new «newTypeReference(EAttribute_EnumerationValue_MultiplicativeCardinality)»(«emitLiteral(eAttribute2enumerationValue2multiplicativeCardinality.getEAttribute())»,
-					new @NonNull «newTypeReference(EnumerationValue_MultiplicativeCardinality)» [] {
-					«FOR enumerationValue2multiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinality.getEnumerationValue_MultiplicativeCardinality() SEPARATOR ','»
-					«var enumerationValue = enumerationValue2multiplicativeCardinality.getEnumerationValue()»
-						new «newTypeReference(EnumerationValue_MultiplicativeCardinality)»(«enumerationValue !== null ? getEnumValueId(enumerationValue, true) : "null"», «emitMultiplicativeCardinality(enumerationValue2multiplicativeCardinality.getMultiplicativeCardinality())»)
+			«var eAttribute2enumerationValue2grammarCardinalityArray = serializationRuleAnalysis.basicGetEAttribute2enumerationValue2grammarCardinality()»
+			«IF eAttribute2enumerationValue2grammarCardinalityArray !== null»
+			new @NonNull «newTypeReference(EAttribute_EnumerationValue_GrammarCardinality)» [] {
+				«FOR eAttribute2enumerationValue2grammarCardinality : eAttribute2enumerationValue2grammarCardinalityArray SEPARATOR ','»
+				new «newTypeReference(EAttribute_EnumerationValue_GrammarCardinality)»(«emitLiteral(eAttribute2enumerationValue2grammarCardinality.getEAttribute())»,
+					new @NonNull «newTypeReference(EnumerationValue_GrammarCardinality)» [] {
+					«FOR enumerationValue2grammarCardinality : eAttribute2enumerationValue2grammarCardinality.getEnumerationValue_GrammarCardinality() SEPARATOR ','»
+					«var enumerationValue = enumerationValue2grammarCardinality.getEnumerationValue()»
+						new «newTypeReference(EnumerationValue_GrammarCardinality)»(«enumerationValue !== null ? getEnumValueId(enumerationValue, true) : "null"», «emitGrammarCardinality(enumerationValue2grammarCardinality.getGrammarCardinality())»)
 					«ENDFOR»
 					}
 				)
@@ -523,14 +523,14 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			«ELSE»
 			null,
 			«ENDIF»
-			«var eReference2ruleValueIndex2multiplicativeCardinalityArray = serializationRuleAnalysis.basicGetEReference2ruleValueIndex2multiplicativeCardinality()»
-			«IF eReference2ruleValueIndex2multiplicativeCardinalityArray !== null»
-			new @NonNull «newTypeReference(EReference_RuleIndex_MultiplicativeCardinality)» [] {
-				«FOR eReference2ruleValueIndex2multiplicativeCardinality : eReference2ruleValueIndex2multiplicativeCardinalityArray SEPARATOR ','»
-				new «newTypeReference(EReference_RuleIndex_MultiplicativeCardinality)»(«emitLiteral(eReference2ruleValueIndex2multiplicativeCardinality.getEReference())»,
-					new @NonNull «newTypeReference(RuleIndex_MultiplicativeCardinality)» [] {
-					«FOR ruleValueIndex2multiplicativeCardinality : eReference2ruleValueIndex2multiplicativeCardinality.getRuleIndex_MultiplicativeCardinality() SEPARATOR ','»
-						new «newTypeReference(RuleIndex_MultiplicativeCardinality)»(«ruleValueIndex2multiplicativeCardinality.getRuleIndex()», «emitMultiplicativeCardinality(ruleValueIndex2multiplicativeCardinality.getMultiplicativeCardinality())»)
+			«var eReference2ruleValueIndex2grammarCardinalityArray = serializationRuleAnalysis.basicGetEReference2ruleValueIndex2grammarCardinality()»
+			«IF eReference2ruleValueIndex2grammarCardinalityArray !== null»
+			new @NonNull «newTypeReference(EReference_RuleIndex_GrammarCardinality)» [] {
+				«FOR eReference2ruleValueIndex2grammarCardinality : eReference2ruleValueIndex2grammarCardinalityArray SEPARATOR ','»
+				new «newTypeReference(EReference_RuleIndex_GrammarCardinality)»(«emitLiteral(eReference2ruleValueIndex2grammarCardinality.getEReference())»,
+					new @NonNull «newTypeReference(RuleIndex_GrammarCardinality)» [] {
+					«FOR ruleValueIndex2grammarCardinality : eReference2ruleValueIndex2grammarCardinality.getRuleIndex_GrammarCardinality() SEPARATOR ','»
+						new «newTypeReference(RuleIndex_GrammarCardinality)»(«ruleValueIndex2grammarCardinality.getRuleIndex()», «emitGrammarCardinality(ruleValueIndex2grammarCardinality.getGrammarCardinality())»)
 					«ENDFOR»
 					}
 				)

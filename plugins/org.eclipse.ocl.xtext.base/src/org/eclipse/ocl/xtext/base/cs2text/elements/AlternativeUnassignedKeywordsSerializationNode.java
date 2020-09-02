@@ -34,8 +34,8 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	private @Nullable SerializationStep runtime = null;
 	private @Nullable Integer semanticHashCode = null;
 
-	public AlternativeUnassignedKeywordsSerializationNode(@NonNull GrammarCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull String> values) {
-		super(multiplicativeCardinality);
+	public AlternativeUnassignedKeywordsSerializationNode(@NonNull GrammarCardinality grammarCardinality, @Nullable Iterable<@NonNull String> values) {
+		super(grammarCardinality);
 		if (values != null) {
 			for (@NonNull String value : values) {
 				this.values.add(value);
@@ -49,9 +49,9 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AlternativeUnassignedKeywordsSerializationNode(multiplicativeCardinality, values);
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) grammarCardinality = this.grammarCardinality;
+		return new AlternativeUnassignedKeywordsSerializationNode(grammarCardinality, values);
 	}
 
 	@Override

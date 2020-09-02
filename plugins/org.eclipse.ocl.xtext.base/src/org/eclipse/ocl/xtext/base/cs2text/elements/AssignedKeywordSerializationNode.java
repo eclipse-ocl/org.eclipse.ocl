@@ -29,16 +29,16 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 	protected final @NonNull EnumerationValue enumerationValue;
 	private @Nullable Integer semanticHashCode = null;
 
-	public AssignedKeywordSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality multiplicativeCardinality, @NonNull Keyword keyword) {
-		super(assignmentAnalysis, multiplicativeCardinality);
+	public AssignedKeywordSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, @NonNull Keyword keyword) {
+		super(assignmentAnalysis, grammarCardinality);
 		this.keyword = keyword;
 		this.enumerationValue = assignmentAnalysis.getGrammarAnalysis().getEnumerationValue(keyword);
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) multiplicativeCardinality = this.multiplicativeCardinality;
-		return new AssignedKeywordSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, keyword);
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) grammarCardinality = this.grammarCardinality;
+		return new AssignedKeywordSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, grammarCardinality, keyword);
 	}
 
 	@Override

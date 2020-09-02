@@ -21,10 +21,10 @@ import org.eclipse.xtext.CompoundElement;
 
 public abstract class AbstractSerializationNode extends AbstractSerializationElement implements SerializationNode
 {
-	protected final @NonNull GrammarCardinality multiplicativeCardinality;
+	protected final @NonNull GrammarCardinality grammarCardinality;
 
-	protected AbstractSerializationNode(@NonNull GrammarCardinality multiplicativeCardinality) {
-		this.multiplicativeCardinality = multiplicativeCardinality;
+	protected AbstractSerializationNode(@NonNull GrammarCardinality grammarCardinality) {
+		this.grammarCardinality = grammarCardinality;
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	protected void appendCardinality(@NonNull StringBuilder s, int depth) {
-		if ((depth >= 0) || !multiplicativeCardinality.isOne()) {
+		if ((depth >= 0) || !grammarCardinality.isOne()) {
 			s.append("[");
-			s.append(multiplicativeCardinality);
+			s.append(grammarCardinality);
 			s.append("]");
 		}
 	}
@@ -71,13 +71,13 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) { // is this needed ?
-		return createFrozenSequence(compoundElement, multiplicativeCardinality, Collections.singletonList(this));
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) { // is this needed ?
+		return createFrozenSequence(compoundElement, grammarCardinality, Collections.singletonList(this));
 	}
 
 	@Override
-	public @NonNull GrammarCardinality getMultiplicativeCardinality() {
-		return multiplicativeCardinality;
+	public @NonNull GrammarCardinality getGrammarCardinality() {
+		return grammarCardinality;
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 
 	@Override
 	public boolean isOne() {
-		return multiplicativeCardinality.isOne();
+		return grammarCardinality.isOne();
 	}
 
 	@Override
@@ -106,10 +106,10 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality) {
-		if (this.multiplicativeCardinality.isZeroOrMore()) {
+	public @NonNull SerializationNode setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
+		if (this.grammarCardinality.isZeroOrMore()) {
 			return this;
 		}
-		return clone(multiplicativeCardinality);
+		return clone(grammarCardinality);
 	}
 }

@@ -15,8 +15,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 
 public abstract class CompositeSerializationNode extends AbstractSerializationNode
 {
-	public CompositeSerializationNode(/*@NonNull CompoundElement compoundElement,*/ @NonNull GrammarCardinality multiplicativeCardinality) {
-		super(multiplicativeCardinality);
+	public CompositeSerializationNode(/*@NonNull CompoundElement compoundElement,*/ @NonNull GrammarCardinality grammarCardinality) {
+		super(grammarCardinality);
 //		this.compoundElement = compoundElement;
 	//	assert serializationNodes.size() > 1;
 	}

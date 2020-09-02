@@ -22,16 +22,16 @@ import org.eclipse.xtext.CompoundElement;
 public interface SerializationNode extends SerializationElement
 {
 	/**
-	 * If multiplicativeCardinality is null return a deep copy of this node, else a deep copy
-	 * with a changed multiplicativeCardinality. This accommodates the need to change the
+	 * If grammarCardinality is null return a deep copy of this node, else a deep copy
+	 * with a changed grammarCardinality. This accommodates the need to change the
 	 * multiplicity when flattening one-or-more alternatives and to avoid duplicates when flattening,
 	 */
-	@NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality);
+	@NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality);
 
 	/**
 	 * Return the (outer) configured multiplicative cardinality.
 	 */
-	@NonNull GrammarCardinality getMultiplicativeCardinality();
+	@NonNull GrammarCardinality getGrammarCardinality();
 
 	/**
 	 * Gather the runtime represetation of the nodes in steps.
@@ -65,5 +65,5 @@ public interface SerializationNode extends SerializationElement
 //	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
 	@Override
-	@NonNull SerializationNode setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality);
+	@NonNull SerializationNode setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality);
 }

@@ -22,12 +22,12 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
-	public AssignedCurrentSerializationNode(@NonNull ActionAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality multiplicativeCardinality) {
-		super(assignmentAnalysis, multiplicativeCardinality);
+	public AssignedCurrentSerializationNode(@NonNull ActionAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality) {
+		super(assignmentAnalysis, grammarCardinality);
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
 		throw new IllegalStateException();		// clone occurs for flattened SerializationRules
 	}
 

@@ -40,12 +40,12 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.Seriali
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermInteger;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermSubtract;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValue_GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EAttribute_EnumerationValues;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndex_GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_MultiplicativeCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_MultiplicativeCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_GrammarCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall;
@@ -700,17 +700,17 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* MarkupElement */
 			},
 			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.BULLET_ELEMENT__LEVEL,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.BULLET_ELEMENT__LEVEL,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -748,30 +748,30 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new /*@NonNull*/ EAttribute [] {
 				MarkupPackage.Literals.FIGURE_ELEMENT__SRC
 			},
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
+			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__DEF,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__DEF,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -793,9 +793,9 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			null,
 			null,
 			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.FIGURE_REF_ELEMENT__REF,
+					new @NonNull RuleIndex_GrammarCardinality [] {
 					}
 				)
 			});
@@ -823,17 +823,17 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* MarkupElement */
 			},
 			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.FONT_ELEMENT__FONT,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._1, GrammarCardinality.ONE)
+			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FONT_ELEMENT__FONT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._1, GrammarCardinality.ONE)
 					}
 				)
 			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -858,10 +858,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -889,17 +889,17 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 					iv._0) /* MarkupElement */
 			},
 			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.HEADING_ELEMENT__LEVEL,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.HEADING_ELEMENT__LEVEL,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -920,10 +920,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -941,10 +941,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new /*@NonNull*/ EAttribute [] {
 				MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT
 			},
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
+			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.NEW_LINE_ELEMENT__TEXT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -969,10 +969,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -997,10 +997,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -1025,10 +1025,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -1053,10 +1053,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EReference_RuleIndex_MultiplicativeCardinality [] {
-				new EReference_RuleIndex_MultiplicativeCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
-					new @NonNull RuleIndex_MultiplicativeCardinality [] {
-					new RuleIndex_MultiplicativeCardinality(13, GrammarCardinality.ZERO_OR_MORE)
+			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
+				new EReference_RuleIndex_GrammarCardinality(MarkupPackage.Literals.COMPOUND_ELEMENT__ELEMENTS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			});
@@ -1075,10 +1075,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			},
 			null,
 			null,
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(ev._0, GrammarCardinality.ONE_OR_MORE)
+			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._0, GrammarCardinality.ONE_OR_MORE)
 					}
 				)
 			},
@@ -1097,10 +1097,10 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 			new /*@NonNull*/ EAttribute [] {
 				MarkupPackage.Literals.TEXT_ELEMENT__TEXT
 			},
-			new @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality [] {
-				new EAttribute_EnumerationValue_MultiplicativeCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
-					new @NonNull EnumerationValue_MultiplicativeCardinality [] {
-						new EnumerationValue_MultiplicativeCardinality(null, GrammarCardinality.ONE)
+			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.TEXT_ELEMENT__TEXT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -1164,12 +1164,12 @@ public class MarkupAnalysisProvider extends AbstractAnalysisProvider
 //	import SerializationMatchTermInteger;
 //	import SerializationMatchTermSubtract;
 //	import SerializationRule;
-//	import EAttribute_EnumerationValue_MultiplicativeCardinality;
+//	import EAttribute_EnumerationValue_GrammarCardinality;
 //	import EAttribute_EnumerationValues;
-//	import EReference_RuleIndex_MultiplicativeCardinality;
+//	import EReference_RuleIndex_GrammarCardinality;
 //	import EReference_RuleIndexes;
-//	import EnumerationValue_MultiplicativeCardinality;
-//	import RuleIndex_MultiplicativeCardinality;
+//	import EnumerationValue_GrammarCardinality;
+//	import RuleIndex_GrammarCardinality;
 //	import SerializationStep;
 //	import SerializationStepAssignKeyword;
 //	import SerializationStepAssignedRuleCall;

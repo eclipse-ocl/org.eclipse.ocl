@@ -64,7 +64,7 @@ public interface SerializationElement
 	 * current action calls and unassigned rule calls rewritten. The return may be a ListListOfSerializationNode.
 	 * @param GrammarCardinality
 	 */
-	@NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality);
+	@NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality);
 
 	/**
 	 * Return true if this is a ListOfSerializationNode
@@ -92,8 +92,8 @@ public interface SerializationElement
 	void toString(@NonNull StringBuilder s, int depth);
 
 	/**
-	 * Return an equivalent SerializationElement to this that supports a multiplicativeCardinality or greater as part of a compoundElement.
+	 * Return an equivalent SerializationElement to this that supports a grammarCardinality or greater as part of a compoundElement.
 	 * Returns this if existing cardinality is adequate, or a SequenceSerializationNode, clone with adjusted cardinality otherwise.
 	 */
-	@NonNull SerializationElement setMultiplicativeCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality);
+	@NonNull SerializationElement setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality);
 }

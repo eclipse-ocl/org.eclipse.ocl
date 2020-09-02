@@ -36,18 +36,18 @@ public class AlternativeAssignedKeywordsSerializationNode extends AbstractAssign
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignedKeywordsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
-			@NonNull GrammarCardinality multiplicativeCardinality, @NonNull Iterable<@NonNull Keyword> keywords) {
-		super(assignmentAnalysis, multiplicativeCardinality);
+			@NonNull GrammarCardinality grammarCardinality, @NonNull Iterable<@NonNull Keyword> keywords) {
+		super(assignmentAnalysis, grammarCardinality);
 		this.keywords = keywords;
 		this.enumerationValue = assignmentAnalysis.getGrammarAnalysis().getEnumerationValue(keywords);
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) {
-			multiplicativeCardinality = this.multiplicativeCardinality;
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) {
+			grammarCardinality = this.grammarCardinality;
 		}
-		return new AlternativeAssignedKeywordsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, keywords);
+		return new AlternativeAssignedKeywordsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, grammarCardinality, keywords);
 	}
 
 	@Override

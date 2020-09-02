@@ -98,9 +98,9 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 	/**
 	 * Return an immutable frozen sequence from the extensible listOfNodes eliminating assigned current rule calls and
 	 * flattening unassigned rule calls.
-	 * The listOfNodes corresponds to the content of compoundElement and has an overall multiplicativeCardinality.
+	 * The listOfNodes corresponds to the content of compoundElement and has an overall grammarCardinality.
 	 */
-	protected @NonNull SerializationElement createFrozenSequence(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> listOfNodes) {
+	protected @NonNull SerializationElement createFrozenSequence(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, @NonNull List<@NonNull SerializationNode> listOfNodes) {
 		//
 		//	Rewrite ... X ... {Y.y=current} ... as {Y} ... y=X ... ...
 		//
@@ -111,10 +111,10 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 				UnassignedRuleCallSerializationNode unassignedRuleCallSerializationNode = unassignedRuleContext.getElement();
 				AssignedCurrentSerializationNode assignedCurrentSerializationNode = assignedCurrentContext.getElement();
 				AssignmentAnalysis assignmentAnalysis = assignedCurrentSerializationNode.getAssignmentAnalysis();
-				GrammarCardinality multiplicativeCardinality2 = assignedCurrentSerializationNode.getMultiplicativeCardinality();
-				assert multiplicativeCardinality2.isOne();
+				GrammarCardinality grammarCardinality2 = assignedCurrentSerializationNode.getGrammarCardinality();
+				assert grammarCardinality2.isOne();
 				AbstractRuleAnalysis calledRuleAnalysis = unassignedRuleCallSerializationNode.getCalledRuleAnalysis();
-				AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality2, calledRuleAnalysis.getIndex());
+				AssignedRuleCallSerializationNode assignedRuleCallSerializationNode = new AssignedRuleCallSerializationNode(assignmentAnalysis, grammarCardinality2, calledRuleAnalysis.getIndex());
 				unassignedRuleContext.replace(assignedRuleCallSerializationNode);
 				assignedCurrentContext.remove();
 			}
@@ -122,8 +122,8 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 		//
 		//	Rewrite {... {Y.y=current} ...}? as epsilon | {... {Y.y=current} ...}
 		//
-		if (multiplicativeCardinality.isOne() || noAssignedCurrent(listOfNodes)) {
-			return createFlattenedSequence(compoundElement, multiplicativeCardinality, listOfNodes);
+		if (grammarCardinality.isOne() || noAssignedCurrent(listOfNodes)) {
+			return createFlattenedSequence(compoundElement, grammarCardinality, listOfNodes);
 		}
 		else {
 			SerializationElement sequenceSerializationNode = createFlattenedSequence(compoundElement, GrammarCardinality.ONE, listOfNodes);
@@ -136,9 +136,9 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 
 	/**
 	 * Return a flattened serializzation, possibly a disjunction of serializzation, corresponding to listOfNodes with all rule calls recursively replaced by their called serializations.
-	 * The listOfNodes corresponds to the content of compoundElement and has an overall multiplicativeCardinality.
+	 * The listOfNodes corresponds to the content of compoundElement and has an overall grammarCardinality.
 	 */
-	protected @NonNull SerializationElement createFlattenedSequence(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality multiplicativeCardinality, @NonNull List<@NonNull SerializationNode> listOfNodes) {
+	protected @NonNull SerializationElement createFlattenedSequence(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, @NonNull List<@NonNull SerializationNode> listOfNodes) {
 		assert listOfNodes.size() > 0;
 		//
 		//	Scan to see whether any parser rule calls need flattening.
@@ -162,13 +162,13 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 		if (firstRuleCall == null) {
 			if (listOfNodes.size() == 1) {
 				SerializationNode serializationNode = listOfNodes.get(0);
-				GrammarCardinality nodeMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-				GrammarCardinality maxMultiplicativeCardinality = GrammarCardinality.max(multiplicativeCardinality, nodeMultiplicativeCardinality);
-				if (nodeMultiplicativeCardinality == maxMultiplicativeCardinality) {
+				GrammarCardinality nodeGrammarCardinality = serializationNode.getGrammarCardinality();
+				GrammarCardinality maxGrammarCardinality = GrammarCardinality.max(grammarCardinality, nodeGrammarCardinality);
+				if (nodeGrammarCardinality == maxGrammarCardinality) {
 					return serializationNode;
 				}
 			}
-			return new SequenceSerializationNode(compoundElement, multiplicativeCardinality, listOfNodes);
+			return new SequenceSerializationNode(compoundElement, grammarCardinality, listOfNodes);
 		}
 		//
 		//	If flattening a single rule call as part of an alternative hierarchy at the root, the rule call can be delegated.
@@ -178,10 +178,10 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 			for (; searchElement instanceof Alternatives; searchElement = searchElement.eContainer()) {}
 			boolean isDelegator = searchElement instanceof ParserRule;
 			if (isDelegator) {
-				if (multiplicativeCardinality.isOne()) {
+				if (grammarCardinality.isOne()) {
 					return firstRuleCall;
 				}
-				return new SequenceSerializationNode(compoundElement, multiplicativeCardinality, listOfNodes);
+				return new SequenceSerializationNode(compoundElement, grammarCardinality, listOfNodes);
 			}
 		}
 		//

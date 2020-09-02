@@ -137,7 +137,7 @@ public class StaticRuleMatch implements RuleMatch
 	 * a product for assignedSerializationNode's cardinality variable and for all surrounding sequences in outerVariables.
 	 */
 	protected void analyzeAssignment(@NonNull AssignedSerializationNode assignedSerializationNode, @NonNull Iterable<@NonNull CardinalityVariable> cardinalityVariables,
-			@NonNull GrammarCardinality netMultiplicativeCardinality) {
+			@NonNull GrammarCardinality netGrammarCardinality) {
 		EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 		//
 		//	Accumulate enumerated attributes
@@ -146,20 +146,20 @@ public class StaticRuleMatch implements RuleMatch
 		if (eStructuralFeature instanceof EAttribute) {
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-			serializationRuleAnalysis.analyzeAssignment(eAttribute, enumerationValue, netMultiplicativeCardinality);
-		/*	Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality>> eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
-			if (eAttribute2enumerationValue2multiplicativeCardinality2 == null) {
-				eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2 = new HashMap<>();
+			serializationRuleAnalysis.analyzeAssignment(eAttribute, enumerationValue, netGrammarCardinality);
+		/*	Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> eAttribute2enumerationValue2grammarCardinality2 = eAttribute2enumerationValue2grammarCardinality;
+			if (eAttribute2enumerationValue2grammarCardinality2 == null) {
+				eAttribute2enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality2 = new HashMap<>();
 			}
-			Map<@Nullable EnumerationValue, @NonNull MultiplicativeCardinality> enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality2.get(eAttribute);
-			if (enumerationValue2multiplicativeCardinality == null) {
-				enumerationValue2multiplicativeCardinality = new HashMap<>();
-				eAttribute2enumerationValue2multiplicativeCardinality2.put(eAttribute, enumerationValue2multiplicativeCardinality);
+			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality2.get(eAttribute);
+			if (enumerationValue2grammarCardinality == null) {
+				enumerationValue2grammarCardinality = new HashMap<>();
+				eAttribute2enumerationValue2grammarCardinality2.put(eAttribute, enumerationValue2grammarCardinality);
 			}
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
-			MultiplicativeCardinality oldMultiplicativeCardinality = enumerationValue2multiplicativeCardinality.get(enumerationValue);
-			MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
-			enumerationValue2multiplicativeCardinality.put(enumerationValue, newMultiplicativeCardinality); */
+			GrammarCardinality oldGrammarCardinality = enumerationValue2grammarCardinality.get(enumerationValue);
+			GrammarCardinality newGrammarCardinality = refineGrammarCardinality(netGrammarCardinality, oldGrammarCardinality);
+			enumerationValue2grammarCardinality.put(enumerationValue, newGrammarCardinality); */
 			//
 			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
 			//
@@ -188,23 +188,23 @@ public class StaticRuleMatch implements RuleMatch
 		else {
 			EReference eReference = (EReference)eStructuralFeature;
 			@NonNull Integer @Nullable [] ruleIndexes = assignedSerializationNode.getAssignedRuleIndexes();
-			serializationRuleAnalysis.analyzeAssignment(eReference, ruleIndexes, netMultiplicativeCardinality);
-		/*	Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality>> eReference2ruleAnalysis2multiplicativeCardinality2 = eReference2ruleAnalysis2multiplicativeCardinality;
-			if (eReference2ruleAnalysis2multiplicativeCardinality2 == null) {
-				eReference2ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2 = new HashMap<>();
+			serializationRuleAnalysis.analyzeAssignment(eReference, ruleIndexes, netGrammarCardinality);
+		/*	Map<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality>> eReference2ruleAnalysis2grammarCardinality2 = eReference2ruleAnalysis2grammarCardinality;
+			if (eReference2ruleAnalysis2grammarCardinality2 == null) {
+				eReference2ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality2 = new HashMap<>();
 			}
-			Map<@Nullable ParserRuleAnalysis, @NonNull MultiplicativeCardinality> ruleAnalysis2multiplicativeCardinality = eReference2ruleAnalysis2multiplicativeCardinality2.get(eReference);
-			if (ruleAnalysis2multiplicativeCardinality == null) {
-				ruleAnalysis2multiplicativeCardinality = new HashMap<>();
-				eReference2ruleAnalysis2multiplicativeCardinality2.put(eReference, ruleAnalysis2multiplicativeCardinality);
+			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality2.get(eReference);
+			if (ruleAnalysis2grammarCardinality == null) {
+				ruleAnalysis2grammarCardinality = new HashMap<>();
+				eReference2ruleAnalysis2grammarCardinality2.put(eReference, ruleAnalysis2grammarCardinality);
 			}
 			Iterable<@NonNull AbstractRuleAnalysis> ruleAnalyses = assignedSerializationNode.getAssignedRuleAnalyses();
 			if (ruleAnalyses != null) {
 				for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
 					if (ruleAnalysis instanceof ParserRuleAnalysis) {
-						MultiplicativeCardinality oldMultiplicativeCardinality = ruleAnalysis2multiplicativeCardinality.get(ruleAnalysis);
-						MultiplicativeCardinality newMultiplicativeCardinality = refineMultiplicativeCardinality(netMultiplicativeCardinality, oldMultiplicativeCardinality);
-						ruleAnalysis2multiplicativeCardinality.put((ParserRuleAnalysis) ruleAnalysis, newMultiplicativeCardinality);
+						GrammarCardinality oldGrammarCardinality = ruleAnalysis2grammarCardinality.get(ruleAnalysis);
+						GrammarCardinality newGrammarCardinality = refineGrammarCardinality(netGrammarCardinality, oldGrammarCardinality);
+						ruleAnalysis2grammarCardinality.put((ParserRuleAnalysis) ruleAnalysis, newGrammarCardinality);
 					}
 				}
 			} */
@@ -228,19 +228,19 @@ public class StaticRuleMatch implements RuleMatch
 	public void analyzeSerialization() {
 		analyzeSerialization(serializationRuleAnalysis.getRootSerializationNode(), new Stack<@NonNull CardinalityVariable>(), GrammarCardinality.ONE);
 	}
-	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull GrammarCardinality outerMultiplicativeCardinality) {
+	protected void analyzeSerialization(@NonNull SerializationNode serializationNode, @NonNull Stack<@NonNull CardinalityVariable> cardinalityVariables, @NonNull GrammarCardinality outerGrammarCardinality) {
 		//
 		//	Allocate a CardinalityVariable for an indeterminate multiplicity.
 		//
 		CardinalityVariable cardinalityVariable = null;
 		if (!serializationNode.isRedundant()) {
-			GrammarCardinality multiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-			if (!multiplicativeCardinality.isOne()) {
+			GrammarCardinality grammarCardinality = serializationNode.getGrammarCardinality();
+			if (!grammarCardinality.isOne()) {
 				int index = variable2node.size();
 				String name = String.format("C%02d", index);
 				assert name != null;
 				@NonNull Integer @Nullable [] ruleIndexes = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes() : null;
-				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes != null ? new GrammarRuleVector(ruleIndexes) : null, multiplicativeCardinality);
+				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes != null ? new GrammarRuleVector(ruleIndexes) : null, grammarCardinality);
 				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
 				assert old2 == null;
 				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
@@ -249,8 +249,8 @@ public class StaticRuleMatch implements RuleMatch
 				assert old4 == null;
 			}
 		}
-		GrammarCardinality innerMultiplicativeCardinality = serializationNode.getMultiplicativeCardinality();
-		GrammarCardinality netMultiplicativeCardinality = GrammarCardinality.max(innerMultiplicativeCardinality, outerMultiplicativeCardinality);
+		GrammarCardinality innerGrammarCardinality = serializationNode.getGrammarCardinality();
+		GrammarCardinality netGrammarCardinality = GrammarCardinality.max(innerGrammarCardinality, outerGrammarCardinality);
 		//
 		//	Create the feature size expressions for an assignment
 		//
@@ -260,7 +260,7 @@ public class StaticRuleMatch implements RuleMatch
 		if (serializationNode instanceof AssignedSerializationNode) {
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
 			assignedSerializationNodes.add(assignedSerializationNode);
-			analyzeAssignment(assignedSerializationNode, cardinalityVariables, netMultiplicativeCardinality);
+			analyzeAssignment(assignedSerializationNode, cardinalityVariables, netGrammarCardinality);
 		}
 		//
 		//	Recurse for sequences
@@ -268,7 +268,7 @@ public class StaticRuleMatch implements RuleMatch
 		else if (serializationNode instanceof SequenceSerializationNode) {
 			SequenceSerializationNode sequenceSerializationNode = (SequenceSerializationNode)serializationNode;
 			for (@NonNull SerializationNode nestedSerializationNode : sequenceSerializationNode.getSerializationNodes()) {
-				analyzeSerialization(nestedSerializationNode, cardinalityVariables, netMultiplicativeCardinality);
+				analyzeSerialization(nestedSerializationNode, cardinalityVariables, netGrammarCardinality);
 			}
 		}
 		if (cardinalityVariable != null) {

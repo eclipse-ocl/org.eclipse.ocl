@@ -95,8 +95,8 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		if (alternativeUnassignedKeywordsSerializationNode != null) {
 			return alternativeUnassignedKeywordsSerializationNode;
 		}
-		GrammarCardinality multiplicativeCardinality = GrammarCardinality.toEnum(alternatives);
-		List<@NonNull SerializationElement> alternativeSerializationElements = doAlternativeAssignedKeywords(alternatives, multiplicativeCardinality);
+		GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(alternatives);
+		List<@NonNull SerializationElement> alternativeSerializationElements = doAlternativeAssignedKeywords(alternatives, grammarCardinality);
 		for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(alternatives)) {
 			boolean doSwitchNeeded = true;
 			if ((element instanceof Assignment) && (element.getCardinality() == null)) {
@@ -110,24 +110,24 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 				alternativeSerializationElements.add(doSwitch(classifierID, element));
 			}
 		}
-		return doAlternatives(alternatives, alternativeSerializationElements, multiplicativeCardinality);
+		return doAlternatives(alternatives, alternativeSerializationElements, grammarCardinality);
 	}
 
 	@Override
 	public @NonNull SerializationElement caseAssignment(Assignment assignment) {
 		assert assignment != null;
 		DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
-		GrammarCardinality multiplicativeCardinality = GrammarCardinality.toEnum(assignment);
+		GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(assignment);
 		AbstractElement terminal = XtextGrammarUtil.getTerminal(assignment);
 		if (terminal instanceof CrossReference) {
-			return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, multiplicativeCardinality, (CrossReference)terminal);
+			return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, grammarCardinality, (CrossReference)terminal);
 		}
 		else if (terminal instanceof Keyword) {
-			return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, (Keyword)terminal);
+			return new AssignedKeywordSerializationNode(assignmentAnalysis, grammarCardinality, (Keyword)terminal);
 		}
 		else if (terminal instanceof RuleCall) {
 			AbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)terminal));
-			return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalysis2.getIndex());
+			return new AssignedRuleCallSerializationNode(assignmentAnalysis, grammarCardinality, ruleAnalysis2.getIndex());
 		}
 		else if (terminal instanceof Alternatives) {
 			Alternatives alternatives = (Alternatives)terminal;
@@ -163,18 +163,18 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 					for (@NonNull AbstractRuleAnalysis ruleAnalysis : ruleAnalyses) {
 						ruleIndexes[i++] = ruleAnalysis.getIndex();
 					}
-					return new AlternativeAssignsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords, ruleIndexes);
+					return new AlternativeAssignsSerializationNode(assignmentAnalysis, grammarCardinality, keywords, ruleIndexes);
 				}
 				else {
-					return new AssignedRuleCallSerializationNode(assignmentAnalysis, multiplicativeCardinality, ruleAnalyses.get(0).getIndex());
+					return new AssignedRuleCallSerializationNode(assignmentAnalysis, grammarCardinality, ruleAnalyses.get(0).getIndex());
 				}
 			}
 			else if (keywords != null) {
 				if (keywords.size() > 1) {
-					return new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords);
+					return new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, grammarCardinality, keywords);
 				}
 				else {
-					return new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords.get(0));
+					return new AssignedKeywordSerializationNode(assignmentAnalysis, grammarCardinality, keywords.get(0));
 				}
 			}
 		}
@@ -201,12 +201,12 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 	@Override
 	public @NonNull SerializationElement caseKeyword(Keyword keyword) {
 		assert keyword != null;
-		GrammarCardinality multiplicativeCardinality = GrammarCardinality.toEnum(keyword);
-		if (multiplicativeCardinality.mayBeZero()) {
+		GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(keyword);
+		if (grammarCardinality.mayBeZero()) {
 			return NullSerializationNode.INSTANCE;	// Skip gratuitous output
 		}
 		else {
-			return new UnassignedKeywordSerializationNode(keyword, multiplicativeCardinality);
+			return new UnassignedKeywordSerializationNode(keyword, grammarCardinality);
 		}
 	}
 
@@ -219,8 +219,8 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		if (!(calledRuleAnalysis instanceof ParserRuleAnalysis)) {
 			return NullSerializationNode.INSTANCE;
 		}
-		GrammarCardinality multiplicativeCardinality = GrammarCardinality.toEnum(ruleCall);
-		return new UnassignedRuleCallSerializationNode(ruleCall, multiplicativeCardinality, calledRuleAnalysis);
+		GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(ruleCall);
+		return new UnassignedRuleCallSerializationNode(ruleCall, grammarCardinality, calledRuleAnalysis);
 	}
 
 	/*		@Override
@@ -233,7 +233,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		throw new UnsupportedOperationException("Unsupported '" + object.eClass().getName() + "' in ParserRuleSwitch");
 	}
 
-	private @NonNull List<@NonNull SerializationElement> doAlternativeAssignedKeywords(@NonNull Alternatives alternatives, @NonNull GrammarCardinality multiplicativeCardinality) {
+	private @NonNull List<@NonNull SerializationElement> doAlternativeAssignedKeywords(@NonNull Alternatives alternatives, @NonNull GrammarCardinality grammarCardinality) {
 		Map<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> eFeature2keywords = null;
 		Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
 		for (@NonNull AbstractElement element : elements) {
@@ -262,10 +262,10 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 				DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 				if (keywords.size() == 1) {
 					Keyword keyword = keywords.get(0);
-					alternativeSerializationElements.add(new AssignedKeywordSerializationNode(assignmentAnalysis, multiplicativeCardinality, keyword));
+					alternativeSerializationElements.add(new AssignedKeywordSerializationNode(assignmentAnalysis, grammarCardinality, keyword));
 				}
 				else {
-					alternativeSerializationElements.add(new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, multiplicativeCardinality, keywords));
+					alternativeSerializationElements.add(new AlternativeAssignedKeywordsSerializationNode(assignmentAnalysis, grammarCardinality, keywords));
 				}
 			}
 		}
@@ -279,37 +279,37 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 				return null;
 			}
 		}
-		GrammarCardinality multiplicativeCardinality = GrammarCardinality.toEnum(alternatives);
-		AlternativeUnassignedKeywordsSerializationNode alternativeUnassignedKeywordsSerializationNode = new AlternativeUnassignedKeywordsSerializationNode(multiplicativeCardinality, null);
+		GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(alternatives);
+		AlternativeUnassignedKeywordsSerializationNode alternativeUnassignedKeywordsSerializationNode = new AlternativeUnassignedKeywordsSerializationNode(grammarCardinality, null);
 		for (@NonNull AbstractElement element : elements) {
 			alternativeUnassignedKeywordsSerializationNode.addKeyword((Keyword)element);
 		}
 		return alternativeUnassignedKeywordsSerializationNode;
 	}
 
-	private @NonNull SerializationElement doAlternatives(@NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationElement> alternativeSerializationElements, @NonNull GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality.isZeroOrMore()) {	// (A|B)* => A* | B*
+	private @NonNull SerializationElement doAlternatives(@NonNull Alternatives alternatives, @NonNull List<@NonNull SerializationElement> alternativeSerializationElements, @NonNull GrammarCardinality grammarCardinality) {
+		if (grammarCardinality.isZeroOrMore()) {	// (A|B)* => A* | B*
 			SerializationElement conjunction = new ListOfSerializationNode();
 			for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
-				SerializationElement frozen = alternativeSerializationElement.setMultiplicativeCardinality(alternatives, GrammarCardinality.ZERO_OR_MORE).freezeSequences(alternatives, GrammarCardinality.ONE);
+				SerializationElement frozen = alternativeSerializationElement.setGrammarCardinality(alternatives, GrammarCardinality.ZERO_OR_MORE).freezeSequences(alternatives, GrammarCardinality.ONE);
 				conjunction = conjunction.addConcatenation(frozen);
 			}
 			return conjunction;
 		}
-		else if (multiplicativeCardinality.isOneOrMore()) { 											// (A|B)+ => A+B* | A*B+
+		else if (grammarCardinality.isOneOrMore()) { 											// (A|B)+ => A+B* | A*B+
 			ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 			for (@NonNull SerializationElement alternativeSerializationElement1 : alternativeSerializationElements) {
 				SerializationElement conjunction = new ListOfSerializationNode();
 				for (@NonNull SerializationElement alternativeSerializationElement2 : alternativeSerializationElements) {
 					GrammarCardinality termCardinality = alternativeSerializationElement1 != alternativeSerializationElement2 ? GrammarCardinality.ZERO_OR_MORE : GrammarCardinality.ONE_OR_MORE;
-					conjunction = conjunction.addConcatenation(alternativeSerializationElement2.setMultiplicativeCardinality(alternatives, termCardinality));
+					conjunction = conjunction.addConcatenation(alternativeSerializationElement2.setGrammarCardinality(alternatives, termCardinality));
 				}
 				SerializationElement frozen = conjunction.freezeSequences(alternatives, GrammarCardinality.ONE);
 				disjunction = disjunction.addConjunction(frozen);
 			}
 			return disjunction;
 		}
-		else if (multiplicativeCardinality.isZeroOrOne()) {	// (A|B)? => A|B|epsilon
+		else if (grammarCardinality.isZeroOrOne()) {	// (A|B)? => A|B|epsilon
 			ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 			for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
 				SerializationElement conjunction = new ListOfSerializationNode();
@@ -318,10 +318,10 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 				disjunction = disjunction.addConjunction(frozen);
 			}
 			disjunction = disjunction.addConjunction(NullSerializationNode.INSTANCE);
-			return disjunction;//.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);
-		//	return disjunction.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ZERO_OR_ONE);
+			return disjunction;//.setGrammarCardinality(grammarAnalysis, alternatives, GrammarCardinality.ONE);
+		//	return disjunction.setGrammarCardinality(grammarAnalysis, alternatives, GrammarCardinality.ZERO_OR_ONE);
 		}
-		else { // multiplicativeCardinality.isOne()
+		else { // grammarCardinality.isOne()
 			ListOfListOfSerializationNode disjunction = new ListOfListOfSerializationNode();
 			for (@NonNull SerializationElement alternativeSerializationElement : alternativeSerializationElements) {
 				SerializationElement conjunction = new ListOfSerializationNode();
@@ -329,7 +329,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 				SerializationElement frozen = conjunction.freezeSequences(alternatives, GrammarCardinality.ONE);
 				disjunction = disjunction.addConjunction(frozen);
 			}
-			return disjunction;//.setMultiplicativeCardinality(grammarAnalysis, alternatives, MultiplicativeCardinality.ONE);
+			return disjunction;//.setGrammarCardinality(grammarAnalysis, alternatives, GrammarCardinality.ONE);
 		}
 	}
 

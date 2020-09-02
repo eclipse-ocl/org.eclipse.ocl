@@ -58,23 +58,23 @@ public class SerializationRule
 		}
 	}
 
-	public static class EAttribute_EnumerationValue_MultiplicativeCardinality implements Nameable
+	public static class EAttribute_EnumerationValue_GrammarCardinality implements Nameable
 	{
 		protected final @NonNull EAttribute eAttribute;
-		protected final @NonNull EnumerationValue_MultiplicativeCardinality @NonNull [] enumerationValue2multiplicativeCardinality;
+		protected final @NonNull EnumerationValue_GrammarCardinality @NonNull [] enumerationValue2grammarCardinality;
 
-		public EAttribute_EnumerationValue_MultiplicativeCardinality(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue_MultiplicativeCardinality @NonNull [] enumerationValue2multiplicativeCardinality) {
+		public EAttribute_EnumerationValue_GrammarCardinality(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue_GrammarCardinality @NonNull [] enumerationValue2grammarCardinality) {
 			assert eAttribute != null;
 			this.eAttribute = eAttribute;
-			this.enumerationValue2multiplicativeCardinality = enumerationValue2multiplicativeCardinality;
+			this.enumerationValue2grammarCardinality = enumerationValue2grammarCardinality;
 		}
 
 		public @NonNull EAttribute getEAttribute() {
 			return eAttribute;
 		}
 
-		public @NonNull EnumerationValue_MultiplicativeCardinality @NonNull [] getEnumerationValue_MultiplicativeCardinality() {
-			return enumerationValue2multiplicativeCardinality;
+		public @NonNull EnumerationValue_GrammarCardinality @NonNull [] getEnumerationValue_GrammarCardinality() {
+			return enumerationValue2grammarCardinality;
 		}
 
 		@Override
@@ -84,7 +84,7 @@ public class SerializationRule
 
 		@Override
 		public @NonNull String toString() {
-			return eAttribute.getEContainingClass().getName() + "::" + eAttribute.getName() + " " + enumerationValue2multiplicativeCardinality;
+			return eAttribute.getEContainingClass().getName() + "::" + eAttribute.getName() + " " + enumerationValue2grammarCardinality;
 		}
 	}
 
@@ -118,15 +118,15 @@ public class SerializationRule
 		}
 	}
 
-	public static class EReference_RuleIndex_MultiplicativeCardinality implements Nameable
+	public static class EReference_RuleIndex_GrammarCardinality implements Nameable
 	{
 		protected final @NonNull EReference eReference;
-		protected final @NonNull RuleIndex_MultiplicativeCardinality @NonNull [] ruleIndex2multiplicativeCardinality;
+		protected final @NonNull RuleIndex_GrammarCardinality @NonNull [] ruleIndex2grammarCardinality;
 
-		public EReference_RuleIndex_MultiplicativeCardinality(/*@NonNull*/ EReference eReference, @NonNull RuleIndex_MultiplicativeCardinality @NonNull [] ruleIndex2multiplicativeCardinality) {
+		public EReference_RuleIndex_GrammarCardinality(/*@NonNull*/ EReference eReference, @NonNull RuleIndex_GrammarCardinality @NonNull [] ruleIndex2grammarCardinality) {
 			assert eReference != null;
 			this.eReference = eReference;
-			this.ruleIndex2multiplicativeCardinality = ruleIndex2multiplicativeCardinality;
+			this.ruleIndex2grammarCardinality = ruleIndex2grammarCardinality;
 		}
 
 		public @NonNull EReference getEReference() {
@@ -138,33 +138,33 @@ public class SerializationRule
 			return XtextGrammarUtil.getName(eReference);
 		}
 
-		public @NonNull RuleIndex_MultiplicativeCardinality @NonNull [] getRuleIndex_MultiplicativeCardinality() {
-			return ruleIndex2multiplicativeCardinality;
+		public @NonNull RuleIndex_GrammarCardinality @NonNull [] getRuleIndex_GrammarCardinality() {
+			return ruleIndex2grammarCardinality;
 		}
 
 		@Override
 		public @NonNull String toString() {
-			return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + ruleIndex2multiplicativeCardinality;
+			return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + ruleIndex2grammarCardinality;
 		}
 	}
 
-	public static class EnumerationValue_MultiplicativeCardinality implements Nameable
+	public static class EnumerationValue_GrammarCardinality implements Nameable
 	{
 		protected final @Nullable EnumerationValue enumerationValue;
-		protected final @NonNull GrammarCardinality multiplicativeCardinality;
+		protected final @NonNull GrammarCardinality grammarCardinality;
 
-		public EnumerationValue_MultiplicativeCardinality(/*@NonNull*/ EnumerationValue enumerationValue, @NonNull GrammarCardinality multiplicativeCardinality) {
+		public EnumerationValue_GrammarCardinality(/*@NonNull*/ EnumerationValue enumerationValue, @NonNull GrammarCardinality grammarCardinality) {
 //			assert enumerationValue != null;
 			this.enumerationValue = enumerationValue;
-			this.multiplicativeCardinality = multiplicativeCardinality;
+			this.grammarCardinality = grammarCardinality;
 		}
 
 		public @Nullable EnumerationValue getEnumerationValue() {
 			return enumerationValue;
 		}
 
-		public @NonNull GrammarCardinality getMultiplicativeCardinality() {
-			return multiplicativeCardinality;
+		public @NonNull GrammarCardinality getGrammarCardinality() {
+			return grammarCardinality;
 		}
 
 		@Override
@@ -174,28 +174,28 @@ public class SerializationRule
 
 		@Override
 		public @NonNull String toString() {
-			return getName() + " " + multiplicativeCardinality;
+			return getName() + " " + grammarCardinality;
 		}
 	}
 
-	public static class RuleIndex_MultiplicativeCardinality implements Comparable<@NonNull RuleIndex_MultiplicativeCardinality>
+	public static class RuleIndex_GrammarCardinality implements Comparable<@NonNull RuleIndex_GrammarCardinality>
 	{
 		protected final @NonNull Integer ruleIndex;
-		protected final @NonNull GrammarCardinality multiplicativeCardinality;
+		protected final @NonNull GrammarCardinality grammarCardinality;
 
-		public RuleIndex_MultiplicativeCardinality(/*@NonNull*/ Integer ruleIndex, @NonNull GrammarCardinality multiplicativeCardinality) {
+		public RuleIndex_GrammarCardinality(/*@NonNull*/ Integer ruleIndex, @NonNull GrammarCardinality grammarCardinality) {
 			assert ruleIndex != null;
 			this.ruleIndex = ruleIndex;
-			this.multiplicativeCardinality = multiplicativeCardinality;
+			this.grammarCardinality = grammarCardinality;
 		}
 
 		@Override
-		public int compareTo(@NonNull RuleIndex_MultiplicativeCardinality that) {
+		public int compareTo(@NonNull RuleIndex_GrammarCardinality that) {
 			return this.ruleIndex - that.ruleIndex;
 		}
 
-		public @NonNull GrammarCardinality getMultiplicativeCardinality() {
-			return multiplicativeCardinality;
+		public @NonNull GrammarCardinality getGrammarCardinality() {
+			return grammarCardinality;
 		}
 
 		public @NonNull Integer getRuleIndex() {
@@ -204,7 +204,7 @@ public class SerializationRule
 
 		@Override
 		public @NonNull String toString() {
-			return ruleIndex + " " + multiplicativeCardinality;
+			return ruleIndex + " " + grammarCardinality;
 		}
 	}
 
@@ -223,12 +223,12 @@ public class SerializationRule
 	/**
 	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
 	 */
-	private final @NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality;
+	private final @NonNull EAttribute_EnumerationValue_GrammarCardinality @Nullable [] eAttribute2enumerationValue2grammarCardinality;
 
 	/**
 	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
 	 */
-	private final @NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality;
+	private final @NonNull EReference_RuleIndex_GrammarCardinality @Nullable [] eReference2ruleValueIndex2grammarCardinality;
 
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ SerializationMatchStep /*@NonNull*/ [] solutionSteps,
@@ -237,8 +237,8 @@ public class SerializationRule
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
 			/*@NonNull*/ EAttribute @Nullable [] needsDefaultEAttributes,
-			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality @Nullable [] eAttribute2enumerationValue2multiplicativeCardinality,
-			@NonNull EReference_RuleIndex_MultiplicativeCardinality @Nullable [] eReference2ruleValueIndex2multiplicativeCardinality) {
+			@NonNull EAttribute_EnumerationValue_GrammarCardinality @Nullable [] eAttribute2enumerationValue2grammarCardinality,
+			@NonNull EReference_RuleIndex_GrammarCardinality @Nullable [] eReference2ruleValueIndex2grammarCardinality) {
 		this.ruleValueIndex = ruleValueIndex;
 		this.solutionSteps = solutionSteps;
 		this.serializationSteps = serializationSteps;
@@ -246,8 +246,8 @@ public class SerializationRule
 		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
 		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
 		this.needsDefaultEAttributes = needsDefaultEAttributes;
-		this.eAttribute2enumerationValue2multiplicativeCardinality = eAttribute2enumerationValue2multiplicativeCardinality;
-		this.eReference2ruleValueIndex2multiplicativeCardinality = eReference2ruleValueIndex2multiplicativeCardinality;
+		this.eAttribute2enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality;
+		this.eReference2ruleValueIndex2grammarCardinality = eReference2ruleValueIndex2grammarCardinality;
 	}
 
 /*	@Override
@@ -280,10 +280,10 @@ public class SerializationRule
 		if (!ClassUtil.safeEquals(this.needsDefaultEAttributes, that.needsDefaultEAttributes)) {
 			return false;
 		}
-		if (!ClassUtil.safeEquals(this.eAttribute2enumerationValue2multiplicativeCardinality, that.eAttribute2enumerationValue2multiplicativeCardinality)) {
+		if (!ClassUtil.safeEquals(this.eAttribute2enumerationValue2grammarCardinality, that.eAttribute2enumerationValue2grammarCardinality)) {
 			return false;
 		}
-		if (!ClassUtil.safeEquals(this.eReference2ruleValueIndex2multiplicativeCardinality, that.eReference2ruleValueIndex2multiplicativeCardinality)) {
+		if (!ClassUtil.safeEquals(this.eReference2ruleValueIndex2grammarCardinality, that.eReference2ruleValueIndex2grammarCardinality)) {
 			return false;
 		}
 		return true;
@@ -311,13 +311,13 @@ public class SerializationRule
 		return null;
 	}
 
-	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EStructuralFeature eStructuralFeature) {
-		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			for (@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality eAttribute_EnumerationValue_MultiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinality) {
-				if (eAttribute_EnumerationValue_MultiplicativeCardinality.getEAttribute() == eStructuralFeature) {
-					for (@NonNull EnumerationValue_MultiplicativeCardinality enumerationValue2multiplicativeCardinality : eAttribute_EnumerationValue_MultiplicativeCardinality.getEnumerationValue_MultiplicativeCardinality()) {
-						if (enumerationValue2multiplicativeCardinality.getEnumerationValue() == null) {
-							return enumerationValue2multiplicativeCardinality.getMultiplicativeCardinality();
+	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EStructuralFeature eStructuralFeature) {
+		if (eAttribute2enumerationValue2grammarCardinality != null) {
+			for (@NonNull EAttribute_EnumerationValue_GrammarCardinality eAttribute_EnumerationValue_GrammarCardinality : eAttribute2enumerationValue2grammarCardinality) {
+				if (eAttribute_EnumerationValue_GrammarCardinality.getEAttribute() == eStructuralFeature) {
+					for (@NonNull EnumerationValue_GrammarCardinality enumerationValue2grammarCardinality : eAttribute_EnumerationValue_GrammarCardinality.getEnumerationValue_GrammarCardinality()) {
+						if (enumerationValue2grammarCardinality.getEnumerationValue() == null) {
+							return enumerationValue2grammarCardinality.getGrammarCardinality();
 						}
 					}
 					return null;
@@ -327,13 +327,13 @@ public class SerializationRule
 		return null;
 	}
 
-	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		if (eAttribute2enumerationValue2multiplicativeCardinality != null) {
-			for (@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality eAttribute_EnumerationValue_MultiplicativeCardinality : eAttribute2enumerationValue2multiplicativeCardinality) {
-				if (eAttribute_EnumerationValue_MultiplicativeCardinality.getEAttribute() == eAttribute) {
-					for (@NonNull EnumerationValue_MultiplicativeCardinality enumerationValue2multiplicativeCardinality : eAttribute_EnumerationValue_MultiplicativeCardinality.getEnumerationValue_MultiplicativeCardinality()) {
-						if (enumerationValue2multiplicativeCardinality.getEnumerationValue() == enumerationValue) {
-							return enumerationValue2multiplicativeCardinality.getMultiplicativeCardinality();
+	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		if (eAttribute2enumerationValue2grammarCardinality != null) {
+			for (@NonNull EAttribute_EnumerationValue_GrammarCardinality eAttribute_EnumerationValue_GrammarCardinality : eAttribute2enumerationValue2grammarCardinality) {
+				if (eAttribute_EnumerationValue_GrammarCardinality.getEAttribute() == eAttribute) {
+					for (@NonNull EnumerationValue_GrammarCardinality enumerationValue2grammarCardinality : eAttribute_EnumerationValue_GrammarCardinality.getEnumerationValue_GrammarCardinality()) {
+						if (enumerationValue2grammarCardinality.getEnumerationValue() == enumerationValue) {
+							return enumerationValue2grammarCardinality.getGrammarCardinality();
 						}
 					}
 					return null;
@@ -343,13 +343,13 @@ public class SerializationRule
 		return null;
 	}
 
-	public @Nullable GrammarCardinality getMultiplicativeCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
-		if (eReference2ruleValueIndex2multiplicativeCardinality != null) {
-			for (@NonNull EReference_RuleIndex_MultiplicativeCardinality eReference_RuleIndex_MultiplicativeCardinality : eReference2ruleValueIndex2multiplicativeCardinality) {
-				if (eReference_RuleIndex_MultiplicativeCardinality.getEReference() == eReference) {
-					for (@NonNull RuleIndex_MultiplicativeCardinality ruleIndex2multiplicativeCardinality : eReference_RuleIndex_MultiplicativeCardinality.getRuleIndex_MultiplicativeCardinality()) {
-						if (ruleIndex2multiplicativeCardinality.getRuleIndex() == ruleValue.getIndex()) {
-							return ruleIndex2multiplicativeCardinality.getMultiplicativeCardinality();
+	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
+		if (eReference2ruleValueIndex2grammarCardinality != null) {
+			for (@NonNull EReference_RuleIndex_GrammarCardinality eReference_RuleIndex_GrammarCardinality : eReference2ruleValueIndex2grammarCardinality) {
+				if (eReference_RuleIndex_GrammarCardinality.getEReference() == eReference) {
+					for (@NonNull RuleIndex_GrammarCardinality ruleIndex2grammarCardinality : eReference_RuleIndex_GrammarCardinality.getRuleIndex_GrammarCardinality()) {
+						if (ruleIndex2grammarCardinality.getRuleIndex() == ruleValue.getIndex()) {
+							return ruleIndex2grammarCardinality.getGrammarCardinality();
 						}
 					}
 					return null;
@@ -381,8 +381,8 @@ public class SerializationRule
 			hash += 13*arrayHash(eAttribute2enumerationValues);
 			hash += 17*arrayHash(eReference2assignedRuleValueIndexes);
 			hash += 19*arrayHash(needsDefaultEAttributes);
-			hash += 23*arrayHash(eAttribute2enumerationValue2multiplicativeCardinality);
-			hash += 29*arrayHash(eReference2ruleValueIndex2multiplicativeCardinality);
+			hash += 23*arrayHash(eAttribute2enumerationValue2grammarCardinality);
+			hash += 29*arrayHash(eReference2ruleValueIndex2grammarCardinality);
 			this.hashCode = hash;
 		}
 		assert hashCode != null;
@@ -418,19 +418,19 @@ public class SerializationRule
 			//
 			//	Check that no 'unused' features are used.
 			//
-			@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality[] eAttribute2enumerationValue2multiplicativeCardinality2 = eAttribute2enumerationValue2multiplicativeCardinality;
-			@NonNull EReference_RuleIndex_MultiplicativeCardinality[] eReference2ruleValueIndex2multiplicativeCardinality2 = eReference2ruleValueIndex2multiplicativeCardinality;
+			@NonNull EAttribute_EnumerationValue_GrammarCardinality[] eAttribute2enumerationValue2grammarCardinality2 = eAttribute2enumerationValue2grammarCardinality;
+			@NonNull EReference_RuleIndex_GrammarCardinality[] eReference2ruleValueIndex2grammarCardinality2 = eReference2ruleValueIndex2grammarCardinality;
 			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
 				boolean gotIt = false;
-				if (eAttribute2enumerationValue2multiplicativeCardinality2 != null) {
-					for (@NonNull EAttribute_EnumerationValue_MultiplicativeCardinality eAttributeData : eAttribute2enumerationValue2multiplicativeCardinality2) {
+				if (eAttribute2enumerationValue2grammarCardinality2 != null) {
+					for (@NonNull EAttribute_EnumerationValue_GrammarCardinality eAttributeData : eAttribute2enumerationValue2grammarCardinality2) {
 						if (eAttributeData.getEAttribute() == eStructuralFeature) {
 							gotIt = true;
 						}
 					}
 				}
-				if (eReference2ruleValueIndex2multiplicativeCardinality2 != null) {
-					for (@NonNull EReference_RuleIndex_MultiplicativeCardinality eReferenceData : eReference2ruleValueIndex2multiplicativeCardinality2) {
+				if (eReference2ruleValueIndex2grammarCardinality2 != null) {
+					for (@NonNull EReference_RuleIndex_GrammarCardinality eReferenceData : eReference2ruleValueIndex2grammarCardinality2) {
 						if (eReferenceData.getEReference() == eStructuralFeature) {
 							gotIt = true;
 						}

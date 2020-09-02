@@ -110,7 +110,7 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 		return grammarAnalysis;
 	}
 
-	public @NonNull GrammarCardinality getMultiplicativeCardinality() {
+	public @NonNull GrammarCardinality getGrammarCardinality() {
 		return GrammarCardinality.toEnum(actionOrAssignment);
 	}
 

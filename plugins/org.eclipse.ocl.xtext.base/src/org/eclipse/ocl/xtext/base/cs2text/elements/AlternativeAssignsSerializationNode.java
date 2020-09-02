@@ -40,19 +40,19 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
-			@NonNull GrammarCardinality multiplicativeCardinality, @Nullable Iterable<@NonNull Keyword> keywords, @NonNull Integer @Nullable [] calledRuleIndexes) {
-		super(assignmentAnalysis, multiplicativeCardinality);
+			@NonNull GrammarCardinality grammarCardinality, @Nullable Iterable<@NonNull Keyword> keywords, @NonNull Integer @Nullable [] calledRuleIndexes) {
+		super(assignmentAnalysis, grammarCardinality);
 		this.keywords = keywords;
 		this.enumerationValue = keywords != null ? assignmentAnalysis.getGrammarAnalysis().getEnumerationValue(keywords) : null;
 		this.calledRuleIndexes = calledRuleIndexes;
 	}
 
 	@Override
-	public @NonNull SerializationNode clone(@Nullable GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality == null) {
-			multiplicativeCardinality = this.multiplicativeCardinality;
+	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
+		if (grammarCardinality == null) {
+			grammarCardinality = this.grammarCardinality;
 		}
-		return new AlternativeAssignsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, multiplicativeCardinality, keywords, calledRuleIndexes);
+		return new AlternativeAssignsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, grammarCardinality, keywords, calledRuleIndexes);
 	}
 
 	@Override

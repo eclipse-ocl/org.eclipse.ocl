@@ -70,8 +70,8 @@ public class RTSerializationRule2 extends SerializationRule
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
 			serializationRuleAnalysis.getStaticRuleMatch().basicGetNeedsDefaultEAttributes(),
-			serializationRuleAnalysis.basicGetEAttribute2enumerationValue2multiplicativeCardinality(),
-			serializationRuleAnalysis.basicGetEReference2ruleValueIndex2multiplicativeCardinality());
+			serializationRuleAnalysis.basicGetEAttribute2enumerationValue2grammarCardinality(),
+			serializationRuleAnalysis.basicGetEReference2ruleValueIndex2grammarCardinality());
 		this.serializationRuleAnalysis = serializationRuleAnalysis;
 		RTSerializationRule2 old = debugMap.put(serializationRuleAnalysis, this);		// XXX debugging
 		assert old == null;

@@ -162,20 +162,20 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return newTypeReference(genModelHelper.getQualifiedPackageInterfaceName(eStructuralFeature.getEContainingClass().getEPackage())) + ".Literals." + genModelHelper.getEcoreLiteralName(eStructuralFeature);
 	}
 
-	protected @NonNull String emitMultiplicativeCardinality(@NonNull GrammarCardinality multiplicativeCardinality) {
-		if (multiplicativeCardinality.equals(GrammarCardinality.ONE)) {
+	protected @NonNull String emitGrammarCardinality(@NonNull GrammarCardinality grammarCardinality) {
+		if (grammarCardinality.equals(GrammarCardinality.ONE)) {
 			return newTypeReference(GrammarCardinality.class) + ".ONE";
 		}
-		else if (multiplicativeCardinality.equals(GrammarCardinality.ZERO_OR_ONE)) {
+		else if (grammarCardinality.equals(GrammarCardinality.ZERO_OR_ONE)) {
 			return newTypeReference(GrammarCardinality.class) + ".ZERO_OR_ONE";
 		}
-		else if (multiplicativeCardinality.equals(GrammarCardinality.ZERO_OR_MORE)) {
+		else if (grammarCardinality.equals(GrammarCardinality.ZERO_OR_MORE)) {
 			return newTypeReference(GrammarCardinality.class) + ".ZERO_OR_MORE";
 		}
-		else if (multiplicativeCardinality.equals(GrammarCardinality.ONE_OR_MORE)) {
+		else if (grammarCardinality.equals(GrammarCardinality.ONE_OR_MORE)) {
 			return newTypeReference(GrammarCardinality.class) + ".ONE_OR_MORE";
 		}
-		return multiplicativeCardinality.toString();
+		return grammarCardinality.toString();
 	}
 
 	protected @NonNull String emitQualifiedLiteral(@NonNull EPackage ePackage) {
