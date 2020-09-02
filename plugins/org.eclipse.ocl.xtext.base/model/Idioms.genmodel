@@ -82,11 +82,6 @@
     <genClasses ecoreClass="Idioms.ecore#//PushSegment"/>
     <genClasses image="false" ecoreClass="Idioms.ecore#//Segment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Segment/name"/>
-      <genOperations ecoreOperation="Idioms.ecore#//Segment/serialize">
-        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializationStep"/>
-        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializer"/>
-        <genParameters ecoreParameter="Idioms.ecore#//Segment/serialize/serializationBuilder"/>
-      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//SoftNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//SoftSpaceSegment"/>

@@ -818,7 +818,7 @@ public interface IdiomsPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Serialization Builder</em>'.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.SerializationBuilder" serializeable="false"
+	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder" serializeable="false"
 	 * @generated
 	 */
 	EDataType getSerializationBuilder();
@@ -851,7 +851,7 @@ public interface IdiomsPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>User Element Serializer</em>'.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.user.UserElementSerializer" serializeable="false"
+	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer" serializeable="false"
 	 * @generated
 	 */
 	EDataType getUserElementSerializer();

@@ -11,13 +11,12 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment;
 
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Segment</b></em>'.
+ * @extends org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -36,7 +35,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
  * @model abstract="true"
  * @generated
  */
-public interface Segment extends EObject
+public interface Segment extends EObject, org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
 {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -63,13 +62,5 @@ public interface Segment extends EObject
 	 * @generated
 	 */
 	void setName(String value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model serializationStepDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationStep" serializationStepRequired="true" serializerDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.UserElementSerializer" serializerRequired="true" serializationBuilderDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationBuilder" serializationBuilderRequired="true"
-	 * @generated
-	 */
-	void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder);
 
 } // Segment
