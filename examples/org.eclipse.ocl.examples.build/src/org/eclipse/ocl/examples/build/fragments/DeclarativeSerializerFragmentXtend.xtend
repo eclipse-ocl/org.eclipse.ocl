@@ -69,6 +69,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -201,7 +202,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			new @NonNull «newTypeReference(SerializationRule_SegmentsList)» [] {
 				«FOR serializationRuleSegmentsList : grammarAnalysis.getEClassValue(eClass).getSerializationRuleSegmentsLists() SEPARATOR ','»
 				«var serializationRule = serializationRuleSegmentsList.getSerializationRule()»
-				new «newTypeReference(SerializationRule_SegmentsList)»(«getSerializationRuleId(serializationRule, true)», «getSegmentsListId(getSegmentsListString(serializationRule.getStaticSegments()), true)») /* «serializationRule.toRuleString()» */
+				new «newTypeReference(SerializationRule_SegmentsList)»(«getSerializationRuleId(serializationRule, true)», «getSerializationSegmentsListId(getSerializationSegmentsListString(serializationRule.getStaticSegments()), true)») /* «serializationRule.toRuleString()» */
 				«ENDFOR»
 			}, «IF grammarAnalysis.basicGetEReferenceRuleIndexes(eClass) === null »null«ELSE»
 			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
@@ -472,8 +473,8 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				«getSerializationStepId(serializationStep, true)» /* «serializationStep.toString()» || «IF segments !== null»«FOR segment : segments SEPARATOR ' '»«segment.toString()»«ENDFOR»«ELSE»«"«null»"»«ENDIF» */
 				«ENDFOR»
 			}, 
-			«var segmentsListString = getSegmentsListString(segmentsList)»
-			«IF segmentsList !== null»«getSegmentsListId(segmentsListString, true)»«ELSE»null«ENDIF»,
+			«var segmentsListString = getSerializationSegmentsListString(segmentsList)»
+			«IF segmentsList !== null»«getSerializationSegmentsListId(segmentsListString, true)»«ELSE»null«ENDIF»,
 			«var eAttribute2EnumerationValues = serializationRuleAnalysis.basicGetEAttribute2EnumerationValues()»
 			«IF eAttribute2EnumerationValues !== null»
 			new @NonNull «newTypeReference(EAttribute_EnumerationValues)» [] {
@@ -551,8 +552,8 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		 */
 		private class _SerializationSegments
 		{
-			«FOR segments : getSegmentsIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(Segment)» [] «getSegmentsId(segments, false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] {
+			«FOR segments : getSerializationSegmentsIterable(grammarAnalysis)»
+			private final @NonNull «newTypeReference(SerializationSegment)» [] «getSerializationSegmentsId(segments, false)» = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [] {
 				«FOR segment : segments SEPARATOR ','»
 				«generateSerializationSegment(segment)» /* «segment.toString()» */
 				«ENDFOR»
@@ -627,10 +628,10 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		 */
 		private class _SerializationSegmentsLists
 		{
-			«FOR segmentsList : getSegmentsListIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] {
+			«FOR segmentsList : getSerializationSegmentsListIterable(grammarAnalysis)»
+			private final @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @Nullable [] «getSerializationSegmentsListId(getSerializationSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @Nullable [] {
 				«FOR segments : segmentsList SEPARATOR ','»
-				«IF segments !== null»«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' '»«segment.toString()»«ENDFOR» */«ELSE»null«ENDIF»
+				«IF segments !== null»«getSerializationSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' '»«segment.toString()»«ENDFOR» */«ELSE»null«ENDIF»
 				«ENDFOR»
 			};
 			«ENDFOR»

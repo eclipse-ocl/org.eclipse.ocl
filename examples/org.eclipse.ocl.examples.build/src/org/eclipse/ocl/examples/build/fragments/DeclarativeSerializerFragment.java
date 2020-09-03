@@ -494,14 +494,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "mt." + id : id;
 	}
 
-	protected @NonNull String getSegmentsId(@NonNull List<Segment> segments, boolean addQualifier) {
+	protected @NonNull String getSerializationSegmentsId(@NonNull List<Segment> segments, boolean addQualifier) {
 		assert segments2id != null;
 		String id = segments2id.get(segments);
 	//	assert id != null;
 		return addQualifier ? "ss." + id : id;
 	}
 
-	protected @NonNull Iterable<@NonNull List<Segment>> getSegmentsIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected @NonNull Iterable<@NonNull List<Segment>> getSerializationSegmentsIterable(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull List<Segment>, @NonNull String> segments2id2 = segments2id;
 		if (segments2id2 == null) {
 			segments2id = segments2id2 = new HashMap<>();
@@ -525,14 +525,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return segmentLists;
 	}
 
-	protected @NonNull String getSegmentsListId(@NonNull String segmentsList, boolean addQualifier) {
+	protected @NonNull String getSerializationSegmentsListId(@NonNull String segmentsList, boolean addQualifier) {
 		assert segmentsList2id != null;
 		String id = segmentsList2id.get(segmentsList);
 		assert id != null;
 		return addQualifier ? "sl." + id : id;
 	}
 
-	protected @NonNull Iterable<@NonNull Segment[][]> getSegmentsListIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected @NonNull Iterable<@NonNull Segment[][]> getSerializationSegmentsListIterable(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
 		assert serializationRule2id2 != null;
 		Map<@NonNull String, @NonNull String> segmentsList2id2 = segmentsList2id;
@@ -540,7 +540,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			segmentsList2id = segmentsList2id2 = new HashMap<>();
 		}
 		for (@NonNull SerializationRule serializationRule : serializationRule2id2.keySet()) {
-			segmentsList2id2.put(getSegmentsListString(serializationRule.getStaticSegments()), "");
+			segmentsList2id2.put(getSerializationSegmentsListString(serializationRule.getStaticSegments()), "");
 		}
 		List<@NonNull String> segmentsLists = new ArrayList<>(segmentsList2id2.keySet());
 		Collections.sort(segmentsLists);
@@ -554,7 +554,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return segmentsListArray;
 	}
 
-	protected @NonNull String getSegmentsListString(@NonNull Segment[][] segmentsList) {
+	protected @NonNull String getSerializationSegmentsListString(@NonNull Segment[][] segmentsList) {
 		String string = segmentsList2string.get(segmentsList);
 		if (string == null) {
 			StringBuilder s= new StringBuilder();
@@ -682,7 +682,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 	protected void initSerializationMetaDataContent(@NonNull GrammarAnalysis grammarAnalysis) {
 		getEnumValueIterable(grammarAnalysis);
-		getSegmentsIterable(grammarAnalysis);
+		getSerializationSegmentsIterable(grammarAnalysis);
 		getSerializationStepIterable(grammarAnalysis);
 		getMatchTermIterable(grammarAnalysis);
 		getMatchStepIterable(grammarAnalysis);
