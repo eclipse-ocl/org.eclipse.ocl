@@ -126,7 +126,7 @@ public class StringSegmentImpl extends SegmentImpl implements StringSegment
 		boolean oldPrintable = printable;
 		printable = newPrintable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldPrintable, printable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldPrintable, printable));
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class StringSegmentImpl extends SegmentImpl implements StringSegment
 		String oldString = string;
 		string = newString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldString, string));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldString, string));
 	}
 
 	/**
@@ -164,9 +164,9 @@ public class StringSegmentImpl extends SegmentImpl implements StringSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				return isPrintable();
-			case 3:
+			case 2:
 				return getString();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -182,10 +182,10 @@ public class StringSegmentImpl extends SegmentImpl implements StringSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setPrintable((Boolean)newValue);
 				return;
-			case 3:
+			case 2:
 				setString((String)newValue);
 				return;
 		}
@@ -202,10 +202,10 @@ public class StringSegmentImpl extends SegmentImpl implements StringSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setPrintable(PRINTABLE_EDEFAULT);
 				return;
-			case 3:
+			case 2:
 				setString(STRING_EDEFAULT);
 				return;
 		}
@@ -222,9 +222,9 @@ public class StringSegmentImpl extends SegmentImpl implements StringSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				return printable != PRINTABLE_EDEFAULT;
-			case 3:
+			case 2:
 				return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
 		}
 		return super.eIsSet(featureID);

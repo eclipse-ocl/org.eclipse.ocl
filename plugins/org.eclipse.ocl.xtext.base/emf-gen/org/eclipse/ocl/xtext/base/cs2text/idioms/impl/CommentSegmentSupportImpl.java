@@ -339,9 +339,7 @@ public abstract class CommentSegmentSupportImpl extends EObjectImpl implements C
 	}
 
 	@Override
-	public void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
-		assert serializer != null;
-		assert serializationBuilder != null;
+	public void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		EObject eObject = serializer.getElement();
 		String comment = getComment(eObject);
 		if (comment != null) {

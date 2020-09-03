@@ -89,7 +89,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 			if (eStructuralFeature != oldEStructuralFeature)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldEStructuralFeature, eStructuralFeature));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldEStructuralFeature, eStructuralFeature));
 			}
 		}
 		return eStructuralFeature;
@@ -116,7 +116,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 		EStructuralFeature oldEStructuralFeature = eStructuralFeature;
 		eStructuralFeature = newEStructuralFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldEStructuralFeature, eStructuralFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEStructuralFeature, eStructuralFeature));
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				if (resolve) return getEStructuralFeature();
 				return basicGetEStructuralFeature();
 		}
@@ -146,7 +146,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setEStructuralFeature((EStructuralFeature)newValue);
 				return;
 		}
@@ -163,7 +163,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setEStructuralFeature((EStructuralFeature)null);
 				return;
 		}
@@ -180,7 +180,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				return eStructuralFeature != null;
 		}
 		return super.eIsSet(featureID);

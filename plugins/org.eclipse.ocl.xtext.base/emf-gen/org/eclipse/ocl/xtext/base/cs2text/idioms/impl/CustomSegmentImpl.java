@@ -120,7 +120,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		Class<?> oldSupportClass = supportClass;
 		supportClass = newSupportClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldSupportClass, supportClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldSupportClass, supportClass));
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		String oldSupportClassName = supportClassName;
 		supportClassName = newSupportClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldSupportClassName, supportClassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldSupportClassName, supportClassName));
 	}
 
 	/**
@@ -158,9 +158,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				return getSupportClass();
-			case 3:
+			case 2:
 				return getSupportClassName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -176,10 +176,10 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setSupportClass((Class<?>)newValue);
 				return;
-			case 3:
+			case 2:
 				setSupportClassName((String)newValue);
 				return;
 		}
@@ -196,10 +196,10 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setSupportClass((Class<?>)null);
 				return;
-			case 3:
+			case 2:
 				setSupportClassName(SUPPORT_CLASS_NAME_EDEFAULT);
 				return;
 		}
@@ -216,9 +216,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				return supportClass != null;
-			case 3:
+			case 2:
 				return SUPPORT_CLASS_NAME_EDEFAULT == null ? supportClassName != null : !SUPPORT_CLASS_NAME_EDEFAULT.equals(supportClassName);
 		}
 		return super.eIsSet(featureID);

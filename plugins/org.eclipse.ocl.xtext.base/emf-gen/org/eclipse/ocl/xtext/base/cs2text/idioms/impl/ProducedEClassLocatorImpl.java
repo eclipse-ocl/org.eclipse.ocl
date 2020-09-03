@@ -88,7 +88,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 			if (eClass != oldEClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldEClass, eClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldEClass, eClass));
 			}
 		}
 		return eClass;
@@ -115,7 +115,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 		EClass oldEClass = eClass;
 		eClass = newEClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldEClass, eClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEClass, eClass));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				if (resolve) return getEClass();
 				return basicGetEClass();
 		}
@@ -145,7 +145,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setEClass((EClass)newValue);
 				return;
 		}
@@ -162,7 +162,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				setEClass((EClass)null);
 				return;
 		}
@@ -179,7 +179,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 2:
+			case 1:
 				return eClass != null;
 		}
 		return super.eIsSet(featureID);

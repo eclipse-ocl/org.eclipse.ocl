@@ -12,7 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -269,57 +268,6 @@ public interface IdiomsPackage extends EPackage
 	 */
 	int VALUE_SEGMENT = 20;
 	/**
-	 * The meta object id for the '<em>Locator Helper</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getLocatorHelper()
-	 * @generated
-	 */
-	int LOCATOR_HELPER = 21;
-
-	/**
-	 * The meta object id for the '<em>Serialization Builder</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationBuilder()
-	 * @generated
-	 */
-	int SERIALIZATION_BUILDER = 23;
-	/**
-	 * The meta object id for the '<em>Serialization Step</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationStep()
-	 * @generated
-	 */
-	int SERIALIZATION_STEP = 24;
-
-	/**
-	 * The meta object id for the '<em>User Element Serializer</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getUserElementSerializer()
-	 * @generated
-	 */
-	int USER_ELEMENT_SERIALIZER = 25;
-
-
-	/**
-	 * The meta object id for the '<em>Segment Helper</em>' data type.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSegmentHelper()
-	 * @generated
-	 */
-	int SEGMENT_HELPER = 22;
-
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator <em>Assignment Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -564,17 +512,6 @@ public interface IdiomsPackage extends EPackage
 	EAttribute getLocator_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Locator#getHelper <em>Helper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Helper</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Locator#getHelper()
-	 * @see #getLocator()
-	 * @generated
-	 */
-	EAttribute getLocator_Helper();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator <em>Keyword Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -689,17 +626,6 @@ public interface IdiomsPackage extends EPackage
 	EAttribute getSegment_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment#getHelper <em>Helper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Helper</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Segment#getHelper()
-	 * @see #getSegment()
-	 * @generated
-	 */
-	EAttribute getSegment_Helper();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment <em>Soft New Line Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -803,61 +729,6 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EClass getValueSegment();
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper <em>Locator Helper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Locator Helper</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper" serializeable="false"
-	 * @generated
-	 */
-	EDataType getLocatorHelper();
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder <em>Serialization Builder</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Serialization Builder</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder" serializeable="false"
-	 * @generated
-	 */
-	EDataType getSerializationBuilder();
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep <em>Serialization Step</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Serialization Step</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep"
-	 * @generated
-	 */
-	EDataType getSerializationStep();
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer <em>User Element Serializer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>User Element Serializer</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer" serializeable="false"
-	 * @generated
-	 */
-	EDataType getUserElementSerializer();
-
-	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper <em>Segment Helper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for data type '<em>Segment Helper</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper" serializeable="false"
-	 * @generated
-	 */
-	EDataType getSegmentHelper();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1085,14 +956,6 @@ public interface IdiomsPackage extends EPackage
 		EAttribute LOCATOR__NAME = eINSTANCE.getLocator_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Helper</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LOCATOR__HELPER = eINSTANCE.getLocator_Helper();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.KeywordLocatorImpl <em>Keyword Locator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1195,14 +1058,6 @@ public interface IdiomsPackage extends EPackage
 		EAttribute SEGMENT__NAME = eINSTANCE.getSegment_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Helper</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SEGMENT__HELPER = eINSTANCE.getSegment_Helper();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftNewLineSegmentImpl <em>Soft New Line Segment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1291,56 +1146,6 @@ public interface IdiomsPackage extends EPackage
 		 * @generated
 		 */
 		EClass VALUE_SEGMENT = eINSTANCE.getValueSegment();
-
-		/**
-		 * The meta object literal for the '<em>Locator Helper</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getLocatorHelper()
-		 * @generated
-		 */
-		EDataType LOCATOR_HELPER = eINSTANCE.getLocatorHelper();
-
-		/**
-		 * The meta object literal for the '<em>Serialization Builder</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationBuilder()
-		 * @generated
-		 */
-		EDataType SERIALIZATION_BUILDER = eINSTANCE.getSerializationBuilder();
-
-		/**
-		 * The meta object literal for the '<em>Serialization Step</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationStep()
-		 * @generated
-		 */
-		EDataType SERIALIZATION_STEP = eINSTANCE.getSerializationStep();
-
-		/**
-		 * The meta object literal for the '<em>User Element Serializer</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getUserElementSerializer()
-		 * @generated
-		 */
-		EDataType USER_ELEMENT_SERIALIZER = eINSTANCE.getUserElementSerializer();
-
-		/**
-		 * The meta object literal for the '<em>Segment Helper</em>' data type.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSegmentHelper()
-		 * @generated
-		 */
-		EDataType SEGMENT_HELPER = eINSTANCE.getSegmentHelper();
 
 	}
 

@@ -45,11 +45,6 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="CustomSegmentSupport defines the interface that a user-defined class must implement&#xA;to contribute custom strings to the overall output."/>
     </eAnnotations>
-    <eOperations name="serialize">
-      <eParameters name="serializationStep" lowerBound="1" eType="#//SerializationStep"/>
-      <eParameters name="serializer" lowerBound="1" eType="#//UserElementSerializer"/>
-      <eParameters name="serializationBuilder" lowerBound="1" eType="#//SerializationBuilder"/>
-    </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DefaultLocator" eSuperTypes="#//Locator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -112,8 +107,6 @@
       <details key="documentation" value="A Locator identifies where a SubIdiom applies Segment formatting."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="helper" eType="#//LocatorHelper"
-        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordLocator" eSuperTypes="#//Locator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -163,8 +156,6 @@
       <details key="documentation" value="A Segment is a string or virtual string that may be concatenated to form the overall output.&#xA;Each SubIdiom provides s sequence of SEfment to wrap the inner value as a formatted output value,"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="helper" eType="#//SegmentHelper"
-        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SoftNewLineSegment" eSuperTypes="#//Segment"/>
   <eClassifiers xsi:type="ecore:EClass" name="SoftSpaceSegment" eSuperTypes="#//Segment">
@@ -195,13 +186,4 @@
       <details key="documentation" value="A ValueSegment is the virtual string that makes the inner value of a grammar element available for&#xA;embedding in the outer value."/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="LocatorHelper" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper"
-      serializable="false"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="SegmentHelper" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper"
-      serializable="false"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="SerializationBuilder" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder"
-      serializable="false"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="SerializationStep" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="UserElementSerializer" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer"
-      serializable="false"/>
 </ecore:EPackage>

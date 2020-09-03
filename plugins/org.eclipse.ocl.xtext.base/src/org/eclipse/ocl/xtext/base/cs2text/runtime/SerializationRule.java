@@ -30,6 +30,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SegmentImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsSwitch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis.UserSlotAnalysis;
@@ -632,11 +633,12 @@ public class SerializationRule
 
 	protected void serializeSegments(@NonNull Segment @NonNull [] segments, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (Segment segment : segments) {
-			SegmentHelper helper = segment.getHelper();
+			SegmentImpl segmentImpl = (SegmentImpl)segment;
+			SegmentHelper helper = (SegmentHelper)segmentImpl.basicGetHelper();
 			if (helper == null) {
 				helper = serializer.getModelAnalysis().getSegmentSwitch().doSwitch(segment);
 				assert helper != null;
-				segment.setHelper(helper);
+				segmentImpl.setHelper(helper);
 			}
 			helper.serialize(segment, serializationStep, serializer, serializationBuilder);
 		}

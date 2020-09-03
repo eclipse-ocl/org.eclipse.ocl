@@ -5303,7 +5303,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._125 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._124 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._95,
 			null,
@@ -8736,7 +8736,7 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				ms._040 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._124 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._125 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._95,
 			null,

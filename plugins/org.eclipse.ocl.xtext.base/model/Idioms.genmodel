@@ -17,11 +17,6 @@
   <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base.cs2text" resource="XMI"
       disposableProviderFactory="true" generateExampleClass="false" ecorePackage="Idioms.ecore#/"
       publicationLocation="">
-    <genDataTypes ecoreDataType="Idioms.ecore#//LocatorHelper"/>
-    <genDataTypes ecoreDataType="Idioms.ecore#//SegmentHelper"/>
-    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
-    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationStep"/>
-    <genDataTypes ecoreDataType="Idioms.ecore#//UserElementSerializer"/>
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
     </genClasses>
@@ -37,13 +32,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/supportClass"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/supportClassName"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="Idioms.ecore#//CustomSegmentSupport">
-      <genOperations ecoreOperation="Idioms.ecore#//CustomSegmentSupport/serialize">
-        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationStep"/>
-        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializer"/>
-        <genParameters ecoreParameter="Idioms.ecore#//CustomSegmentSupport/serialize/serializationBuilder"/>
-      </genOperations>
-    </genClasses>
+    <genClasses image="false" ecoreClass="Idioms.ecore#//CustomSegmentSupport"/>
     <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
     <genClasses ecoreClass="Idioms.ecore#//HalfNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//Idiom">
@@ -59,7 +48,6 @@
     </genClasses>
     <genClasses image="false" ecoreClass="Idioms.ecore#//Locator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Locator/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Locator/helper"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//KeywordLocator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//KeywordLocator/string"/>
@@ -74,7 +62,6 @@
     <genClasses ecoreClass="Idioms.ecore#//PushSegment"/>
     <genClasses image="false" ecoreClass="Idioms.ecore#//Segment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Segment/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Segment/helper"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//SoftNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//SoftSpaceSegment"/>

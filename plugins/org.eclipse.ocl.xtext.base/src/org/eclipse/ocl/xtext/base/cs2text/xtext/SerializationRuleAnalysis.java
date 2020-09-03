@@ -44,6 +44,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.LocatorImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsSwitch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
@@ -704,11 +705,12 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		if (locator == null) {
 			return false;
 		}
-		LocatorHelper locatorHelper = locator.getHelper();
+		LocatorImpl locatorImpl = (LocatorImpl)locator;
+		LocatorHelper locatorHelper = (LocatorHelper)locatorImpl.basicGetHelper();
 		if (locatorHelper == null) {
 			LocatorSwitch subIdiomLocatorSwitch = grammarAnalysis.getLocatorSwitch();
 			locatorHelper = subIdiomLocatorSwitch.doSwitch(locator);
-			locator.setHelper(locatorHelper);
+			locatorImpl.setHelper(locatorHelper);
 		}
 		if (locatorHelper == null) {	// Only actually null after an UnsupportedOperationException
 			return false;

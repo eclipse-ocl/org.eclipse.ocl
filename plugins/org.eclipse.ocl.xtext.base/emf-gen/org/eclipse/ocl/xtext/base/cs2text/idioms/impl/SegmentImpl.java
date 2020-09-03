@@ -14,9 +14,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelpe
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SegmentImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SegmentImpl#getHelper <em>Helper</em>}</li>
  * </ul>
  *
  * @generated
@@ -41,7 +40,7 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SEGMENT_FEATURE_COUNT = 2;
+	public static final int SEGMENT_FEATURE_COUNT = 1;
 
 
 	/**
@@ -62,28 +61,6 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-
-	/**
-	 * The default value of the '{@link #getHelper() <em>Helper</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getHelper()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final SegmentHelper HELPER_EDEFAULT = null;
-
-
-	/**
-	 * The cached value of the '{@link #getHelper() <em>Helper</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getHelper()
-	 * @generated
-	 * @ordered
-	 */
-	protected SegmentHelper helper = HELPER_EDEFAULT;
 
 
 	/**
@@ -138,39 +115,12 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 	 * @generated
 	 */
 	@Override
-	public SegmentHelper getHelper()
-	{
-		return helper;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setHelper(SegmentHelper newHelper)
-	{
-		SegmentHelper oldHelper = helper;
-		helper = newHelper;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldHelper, helper));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID)
 		{
 			case 0:
 				return getName();
-			case 1:
-				return getHelper();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -187,9 +137,6 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 		{
 			case 0:
 				setName((String)newValue);
-				return;
-			case 1:
-				setHelper((SegmentHelper)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -208,9 +155,6 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 			case 0:
 				setName(NAME_EDEFAULT);
 				return;
-			case 1:
-				setHelper(HELPER_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -227,8 +171,6 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 		{
 			case 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case 1:
-				return HELPER_EDEFAULT == null ? helper != null : !HELPER_EDEFAULT.equals(helper);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -246,11 +188,21 @@ public abstract class SegmentImpl extends EObjectImpl implements Segment
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", helper: "); //$NON-NLS-1$
-		result.append(helper);
 		result.append(')');
 		return result.toString();
 	}
 
+	/**
+	 * Transient cached reference to org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper serialization support.
+	 */
+	private @Nullable Object helper = null;
+
+	public @Nullable Object basicGetHelper() {
+		return helper;
+	}
+
+	public void setHelper(Object newHelper) {
+		this.helper = newHelper;
+	}
 
 } //SegmentImpl

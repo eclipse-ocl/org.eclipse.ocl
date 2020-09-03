@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
@@ -32,13 +33,9 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
  */
 public interface CustomSegmentSupport extends EObject
 {
-
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model serializationStepDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationStep" serializationStepRequired="true" serializerDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.UserElementSerializer" serializerRequired="true" serializationBuilderDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationBuilder" serializationBuilderRequired="true"
-	 * @generated
+	 * @generated NOT
 	 */
-	void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder);
+	void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
 } // CustomSegmentSupport
