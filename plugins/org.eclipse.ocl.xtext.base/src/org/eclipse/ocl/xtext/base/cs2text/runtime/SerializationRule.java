@@ -30,7 +30,6 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SegmentImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsSwitch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis.UserSlotAnalysis;
@@ -549,7 +548,7 @@ public class SerializationRule
 		return hashCode.intValue();
 	} */
 
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull Segment @NonNull [] @Nullable [] staticSegments) {
+	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments) {
 		//
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
@@ -631,30 +630,19 @@ public class SerializationRule
 		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
 	}
 
-	protected void serializeSegments(@NonNull Segment @NonNull [] segments, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		for (Segment segment : segments) {
-			SegmentImpl segmentImpl = (SegmentImpl)segment;
-			SegmentHelper helper = (SegmentHelper)segmentImpl.basicGetHelper();
-			if (helper == null) {
-				helper = serializer.getModelAnalysis().getSegmentSwitch().doSwitch(segment);
-				assert helper != null;
-				segmentImpl.setHelper(helper);
-			}
-			helper.serialize(segment, serializationStep, serializer, serializationBuilder);
-		}
-	}
-
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		@NonNull Segment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
+		@NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
 		for (int index = startIndex; index < endIndex; ) {
-			@NonNull Segment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
+			@NonNull SerializationSegment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
 			SerializationStep serializationStep = serializationSteps[index++];
 			int cardinalityVariableIndex = serializationStep.getVariableIndex();
 			int stepLoopCount = cardinalityVariableIndex >= 0 ? serializer.getValue(cardinalityVariableIndex) : 1;
 			if (serializationStep instanceof SerializationStepSequence) {
 				int stepsRange = ((SerializationStepSequence)serializationStep).getStepsRange();
 				if (segments != null) {
-					serializeSegments(segments, serializationStep, serializer, serializationBuilder);
+					for (@NonNull SerializationSegment segment : segments) {
+						segment.serialize(serializationStep, serializer, serializationBuilder);
+					}
 				}
 				else {
 					for (int i = 0; i < stepLoopCount; i++) {
@@ -666,7 +654,9 @@ public class SerializationRule
 			else {
 				for (int i = 0; i < stepLoopCount; i++) {
 					if (segments != null) {
-						serializeSegments(segments, serializationStep, serializer, serializationBuilder);
+						for (@NonNull SerializationSegment segment : segments) {
+							segment.serialize(serializationStep, serializer, serializationBuilder);
+						}
 					}
 					else {
 						serializationStep.serialize(serializer, serializationBuilder);

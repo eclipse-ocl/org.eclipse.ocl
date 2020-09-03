@@ -39,8 +39,17 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceFactoryImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceImpl;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractGrammarAnalysis;
@@ -55,6 +64,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.CustomSerializationSegment;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -122,6 +133,8 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	private @Nullable SerializationGrammarAnalysis runtime = null;
 	private @Nullable Iterable<@NonNull EClassValue> sortedProducedEClassValues = null;
 	private @Nullable Map<@NonNull SerializationRule, @NonNull SerializationRuleAnalysis> serializationRule2aserializationRuleAnalysis = null;
+
+	private @NonNull Map<@NonNull Segment, @NonNull SerializationSegment> segment2serializationSegment = new HashMap<>();
 
 	public GrammarAnalysis() {
 		this.grammar = null;
@@ -691,6 +704,41 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 
 	public @NonNull SerializationRule @NonNull [] getSerializationRules(@NonNull ParserRuleValue ruleValue) {
 		return ruleValue.getSerializationRules();
+	}
+
+	public @NonNull SerializationSegment getSerializationSegment(@NonNull Segment segment) {
+		SerializationSegment serializationSegment = segment2serializationSegment.get(segment);
+		if (serializationSegment == null) {
+			if (segment instanceof HalfNewLineSegment) {
+				serializationSegment = SerializationSegment.HALF_NEW_LINE;
+			}
+			else if (segment instanceof NoSpaceSegment) {
+				serializationSegment = SerializationSegment.NO_SPACE;
+			}
+			else if (segment instanceof PopSegment) {
+				serializationSegment = SerializationSegment.POP;
+			}
+			else if (segment instanceof PushSegment) {
+				serializationSegment = SerializationSegment.PUSH;
+			}
+			else if (segment instanceof SoftNewLineSegment) {
+				serializationSegment = SerializationSegment.SOFT_NEW_LINE;
+			}
+			else if (segment instanceof SoftSpaceSegment) {
+				serializationSegment = SerializationSegment.SOFT_SPACE;
+			}
+			else if (segment instanceof ValueSegment) {
+				serializationSegment = SerializationSegment.VALUE;
+			}
+			else if (segment instanceof CustomSegment) {
+				serializationSegment = new CustomSerializationSegment(((CustomSegment) segment).getSupportClassName());	// XXX
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
+			segment2serializationSegment.put(segment, serializationSegment);
+		}
+		return serializationSegment;
 	}
 
 	@Override

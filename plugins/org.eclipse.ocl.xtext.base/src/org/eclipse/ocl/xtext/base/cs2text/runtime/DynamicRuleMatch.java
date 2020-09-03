@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 
 /**
  * A DynamicRuleMatch accumulates the results of augmenting the static match of a particular SerializationRule
@@ -34,13 +33,13 @@ public class DynamicRuleMatch implements RuleMatch
 	protected final @NonNull UserSlotsAnalysis slotsAnalysis;
 	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull SerializationMatchStep @NonNull [] matchSteps;
-	protected final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
+	protected final @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments;
 	private final @NonNull Object debugStaticRuleMatch;
 	private final @NonNull Map<@NonNull Integer, @NonNull Integer> variableIndex2value = new HashMap<>();
 	private boolean checked = false;
 
 	public DynamicRuleMatch(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationRule serializationRule, @NonNull SerializationMatchStep @NonNull [] matchSteps,
-			@NonNull Segment @NonNull [] @Nullable [] staticSegments, @NonNull Object debugStaticRuleMatch) {
+			@NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments, @NonNull Object debugStaticRuleMatch) {
 		this.slotsAnalysis = slotsAnalysis;
 		this.serializationRule = serializationRule;
 		this.matchSteps = matchSteps;
@@ -95,7 +94,7 @@ public class DynamicRuleMatch implements RuleMatch
 		return slotsAnalysis;
 	}
 
-	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
+	public @NonNull SerializationSegment @NonNull [] @Nullable [] getStaticSegments() {
 		return staticSegments;
 	}
 

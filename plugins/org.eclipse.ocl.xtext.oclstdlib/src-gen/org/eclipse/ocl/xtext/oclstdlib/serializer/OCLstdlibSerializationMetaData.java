@@ -16,7 +16,6 @@ import com.google.inject.Inject;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue;
@@ -27,7 +26,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationVa
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.IdiomsUtils;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
@@ -48,6 +46,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_GrammarCardinality;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.CustomSerializationSegment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall;
@@ -2012,50 +2012,50 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 	 */
 	private class _SerializationSegments
 	{
-		private final @NonNull Segment [] _0 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.createCustomSegment(null, BaseCommentSegmentSupport.class) /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport */,
-			IdiomsUtils.VALUE /* «value» */
+		private final @NonNull SerializationSegment [] _0 = new @NonNull SerializationSegment @NonNull [] {
+			new CustomSerializationSegment(BaseCommentSegmentSupport.class) /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport */,
+			SerializationSegment.VALUE /* «value» */
 		};
-		private final @NonNull Segment [] _1 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.NO_SPACE /* «! » */,
-			IdiomsUtils.VALUE /* «value» */,
-			IdiomsUtils.NO_SPACE /* «! » */
+		private final @NonNull SerializationSegment [] _1 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.NO_SPACE /* «! » */,
+			SerializationSegment.VALUE /* «value» */,
+			SerializationSegment.NO_SPACE /* «! » */
 		};
-		private final @NonNull Segment [] _2 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.NO_SPACE /* «! » */,
-			IdiomsUtils.VALUE /* «value» */,
-			IdiomsUtils.SOFT_SPACE /* «? » */
+		private final @NonNull SerializationSegment [] _2 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.NO_SPACE /* «! » */,
+			SerializationSegment.VALUE /* «value» */,
+			SerializationSegment.SOFT_SPACE /* «? » */
 		};
-		private final @NonNull Segment [] _3 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.NO_SPACE /* «! » */,
-			IdiomsUtils.VALUE /* «value» */,
-			IdiomsUtils.SOFT_NEW_LINE /* «?\n» */
+		private final @NonNull SerializationSegment [] _3 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.NO_SPACE /* «! » */,
+			SerializationSegment.VALUE /* «value» */,
+			SerializationSegment.SOFT_NEW_LINE /* «?\n» */
 		};
-		private final @NonNull Segment [] _4 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.NO_SPACE /* «! » */,
-			IdiomsUtils.VALUE /* «value» */
+		private final @NonNull SerializationSegment [] _4 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.NO_SPACE /* «! » */,
+			SerializationSegment.VALUE /* «value» */
 		};
-		private final @NonNull Segment [] _5 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.POP /* «-» */,
-			IdiomsUtils.SOFT_SPACE /* «? » */,
-			IdiomsUtils.VALUE /* «value» */,
-			IdiomsUtils.SOFT_NEW_LINE /* «?\n» */
+		private final @NonNull SerializationSegment [] _5 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.POP /* «-» */,
+			SerializationSegment.SOFT_SPACE /* «? » */,
+			SerializationSegment.VALUE /* «value» */,
+			SerializationSegment.SOFT_NEW_LINE /* «?\n» */
 		};
-		private final @NonNull Segment [] _6 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.SOFT_SPACE /* «? » */,
-			IdiomsUtils.VALUE /* «value» */,
-			IdiomsUtils.PUSH /* «+» */,
-			IdiomsUtils.SOFT_NEW_LINE /* «?\n» */
+		private final @NonNull SerializationSegment [] _6 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.SOFT_SPACE /* «? » */,
+			SerializationSegment.VALUE /* «value» */,
+			SerializationSegment.PUSH /* «+» */,
+			SerializationSegment.SOFT_NEW_LINE /* «?\n» */
 		};
-		private final @NonNull Segment [] _7 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.SOFT_SPACE /* «? » */,
-			IdiomsUtils.VALUE /* «value» */,
-			IdiomsUtils.SOFT_SPACE /* «? » */
+		private final @NonNull SerializationSegment [] _7 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.SOFT_SPACE /* «? » */,
+			SerializationSegment.VALUE /* «value» */,
+			SerializationSegment.SOFT_SPACE /* «? » */
 		};
-		private final @NonNull Segment [] _8 = new @NonNull Segment @NonNull [] {
-			IdiomsUtils.HALF_NEW_LINE /* «½\n» */,
-			IdiomsUtils.VALUE /* «value» */,
-			IdiomsUtils.HALF_NEW_LINE /* «½\n» */
+		private final @NonNull SerializationSegment [] _8 = new @NonNull SerializationSegment @NonNull [] {
+			SerializationSegment.HALF_NEW_LINE /* «½\n» */,
+			SerializationSegment.VALUE /* «value» */,
+			SerializationSegment.HALF_NEW_LINE /* «½\n» */
 		};
 	}
 
@@ -2064,10 +2064,10 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 	 */
 	private class _SerializationSegmentsLists
 	{
-		private final @NonNull Segment @NonNull [] @Nullable [] _00 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _00 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _01 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _01 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -2077,7 +2077,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _02 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _02 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -2088,14 +2088,14 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._5 /* «-» «? » «value» «?\n» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _03 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _03 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _04 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _04 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -2103,7 +2103,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _05 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _05 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -2112,7 +2112,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _06 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _06 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			null,
@@ -2120,7 +2120,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _07 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _07 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
@@ -2133,7 +2133,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _08 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _08 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
@@ -2147,7 +2147,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._5 /* «-» «? » «value» «?\n» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _09 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _09 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null,
@@ -2155,7 +2155,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _10 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _10 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null,
@@ -2164,7 +2164,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _11 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _11 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2173,7 +2173,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _12 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _12 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2183,20 +2183,20 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _13 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _13 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _14 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _14 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _15 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _15 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
 			null,
@@ -2206,12 +2206,12 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _16 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _16 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _17 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _17 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2226,7 +2226,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _18 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _18 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2242,7 +2242,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _19 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _19 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2254,7 +2254,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _20 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _20 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2267,7 +2267,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _21 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _21 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2276,7 +2276,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _22 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _22 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2286,7 +2286,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _23 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _23 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2296,7 +2296,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _24 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _24 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2307,28 +2307,28 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _25 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _25 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._1 /* «! » «value» «! » */,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _26 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _26 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _27 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _27 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			ss._1 /* «! » «value» «! » */,
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _28 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _28 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			null,
 			ss._7 /* «? » «value» «? » */,
 			ss._1 /* «! » «value» «! » */,
@@ -2336,10 +2336,10 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._4 /* «! » «value» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _29 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _29 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _30 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _30 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			null,
@@ -2349,21 +2349,21 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _31 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _31 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			null,
 			ss._1 /* «! » «value» «! » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _32 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _32 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			null,
 			ss._3 /* «! » «value» «?\n» */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _33 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _33 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			null,
@@ -2375,7 +2375,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _34 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _34 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			ss._6 /* «? » «value» «+» «?\n» */,
@@ -2386,26 +2386,14 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _35 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _35 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _36 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _36 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null
-		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _37 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2413,7 +2401,19 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _38 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _37 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null
+		};
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _38 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._1 /* «! » «value» «! » */,
 			null,
@@ -2422,18 +2422,18 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _39 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _39 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._1 /* «! » «value» «! » */,
 			null,
 			ss._4 /* «! » «value» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _40 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _40 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._2 /* «! » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _41 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _41 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._2 /* «! » «value» «? » */,
 			null,
@@ -2446,17 +2446,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _42 = new @NonNull Segment @NonNull [] @Nullable [] {
-			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-			ss._2 /* «! » «value» «? » */,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null,
-			null,
-			ss._7 /* «? » «value» «? » */,
-			null
-		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _43 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _42 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._2 /* «! » «value» «? » */,
 			null,
@@ -2464,12 +2454,22 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			null,
 			ss._7 /* «? » «value» «? » */,
+			null
+		};
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _43 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
+			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+			ss._2 /* «! » «value» «? » */,
+			null,
+			ss._7 /* «? » «value» «? » */,
+			null,
+			null,
+			ss._7 /* «? » «value» «? » */,
 			null,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _44 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _44 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._3 /* «! » «value» «?\n» */,
 			null,
@@ -2480,12 +2480,12 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _45 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _45 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _46 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _46 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2495,7 +2495,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _47 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _47 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2506,7 +2506,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _48 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _48 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2516,14 +2516,14 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _49 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _49 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _50 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _50 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2533,7 +2533,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _51 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _51 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2544,7 +2544,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _52 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _52 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2557,7 +2557,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._3 /* «! » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _53 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _53 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2566,7 +2566,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _54 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _54 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			null,
@@ -2575,7 +2575,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _55 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _55 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._6 /* «? » «value» «+» «?\n» */,
@@ -2585,20 +2585,20 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _56 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _56 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._6 /* «? » «value» «+» «?\n» */,
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _57 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _57 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _58 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _58 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2630,7 +2630,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._3 /* «! » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _59 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _59 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2666,7 +2666,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _60 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _60 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2679,7 +2679,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._4 /* «! » «value» */,
 			ss._3 /* «! » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _61 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _61 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2694,7 +2694,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _62 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _62 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2713,7 +2713,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _63 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _63 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2728,7 +2728,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _64 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _64 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2741,7 +2741,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._3 /* «! » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _65 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _65 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2758,20 +2758,20 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _66 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _66 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _67 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _67 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
 			null
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _68 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _68 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2793,7 +2793,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _69 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _69 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2819,7 +2819,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._3 /* «! » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _70 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _70 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2854,7 +2854,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _71 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _71 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2867,7 +2867,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			ss._7 /* «? » «value» «? » */,
 			ss._3 /* «! » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _72 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _72 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._0 /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 			ss._7 /* «? » «value» «? » */,
 			ss._7 /* «? » «value» «? » */,
@@ -2882,7 +2882,7 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 			null,
 			ss._5 /* «-» «? » «value» «?\n» */
 		};
-		private final @NonNull Segment @NonNull [] @Nullable [] _73 = new @NonNull Segment @NonNull [] @Nullable [] {
+		private final @NonNull SerializationSegment @NonNull [] @Nullable [] _73 = new @NonNull SerializationSegment @NonNull [] @Nullable [] {
 			ss._7 /* «? » «value» «? » */
 		};
 	}
@@ -10350,7 +10350,6 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 //	import EAttribute;
 //	import NonNull;
 //	import Nullable;
-//	import Segment;
 //	import DataTypeRuleValue;
 //	import EClassValue;
 //	import SerializationRule_SegmentsList;
@@ -10360,7 +10359,6 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 //	import GrammarCardinality;
 //	import GrammarRuleValue;
 //	import GrammarRuleVector;
-//	import IdiomsUtils;
 //	import ParserRuleValue;
 //	import SerializationGrammarAnalysis;
 //	import SerializationMatchStep;
@@ -10381,6 +10379,8 @@ public class OCLstdlibSerializationMetaData extends AbstractSerializationMetaDat
 //	import EReference_RuleIndexes;
 //	import EnumerationValue_GrammarCardinality;
 //	import RuleIndex_GrammarCardinality;
+//	import SerializationSegment;
+//	import CustomSerializationSegment;
 //	import SerializationStep;
 //	import SerializationStepAssignKeyword;
 //	import SerializationStepAssignedRuleCall;

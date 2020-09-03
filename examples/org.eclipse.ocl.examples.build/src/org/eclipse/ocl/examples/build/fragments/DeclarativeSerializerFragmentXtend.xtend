@@ -69,6 +69,13 @@ import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.ValueSerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.StringSerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.CustomSerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.IdiomsUtils
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.ValueSerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.StringSerializationSegment
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -562,59 +569,65 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 	}
 
-	protected def generateSerializationSegment(Segment segment) {
+	protected def generateSerializationSegment(SerializationSegment segment) {
 		switch segment {
-		CustomSegment: return generateSerializationSegment_Custom(segment)
-		HalfNewLineSegment: return generateSerializationSegment_HalfNewLine(segment)
-		NewLineSegment: return generateSerializationSegment_NewLine(segment)
-		NoSpaceSegment: return generateSerializationSegment_NoSpace(segment)
-		PopSegment: return generateSerializationSegment_Pop(segment)
-		PushSegment: return generateSerializationSegment_Push(segment)
-		SoftNewLineSegment: return generateSerializationSegment_SoftNewLine(segment)
-		SoftSpaceSegment: return generateSerializationSegment_SoftSpace(segment)
-		StringSegment: return generateSerializationSegment_String(segment)
-		ValueSegment: return generateSerializationSegment_Value(segment)
+		CustomSerializationSegment: return generateSerializationSegment_Custom(segment)
+	//	HalfNewLineSegment: return generateSerializationSegment_HalfNewLine(segment)
+	//	NewLineSegment: return generateSerializationSegment_NewLine(segment)
+	//	NoSpaceSegment: return generateSerializationSegment_NoSpace(segment)
+	//	PopSegment: return generateSerializationSegment_Pop(segment)
+	//	PushSegment: return generateSerializationSegment_Push(segment)
+	//	SoftNewLineSegment: return generateSerializationSegment_SoftNewLine(segment)
+	//	SoftSpaceSegment: return generateSerializationSegment_SoftSpace(segment)
+		StringSerializationSegment case segment.getString().equals(IdiomsUtils.HALF_NEW_LINE.getString()) : return generateSerializationSegment_HalfNewLine(segment)
+	//	StringSerializationSegment case segment.getString().equals(IdiomsUtils.NEW_LINE.getString()) : return generateSerializationSegment_NewLine(segment)
+		StringSerializationSegment case segment.getString().equals(IdiomsUtils.NO_SPACE.getString()) : return generateSerializationSegment_NoSpace(segment)
+		StringSerializationSegment case segment.getString().equals(IdiomsUtils.POP.getString()) : return generateSerializationSegment_Pop(segment)
+		StringSerializationSegment case segment.getString().equals(IdiomsUtils.PUSH.getString()) : return generateSerializationSegment_Push(segment)
+		StringSerializationSegment case segment.getString().equals(IdiomsUtils.SOFT_NEW_LINE.getString()) : return generateSerializationSegment_SoftNewLine(segment)
+		StringSerializationSegment case segment.getString().equals(IdiomsUtils.SOFT_SPACE.getString()) : return generateSerializationSegment_SoftSpace(segment)
+		ValueSerializationSegment: return generateSerializationSegment_Value(segment)
 		default: segment.getClass().getName() //throw new UnsupportedOperationException()
 		}
 	}
 	
-	protected def generateSerializationSegment_Custom(CustomSegment segment) {
-		'''«newTypeReference(SerializationSegment)».createCustomSegment(null, «newTypeReference(segment.getSupportClassName())».class)'''
+	protected def generateSerializationSegment_Custom(CustomSerializationSegment segment) {
+		'''new «newTypeReference(CustomSerializationSegment)»(«newTypeReference(segment.getSupportClassName())».class)'''
 	}
 	
-	protected def generateSerializationSegment_HalfNewLine(HalfNewLineSegment segment) {
+	protected def generateSerializationSegment_HalfNewLine(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».HALF_NEW_LINE'''
 	}
 	
-	protected def generateSerializationSegment_NewLine(NewLineSegment segment) {
+	protected def generateSerializationSegment_NewLine(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».NEW_LINE'''
 	}
 	
-	protected def generateSerializationSegment_NoSpace(NoSpaceSegment segment) {
+	protected def generateSerializationSegment_NoSpace(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».NO_SPACE'''
 	}
 	
-	protected def generateSerializationSegment_Pop(PopSegment segment) {
+	protected def generateSerializationSegment_Pop(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».POP'''
 	}
 	
-	protected def generateSerializationSegment_Push(PushSegment segment) {
+	protected def generateSerializationSegment_Push(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».PUSH'''
 	}
 	
-	protected def generateSerializationSegment_SoftNewLine(SoftNewLineSegment segment) {
+	protected def generateSerializationSegment_SoftNewLine(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».SOFT_NEW_LINE'''
 	}
 	
-	protected def generateSerializationSegment_SoftSpace(SoftSpaceSegment segment) {
+	protected def generateSerializationSegment_SoftSpace(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».SOFT_SPACE'''
 	}
 	
-	protected def generateSerializationSegment_String(StringSegment segment) {
+	protected def generateSerializationSegment_String(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».createStringSegment(«segment.getString()»)'''
 	}
 	
-	protected def generateSerializationSegment_Value(ValueSegment segment) {
+	protected def generateSerializationSegment_Value(ValueSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».VALUE'''
 	}
 	
