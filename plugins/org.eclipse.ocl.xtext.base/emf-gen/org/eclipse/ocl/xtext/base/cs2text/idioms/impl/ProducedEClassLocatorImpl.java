@@ -14,11 +14,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,7 +88,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 			if (eClass != oldEClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldEClass, eClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldEClass, eClass));
 			}
 		}
 		return eClass;
@@ -118,7 +115,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 		EClass oldEClass = eClass;
 		eClass = newEClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEClass, eClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldEClass, eClass));
 	}
 
 	/**
@@ -131,7 +128,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				if (resolve) return getEClass();
 				return basicGetEClass();
 		}
@@ -148,7 +145,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setEClass((EClass)newValue);
 				return;
 		}
@@ -165,7 +162,7 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setEClass((EClass)null);
 				return;
 		}
@@ -182,22 +179,10 @@ public class ProducedEClassLocatorImpl extends LocatorImpl implements ProducedEC
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				return eClass != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-
-	@Override
-	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
-		if (serializationNode == serializationRule.getRootSerializationNode()) {
-			EClass producedEClass = serializationRule.getProducedEClass();
-			if (XtextGrammarUtil.isSuperTypeOf(eClass, producedEClass)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override

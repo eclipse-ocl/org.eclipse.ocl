@@ -14,13 +14,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.util.Strings;
 
 /**
@@ -122,7 +117,7 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 		String oldString = string;
 		string = newString;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldString, string));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldString, string));
 	}
 
 	/**
@@ -140,7 +135,7 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 			if (inEClass != oldInEClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldInEClass, inEClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 3, oldInEClass, inEClass));
 			}
 		}
 		return inEClass;
@@ -167,7 +162,7 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 		EClass oldInEClass = inEClass;
 		inEClass = newInEClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldInEClass, inEClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldInEClass, inEClass));
 	}
 
 	/**
@@ -180,9 +175,9 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 	{
 		switch (featureID)
 		{
-			case 1:
-				return getString();
 			case 2:
+				return getString();
+			case 3:
 				if (resolve) return getInEClass();
 				return basicGetInEClass();
 		}
@@ -199,10 +194,10 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setString((String)newValue);
 				return;
-			case 2:
+			case 3:
 				setInEClass((EClass)newValue);
 				return;
 		}
@@ -219,10 +214,10 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setString(STRING_EDEFAULT);
 				return;
-			case 2:
+			case 3:
 				setInEClass((EClass)null);
 				return;
 		}
@@ -239,33 +234,12 @@ public class KeywordLocatorImpl extends LocatorImpl implements KeywordLocator
 	{
 		switch (featureID)
 		{
-			case 1:
-				return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
 			case 2:
+				return STRING_EDEFAULT == null ? string != null : !STRING_EDEFAULT.equals(string);
+			case 3:
 				return inEClass != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	@Override
-	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
-		String value = null;
-		if (serializationNode instanceof AssignedKeywordSerializationNode) {
-			value = ((AssignedKeywordSerializationNode)serializationNode).getValue();
-		}
-		else if (serializationNode instanceof UnassignedKeywordSerializationNode) {
-			value = ((UnassignedKeywordSerializationNode)serializationNode).getValue();
-		}
-		if (!string.equals(value)) {
-			return false;
-		}
-		if (":".equals(string) && (inEClass != null)) {
-			getClass();
-		}
-		if ((inEClass != null) && !XtextGrammarUtil.isSuperTypeOf(inEClass, serializationRule.getProducedEClass())) {
-			return false;
-		}
-		return true;
 	}
 
 	@Override

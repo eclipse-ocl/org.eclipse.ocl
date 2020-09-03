@@ -124,9 +124,9 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 24:
-				return createSerializationNodeFromString(eDataType, initialValue);
 			case 25:
+				return createSerializationNodeFromString(eDataType, initialValue);
+			case 26:
 				return createSerializationStepFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -143,9 +143,9 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 24:
-				return convertSerializationNodeToString(eDataType, instanceValue);
 			case 25:
+				return convertSerializationNodeToString(eDataType, instanceValue);
+			case 26:
 				return convertSerializationStepToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

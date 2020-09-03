@@ -15,12 +15,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -93,7 +89,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 			if (eStructuralFeature != oldEStructuralFeature)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 1, oldEStructuralFeature, eStructuralFeature));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 2, oldEStructuralFeature, eStructuralFeature));
 			}
 		}
 		return eStructuralFeature;
@@ -120,7 +116,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 		EStructuralFeature oldEStructuralFeature = eStructuralFeature;
 		eStructuralFeature = newEStructuralFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldEStructuralFeature, eStructuralFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldEStructuralFeature, eStructuralFeature));
 	}
 
 	/**
@@ -133,7 +129,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				if (resolve) return getEStructuralFeature();
 				return basicGetEStructuralFeature();
 		}
@@ -150,7 +146,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setEStructuralFeature((EStructuralFeature)newValue);
 				return;
 		}
@@ -167,7 +163,7 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setEStructuralFeature((EStructuralFeature)null);
 				return;
 		}
@@ -184,19 +180,10 @@ public class AssignmentLocatorImpl extends LocatorImpl implements AssignmentLoca
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				return eStructuralFeature != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	@Override
-	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
-		if (serializationNode instanceof AssignedSerializationNode) {
-			EStructuralFeature assignedEStructuralFeature = ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
-			return XtextGrammarUtil.isEqual(eStructuralFeature, assignedEStructuralFeature);
-		}
-		return false;
 	}
 
 	@Override

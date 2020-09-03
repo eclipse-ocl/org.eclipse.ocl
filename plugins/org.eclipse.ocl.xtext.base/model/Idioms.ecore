@@ -111,11 +111,9 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Locator identifies where a SubIdiom applies Segment formatting."/>
     </eAnnotations>
-    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
-      <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
-    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="helper" eType="#//LocatorHelper"
+        volatile="true" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordLocator" eSuperTypes="#//Locator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -198,6 +196,8 @@
   <eClassifiers xsi:type="ecore:EDataType" name="SerializationRuleAnalysis" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="IdiomMatch" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="LocatorHelper" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="SerializationBuilder" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder"
       serializable="false"/>

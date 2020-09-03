@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -29,14 +30,21 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignsSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedRuleCallSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.ProducedEClassLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsSwitch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
@@ -54,9 +62,136 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.ToDebugString.ToDebugStringabl
 
 import com.google.common.collect.Iterables;
 
+/**
+ * A SerializationRuleAnalysis supervises the analysis leading to the MetaData for a SerializationRule.
+ */
 public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 {
+	/**
+	 * The SubIdiomLocatorSwitch returns a LocatorHelper instance that can perform matching of a
+	 * SubIdiom's Locator and a SerializationNode of the SerialzationRule.
+	 */
+	public static class SubIdiomLocatorSwitch extends IdiomsSwitch<@Nullable LocatorHelper>
+	{
+		@Override
+		public @Nullable LocatorHelper caseAssignmentLocator(AssignmentLocator assignmentLocator) {
+			return AssignmentLocatorHelper.INSTANCE;
+		}
+
+		@Override
+		public @Nullable LocatorHelper caseDefaultLocator(DefaultLocator defaultLocator) {
+			return DefaultLocatorHelper.INSTANCE;
+		}
+
+		@Override
+		public @Nullable LocatorHelper caseKeywordLocator(KeywordLocator keywordLocator) {
+			return KeywordLocatorHelper.INSTANCE;
+		}
+
+		@Override
+		public @Nullable LocatorHelper caseProducedEClassLocator(ProducedEClassLocator producedEClassLocator) {
+			return ProducedEClassLocatorHelper.INSTANCE;
+		}
+
+		@Override
+		public @Nullable LocatorHelper defaultCase(EObject object) {
+			throw new UnsupportedOperationException("Missing " + getClass().getName() + " support for " + object.eClass().getName());
+		}
+	}
+
+	/**
+	 * The LocatorHelper defines the interface for matching of a
+	 * SubIdiom's Locator and a SerializationNode of the SerialzationRule.
+	 */
+	public static interface LocatorHelper
+	{
+		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis);
+	}
+
+	public static class AssignmentLocatorHelper implements LocatorHelper
+	{
+		public static final @NonNull AssignmentLocatorHelper INSTANCE = new AssignmentLocatorHelper();
+
+		@Override
+		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+			if (serializationNode instanceof AssignedSerializationNode) {
+				AssignmentLocator assignmentLocator = (AssignmentLocator)locator;
+				EStructuralFeature assignedEStructuralFeature = ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
+				return XtextGrammarUtil.isEqual(assignmentLocator.getEStructuralFeature(), assignedEStructuralFeature);
+			}
+			return false;
+		}
+	}
+
+	public static class DefaultLocatorHelper implements LocatorHelper
+	{
+		public static final @NonNull DefaultLocatorHelper INSTANCE = new DefaultLocatorHelper();
+
+		@Override
+		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+			if (serializationNode instanceof AssignedCrossReferenceSerializationNode) {
+				return true;
+			}
+			else if (serializationNode instanceof UnassignedKeywordSerializationNode) {
+				return true;
+			}
+			else if (serializationNode instanceof AssignedSerializationNode) {
+				AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
+				return assignedSerializationNode.getEStructuralFeature() instanceof EAttribute;
+			}
+			return false;
+		}
+	}
+
+	public static class KeywordLocatorHelper implements LocatorHelper
+	{
+		public static final @NonNull KeywordLocatorHelper INSTANCE = new KeywordLocatorHelper();
+
+		@Override
+		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+			String value = null;
+			if (serializationNode instanceof AssignedKeywordSerializationNode) {
+				value = ((AssignedKeywordSerializationNode)serializationNode).getValue();
+			}
+			else if (serializationNode instanceof UnassignedKeywordSerializationNode) {
+				value = ((UnassignedKeywordSerializationNode)serializationNode).getValue();
+			}
+			KeywordLocator keywordLocator = (KeywordLocator)locator;
+			String string = keywordLocator.getString();
+			if (!string.equals(value)) {
+				return false;
+			}
+			EClass inEClass = keywordLocator.getInEClass();
+			if (":".equals(string) && (inEClass != null)) {
+				getClass();
+			}
+			if ((inEClass != null) && !XtextGrammarUtil.isSuperTypeOf(inEClass, serializationRuleAnalysis.getProducedEClass())) {
+				return false;
+			}
+			return true;
+		}
+	}
+
+	public static class ProducedEClassLocatorHelper implements LocatorHelper
+	{
+		public static final @NonNull ProducedEClassLocatorHelper INSTANCE = new ProducedEClassLocatorHelper();
+
+		@Override
+		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
+			if (serializationNode == serializationRuleAnalysis.getRootSerializationNode()) {
+				ProducedEClassLocator producedEClassLocator = (ProducedEClassLocator)locator;
+				EClass producedEClass = serializationRuleAnalysis.getProducedEClass();
+				EClass eClass = producedEClassLocator.getEClass();
+				if (XtextGrammarUtil.isSuperTypeOf(eClass, producedEClass)) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
 	protected final @NonNull ParserRuleAnalysis ruleAnalysis;
+	protected final @NonNull GrammarAnalysis grammarAnalysis;
 	protected final @NonNull SerializationNode rootSerializationNode;
 	private @Nullable EClass producedEClass = null;
 
@@ -91,6 +226,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 
 	public SerializationRuleAnalysis(@NonNull ParserRuleAnalysis ruleAnalysis, @NonNull SerializationNode rootSerializationNode) {
 		this.ruleAnalysis = ruleAnalysis;
+		this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
 		this.rootSerializationNode = rootSerializationNode;
 		if ("PackageCS".equals(ruleAnalysis.getRuleName()) ) {
 			getClass();
@@ -124,7 +260,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		if (ruleIndexes != null) {
 			for (@NonNull Integer ruleIndex : ruleIndexes) {
-				@NonNull AbstractRuleAnalysis ruleAnalysis2 = ruleAnalysis.getGrammarAnalysis().getRuleAnalysis(ruleIndex);
+				@NonNull AbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(ruleIndex);
 				if (ruleAnalysis2 instanceof ParserRuleAnalysis) {
 					GrammarCardinality oldGrammarCardinality = ruleAnalysis2grammarCardinality.get(ruleAnalysis2);
 					GrammarCardinality newGrammarCardinality = refineGrammarCardinality(netGrammarCardinality, oldGrammarCardinality);
@@ -228,10 +364,6 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @NonNull EAttribute @Nullable [] basicGetNeedsDefaultEAttributes() {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.basicGetNeedsDefaultEAttributes();
-	}
-
-	protected @NonNull IdiomMatch createIdiomMatch(@NonNull Idiom idiom, @NonNull SerializationNode serializationNode) {
-		return new IdiomMatch(idiom, serializationNode);
 	}
 
 	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {
@@ -406,8 +538,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			IdiomMatch idiomMatch = idiomMatches[idiomIndex];
 			if (idiomMatch == null) {
 				SubIdiom firstSubIdiom = idiom.getOwnedSubIdioms().get(0);
+				assert firstSubIdiom != null;
 				boolean firstSubIdiomMatches = matches(firstSubIdiom, serializationNode);
-				idiomMatches[idiomIndex] = firstSubIdiomMatches ? createIdiomMatch(idiom, serializationNode) : null;
+				idiomMatches[idiomIndex] = firstSubIdiomMatches ? grammarAnalysis.createIdiomMatch(idiom, serializationNode) : null;
 			}
 			else {
 				idiomMatch.nextMatch(serializationNode, this);
@@ -539,7 +672,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom2 = serializationNode2subIdiom;
 		if (serializationNode2subIdiom2 == null) {
 			assert staticRuleMatch != null;
-			@NonNull Iterable<@NonNull Idiom> idioms = staticRuleMatch.getSerializationRuleAnalysis().getRuleAnalysis().getGrammarAnalysis().getIdioms();
+			@NonNull Iterable<@NonNull Idiom> idioms = grammarAnalysis.getIdioms();
 			//
 			//	Locate the matches for each idiom.
 			//
@@ -566,7 +699,19 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 
 	public boolean matches(@NonNull SubIdiom subIdiom, @NonNull SerializationNode serializationNode) {
 		Locator locator = subIdiom.getLocator();
-		return (locator != null) && locator.matches(serializationNode, this);
+		if (locator == null) {
+			return false;
+		}
+		LocatorHelper locatorHelper = locator.getHelper();
+		if (locatorHelper == null) {
+			SubIdiomLocatorSwitch subIdiomLocatorSwitch = grammarAnalysis.getSubIdiomLocatorSwitch();
+			locatorHelper = subIdiomLocatorSwitch.doSwitch(locator);
+			locator.setHelper(locatorHelper);
+		}
+		if (locatorHelper == null) {	// Only actually null after an UnsupportedOperationException
+			return false;
+		}
+		return locatorHelper.matches(locator, serializationNode, this);
 	}
 
 	private @NonNull GrammarCardinality refineGrammarCardinality(@NonNull GrammarCardinality netGrammarCardinality, @Nullable GrammarCardinality oldGrammarCardinality) {

@@ -10,15 +10,9 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedCrossReferenceSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,21 +52,6 @@ public class DefaultLocatorImpl extends LocatorImpl implements DefaultLocator
 	protected EClass eStaticClass()
 	{
 		return IdiomsPackage.Literals.DEFAULT_LOCATOR;
-	}
-
-	@Override
-	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
-		if (serializationNode instanceof AssignedCrossReferenceSerializationNode) {
-			return true;
-		}
-		else if (serializationNode instanceof UnassignedKeywordSerializationNode) {
-			return true;
-		}
-		else if (serializationNode instanceof AssignedSerializationNode) {
-			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
-			return assignedSerializationNode.getEStructuralFeature() instanceof EAttribute;
-		}
-		return false;
 	}
 
 	@Override

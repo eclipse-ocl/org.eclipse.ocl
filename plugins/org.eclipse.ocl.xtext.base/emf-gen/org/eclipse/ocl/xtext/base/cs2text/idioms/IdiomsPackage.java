@@ -288,6 +288,16 @@ public interface IdiomsPackage extends EPackage
 	 */
 	int IDIOM_MATCH = 22;
 	/**
+	 * The meta object id for the '<em>Locator Helper</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getLocatorHelper()
+	 * @generated
+	 */
+	int LOCATOR_HELPER = 23;
+
+	/**
 	 * The meta object id for the '<em>Serialization Builder</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -295,7 +305,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationBuilder()
 	 * @generated
 	 */
-	int SERIALIZATION_BUILDER = 23;
+	int SERIALIZATION_BUILDER = 24;
 	/**
 	 * The meta object id for the '<em>Serialization Node</em>' data type.
 	 * <!-- begin-user-doc -->
@@ -304,7 +314,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationNode()
 	 * @generated
 	 */
-	int SERIALIZATION_NODE = 24;
+	int SERIALIZATION_NODE = 25;
 
 	/**
 	 * The meta object id for the '<em>Serialization Step</em>' data type.
@@ -314,7 +324,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSerializationStep()
 	 * @generated
 	 */
-	int SERIALIZATION_STEP = 25;
+	int SERIALIZATION_STEP = 26;
 
 	/**
 	 * The meta object id for the '<em>User Element Serializer</em>' data type.
@@ -324,7 +334,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getUserElementSerializer()
 	 * @generated
 	 */
-	int USER_ELEMENT_SERIALIZER = 26;
+	int USER_ELEMENT_SERIALIZER = 27;
 
 
 	/**
@@ -572,6 +582,17 @@ public interface IdiomsPackage extends EPackage
 	EAttribute getLocator_Name();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Locator#getHelper <em>Helper</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Helper</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.Locator#getHelper()
+	 * @see #getLocator()
+	 * @generated
+	 */
+	EAttribute getLocator_Helper();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.KeywordLocator <em>Keyword Locator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -811,6 +832,17 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EDataType getIdiomMatch();
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper <em>Locator Helper</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Locator Helper</em>'.
+	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper
+	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper" serializeable="false"
+	 * @generated
+	 */
+	EDataType getLocatorHelper();
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder <em>Serialization Builder</em>}'.
@@ -1082,6 +1114,14 @@ public interface IdiomsPackage extends EPackage
 		EAttribute LOCATOR__NAME = eINSTANCE.getLocator_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Helper</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LOCATOR__HELPER = eINSTANCE.getLocator_Helper();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.KeywordLocatorImpl <em>Keyword Locator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1292,6 +1332,16 @@ public interface IdiomsPackage extends EPackage
 		 * @generated
 		 */
 		EDataType IDIOM_MATCH = eINSTANCE.getIdiomMatch();
+
+		/**
+		 * The meta object literal for the '<em>Locator Helper</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper
+		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getLocatorHelper()
+		 * @generated
+		 */
+		EDataType LOCATOR_HELPER = eINSTANCE.getLocatorHelper();
 
 		/**
 		 * The meta object literal for the '<em>Serialization Builder</em>' data type.

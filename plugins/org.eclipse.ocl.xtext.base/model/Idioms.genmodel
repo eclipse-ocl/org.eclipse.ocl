@@ -19,6 +19,7 @@
       publicationLocation="">
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationRuleAnalysis"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//IdiomMatch"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//LocatorHelper"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationNode"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationStep"/>
@@ -60,10 +61,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="Idioms.ecore#//Locator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Locator/name"/>
-      <genOperations ecoreOperation="Idioms.ecore#//Locator/matches">
-        <genParameters ecoreParameter="Idioms.ecore#//Locator/matches/serializationNode"/>
-        <genParameters ecoreParameter="Idioms.ecore#//Locator/matches/serializationRule"/>
-      </genOperations>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Locator/helper"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//KeywordLocator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//KeywordLocator/string"/>

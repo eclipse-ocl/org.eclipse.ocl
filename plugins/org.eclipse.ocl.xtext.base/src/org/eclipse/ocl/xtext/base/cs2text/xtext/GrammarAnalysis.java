@@ -387,7 +387,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 
 	public @Nullable GrammarRuleValue basicGetRuleValue(int ruleValueIndex) {
 		AbstractRuleAnalysis ruleAnalysis = ruleAnalyses.get(ruleValueIndex);
-		return ruleAnalysis != null ? ruleAnalysis.basicGetRuleValue() : null;
+		return ruleAnalysis.basicGetRuleValue();
 	}
 
 	/**
@@ -445,11 +445,6 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		assert assignment2assignmentAnalysis != null;
 		return (ActionAssignmentAnalysis) ClassUtil.nonNullState(assignment2assignmentAnalysis.get(action));
 	}
-	public @NonNull DirectAssignmentAnalysis getAssignmentAnalysis(@NonNull Assignment assignment) {
-		assert assignment2assignmentAnalysis != null;
-		return (DirectAssignmentAnalysis) ClassUtil.nonNullState(assignment2assignmentAnalysis.get(assignment));
-	}
-
 	public @NonNull List<@NonNull AssignmentAnalysis> getAssignmentAnalyses(@NonNull EStructuralFeature eFeature) {
 		assert containment2assignmentAnalyses != null;
 		return ClassUtil.nonNullState(containment2assignmentAnalyses.get(eFeature));
@@ -463,6 +458,15 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceRuleIndexes(@NonNull EClass eClass) {
 		EClassValue eClassValue = getEClassValue(eClass);
 		return eClassValue.basicGetEReferenceRuleIndexes();
+	}
+
+	public @NonNull IdiomMatch createIdiomMatch(@NonNull Idiom idiom, @NonNull SerializationNode serializationNode) {
+		return new IdiomMatch(idiom, serializationNode);
+	}
+
+	public @NonNull DirectAssignmentAnalysis getAssignmentAnalysis(@NonNull Assignment assignment) {
+		assert assignment2assignmentAnalysis != null;
+		return (DirectAssignmentAnalysis) ClassUtil.nonNullState(assignment2assignmentAnalysis.get(assignment));
 	}
 
 	public @NonNull EReference_RuleIndexes @NonNull [] getEReferenceRuleIndexes(@NonNull EClass eClass) {
@@ -692,6 +696,10 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			sortedProducedEClassValues = sortedProducedEClassValues2 = super.getSortedProducedEClassValues();
 		}
 		return sortedProducedEClassValues2;
+	}
+
+	public SerializationRuleAnalysis.@NonNull SubIdiomLocatorSwitch getSubIdiomLocatorSwitch() {
+		return new SerializationRuleAnalysis.SubIdiomLocatorSwitch();
 	}
 
 	private @NonNull Map<@NonNull Integer, @NonNull Object> semanticHash2serializationAnalysisOrAnalyses = new HashMap<>();

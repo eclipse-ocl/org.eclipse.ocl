@@ -12,14 +12,11 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,6 +27,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.LocatorImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.LocatorImpl#getHelper <em>Helper</em>}</li>
  * </ul>
  *
  * @generated
@@ -43,7 +41,7 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 	 * @generated
 	 * @ordered
 	 */
-	public static final int LOCATOR_FEATURE_COUNT = 1;
+	public static final int LOCATOR_FEATURE_COUNT = 2;
 
 
 	/**
@@ -64,6 +62,17 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+
+	/**
+	 * The default value of the '{@link #getHelper() <em>Helper</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHelper()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final LocatorHelper HELPER_EDEFAULT = null;
 
 
 	/**
@@ -118,9 +127,22 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 	 * @generated
 	 */
 	@Override
-	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule)
+	public LocatorHelper getHelper()
 	{
-		// TODO: implement this method
+		// TODO: implement this method to return the 'Helper' attribute
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setHelper(LocatorHelper newHelper)
+	{
+		// TODO: implement this method to set the 'Helper' attribute
 		// Ensure that you remove @generated or mark it @generated NOT
 		throw new UnsupportedOperationException();
 	}
@@ -137,6 +159,8 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 		{
 			case 0:
 				return getName();
+			case 1:
+				return getHelper();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -153,6 +177,9 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 		{
 			case 0:
 				setName((String)newValue);
+				return;
+			case 1:
+				setHelper((LocatorHelper)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -171,6 +198,9 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 			case 0:
 				setName(NAME_EDEFAULT);
 				return;
+			case 1:
+				setHelper(HELPER_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -187,6 +217,8 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 		{
 			case 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case 1:
+				return HELPER_EDEFAULT == null ? getHelper() != null : !HELPER_EDEFAULT.equals(getHelper());
 		}
 		return super.eIsSet(featureID);
 	}
