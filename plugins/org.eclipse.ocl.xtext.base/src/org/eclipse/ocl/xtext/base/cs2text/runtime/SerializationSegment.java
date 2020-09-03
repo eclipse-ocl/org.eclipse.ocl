@@ -10,7 +10,24 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport;
+
 public interface SerializationSegment
 {
-//	void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
+
+	public static final @NonNull SerializationSegment HALF_NEW_LINE = null;//createStringSegment(IDIOM_MODEL, SerializationBuilder.HALF_NEW_LINE);
+	public static final @NonNull SerializationSegment NO_SPACE = null;//createStringSegment(IDIOM_MODEL, SerializationBuilder.NO_SPACE);
+	public static final @NonNull SerializationSegment POP = null;//createStringSegment(IDIOM_MODEL, SerializationBuilder.POP);
+	public static final @NonNull SerializationSegment PUSH = null;//createStringSegment(IDIOM_MODEL, SerializationBuilder.PUSH);
+	public static final @NonNull SerializationSegment SOFT_NEW_LINE = null;//createStringSegment(IDIOM_MODEL, SerializationBuilder.SOFT_NEW_LINE);
+	public static final @NonNull SerializationSegment SOFT_SPACE = null;//createStringSegment(IDIOM_MODEL, SerializationBuilder.SOFT_SPACE);
+	public static final @NonNull SerializationSegment VALUE = null;//createValueSegment(IDIOM_MODEL);
+
+	public static @NonNull SerializationSegment createCustomSegment(Object object, Class<@NonNull BaseCommentSegmentSupport> class1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//	void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 }

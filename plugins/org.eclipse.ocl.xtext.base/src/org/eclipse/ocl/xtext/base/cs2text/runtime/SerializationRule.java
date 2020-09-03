@@ -371,7 +371,7 @@ public class SerializationRule
 	private final int ruleValueIndex;
 	private final @NonNull SerializationMatchStep @NonNull [] solutionSteps;
 	private final @NonNull SerializationStep @NonNull [] serializationSteps;
-	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
+	private final @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments;
 	private final @NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues;
 	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
 
@@ -393,7 +393,7 @@ public class SerializationRule
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ SerializationMatchStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ SerializationStep /*@NonNull*/ [] serializationSteps,
-			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
+			/*@Nullable*/ SerializationSegment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
 			/*@NonNull*/ EAttribute @Nullable [] needsDefaultEAttributes,
@@ -527,7 +527,7 @@ public class SerializationRule
 		return serializationSteps;
 	}
 
-	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
+	public @NonNull SerializationSegment @NonNull [] @Nullable [] getStaticSegments() {
 		return staticSegments;
 	}
 

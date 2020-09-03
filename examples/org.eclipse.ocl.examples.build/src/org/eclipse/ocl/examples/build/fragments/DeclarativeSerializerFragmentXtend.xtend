@@ -34,7 +34,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationVa
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationValueSingle
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector
-import org.eclipse.ocl.xtext.base.cs2text.runtime.IdiomsUtils
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep
@@ -580,43 +579,43 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateSerializationSegment_Custom(CustomSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».createCustomSegment(null, «newTypeReference(segment.getSupportClassName())».class)'''
+		'''«newTypeReference(SerializationSegment)».createCustomSegment(null, «newTypeReference(segment.getSupportClassName())».class)'''
 	}
 	
 	protected def generateSerializationSegment_HalfNewLine(HalfNewLineSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».HALF_NEW_LINE'''
+		'''«newTypeReference(SerializationSegment)».HALF_NEW_LINE'''
 	}
 	
 	protected def generateSerializationSegment_NewLine(NewLineSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».NEW_LINE'''
+		'''«newTypeReference(SerializationSegment)».NEW_LINE'''
 	}
 	
 	protected def generateSerializationSegment_NoSpace(NoSpaceSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».NO_SPACE'''
+		'''«newTypeReference(SerializationSegment)».NO_SPACE'''
 	}
 	
 	protected def generateSerializationSegment_Pop(PopSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».POP'''
+		'''«newTypeReference(SerializationSegment)».POP'''
 	}
 	
 	protected def generateSerializationSegment_Push(PushSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».PUSH'''
+		'''«newTypeReference(SerializationSegment)».PUSH'''
 	}
 	
 	protected def generateSerializationSegment_SoftNewLine(SoftNewLineSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».SOFT_NEW_LINE'''
+		'''«newTypeReference(SerializationSegment)».SOFT_NEW_LINE'''
 	}
 	
 	protected def generateSerializationSegment_SoftSpace(SoftSpaceSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».SOFT_SPACE'''
+		'''«newTypeReference(SerializationSegment)».SOFT_SPACE'''
 	}
 	
 	protected def generateSerializationSegment_String(StringSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».createStringSegment(«segment.getString()»)'''
+		'''«newTypeReference(SerializationSegment)».createStringSegment(«segment.getString()»)'''
 	}
 	
 	protected def generateSerializationSegment_Value(ValueSegment segment) {
-		'''«newTypeReference(IdiomsUtils)».VALUE'''
+		'''«newTypeReference(SerializationSegment)».VALUE'''
 	}
 	
 	/* ************************************************************************************************************************** */	
