@@ -17,20 +17,14 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 
 public interface SerializationSegment
 {
-
 	public static final @NonNull SerializationSegment HALF_NEW_LINE = new StringSerializationSegment(SerializationBuilder.HALF_NEW_LINE);
+//	public static final @NonNull StringSerializationSegment NEW_LINE = new StringSerializationSegment(SerializationBuilder.NEW_LINE);
 	public static final @NonNull SerializationSegment NO_SPACE = new StringSerializationSegment(SerializationBuilder.NO_SPACE);
 	public static final @NonNull SerializationSegment POP = new StringSerializationSegment(SerializationBuilder.POP);
 	public static final @NonNull SerializationSegment PUSH = new StringSerializationSegment(SerializationBuilder.PUSH);
 	public static final @NonNull SerializationSegment SOFT_NEW_LINE = new StringSerializationSegment(SerializationBuilder.SOFT_NEW_LINE);
 	public static final @NonNull SerializationSegment SOFT_SPACE = new StringSerializationSegment(SerializationBuilder.SOFT_SPACE);
 	public static final @NonNull SerializationSegment VALUE = new ValueSerializationSegment();
-//	public static final @NonNull StringSerializationSegment NEW_LINE = new StringSerializationSegment(SerializationBuilder.NEW_LINE);
-
-
-//	public static @NonNull SerializationSegment createCustomSegment(Object object, Class<@NonNull BaseCommentSegmentSupport> class1) {
-//		return new CustomSerializationSegment(((CustomSegment) object).getSupportClassName());				// XXX
-//	}
 
 	void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
@@ -60,15 +54,10 @@ public interface SerializationSegment
 			return supportClass.getName();
 		}
 
-//		public @NonNull Class<?> getSupportClass() {
-//			return supportClass;
-//		}
-
 		@Override
 		public void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		//	assert segment == customSegment;
-		//	CustomSegment customSegment = (CustomSegment)segment;;
-			if (supportInstance == null) {
+			CustomSegmentSupport supportInstance2 = supportInstance;
+			if (supportInstance2 == null) {
 				if ((supportClass == null) && (supportClassName != null)) {
 					EObject eObject = serializer.getElement();
 					ClassLoader classLoader = eObject.getClass().getClassLoader();
@@ -80,18 +69,17 @@ public interface SerializationSegment
 				}
 				if (supportClass != null) {
 					try {
-						supportInstance = (CustomSegmentSupport) supportClass.newInstance();
+						supportInstance = supportInstance2 = (CustomSegmentSupport) supportClass.newInstance();
 					} catch (InstantiationException | IllegalAccessException e) {
 					//	return null;
 					}
 				}
 			}
-			if (supportInstance == null) {
+			if (supportInstance2 == null) {
 				serializationBuilder.appendError("\n\n«missing " + getSupportClassName() + "»\n\n");
 			}
 			else {
-				assert supportInstance != null;
-				supportInstance.serialize(serializationStep, serializer, serializationBuilder);
+				supportInstance2.serialize(serializationStep, serializer, serializationBuilder);
 			}
 		}
 

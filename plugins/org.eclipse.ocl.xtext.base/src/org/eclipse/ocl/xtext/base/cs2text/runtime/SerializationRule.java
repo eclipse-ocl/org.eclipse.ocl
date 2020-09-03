@@ -11,26 +11,12 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsSwitch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis.UserSlotAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
@@ -214,156 +200,6 @@ public class SerializationRule
 		@Override
 		public @NonNull String toString() {
 			return ruleIndex + " " + grammarCardinality;
-		}
-	}
-	/**
-	 * The SegmentSwitch returns a SegmentHelper instance that can serialize onre of a
-	 * SubIdiom's Segments.
-	 */
-	public static class SegmentSwitch extends IdiomsSwitch<@Nullable SegmentHelper>
-	{
-		public static final @NonNull SegmentSwitch INSTANCE = new SegmentSwitch();
-
-		@Override
-		public @Nullable SegmentHelper caseCustomSegment(CustomSegment object) {
-			assert object != null;
-			return new CustomSegmentHelper(object);
-		}
-
-		@Override
-		public @Nullable SegmentHelper caseHalfNewLineSegment(HalfNewLineSegment object) {
-			return StringSegmentHelper.HALF_NEW_LINE;
-		}
-
-		@Override
-		public @Nullable SegmentHelper caseNewLineSegment(NewLineSegment object) {
-			return StringSegmentHelper.NEW_LINE;
-		}
-
-		@Override
-		public @Nullable SegmentHelper caseNoSpaceSegment(NoSpaceSegment object) {
-			return StringSegmentHelper.NO_SPACE;
-		}
-
-		@Override
-		public @Nullable SegmentHelper casePopSegment(PopSegment object) {
-			return StringSegmentHelper.POP;
-		}
-
-		@Override
-		public @Nullable SegmentHelper casePushSegment(PushSegment object) {
-			return StringSegmentHelper.PUSH;
-		}
-
-		@Override
-		public @Nullable SegmentHelper caseSoftNewLineSegment(SoftNewLineSegment object) {
-			return StringSegmentHelper.SOFT_NEW_LINE;
-		}
-
-		@Override
-		public @Nullable SegmentHelper caseSoftSpaceSegment(SoftSpaceSegment object) {
-			return StringSegmentHelper.SOFT_SPACE;
-		}
-
-		@Override
-		public @Nullable SegmentHelper caseStringSegment(StringSegment object) {
-			String string = object.getString();
-			return new StringSegmentHelper(string !=null ? string : "");
-		}
-
-		@Override
-		public @Nullable SegmentHelper caseValueSegment(ValueSegment object) {
-			return ValueSegmentHelper.INSTANCE;
-		}
-
-		@Override
-		public @Nullable SegmentHelper defaultCase(EObject object) {
-			throw new UnsupportedOperationException("Missing " + getClass().getName() + " support for " + object.eClass().getName());
-		}
-	}
-
-	/**
-	 * The SegmentHelper defines the interface for serializing one of a SubIdiom's segments.
-	 */
-	public static interface SegmentHelper
-	{
-	//	boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis);
-		void serialize(@NonNull Segment segment, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
-	}
-
-	public static class CustomSegmentHelper implements SegmentHelper
-	{
-		protected final @NonNull CustomSegment customSegment;
-		private @Nullable CustomSegmentSupport support = null;
-
-		public CustomSegmentHelper(@NonNull CustomSegment customSegment) {
-			this.customSegment = customSegment;
-		}
-
-		@Override
-		public void serialize(@NonNull Segment segment, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-			assert segment == customSegment;
-			CustomSegment customSegment = (CustomSegment)segment;;
-			if (support == null) {
-				Class<?> supportClass = customSegment.getSupportClass();
-				if ((supportClass == null) && (customSegment.getSupportClassName() != null)) {
-					EObject eObject = serializer.getElement();
-					ClassLoader classLoader = eObject.getClass().getClassLoader();
-					try {
-						supportClass = classLoader.loadClass(customSegment.getSupportClassName());
-					} catch (ClassNotFoundException e) {
-					//	return null;
-					}
-				}
-				if (supportClass != null) {
-					try {
-						support = (CustomSegmentSupport) supportClass.newInstance();
-					} catch (InstantiationException | IllegalAccessException e) {
-					//	return null;
-					}
-				}
-			}
-			if (support == null) {
-				Class<?> supportClass = customSegment.getSupportClass();
-				String className = supportClass != null ? supportClass.getName() : customSegment.getSupportClassName();
-				serializationBuilder.appendError("\n\n«missing " + className + "»\n\n");
-			}
-			else {
-				assert support != null;
-				support.serialize(serializationStep, serializer, serializationBuilder);
-			}
-		}
-	}
-
-	public static class StringSegmentHelper implements SegmentHelper
-	{
-		public static final @NonNull StringSegmentHelper HALF_NEW_LINE = new StringSegmentHelper(SerializationBuilder.HALF_NEW_LINE);
-		public static final @NonNull StringSegmentHelper NEW_LINE = new StringSegmentHelper(SerializationBuilder.NEW_LINE);
-		public static final @NonNull StringSegmentHelper NO_SPACE = new StringSegmentHelper(SerializationBuilder.NO_SPACE);
-		public static final @NonNull StringSegmentHelper POP = new StringSegmentHelper(SerializationBuilder.POP);
-		public static final @NonNull StringSegmentHelper PUSH = new StringSegmentHelper(SerializationBuilder.PUSH);
-		public static final @NonNull StringSegmentHelper SOFT_NEW_LINE = new StringSegmentHelper(SerializationBuilder.SOFT_NEW_LINE);
-		public static final @NonNull StringSegmentHelper SOFT_SPACE = new StringSegmentHelper(SerializationBuilder.SOFT_SPACE);
-
-		protected final @NonNull String string;
-
-		public StringSegmentHelper(@NonNull String string) {
-			this.string = string;
-		}
-
-		@Override
-		public void serialize(@NonNull Segment segment, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-			serializationBuilder.append(string);
-		}
-	}
-
-	public static class ValueSegmentHelper implements SegmentHelper
-	{
-		public static final @NonNull ValueSegmentHelper INSTANCE = new ValueSegmentHelper();
-
-		@Override
-		public void serialize(@NonNull Segment segment, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-			serializationStep.serialize(serializer, serializationBuilder);
 		}
 	}
 
