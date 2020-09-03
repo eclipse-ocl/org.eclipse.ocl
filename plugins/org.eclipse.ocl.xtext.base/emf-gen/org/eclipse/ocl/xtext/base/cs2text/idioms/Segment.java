@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment;
 
 /**
  * <!-- begin-user-doc -->

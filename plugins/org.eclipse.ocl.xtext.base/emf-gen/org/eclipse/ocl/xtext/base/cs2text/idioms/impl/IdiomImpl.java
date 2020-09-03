@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 
 import java.util.Collection;
-import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -23,13 +22,10 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->
@@ -245,26 +241,8 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		return super.eIsSet(featureID);
 	}
 
-	protected @NonNull IdiomMatch createIdiomMatch(@NonNull SerializationNode serializationNode) {
-		return new IdiomMatch(this, serializationNode);
-	}
-
 	public @NonNull SubIdiom getSubidiom(int subIdiomIndex) {
-		return ownedSubIdioms.get(subIdiomIndex);
-	}
-
-/*	public @NonNull SubIdiom @NonNull [] getSubIdioms() {
-		return subIdioms;
-	} */
-
-	@Override
-	public @Nullable IdiomMatch firstMatch(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
-		if (!ownedSubIdioms.get(0).matches(serializationNode, serializationRule)) {
-			return null;
-		}
-		IdiomMatch idiomMatch = createIdiomMatch(serializationNode);
-	//	idiomMatch.nextMatch(serializationNode, serializationRule);		// Opportunity for X ... X formatting
-		return idiomMatch;
+		return ClassUtil.nonNullState(getOwnedSubIdioms().get(subIdiomIndex));
 	}
 
 	@Override
@@ -272,7 +250,7 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		StringBuilder s = new StringBuilder();
 		s.append("{");
 		boolean isFirst = true;
-		for (@NonNull SubIdiom subIdiom: ownedSubIdioms) {
+		for (SubIdiom subIdiom: getOwnedSubIdioms()) {
 			if (!isFirst) {
 				s.append(",");
 			}
@@ -282,25 +260,4 @@ public class IdiomImpl extends EObjectImpl implements Idiom
 		s.append("}");
 		return s.toString();
 	}
-
-	public static class DebugIdiom extends IdiomImpl
-	{
-		@Override
-		protected @NonNull IdiomMatch createIdiomMatch(@NonNull SerializationNode serializationNode) {
-			return new IdiomMatch(this, serializationNode) {
-
-				@Override
-				public boolean installIn(@NonNull Map<@NonNull SerializationNode, @NonNull SubIdiom> serializationNode2subIdiom) {
-					return super.installIn(serializationNode2subIdiom);
-				}
-
-				@Override
-				public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRule) {
-					return super.nextMatch(serializationNode, serializationRule);
-				}
-
-			};
-		}
-	}
-
 } //IdiomImpl

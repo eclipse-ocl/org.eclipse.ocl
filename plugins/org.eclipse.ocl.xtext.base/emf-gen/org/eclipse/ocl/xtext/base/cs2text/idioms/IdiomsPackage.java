@@ -807,7 +807,7 @@ public interface IdiomsPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Idiom Match</em>'.
 	 * @see org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch
-	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch" serializeable="false"
+	 * @model instanceClass="org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch" serializeable="false"
 	 * @generated
 	 */
 	EDataType getIdiomMatch();

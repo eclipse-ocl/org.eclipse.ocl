@@ -12,9 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->
@@ -92,13 +89,4 @@ public interface Idiom extends EObject
 	 * @generated
 	 */
 	EList<SubIdiom> getOwnedSubIdioms();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model dataType="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch" required="true" serializationNodeDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationNode" serializationNodeRequired="true" serializationRuleDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationRuleAnalysis" serializationRuleRequired="true"
-	 * @generated
-	 */
-	IdiomMatch firstMatch(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule);
-
 } // Idiom

@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 
 /**
  * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the
@@ -65,12 +64,12 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return left.isConstant(ruleMatch) && right.isConstant(ruleMatch);
 		}
 
 		@Override
-		public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 			return left.isKnown(ruleMatch) && right.isKnown(ruleMatch);
 		}
 	}
@@ -212,12 +211,12 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
 
 		@Override
-		public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 			return true;
 		}
 
@@ -280,12 +279,12 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
 
 		@Override
-		public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 			return true;
 		}
 
@@ -342,12 +341,12 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
 
 		@Override
-		public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 			return true;
 		}
 
@@ -440,12 +439,12 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return true;
 		}
 
 		@Override
-		public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 			return true;
 		}
 
@@ -561,12 +560,12 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
 
 		@Override
-		public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
 
@@ -615,12 +614,12 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
 
 		@Override
-		public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+		public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
 
@@ -659,12 +658,12 @@ public abstract class SerializationMatchTerm
 	/**
 	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.
 	 */
-	public abstract boolean isConstant(@NonNull StaticRuleMatch ruleMatch);
+	public abstract boolean isConstant(@NonNull DynamicRuleMatch ruleMatch);
 
 	/**
 	 * Return true if this will be a known constant value at run time. i.e. an expression involving actual feature slot counts.
 	 */
-	public abstract boolean isKnown(@NonNull StaticRuleMatch ruleMatch);
+	public abstract boolean isKnown(@NonNull DynamicRuleMatch ruleMatch);
 
 //	@Override
 //	public boolean isOptional() {

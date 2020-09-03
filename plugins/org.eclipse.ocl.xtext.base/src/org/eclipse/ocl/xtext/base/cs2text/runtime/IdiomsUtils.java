@@ -29,7 +29,6 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl;
 
 public class IdiomsUtils
 {
@@ -113,14 +112,6 @@ public class IdiomsUtils
 			idiomModel.getOwnedSegments().add(segment);
 		}
 		return segment;
-	}
-
-	public static @NonNull Idiom createDebugIdiom(@NonNull SubIdiom @NonNull ... subIdioms) {
-		Idiom idiom = new IdiomImpl.DebugIdiom();
-		for (@NonNull SubIdiom subIdiom : subIdioms) {
-			idiom.getOwnedSubIdioms().add(subIdiom);
-		}
-		return idiom;
 	}
 
 	public static @NonNull Idiom createIdiom(@NonNull IdiomModel idiomModel, @NonNull SubIdiom @NonNull ... subIdioms) {

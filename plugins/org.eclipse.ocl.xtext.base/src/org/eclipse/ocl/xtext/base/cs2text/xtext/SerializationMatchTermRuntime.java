@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 
 public class SerializationMatchTermRuntime extends SerializationMatchTerm
@@ -55,12 +56,12 @@ public class SerializationMatchTermRuntime extends SerializationMatchTerm
 	}
 
 	@Override
-	public boolean isConstant(@NonNull StaticRuleMatch ruleMatch) {
+	public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 		return false;
 	}
 
 	@Override
-	public boolean isKnown(@NonNull StaticRuleMatch ruleMatch) {
+	public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
 		return false;
 	}
 

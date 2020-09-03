@@ -50,10 +50,6 @@
     <genClasses ecoreClass="Idioms.ecore#//Idiom">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Idiom/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//Idiom/ownedSubIdioms"/>
-      <genOperations ecoreOperation="Idioms.ecore#//Idiom/firstMatch">
-        <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationNode"/>
-        <genParameters ecoreParameter="Idioms.ecore#//Idiom/firstMatch/serializationRule"/>
-      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//IdiomModel">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomModel/imports"/>

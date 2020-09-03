@@ -229,6 +229,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		return staticRuleMatch.basicGetNeedsDefaultEAttributes();
 	}
 
+	protected @NonNull IdiomMatch createIdiomMatch(@NonNull Idiom idiom, @NonNull SerializationNode serializationNode) {
+		return new IdiomMatch(idiom, serializationNode);
+	}
+
 	private @Nullable List<@NonNull AssignedSerializationNode> gatherAssignedSerializationNodes(@NonNull EReference eReference, @NonNull SerializationNode serializationNode, @Nullable List<@NonNull AssignedSerializationNode> assignedSerializationNodes) {
 		if (serializationNode instanceof AssignedSerializationNode) {
 			AssignedSerializationNode assignedSerializationNode = (AssignedSerializationNode)serializationNode;
@@ -400,7 +404,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		for (@NonNull Idiom idiom : idioms) {
 			IdiomMatch idiomMatch = idiomMatches[idiomIndex];
 			if (idiomMatch == null) {
-				idiomMatches[idiomIndex] = idiom.firstMatch(serializationNode, this);
+				SubIdiom firstSubIdiom = idiom.getOwnedSubIdioms().get(0);
+				boolean firstSubIdiomMatches = firstSubIdiom.matches(serializationNode, this);
+				idiomMatches[idiomIndex] = firstSubIdiomMatches ? createIdiomMatch(idiom, serializationNode) : null;
 			}
 			else {
 				idiomMatch.nextMatch(serializationNode, this);

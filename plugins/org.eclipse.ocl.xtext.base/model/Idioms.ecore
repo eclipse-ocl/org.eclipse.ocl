@@ -65,10 +65,6 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Idiom defines a formatting policy comprising one or more SubIdioms each of which&#xA;identifies a grammar term at which formatting is to be applied. Thus a dual SubIdiom,&#xA;may locate an opening brace in first SubIdiom and a closing brace in a second and impose&#xA;new-lines as desired.&#xA;&#xA;The serialization variant of each grammar rule is analyzed to determine which Idioms&#xA;configure the formatting of each term in the rule. Each Idiom has one or more SubIdioms&#xA;whose locator may or may not match a term. Where all SubIdioms match, the corresponding&#xA;segemnts format the matching term. Idioms can match recursively and sequentially. Partial&#xA;Idiom matches are ignored."/>
     </eAnnotations>
-    <eOperations name="firstMatch" lowerBound="1" eType="#//IdiomMatch">
-      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
-      <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
-    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubIdioms" upperBound="-1"
         eType="#//SubIdiom" containment="true">
@@ -205,7 +201,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="SerializationRuleAnalysis" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis"
       serializable="false"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="IdiomMatch" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomMatch"
+  <eClassifiers xsi:type="ecore:EDataType" name="IdiomMatch" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="SerializationBuilder" instanceClassName="org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder"
       serializable="false"/>
