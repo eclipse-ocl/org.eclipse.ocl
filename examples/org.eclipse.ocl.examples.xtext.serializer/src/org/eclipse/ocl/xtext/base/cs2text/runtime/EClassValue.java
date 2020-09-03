@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationUtils;
 
 public class EClassValue implements Nameable
 {

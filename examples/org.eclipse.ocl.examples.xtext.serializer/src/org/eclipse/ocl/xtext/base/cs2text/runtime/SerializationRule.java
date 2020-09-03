@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis.UserSlotAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationUtils;
 
 public class SerializationRule
 {

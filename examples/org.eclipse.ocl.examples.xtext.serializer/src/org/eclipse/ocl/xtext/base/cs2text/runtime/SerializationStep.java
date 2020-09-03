@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationUtils;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;

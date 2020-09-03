@@ -19,7 +19,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
 
-var sourceName = "org.eclipse.ocl.xtext.base"
+var sourceName = "org.eclipse.ocl.examples.xtext.serializer"
 
 /**
  *	Generate the Idioms Model, by converting idioms.ecore to *.java.
@@ -27,14 +27,14 @@ var sourceName = "org.eclipse.ocl.xtext.base"
 Workflow {
 	bean = ResourceSetImpl : resourceSet {}
     bean = StandaloneSetup { resourceSet = resourceSet
-    	platformUri = "../../plugins"
+    	platformUri = "../../examples"
     }
     bean = EcoreGenModelSetup { resourceSet = resourceSet }
     component = GenerateModel { resourceSet = resourceSet skipOnErrors = true clearResourceSet=false
     	genModel = "/${sourceName}/model/Idioms.genmodel"
     }
 	component = ConvertToUnixLineEndings {
-		directory = "../../plugins/${sourceName}/emf-gen"
+		directory = "../../examples/${sourceName}/emf-gen"
 	}
 }
 
