@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
@@ -43,10 +42,9 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis.LocatorHelper;
 
 /**
@@ -209,20 +207,6 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType serializationRuleAnalysisEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EDataType idiomMatchEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EDataType locatorHelperEDataType = null;
 
 	/**
@@ -237,13 +221,6 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType serializationNodeEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EDataType serializationStepEDataType = null;
 
 	/**
@@ -252,6 +229,13 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	private EDataType userElementSerializerEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType segmentHelperEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -707,6 +691,17 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
+	public EAttribute getSegment_Helper()
+	{
+		return (EAttribute)segmentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getSoftNewLineSegment()
 	{
 		return softNewLineSegmentEClass;
@@ -817,28 +812,6 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EDataType getSerializationRuleAnalysis()
-	{
-		return serializationRuleAnalysisEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EDataType getIdiomMatch()
-	{
-		return idiomMatchEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EDataType getLocatorHelper()
 	{
 		return locatorHelperEDataType;
@@ -861,17 +834,6 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	 * @generated
 	 */
 	@Override
-	public EDataType getSerializationNode()
-	{
-		return serializationNodeEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EDataType getSerializationStep()
 	{
 		return serializationStepEDataType;
@@ -886,6 +848,17 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 	public EDataType getUserElementSerializer()
 	{
 		return userElementSerializerEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EDataType getSegmentHelper()
+	{
+		return segmentHelperEDataType;
 	}
 
 	/**
@@ -928,8 +901,8 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		createEAttribute(commentSegmentSupportEClass, 2);
 
 		customSegmentEClass = createEClass(2);
-		createEAttribute(customSegmentEClass, 1);
 		createEAttribute(customSegmentEClass, 2);
+		createEAttribute(customSegmentEClass, 3);
 
 		customSegmentSupportEClass = createEClass(3);
 
@@ -969,14 +942,15 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 
 		segmentEClass = createEClass(15);
 		createEAttribute(segmentEClass, 0);
+		createEAttribute(segmentEClass, 1);
 
 		softNewLineSegmentEClass = createEClass(16);
 
 		softSpaceSegmentEClass = createEClass(17);
 
 		stringSegmentEClass = createEClass(18);
-		createEAttribute(stringSegmentEClass, 1);
 		createEAttribute(stringSegmentEClass, 2);
+		createEAttribute(stringSegmentEClass, 3);
 
 		subIdiomEClass = createEClass(19);
 		createEReference(subIdiomEClass, 0);
@@ -986,13 +960,11 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		valueSegmentEClass = createEClass(20);
 
 		// Create data types
-		serializationRuleAnalysisEDataType = createEDataType(21);
-		idiomMatchEDataType = createEDataType(22);
-		locatorHelperEDataType = createEDataType(23);
-		serializationBuilderEDataType = createEDataType(24);
-		serializationNodeEDataType = createEDataType(25);
-		serializationStepEDataType = createEDataType(26);
-		userElementSerializerEDataType = createEDataType(27);
+		locatorHelperEDataType = createEDataType(21);
+		segmentHelperEDataType = createEDataType(22);
+		serializationBuilderEDataType = createEDataType(23);
+		serializationStepEDataType = createEDataType(24);
+		userElementSerializerEDataType = createEDataType(25);
 	}
 
 	/**
@@ -1083,7 +1055,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 
 		initEClass(locatorEClass, Locator.class, "Locator", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getLocator_Name(), ecorePackage.getEString(), "name", null, 1, 1, Locator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getLocator_Helper(), this.getLocatorHelper(), "helper", null, 0, 1, Locator.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getLocator_Helper(), this.getLocatorHelper(), "helper", null, 0, 1, Locator.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(keywordLocatorEClass, KeywordLocator.class, "KeywordLocator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getKeywordLocator_String(), ecorePackage.getEString(), "string", null, 1, 1, KeywordLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -1102,6 +1074,7 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 
 		initEClass(segmentEClass, Segment.class, "Segment", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getSegment_Name(), ecorePackage.getEString(), "name", null, 1, 1, Segment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getSegment_Helper(), this.getSegmentHelper(), "helper", null, 0, 1, Segment.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(softNewLineSegmentEClass, SoftNewLineSegment.class, "SoftNewLineSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -1119,11 +1092,9 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		initEClass(valueSegmentEClass, ValueSegment.class, "ValueSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Initialize data types
-		initEDataType(serializationRuleAnalysisEDataType, SerializationRuleAnalysis.class, "SerializationRuleAnalysis", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEDataType(idiomMatchEDataType, IdiomMatch.class, "IdiomMatch", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(locatorHelperEDataType, LocatorHelper.class, "LocatorHelper", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(segmentHelperEDataType, SegmentHelper.class, "SegmentHelper", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(serializationBuilderEDataType, SerializationBuilder.class, "SerializationBuilder", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEDataType(serializationNodeEDataType, SerializationNode.class, "SerializationNode", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(serializationStepEDataType, SerializationStep.class, "SerializationStep", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(userElementSerializerEDataType, UserElementSerializer.class, "UserElementSerializer", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

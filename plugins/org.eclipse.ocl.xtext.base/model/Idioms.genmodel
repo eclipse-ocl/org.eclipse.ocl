@@ -17,11 +17,9 @@
   <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base.cs2text" resource="XMI"
       disposableProviderFactory="true" generateExampleClass="false" ecorePackage="Idioms.ecore#/"
       publicationLocation="">
-    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationRuleAnalysis"/>
-    <genDataTypes ecoreDataType="Idioms.ecore#//IdiomMatch"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//LocatorHelper"/>
+    <genDataTypes ecoreDataType="Idioms.ecore#//SegmentHelper"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationBuilder"/>
-    <genDataTypes ecoreDataType="Idioms.ecore#//SerializationNode"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//SerializationStep"/>
     <genDataTypes ecoreDataType="Idioms.ecore#//UserElementSerializer"/>
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
@@ -76,6 +74,7 @@
     <genClasses ecoreClass="Idioms.ecore#//PushSegment"/>
     <genClasses image="false" ecoreClass="Idioms.ecore#//Segment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Segment/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//Segment/helper"/>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//SoftNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//SoftSpaceSegment"/>

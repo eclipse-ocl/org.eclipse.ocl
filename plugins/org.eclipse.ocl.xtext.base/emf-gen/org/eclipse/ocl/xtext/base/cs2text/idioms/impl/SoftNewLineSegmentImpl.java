@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
 
 /**
  * <!-- begin-user-doc -->
@@ -55,11 +53,6 @@ public class SoftNewLineSegmentImpl extends SegmentImpl implements SoftNewLineSe
 	protected EClass eStaticClass()
 	{
 		return IdiomsPackage.Literals.SOFT_NEW_LINE_SEGMENT;
-	}
-
-	@Override
-	public void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
-		serializationBuilder.append(SerializationBuilder.SOFT_NEW_LINE);
 	}
 
 	@Override

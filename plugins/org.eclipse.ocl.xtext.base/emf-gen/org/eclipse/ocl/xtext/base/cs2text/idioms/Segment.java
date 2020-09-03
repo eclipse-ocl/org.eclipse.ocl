@@ -11,6 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelper;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment#getHelper <em>Helper</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getSegment()
@@ -61,5 +63,31 @@ public interface Segment extends EObject, org.eclipse.ocl.xtext.base.cs2text.run
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Helper</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Helper</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Helper</em>' attribute.
+	 * @see #setHelper(SegmentHelper)
+	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getSegment_Helper()
+	 * @model dataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SegmentHelper" transient="true"
+	 * @generated
+	 */
+	SegmentHelper getHelper();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.Segment#getHelper <em>Helper</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Helper</em>' attribute.
+	 * @see #getHelper()
+	 * @generated
+	 */
+	void setHelper(SegmentHelper value);
 
 } // Segment

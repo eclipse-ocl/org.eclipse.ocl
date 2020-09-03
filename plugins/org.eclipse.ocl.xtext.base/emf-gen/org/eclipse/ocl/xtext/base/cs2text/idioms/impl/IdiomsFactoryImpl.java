@@ -17,8 +17,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.*;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
@@ -124,9 +122,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 25:
-				return createSerializationNodeFromString(eDataType, initialValue);
-			case 26:
+			case 24:
 				return createSerializationStepFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -143,9 +139,7 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-			case 25:
-				return convertSerializationNodeToString(eDataType, instanceValue);
-			case 26:
+			case 24:
 				return convertSerializationStepToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -354,26 +348,6 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 	{
 		ValueSegmentImpl valueSegment = new ValueSegmentImpl();
 		return valueSegment;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SerializationNode createSerializationNodeFromString(EDataType eDataType, String initialValue)
-	{
-		return (SerializationNode)super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertSerializationNodeToString(EDataType eDataType, Object instanceValue)
-	{
-		return super.convertToString(eDataType, instanceValue);
 	}
 
 	/**

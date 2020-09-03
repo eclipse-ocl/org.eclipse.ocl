@@ -144,6 +144,10 @@ public class UserModelAnalysis
 		return ClassUtil.nonNullState(serializationMetaData.getAnalysis());
 	}
 
+	public SerializationRule.@NonNull SegmentSwitch getSegmentSwitch() {
+		return SerializationRule.SegmentSwitch.INSTANCE;
+	}
+
 	public @NonNull IValueConverterService getValueConverterService() {
 		return valueConverterService;
 	}

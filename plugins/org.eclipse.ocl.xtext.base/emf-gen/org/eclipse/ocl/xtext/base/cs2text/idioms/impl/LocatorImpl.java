@@ -76,6 +76,17 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 
 
 	/**
+	 * The cached value of the '{@link #getHelper() <em>Helper</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getHelper()
+	 * @generated
+	 * @ordered
+	 */
+	protected LocatorHelper helper = HELPER_EDEFAULT;
+
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -129,9 +140,7 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 	@Override
 	public LocatorHelper getHelper()
 	{
-		// TODO: implement this method to return the 'Helper' attribute
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		return helper;
 	}
 
 	/**
@@ -142,9 +151,10 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 	@Override
 	public void setHelper(LocatorHelper newHelper)
 	{
-		// TODO: implement this method to set the 'Helper' attribute
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		LocatorHelper oldHelper = helper;
+		helper = newHelper;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldHelper, helper));
 	}
 
 	/**
@@ -218,7 +228,7 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 			case 0:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case 1:
-				return HELPER_EDEFAULT == null ? getHelper() != null : !HELPER_EDEFAULT.equals(getHelper());
+				return HELPER_EDEFAULT == null ? helper != null : !HELPER_EDEFAULT.equals(helper);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -236,6 +246,8 @@ public abstract class LocatorImpl extends EObjectImpl implements Locator
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
+		result.append(", helper: "); //$NON-NLS-1$
+		result.append(helper);
 		result.append(')');
 		return result.toString();
 	}

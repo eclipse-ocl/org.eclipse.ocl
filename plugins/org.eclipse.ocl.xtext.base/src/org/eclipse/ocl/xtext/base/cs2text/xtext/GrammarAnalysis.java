@@ -590,6 +590,10 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		return idioms != null ? idioms : Collections.emptyList();
 	}
 
+	public SerializationRuleAnalysis.@NonNull LocatorSwitch getLocatorSwitch() {
+		return SerializationRuleAnalysis.LocatorSwitch.INSTANCE;
+	}
+
 /*	public @NonNull Iterable<@NonNull EClass> getSortedProducedEClasses() {
 		assert eClass2serializationRules != null;
 		List<@NonNull EClass> list = new ArrayList<>(ClassUtil.nonNullState(eClass2serializationRules.keySet()));
@@ -696,10 +700,6 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			sortedProducedEClassValues = sortedProducedEClassValues2 = super.getSortedProducedEClassValues();
 		}
 		return sortedProducedEClassValues2;
-	}
-
-	public SerializationRuleAnalysis.@NonNull SubIdiomLocatorSwitch getSubIdiomLocatorSwitch() {
-		return new SerializationRuleAnalysis.SubIdiomLocatorSwitch();
 	}
 
 	private @NonNull Map<@NonNull Integer, @NonNull Object> semanticHash2serializationAnalysisOrAnalyses = new HashMap<>();

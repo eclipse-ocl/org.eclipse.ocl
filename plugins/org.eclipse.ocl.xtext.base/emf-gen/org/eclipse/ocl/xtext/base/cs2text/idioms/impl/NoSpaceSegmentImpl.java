@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
 
 /**
  * <!-- begin-user-doc -->
@@ -55,12 +53,6 @@ public class NoSpaceSegmentImpl extends SegmentImpl implements NoSpaceSegment
 	protected EClass eStaticClass()
 	{
 		return IdiomsPackage.Literals.NO_SPACE_SEGMENT;
-	}
-
-
-	@Override
-	public void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
-		serializationBuilder.append(SerializationBuilder.NO_SPACE);
 	}
 
 	@Override

@@ -12,15 +12,11 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
 
 /**
  * <!-- begin-user-doc -->
@@ -124,7 +120,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		Class<?> oldSupportClass = supportClass;
 		supportClass = newSupportClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldSupportClass, supportClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldSupportClass, supportClass));
 	}
 
 	/**
@@ -149,7 +145,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		String oldSupportClassName = supportClassName;
 		supportClassName = newSupportClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldSupportClassName, supportClassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldSupportClassName, supportClassName));
 	}
 
 	/**
@@ -162,9 +158,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 1:
-				return getSupportClass();
 			case 2:
+				return getSupportClass();
+			case 3:
 				return getSupportClassName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -180,10 +176,10 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setSupportClass((Class<?>)newValue);
 				return;
-			case 2:
+			case 3:
 				setSupportClassName((String)newValue);
 				return;
 		}
@@ -200,10 +196,10 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 1:
+			case 2:
 				setSupportClass((Class<?>)null);
 				return;
-			case 2:
+			case 3:
 				setSupportClassName(SUPPORT_CLASS_NAME_EDEFAULT);
 				return;
 		}
@@ -220,9 +216,9 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	{
 		switch (featureID)
 		{
-			case 1:
-				return supportClass != null;
 			case 2:
+				return supportClass != null;
+			case 3:
 				return SUPPORT_CLASS_NAME_EDEFAULT == null ? supportClassName != null : !SUPPORT_CLASS_NAME_EDEFAULT.equals(supportClassName);
 		}
 		return super.eIsSet(featureID);
@@ -250,20 +246,6 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 			}
 		}
 		return support;
-	}
-
-	@Override
-	public void serialize(SerializationStep serializationStep, UserElementSerializer serializer, SerializationBuilder serializationBuilder) {
-		assert serializationBuilder != null;
-		EObject eObject = serializer.getElement();
-		CustomSegmentSupport support = getSupport(eObject);
-		if (support == null) {
-			String className = supportClass != null ? supportClass.getName() : supportClassName;
-			serializationBuilder.appendError("\n\n«missing " + className + "»\n\n");
-		}
-		else {
-			support.serialize(serializationStep, serializer, serializationBuilder);
-		}
 	}
 
 	@Override

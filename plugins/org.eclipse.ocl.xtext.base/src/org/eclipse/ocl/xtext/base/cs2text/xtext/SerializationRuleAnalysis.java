@@ -68,11 +68,13 @@ import com.google.common.collect.Iterables;
 public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 {
 	/**
-	 * The SubIdiomLocatorSwitch returns a LocatorHelper instance that can perform matching of a
-	 * SubIdiom's Locator and a SerializationNode of the SerialzationRule.
+	 * The LocatorSwitch returns a LocatorHelper instance that can perform matching of a
+	 * SubIdiom's Locator
 	 */
-	public static class SubIdiomLocatorSwitch extends IdiomsSwitch<@Nullable LocatorHelper>
+	public static class LocatorSwitch extends IdiomsSwitch<@Nullable LocatorHelper>
 	{
+		public static final @NonNull LocatorSwitch INSTANCE = new LocatorSwitch();
+
 		@Override
 		public @Nullable LocatorHelper caseAssignmentLocator(AssignmentLocator assignmentLocator) {
 			return AssignmentLocatorHelper.INSTANCE;
@@ -105,7 +107,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	 */
 	public static interface LocatorHelper
 	{
-		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis);
+		boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis);
 	}
 
 	public static class AssignmentLocatorHelper implements LocatorHelper
@@ -704,7 +706,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		LocatorHelper locatorHelper = locator.getHelper();
 		if (locatorHelper == null) {
-			SubIdiomLocatorSwitch subIdiomLocatorSwitch = grammarAnalysis.getSubIdiomLocatorSwitch();
+			LocatorSwitch subIdiomLocatorSwitch = grammarAnalysis.getLocatorSwitch();
 			locatorHelper = subIdiomLocatorSwitch.doSwitch(locator);
 			locator.setHelper(locatorHelper);
 		}

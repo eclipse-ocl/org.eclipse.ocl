@@ -32,6 +32,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.UserElementSerializer;
  */
 public interface CustomSegmentSupport extends EObject
 {
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -73,7 +73,7 @@ public interface Locator extends EObject
 	 * @return the value of the '<em>Helper</em>' attribute.
 	 * @see #setHelper(LocatorHelper)
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getLocator_Helper()
-	 * @model dataType="org.eclipse.ocl.xtext.base.cs2text.idioms.LocatorHelper" transient="true" volatile="true"
+	 * @model dataType="org.eclipse.ocl.xtext.base.cs2text.idioms.LocatorHelper" transient="true"
 	 * @generated
 	 */
 	LocatorHelper getHelper();

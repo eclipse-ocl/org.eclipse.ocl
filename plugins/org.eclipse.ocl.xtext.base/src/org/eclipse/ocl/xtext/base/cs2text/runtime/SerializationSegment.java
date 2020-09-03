@@ -10,10 +10,7 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 public interface SerializationSegment
 {
-	void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
-
+//	void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 }
