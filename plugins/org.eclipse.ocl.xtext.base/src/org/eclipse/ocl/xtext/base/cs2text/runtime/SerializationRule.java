@@ -370,7 +370,7 @@ public class SerializationRule
 	private final int ruleValueIndex;
 	private final @NonNull SerializationMatchStep @NonNull [] solutionSteps;
 	private final @NonNull SerializationStep @NonNull [] serializationSteps;
-	private final @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments;
+	private final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 	private final @NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues;
 	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
 
@@ -392,7 +392,7 @@ public class SerializationRule
 	public SerializationRule(int ruleValueIndex,
 			/*@NonNull*/ SerializationMatchStep /*@NonNull*/ [] solutionSteps,
 			/*@NonNull*/ SerializationStep /*@NonNull*/ [] serializationSteps,
-			/*@Nullable*/ SerializationSegment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
+			/*@Nullable*/ Segment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
 			/*@NonNull*/ EAttribute @Nullable [] needsDefaultEAttributes,
@@ -526,7 +526,7 @@ public class SerializationRule
 		return serializationSteps;
 	}
 
-	public @NonNull SerializationSegment @NonNull [] @Nullable [] getStaticSegments() {
+	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
 		return staticSegments;
 	}
 
@@ -548,7 +548,7 @@ public class SerializationRule
 		return hashCode.intValue();
 	} */
 
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments) {
+	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull Segment @NonNull [] @Nullable [] staticSegments) {
 		//
 		//	Compute the solutions and assign to/check against each CardinalityVariable
 		//
@@ -630,22 +630,22 @@ public class SerializationRule
 		serializeSubRule(0, serializationSteps.length, serializer, serializationBuilder);
 	}
 
-	protected void serializeSegments(@NonNull SerializationSegment @NonNull [] segments, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		for (SerializationSegment segment : segments) {
-			SegmentHelper helper = ((Segment)segment).getHelper();
+	protected void serializeSegments(@NonNull Segment @NonNull [] segments, @NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		for (Segment segment : segments) {
+			SegmentHelper helper = segment.getHelper();
 			if (helper == null) {
-				helper = serializer.getModelAnalysis().getSegmentSwitch().doSwitch((Segment)segment);
+				helper = serializer.getModelAnalysis().getSegmentSwitch().doSwitch(segment);
 				assert helper != null;
-				((Segment)segment).setHelper(helper);
+				segment.setHelper(helper);
 			}
-			helper.serialize((Segment)segment, serializationStep, serializer, serializationBuilder);
+			helper.serialize(segment, serializationStep, serializer, serializationBuilder);
 		}
 	}
 
 	public void serializeSubRule(int startIndex, int endIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-		@NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
+		@NonNull Segment @NonNull [] @Nullable [] staticSegments = serializer.getStaticSegments();
 		for (int index = startIndex; index < endIndex; ) {
-			@NonNull SerializationSegment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
+			@NonNull Segment @Nullable [] segments = staticSegments[index];		// XXX Could invite serializer to provide a dynamicSubIdiom.
 			SerializationStep serializationStep = serializationSteps[index++];
 			int cardinalityVariableIndex = serializationStep.getVariableIndex();
 			int stepLoopCount = cardinalityVariableIndex >= 0 ? serializer.getValue(cardinalityVariableIndex) : 1;

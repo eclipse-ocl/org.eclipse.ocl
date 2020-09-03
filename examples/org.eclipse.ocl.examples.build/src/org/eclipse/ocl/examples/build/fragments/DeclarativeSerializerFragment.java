@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
-//import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.AbstractSerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DeclarativeSerializer;
@@ -51,7 +51,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssigns;
@@ -110,9 +109,9 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private @Nullable List<@NonNull GrammarRuleVector> grammarRuleVectors = null;
 	private @Nullable Map<@NonNull SerializationMatchStep, @NonNull String> matchStep2id = null;
 	private @Nullable Map<@NonNull SerializationMatchTerm, @NonNull String> matchTerm2id = null;
-	private @Nullable Map<@NonNull List<SerializationSegment>, @NonNull String> segments2id = null;
-	private @NonNull Map<@NonNull SerializationSegment [] [], @NonNull String> segmentsList2string = new HashMap<>();
-	private @NonNull Map<@NonNull String, @NonNull SerializationSegment [] []> segmentsListString2segmentsList = new HashMap<>();
+	private @Nullable Map<@NonNull List<Segment>, @NonNull String> segments2id = null;
+	private @NonNull Map<@NonNull Segment [] [], @NonNull String> segmentsList2string = new HashMap<>();
+	private @NonNull Map<@NonNull String, @NonNull Segment [] []> segmentsListString2segmentsList = new HashMap<>();
 	private @Nullable Map<@NonNull String, @NonNull String> segmentsList2id = null;
 	private @Nullable Map<@NonNull SerializationRule, @NonNull String> serializationRule2id = null;
 	private @Nullable List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = null;
@@ -495,32 +494,32 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "mt." + id : id;
 	}
 
-	protected @NonNull String getSegmentsId(@NonNull List<SerializationSegment> segments, boolean addQualifier) {
+	protected @NonNull String getSegmentsId(@NonNull List<Segment> segments, boolean addQualifier) {
 		assert segments2id != null;
 		String id = segments2id.get(segments);
 	//	assert id != null;
 		return addQualifier ? "ss." + id : id;
 	}
 
-	protected @NonNull Iterable<@NonNull List<SerializationSegment>> getSegmentsIterable(@NonNull GrammarAnalysis grammarAnalysis) {
-		Map<@NonNull List<SerializationSegment>, @NonNull String> segments2id2 = segments2id;
+	protected @NonNull Iterable<@NonNull List<Segment>> getSegmentsIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+		Map<@NonNull List<Segment>, @NonNull String> segments2id2 = segments2id;
 		if (segments2id2 == null) {
 			segments2id = segments2id2 = new HashMap<>();
 		}
 		for (@NonNull Idiom idiom : grammarAnalysis.getIdioms()) {
 			List<SubIdiom> staticSubIdioms = idiom.getOwnedSubIdioms();
 			for(@NonNull SubIdiom subIdiom : staticSubIdioms) {
-				List<SerializationSegment> segments = new ArrayList<SerializationSegment>(subIdiom.getSegments());
+				List<Segment> segments = new ArrayList<Segment>(subIdiom.getSegments());
 				if (segments.size() > 0) {
 					segments2id2.put(segments, "");
 				}
 			}
 		}
-		List<@NonNull List<SerializationSegment>> segmentLists = new ArrayList<>(segments2id2.keySet());
+		List<@NonNull List<Segment>> segmentLists = new ArrayList<>(segments2id2.keySet());
 		Collections.sort(segmentLists, NameUtil.TO_STRING_COMPARATOR);
 		String formatString = "_" + getDigitsFormatString(segmentLists);
 		int i = 0;
-		for (@NonNull List<SerializationSegment> segmentList : segmentLists) {
+		for (@NonNull List<Segment> segmentList : segmentLists) {
 			segments2id2.put(segmentList, String.format(formatString, i++));
 		}
 		return segmentLists;
@@ -533,7 +532,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return addQualifier ? "sl." + id : id;
 	}
 
-	protected @NonNull Iterable<@NonNull SerializationSegment[][]> getSegmentsListIterable(@NonNull GrammarAnalysis grammarAnalysis) {
+	protected @NonNull Iterable<@NonNull Segment[][]> getSegmentsListIterable(@NonNull GrammarAnalysis grammarAnalysis) {
 		Map<@NonNull SerializationRule, @NonNull String> serializationRule2id2 = serializationRule2id;
 		assert serializationRule2id2 != null;
 		Map<@NonNull String, @NonNull String> segmentsList2id2 = segmentsList2id;
@@ -546,7 +545,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		List<@NonNull String> segmentsLists = new ArrayList<>(segmentsList2id2.keySet());
 		Collections.sort(segmentsLists);
 		String formatString = "_" + getDigitsFormatString(segmentsLists);
-		@NonNull List<@NonNull SerializationSegment[][]> segmentsListArray = new ArrayList<>();
+		@NonNull List<@NonNull Segment[][]> segmentsListArray = new ArrayList<>();
 		int i = 0;
 		for (@NonNull String segmentsListString : segmentsLists) {
 			segmentsList2id2.put(segmentsListString, String.format(formatString, i++));
@@ -555,13 +554,13 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return segmentsListArray;
 	}
 
-	protected @NonNull String getSegmentsListString(@NonNull SerializationSegment[][] segmentsList) {
+	protected @NonNull String getSegmentsListString(@NonNull Segment[][] segmentsList) {
 		String string = segmentsList2string.get(segmentsList);
 		if (string == null) {
 			StringBuilder s= new StringBuilder();
-			for (@NonNull SerializationSegment[] segments: segmentsList) {
+			for (@NonNull Segment[] segments: segmentsList) {
 				if (segments != null) {
-					for (@NonNull SerializationSegment segment: segments) {
+					for (@NonNull Segment segment: segments) {
 						s.append(segment.toString());
 					}
 				}

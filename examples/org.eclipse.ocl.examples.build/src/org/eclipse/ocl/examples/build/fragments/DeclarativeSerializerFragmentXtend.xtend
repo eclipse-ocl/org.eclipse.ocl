@@ -56,7 +56,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_GrammarCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_GrammarCardinality
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall
@@ -69,6 +68,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -552,7 +552,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _SerializationSegments
 		{
 			«FOR segments : getSegmentsIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(SerializationSegment)» [] «getSegmentsId(segments, false)» = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [] {
+			private final @NonNull «newTypeReference(Segment)» [] «getSegmentsId(segments, false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] {
 				«FOR segment : segments SEPARATOR ','»
 				«generateSerializationSegment(segment)» /* «segment.toString()» */
 				«ENDFOR»
@@ -562,7 +562,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''
 	}
 
-	protected def generateSerializationSegment(SerializationSegment segment) {
+	protected def generateSerializationSegment(Segment segment) {
 		switch segment {
 		CustomSegment: return generateSerializationSegment_Custom(segment)
 		HalfNewLineSegment: return generateSerializationSegment_HalfNewLine(segment)
@@ -628,7 +628,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		private class _SerializationSegmentsLists
 		{
 			«FOR segmentsList : getSegmentsListIterable(grammarAnalysis)»
-			private final @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @Nullable [] {
+			private final @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] «getSegmentsListId(getSegmentsListString(segmentsList), false)» = new @NonNull «newTypeReference(Segment)» @NonNull [] @Nullable [] {
 				«FOR segments : segmentsList SEPARATOR ','»
 				«IF segments !== null»«getSegmentsId(segments, true)» /* «FOR segment : segments SEPARATOR ' '»«segment.toString()»«ENDFOR» */«ELSE»null«ENDIF»
 				«ENDFOR»

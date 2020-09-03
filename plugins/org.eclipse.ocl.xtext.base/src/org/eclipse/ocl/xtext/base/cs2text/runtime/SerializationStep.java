@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
@@ -245,7 +246,7 @@ public abstract class SerializationStep
 				assert eReference.isContainment();
 				UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis(eObject);
 				UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
-				SerializationSegment[][] staticSegments = serializer.getStaticSegments();
+				Segment[][] staticSegments = serializer.getStaticSegments();
 				for (int calledRuleIndex : calledRuleIndexes2) {			// search for matching rule
 					@NonNull GrammarRuleValue calledRuleValue = grammarAnalysis.getRuleValue(calledRuleIndex);
 					for (@NonNull SerializationRule serializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {

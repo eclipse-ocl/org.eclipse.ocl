@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
 
@@ -27,9 +28,9 @@ public class EClassValue implements Nameable
 	public static class SerializationRule_SegmentsList //implements Nameable
 	{
 		protected final @NonNull SerializationRule serializationRule;
-		protected final @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments;
+		protected final @NonNull Segment @NonNull [] @Nullable [] staticSegments;
 
-		public SerializationRule_SegmentsList(@NonNull SerializationRule serializationRule, @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments) {
+		public SerializationRule_SegmentsList(@NonNull SerializationRule serializationRule, @NonNull Segment @NonNull [] @Nullable [] staticSegments) {
 			this.serializationRule = serializationRule;
 			this.staticSegments = staticSegments;
 		}
@@ -43,7 +44,7 @@ public class EClassValue implements Nameable
 			return serializationRule;
 		}
 
-		public @NonNull SerializationSegment @NonNull [] @Nullable [] getStaticSegments() {
+		public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
 			return staticSegments;
 		}
 

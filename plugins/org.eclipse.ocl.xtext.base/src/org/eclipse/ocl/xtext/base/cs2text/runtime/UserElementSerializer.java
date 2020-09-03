@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 
 /**
  * A Serializer supports the serialization of a user model element, automatocally creating a hierarchy
@@ -91,7 +92,7 @@ public class UserElementSerializer
 		return serializationRule;
 	}
 
-	public @NonNull SerializationSegment @NonNull [] @Nullable [] getStaticSegments() {
+	public @NonNull Segment @NonNull [] @Nullable [] getStaticSegments() {
 		return dynamicRuleMatch.getStaticSegments();
 	}
 

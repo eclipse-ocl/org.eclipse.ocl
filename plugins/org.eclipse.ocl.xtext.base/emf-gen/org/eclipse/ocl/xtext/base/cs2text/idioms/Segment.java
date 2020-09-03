@@ -16,7 +16,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelpe
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Segment</b></em>'.
- * @extends org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -36,7 +35,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.SegmentHelpe
  * @model abstract="true"
  * @generated
  */
-public interface Segment extends EObject, org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
+public interface Segment extends EObject
 {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
