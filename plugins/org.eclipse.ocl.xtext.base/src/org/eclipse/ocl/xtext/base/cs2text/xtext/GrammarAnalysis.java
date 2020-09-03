@@ -731,7 +731,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				serializationSegment = SerializationSegment.VALUE;
 			}
 			else if (segment instanceof CustomSegment) {
-				serializationSegment = new CustomSerializationSegment(((CustomSegment) segment).getSupportClassName());	// XXX
+				serializationSegment = new CustomSerializationSegment(((CustomSegment) segment).getSupportClassName());
 			}
 			else {
 				throw new UnsupportedOperationException();

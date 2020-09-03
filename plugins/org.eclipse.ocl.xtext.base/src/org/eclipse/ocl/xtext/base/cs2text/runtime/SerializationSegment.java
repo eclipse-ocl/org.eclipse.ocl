@@ -36,27 +36,39 @@ public interface SerializationSegment
 
 	public static class CustomSerializationSegment implements SerializationSegment
 	{
-	//	protected final @NonNull CustomSegment customSegment;
-		private @Nullable CustomSegmentSupport support = null;
-		private @NonNull String supportClassName;
+		private @Nullable String supportClassName;
+		private @Nullable Class<?> supportClass;
+		private @Nullable CustomSegmentSupport supportInstance = null;
 
 		public CustomSerializationSegment(@NonNull String supportClassName) {
 			this.supportClassName = supportClassName;
+			this.supportClass = null;
+			this.supportInstance = null;
 		}
 
 		public CustomSerializationSegment(@NonNull Class<?> supportClass) {
-			this.supportClassName = supportClass.getName();
+			this.supportClassName = null;
+			this.supportClass = supportClass;
+			this.supportInstance = null;
 		}
 
 		public @NonNull String getSupportClassName() {
-			return supportClassName;
+			if (supportClassName != null) {
+				return supportClassName;
+			}
+			assert supportClass != null;
+			return supportClass.getName();
 		}
+
+//		public @NonNull Class<?> getSupportClass() {
+//			return supportClass;
+//		}
 
 		@Override
 		public void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		//	assert segment == customSegment;
 		//	CustomSegment customSegment = (CustomSegment)segment;;
-			if (support == null) {
+			if (supportInstance == null) {
 				Class<?> supportClass = null; //customSegment.getSupportClass();
 				if ((supportClass == null) && (supportClassName/*customSegment.getSupportClassName()*/ != null)) {
 					EObject eObject = serializer.getElement();
@@ -69,26 +81,24 @@ public interface SerializationSegment
 				}
 				if (supportClass != null) {
 					try {
-						support = (CustomSegmentSupport) supportClass.newInstance();
+						supportInstance = (CustomSegmentSupport) supportClass.newInstance();
 					} catch (InstantiationException | IllegalAccessException e) {
 					//	return null;
 					}
 				}
 			}
-			if (support == null) {
-				Class<?> supportClass = null; //customSegment.getSupportClass();
-				String className = supportClassName; //supportClass != null ? supportClass.getName() : customSegment.getSupportClassName();
-				serializationBuilder.appendError("\n\n«missing " + className + "»\n\n");
+			if (supportInstance == null) {
+				serializationBuilder.appendError("\n\n«missing " + getSupportClassName() + "»\n\n");
 			}
 			else {
-				assert support != null;
-				support.serialize(serializationStep, serializer, serializationBuilder);
+				assert supportInstance != null;
+				supportInstance.serialize(serializationStep, serializer, serializationBuilder);
 			}
 		}
 
 		@Override
 		public String toString() {
-			return "supported by " + supportClassName;
+			return "supported by " + getSupportClassName();
 		}
 	}
 
