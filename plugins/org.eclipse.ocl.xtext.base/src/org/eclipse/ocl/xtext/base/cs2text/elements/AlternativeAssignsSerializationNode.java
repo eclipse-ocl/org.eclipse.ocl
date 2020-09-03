@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
@@ -22,8 +21,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssigns;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.xtext.Keyword;
 
 /**
@@ -37,7 +36,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 	protected final @Nullable Iterable<@NonNull Keyword> keywords;
 	protected final @Nullable EnumerationValue enumerationValue;
 	protected final @NonNull Integer @Nullable [] calledRuleIndexes;			// Cannot use GrammarRuleVector since need to preseve declaration order
-	private @Nullable Integer semanticHashCode = null;
+//	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeAssignsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
 			@NonNull GrammarCardinality grammarCardinality, @Nullable Iterable<@NonNull Keyword> keywords, @NonNull Integer @Nullable [] calledRuleIndexes) {
@@ -70,7 +69,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 		return enumerationValue;
 	}
 
-	@Override
+/*	@Override
 	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
 		if (serializationNode == this) {
 			return true;
@@ -89,9 +88,9 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 			return false;
 		}
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
 			int hash = getClass().hashCode() + eStructuralFeature.hashCode();
@@ -105,7 +104,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 		}
 		assert semanticHashCode != null;
 		return semanticHashCode.intValue();
-	}
+	} */
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {

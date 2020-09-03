@@ -14,6 +14,8 @@ import org.eclipse.xtext.xtext.generator.model.TypeReference
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.jdt.annotation.NonNull
+import org.eclipse.jdt.annotation.Nullable
 
 /**
  * DeclarativeFormatterFragmentXtend augments DeclarativeFormatterFragment with M2T functionality
@@ -29,17 +31,21 @@ class DeclarativeFormatterFragmentXtend extends DeclarativeFormatterFragment
 
 	protected override doGetIdiomsProviderStubContent() {
 		'''
+		// «new TypeReference(NonNull)»
+		// «new TypeReference(Nullable)»
+				
 		public class «getIdiomsProviderClass(grammar).simpleName» extends «getIdiomsProviderSuperClass(grammar)»
 		{
-			private static Iterable<«new TypeReference(Idiom)»> idioms = null;
+			private static @Nullable Iterable<@NonNull «new TypeReference(Idiom)»> idioms = null;
 		
 			@Override
-			public Iterable<«new TypeReference(Idiom)»> getIdioms(«new TypeReference(ResourceSet)» resourceSet) {
-				if (idioms == null) {
+			public @NonNull Iterable<@NonNull «new TypeReference(Idiom)»> getIdioms(@NonNull «new TypeReference(ResourceSet)» resourceSet) {
+				Iterable<@NonNull «new TypeReference(Idiom)»> idioms2 = idioms;
+				if (idioms2 == null) {
 					«new TypeReference(IdiomModel)» idiomModel = getIdiomModel(getClass(), resourceSet, "«getIdiomsPath(grammar)»");
-					idioms = getIdioms(idiomModel);
+					idioms = idioms2 = getIdioms(idiomModel);
 				}
-				return idioms;
+				return idioms2;
 			}
 		}
 		'''

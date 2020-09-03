@@ -19,15 +19,15 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.xtext.Keyword;
 
 public class AssignedKeywordSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull EnumerationValue enumerationValue;
-	private @Nullable Integer semanticHashCode = null;
+//	private @Nullable Integer semanticHashCode = null;
 
 	public AssignedKeywordSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, @NonNull Keyword keyword) {
 		super(assignmentAnalysis, grammarCardinality);
@@ -60,7 +60,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 		return enumerationValue.getName();
 	}
 
-	@Override
+/*	@Override
 	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
 		if (serializationNode == this) {
 			return true;
@@ -76,9 +76,9 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 			return false;
 		}
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
 			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + enumerationValue.hashCode();
@@ -86,7 +86,7 @@ public class AssignedKeywordSerializationNode extends AbstractAssignedSerializat
 		}
 		assert semanticHashCode != null;
 		return semanticHashCode.intValue();
-	}
+	} */
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {

@@ -28,7 +28,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 {
 	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
-	private @Nullable Integer semanticHashCode = null;
+//	private @Nullable Integer semanticHashCode = null;
 
 	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
 		super(grammarCardinality);
@@ -72,7 +72,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		return serializationNodes;
 	}
 
-	@Override
+/*	@Override
 	public boolean semanticEquals(@NonNull SerializationNode that) {
 		if (that == this) {
 			return true;
@@ -92,9 +92,9 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			}
 		}
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
 			int hash = getClass().hashCode();
@@ -105,7 +105,7 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		}
 		assert semanticHashCode != null;
 		return semanticHashCode.intValue();
-	}
+	} */
 
 	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof AssignedCurrentSerializationNode) {

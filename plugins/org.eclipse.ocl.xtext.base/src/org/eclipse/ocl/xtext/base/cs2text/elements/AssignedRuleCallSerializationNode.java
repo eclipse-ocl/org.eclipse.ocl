@@ -19,14 +19,14 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final int calledRuleIndex;
 	protected final @NonNull Integer [] calledRuleIndexes;
-	private @Nullable Integer semanticHashCode = null;
+//	private @Nullable Integer semanticHashCode = null;
 
 	public AssignedRuleCallSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, int calledRuleIndex) {
 		super(assignmentAnalysis, grammarCardinality);
@@ -55,7 +55,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		return calledRuleIndexes;
 	}
 
-	@Override
+/*	@Override
 	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
 		if (serializationNode == this) {
 			return true;
@@ -71,9 +71,9 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 			return false;
 		}
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
 			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleIndex;
@@ -81,7 +81,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 		}
 		assert semanticHashCode != null;
 		return semanticHashCode.intValue();
-	}
+	} */
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {

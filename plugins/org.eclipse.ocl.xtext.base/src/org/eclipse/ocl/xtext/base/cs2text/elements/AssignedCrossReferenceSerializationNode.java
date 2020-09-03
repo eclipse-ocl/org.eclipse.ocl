@@ -20,8 +20,8 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepCrossReference;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
@@ -31,7 +31,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 	protected final @NonNull CrossReference crossReference;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
 	protected final @NonNull Integer [] calledRuleIndexes;
-	private @Nullable Integer semanticHashCode = null;
+//	private @Nullable Integer semanticHashCode = null;
 
 	public AssignedCrossReferenceSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, @NonNull CrossReference crossReference) {
 		super(assignmentAnalysis, grammarCardinality);
@@ -59,7 +59,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		stepsList.add(new SerializationStepCrossReference(staticRuleMatch.getCardinalityVariableIndex(this), eStructuralFeature, crossReference));
 	}
 
-	@Override
+/*	@Override
 	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
 		if (serializationNode == this) {
 			return true;
@@ -75,9 +75,9 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 			return false;
 		}
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
 			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleAnalysis.hashCode();
@@ -85,7 +85,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 		}
 		assert semanticHashCode != null;
 		return semanticHashCode.intValue();
-	}
+	} */
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {

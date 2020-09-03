@@ -566,21 +566,22 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 
 			idiomsProvider = idiomsProvider2 = new AbstractIdiomsProvider()
 			{
-				private Iterable<Idiom> idioms = null;
+				private @Nullable Iterable<@NonNull Idiom> idioms = null;
 
 				@Override
-				public Iterable<Idiom> getIdioms(@NonNull ResourceSet resourceSet) {
-					if (idioms == null) {
+				public @NonNull Iterable<@NonNull Idiom> getIdioms(@NonNull ResourceSet resourceSet) {
+					Iterable<@NonNull Idiom> idioms2 = idioms;
+					if (idioms2 == null) {
 						URI xtextURI = getGrammar().eResource().getURI();
 						URI idiomsURI = xtextURI.trimFileExtension().appendFileExtension("idioms");
 						IdiomModel idiomModel = getIdiomModel(resourceSet, idiomsURI);
-						idioms = getIdioms(idiomModel);
+						idioms = idioms2 = getIdioms(idiomModel);
 					}
-					return idioms;
+					return idioms2;
 				}
 			};
 		}
-		Iterable<Idiom> idioms = idiomsProvider2.getIdioms(resourceSet);
+		Iterable<@NonNull Idiom> idioms = idiomsProvider2.getIdioms(resourceSet);
 
 
 		StringBuilder s = null;
@@ -659,12 +660,13 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull ParserRuleAnalysis parserRuleAnalysis, @NonNull SerializationNode thatSerializationNode) {
-		int hashCode = thatSerializationNode.semanticHashCode();			// Do we really need this ??
+	/*	int hashCode = thatSerializationNode.semanticHashCode();			// Do we really need this ??
 		Object analysisOrAnalyses = semanticHash2serializationAnalysisOrAnalyses.get(hashCode);
 		SerializationRuleAnalysis oldSerializationRuleAnalysis = null;
 		if (analysisOrAnalyses instanceof SerializationRuleAnalysis) {
 			if (((SerializationRuleAnalysis)analysisOrAnalyses).getRootSerializationNode().semanticEquals(thatSerializationNode)) {
-				oldSerializationRuleAnalysis = (SerializationRuleAnalysis)analysisOrAnalyses;
+				throw new UnsupportedOperationException();
+			//	oldSerializationRuleAnalysis = (SerializationRuleAnalysis)analysisOrAnalyses;
 			}
 		}
 		else if (analysisOrAnalyses != null) {
@@ -672,15 +674,16 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
 			for (@NonNull SerializationRuleAnalysis ruleAnalysis : ruleAnalyses) {
 				if (ruleAnalysis.getRootSerializationNode().semanticEquals(thatSerializationNode)) {
-					oldSerializationRuleAnalysis = ruleAnalysis;
+					throw new UnsupportedOperationException();
+				//	oldSerializationRuleAnalysis = ruleAnalysis;
 				}
 			}
 		}
 		if (oldSerializationRuleAnalysis != null) {
 			return oldSerializationRuleAnalysis;
-		}
+		} */
 		SerializationRuleAnalysis serializationRuleAnalysis = new SerializationRuleAnalysis(parserRuleAnalysis, thatSerializationNode);
-		if (analysisOrAnalyses == null) {
+	/*	if (analysisOrAnalyses == null) {
 			semanticHash2serializationAnalysisOrAnalyses.put(hashCode, serializationRuleAnalysis);
 		}
 		else if (analysisOrAnalyses instanceof SerializationNode) {
@@ -693,7 +696,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			@SuppressWarnings("unchecked")
 			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
 			ruleAnalyses.add(serializationRuleAnalysis);
-		}
+		} */
 		return serializationRuleAnalysis;
 	}
 

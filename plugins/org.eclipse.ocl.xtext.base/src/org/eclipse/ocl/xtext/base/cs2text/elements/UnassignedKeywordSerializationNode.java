@@ -17,8 +17,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
@@ -26,7 +26,7 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 {
 	protected final @NonNull Keyword keyword;
 	protected final @NonNull String value;
-	private @Nullable Integer semanticHashCode = null;
+//	private @Nullable Integer semanticHashCode = null;
 
 	public UnassignedKeywordSerializationNode(@NonNull Keyword keyword, @NonNull GrammarCardinality grammarCardinality) {
 		super(grammarCardinality);
@@ -50,7 +50,7 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 		return value;
 	}
 
-	@Override
+/*	@Override
 	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
 		if (serializationNode == this) {
 			return true;
@@ -63,9 +63,9 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 			return false;
 		}
 		return true;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public int semanticHashCode() {
 		if (semanticHashCode == null) {
 			int hash = getClass().hashCode() + value.hashCode();
@@ -73,7 +73,7 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 		}
 		assert semanticHashCode != null;
 		return semanticHashCode.intValue();
-	}
+	} */
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {

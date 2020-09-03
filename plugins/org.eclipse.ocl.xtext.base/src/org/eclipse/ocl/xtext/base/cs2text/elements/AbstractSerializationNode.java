@@ -95,15 +95,15 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		return false;
 	}
 
-	@Override
+/*	@Override
 	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
 		throw new UnsupportedOperationException("Missing " + getClass().getName() + ".semanticEquals implementation.");
-	}
+	} */
 
-	@Override
+/*	@Override
 	public int semanticHashCode() {
 		throw new UnsupportedOperationException("Missing " + getClass().getName() + ".semanticHashCode implementation.");
-	}
+	} */
 
 	@Override
 	public @NonNull SerializationNode setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {

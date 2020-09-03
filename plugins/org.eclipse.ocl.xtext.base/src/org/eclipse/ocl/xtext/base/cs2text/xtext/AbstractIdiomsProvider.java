@@ -52,8 +52,8 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 		return (IdiomModel)resource.getContents().get(0);
 	}
 
-	protected /*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms(/*@NonNull*/ IdiomModel rootIdiomModel) {
-		List<Idiom> allIdioms = new ArrayList<>();
+	protected @NonNull Iterable<@NonNull Idiom> getIdioms(/*@NonNull*/ IdiomModel rootIdiomModel) {
+		List<@NonNull Idiom> allIdioms = new ArrayList<>();
 		if (rootIdiomModel != null) {
 			List<IdiomModel> allIdiomModels = new ArrayList<>();
 			allIdiomModels.add(rootIdiomModel);

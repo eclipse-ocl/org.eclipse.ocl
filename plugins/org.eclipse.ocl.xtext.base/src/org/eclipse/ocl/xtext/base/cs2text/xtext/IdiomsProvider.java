@@ -16,5 +16,5 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 
 public interface IdiomsProvider
 {
-	/*@NonNull*/ Iterable</*@NonNull*/ Idiom> getIdioms(@NonNull ResourceSet resourceSet);
+	@NonNull Iterable<@NonNull Idiom> getIdioms(@NonNull ResourceSet resourceSet);
 }

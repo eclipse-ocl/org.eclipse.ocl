@@ -13,20 +13,26 @@
 package org.eclipse.ocl.xtext.oclstdlib.formatting;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractIdiomsProvider;
 
+// NonNull
+// Nullable
+
 public class OCLstdlibIdiomsProvider extends AbstractIdiomsProvider
 {
-	private static Iterable<Idiom> idioms = null;
+	private static @Nullable Iterable<@NonNull Idiom> idioms = null;
 
 	@Override
-	public Iterable<Idiom> getIdioms(ResourceSet resourceSet) {
-		if (idioms == null) {
+	public @NonNull Iterable<@NonNull Idiom> getIdioms(@NonNull ResourceSet resourceSet) {
+		Iterable<@NonNull Idiom> idioms2 = idioms;
+		if (idioms2 == null) {
 			IdiomModel idiomModel = getIdiomModel(getClass(), resourceSet, "/org/eclipse/ocl/xtext/oclstdlib/OCLstdlib.idioms");
-			idioms = getIdioms(idiomModel);
+			idioms = idioms2 = getIdioms(idiomModel);
 		}
-		return idioms;
+		return idioms2;
 	}
 }

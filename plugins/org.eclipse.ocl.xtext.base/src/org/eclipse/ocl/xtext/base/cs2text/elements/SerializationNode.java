@@ -51,12 +51,12 @@ public interface SerializationNode extends SerializationElement
 	/**
 	 * Return true if this and that serialization node have the same pattern.
 	 */
-	boolean semanticEquals(@NonNull SerializationNode that);
+//	boolean semanticEquals(@NonNull SerializationNode that);
 
 	/**
 	 * Return the hash code for the pattern.
 	 */
-	int semanticHashCode();
+//	int semanticHashCode();
 
 	/**
 	 * Traverse the serialization node hoderarchy of a serializer's serializationRule to append appropriate string
