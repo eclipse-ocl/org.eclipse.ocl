@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
+import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -91,12 +91,12 @@ public class IdiomMatch
 	}
 
 	public boolean nextMatch(@NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRule) {
-		EList<SubIdiom> subIdioms = idiom.getOwnedSubIdioms();
+		List<@NonNull SubIdiom> subIdioms = idiom.getOwnedSubIdioms();
 		if (isMatchedLocal()) {
 			if (additionalMatch != null) {
 				additionalMatch.nextMatch(serializationNode, serializationRule);
 			}
-			else if (subIdioms.get(0).matches(serializationNode, serializationRule)) {		// Look to chain a new sub-match
+			else if (serializationRule.matches(subIdioms.get(0), serializationNode)) {		// Look to chain a new sub-match
 				additionalMatch = new IdiomMatch(idiom, serializationNode);
 			}
 			return true;																	// Handled by additional match
@@ -106,11 +106,11 @@ public class IdiomMatch
 				return true;
 			}
 		}
-		if (subIdioms.get(subIdiomIndex).matches(serializationNode, serializationRule)) {	// Continue current match
+		if (serializationRule.matches(subIdioms.get(subIdiomIndex), serializationNode)) {	// Continue current match
 			matchNodes[subIdiomIndex++] = serializationNode;
 			return true;
 		}
-		else if (subIdioms.get(0).matches(serializationNode, serializationRule)) {			// Look to nest a recursive sub-match
+		else if (serializationRule.matches(subIdioms.get(0), serializationNode)) {			// Look to nest a recursive sub-match
 			nestedMatch = new IdiomMatch(idiom, serializationNode);
 			return true;
 		}

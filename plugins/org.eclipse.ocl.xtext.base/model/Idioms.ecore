@@ -185,10 +185,6 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A SubIdiom defines the fomattimg to be applied at some position inthe Xtext grammar.&#xA;A Locator matches the grammar location, then a sequence of virtual text strings may&#xA;form an outer value that wraps the inner value of the location with virtual segments&#xA;such as soft-spaces or indentation pushes."/>
     </eAnnotations>
-    <eOperations name="matches" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eParameters name="serializationNode" lowerBound="1" eType="#//SerializationNode"/>
-      <eParameters name="serializationRule" lowerBound="1" eType="#//SerializationRuleAnalysis"/>
-    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="locator" eType="#//Locator"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="segments" unique="false"

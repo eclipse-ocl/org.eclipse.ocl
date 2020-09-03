@@ -89,10 +89,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//SubIdiom/locator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//SubIdiom/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//SubIdiom/segments"/>
-      <genOperations ecoreOperation="Idioms.ecore#//SubIdiom/matches">
-        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/matches/serializationNode"/>
-        <genParameters ecoreParameter="Idioms.ecore#//SubIdiom/matches/serializationRule"/>
-      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//ValueSegment"/>
   </genPackages>

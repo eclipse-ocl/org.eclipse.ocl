@@ -35,6 +35,7 @@ import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
@@ -405,7 +406,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			IdiomMatch idiomMatch = idiomMatches[idiomIndex];
 			if (idiomMatch == null) {
 				SubIdiom firstSubIdiom = idiom.getOwnedSubIdioms().get(0);
-				boolean firstSubIdiomMatches = firstSubIdiom.matches(serializationNode, this);
+				boolean firstSubIdiomMatches = matches(firstSubIdiom, serializationNode);
 				idiomMatches[idiomIndex] = firstSubIdiomMatches ? createIdiomMatch(idiom, serializationNode) : null;
 			}
 			else {
@@ -561,6 +562,11 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @NonNull Iterable<@NonNull CardinalityVariable> getVariables() {
 		assert staticRuleMatch != null;
 		return staticRuleMatch.getCardinalityVariables();
+	}
+
+	public boolean matches(@NonNull SubIdiom subIdiom, @NonNull SerializationNode serializationNode) {
+		Locator locator = subIdiom.getLocator();
+		return (locator != null) && locator.matches(serializationNode, this);
 	}
 
 	private @NonNull GrammarCardinality refineGrammarCardinality(@NonNull GrammarCardinality netGrammarCardinality, @Nullable GrammarCardinality oldGrammarCardinality) {

@@ -12,8 +12,6 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->
@@ -109,13 +107,4 @@ public interface SubIdiom extends EObject
 	 * @generated
 	 */
 	EList<Segment> getSegments();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model required="true" serializationNodeDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationNode" serializationNodeRequired="true" serializationRuleDataType="org.eclipse.ocl.xtext.base.cs2text.idioms.SerializationRuleAnalysis" serializationRuleRequired="true"
-	 * @generated
-	 */
-	boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule);
-
 } // SubIdiom

@@ -1087,10 +1087,6 @@ public class IdiomsPackageImpl extends EPackageImpl implements IdiomsPackage
 		initEAttribute(getSubIdiom_Name(), ecorePackage.getEString(), "name", null, 1, 1, SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getSubIdiom_Segments(), this.getSegment(), null, "segments", null, 0, -1, SubIdiom.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		op = addEOperation(subIdiomEClass, ecorePackage.getEBoolean(), "matches", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getSerializationNode(), "serializationNode", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getSerializationRuleAnalysis(), "serializationRule", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-
 		initEClass(valueSegmentEClass, ValueSegment.class, "ValueSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Initialize data types

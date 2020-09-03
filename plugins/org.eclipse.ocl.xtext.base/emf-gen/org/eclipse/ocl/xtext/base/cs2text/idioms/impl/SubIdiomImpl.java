@@ -19,12 +19,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Locator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
  * <!-- begin-user-doc -->
@@ -295,11 +293,6 @@ public class SubIdiomImpl extends EObjectImpl implements SubIdiom
 				return segments != null && !segments.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	@Override
-	public boolean matches(SerializationNode serializationNode, SerializationRuleAnalysis serializationRule) {
-		return (locator != null) && locator.matches(serializationNode, serializationRule);
 	}
 
 	@Override
