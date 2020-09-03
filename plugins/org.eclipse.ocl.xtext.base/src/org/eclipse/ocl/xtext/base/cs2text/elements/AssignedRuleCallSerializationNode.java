@@ -20,7 +20,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
 
 public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializationNode
 {
@@ -85,7 +85,7 @@ public class AssignedRuleCallSerializationNode extends AbstractAssignedSerializa
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
+		GrammarUtils.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		GrammarRuleValue ruleValue = assignmentAnalysis.getGrammarAnalysis().basicGetRuleValue(calledRuleIndex);
 		s.append(ruleValue != null ? ruleValue.getRuleName() : calledRuleIndex);

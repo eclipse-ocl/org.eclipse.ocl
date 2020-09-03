@@ -21,7 +21,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.Serializatio
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
@@ -35,8 +35,8 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	public AssignedCrossReferenceSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, @NonNull CrossReference crossReference) {
 		super(assignmentAnalysis, grammarCardinality);
-		RuleCall ruleCall = (RuleCall) XtextGrammarUtil.getTerminal(crossReference);
-		AbstractRule calledRule = XtextGrammarUtil.getRule(ruleCall);
+		RuleCall ruleCall = (RuleCall) GrammarUtils.getTerminal(crossReference);
+		AbstractRule calledRule = GrammarUtils.getRule(ruleCall);
 		this.calledRuleAnalysis = assignmentAnalysis.getGrammarAnalysis().getRuleAnalysis(calledRule);
 		this.calledRuleIndexes = new @NonNull Integer[] { calledRuleAnalysis.getIndex() };
 		this.crossReference = crossReference;
@@ -89,7 +89,7 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
-		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
+		GrammarUtils.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(calledRuleAnalysis.getRuleName());
 		appendCardinality(s, depth);

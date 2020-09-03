@@ -18,7 +18,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
@@ -31,7 +31,7 @@ public class UnassignedKeywordSerializationNode extends SimpleSerializationNode
 	public UnassignedKeywordSerializationNode(@NonNull Keyword keyword, @NonNull GrammarCardinality grammarCardinality) {
 		super(grammarCardinality);
 		this.keyword = keyword;
-		this.value = XtextGrammarUtil.getValue(keyword);
+		this.value = GrammarUtils.getValue(keyword);
 		assert !grammarCardinality.mayBeZero();
 	}
 

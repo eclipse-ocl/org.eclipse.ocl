@@ -26,26 +26,26 @@ import org.eclipse.xtext.RuleCall;
 public class DirectAssignmentAnalysis extends AbstractAssignmentAnalysis<@NonNull Assignment>
 {
 	public DirectAssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Assignment assignment) {
-		super(sourceRuleAnalysis, (EClass)XtextGrammarUtil.getEClassifierScope(assignment), XtextGrammarUtil.getFeature(assignment), assignment);
+		super(sourceRuleAnalysis, (EClass)GrammarUtils.getEClassifierScope(assignment), GrammarUtils.getFeature(assignment), assignment);
 	}
 
 	@Override
 	public void analyzeContainmentAndTargets() {
 		analyzeContainment();
-		AbstractElement terminal = XtextGrammarUtil.getTerminal(actionOrAssignment);
+		AbstractElement terminal = GrammarUtils.getTerminal(actionOrAssignment);
 		computeTargetRuleAnalyses(terminal);
 	}
 
 	private void computeTargetRuleAnalyses(@NonNull AbstractElement terminal) {
 		if (terminal instanceof RuleCall) {							// containment EReference / value EAttribute
-			AbstractRule calledRule = XtextGrammarUtil.getRule((RuleCall)terminal);
+			AbstractRule calledRule = GrammarUtils.getRule((RuleCall)terminal);
 			AbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
 			addTargetRuleAnalysis(calledRuleAnalysis);
 		}
 		else if (terminal instanceof CrossReference) {}				// non-containment EReference
 		else if (terminal instanceof Keyword) {}					// enumerated attribute
 		else if (terminal instanceof Alternatives) {
-			for (@NonNull AbstractElement element : XtextGrammarUtil.getElements((Alternatives)terminal)) {
+			for (@NonNull AbstractElement element : GrammarUtils.getElements((Alternatives)terminal)) {
 				computeTargetRuleAnalyses(element);
 			}
 		}

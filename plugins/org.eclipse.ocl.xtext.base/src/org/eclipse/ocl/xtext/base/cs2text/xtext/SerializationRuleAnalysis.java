@@ -120,7 +120,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			if (serializationNode instanceof AssignedSerializationNode) {
 				AssignmentLocator assignmentLocator = (AssignmentLocator)locator;
 				EStructuralFeature assignedEStructuralFeature = ((AssignedSerializationNode)serializationNode).getEStructuralFeature();
-				return XtextGrammarUtil.isEqual(assignmentLocator.getEStructuralFeature(), assignedEStructuralFeature);
+				return GrammarUtils.isEqual(assignmentLocator.getEStructuralFeature(), assignedEStructuralFeature);
 			}
 			return false;
 		}
@@ -168,7 +168,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			if (":".equals(string) && (inEClass != null)) {
 				getClass();
 			}
-			if ((inEClass != null) && !XtextGrammarUtil.isSuperTypeOf(inEClass, serializationRuleAnalysis.getProducedEClass())) {
+			if ((inEClass != null) && !GrammarUtils.isSuperTypeOf(inEClass, serializationRuleAnalysis.getProducedEClass())) {
 				return false;
 			}
 			return true;
@@ -185,7 +185,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				ProducedEClassLocator producedEClassLocator = (ProducedEClassLocator)locator;
 				EClass producedEClass = serializationRuleAnalysis.getProducedEClass();
 				EClass eClass = producedEClassLocator.getEClass();
-				if (XtextGrammarUtil.isSuperTypeOf(eClass, producedEClass)) {
+				if (GrammarUtils.isSuperTypeOf(eClass, producedEClass)) {
 					return true;
 				}
 			}

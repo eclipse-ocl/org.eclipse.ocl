@@ -59,7 +59,7 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ParserRuleAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
@@ -149,8 +149,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	protected @NonNull String emitCalledRule(@NonNull CrossReference crossReference) {
-		RuleCall ruleCall = (RuleCall)XtextGrammarUtil.getTerminal(crossReference);
-		AbstractRule abstractRule = XtextGrammarUtil.getRule(ruleCall);
+		RuleCall ruleCall = (RuleCall)GrammarUtils.getTerminal(crossReference);
+		AbstractRule abstractRule = GrammarUtils.getRule(ruleCall);
 		AbstractRuleAnalysis ruleAnalysis = getGrammarAnalysis().getRuleAnalysis(abstractRule);
 		return ruleAnalysis.getRuleName();
 	}

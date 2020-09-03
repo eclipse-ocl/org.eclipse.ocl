@@ -97,7 +97,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		}
 		GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(alternatives);
 		List<@NonNull SerializationElement> alternativeSerializationElements = doAlternativeAssignedKeywords(alternatives, grammarCardinality);
-		for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(alternatives)) {
+		for (@NonNull AbstractElement element : GrammarUtils.getElements(alternatives)) {
 			boolean doSwitchNeeded = true;
 			if ((element instanceof Assignment) && (element.getCardinality() == null)) {
 				AbstractElement terminal = ((Assignment)element).getTerminal();
@@ -118,7 +118,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 		assert assignment != null;
 		DirectAssignmentAnalysis assignmentAnalysis = grammarAnalysis.getAssignmentAnalysis(assignment);
 		GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(assignment);
-		AbstractElement terminal = XtextGrammarUtil.getTerminal(assignment);
+		AbstractElement terminal = GrammarUtils.getTerminal(assignment);
 		if (terminal instanceof CrossReference) {
 			return new AssignedCrossReferenceSerializationNode(assignmentAnalysis, grammarCardinality, (CrossReference)terminal);
 		}
@@ -126,14 +126,14 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 			return new AssignedKeywordSerializationNode(assignmentAnalysis, grammarCardinality, (Keyword)terminal);
 		}
 		else if (terminal instanceof RuleCall) {
-			AbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)terminal));
+			AbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(GrammarUtils.getRule((RuleCall)terminal));
 			return new AssignedRuleCallSerializationNode(assignmentAnalysis, grammarCardinality, ruleAnalysis2.getIndex());
 		}
 		else if (terminal instanceof Alternatives) {
 			Alternatives alternatives = (Alternatives)terminal;
 			List<@NonNull Keyword> keywords = null;
 			List<@NonNull AbstractRuleAnalysis> ruleAnalyses = null;
-			Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
+			Iterable<@NonNull AbstractElement> elements = GrammarUtils.getElements(alternatives);
 			for (@NonNull AbstractElement alternative : elements) {
 				assert alternative.getCardinality() == null;
 				/*if (alternative instanceof CrossReference) {
@@ -149,7 +149,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 					if (ruleAnalyses == null) {
 						ruleAnalyses = new ArrayList<>();
 					}
-					AbstractRuleAnalysis ruleAnalysis = grammarAnalysis.getRuleAnalysis(XtextGrammarUtil.getRule((RuleCall)alternative));
+					AbstractRuleAnalysis ruleAnalysis = grammarAnalysis.getRuleAnalysis(GrammarUtils.getRule((RuleCall)alternative));
 					ruleAnalyses.add(ruleAnalysis);
 				}
 				else {
@@ -190,7 +190,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 	public @NonNull SerializationElement caseGroup(Group group) {
 		assert group != null;
 		SerializationElement serializationResult = new ListOfSerializationNode();
-		for (@NonNull AbstractElement element : XtextGrammarUtil.getElements(group)) {
+		for (@NonNull AbstractElement element : GrammarUtils.getElements(group)) {
 			int classifierID = element.eClass().getClassifierID();
 			@SuppressWarnings("null") SerializationElement serializationElement = doSwitch(classifierID, element);
 			serializationResult = serializationResult.addConcatenation(serializationElement);
@@ -214,7 +214,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 	public @NonNull SerializationElement caseRuleCall(RuleCall ruleCall) {
 		assert ruleCall != null;
 		assert !(ruleCall.eContainer() instanceof Assignment);
-		AbstractRule abstractRule = XtextGrammarUtil.getRule(ruleCall);
+		AbstractRule abstractRule = GrammarUtils.getRule(ruleCall);
 		AbstractRuleAnalysis calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(abstractRule);
 		if (!(calledRuleAnalysis instanceof ParserRuleAnalysis)) {
 			return NullSerializationNode.INSTANCE;
@@ -235,7 +235,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 
 	private @NonNull List<@NonNull SerializationElement> doAlternativeAssignedKeywords(@NonNull Alternatives alternatives, @NonNull GrammarCardinality grammarCardinality) {
 		Map<@NonNull EStructuralFeature, @NonNull List<@NonNull Keyword>> eFeature2keywords = null;
-		Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
+		Iterable<@NonNull AbstractElement> elements = GrammarUtils.getElements(alternatives);
 		for (@NonNull AbstractElement element : elements) {
 			if ((element instanceof Assignment) && (element.getCardinality() == null)) {
 				Assignment assignment = (Assignment)element;
@@ -273,7 +273,7 @@ public class ParserRuleSwitch extends XtextSwitch<@NonNull SerializationElement>
 	}
 
 	private @Nullable AlternativeUnassignedKeywordsSerializationNode doAlternativeUnassignedKeywords(@NonNull Alternatives alternatives) {
-		Iterable<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements(alternatives);
+		Iterable<@NonNull AbstractElement> elements = GrammarUtils.getElements(alternatives);
 		for (@NonNull AbstractElement element : elements) {
 			if (!(element instanceof Keyword)) {
 				return null;

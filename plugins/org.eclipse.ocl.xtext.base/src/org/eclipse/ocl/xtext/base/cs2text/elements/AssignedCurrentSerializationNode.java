@@ -18,7 +18,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.ActionAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
@@ -44,9 +44,9 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 //		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
-		s.append(XtextGrammarUtil.getName(assignmentAnalysis.getEClass()));
+		s.append(GrammarUtils.getName(assignmentAnalysis.getEClass()));
 		s.append("::");
-		s.append(XtextGrammarUtil.getName(eStructuralFeature));
+		s.append(GrammarUtils.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("«current»");
 		appendCardinality(s, depth);

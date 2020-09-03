@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationUtils;
 
 public class EClassValue implements Nameable
 {
@@ -115,7 +115,7 @@ public class EClassValue implements Nameable
 
 	@Override
 	public @NonNull String getName() {
-		return XtextGrammarUtil.getName(eClass);
+		return SerializationUtils.getName(eClass);
 	}
 
 	public @NonNull SerializationRule_SegmentsList @NonNull [] getSerializationRuleSegmentsLists() {

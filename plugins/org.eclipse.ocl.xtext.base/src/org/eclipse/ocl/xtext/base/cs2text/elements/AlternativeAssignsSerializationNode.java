@@ -23,7 +23,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.Serializatio
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
 import org.eclipse.xtext.Keyword;
 
 /**
@@ -110,7 +110,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 	@Override
 	public void toString(@NonNull StringBuilder s, int depth) {
 		GrammarAnalysis grammarAnalysis = assignmentAnalysis.getGrammarAnalysis();
-		XtextGrammarUtil.appendEStructuralFeatureName(s, assignmentAnalysis);
+		GrammarUtils.appendEStructuralFeatureName(s, assignmentAnalysis);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("(");
 		boolean isFirst = true;

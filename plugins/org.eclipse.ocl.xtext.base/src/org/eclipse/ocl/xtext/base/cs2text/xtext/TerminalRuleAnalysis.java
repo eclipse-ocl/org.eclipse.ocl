@@ -26,7 +26,7 @@ public class TerminalRuleAnalysis extends AbstractRuleAnalysis
 
 	public TerminalRuleAnalysis(@NonNull GrammarAnalysis grammarAnalysis, int index, @NonNull TerminalRule terminalRule) {
 		super(grammarAnalysis, index, terminalRule);
-		this.eDataType = (EDataType)XtextGrammarUtil.getClassifier(terminalRule.getType());
+		this.eDataType = (EDataType)GrammarUtils.getClassifier(terminalRule.getType());
 	}
 
 	@Override

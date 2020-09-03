@@ -25,7 +25,7 @@ public class ActionAssignmentAnalysis extends AbstractAssignmentAnalysis<@NonNul
 	protected final @NonNull ParserRuleAnalysis currentRuleAnalysis;
 
 	public ActionAssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Action action, @NonNull ParserRuleAnalysis currentRuleAnalysis) {
-		super(sourceRuleAnalysis, (EClass)XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(action)), XtextGrammarUtil.getFeature(action), action);
+		super(sourceRuleAnalysis, (EClass)GrammarUtils.getClassifier(GrammarUtils.getType(action)), GrammarUtils.getFeature(action), action);
 		this.currentRuleAnalysis = currentRuleAnalysis;
 	}
 

@@ -259,7 +259,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				}
 				else if (eObject instanceof AbstractRule) {
 					AbstractRule abstractRule = (AbstractRule)eObject;
-					String ruleName = XtextGrammarUtil.getName(abstractRule);
+					String ruleName = GrammarUtils.getName(abstractRule);
 					List<@NonNull AbstractRule> rules = ruleName2rules.get(ruleName);
 					if (rules == null) {
 						rules = new ArrayList<>();
@@ -269,7 +269,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 				}
 				else if (eObject instanceof RuleCall) {
 					RuleCall ruleCall = (RuleCall)eObject;
-					AbstractRule rule = XtextGrammarUtil.getRule(ruleCall);
+					AbstractRule rule = GrammarUtils.getRule(ruleCall);
 					List<@NonNull RuleCall> ruleCalls = rule2ruleCalls.get(rule);
 					if (ruleCalls == null) {
 						ruleCalls = new ArrayList<>();
@@ -435,7 +435,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 			int ruleIndex = ruleAnalyses.size();
 			AbstractRuleAnalysis ruleAnalysis;
 			if (activeRule instanceof ParserRule) {
-				EClassifier eClassifier = XtextGrammarUtil.getClassifier(activeRule.getType());
+				EClassifier eClassifier = GrammarUtils.getClassifier(activeRule.getType());
 				if (eClassifier instanceof EClass) {
 					ruleAnalysis = new ParserRuleAnalysis(this, ruleIndex, (ParserRule)activeRule, (EClass)eClassifier);
 				}
@@ -515,7 +515,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	public @NonNull EnumerationValue getEnumerationValue(@NonNull Keyword keyword) {
-		String value = XtextGrammarUtil.getValue(keyword);
+		String value = GrammarUtils.getValue(keyword);
 		EnumerationValueSingle enumerationValue = value2enumerationValue.get(value);
 		if (enumerationValue == null) {
 			enumerationValue = new EnumerationValueSingle(value);
@@ -527,7 +527,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	public @NonNull EnumerationValue getEnumerationValue(@NonNull Iterable<@NonNull Keyword> keywords) {
 		List<@NonNull String> values = new ArrayList<>();
 		for (@NonNull Keyword keyword : keywords) {
-			values.add(XtextGrammarUtil.getValue(keyword));
+			values.add(GrammarUtils.getValue(keyword));
 		}
 		Collections.sort(values);
 		EnumerationValueMultiple enumerationValue = values2enumerationValue.get(values);

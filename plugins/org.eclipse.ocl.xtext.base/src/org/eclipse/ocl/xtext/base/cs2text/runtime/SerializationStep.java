@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationUtils;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
@@ -92,9 +92,9 @@ public abstract class SerializationStep
 		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
 			super.toString(s, depth);
-			s.append(XtextGrammarUtil.getName(XtextGrammarUtil.getEContainingClass(eStructuralFeature)));
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
-			s.append(XtextGrammarUtil.getName(eStructuralFeature));
+			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append(eStructuralFeature.isMany() ? "+=" : "=");
 			s.append(enumerationValue);
 		}
@@ -154,9 +154,9 @@ public abstract class SerializationStep
 		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
 			super.toString(s, depth);
-			s.append(XtextGrammarUtil.getName(XtextGrammarUtil.getEContainingClass(eStructuralFeature)));
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
-			s.append(XtextGrammarUtil.getName(eStructuralFeature));
+			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append(eStructuralFeature.isMany() ? "+=" : "=");
 			s.append(calledRuleIndex);
 		}
@@ -270,9 +270,9 @@ public abstract class SerializationStep
 		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
 			super.toString(s, depth);
-			s.append(XtextGrammarUtil.getName(XtextGrammarUtil.getEContainingClass(eStructuralFeature)));
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
-			s.append(XtextGrammarUtil.getName(eStructuralFeature));
+			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append(eStructuralFeature.isMany() ? "+=" : "=");
 			boolean isFirst = true;
 			// enumerationValue
@@ -353,9 +353,9 @@ public abstract class SerializationStep
 		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
 			super.toString(s, depth);
-			s.append(XtextGrammarUtil.getName(XtextGrammarUtil.getEContainingClass(eStructuralFeature)));
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
-			s.append(XtextGrammarUtil.getName(eStructuralFeature));
+			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append(eStructuralFeature.isMany() ? "+=" : "=");
 			s.append(((RuleCall)crossReference.getTerminal()).getRule().getName());
 		}

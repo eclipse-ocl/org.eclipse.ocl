@@ -19,7 +19,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepLiteral;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.StaticRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Strings;
 
@@ -44,7 +44,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 
 	public void addKeyword(@NonNull Keyword keyword) {
 		assert keyword.getCardinality() == null;
-		values.add(XtextGrammarUtil.getValue(keyword));
+		values.add(GrammarUtils.getValue(keyword));
 	}
 
 	@Override

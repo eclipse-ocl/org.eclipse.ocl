@@ -133,7 +133,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 					serializationNode = serializationNodes.get(0);
 				}
 				else {
-					CompoundElement alternatives = (CompoundElement)XtextGrammarUtil.getAlternatives(abstractRule);
+					CompoundElement alternatives = (CompoundElement)GrammarUtils.getAlternatives(abstractRule);
 					serializationNode = new SequenceSerializationNode(alternatives, GrammarCardinality.ONE, serializationNodes);
 				}
 				createSerializationRules(serializationRuleAnalyses, serializationNode);
@@ -146,7 +146,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 				serializationNode = serializationNodes.get(0);
 			}
 			else {
-				CompoundElement alternatives = (CompoundElement)XtextGrammarUtil.getAlternatives(abstractRule);
+				CompoundElement alternatives = (CompoundElement)GrammarUtils.getAlternatives(abstractRule);
 				serializationNode = new SequenceSerializationNode(alternatives, GrammarCardinality.ONE, serializationNodes);
 			}
 			createSerializationRules(serializationRuleAnalyses, serializationNode);
@@ -170,7 +170,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 	 *	required behaviour of a current action.
 	 */
 	public @Nullable RuleCall analyzeActionsAndAssignments() {
-		AbstractElement rootElement = XtextGrammarUtil.getAlternatives(getRule());
+		AbstractElement rootElement = GrammarUtils.getAlternatives(getRule());
 		return analyzeActionsAndAssignments(rootElement, null, true);
 	}
 
@@ -191,7 +191,7 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			String feature = action.getFeature();
 			if (feature != null) {
 				assert firstUnassignedRuleCall != null;
-				AbstractRule currentRule = XtextGrammarUtil.getRule(firstUnassignedRuleCall);
+				AbstractRule currentRule = GrammarUtils.getRule(firstUnassignedRuleCall);
 				ParserRuleAnalysis currentRuleAnalysis = (ParserRuleAnalysis)grammarAnalysis.getRuleAnalysis(currentRule);
 				AssignmentAnalysis assignmentAnalysis = new ActionAssignmentAnalysis(this, action, currentRuleAnalysis);
 				addAssignmentAnalysis(assignmentAnalysis);
@@ -200,8 +200,8 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 		else if (abstractElement instanceof RuleCall) {
 			assert firstUnassignedRuleCall == null;
 			RuleCall ruleCall = (RuleCall)abstractElement;
-			AbstractRule subRule = XtextGrammarUtil.getRule(ruleCall);
-			if (XtextGrammarUtil.getClassifier(XtextGrammarUtil.getType(subRule)) instanceof EClass) {
+			AbstractRule subRule = GrammarUtils.getRule(ruleCall);
+			if (GrammarUtils.getClassifier(GrammarUtils.getType(subRule)) instanceof EClass) {
 				firstUnassignedRuleCall = ruleCall;
 				if (isSimpleAlternative) {
 					ParserRuleAnalysis subRuleAnalysis = (ParserRuleAnalysis)grammarAnalysis.getRuleAnalysis(subRule);
@@ -210,18 +210,18 @@ public class ParserRuleAnalysis extends AbstractRuleAnalysis implements Indexed
 			}
 		}
 		else if (abstractElement instanceof Alternatives) {
-			List<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements((Alternatives)abstractElement);
+			List<@NonNull AbstractElement> elements = GrammarUtils.getElements((Alternatives)abstractElement);
 			if (elements.size() == 1) {
 				firstUnassignedRuleCall = analyzeActionsAndAssignments(elements.get(0), firstUnassignedRuleCall, isSimpleAlternative);
 			}
 			else {
-				for (@NonNull AbstractElement nestedElement : XtextGrammarUtil.getElements((Alternatives)abstractElement)) {
+				for (@NonNull AbstractElement nestedElement : GrammarUtils.getElements((Alternatives)abstractElement)) {
 					analyzeActionsAndAssignments(nestedElement, firstUnassignedRuleCall, isSimpleAlternative);
 				}
 			}
 		}
 		else if (abstractElement instanceof Group) {
-			List<@NonNull AbstractElement> elements = XtextGrammarUtil.getElements((Group)abstractElement);
+			List<@NonNull AbstractElement> elements = GrammarUtils.getElements((Group)abstractElement);
 			AbstractElement nonOptionalElement = null;
 			for (@NonNull AbstractElement nestedElement : elements) {
 				GrammarCardinality grammarCardinality = GrammarCardinality.toEnum(nestedElement);

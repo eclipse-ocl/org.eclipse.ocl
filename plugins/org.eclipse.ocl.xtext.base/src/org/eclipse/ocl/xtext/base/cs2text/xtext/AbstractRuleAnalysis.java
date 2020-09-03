@@ -48,12 +48,12 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 		this.grammarAnalysis = grammarAnalysis;
 		this.index = index;
 		this.abstractRule = abstractRule;
-		String grammarName = XtextGrammarUtil.getEContainingGrammar(abstractRule).getName();
+		String grammarName = GrammarUtils.getEContainingGrammar(abstractRule).getName();
 		int dotIndex = grammarName.lastIndexOf('.');
 		if (dotIndex >= 0) {
 			grammarName = grammarName.substring(dotIndex+1);
 		}
-		this.name = grammarName + "::" + XtextGrammarUtil.getName(abstractRule);
+		this.name = grammarName + "::" + GrammarUtils.getName(abstractRule);
 	}
 
 	public abstract @Nullable GrammarRuleValue basicGetRuleValue();
@@ -77,7 +77,7 @@ public abstract class AbstractRuleAnalysis implements Indexed, Nameable, ToDebug
 	}
 
 	public @NonNull String getRuleName() {
-		return XtextGrammarUtil.getName(abstractRule);
+		return GrammarUtils.getName(abstractRule);
 	}
 
 	public abstract @NonNull GrammarRuleValue getRuleValue();

@@ -60,7 +60,7 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 		this.grammarAnalysis = sourceRuleAnalysis.getGrammarAnalysis();
 		this.sourceRuleAnalysis = sourceRuleAnalysis;
 		this.eClass = eClass;
-		this.eStructuralFeature = XtextGrammarUtil.getEStructuralFeature(eClass, featureName);
+		this.eStructuralFeature = GrammarUtils.getEStructuralFeature(eClass, featureName);
 		this.actionOrAssignment = actionOrAssignment;
 	}
 
@@ -116,7 +116,7 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 
 	@Override
 	public @NonNull String getName() {
-		return XtextGrammarUtil.getName(sourceRuleAnalysis.getRule()) + "-" + eStructuralFeature.getName();
+		return GrammarUtils.getName(sourceRuleAnalysis.getRule()) + "-" + eStructuralFeature.getName();
 	}
 
 	public @NonNull ParserRuleAnalysis getSourceRuleAnalysis() {

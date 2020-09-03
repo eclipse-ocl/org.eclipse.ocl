@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepSequence;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis.UserSlotAnalysis;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationUtils;
 
 public class SerializationRule
 {
@@ -44,7 +44,7 @@ public class SerializationRule
 
 		@Override
 		public @NonNull String getName() {
-			return XtextGrammarUtil.getName(eAttribute);
+			return SerializationUtils.getName(eAttribute);
 		}
 
 		@Override
@@ -74,7 +74,7 @@ public class SerializationRule
 
 		@Override
 		public @NonNull String getName() {
-			return XtextGrammarUtil.getName(eAttribute);
+			return SerializationUtils.getName(eAttribute);
 		}
 
 		@Override
@@ -104,7 +104,7 @@ public class SerializationRule
 
 		@Override
 		public @NonNull String getName() {
-			return XtextGrammarUtil.getName(eReference);
+			return SerializationUtils.getName(eReference);
 		}
 
 		@Override
@@ -130,7 +130,7 @@ public class SerializationRule
 
 		@Override
 		public @NonNull String getName() {
-			return XtextGrammarUtil.getName(eReference);
+			return SerializationUtils.getName(eReference);
 		}
 
 		public @NonNull RuleIndex_GrammarCardinality @NonNull [] getRuleIndex_GrammarCardinality() {

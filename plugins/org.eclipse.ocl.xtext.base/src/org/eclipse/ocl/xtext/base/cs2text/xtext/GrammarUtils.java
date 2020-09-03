@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -37,31 +36,14 @@ import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TypeRef;
 import org.eclipse.xtext.UntilToken;
 
-public class XtextGrammarUtil
+public class GrammarUtils extends SerializationUtils
 {
-/*	public static void appendCardinality(@NonNull StringBuilder s, int lowerBound, int upperBound) {
-		s.append("[");
-		if (upperBound < 0) {
-			s.append(lowerBound != 0 ? "+" : "*");
-		}
-		else if (upperBound == 1) {
-			s.append(lowerBound != 0 ? "1" : "?");
-		}
-		else if (upperBound == lowerBound) {
-			s.append(Integer.toString(lowerBound));
-		}
-		else {
-			s.append(lowerBound + ".." + upperBound);
-		}
-		s.append("]");
-	} */
-
 	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
 	//	if (eFeatureScope != getEContainingClass(eStructuralFeature)) {
 	//		s.append(XtextGrammarUtil.getName(eFeatureScope));
 	//		s.append("::");
 	//	}
-		s.append(XtextGrammarUtil.getName(eStructuralFeature));
+		s.append(GrammarUtils.getName(eStructuralFeature));
 	}
 
 	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull AssignmentAnalysis assignmentAnalysis) {
@@ -105,29 +87,6 @@ public class XtextGrammarUtil
 		throw new IllegalStateException();
 	}
 
-/*	public static class XtextTermsAnalysis extends XtextSwitch<@NonNull Object>
-	{
-	//	private final @NonNull Map<@NonNull EStructuralFeature,  @NonNull List<@NonNull XtextAssignmentAnalysis>> feature2assignmentAnalyses;
-
-		public XtextTermsAnalysis(@NonNull XtextAbstractRuleAnalysis ruleAnalysis) {
-		//	this.ruleAnalysis = ruleAnalysis;
-		//	this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
-		//	this.feature2assignmentAnalyses = new HashMap<>();
-		//	this.userElement2element = new HashMap<>();
-		}
-
-	//	private XtextTermsAnalysis(@NonNull XtextTermsAnalysis correlator) {
-		//	this.ruleAnalysis = correlator.ruleAnalysis;
-		//	this.grammarAnalysis = ruleAnalysis.getGrammarAnalysis();
-		//	this.feature2assignmentAnalyses = new HashMap<>(correlator.feature2assignmentAnalyses);
-		//	this.userElement2element = new HashMap<>(correlator.userElement2element);
-	//	}
-	} */
-
-	public static @NonNull EClass getEContainingClass(@NonNull EStructuralFeature eFeature) {
-		return ClassUtil.nonNullState(eFeature.getEContainingClass());
-	}
-
 	public static @NonNull Grammar getEContainingGrammar(@NonNull EObject eObject) {
 		for (EObject eCursor = eObject; (eCursor != null); eCursor = eCursor.eContainer()) {
 			if (eCursor instanceof Grammar) {
@@ -159,10 +118,6 @@ public class XtextGrammarUtil
 
 	public static @NonNull String getName(@NonNull AbstractRule abstractRule) {
 		return ClassUtil.nonNullState(abstractRule.getName());
-	}
-
-	public static @NonNull String getName(@NonNull ENamedElement eNamedElement) {
-		return ClassUtil.nonNullState(eNamedElement.getName());
 	}
 
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
