@@ -15,16 +15,6 @@ import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.jdt.annotation.NonNull
 import org.eclipse.jdt.annotation.Nullable
-import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.NewLineSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.NoSpaceSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.PopSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.PushSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftNewLineSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment
-import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment
 import org.eclipse.ocl.xtext.base.cs2text.runtime.DataTypeRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.EClassValue.SerializationRule_SegmentsList
@@ -35,6 +25,7 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue.EnumerationVa
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue
 import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector
 import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationGrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm
@@ -55,6 +46,10 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_R
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EReference_RuleIndexes
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.EnumerationValue_GrammarCardinality
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule.RuleIndex_GrammarCardinality
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.CustomSerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.StringSerializationSegment
+import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.ValueSerializationSegment
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignKeyword
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssignedRuleCall
@@ -67,15 +62,6 @@ import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.ValueSerializationSegment
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.StringSerializationSegment
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.CustomSerializationSegment
-import org.eclipse.ocl.xtext.base.cs2text.runtime.IdiomsUtils
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.ValueSerializationSegment
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment.StringSerializationSegment
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -572,20 +558,13 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	protected def generateSerializationSegment(SerializationSegment segment) {
 		switch segment {
 		CustomSerializationSegment: return generateSerializationSegment_Custom(segment)
-	//	HalfNewLineSegment: return generateSerializationSegment_HalfNewLine(segment)
-	//	NewLineSegment: return generateSerializationSegment_NewLine(segment)
-	//	NoSpaceSegment: return generateSerializationSegment_NoSpace(segment)
-	//	PopSegment: return generateSerializationSegment_Pop(segment)
-	//	PushSegment: return generateSerializationSegment_Push(segment)
-	//	SoftNewLineSegment: return generateSerializationSegment_SoftNewLine(segment)
-	//	SoftSpaceSegment: return generateSerializationSegment_SoftSpace(segment)
-		StringSerializationSegment case segment.getString().equals(IdiomsUtils.HALF_NEW_LINE.getString()) : return generateSerializationSegment_HalfNewLine(segment)
-	//	StringSerializationSegment case segment.getString().equals(IdiomsUtils.NEW_LINE.getString()) : return generateSerializationSegment_NewLine(segment)
-		StringSerializationSegment case segment.getString().equals(IdiomsUtils.NO_SPACE.getString()) : return generateSerializationSegment_NoSpace(segment)
-		StringSerializationSegment case segment.getString().equals(IdiomsUtils.POP.getString()) : return generateSerializationSegment_Pop(segment)
-		StringSerializationSegment case segment.getString().equals(IdiomsUtils.PUSH.getString()) : return generateSerializationSegment_Push(segment)
-		StringSerializationSegment case segment.getString().equals(IdiomsUtils.SOFT_NEW_LINE.getString()) : return generateSerializationSegment_SoftNewLine(segment)
-		StringSerializationSegment case segment.getString().equals(IdiomsUtils.SOFT_SPACE.getString()) : return generateSerializationSegment_SoftSpace(segment)
+		StringSerializationSegment case segment.getString().equals(SerializationBuilder.HALF_NEW_LINE) : return generateSerializationSegment_HalfNewLine(segment)
+	//	StringSerializationSegment case segment.getString().equals(SerializationBuilder.NEW_LINE) : return generateSerializationSegment_NewLine(segment)
+		StringSerializationSegment case segment.getString().equals(SerializationBuilder.NO_SPACE) : return generateSerializationSegment_NoSpace(segment)
+		StringSerializationSegment case segment.getString().equals(SerializationBuilder.POP) : return generateSerializationSegment_Pop(segment)
+		StringSerializationSegment case segment.getString().equals(SerializationBuilder.PUSH) : return generateSerializationSegment_Push(segment)
+		StringSerializationSegment case segment.getString().equals(SerializationBuilder.SOFT_NEW_LINE) : return generateSerializationSegment_SoftNewLine(segment)
+		StringSerializationSegment case segment.getString().equals(SerializationBuilder.SOFT_SPACE) : return generateSerializationSegment_SoftSpace(segment)
 		ValueSerializationSegment: return generateSerializationSegment_Value(segment)
 		default: segment.getClass().getName() //throw new UnsupportedOperationException()
 		}

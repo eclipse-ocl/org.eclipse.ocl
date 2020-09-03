@@ -69,12 +69,11 @@ public interface SerializationSegment
 		//	assert segment == customSegment;
 		//	CustomSegment customSegment = (CustomSegment)segment;;
 			if (supportInstance == null) {
-				Class<?> supportClass = null; //customSegment.getSupportClass();
-				if ((supportClass == null) && (supportClassName/*customSegment.getSupportClassName()*/ != null)) {
+				if ((supportClass == null) && (supportClassName != null)) {
 					EObject eObject = serializer.getElement();
 					ClassLoader classLoader = eObject.getClass().getClassLoader();
 					try {
-						supportClass = classLoader.loadClass(supportClassName/*customSegment.getSupportClassName()*/);
+						supportClass = classLoader.loadClass(supportClassName);
 					} catch (ClassNotFoundException e) {
 					//	return null;
 					}
