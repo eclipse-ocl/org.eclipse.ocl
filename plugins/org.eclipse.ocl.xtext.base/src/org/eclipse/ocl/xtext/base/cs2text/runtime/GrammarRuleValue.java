@@ -11,12 +11,14 @@
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 public abstract class GrammarRuleValue implements Indexed,Nameable
 {
 	protected final int ruleIndex;
 	protected final @NonNull String name;
+	private @Nullable Integer hashCode = null;
 
 	protected GrammarRuleValue(int ruleIndex, @NonNull String name) {
 		this.ruleIndex = ruleIndex;
@@ -38,8 +40,12 @@ public abstract class GrammarRuleValue implements Indexed,Nameable
 	}
 
 	@Override
-	public int hashCode() {
-		return getClass().hashCode() + name.hashCode();
+	public final int hashCode() {
+		Integer hashCode2 = hashCode;
+		if (hashCode2 == null) {
+			hashCode = hashCode2 = getClass().hashCode() + name.hashCode();
+		}
+		return hashCode2.intValue();
 	}
 
 	@Override

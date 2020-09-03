@@ -3,6 +3,7 @@ package org.eclipse.ocl.xtext.base.cs2text.runtime;
 import java.util.Iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable<@NonNull GrammarRuleVector>
 {
@@ -40,7 +41,7 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 	}
 
 	private long longs[] = null;
-	private int hashCode;
+	private @Nullable Integer hashCode;
 
 	public GrammarRuleVector() {}
 
@@ -134,16 +135,17 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 	}
 
 	@Override
-	public int hashCode() {
-		if (this.hashCode != 0) {
-			int hashCode = getClass().hashCode();
+	public final int hashCode() {
+		Integer hashCode2 = hashCode;
+		if (hashCode2 == null) {
+			int hash = getClass().hashCode();
 			for (int i = longs.length; --i >= 0; ) {
 				long word = longs[i];
-				hashCode = (int)(3 * hashCode + word + (word >> 16));
+				hash = (int)(3 * hash + word + (word >> 16));
 			}
-			this.hashCode = hashCode != 0 ? hashCode : 1;
+			this.hashCode = hashCode2 = hash;
 		}
-		return hashCode;
+		return hashCode2.intValue();
 	}
 
 	@Override

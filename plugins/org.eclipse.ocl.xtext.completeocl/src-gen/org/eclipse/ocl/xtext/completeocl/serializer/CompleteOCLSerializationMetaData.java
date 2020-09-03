@@ -1458,215 +1458,213 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 									= new SerializationStepCrossReference(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"));
 		private final @NonNull SerializationStepCrossReference _107 // 1*PathElementCS::referredElement=UnrestrictedName
 									= new SerializationStepCrossReference(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
-		private final @NonNull SerializationStepCrossReference _108 // 1*PathElementCS::referredElement=UnrestrictedName
-									= new SerializationStepCrossReference(-1, BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"));
-		private final @NonNull SerializationStepAssignedRuleCall _109 // 1*PathNameCS::ownedPathElements+=107
+		private final @NonNull SerializationStepAssignedRuleCall _108 // 1*PathNameCS::ownedPathElements+=107
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 107 /* URIFirstPathElementCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _110 // 1*PathNameCS::ownedPathElements+=30
+		private final @NonNull SerializationStepAssignedRuleCall _109 // 1*PathNameCS::ownedPathElements+=30
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 30 /* FirstPathElementCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _111 // 1*PathNameCS::ownedPathElements+=61
+		private final @NonNull SerializationStepAssignedRuleCall _110 // 1*PathNameCS::ownedPathElements+=61
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 61 /* NextPathElementCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _112 // 1*PathNameDeclCS::ownedPathName=67
+		private final @NonNull SerializationStepAssignedRuleCall _111 // 1*PathNameDeclCS::ownedPathName=67
 									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _113 // 1*PatternExpCS::ownedPatternType=94
+		private final @NonNull SerializationStepAssignedRuleCall _112 // 1*PatternExpCS::ownedPatternType=94
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__OWNED_PATTERN_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _114 // 1*PrimitiveTypeRefCS::name=74
+		private final @NonNull SerializationStepAssignedRuleCall _113 // 1*PrimitiveTypeRefCS::name=74
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.PRIMITIVE_TYPE_REF_CS__NAME, 74 /* PrimitiveTypeIdentifier */);
-		private final @NonNull SerializationStepAssignedRuleCall _115 // 1*PropertyContextDeclCS::ownedDefaultExpressions+=83
+		private final @NonNull SerializationStepAssignedRuleCall _114 // 1*PropertyContextDeclCS::ownedDefaultExpressions+=83
 									= new SerializationStepAssignedRuleCall(-1, CompleteOCLCSPackage.Literals.PROPERTY_CONTEXT_DECL_CS__OWNED_DEFAULT_EXPRESSIONS, 83 /* SpecificationCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _116 // 1*RoundBracketedClauseCS::ownedArguments+=54
+		private final @NonNull SerializationStepAssignedRuleCall _115 // 1*RoundBracketedClauseCS::ownedArguments+=54
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, 54 /* NavigatingArgCS */);
-		private final @NonNull SerializationStepAssigns _117 // 1*ShadowPartCS::ownedInitExpression=29|68
+		private final @NonNull SerializationStepAssigns _116 // 1*ShadowPartCS::ownedInitExpression=29|68
 									= new SerializationStepAssigns(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, null, new @NonNull Integer [] { 29/*ExpCS*/,68/*PatternExpCS*/});
-		private final @NonNull SerializationStepAssignedRuleCall _118 // 1*ShadowPartCS::ownedInitExpression=86
+		private final @NonNull SerializationStepAssignedRuleCall _117 // 1*ShadowPartCS::ownedInitExpression=86
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__OWNED_INIT_EXPRESSION, 86 /* StringLiteralExpCS */);
-		private final @NonNull SerializationStepCrossReference _119 // 1*ShadowPartCS::referredProperty=UnrestrictedName
+		private final @NonNull SerializationStepCrossReference _118 // 1*ShadowPartCS::referredProperty=UnrestrictedName
 									= new SerializationStepCrossReference(-1, EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, getCrossReference(EssentialOCLCSPackage.Literals.SHADOW_PART_CS__REFERRED_PROPERTY, "UnrestrictedName"));
-		private final @NonNull SerializationStepAssignedRuleCall _120 // 1*SpecificationCS::exprString=104
+		private final @NonNull SerializationStepAssignedRuleCall _119 // 1*SpecificationCS::exprString=104
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.SPECIFICATION_CS__EXPR_STRING, 104 /* UNQUOTED_STRING */);
-		private final @NonNull SerializationStepAssignedRuleCall _121 // 1*SquareBracketedClauseCS::ownedTerms+=29
+		private final @NonNull SerializationStepAssignedRuleCall _120 // 1*SquareBracketedClauseCS::ownedTerms+=29
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.SQUARE_BRACKETED_CLAUSE_CS__OWNED_TERMS, 29 /* ExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _122 // 1*TemplateBindingCS::ownedSubstitutions+=88
+		private final @NonNull SerializationStepAssignedRuleCall _121 // 1*TemplateBindingCS::ownedSubstitutions+=88
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 88 /* TemplateParameterSubstitutionCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _123 // 1*TemplateParameterSubstitutionCS::ownedActualParameter=101
+		private final @NonNull SerializationStepAssignedRuleCall _122 // 1*TemplateParameterSubstitutionCS::ownedActualParameter=101
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 101 /* TypeRefCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _124 // 1*TemplateSignatureCS::ownedParameters+=100
+		private final @NonNull SerializationStepAssignedRuleCall _123 // 1*TemplateSignatureCS::ownedParameters+=100
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 100 /* TypeParameterCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _125 // 1*TupleLiteralExpCS::ownedParts+=91
+		private final @NonNull SerializationStepAssignedRuleCall _124 // 1*TupleLiteralExpCS::ownedParts+=91
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TUPLE_LITERAL_EXP_CS__OWNED_PARTS, 91 /* TupleLiteralPartCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _126 // 1*TupleTypeCS::ownedParts+=92
+		private final @NonNull SerializationStepAssignedRuleCall _125 // 1*TupleTypeCS::ownedParts+=92
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS, 92 /* TuplePartCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _127 // 1*TypeLiteralExpCS::ownedType=98
+		private final @NonNull SerializationStepAssignedRuleCall _126 // 1*TypeLiteralExpCS::ownedType=98
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_LITERAL_EXP_CS__OWNED_TYPE, 98 /* TypeLiteralWithMultiplicityCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _128 // 1*TypeNameExpCS::ownedCurlyBracketedClause=14
+		private final @NonNull SerializationStepAssignedRuleCall _127 // 1*TypeNameExpCS::ownedCurlyBracketedClause=14
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 14 /* CurlyBracketedClauseCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _129 // 1*TypeNameExpCS::ownedPathName=67
+		private final @NonNull SerializationStepAssignedRuleCall _128 // 1*TypeNameExpCS::ownedPathName=67
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _130 // 1*TypeNameExpCS::ownedPatternGuard=29
+		private final @NonNull SerializationStepAssignedRuleCall _129 // 1*TypeNameExpCS::ownedPatternGuard=29
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD, 29 /* ExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _131 // 1*TypeParameterCS::ownedExtends+=102
+		private final @NonNull SerializationStepAssignedRuleCall _130 // 1*TypeParameterCS::ownedExtends+=102
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 102 /* TypedRefCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _132 // 1*TypedElementCS::ownedType=94
+		private final @NonNull SerializationStepAssignedRuleCall _131 // 1*TypedElementCS::ownedType=94
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _133 // 1*TypedTypeRefCS::ownedBinding=87
+		private final @NonNull SerializationStepAssignedRuleCall _132 // 1*TypedTypeRefCS::ownedBinding=87
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 87 /* TemplateBindingCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _134 // 1*TypedTypeRefCS::ownedPathName=67
+		private final @NonNull SerializationStepAssignedRuleCall _133 // 1*TypedTypeRefCS::ownedPathName=67
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 67 /* PathNameCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _135 // 1*VariableCS::ownedInitExpression=29
+		private final @NonNull SerializationStepAssignedRuleCall _134 // 1*VariableCS::ownedInitExpression=29
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION, 29 /* ExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _136 // 1*VariableCS::ownedType=94
+		private final @NonNull SerializationStepAssignedRuleCall _135 // 1*VariableCS::ownedType=94
 									= new SerializationStepAssignedRuleCall(-1, EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _137 // 1*WildcardTypeRefCS::ownedExtends=102
+		private final @NonNull SerializationStepAssignedRuleCall _136 // 1*WildcardTypeRefCS::ownedExtends=102
 									= new SerializationStepAssignedRuleCall(-1, BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 102 /* TypedRefCS */);
-		private final @NonNull SerializationStepSequence _138 // 1*steps-1..10
+		private final @NonNull SerializationStepSequence _137 // 1*steps-1..10
 									= new SerializationStepSequence(-1, 1, 10);
-		private final @NonNull SerializationStepSequence _139 // 1*steps-1..11
+		private final @NonNull SerializationStepSequence _138 // 1*steps-1..11
 									= new SerializationStepSequence(-1, 1, 11);
-		private final @NonNull SerializationStepSequence _140 // 1*steps-1..12
+		private final @NonNull SerializationStepSequence _139 // 1*steps-1..12
 									= new SerializationStepSequence(-1, 1, 12);
-		private final @NonNull SerializationStepSequence _141 // 1*steps-1..13
+		private final @NonNull SerializationStepSequence _140 // 1*steps-1..13
 									= new SerializationStepSequence(-1, 1, 13);
-		private final @NonNull SerializationStepSequence _142 // 1*steps-1..17
+		private final @NonNull SerializationStepSequence _141 // 1*steps-1..17
 									= new SerializationStepSequence(-1, 1, 17);
-		private final @NonNull SerializationStepSequence _143 // 1*steps-1..23
+		private final @NonNull SerializationStepSequence _142 // 1*steps-1..23
 									= new SerializationStepSequence(-1, 1, 23);
-		private final @NonNull SerializationStepSequence _144 // 1*steps-1..3
+		private final @NonNull SerializationStepSequence _143 // 1*steps-1..3
 									= new SerializationStepSequence(-1, 1, 3);
-		private final @NonNull SerializationStepSequence _145 // 1*steps-1..4
+		private final @NonNull SerializationStepSequence _144 // 1*steps-1..4
 									= new SerializationStepSequence(-1, 1, 4);
-		private final @NonNull SerializationStepSequence _146 // 1*steps-1..5
+		private final @NonNull SerializationStepSequence _145 // 1*steps-1..5
 									= new SerializationStepSequence(-1, 1, 5);
-		private final @NonNull SerializationStepSequence _147 // 1*steps-1..6
+		private final @NonNull SerializationStepSequence _146 // 1*steps-1..6
 									= new SerializationStepSequence(-1, 1, 6);
-		private final @NonNull SerializationStepSequence _148 // 1*steps-1..7
+		private final @NonNull SerializationStepSequence _147 // 1*steps-1..7
 									= new SerializationStepSequence(-1, 1, 7);
-		private final @NonNull SerializationStepSequence _149 // 1*steps-1..8
+		private final @NonNull SerializationStepSequence _148 // 1*steps-1..8
 									= new SerializationStepSequence(-1, 1, 8);
-		private final @NonNull SerializationStepSequence _150 // 1*steps-1..9
+		private final @NonNull SerializationStepSequence _149 // 1*steps-1..9
 									= new SerializationStepSequence(-1, 1, 9);
-		private final @NonNull SerializationStepLiteral _151 // V00*'static'
+		private final @NonNull SerializationStepLiteral _150 // V00*'static'
 									= new SerializationStepLiteral(0, "static");
-		private final @NonNull SerializationStepLiteral _152 // V00*'|1'
+		private final @NonNull SerializationStepLiteral _151 // V00*'|1'
 									= new SerializationStepLiteral(0, "|1");
-		private final @NonNull SerializationStepAssignedRuleCall _153 // V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84
+		private final @NonNull SerializationStepAssignedRuleCall _152 // V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84
 									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES, 84 /* SquareBracketedClauseCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _154 // V00*IfExpCS::ownedIfThenExpressions+=22
+		private final @NonNull SerializationStepAssignedRuleCall _153 // V00*IfExpCS::ownedIfThenExpressions+=22
 									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS, 22 /* ElseIfThenExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _155 // V00*LetVariableCS::ownedRoundBracketedClause=76
+		private final @NonNull SerializationStepAssignedRuleCall _154 // V00*LetVariableCS::ownedRoundBracketedClause=76
 									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE, 76 /* RoundBracketedClauseCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _156 // V00*PatternExpCS::patternVariableName=112
+		private final @NonNull SerializationStepAssignedRuleCall _155 // V00*PatternExpCS::patternVariableName=112
 									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.PATTERN_EXP_CS__PATTERN_VARIABLE_NAME, 112 /* UnrestrictedName */);
-		private final @NonNull SerializationStepAssignedRuleCall _157 // V00*RootCS::ownedImports+=35
+		private final @NonNull SerializationStepAssignedRuleCall _156 // V00*RootCS::ownedImports+=35
 									= new SerializationStepAssignedRuleCall(0, BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS, 35 /* ImportCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _158 // V00*StringLiteralExpCS::segments+=85
+		private final @NonNull SerializationStepAssignedRuleCall _157 // V00*StringLiteralExpCS::segments+=85
 									= new SerializationStepAssignedRuleCall(0, EssentialOCLCSPackage.Literals.STRING_LITERAL_EXP_CS__SEGMENTS, 85 /* StringLiteral */);
-		private final @NonNull SerializationStepAssignedRuleCall _159 // V00*TemplateableElementCS::ownedSignature=89
+		private final @NonNull SerializationStepAssignedRuleCall _158 // V00*TemplateableElementCS::ownedSignature=89
 									= new SerializationStepAssignedRuleCall(0, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 89 /* TemplateSignatureCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _160 // V00*TypedRefCS::ownedMultiplicity=50
+		private final @NonNull SerializationStepAssignedRuleCall _159 // V00*TypedRefCS::ownedMultiplicity=50
 									= new SerializationStepAssignedRuleCall(0, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull SerializationStepSequence _161 // V00*steps-2..4
+		private final @NonNull SerializationStepSequence _160 // V00*steps-2..4
 									= new SerializationStepSequence(0, 2, 4);
-		private final @NonNull SerializationStepSequence _162 // V00*steps-2..7
+		private final @NonNull SerializationStepSequence _161 // V00*steps-2..7
 									= new SerializationStepSequence(0, 2, 7);
-		private final @NonNull SerializationStepSequence _163 // V00*steps-3..10
+		private final @NonNull SerializationStepSequence _162 // V00*steps-3..10
 									= new SerializationStepSequence(0, 3, 10);
-		private final @NonNull SerializationStepSequence _164 // V00*steps-3..5
+		private final @NonNull SerializationStepSequence _163 // V00*steps-3..5
 									= new SerializationStepSequence(0, 3, 5);
-		private final @NonNull SerializationStepSequence _165 // V00*steps-3..6
+		private final @NonNull SerializationStepSequence _164 // V00*steps-3..6
 									= new SerializationStepSequence(0, 3, 6);
-		private final @NonNull SerializationStepSequence _166 // V00*steps-3..7
+		private final @NonNull SerializationStepSequence _165 // V00*steps-3..7
 									= new SerializationStepSequence(0, 3, 7);
-		private final @NonNull SerializationStepSequence _167 // V00*steps-3..8
+		private final @NonNull SerializationStepSequence _166 // V00*steps-3..8
 									= new SerializationStepSequence(0, 3, 8);
-		private final @NonNull SerializationStepSequence _168 // V00*steps-4..10
+		private final @NonNull SerializationStepSequence _167 // V00*steps-4..10
 									= new SerializationStepSequence(0, 4, 10);
-		private final @NonNull SerializationStepSequence _169 // V00*steps-4..6
+		private final @NonNull SerializationStepSequence _168 // V00*steps-4..6
 									= new SerializationStepSequence(0, 4, 6);
-		private final @NonNull SerializationStepSequence _170 // V00*steps-4..8
+		private final @NonNull SerializationStepSequence _169 // V00*steps-4..8
 									= new SerializationStepSequence(0, 4, 8);
-		private final @NonNull SerializationStepSequence _171 // V00*steps-4..9
+		private final @NonNull SerializationStepSequence _170 // V00*steps-4..9
 									= new SerializationStepSequence(0, 4, 9);
-		private final @NonNull SerializationStepSequence _172 // V00*steps-5..7
+		private final @NonNull SerializationStepSequence _171 // V00*steps-5..7
 									= new SerializationStepSequence(0, 5, 7);
-		private final @NonNull SerializationStepSequence _173 // V00*steps-6..8
+		private final @NonNull SerializationStepSequence _172 // V00*steps-6..8
 									= new SerializationStepSequence(0, 6, 8);
-		private final @NonNull SerializationStepSequence _174 // V00*steps-6..9
+		private final @NonNull SerializationStepSequence _173 // V00*steps-6..9
 									= new SerializationStepSequence(0, 6, 9);
-		private final @NonNull SerializationStepLiteral _175 // V01*'::*'
+		private final @NonNull SerializationStepLiteral _174 // V01*'::*'
 									= new SerializationStepLiteral(1, "::*");
-		private final @NonNull SerializationStepLiteral _176 // V01*'|1'
+		private final @NonNull SerializationStepLiteral _175 // V01*'|1'
 									= new SerializationStepLiteral(1, "|1");
-		private final @NonNull SerializationStepAssignedRuleCall _177 // V01*AbstractNameExpCS::ownedRoundBracketedClause=76
+		private final @NonNull SerializationStepAssignedRuleCall _176 // V01*AbstractNameExpCS::ownedRoundBracketedClause=76
 									= new SerializationStepAssignedRuleCall(1, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE, 76 /* RoundBracketedClauseCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _178 // V01*ClassifierContextDeclCS::selfName=112
+		private final @NonNull SerializationStepAssignedRuleCall _177 // V01*ClassifierContextDeclCS::selfName=112
 									= new SerializationStepAssignedRuleCall(1, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__SELF_NAME, 112 /* UnrestrictedName */);
-		private final @NonNull SerializationStepAssignedRuleCall _179 // V01*CollectionTypeCS::ownedCollectionMultiplicity=50
+		private final @NonNull SerializationStepAssignedRuleCall _178 // V01*CollectionTypeCS::ownedCollectionMultiplicity=50
 									= new SerializationStepAssignedRuleCall(1, EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _180 // V01*CompleteOCLDocumentCS::ownedPackages+=65
+		private final @NonNull SerializationStepAssignedRuleCall _179 // V01*CompleteOCLDocumentCS::ownedPackages+=65
 									= new SerializationStepAssignedRuleCall(1, CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES, 65 /* PackageDeclarationCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _181 // V01*PackageDeclarationCS::ownedContexts+=13
+		private final @NonNull SerializationStepAssignedRuleCall _180 // V01*PackageDeclarationCS::ownedContexts+=13
 									= new SerializationStepAssignedRuleCall(1, CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS, 13 /* ContextDeclCS */);
-		private final @NonNull SerializationStepAssigns _182 // V01*RoundBracketedClauseCS::ownedArguments+=57|58|56
+		private final @NonNull SerializationStepAssigns _181 // V01*RoundBracketedClauseCS::ownedArguments+=57|58|56
 									= new SerializationStepAssigns(1, EssentialOCLCSPackage.Literals.ROUND_BRACKETED_CLAUSE_CS__OWNED_ARGUMENTS, null, new @NonNull Integer [] { 57/*NavigatingCommaArgCS*/,58/*NavigatingSemiArgCS*/,56/*NavigatingBarArgCS*/});
-		private final @NonNull SerializationStepAssignedRuleCall _183 // V01*TemplateBindingCS::ownedMultiplicity=50
+		private final @NonNull SerializationStepAssignedRuleCall _182 // V01*TemplateBindingCS::ownedMultiplicity=50
 									= new SerializationStepAssignedRuleCall(1, BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _184 // V01*TemplateableElementCS::ownedSignature=89
+		private final @NonNull SerializationStepAssignedRuleCall _183 // V01*TemplateableElementCS::ownedSignature=89
 									= new SerializationStepAssignedRuleCall(1, BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE, 89 /* TemplateSignatureCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _185 // V01*TypedRefCS::ownedMultiplicity=50
+		private final @NonNull SerializationStepAssignedRuleCall _184 // V01*TypedRefCS::ownedMultiplicity=50
 									= new SerializationStepAssignedRuleCall(1, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull SerializationStepSequence _186 // V01*steps-10..13
+		private final @NonNull SerializationStepSequence _185 // V01*steps-10..13
 									= new SerializationStepSequence(1, 10, 13);
-		private final @NonNull SerializationStepSequence _187 // V01*steps-4..6
+		private final @NonNull SerializationStepSequence _186 // V01*steps-4..6
 									= new SerializationStepSequence(1, 4, 6);
-		private final @NonNull SerializationStepSequence _188 // V01*steps-4..7
+		private final @NonNull SerializationStepSequence _187 // V01*steps-4..7
 									= new SerializationStepSequence(1, 4, 7);
-		private final @NonNull SerializationStepSequence _189 // V01*steps-5..7
+		private final @NonNull SerializationStepSequence _188 // V01*steps-5..7
 									= new SerializationStepSequence(1, 5, 7);
-		private final @NonNull SerializationStepSequence _190 // V01*steps-5..8
+		private final @NonNull SerializationStepSequence _189 // V01*steps-5..8
 									= new SerializationStepSequence(1, 5, 8);
-		private final @NonNull SerializationStepSequence _191 // V01*steps-5..9
+		private final @NonNull SerializationStepSequence _190 // V01*steps-5..9
 									= new SerializationStepSequence(1, 5, 9);
-		private final @NonNull SerializationStepSequence _192 // V01*steps-6..10
+		private final @NonNull SerializationStepSequence _191 // V01*steps-6..10
 									= new SerializationStepSequence(1, 6, 10);
-		private final @NonNull SerializationStepSequence _193 // V01*steps-6..8
+		private final @NonNull SerializationStepSequence _192 // V01*steps-6..8
 									= new SerializationStepSequence(1, 6, 8);
-		private final @NonNull SerializationStepSequence _194 // V01*steps-7..9
+		private final @NonNull SerializationStepSequence _193 // V01*steps-7..9
 									= new SerializationStepSequence(1, 7, 9);
-		private final @NonNull SerializationStepSequence _195 // V01*steps-8..10
+		private final @NonNull SerializationStepSequence _194 // V01*steps-8..10
 									= new SerializationStepSequence(1, 8, 10);
-		private final @NonNull SerializationStepSequence _196 // V01*steps-9..11
+		private final @NonNull SerializationStepSequence _195 // V01*steps-9..11
 									= new SerializationStepSequence(1, 9, 11);
-		private final @NonNull SerializationStepAssignedRuleCall _197 // V02*AbstractNameExpCS::ownedCurlyBracketedClause=14
+		private final @NonNull SerializationStepAssignedRuleCall _196 // V02*AbstractNameExpCS::ownedCurlyBracketedClause=14
 									= new SerializationStepAssignedRuleCall(2, EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE, 14 /* CurlyBracketedClauseCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _198 // V02*CompleteOCLDocumentCS::ownedContexts+=13
+		private final @NonNull SerializationStepAssignedRuleCall _197 // V02*CompleteOCLDocumentCS::ownedContexts+=13
 									= new SerializationStepAssignedRuleCall(2, CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS, 13 /* ContextDeclCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _199 // V02*TypedRefCS::ownedMultiplicity=50
+		private final @NonNull SerializationStepAssignedRuleCall _198 // V02*TypedRefCS::ownedMultiplicity=50
 									= new SerializationStepAssignedRuleCall(2, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull SerializationStepSequence _200 // V02*steps-6..8
+		private final @NonNull SerializationStepSequence _199 // V02*steps-6..8
 									= new SerializationStepSequence(2, 6, 8);
-		private final @NonNull SerializationStepSequence _201 // V02*steps-7..9
+		private final @NonNull SerializationStepSequence _200 // V02*steps-7..9
 									= new SerializationStepSequence(2, 7, 9);
-		private final @NonNull SerializationStepSequence _202 // V02*steps-8..10
+		private final @NonNull SerializationStepSequence _201 // V02*steps-8..10
 									= new SerializationStepSequence(2, 8, 10);
-		private final @NonNull SerializationStepSequence _203 // V02*steps-8..12
+		private final @NonNull SerializationStepSequence _202 // V02*steps-8..12
 									= new SerializationStepSequence(2, 8, 12);
-		private final @NonNull SerializationStepAssignedRuleCall _204 // V03*ClassifierContextDeclCS::ownedDefinitions+=16
+		private final @NonNull SerializationStepAssignedRuleCall _203 // V03*ClassifierContextDeclCS::ownedDefinitions+=16
 									= new SerializationStepAssignedRuleCall(3, CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS, 16 /* DefCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _205 // V03*FeatureContextDeclCS::ownedType=94
+		private final @NonNull SerializationStepAssignedRuleCall _204 // V03*FeatureContextDeclCS::ownedType=94
 									= new SerializationStepAssignedRuleCall(3, CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull SerializationStepAssignedRuleCall _206 // V03*TypedRefCS::ownedMultiplicity=50
+		private final @NonNull SerializationStepAssignedRuleCall _205 // V03*TypedRefCS::ownedMultiplicity=50
 									= new SerializationStepAssignedRuleCall(3, BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY, 50 /* MultiplicityCS */);
-		private final @NonNull SerializationStepSequence _207 // V03*steps-10..12
+		private final @NonNull SerializationStepSequence _206 // V03*steps-10..12
 									= new SerializationStepSequence(3, 10, 12);
-		private final @NonNull SerializationStepSequence _208 // V03*steps-6..8
+		private final @NonNull SerializationStepSequence _207 // V03*steps-6..8
 									= new SerializationStepSequence(3, 6, 8);
-		private final @NonNull SerializationStepAssignedRuleCall _209 // V04*TypedElementCS::ownedType=94
+		private final @NonNull SerializationStepAssignedRuleCall _208 // V04*TypedElementCS::ownedType=94
 									= new SerializationStepAssignedRuleCall(4, BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE, 94 /* TypeExpCS */);
-		private final @NonNull SerializationStepSequence _210 // V04*steps-14..16
+		private final @NonNull SerializationStepSequence _209 // V04*steps-14..16
 									= new SerializationStepSequence(4, 14, 16);
-		private final @NonNull SerializationStepSequence _211 // V05*steps-17..19
+		private final @NonNull SerializationStepSequence _210 // V05*steps-17..19
 									= new SerializationStepSequence(5, 17, 19);
-		private final @NonNull SerializationStepSequence _212 // V06*steps-20..23
+		private final @NonNull SerializationStepSequence _211 // V06*steps-20..23
 									= new SerializationStepSequence(6, 20, 23);
 	}
 
@@ -3746,9 +3744,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || «null» */,
+				st._145 /* 1*steps-1..5 || «null» */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._006 /* 1*'..' || «! » «value» «! » */,
 				st._085 /* 1*MultiplicityBoundsCS::upperBound=105 || «? » «value» «? » */
 			},
@@ -3778,10 +3776,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || «null» */,
+				st._147 /* 1*steps-1..7 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._006 /* 1*'..' || «! » «value» «! » */,
 				st._085 /* 1*MultiplicityBoundsCS::upperBound=105 || «? » «value» «? » */,
 				st._020 /* 1*']' || «! » «value» */
@@ -3812,10 +3810,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || «null» */,
+				st._148 /* 1*steps-1..8 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._006 /* 1*'..' || «! » «value» «! » */,
 				st._085 /* 1*MultiplicityBoundsCS::upperBound=105 || «? » «value» «? » */,
 				st._045 /* 1*'|?' || «? » «value» «? » */,
@@ -3848,13 +3846,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._025 /* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || «null» */,
+				st._148 /* 1*steps-1..8 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._084 /* 1*MultiplicityBoundsCS::lowerBound=39 || «? » «value» «? » */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._006 /* 1*'..' || «! » «value» «! » */,
 				st._085 /* 1*MultiplicityBoundsCS::upperBound=105 || «? » «value» «? » */,
-				st._176 /* V01*'|1' || «? » «value» «? » */,
+				st._175 /* V01*'|1' || «? » «value» «? » */,
 				st._020 /* 1*']' || «! » «value» */
 			},
 			sl._11,
@@ -3890,7 +3888,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._026 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || «null» */,
+				st._144 /* 1*steps-1..4 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._086 /* 1*MultiplicityStringCS::stringBounds='*|+|?' || «? » «value» «? » */,
 				st._020 /* 1*']' || «! » «value» */
@@ -3916,7 +3914,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._026 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || «null» */,
+				st._145 /* 1*steps-1..5 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._086 /* 1*MultiplicityStringCS::stringBounds='*|+|?' || «? » «value» «? » */,
 				st._045 /* 1*'|?' || «? » «value» «? » */,
@@ -3944,10 +3942,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._026 /* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || «null» */,
+				st._145 /* 1*steps-1..5 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
 				st._086 /* 1*MultiplicityStringCS::stringBounds='*|+|?' || «? » «value» «? » */,
-				st._152 /* V00*'|1' || «? » «value» «? » */,
+				st._151 /* V00*'|1' || «? » «value» «? » */,
 				st._020 /* 1*']' || «! » «value» */
 			},
 			sl._13,
@@ -4021,11 +4019,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._057 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || «null» */,
-				st._110 /* 1*PathNameCS::ownedPathElements+=30 || «null» */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._145 /* 1*steps-1..5 || «null» */,
+				st._109 /* 1*PathNameCS::ownedPathElements+=30 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._008 /* 1*'::' || «! » «value» «! » */,
-				st._111 /* 1*PathNameCS::ownedPathElements+=61 || «null» */
+				st._110 /* 1*PathNameCS::ownedPathElements+=61 || «null» */
 			},
 			sl._03,
 			null,
@@ -4052,12 +4050,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._060 /* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._147 /* 1*steps-1..6 || «null» */,
-				st._122 /* 1*TemplateBindingCS::ownedSubstitutions+=88 || «null» */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._146 /* 1*steps-1..6 || «null» */,
+				st._121 /* 1*TemplateBindingCS::ownedSubstitutions+=88 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._122 /* 1*TemplateBindingCS::ownedSubstitutions+=88 || «null» */,
-				st._183 /* V01*TemplateBindingCS::ownedMultiplicity=50 || «null» */
+				st._121 /* 1*TemplateBindingCS::ownedSubstitutions+=88 || «null» */,
+				st._182 /* V01*TemplateBindingCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._05,
 			null,
@@ -4088,7 +4086,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._046 /* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._123 /* 1*TemplateParameterSubstitutionCS::ownedActualParameter=101 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
+				st._122 /* 1*TemplateParameterSubstitutionCS::ownedActualParameter=101 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4114,14 +4112,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._097 /* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
-				st._167 /* V00*steps-3..8 || «null» */,
+				st._166 /* V00*steps-3..8 || «null» */,
 				st._029 /* 1*'extends' || «? » «value» «? » */,
-				st._131 /* 1*TypeParameterCS::ownedExtends+=102 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._130 /* 1*TypeParameterCS::ownedExtends+=102 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._000 /* 1*'&&' || «? » «value» «? » */,
-				st._131 /* 1*TypeParameterCS::ownedExtends+=102 || «null» */
+				st._130 /* 1*TypeParameterCS::ownedExtends+=102 || «null» */
 			},
 			sl._51,
 			null,
@@ -4155,11 +4153,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._051 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._147 /* 1*steps-1..6 || «null» */,
-				st._134 /* 1*TypedTypeRefCS::ownedPathName=67 || «null» */,
-				st._165 /* V00*steps-3..6 || «null» */,
+				st._146 /* 1*steps-1..6 || «null» */,
+				st._133 /* 1*TypedTypeRefCS::ownedPathName=67 || «null» */,
+				st._164 /* V00*steps-3..6 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._133 /* 1*TypedTypeRefCS::ownedBinding=87 || «null» */,
+				st._132 /* 1*TypedTypeRefCS::ownedBinding=87 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
 			},
 			sl._04,
@@ -4191,11 +4189,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._089 /* assign V0 = |WildcardTypeRefCS::ownedExtends| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || «null» */,
+				st._145 /* 1*steps-1..5 || «null» */,
 				st._014 /* 1*'?' || «? » «value» «? » */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._029 /* 1*'extends' || «? » «value» «? » */,
-				st._137 /* 1*WildcardTypeRefCS::ownedExtends=102 || «null» */
+				st._136 /* 1*WildcardTypeRefCS::ownedExtends=102 || «null» */
 			},
 			sl._23,
 			null,
@@ -4226,15 +4224,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._084 /* assign V0 = |TemplateableElementCS::ownedSignature| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
-				st._159 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
-				st._178 /* V01*ClassifierContextDeclCS::selfName=112 || «? » «value» «? » */,
-				st._112 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
-				st._200 /* V02*steps-6..8 || «null» */,
+				st._158 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
+				st._177 /* V01*ClassifierContextDeclCS::selfName=112 || «? » «value» «? » */,
+				st._111 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
+				st._199 /* V02*steps-6..8 || «null» */,
 				st._034 /* 1*'inv' || «? » «value» «? » */,
 				st._049 /* 1*ClassifierContextDeclCS::ownedInvariants+=12 || «null» */,
-				st._204 /* V03*ClassifierContextDeclCS::ownedDefinitions+=16 || «null» */
+				st._203 /* V03*ClassifierContextDeclCS::ownedDefinitions+=16 || «null» */
 			},
 			sl._52,
 			null,
@@ -4292,15 +4290,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._084 /* assign V0 = |TemplateableElementCS::ownedSignature| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
-				st._159 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
-				st._178 /* V01*ClassifierContextDeclCS::selfName=112 || «? » «value» «? » */,
-				st._112 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
-				st._200 /* V02*steps-6..8 || «null» */,
+				st._158 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
+				st._177 /* V01*ClassifierContextDeclCS::selfName=112 || «? » «value» «? » */,
+				st._111 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
+				st._199 /* V02*steps-6..8 || «null» */,
 				st._034 /* 1*'inv' || «? » «value» «? » */,
 				st._049 /* 1*ClassifierContextDeclCS::ownedInvariants+=12 || «null» */,
-				st._204 /* V03*ClassifierContextDeclCS::ownedDefinitions+=16 || «null» */
+				st._203 /* V03*ClassifierContextDeclCS::ownedDefinitions+=16 || «null» */
 			},
 			sl._52,
 			null,
@@ -4355,10 +4353,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._082 /* assign V0 = |RootCS::ownedImports| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-				st._157 /* V00*RootCS::ownedImports+=35 || «null» */,
-				st._180 /* V01*CompleteOCLDocumentCS::ownedPackages+=65 || «null» */,
-				st._198 /* V02*CompleteOCLDocumentCS::ownedContexts+=13 || «null» */
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._156 /* V00*RootCS::ownedImports+=35 || «null» */,
+				st._179 /* V01*CompleteOCLDocumentCS::ownedPackages+=65 || «null» */,
+				st._197 /* V02*CompleteOCLDocumentCS::ownedContexts+=13 || «null» */
 			},
 			sl._25,
 			null,
@@ -4399,10 +4397,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._103 /* assign V1 = |ConstraintCS::ownedMessageSpecification| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-				st._162 /* V00*steps-2..7 || «null» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._161 /* V00*steps-2..7 || «null» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
-				st._188 /* V01*steps-4..7 || «null» */,
+				st._187 /* V01*steps-4..7 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._060 /* 1*ConstraintCS::ownedMessageSpecification=83 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
@@ -4453,21 +4451,21 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._121 /* assign V3 = (|DefOperationCS::ownedParameters| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._142 /* 1*steps-1..17 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-				st._151 /* V00*'static' || «? » «value» «? » */,
+				st._141 /* 1*steps-1..17 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._150 /* V00*'static' || «? » «value» «? » */,
 				st._023 /* 1*'def' || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._184 /* V01*TemplateableElementCS::ownedSignature=89 || «null» */,
+				st._183 /* V01*TemplateableElementCS::ownedSignature=89 || «null» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._203 /* V02*steps-8..12 || «null» */,
+				st._202 /* V02*steps-8..12 || «null» */,
 				st._065 /* 1*DefOperationCS::ownedParameters+=18 || «null» */,
-				st._207 /* V03*steps-10..12 || «null» */,
+				st._206 /* V03*steps-10..12 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._065 /* 1*DefOperationCS::ownedParameters+=18 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._209 /* V04*TypedElementCS::ownedType=94 || «null» */,
+				st._208 /* V04*TypedElementCS::ownedType=94 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._064 /* 1*DefCS::ownedSpecification=83 || «null» */
 			},
@@ -4531,10 +4529,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._132 /* 1*TypedElementCS::ownedType=94 || «null» */
+				st._131 /* 1*TypedElementCS::ownedType=94 || «null» */
 			},
 			sl._58,
 			null,
@@ -4570,13 +4568,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._069 /* assign V0 = |DefCS::isStatic.'static'| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-				st._151 /* V00*'static' || «? » «value» «? » */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._150 /* V00*'static' || «? » «value» «? » */,
 				st._023 /* 1*'def' || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._132 /* 1*TypedElementCS::ownedType=94 || «null» */,
+				st._131 /* 1*TypedElementCS::ownedType=94 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._064 /* 1*DefCS::ownedSpecification=83 || «null» */
 			},
@@ -4627,13 +4625,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._075 /* assign V0 = |NamedElementCS::name| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._147 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._031 /* 1*'import' || «null» */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._090 /* 1*NamedElementCS::name=33 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._073 /* 1*ImportCS::ownedPathName=108 || «null» */,
-				st._175 /* V01*'::*' || «? » «value» «? » */
+				st._174 /* V01*'::*' || «? » «value» «? » */
 			},
 			sl._29,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -4697,26 +4695,26 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._115 /* assign V2 = (|OperationContextDeclCS::ownedParameters| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._143 /* 1*steps-1..23 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._142 /* 1*steps-1..23 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
-				st._159 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
-				st._112 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
+				st._158 /* V00*TemplateableElementCS::ownedSignature=89 || «null» */,
+				st._111 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._192 /* V01*steps-6..10 || «null» */,
+				st._191 /* V01*steps-6..10 || «null» */,
 				st._098 /* 1*OperationContextDeclCS::ownedParameters+=66 || «null» */,
-				st._202 /* V02*steps-8..10 || «null» */,
+				st._201 /* V02*steps-8..10 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._098 /* 1*OperationContextDeclCS::ownedParameters+=66 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._205 /* V03*FeatureContextDeclCS::ownedType=94 || «null» */,
-				st._210 /* V04*steps-14..16 || «null» */,
+				st._204 /* V03*FeatureContextDeclCS::ownedType=94 || «null» */,
+				st._209 /* V04*steps-14..16 || «null» */,
 				st._040 /* 1*'pre' || «? » «value» «? » */,
 				st._100 /* 1*OperationContextDeclCS::ownedPreconditions+=12 || «null» */,
-				st._211 /* V05*steps-17..19 || «null» */,
+				st._210 /* V05*steps-17..19 || «null» */,
 				st._039 /* 1*'post' || «? » «value» «? » */,
 				st._099 /* 1*OperationContextDeclCS::ownedPostconditions+=12 || «null» */,
-				st._212 /* V06*steps-20..23 || «null» */,
+				st._211 /* V06*steps-20..23 || «null» */,
 				st._021 /* 1*'body' || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._097 /* 1*OperationContextDeclCS::ownedBodies+=83 || «null» */
@@ -4789,13 +4787,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._040 /* assert (|PathNameDeclCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._038 /* 1*'package' || «? » «value» «? » */,
-				st._112 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._111 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._034 /* 1*'inv' || «? » «value» «? » */,
 				st._104 /* 1*PackageDeclarationCS::ownedInvariants+=12 || «null» */,
-				st._181 /* V01*PackageDeclarationCS::ownedContexts+=13 || «null» */,
+				st._180 /* V01*PackageDeclarationCS::ownedContexts+=13 || «null» */,
 				st._028 /* 1*'endpackage' || «? » «value» «? » */
 			},
 			sl._47,
@@ -4835,11 +4833,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._075 /* assign V0 = |NamedElementCS::name| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-				st._161 /* V00*steps-2..4 || «null» */,
+				st._145 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._160 /* V00*steps-2..4 || «null» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._132 /* 1*TypedElementCS::ownedType=94 || «null» */
+				st._131 /* 1*TypedElementCS::ownedType=94 || «null» */
 			},
 			sl._35,
 			null,
@@ -4874,19 +4872,19 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._098 /* assign V1 = 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._141 /* 1*steps-1..13 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._140 /* 1*steps-1..13 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._022 /* 1*'context' || «? » «value» «? » */,
-				st._112 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
+				st._111 /* 1*PathNameDeclCS::ownedPathName=67 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._067 /* 1*FeatureContextDeclCS::ownedType=94 || «null» */,
-				st._174 /* V00*steps-6..9 || «null» */,
+				st._173 /* V00*steps-6..9 || «null» */,
 				st._024 /* 1*'derive' || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._115 /* 1*PropertyContextDeclCS::ownedDefaultExpressions+=83 || «null» */,
-				st._186 /* V01*steps-10..13 || «null» */,
+				st._114 /* 1*PropertyContextDeclCS::ownedDefaultExpressions+=83 || «null» */,
+				st._185 /* V01*steps-10..13 || «null» */,
 				st._033 /* 1*'init' || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._115 /* 1*PropertyContextDeclCS::ownedDefaultExpressions+=83 || «null» */
+				st._114 /* 1*PropertyContextDeclCS::ownedDefaultExpressions+=83 || «null» */
 			},
 			sl._54,
 			null,
@@ -4923,7 +4921,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._045 /* assert (|SpecificationCS::exprString| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._120 /* 1*SpecificationCS::exprString=104 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
+				st._119 /* 1*SpecificationCS::exprString=104 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -4970,12 +4968,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._061 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._147 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._124 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._123 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._124 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
+				st._123 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
 			},
 			sl._36,
@@ -5000,12 +4998,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._061 /* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._147 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._010 /* 1*'<' || «? » «value» «? » */,
-				st._124 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._123 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._124 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
+				st._123 /* 1*TemplateSignatureCS::ownedParameters+=100 || «null» */,
 				st._013 /* 1*'>' || «? » «value» «? » */
 			},
 			sl._45,
@@ -5054,11 +5052,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._145 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._136 /* 1*VariableCS::ownedType=94 || «null» */
+				st._135 /* 1*VariableCS::ownedType=94 || «null» */
 			},
 			sl._50,
 			null,
@@ -5093,12 +5091,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._090 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._051 /* 1*CollectionLiteralExpCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._170 /* V00*steps-4..8 || «null» */,
+				st._169 /* V00*steps-4..8 || «null» */,
 				st._050 /* 1*CollectionLiteralExpCS::ownedParts+=6 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._050 /* 1*CollectionLiteralExpCS::ownedParts+=6 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
@@ -5158,9 +5156,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._003 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._145 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._052 /* 1*CollectionLiteralPartCS::ownedExpression=29 || «null» */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._006 /* 1*'..' || «! » «value» «! » */,
 				st._054 /* 1*CollectionLiteralPartCS::ownedLastExpression=29 || «null» */
 			},
@@ -5196,12 +5194,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._004 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._139 /* 1*steps-1..11 || «null» */,
+				st._138 /* 1*steps-1..11 || «null» */,
 				st._056 /* 1*CollectionPatternCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._168 /* V00*steps-4..10 || «null» */,
+				st._167 /* V00*steps-4..10 || «null» */,
 				st._055 /* 1*CollectionPatternCS::ownedParts+=68 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._055 /* 1*CollectionPatternCS::ownedParts+=68 || «null» */,
 				st._004 /* 1*'++' || «? » «value» «? » */,
@@ -5246,12 +5244,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._101 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || «null» */,
+				st._147 /* 1*steps-1..7 || «null» */,
 				st._058 /* 1*CollectionTypeCS::name=9 || «? » «value» «? » */,
-				st._166 /* V00*steps-3..7 || «null» */,
+				st._165 /* V00*steps-3..7 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._059 /* 1*CollectionTypeCS::ownedType=95 || «null» */,
-				st._179 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=50 || «null» */,
+				st._178 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=50 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
 			},
 			sl._18,
@@ -5292,11 +5290,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._092 /* assign V1 = (|CurlyBracketedClauseCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || «null» */,
+				st._148 /* 1*steps-1..8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._166 /* V00*steps-3..7 || «null» */,
+				st._165 /* V00*steps-3..7 || «null» */,
 				st._063 /* 1*CurlyBracketedClauseCS::ownedParts+=81 || «null» */,
-				st._189 /* V01*steps-5..7 || «null» */,
+				st._188 /* V01*steps-5..7 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._063 /* 1*CurlyBracketedClauseCS::ownedParts+=81 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
@@ -5325,7 +5323,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._014 /* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._145 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._026 /* 1*'elseif' || «? » «value» «? » */,
 				st._071 /* 1*IfThenExpCS::ownedCondition=29 || «null» */,
 				st._042 /* 1*'then' || «? » «value» «? » */,
@@ -5386,12 +5384,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._090 /* assign V1 = (|CollectionLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._051 /* 1*CollectionLiteralExpCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._170 /* V00*steps-4..8 || «null» */,
+				st._169 /* V00*steps-4..8 || «null» */,
 				st._050 /* 1*CollectionLiteralExpCS::ownedParts+=6 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._050 /* 1*CollectionLiteralExpCS::ownedParts+=6 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
@@ -5483,12 +5481,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._011 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._030 /* 1*'if' || «? » «value» «? » */,
 				st._068 /* 1*IfExpCS::ownedCondition=29|68 || «null» */,
 				st._042 /* 1*'then' || «? » «value» «? » */,
 				st._070 /* 1*IfExpCS::ownedThenExpression=29 || «null» */,
-				st._154 /* V00*IfExpCS::ownedIfThenExpressions+=22 || «null» */,
+				st._153 /* V00*IfExpCS::ownedIfThenExpressions+=22 || «null» */,
 				st._025 /* 1*'else' || «? » «value» «? » */,
 				st._069 /* 1*IfExpCS::ownedElseExpression=29 || «null» */,
 				st._027 /* 1*'endif' || «? » «value» «? » */
@@ -5540,7 +5538,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._017 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._074 /* 1*InfixExpCS::ownedLeft=70 || «null» */,
 				st._087 /* 1*NamedElementCS::name=1 || «? » «value» «? » */,
 				st._101 /* 1*OperatorExpCS::ownedRight=29 || «null» */
@@ -5582,7 +5580,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._018 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._145 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._016 /* 1*'Lambda' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._075 /* 1*LambdaLiteralExpCS::ownedExpressionCS=29 || «null» */,
@@ -5613,12 +5611,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._093 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._079 /* 1*MapLiteralExpCS::ownedType=47 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._170 /* V00*steps-4..8 || «null» */,
+				st._169 /* V00*steps-4..8 || «null» */,
 				st._078 /* 1*MapLiteralExpCS::ownedParts+=46 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._078 /* 1*MapLiteralExpCS::ownedParts+=46 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
@@ -5659,12 +5657,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._047 /* 1*AbstractNameExpCS::ownedPathName=67 || «null» */,
-				st._153 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84 || «null» */,
-				st._177 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=76 || «null» */,
-				st._197 /* V02*AbstractNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
-				st._208 /* V03*steps-6..8 || «null» */,
+				st._152 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84 || «null» */,
+				st._176 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=76 || «null» */,
+				st._196 /* V02*AbstractNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
+				st._207 /* V03*steps-6..8 || «null» */,
 				st._015 /* 1*'@' || «? » «value» «? » */,
 				st._040 /* 1*'pre' || «? » «value» «? » */
 			},
@@ -5720,7 +5718,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._035 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._095 /* 1*NestedExpCS::ownedExpression=29 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
@@ -5770,7 +5768,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._143 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._088 /* 1*NamedElementCS::name=109 || «? » «value» «? » */,
 				st._103 /* 1*OperatorExpCS::ownedRight=70 || «null» */
 			},
@@ -5803,7 +5801,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._083 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._158 /* V00*StringLiteralExpCS::segments+=85 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
+				st._157 /* V00*StringLiteralExpCS::segments+=85 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -5824,13 +5822,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._062 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._125 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
-				st._172 /* V00*steps-5..7 || «null» */,
+				st._124 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
+				st._171 /* V00*steps-5..7 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._125 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
+				st._124 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
 			},
 			sl._56,
@@ -5855,7 +5853,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._048 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._127 /* 1*TypeLiteralExpCS::ownedType=98 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
+				st._126 /* 1*TypeLiteralExpCS::ownedType=98 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -5885,12 +5883,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._011 /* assert (|IfExpCS::ownedCondition| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._030 /* 1*'if' || «? » «value» «? » */,
 				st._068 /* 1*IfExpCS::ownedCondition=29|68 || «null» */,
 				st._042 /* 1*'then' || «? » «value» «? » */,
 				st._070 /* 1*IfExpCS::ownedThenExpression=29 || «null» */,
-				st._154 /* V00*IfExpCS::ownedIfThenExpressions+=22 || «null» */,
+				st._153 /* V00*IfExpCS::ownedIfThenExpressions+=22 || «null» */,
 				st._025 /* 1*'else' || «? » «value» «? » */,
 				st._069 /* 1*IfExpCS::ownedElseExpression=29 || «null» */,
 				st._027 /* 1*'endif' || «? » «value» «? » */
@@ -5952,7 +5950,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._018 /* assert (|LambdaLiteralExpCS::ownedExpressionCS| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._145 /* 1*steps-1..5 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._016 /* 1*'Lambda' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
 				st._075 /* 1*LambdaLiteralExpCS::ownedExpressionCS=29 || «null» */,
@@ -5982,10 +5980,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._055 /* assign V0 = (|LetExpCS::ownedVariables| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._036 /* 1*'let' || «? » «value» «? » */,
 				st._077 /* 1*LetExpCS::ownedVariables+=42 || «null» */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._077 /* 1*LetExpCS::ownedVariables+=42 || «null» */,
 				st._032 /* 1*'in' || «? » «value» «? » */,
@@ -6025,14 +6023,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
-				st._155 /* V00*LetVariableCS::ownedRoundBracketedClause=76 || «null» */,
-				st._187 /* V01*steps-4..6 || «null» */,
+				st._154 /* V00*LetVariableCS::ownedRoundBracketedClause=76 || «null» */,
+				st._186 /* V01*steps-4..6 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._136 /* 1*VariableCS::ownedType=94 || «null» */,
+				st._135 /* 1*VariableCS::ownedType=94 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
-				st._135 /* 1*VariableCS::ownedInitExpression=29 || «null» */
+				st._134 /* 1*VariableCS::ownedInitExpression=29 || «null» */
 			},
 			sl._49,
 			null,
@@ -6084,12 +6082,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._093 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._079 /* 1*MapLiteralExpCS::ownedType=47 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._170 /* V00*steps-4..8 || «null» */,
+				st._169 /* V00*steps-4..8 || «null» */,
 				st._078 /* 1*MapLiteralExpCS::ownedParts+=46 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._078 /* 1*MapLiteralExpCS::ownedParts+=46 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
@@ -6125,7 +6123,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._021 /* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._080 /* 1*MapLiteralPartCS::ownedKey=29 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
 				st._081 /* 1*MapLiteralPartCS::ownedValue=29 || «null» */
@@ -6162,9 +6160,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._023 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || «null» */,
+				st._148 /* 1*steps-1..8 || «null» */,
 				st._017 /* 1*'Map' || «? » «value» «? » */,
-				st._167 /* V00*steps-3..8 || «null» */,
+				st._166 /* V00*steps-3..8 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._082 /* 1*MapTypeCS::ownedKeyType=94 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
@@ -6240,12 +6238,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._000 /* assert (|AbstractNameExpCS::ownedPathName| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._047 /* 1*AbstractNameExpCS::ownedPathName=67 || «null» */,
-				st._153 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84 || «null» */,
-				st._177 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=76 || «null» */,
-				st._197 /* V02*AbstractNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
-				st._208 /* V03*steps-6..8 || «null» */,
+				st._152 /* V00*AbstractNameExpCS::ownedSquareBracketedClauses+=84 || «null» */,
+				st._176 /* V01*AbstractNameExpCS::ownedRoundBracketedClause=76 || «null» */,
+				st._196 /* V02*AbstractNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
+				st._207 /* V03*steps-6..8 || «null» */,
 				st._015 /* 1*'@' || «? » «value» «? » */,
 				st._040 /* 1*'pre' || «? » «value» «? » */
 			},
@@ -6325,7 +6323,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._031 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._143 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */
 			},
@@ -6357,14 +6355,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._138 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._137 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */,
-				st._172 /* V00*steps-5..7 || «null» */,
+				st._171 /* V00*steps-5..7 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
 				st._091 /* 1*NavigatingArgCS::ownedCoIterator=4 || «null» */,
-				st._195 /* V01*steps-8..10 || «null» */,
+				st._194 /* V01*steps-8..10 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._092 /* 1*NavigatingArgCS::ownedInitExpression=29 || «null» */
 			},
@@ -6415,11 +6413,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._147 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
 				st._091 /* 1*NavigatingArgCS::ownedCoIterator=4 || «null» */,
-				st._172 /* V00*steps-5..7 || «null» */,
+				st._171 /* V00*steps-5..7 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._092 /* 1*NavigatingArgCS::ownedInitExpression=29 || «null» */
 			},
@@ -6465,12 +6463,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._138 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._137 /* 1*steps-1..10 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
 				st._091 /* 1*NavigatingArgCS::ownedCoIterator=4 || «null» */,
 				st._032 /* 1*'in' || «? » «value» «? » */,
@@ -6524,13 +6522,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._107 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._044 /* 1*'|' || «? » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
-				st._171 /* V00*steps-4..9 || «null» */,
+				st._170 /* V00*steps-4..9 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */,
-				st._194 /* V01*steps-7..9 || «null» */,
+				st._193 /* V01*steps-7..9 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._092 /* 1*NavigatingArgCS::ownedInitExpression=29 || «null» */
 			},
@@ -6586,15 +6584,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._139 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._138 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */,
-				st._173 /* V00*steps-6..8 || «null» */,
+				st._172 /* V00*steps-6..8 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
 				st._091 /* 1*NavigatingArgCS::ownedCoIterator=4 || «null» */,
-				st._196 /* V01*steps-9..11 || «null» */,
+				st._195 /* V01*steps-9..11 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._092 /* 1*NavigatingArgCS::ownedInitExpression=29 || «null» */
 			},
@@ -6655,12 +6653,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
 				st._091 /* 1*NavigatingArgCS::ownedCoIterator=4 || «null» */,
-				st._173 /* V00*steps-6..8 || «null» */,
+				st._172 /* V00*steps-6..8 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._092 /* 1*NavigatingArgCS::ownedInitExpression=29 || «null» */
 			},
@@ -6716,13 +6714,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._139 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._138 /* 1*steps-1..11 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */,
-				st._194 /* V01*steps-7..9 || «null» */,
+				st._193 /* V01*steps-7..9 || «null» */,
 				st._011 /* 1*'<-' || «? » «value» «? » */,
 				st._091 /* 1*NavigatingArgCS::ownedCoIterator=4 || «null» */,
 				st._032 /* 1*'in' || «? » «value» «? » */,
@@ -6781,7 +6779,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._032 /* assert (|NavigatingArgCS::prefix.','| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._143 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */
 			},
@@ -6821,13 +6819,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._107 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._149 /* 1*steps-1..9 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._009 /* 1*';' || «! » «value» «?\n» */,
 				st._093 /* 1*NavigatingArgCS::ownedNameExpression=55 || «null» */,
-				st._171 /* V00*steps-4..9 || «null» */,
+				st._170 /* V00*steps-4..9 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
 				st._094 /* 1*NavigatingArgCS::ownedType=94 || «null» */,
-				st._194 /* V01*steps-7..9 || «null» */,
+				st._193 /* V01*steps-7..9 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
 				st._092 /* 1*NavigatingArgCS::ownedInitExpression=29 || «null» */
 			},
@@ -6876,7 +6874,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._035 /* assert (|NestedExpCS::ownedExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._095 /* 1*NestedExpCS::ownedExpression=29 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
@@ -6939,10 +6937,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._080 /* assign V0 = |PatternExpCS::patternVariableName| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-				st._156 /* V00*PatternExpCS::patternVariableName=112 || «? » «value» «? » */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._155 /* V00*PatternExpCS::patternVariableName=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._113 /* 1*PatternExpCS::ownedPatternType=94 || «null» */
+				st._112 /* 1*PatternExpCS::ownedPatternType=94 || «null» */
 			},
 			sl._58,
 			null,
@@ -6973,7 +6971,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._143 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._088 /* 1*NamedElementCS::name=109 || «? » «value» «? » */,
 				st._102 /* 1*OperatorExpCS::ownedRight=69 || «null» */
 			},
@@ -7008,7 +7006,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._144 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._143 /* 1*steps-1..3 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._088 /* 1*NamedElementCS::name=109 || «? » «value» «? » */,
 				st._103 /* 1*OperatorExpCS::ownedRight=70 || «null» */
 			},
@@ -7041,7 +7039,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._042 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._114 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */
+				st._113 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */
 			},
 			sl._61,
 			null,
@@ -7065,11 +7063,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._095 /* assign V1 = (|RoundBracketedClauseCS::ownedArguments| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._147 /* 1*steps-1..6 || «null» */,
+				st._146 /* 1*steps-1..6 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._164 /* V00*steps-3..5 || «null» */,
-				st._116 /* 1*RoundBracketedClauseCS::ownedArguments+=54 || «null» */,
-				st._182 /* V01*RoundBracketedClauseCS::ownedArguments+=57|58|56 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
+				st._115 /* 1*RoundBracketedClauseCS::ownedArguments+=54 || «null» */,
+				st._181 /* V01*RoundBracketedClauseCS::ownedArguments+=57|58|56 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
 			},
 			sl._08,
@@ -7110,7 +7108,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._043 /* assert (|ShadowPartCS::ownedInitExpression| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._118 /* 1*ShadowPartCS::ownedInitExpression=86 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
+				st._117 /* 1*ShadowPartCS::ownedInitExpression=86 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -7135,10 +7133,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._044 /* assert (|ShadowPartCS::referredProperty| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
-				st._119 /* 1*ShadowPartCS::referredProperty=UnrestrictedName || «? » «value» «? » */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._118 /* 1*ShadowPartCS::referredProperty=UnrestrictedName || «? » «value» «? » */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
-				st._117 /* 1*ShadowPartCS::ownedInitExpression=29|68 || «null» */
+				st._116 /* 1*ShadowPartCS::ownedInitExpression=29|68 || «null» */
 			},
 			sl._58,
 			null,
@@ -7167,7 +7165,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._039 /* assert (|PathNameCS::ownedPathElements| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._110 /* 1*PathNameCS::ownedPathElements+=30 || «null» */
+				st._109 /* 1*PathNameCS::ownedPathElements+=30 || «null» */
 			},
 			sl._00,
 			null,
@@ -7191,12 +7189,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._059 /* assign V0 = (|SquareBracketedClauseCS::ownedTerms| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || «null» */,
+				st._147 /* 1*steps-1..7 || «null» */,
 				st._019 /* 1*'[' || «! » «value» «! » */,
-				st._121 /* 1*SquareBracketedClauseCS::ownedTerms+=29 || «null» */,
-				st._169 /* V00*steps-4..6 || «null» */,
+				st._120 /* 1*SquareBracketedClauseCS::ownedTerms+=29 || «null» */,
+				st._168 /* V00*steps-4..6 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._121 /* 1*SquareBracketedClauseCS::ownedTerms+=29 || «null» */,
+				st._120 /* 1*SquareBracketedClauseCS::ownedTerms+=29 || «null» */,
 				st._020 /* 1*']' || «! » «value» */
 			},
 			sl._09,
@@ -7220,7 +7218,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._083 /* assign V0 = |StringLiteralExpCS::segments| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._158 /* V00*StringLiteralExpCS::segments+=85 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
+				st._157 /* V00*StringLiteralExpCS::segments+=85 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -7241,13 +7239,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._062 /* assign V0 = (|TupleLiteralExpCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._148 /* 1*steps-1..8 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._125 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
-				st._172 /* V00*steps-5..7 || «null» */,
+				st._124 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
+				st._171 /* V00*steps-5..7 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._125 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
+				st._124 /* 1*TupleLiteralExpCS::ownedParts+=91 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
 			},
 			sl._56,
@@ -7275,13 +7273,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._148 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._147 /* 1*steps-1..7 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._136 /* 1*VariableCS::ownedType=94 || «null» */,
+				st._135 /* 1*VariableCS::ownedType=94 || «null» */,
 				st._012 /* 1*'=' || «? » «value» «? » */,
-				st._135 /* 1*VariableCS::ownedInitExpression=29 || «null» */
+				st._134 /* 1*VariableCS::ownedInitExpression=29 || «null» */
 			},
 			sl._55,
 			null,
@@ -7321,10 +7319,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._145 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
+				st._144 /* 1*steps-1..4 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */,
 				st._089 /* 1*NamedElementCS::name=112 || «? » «value» «? » */,
 				st._007 /* 1*':' || «? » «value» «? » */,
-				st._132 /* 1*TypedElementCS::ownedType=94 || «null» */
+				st._131 /* 1*TypedElementCS::ownedType=94 || «null» */
 			},
 			sl._58,
 			null,
@@ -7359,15 +7357,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._116 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._138 /* 1*steps-1..10 || «null» */,
+				st._137 /* 1*steps-1..10 || «null» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
-				st._163 /* V00*steps-3..10 || «null» */,
+				st._162 /* V00*steps-3..10 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._191 /* V01*steps-5..9 || «null» */,
-				st._126 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
-				st._201 /* V02*steps-7..9 || «null» */,
+				st._190 /* V01*steps-5..9 || «null» */,
+				st._125 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
+				st._200 /* V02*steps-7..9 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._126 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
+				st._125 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
 				st._002 /* 1*')' || «! » «value» */
 			},
 			sl._16,
@@ -7402,9 +7400,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._042 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._144 /* 1*steps-1..3 || «null» */,
-				st._114 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */,
-				st._160 /* V00*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._143 /* 1*steps-1..3 || «null» */,
+				st._113 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */,
+				st._159 /* V00*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._15,
 			null,
@@ -7441,17 +7439,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._116 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._139 /* 1*steps-1..11 || «null» */,
+				st._138 /* 1*steps-1..11 || «null» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
-				st._163 /* V00*steps-3..10 || «null» */,
+				st._162 /* V00*steps-3..10 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._191 /* V01*steps-5..9 || «null» */,
-				st._126 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
-				st._201 /* V02*steps-7..9 || «null» */,
+				st._190 /* V01*steps-5..9 || «null» */,
+				st._125 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
+				st._200 /* V02*steps-7..9 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._126 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
+				st._125 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
-				st._206 /* V03*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._205 /* V03*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._17,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -7496,18 +7494,18 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._004 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._140 /* 1*steps-1..12 || «null» */,
+				st._139 /* 1*steps-1..12 || «null» */,
 				st._056 /* 1*CollectionPatternCS::ownedType=8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._168 /* V00*steps-4..10 || «null» */,
+				st._167 /* V00*steps-4..10 || «null» */,
 				st._055 /* 1*CollectionPatternCS::ownedParts+=68 || «null» */,
-				st._193 /* V01*steps-6..8 || «null» */,
+				st._192 /* V01*steps-6..8 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._055 /* 1*CollectionPatternCS::ownedParts+=68 || «null» */,
 				st._004 /* 1*'++' || «? » «value» «? » */,
 				st._057 /* 1*CollectionPatternCS::restVariableName=33 || «? » «value» «? » */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */,
-				st._199 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._198 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._07,
 			null,
@@ -7556,14 +7554,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._101 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || «null» */,
+				st._148 /* 1*steps-1..8 || «null» */,
 				st._058 /* 1*CollectionTypeCS::name=9 || «? » «value» «? » */,
-				st._166 /* V00*steps-3..7 || «null» */,
+				st._165 /* V00*steps-3..7 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._059 /* 1*CollectionTypeCS::ownedType=95 || «null» */,
-				st._179 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=50 || «null» */,
+				st._178 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=50 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
-				st._199 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._198 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._19,
 			null,
@@ -7614,15 +7612,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._023 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || «null» */,
+				st._149 /* 1*steps-1..9 || «null» */,
 				st._017 /* 1*'Map' || «? » «value» «? » */,
-				st._167 /* V00*steps-3..8 || «null» */,
+				st._166 /* V00*steps-3..8 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._082 /* 1*MapTypeCS::ownedKeyType=94 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._083 /* 1*MapTypeCS::ownedValueType=94 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
-				st._185 /* V01*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._184 /* V01*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._21,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -7675,15 +7673,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._111 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || «null» */,
-				st._129 /* 1*TypeNameExpCS::ownedPathName=67 || «null» */,
-				st._167 /* V00*steps-3..8 || «null» */,
-				st._128 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
-				st._190 /* V01*steps-5..8 || «null» */,
+				st._149 /* 1*steps-1..9 || «null» */,
+				st._128 /* 1*TypeNameExpCS::ownedPathName=67 || «null» */,
+				st._166 /* V00*steps-3..8 || «null» */,
+				st._127 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
+				st._189 /* V01*steps-5..8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._130 /* 1*TypeNameExpCS::ownedPatternGuard=29 || «null» */,
+				st._129 /* 1*TypeNameExpCS::ownedPatternGuard=29 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */,
-				st._199 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._198 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._02,
 			null,
@@ -7728,7 +7726,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._048 /* assert (|TypeLiteralExpCS::ownedType| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._127 /* 1*TypeLiteralExpCS::ownedType=98 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
+				st._126 /* 1*TypeLiteralExpCS::ownedType=98 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport «value» */
 			},
 			sl._24,
 			null,
@@ -7753,9 +7751,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._042 /* assert (|PrimitiveTypeRefCS::name| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._144 /* 1*steps-1..3 || «null» */,
-				st._114 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */,
-				st._160 /* V00*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._143 /* 1*steps-1..3 || «null» */,
+				st._113 /* 1*PrimitiveTypeRefCS::name=74 || «? » «value» «? » */,
+				st._159 /* V00*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._15,
 			null,
@@ -7792,17 +7790,17 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._116 /* assign V2 = (|TupleTypeCS::ownedParts| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._139 /* 1*steps-1..11 || «null» */,
+				st._138 /* 1*steps-1..11 || «null» */,
 				st._018 /* 1*'Tuple' || «? » «value» «? » */,
-				st._163 /* V00*steps-3..10 || «null» */,
+				st._162 /* V00*steps-3..10 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
-				st._191 /* V01*steps-5..9 || «null» */,
-				st._126 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
-				st._201 /* V02*steps-7..9 || «null» */,
+				st._190 /* V01*steps-5..9 || «null» */,
+				st._125 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
+				st._200 /* V02*steps-7..9 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
-				st._126 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
+				st._125 /* 1*TupleTypeCS::ownedParts+=92 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
-				st._206 /* V03*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._205 /* V03*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._17,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -7847,14 +7845,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._101 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || «null» */,
+				st._148 /* 1*steps-1..8 || «null» */,
 				st._058 /* 1*CollectionTypeCS::name=9 || «? » «value» «? » */,
-				st._166 /* V00*steps-3..7 || «null» */,
+				st._165 /* V00*steps-3..7 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._059 /* 1*CollectionTypeCS::ownedType=95 || «null» */,
-				st._179 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=50 || «null» */,
+				st._178 /* V01*CollectionTypeCS::ownedCollectionMultiplicity=50 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
-				st._199 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._198 /* V02*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._19,
 			null,
@@ -7905,15 +7903,15 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._023 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._150 /* 1*steps-1..9 || «null» */,
+				st._149 /* 1*steps-1..9 || «null» */,
 				st._017 /* 1*'Map' || «? » «value» «? » */,
-				st._167 /* V00*steps-3..8 || «null» */,
+				st._166 /* V00*steps-3..8 || «null» */,
 				st._001 /* 1*'(' || «! » «value» «! » */,
 				st._082 /* 1*MapTypeCS::ownedKeyType=94 || «null» */,
 				st._005 /* 1*',' || «! » «value» «? » */,
 				st._083 /* 1*MapTypeCS::ownedValueType=94 || «null» */,
 				st._002 /* 1*')' || «! » «value» */,
-				st._185 /* V01*TypedRefCS::ownedMultiplicity=50 || «null» */
+				st._184 /* V01*TypedRefCS::ownedMultiplicity=50 || «null» */
 			},
 			sl._21,
 			new @NonNull EAttribute_EnumerationValues [] {
@@ -7964,13 +7962,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._111 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._149 /* 1*steps-1..8 || «null» */,
-				st._129 /* 1*TypeNameExpCS::ownedPathName=67 || «null» */,
-				st._167 /* V00*steps-3..8 || «null» */,
-				st._128 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
-				st._190 /* V01*steps-5..8 || «null» */,
+				st._148 /* 1*steps-1..8 || «null» */,
+				st._128 /* 1*TypeNameExpCS::ownedPathName=67 || «null» */,
+				st._166 /* V00*steps-3..8 || «null» */,
+				st._127 /* 1*TypeNameExpCS::ownedCurlyBracketedClause=14 || «null» */,
+				st._189 /* V01*steps-5..8 || «null» */,
 				st._043 /* 1*'{' || «? » «value» «+» «?\n» */,
-				st._130 /* 1*TypeNameExpCS::ownedPatternGuard=29 || «null» */,
+				st._129 /* 1*TypeNameExpCS::ownedPatternGuard=29 || «null» */,
 				st._046 /* 1*'}' || «-» «? » «value» «?\n» */
 			},
 			sl._01,
@@ -8008,7 +8006,7 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._038 /* assert (|PathElementCS::referredElement| - 1) == 0 */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._108 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
+				st._107 /* 1*PathElementCS::referredElement=UnrestrictedName || «? » «value» «? » */
 			},
 			sl._61,
 			null,
@@ -8047,11 +8045,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				ms._057 /* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
 			},
 			new @NonNull SerializationStep @NonNull [] {
-				st._146 /* 1*steps-1..5 || «null» */,
-				st._109 /* 1*PathNameCS::ownedPathElements+=107 || «null» */,
-				st._164 /* V00*steps-3..5 || «null» */,
+				st._145 /* 1*steps-1..5 || «null» */,
+				st._108 /* 1*PathNameCS::ownedPathElements+=107 || «null» */,
+				st._163 /* V00*steps-3..5 || «null» */,
 				st._008 /* 1*'::' || «! » «value» «! » */,
-				st._111 /* 1*PathNameCS::ownedPathElements+=61 || «null» */
+				st._110 /* 1*PathNameCS::ownedPathElements+=61 || «null» */
 			},
 			sl._03,
 			null,

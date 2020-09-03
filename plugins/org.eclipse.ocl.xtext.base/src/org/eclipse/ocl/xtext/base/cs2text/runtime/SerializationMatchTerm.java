@@ -39,6 +39,11 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 3 * left.hashCode() + 7 * right.hashCode();
+		}
+
+		@Override
 		public @NonNull Set<@NonNull SerializationMatchTerm> getChildClosure() {
 			Set<@NonNull SerializationMatchTerm> childClosure2 = childClosure;
 			if (childClosure2 == null) {
@@ -56,11 +61,6 @@ public abstract class SerializationMatchTerm
 
 		public @NonNull SerializationMatchTerm getRight() {
 			return right;
-		}
-
-		@Override
-		public int hashCode() {
-			return getClass().hashCode() + left.hashCode() + right.hashCode() * 7;
 		}
 
 		@Override
@@ -184,6 +184,11 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 3 * eAttribute.hashCode() + 7 * enumerationValue.hashCode();
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -203,11 +208,6 @@ public abstract class SerializationMatchTerm
 
 		public @NonNull EnumerationValue getEnumerationValue() {
 			return enumerationValue;
-		}
-
-		@Override
-		public int hashCode() {
-			return getClass().hashCode() + eAttribute.hashCode() + enumerationValue.hashCode() * 7;
 		}
 
 		@Override
@@ -252,6 +252,11 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 3 * eReference.hashCode() + 7 * parserRuleValue.hashCode();
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -271,11 +276,6 @@ public abstract class SerializationMatchTerm
 
 		public @NonNull ParserRuleValue getParserRuleValue() {
 			return parserRuleValue;
-		}
-
-		@Override
-		public int hashCode() {
-			return getClass().hashCode() + eReference.hashCode() + parserRuleValue.hashCode() * 7;
 		}
 
 		@Override
@@ -319,6 +319,11 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 3 * eStructuralFeature.hashCode();
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -333,11 +338,6 @@ public abstract class SerializationMatchTerm
 
 		public @NonNull EStructuralFeature getEStructuralFeature() {
 			return eStructuralFeature;
-		}
-
-		@Override
-		public int hashCode() {
-			return getClass().hashCode() + eStructuralFeature.hashCode();
 		}
 
 		@Override
@@ -412,6 +412,11 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + value;
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -431,11 +436,6 @@ public abstract class SerializationMatchTerm
 
 		public int getValue() {
 			return value;
-		}
-
-		@Override
-		public int hashCode() {
-			return getClass().hashCode() + value;
 		}
 
 		@Override
@@ -555,11 +555,6 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public int hashCode() {
-			return getClass().hashCode();
-		}
-
-		@Override
 		public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
 			return false;
 		}
@@ -593,6 +588,11 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 3 * cardinalityVariableIndex;
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -606,11 +606,6 @@ public abstract class SerializationMatchTerm
 
 		public int getVariableIndex() {
 			return cardinalityVariableIndex;
-		}
-
-		@Override
-		public int hashCode() {
-			return getClass().hashCode() + cardinalityVariableIndex;
 		}
 
 		@Override
@@ -634,12 +629,18 @@ public abstract class SerializationMatchTerm
 		}
 	}
 
+	private @Nullable Integer hashCode = null;
+
 	/**
 	 * Return the value of the expression value using the actual characteristic of the user element slots if available.
 	 * Returns null if evaluation fails.
 	 */
 	public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
 		return null;
+	}
+
+	protected int computeHashCode() {
+		return getClass().hashCode();
 	}
 
 	@Override
@@ -653,7 +654,13 @@ public abstract class SerializationMatchTerm
 	}
 
 	@Override
-	public abstract int hashCode();
+	public final int hashCode() {
+		Integer hashCode2 = hashCode;
+		if (hashCode2 == null) {
+			hashCode = hashCode2 = computeHashCode();
+		}
+		return hashCode2.intValue();
+	}
 
 	/**
 	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.

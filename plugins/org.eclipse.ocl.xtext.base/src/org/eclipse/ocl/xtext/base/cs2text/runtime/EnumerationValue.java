@@ -27,7 +27,6 @@ public abstract class EnumerationValue implements Nameable
 	{
 		protected final @NonNull String @NonNull [] values;
 		protected final @NonNull String name;
-		private @Nullable Integer hashCode = null;
 
 		public EnumerationValueMultiple(@NonNull List<@NonNull String> values) {
 			this(values.toArray(new @NonNull String [values.size()]));
@@ -48,6 +47,15 @@ public abstract class EnumerationValue implements Nameable
 				isFirst = false;
 			}
 			this.name = s.toString();
+		}
+
+		@Override
+		public int computeHashCode() {
+			int hash = super.computeHashCode();
+			for (@NonNull String value : values) {
+				hash += value.hashCode();
+			}
+			return hash;
 		}
 
 		@Override
@@ -77,19 +85,6 @@ public abstract class EnumerationValue implements Nameable
 
 		public @NonNull String @NonNull [] getValues() {
 			return values;
-		}
-
-		@Override
-		public int hashCode() {
-			if (hashCode == null) {
-				int hash = getClass().hashCode();
-				for (@NonNull String value : values) {
-					hash += value.hashCode();
-				}
-				hashCode = hash;
-			}
-			assert hashCode != null;
-			return hashCode.intValue();
 		}
 
 		@Override
@@ -139,11 +134,6 @@ public abstract class EnumerationValue implements Nameable
 		}
 
 		@Override
-		public int hashCode() {
-			return getClass().hashCode();
-		}
-
-		@Override
 		public boolean isElement(@NonNull String string) {
 			return false;
 		}
@@ -168,6 +158,11 @@ public abstract class EnumerationValue implements Nameable
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + value.hashCode();
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -184,11 +179,6 @@ public abstract class EnumerationValue implements Nameable
 		}
 
 		@Override
-		public int hashCode() {
-			return value.hashCode();
-		}
-
-		@Override
 		public boolean isElement(@NonNull String string) {
 			return value.equals(string);
 		}
@@ -199,11 +189,23 @@ public abstract class EnumerationValue implements Nameable
 		}
 	}
 
+	private @Nullable Integer hashCode = null;
+
+	protected int computeHashCode() {
+		return getClass().hashCode();
+	}
+
 	@Override
 	public abstract @NonNull String getName();
 
 	@Override
-	public abstract int hashCode();
+	public final int hashCode() {
+		Integer hashCode2 = hashCode;
+		if (hashCode2 == null) {
+			hashCode = hashCode2 = computeHashCode();
+		}
+		return hashCode2.intValue();
+	}
 
 	public abstract boolean isElement(@NonNull String string);
 

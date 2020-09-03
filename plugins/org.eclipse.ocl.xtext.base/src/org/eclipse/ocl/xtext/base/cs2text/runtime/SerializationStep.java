@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.XtextGrammarUtil;
+import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.conversion.ValueConverterException;
@@ -36,17 +37,17 @@ public abstract class SerializationStep
 			this.eStructuralFeature = eStructuralFeature;
 		}
 
+		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 3 * eStructuralFeature.hashCode();
+		}
+
 		protected boolean equalTo(@NonNull SerializationStepAbstractFeature that) {
 			return super.equalTo(that) && eStructuralFeature.equals(that.eStructuralFeature);
 		}
 
 		public @NonNull EStructuralFeature getEStructuralFeature() {
 			return eStructuralFeature;
-		}
-
-		@Override
-		public int hashCode() {
-			return super.hashCode() + 3 * eStructuralFeature.hashCode();
 		}
 	}
 
@@ -57,6 +58,11 @@ public abstract class SerializationStep
 		public SerializationStepAssignKeyword(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue) {
 			super(variableIndex, eStructuralFeature);
 			this.enumerationValue = enumerationValue;
+		}
+
+		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 3 * enumerationValue.hashCode();
 		}
 
 		@Override
@@ -71,7 +77,7 @@ public abstract class SerializationStep
 		}
 
 		protected boolean equalTo(@NonNull SerializationStepAssignKeyword that) {
-			return super.equalTo(that);
+			return super.equalTo(that) && (this.enumerationValue == that.enumerationValue);
 		}
 
 		public @NonNull EnumerationValue getEnumerationValue() {
@@ -105,6 +111,11 @@ public abstract class SerializationStep
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 5 * calledRuleIndex;
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -123,10 +134,6 @@ public abstract class SerializationStep
 			return calledRuleIndex;
 		}
 
-		@Override
-		public int hashCode() {
-			return super.hashCode() + 5 * calledRuleIndex;
-		}
 
 		@Override
 		public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
@@ -167,6 +174,17 @@ public abstract class SerializationStep
 			this.enumerationValue = enumerationValue;
 			this.calledRuleIndexes = calledRuleIndexes;
 		}
+		@Override
+		public int computeHashCode() {
+			int hashCode = super.computeHashCode();
+			if (enumerationValue != null) {
+				enumerationValue.hashCode();
+			}
+			if (calledRuleIndexes != null) {
+				calledRuleIndexes.hashCode();
+			}
+			return hashCode;
+		}
 
 		@Override
 		public boolean equals(Object obj) {
@@ -198,18 +216,6 @@ public abstract class SerializationStep
 
 		public @Nullable EnumerationValue getEnumerationValue() {
 			return enumerationValue;
-		}
-
-		@Override
-		public int hashCode() {
-			int hashCode = super.hashCode();
-			if (enumerationValue != null) {
-				enumerationValue.hashCode();
-			}
-			if (calledRuleIndexes != null) {
-				calledRuleIndexes.hashCode();
-			}
-			return hashCode;
 		}
 
 		@Override
@@ -285,12 +291,24 @@ public abstract class SerializationStep
 
 	public static class SerializationStepCrossReference extends SerializationStepAbstractFeature
 	{
-		protected final @NonNull CrossReference crossReference;
+		protected final @NonNull CrossReference crossReference;		// May be an equivalent - different container
 
 		public SerializationStepCrossReference(int variableIndex, /*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference) {
 			super(variableIndex, eStructuralFeature);
 			assert eStructuralFeature != null;
 			this.crossReference = crossReference;
+		}
+		@Override
+		public int computeHashCode() {
+			int hash = super.computeHashCode();
+			AbstractElement terminal = this.crossReference.getTerminal();
+			if (terminal instanceof RuleCall) {
+				hash += ((RuleCall)terminal).getRule().getName().hashCode();
+			}
+			else {
+				hash += terminal.hashCode();		// Never happens
+			}
+			return hash;
 		}
 
 		@Override
@@ -305,16 +323,24 @@ public abstract class SerializationStep
 		}
 
 		protected boolean equalTo(@NonNull SerializationStepCrossReference that) {
-			return super.equalTo(that) && crossReference.equals(that.crossReference);
+			if (!super.equalTo(that)) {		// Checks eStructuralFeature
+				return false;
+			}
+			if ("implementation".equals(eStructuralFeature.getName())) {
+				getClass();		// XXX
+			}
+			AbstractElement thisTerminal = this.crossReference.getTerminal();
+			AbstractElement thatTerminal = that.crossReference.getTerminal();
+			if ((thisTerminal instanceof RuleCall) && (thatTerminal instanceof RuleCall)) {
+				return ((RuleCall)thisTerminal).getRule() == ((RuleCall)thatTerminal).getRule();
+			}
+			else {
+				return ClassUtil.safeEquals(thisTerminal, thatTerminal);		// Never happens
+			}
 		}
 
 		public @NonNull CrossReference getCrossReference() {
 			return crossReference;
-		}
-
-		@Override
-		public int hashCode() {
-			return super.hashCode() + 5 * crossReference.hashCode();
 		}
 
 		@Override
@@ -344,6 +370,10 @@ public abstract class SerializationStep
 			super(variableIndex);
 			this.string = string;
 		}
+		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 5 * string.hashCode();
+		}
 
 		@Override
 		public boolean equals(Object obj) {
@@ -362,11 +392,6 @@ public abstract class SerializationStep
 
 		public @NonNull String getString() {
 			return string;
-		}
-
-		@Override
-		public int hashCode() {
-			return super.hashCode() + 5 * string.hashCode();
 		}
 
 		@Override
@@ -398,6 +423,11 @@ public abstract class SerializationStep
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 5 * startIndex + 7 * endIndex;
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -425,11 +455,6 @@ public abstract class SerializationStep
 		}
 
 		@Override
-		public int hashCode() {
-			return super.hashCode() + 5 * startIndex + 7 * endIndex;
-		}
-
-		@Override
 		public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 			serializer.getSerializationRule().serializeSubRule(startIndex, endIndex, serializer, serializationBuilder);
 		}
@@ -452,9 +477,14 @@ public abstract class SerializationStep
 	}
 
 	protected final int variableIndex;		// -ve not used
+	private @Nullable Integer hashCode = null;
 
 	protected SerializationStep(int variableIndex) {
 		this.variableIndex = variableIndex;
+	}
+
+	protected int computeHashCode() {
+		return getClass().hashCode() + 7 * variableIndex;
 	}
 
 	@Override
@@ -469,8 +499,12 @@ public abstract class SerializationStep
 	}
 
 	@Override
-	public int hashCode() {
-		return getClass().hashCode() + 7 * variableIndex;
+	public final int hashCode() {
+		Integer hashCode2 = hashCode;
+		if (hashCode2 == null) {
+			hashCode = hashCode2 = computeHashCode();
+		}
+		return hashCode2.intValue();
 	}
 
 	public abstract void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);

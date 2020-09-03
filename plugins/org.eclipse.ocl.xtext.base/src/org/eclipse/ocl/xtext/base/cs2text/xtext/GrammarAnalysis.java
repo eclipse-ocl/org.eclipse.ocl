@@ -646,7 +646,7 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 	}
 
 	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull ParserRuleAnalysis parserRuleAnalysis, @NonNull SerializationNode thatSerializationNode) {
-		int hashCode = thatSerializationNode.semanticHashCode();
+		int hashCode = thatSerializationNode.semanticHashCode();			// Do we really need this ??
 		Object analysisOrAnalyses = semanticHash2serializationAnalysisOrAnalyses.get(hashCode);
 		SerializationRuleAnalysis oldSerializationRuleAnalysis = null;
 		if (analysisOrAnalyses instanceof SerializationRuleAnalysis) {

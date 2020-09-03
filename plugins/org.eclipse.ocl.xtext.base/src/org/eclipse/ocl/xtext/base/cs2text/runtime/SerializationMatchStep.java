@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A CardinalitySolutionStep specifies a run-time action as part of the cardinality variable drtermination.
@@ -33,6 +34,11 @@ public abstract class SerializationMatchStep
 
 		public MatchStep_Assert(@NonNull SerializationMatchTerm cardinalitySolution) {
 			this.cardinalitySolution = cardinalitySolution;
+		}
+
+		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 5 * cardinalitySolution.hashCode();
 		}
 
 		@Override
@@ -67,11 +73,6 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
-		public int hashCode() {
-			return getClass().hashCode() + 5 * cardinalitySolution.hashCode();
-		}
-
-		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
 			s.append("assert ");
 			s.append(cardinalitySolution);
@@ -90,6 +91,11 @@ public abstract class SerializationMatchStep
 		public MatchStep_Assign(int cardinalityVariableIndex, @NonNull SerializationMatchTerm cardinalitySolution) {
 			this.cardinalityVariableIndex = cardinalityVariableIndex;
 			this.cardinalitySolution = cardinalitySolution;
+		}
+
+		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariableIndex;
 		}
 
 		@Override
@@ -131,11 +137,6 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
-		public int hashCode() {
-			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariableIndex;
-		}
-
-		@Override
 		public boolean isAssignTo(int cardinalityVariableIndex) {
 			return this.cardinalityVariableIndex == cardinalityVariableIndex;
 		}
@@ -162,6 +163,11 @@ public abstract class SerializationMatchStep
 			this.eReference = eReference;
 			this.ruleValueIndexes = ruleValueIndexes;
 			assert eReference.isContainment();
+		}
+
+		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 5 * eReference.hashCode() + 7 * ruleValueIndexes.hashCode();
 		}
 
 		@Override
@@ -214,11 +220,6 @@ public abstract class SerializationMatchStep
 		@Override
 		public @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure() {
 			return Collections.emptySet();
-		}
-
-		@Override
-		public int hashCode() {
-			return getClass().hashCode() + 5 * eReference.hashCode() + 7 * ruleValueIndexes.hashCode();
 		}
 
 		protected boolean isInstance(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull EObject slotContent) {
@@ -337,6 +338,11 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
+		public int computeHashCode() {
+			return super.computeHashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariableIndex;
+		}
+
+		@Override
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
@@ -374,17 +380,18 @@ public abstract class SerializationMatchStep
 		}
 
 		@Override
-		public int hashCode() {
-			return getClass().hashCode() + 5 * cardinalitySolution.hashCode() + 7 * cardinalityVariableIndex;
-		}
-
-		@Override
 		public void toString(@NonNull StringBuilder s, int depth) {
 			s.append("check-value V");
 			s.append(cardinalityVariableIndex);
 			s.append(" = ");
 			s.append(cardinalitySolution);
 		}
+	}
+
+	private @Nullable Integer hashCode = null;
+
+	protected int computeHashCode() {
+		return getClass().hashCode();
 	}
 
 	/**
@@ -398,6 +405,15 @@ public abstract class SerializationMatchStep
 	 * Return all solutions to be evaluated.
 	 */
 	public abstract @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure();
+
+	@Override
+	public final int hashCode() {
+		Integer hashCode2 = hashCode;
+		if (hashCode2 == null) {
+			hashCode = hashCode2 = computeHashCode();
+		}
+		return hashCode2.intValue();
+	}
 
 	/**
 	 * Return true if this is an assignment step to cardinalityVariable.

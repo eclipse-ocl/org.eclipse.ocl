@@ -32,6 +32,18 @@ public class SerializationMatchTermRuntime extends SerializationMatchTerm
 	}
 
 	@Override
+	public int computeHashCode() {
+		int hash = super.computeHashCode();
+		for (@NonNull Integer unresolvedVariable : unresolvedVariables) {
+			hash += 3 + unresolvedVariable.hashCode();
+		}
+		for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
+			hash += 5 + unresolvedExpression.hashCode();
+		}
+		return hash;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -41,18 +53,6 @@ public class SerializationMatchTermRuntime extends SerializationMatchTerm
 		}
 		SerializationMatchTermRuntime that = (SerializationMatchTermRuntime) obj;
 		return this.unresolvedVariables.equals(that.unresolvedVariables) && this.unresolvedExpressions.equals(that.unresolvedExpressions);
-	}
-
-	@Override
-	public int hashCode() {
-		int hashCode = 0;
-		for (@NonNull Integer unresolvedVariable : unresolvedVariables) {
-			hashCode += 3 + unresolvedVariable.hashCode();
-		}
-		for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
-			hashCode += 5 + unresolvedExpression.hashCode();
-		}
-		return hashCode;
 	}
 
 	@Override
