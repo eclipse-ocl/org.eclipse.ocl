@@ -48,7 +48,8 @@ public class GrammarRuleVectorTests extends XtextTestCase
 	}
 
 	public void testGrammarRuleVector_HashCode() throws Exception {
-		assertEquals(Sets.newHashSet(new GrammarRuleVector().set(63).set(64), new GrammarRuleVector().setCapacity(256).set(64).set(63)).size(), 1);
+		assertEquals(2, Sets.newHashSet(new GrammarRuleVector().set(63).set(64), new GrammarRuleVector().setCapacity(256).set(65).set(63)).size());
+		assertEquals(1, Sets.newHashSet(new GrammarRuleVector().set(63).set(64), new GrammarRuleVector().setCapacity(256).set(64).set(63)).size());
 	}
 
 	public void testGrammarRuleVector_Iterable() throws Exception {

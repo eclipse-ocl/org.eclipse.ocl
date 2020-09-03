@@ -139,9 +139,13 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 		Integer hashCode2 = hashCode;
 		if (hashCode2 == null) {
 			int hash = getClass().hashCode();
+			boolean isMS = true;
 			for (int i = longs.length; --i >= 0; ) {
 				long word = longs[i];
-				hash = (int)(3 * hash + word + (word >> 16));
+				if (!isMS || (word != 0)) {
+					hash = (int)(3 * hash + word + (word >> 16));
+					isMS = false;
+				}
 			}
 			this.hashCode = hashCode2 = hash;
 		}
