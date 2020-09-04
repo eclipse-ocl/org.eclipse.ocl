@@ -17,14 +17,14 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SequenceSerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Segment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationRule;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationSegment;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
 
 public class RTSerializationRule2 extends SerializationRule
 {

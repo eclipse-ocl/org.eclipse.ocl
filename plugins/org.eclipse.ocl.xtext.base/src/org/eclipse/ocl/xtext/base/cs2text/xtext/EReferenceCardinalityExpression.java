@@ -20,13 +20,13 @@ import java.util.Map.Entry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.DynamicRuleMatch;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
+import org.eclipse.ocl.examples.xtext.serializer.UserSlotsAnalysis;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.ParserRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis;
 
 /**
  * A CardinalityExpression eqates the sum of CardinailtyVariable products to the number of elemets in an eStrucuralFeature slot.

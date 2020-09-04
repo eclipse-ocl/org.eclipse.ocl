@@ -13,11 +13,11 @@ package org.eclipse.ocl.xtext.base.serializer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.CommentSegmentSupport;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationBuilder;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.CommentSegmentSupport;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 
 public class BaseCommentSegmentSupport extends CommentSegmentSupport
 {

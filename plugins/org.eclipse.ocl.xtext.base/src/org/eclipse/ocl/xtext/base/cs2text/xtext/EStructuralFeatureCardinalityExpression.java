@@ -13,10 +13,10 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.UserSlotsAnalysis;
+import org.eclipse.ocl.examples.xtext.serializer.DynamicRuleMatch;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.UserSlotsAnalysis;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
 
 /**
  * A CardinalityExpression equates the sum of CardinailtyVariable products to the number of elements in an eStructuralFeature slot.

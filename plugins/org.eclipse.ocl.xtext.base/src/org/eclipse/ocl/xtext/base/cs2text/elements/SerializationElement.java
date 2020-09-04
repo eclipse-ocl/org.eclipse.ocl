@@ -11,7 +11,7 @@
 package org.eclipse.ocl.xtext.base.cs2text.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 

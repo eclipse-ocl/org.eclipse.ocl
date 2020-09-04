@@ -14,11 +14,11 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationStep.SerializationStepAssigns;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssigns;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.DirectAssignmentAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarAnalysis;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.GrammarUtils;

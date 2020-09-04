@@ -12,9 +12,9 @@ package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarRuleVector;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
 
 /**
  * A CardinalityVariable represents the unknown cardinality of a grammar term for which a constant value must be deduced prior

@@ -14,8 +14,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AssignmentAnalysis;
 
 public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode

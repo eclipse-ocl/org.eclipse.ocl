@@ -14,9 +14,9 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.DynamicRuleMatch;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.EnumerationValue;
 
 /**
  * A CardinalityExpression equates the sum of CardinalityVariable products to the number of elements in an eStructuralFeature slot.

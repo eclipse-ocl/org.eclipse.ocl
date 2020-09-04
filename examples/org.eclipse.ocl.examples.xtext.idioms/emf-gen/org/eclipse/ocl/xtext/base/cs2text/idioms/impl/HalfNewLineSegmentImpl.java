@@ -11,9 +11,9 @@
 package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationBuilder;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 
 /**
  * <!-- begin-user-doc -->

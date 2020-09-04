@@ -11,8 +11,8 @@
 package org.eclipse.ocl.xtext.base.cs2text.xtext;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.DynamicRuleMatch;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationMatchTerm;
+import org.eclipse.ocl.examples.xtext.serializer.DynamicRuleMatch;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
 
 public class SerializationMatchTermRuntime extends SerializationMatchTerm
 {
