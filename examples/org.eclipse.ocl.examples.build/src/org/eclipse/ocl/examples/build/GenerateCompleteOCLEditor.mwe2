@@ -81,7 +81,7 @@ Workflow {
 			name = "${completeOCLprojectName}.CompleteOCL"
 			fileExtensions = "ocl"
 			generator = null
-			serializer = org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragmentXtend {
+			serializer = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragmentXtend {
 				generateStub = true
 			}
 			validator = {
@@ -98,7 +98,7 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			formatter = org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragmentXtend {
+			formatter = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeFormatterFragmentXtend {
 				generateStub = true
 			}
 			// EssentialOCL bindings 
