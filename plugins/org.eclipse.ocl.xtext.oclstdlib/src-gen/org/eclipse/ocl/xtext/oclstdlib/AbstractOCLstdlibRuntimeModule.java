@@ -16,7 +16,6 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
-
 import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
