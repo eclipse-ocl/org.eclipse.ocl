@@ -302,6 +302,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			Arrays.sort(enumerationValuesArray, NameUtil.NAMEABLE_COMPARATOR);
 			eAttributeDatas[i++] = new EAttribute_EnumerationValues(entry.getKey(), enumerationValuesArray);
 		}
+		Arrays.sort(eAttributeDatas, NameUtil.NAMEABLE_COMPARATOR);
 		return eAttributeDatas;
 	}
 
@@ -324,6 +325,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			Arrays.sort(enumerationValue_GrammarCardinality, NameUtil.NAMEABLE_COMPARATOR);
 			eAttribute2enumerationValue2grammarCardinality[i1++] = new EAttribute_EnumerationValue_GrammarCardinality(eAttribute, enumerationValue_GrammarCardinality);
 		}
+		Arrays.sort(eAttribute2enumerationValue2grammarCardinality, NameUtil.NAMEABLE_COMPARATOR);
 		return eAttribute2enumerationValue2grammarCardinality;
 	}
 //	public @Nullable Map<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> basicGetEAttribute2enumerationValue2grammarCardinality() {
@@ -366,6 +368,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		for (Map.Entry<@NonNull EReference, @NonNull GrammarRuleVector> entry : eReference2assignedRuleIndexes.entrySet()) {
 			eReferenceDatas[i++] = new EReference_RuleIndexes(entry.getKey(), entry.getValue());
 		}
+		Arrays.sort(eReferenceDatas, NameUtil.NAMEABLE_COMPARATOR);
 		return eReferenceDatas;
 	}
 

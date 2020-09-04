@@ -3757,14 +3757,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -3791,14 +3791,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -3826,14 +3826,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -3865,11 +3865,6 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._10, GrammarCardinality.ZERO_OR_ONE)
@@ -3878,6 +3873,11 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -3950,22 +3950,22 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			},
 			sl._13,
 			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-					ev._00),
 				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-					ev._10)
+					ev._10),
+				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					ev._00)
 			},
 			null,
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._00, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._10, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._00, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -4060,10 +4060,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._05,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
-					iv._36) /* TemplateParameterSubstitutionCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
-					iv._16) /* MultiplicityCS */
+					iv._16) /* MultiplicityCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
+					iv._36) /* TemplateParameterSubstitutionCS */
 			},
 			null,
 			null,
@@ -4147,8 +4147,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// Base::TypedTypeRefCS : { ownedPathName=PathNameCS { '(' ownedBinding=TemplateBindingCS ')' }[?] }
 		private @NonNull SerializationRule _014 = new SerializationRule(103,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._147 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 67 */,
 				ms._146 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 87 */,
+				ms._147 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 67 */,
 				ms._087 /* assign V0 = |TypedTypeRefCS::ownedBinding| */,
 				ms._051 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
@@ -4163,10 +4163,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._04,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
-					iv._23) /* PathNameCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
-					iv._35) /* TemplateBindingCS */
+					iv._35) /* TemplateBindingCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
+					iv._23) /* PathNameCS */
 			},
 			null,
 			null,
@@ -4213,10 +4213,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// CompleteOCL::ClassifierContextDeclCS : { 'context' ownedSignature=TemplateSignatureCS[?] selfName=UnrestrictedName[?] ownedPathName=PathNameCS { 'inv' ownedInvariants+=ConstraintCS }[*] ownedDefinitions+=DefCS[+] }
 		private @NonNull SerializationRule _016 = new SerializationRule(3,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._149 /* check-rule completeoclcs::ClassifierContextDeclCS.ownedDefinitions : 16 */,
 				ms._150 /* check-rule completeoclcs::ClassifierContextDeclCS.ownedInvariants : 12 */,
 				ms._162 /* check-rule completeoclcs::PathNameDeclCS.ownedPathName : 67 */,
 				ms._141 /* check-rule basecs::TemplateableElementCS.ownedSignature : 89 */,
-				ms._149 /* check-rule completeoclcs::ClassifierContextDeclCS.ownedDefinitions : 16 */,
 				ms._123 /* assign V3 = |ClassifierContextDeclCS::ownedDefinitions| */,
 				ms._118 /* assign V2 = |ClassifierContextDeclCS::ownedInvariants| */,
 				ms._040 /* assert (|PathNameDeclCS::ownedPathName| - 1) == 0 */,
@@ -4237,14 +4237,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._52,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS,
+					iv._6) /* DefCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS,
 					iv._3) /* ConstraintCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME,
 					iv._23) /* PathNameCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._37) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS,
-					iv._6) /* DefCS */
+					iv._37) /* TemplateSignatureCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -4279,10 +4279,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// CompleteOCL::ClassifierContextDeclCS : { 'context' ownedSignature=TemplateSignatureCS[?] selfName=UnrestrictedName[?] ownedPathName=PathNameCS { 'inv' ownedInvariants+=ConstraintCS }[+] ownedDefinitions+=DefCS[*] }
 		private @NonNull SerializationRule _017 = new SerializationRule(3,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._149 /* check-rule completeoclcs::ClassifierContextDeclCS.ownedDefinitions : 16 */,
 				ms._150 /* check-rule completeoclcs::ClassifierContextDeclCS.ownedInvariants : 12 */,
 				ms._162 /* check-rule completeoclcs::PathNameDeclCS.ownedPathName : 67 */,
 				ms._141 /* check-rule basecs::TemplateableElementCS.ownedSignature : 89 */,
-				ms._149 /* check-rule completeoclcs::ClassifierContextDeclCS.ownedDefinitions : 16 */,
 				ms._123 /* assign V3 = |ClassifierContextDeclCS::ownedDefinitions| */,
 				ms._118 /* assign V2 = |ClassifierContextDeclCS::ownedInvariants| */,
 				ms._040 /* assert (|PathNameDeclCS::ownedPathName| - 1) == 0 */,
@@ -4303,14 +4303,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._52,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS,
+					iv._6) /* DefCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_INVARIANTS,
 					iv._3) /* ConstraintCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME,
 					iv._23) /* PathNameCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._37) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS__OWNED_DEFINITIONS,
-					iv._6) /* DefCS */
+					iv._37) /* TemplateSignatureCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -4345,9 +4345,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// CompleteOCL::CompleteOCLDocumentCS : { ownedImports+=ImportCS[*] ownedPackages+=PackageDeclarationCS[*] ownedContexts+=ContextDeclCS[*] }
 		private @NonNull SerializationRule _018 = new SerializationRule(10,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._151 /* check-rule completeoclcs::CompleteOCLDocumentCS.ownedContexts : 13 */,
 				ms._136 /* check-rule basecs::RootCS.ownedImports : 35 */,
 				ms._152 /* check-rule completeoclcs::CompleteOCLDocumentCS.ownedPackages : 65 */,
-				ms._151 /* check-rule completeoclcs::CompleteOCLDocumentCS.ownedContexts : 13 */,
 				ms._119 /* assign V2 = |CompleteOCLDocumentCS::ownedContexts| */,
 				ms._102 /* assign V1 = |CompleteOCLDocumentCS::ownedPackages| */,
 				ms._082 /* assign V0 = |RootCS::ownedImports| */
@@ -4361,12 +4361,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._25,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS,
+					iv._4) /* ContextDeclCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS,
 					iv._12) /* ImportCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_PACKAGES,
-					iv._21) /* PackageDeclarationCS */,
-				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.COMPLETE_OCL_DOCUMENT_CS__OWNED_CONTEXTS,
-					iv._4) /* ContextDeclCS */
+					iv._21) /* PackageDeclarationCS */
 			},
 			null,
 			null,
@@ -4410,9 +4410,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._34,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
-					iv._32) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
+					iv._32) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
 					iv._32) /* SpecificationCS */
 			},
 			null,
@@ -4438,9 +4438,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// CompleteOCL::DefOperationCS : { isStatic='static'[?] 'def' ':' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=DefParameterCS { ',' ownedParameters+=DefParameterCS }[*] }[?] ')' ':' ownedType=TypeExpCS[?] '=' ownedSpecification=SpecificationCS }
 		private @NonNull SerializationRule _020 = new SerializationRule(17,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._154 /* check-rule completeoclcs::DefOperationCS.ownedParameters : 18 */,
-				ms._144 /* check-rule basecs::TypedElementCS.ownedType : 94 */,
 				ms._153 /* check-rule completeoclcs::DefCS.ownedSpecification : 83 */,
+				ms._144 /* check-rule basecs::TypedElementCS.ownedType : 94 */,
+				ms._154 /* check-rule completeoclcs::DefOperationCS.ownedParameters : 18 */,
 				ms._141 /* check-rule basecs::TemplateableElementCS.ownedSignature : 89 */,
 				ms._008 /* assert (|DefCS::ownedSpecification| - 1) == 0 */,
 				ms._127 /* assign V4 = |TypedElementCS::ownedType| */,
@@ -4477,12 +4477,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.DEF_OPERATION_CS__OWNED_PARAMETERS,
 					iv._7) /* DefParameterCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._37) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.DEF_CS__OWNED_SPECIFICATION,
 					iv._32) /* SpecificationCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._37) /* TemplateSignatureCS */
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -4560,8 +4560,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// CompleteOCL::DefPropertyCS : { isStatic='static'[?] 'def' ':' name=UnrestrictedName ':' ownedType=TypeExpCS '=' ownedSpecification=SpecificationCS }
 		private @NonNull SerializationRule _022 = new SerializationRule(19,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._144 /* check-rule basecs::TypedElementCS.ownedType : 94 */,
 				ms._153 /* check-rule completeoclcs::DefCS.ownedSpecification : 83 */,
+				ms._144 /* check-rule basecs::TypedElementCS.ownedType : 94 */,
 				ms._008 /* assert (|DefCS::ownedSpecification| - 1) == 0 */,
 				ms._050 /* assert (|TypedElementCS::ownedType| - 1) == 0 */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */,
@@ -4584,10 +4584,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._08)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.DEF_CS__OWNED_SPECIFICATION,
-					iv._32) /* SpecificationCS */
+					iv._32) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -4678,13 +4678,13 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// CompleteOCL::OperationContextDeclCS : { 'context' ownedSignature=TemplateSignatureCS[?] ownedPathName=PathNameCS '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' ':' ownedType=TypeExpCS[?] { 'pre' ownedPreconditions+=ConstraintCS }[*] { 'post' ownedPostconditions+=ConstraintCS }[*] { 'body' ':' ownedBodies+=SpecificationCS }[*] }
 		private @NonNull SerializationRule _025 = new SerializationRule(64,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._158 /* check-rule completeoclcs::OperationContextDeclCS.ownedPostconditions : 12 */,
 				ms._157 /* check-rule completeoclcs::OperationContextDeclCS.ownedParameters : 66 */,
+				ms._156 /* check-rule completeoclcs::OperationContextDeclCS.ownedBodies : 83 */,
+				ms._158 /* check-rule completeoclcs::OperationContextDeclCS.ownedPostconditions : 12 */,
 				ms._162 /* check-rule completeoclcs::PathNameDeclCS.ownedPathName : 67 */,
+				ms._155 /* check-rule completeoclcs::FeatureContextDeclCS.ownedType : 94 */,
 				ms._159 /* check-rule completeoclcs::OperationContextDeclCS.ownedPreconditions : 12 */,
 				ms._141 /* check-rule basecs::TemplateableElementCS.ownedSignature : 89 */,
-				ms._155 /* check-rule completeoclcs::FeatureContextDeclCS.ownedType : 94 */,
-				ms._156 /* check-rule completeoclcs::OperationContextDeclCS.ownedBodies : 83 */,
 				ms._129 /* assign V6 = |OperationContextDeclCS::ownedBodies| */,
 				ms._128 /* assign V5 = |OperationContextDeclCS::ownedPostconditions| */,
 				ms._126 /* assign V4 = |OperationContextDeclCS::ownedPreconditions| */,
@@ -4722,20 +4722,20 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._44,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS,
-					iv._3) /* ConstraintCS */,
+				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES,
+					iv._32) /* SpecificationCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PARAMETERS,
 					iv._22) /* ParameterCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME,
 					iv._23) /* PathNameCS */,
+				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_POSTCONDITIONS,
+					iv._3) /* ConstraintCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_PRECONDITIONS,
 					iv._3) /* ConstraintCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
 					iv._37) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.FEATURE_CONTEXT_DECL_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
-				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.OPERATION_CONTEXT_DECL_CS__OWNED_BODIES,
-					iv._32) /* SpecificationCS */
+					iv._40) /* TypeExpCS */
 			},
 			null,
 			null,
@@ -4779,9 +4779,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// CompleteOCL::PackageDeclarationCS : { 'package' ownedPathName=PathNameCS { 'inv' ownedInvariants+=ConstraintCS }[*] ownedContexts+=ContextDeclCS[*] 'endpackage' }
 		private @NonNull SerializationRule _026 = new SerializationRule(65,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._161 /* check-rule completeoclcs::PackageDeclarationCS.ownedInvariants : 12 */,
-				ms._162 /* check-rule completeoclcs::PathNameDeclCS.ownedPathName : 67 */,
 				ms._160 /* check-rule completeoclcs::PackageDeclarationCS.ownedContexts : 13 */,
+				ms._162 /* check-rule completeoclcs::PathNameDeclCS.ownedPathName : 67 */,
+				ms._161 /* check-rule completeoclcs::PackageDeclarationCS.ownedInvariants : 12 */,
 				ms._108 /* assign V1 = |PackageDeclarationCS::ownedContexts| */,
 				ms._079 /* assign V0 = |PackageDeclarationCS::ownedInvariants| */,
 				ms._040 /* assert (|PathNameDeclCS::ownedPathName| - 1) == 0 */
@@ -4799,12 +4799,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._47,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS,
+					iv._4) /* ContextDeclCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_INVARIANTS,
 					iv._3) /* ConstraintCS */,
 				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.PATH_NAME_DECL_CS__OWNED_PATH_NAME,
-					iv._23) /* PathNameCS */,
-				new EReference_RuleIndexes(CompleteOCLCSPackage.Literals.PACKAGE_DECLARATION_CS__OWNED_CONTEXTS,
-					iv._4) /* ContextDeclCS */
+					iv._23) /* PathNameCS */
 			},
 			null,
 			null,
@@ -5104,10 +5104,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._30,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
-					iv._2) /* CollectionTypeCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS,
-					iv._1) /* CollectionLiteralPartCS */
+					iv._1) /* CollectionLiteralPartCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
+					iv._2) /* CollectionTypeCS */
 			},
 			null,
 			null,
@@ -5165,9 +5165,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._27,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION,
-					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION,
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION,
 					iv._10) /* ExpCS */
 			},
 			null,
@@ -5187,8 +5187,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::CollectionPatternCS : { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' }
 		private @NonNull SerializationRule _038 = new SerializationRule(7,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._173 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 68 */,
 				ms._174 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 8 */,
+				ms._173 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 68 */,
 				ms._067 /* assign V0 = |CollectionPatternCS::restVariableName| */,
 				ms._091 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
 				ms._004 /* assert (|CollectionPatternCS::ownedType| - 1) == 0 */
@@ -5237,8 +5237,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::CollectionTypeCS : { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 		private @NonNull SerializationRule _039 = new SerializationRule(8,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._176 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 95 */,
 				ms._175 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 50 */,
+				ms._176 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 95 */,
 				ms._068 /* assign V0 = |CollectionTypeCS::ownedType| */,
 				ms._005 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
 				ms._101 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
@@ -5255,10 +5255,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._18,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE,
-					iv._41) /* TypeExpWithoutMultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY,
-					iv._16) /* MultiplicityCS */
+					iv._16) /* MultiplicityCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE,
+					iv._41) /* TypeExpWithoutMultiplicityCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME
@@ -5317,8 +5317,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::ElseIfThenExpCS : { 'elseif' ownedCondition=ExpCS 'then' ownedThenExpression=ExpCS }
 		private @NonNull SerializationRule _041 = new SerializationRule(22,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._185 /* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : 29 */,
 				ms._184 /* check-rule essentialoclcs::IfThenExpCS.ownedCondition : 29 */,
+				ms._185 /* check-rule essentialoclcs::IfThenExpCS.ownedThenExpression : 29 */,
 				ms._015 /* assert (|IfThenExpCS::ownedThenExpression| - 1) == 0 */,
 				ms._014 /* assert (|IfThenExpCS::ownedCondition| - 1) == 0 */
 			},
@@ -5332,9 +5332,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._50,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION,
-					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_CONDITION,
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_THEN_EXP_CS__OWNED_THEN_EXPRESSION,
 					iv._10) /* ExpCS */
 			},
 			null,
@@ -5397,10 +5397,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._30,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
-					iv._2) /* CollectionTypeCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_PARTS,
-					iv._1) /* CollectionLiteralPartCS */
+					iv._1) /* CollectionLiteralPartCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_EXP_CS__OWNED_TYPE,
+					iv._2) /* CollectionTypeCS */
 			},
 			null,
 			null,
@@ -5471,10 +5471,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::ExpCS : { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 		private @NonNull SerializationRule _048 = new SerializationRule(29,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._182 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 22 */,
-				ms._183 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 29 */,
 				ms._181 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 29 */,
+				ms._182 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 22 */,
 				ms._180 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 29|68 */,
+				ms._183 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 29 */,
 				ms._012 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
 				ms._070 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
 				ms._013 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
@@ -5494,14 +5494,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._53,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
+					iv._25) /* ExpCS|PatternExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
+					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
 					iv._9) /* ElseIfThenExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
-					iv._10) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
-					iv._10) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
-					iv._25) /* ExpCS|PatternExpCS */
+					iv._10) /* ExpCS */
 			},
 			null,
 			null,
@@ -5531,8 +5531,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::ExpCS : { ownedLeft=PrefixedPrimaryExpCS name=BinaryOperatorName ownedRight=ExpCS }
 		private @NonNull SerializationRule _049 = new SerializationRule(29,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._186 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : 70 */,
 				ms._202 /* check-rule essentialoclcs::OperatorExpCS.ownedRight : 29 */,
+				ms._186 /* check-rule essentialoclcs::InfixExpCS.ownedLeft : 70 */,
 				ms._037 /* assert (|OperatorExpCS::ownedRight| - 1) == 0 */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._017 /* assert (|InfixExpCS::ownedLeft| - 1) == 0 */
@@ -5604,8 +5604,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::ExpCS : { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 		private @NonNull SerializationRule _051 = new SerializationRule(29,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._191 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 46 */,
 				ms._192 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 47 */,
+				ms._191 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 46 */,
 				ms._020 /* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
 				ms._056 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
 				ms._093 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
@@ -5646,10 +5646,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::ExpCS : { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 		private @NonNull SerializationRule _052 = new SerializationRule(29,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._164 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 14 */,
-				ms._167 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 84 */,
 				ms._166 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 76 */,
 				ms._165 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : 67 */,
+				ms._167 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 84 */,
+				ms._164 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 14 */,
 				ms._122 /* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
 				ms._117 /* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
 				ms._099 /* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
@@ -5674,12 +5674,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
 					iv._5) /* CurlyBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
-					iv._33) /* SquareBracketedClauseCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
+					iv._23) /* PathNameCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE,
 					iv._30) /* RoundBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._23) /* PathNameCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
+					iv._33) /* SquareBracketedClauseCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -5873,10 +5873,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::IfExpCS : { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 		private @NonNull SerializationRule _059 = new SerializationRule(34,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._182 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 22 */,
-				ms._183 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 29 */,
 				ms._181 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 29 */,
+				ms._182 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 22 */,
 				ms._180 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 29|68 */,
+				ms._183 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 29 */,
 				ms._012 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
 				ms._070 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
 				ms._013 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
@@ -5896,14 +5896,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._53,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
+					iv._25) /* ExpCS|PatternExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
+					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
 					iv._9) /* ElseIfThenExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
-					iv._10) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
-					iv._10) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
-					iv._25) /* ExpCS|PatternExpCS */
+					iv._10) /* ExpCS */
 			},
 			null,
 			null,
@@ -5992,10 +5992,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._46,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES,
-					iv._13) /* LetVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES,
+					iv._13) /* LetVariableCS */
 			},
 			null,
 			null,
@@ -6014,8 +6014,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::LetVariableCS : { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _063 = new SerializationRule(42,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._216 /* check-rule essentialoclcs::VariableCS.ownedType : 94 */,
 				ms._215 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 29 */,
+				ms._216 /* check-rule essentialoclcs::VariableCS.ownedType : 94 */,
 				ms._190 /* check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : 76 */,
 				ms._052 /* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
 				ms._113 /* assign V1 = |VariableCS::ownedType| */,
@@ -6035,12 +6035,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._49,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION,
 					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE,
-					iv._30) /* RoundBracketedClauseCS */
+					iv._30) /* RoundBracketedClauseCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -6075,8 +6075,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::MapLiteralExpCS : { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 		private @NonNull SerializationRule _064 = new SerializationRule(45,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._191 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 46 */,
 				ms._192 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 47 */,
+				ms._191 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 46 */,
 				ms._020 /* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
 				ms._056 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
 				ms._093 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
@@ -6131,9 +6131,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._31,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE,
-					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_KEY,
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_PART_CS__OWNED_VALUE,
 					iv._10) /* ExpCS */
 			},
 			null,
@@ -6227,10 +6227,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NameExpCS : { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 		private @NonNull SerializationRule _068 = new SerializationRule(53,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._164 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 14 */,
-				ms._167 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 84 */,
 				ms._166 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 76 */,
 				ms._165 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : 67 */,
+				ms._167 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 84 */,
+				ms._164 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 14 */,
 				ms._122 /* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
 				ms._117 /* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
 				ms._099 /* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
@@ -6255,12 +6255,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
 					iv._5) /* CurlyBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
-					iv._33) /* SquareBracketedClauseCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
+					iv._23) /* PathNameCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE,
 					iv._30) /* RoundBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._23) /* PathNameCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
+					iv._33) /* SquareBracketedClauseCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -6345,10 +6345,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _071 = new SerializationRule(54,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
-				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
-				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
 				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
+				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
+				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
+				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
 				ms._107 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._076 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._031 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
@@ -6369,14 +6369,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._33,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._17) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
 					iv._0) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._17) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			null,
 			null,
@@ -6405,9 +6405,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _072 = new SerializationRule(54,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
 				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
-				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._077 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._028 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
@@ -6424,12 +6424,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._32,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._17) /* NavigatingArgExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
 					iv._0) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._17) /* NavigatingArgExpCS */
 			},
 			null,
 			null,
@@ -6453,10 +6453,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _073 = new SerializationRule(54,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
-				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
-				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
 				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
+				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
+				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
+				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
 				ms._029 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
 				ms._106 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._078 /* assign V0 = |NavigatingArgCS::ownedType| */,
@@ -6477,14 +6477,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._28,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._17) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
 					iv._0) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._17) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			null,
 			null,
@@ -6513,9 +6513,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingBarArgCS : { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 		private @NonNull SerializationRule _074 = new SerializationRule(56,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
 				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
-				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._078 /* assign V0 = |NavigatingArgCS::ownedType| */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._034 /* assert (|NavigatingArgCS::prefix.'|'| - 1) == 0 */,
@@ -6538,12 +6538,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._09)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
 					iv._17) /* NavigatingArgExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._40) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -6573,10 +6573,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _075 = new SerializationRule(57,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
-				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
-				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
 				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
+				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
+				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
+				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
 				ms._107 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._076 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._031 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
@@ -6602,14 +6602,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._01)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._17) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
 					iv._0) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._17) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -6644,9 +6644,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _076 = new SerializationRule(57,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
 				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
-				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._077 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._028 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
@@ -6668,12 +6668,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._01)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._17) /* NavigatingArgExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
 					iv._0) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._17) /* NavigatingArgExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -6703,10 +6703,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _077 = new SerializationRule(57,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
-				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
-				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
 				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
+				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
+				ms._197 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 4 */,
+				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
 				ms._029 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
 				ms._106 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._078 /* assign V0 = |NavigatingArgCS::ownedType| */,
@@ -6732,14 +6732,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._01)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._17) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
 					iv._0) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
+					iv._17) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -6810,9 +6810,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::NavigatingSemiArgCS : { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 		private @NonNull SerializationRule _079 = new SerializationRule(58,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._199 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 55 */,
 				ms._200 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 94 */,
-				ms._198 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 29 */,
 				ms._078 /* assign V0 = |NavigatingArgCS::ownedType| */,
 				ms._030 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._033 /* assert (|NavigatingArgCS::prefix.';'| - 1) == 0 */,
@@ -6835,12 +6835,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._03)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
+					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
 					iv._17) /* NavigatingArgExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._40) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -7266,8 +7266,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::TupleLiteralPartCS : { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _095 = new SerializationRule(91,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._216 /* check-rule essentialoclcs::VariableCS.ownedType : 94 */,
 				ms._215 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 29 */,
+				ms._216 /* check-rule essentialoclcs::VariableCS.ownedType : 94 */,
 				ms._052 /* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
 				ms._088 /* assign V0 = |VariableCS::ownedType| */,
 				ms._027 /* assert (|NamedElementCS::name| - 1) == 0 */
@@ -7284,10 +7284,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._55,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
-					iv._40) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION,
-					iv._10) /* ExpCS */
+					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
+					iv._40) /* TypeExpCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -7430,8 +7430,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::TypeExpCS : { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _099 = new SerializationRule(94,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
 				ms._142 /* check-rule basecs::TupleTypeCS.ownedParts : 92 */,
+				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
 				ms._125 /* assign V3 = |TypedRefCS::ownedMultiplicity| */,
 				ms._047 /* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
 				ms._063 /* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
@@ -7486,8 +7486,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		private @NonNull SerializationRule _100 = new SerializationRule(94,
 			new @NonNull SerializationMatchStep @NonNull [] {
 				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
-				ms._173 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 68 */,
 				ms._174 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 8 */,
+				ms._173 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 68 */,
 				ms._120 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._067 /* assign V0 = |CollectionPatternCS::restVariableName| */,
 				ms._091 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
@@ -7545,9 +7545,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::TypeExpCS : { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _101 = new SerializationRule(94,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
-				ms._176 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 95 */,
 				ms._175 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 50 */,
+				ms._176 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 95 */,
+				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
 				ms._120 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._068 /* assign V0 = |CollectionTypeCS::ownedType| */,
 				ms._005 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
@@ -7566,12 +7566,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._19,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY,
+					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE,
-					iv._41) /* TypeExpWithoutMultiplicityCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY,
-					iv._16) /* MultiplicityCS */
+					iv._41) /* TypeExpWithoutMultiplicityCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME
@@ -7628,10 +7628,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._05)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
 					iv._40) /* TypeExpCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
+					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
 					iv._40) /* TypeExpCS */
 			},
@@ -7663,10 +7663,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::TypeExpCS : { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _103 = new SerializationRule(94,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
-				ms._212 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 14 */,
 				ms._214 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 29 */,
 				ms._213 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 67 */,
+				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
+				ms._212 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 14 */,
 				ms._120 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._085 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
 				ms._049 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
@@ -7686,14 +7686,14 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._02,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
 					iv._5) /* CurlyBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
-					iv._10) /* ExpCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
+					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._23) /* PathNameCS */
+					iv._23) /* PathNameCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
+					iv._10) /* ExpCS */
 			},
 			null,
 			null,
@@ -7781,8 +7781,8 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name='Tuple' { '(' { ownedParts+=TuplePartCS { ',' ownedParts+=TuplePartCS }[*] }[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _106 = new SerializationRule(98,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
 				ms._142 /* check-rule basecs::TupleTypeCS.ownedParts : 92 */,
+				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
 				ms._125 /* assign V3 = |TypedRefCS::ownedMultiplicity| */,
 				ms._047 /* assert (|TupleTypeCS::name.'Tuple'| - 1) == 0 */,
 				ms._063 /* assign V0 = (|TupleTypeCS::ownedParts| > 0) */,
@@ -7836,9 +7836,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _107 = new SerializationRule(98,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
-				ms._176 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 95 */,
 				ms._175 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 50 */,
+				ms._176 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 95 */,
+				ms._145 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 50 */,
 				ms._120 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._068 /* assign V0 = |CollectionTypeCS::ownedType| */,
 				ms._005 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
@@ -7857,12 +7857,12 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			sl._19,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY,
+					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_TYPE,
-					iv._41) /* TypeExpWithoutMultiplicityCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__OWNED_COLLECTION_MULTIPLICITY,
-					iv._16) /* MultiplicityCS */
+					iv._41) /* TypeExpWithoutMultiplicityCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				EssentialOCLCSPackage.Literals.COLLECTION_TYPE_CS__NAME
@@ -7919,10 +7919,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 					ev._05)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
 					iv._40) /* TypeExpCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
+					iv._16) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
 					iv._40) /* TypeExpCS */
 			},
@@ -7954,9 +7954,9 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 		// EssentialOCL::TypeNameExpCS : { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] }
 		private @NonNull SerializationRule _109 = new SerializationRule(99,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._212 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 14 */,
 				ms._214 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 29 */,
 				ms._213 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 67 */,
+				ms._212 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 14 */,
 				ms._085 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
 				ms._049 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
 				ms._111 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
@@ -7976,10 +7976,10 @@ public class CompleteOCLSerializationMetaData extends AbstractSerializationMetaD
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
 					iv._5) /* CurlyBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
-					iv._10) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._23) /* PathNameCS */
+					iv._23) /* PathNameCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
+					iv._10) /* ExpCS */
 			},
 			null,
 			null,

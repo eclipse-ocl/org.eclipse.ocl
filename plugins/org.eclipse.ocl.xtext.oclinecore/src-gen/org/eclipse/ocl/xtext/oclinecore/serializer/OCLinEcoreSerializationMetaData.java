@@ -5446,6 +5446,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._23, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
@@ -5454,11 +5459,6 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._23, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -5531,22 +5531,22 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			},
 			sl._17,
 			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-					ev._04),
 				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-					ev._23)
+					ev._23),
+				new EAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					ev._04)
 			},
 			null,
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._04, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._23, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._04, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -5625,8 +5625,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// Base::TemplateBindingCS : { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _011 = new SerializationRule(99,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._256 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : 100 */,
 				ms._255 /* check-rule basecs::TemplateBindingCS.ownedMultiplicity : 56 */,
+				ms._256 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : 100 */,
 				ms._127 /* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
 				ms._064 /* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			},
@@ -5641,10 +5641,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._05,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
-					iv._47) /* TemplateParameterSubstitutionCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
-					iv._19) /* MultiplicityCS */
+					iv._19) /* MultiplicityCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
+					iv._47) /* TemplateParameterSubstitutionCS */
 			},
 			null,
 			null,
@@ -5882,8 +5882,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::CollectionLiteralPartCS : { ownedExpression=ExpCS { '..' ownedLastExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _019 = new SerializationRule(9,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._276 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : 30 */,
 				ms._274 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedExpression : 30 */,
+				ms._276 /* check-rule essentialoclcs::CollectionLiteralPartCS.ownedLastExpression : 30 */,
 				ms._073 /* assign V0 = |CollectionLiteralPartCS::ownedLastExpression| */,
 				ms._004 /* assert (|CollectionLiteralPartCS::ownedExpression| - 1) == 0 */
 			},
@@ -5897,9 +5897,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._31,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION,
-					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_EXPRESSION,
+					iv._9) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_LITERAL_PART_CS__OWNED_LAST_EXPRESSION,
 					iv._9) /* ExpCS */
 			},
 			null,
@@ -5941,10 +5941,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._08,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
-					iv._4) /* CollectionTypeCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS,
-					iv._28) /* PatternExpCS */
+					iv._28) /* PatternExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
+					iv._4) /* CollectionTypeCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -5969,8 +5969,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::CollectionTypeCS : { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] }
 		private @NonNull SerializationRule _021 = new SerializationRule(11,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
+				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
 				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
 				ms._115 /* assign V1 = |CollectionTypeCS::ownedCollectionMultiplicity| */
@@ -6203,10 +6203,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::ExpCS : { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 		private @NonNull SerializationRule _030 = new SerializationRule(30,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._285 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 30 */,
-				ms._284 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 30|74 */,
 				ms._287 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 30 */,
+				ms._284 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 30|74 */,
 				ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
+				ms._285 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 30 */,
 				ms._013 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
 				ms._080 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
 				ms._014 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
@@ -6226,14 +6226,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._55,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
-					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					iv._29) /* ExpCS|PatternExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
 					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
-					iv._7) /* ElseIfThenExpCS */
+					iv._7) /* ElseIfThenExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
+					iv._9) /* ExpCS */
 			},
 			null,
 			null,
@@ -6336,8 +6336,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::ExpCS : { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 		private @NonNull SerializationRule _033 = new SerializationRule(30,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 				ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
+				ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 				ms._021 /* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
 				ms._060 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
 				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
@@ -6356,10 +6356,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._34,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE,
-					iv._16) /* MapTypeCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS,
-					iv._15) /* MapLiteralPartCS */
+					iv._15) /* MapLiteralPartCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE,
+					iv._16) /* MapTypeCS */
 			},
 			null,
 			null,
@@ -6378,10 +6378,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::ExpCS : { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 		private @NonNull SerializationRule _034 = new SerializationRule(30,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._271 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93 */,
-				ms._268 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._270 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 84 */,
+				ms._271 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93 */,
 				ms._269 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : 73 */,
+				ms._268 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._173 /* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
 				ms._156 /* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
 				ms._113 /* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
@@ -6404,14 +6404,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._08)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
-					iv._39) /* SquareBracketedClauseCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
 					iv._5) /* CurlyBracketedClauseCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
+					iv._27) /* PathNameCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE,
 					iv._35) /* RoundBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._27) /* PathNameCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
+					iv._39) /* SquareBracketedClauseCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -6605,10 +6605,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::IfExpCS : { 'if' ownedCondition=(ExpCS|PatternExpCS) 'then' ownedThenExpression=ExpCS ownedIfThenExpressions+=ElseIfThenExpCS[*] 'else' ownedElseExpression=ExpCS 'endif' }
 		private @NonNull SerializationRule _041 = new SerializationRule(36,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._285 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 30 */,
-				ms._284 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 30|74 */,
 				ms._287 /* check-rule essentialoclcs::IfExpCS.ownedThenExpression : 30 */,
+				ms._284 /* check-rule essentialoclcs::IfExpCS.ownedCondition : 30|74 */,
 				ms._286 /* check-rule essentialoclcs::IfExpCS.ownedIfThenExpressions : 20 */,
+				ms._285 /* check-rule essentialoclcs::IfExpCS.ownedElseExpression : 30 */,
 				ms._013 /* assert (|IfExpCS::ownedElseExpression| - 1) == 0 */,
 				ms._080 /* assign V0 = |IfExpCS::ownedIfThenExpressions| */,
 				ms._014 /* assert (|IfExpCS::ownedThenExpression| - 1) == 0 */,
@@ -6628,14 +6628,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._55,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
-					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_CONDITION,
 					iv._29) /* ExpCS|PatternExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_ELSE_EXPRESSION,
 					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_IF_THEN_EXPRESSIONS,
-					iv._7) /* ElseIfThenExpCS */
+					iv._7) /* ElseIfThenExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.IF_EXP_CS__OWNED_THEN_EXPRESSION,
+					iv._9) /* ExpCS */
 			},
 			null,
 			null,
@@ -6724,10 +6724,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._48,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES,
-					iv._14) /* LetVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_IN_EXPRESSION,
-					iv._9) /* ExpCS */
+					iv._9) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_EXP_CS__OWNED_VARIABLES,
+					iv._14) /* LetVariableCS */
 			},
 			null,
 			null,
@@ -6746,9 +6746,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::LetVariableCS : { name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS[?] { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _045 = new SerializationRule(46,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._319 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 30 */,
 				ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
 				ms._294 /* check-rule essentialoclcs::LetVariableCS.ownedRoundBracketedClause : 84 */,
-				ms._319 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 30 */,
 				ms._056 /* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
 				ms._133 /* assign V1 = |VariableCS::ownedType| */,
 				ms._081 /* assign V0 = |LetVariableCS::ownedRoundBracketedClause| */,
@@ -6767,12 +6767,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._50,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION,
+					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.LET_VARIABLE_CS__OWNED_ROUND_BRACKETED_CLAUSE,
 					iv._35) /* RoundBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION,
-					iv._9) /* ExpCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -6804,8 +6804,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::MapLiteralExpCS : { ownedType=MapTypeCS '{' { ownedParts+=MapLiteralPartCS { ',' ownedParts+=MapLiteralPartCS }[*] }[?] '}' }
 		private @NonNull SerializationRule _046 = new SerializationRule(49,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 				ms._295 /* check-rule essentialoclcs::MapLiteralExpCS.ownedParts : 50 */,
+				ms._296 /* check-rule essentialoclcs::MapLiteralExpCS.ownedType : 51 */,
 				ms._021 /* assert (|MapLiteralExpCS::ownedType| - 1) == 0 */,
 				ms._060 /* assign V0 = (|MapLiteralExpCS::ownedParts| > 0) */,
 				ms._107 /* assign V1 = (|MapLiteralExpCS::ownedParts| - 1) */
@@ -6824,10 +6824,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._34,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE,
-					iv._16) /* MapTypeCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_PARTS,
-					iv._15) /* MapLiteralPartCS */
+					iv._15) /* MapLiteralPartCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_LITERAL_EXP_CS__OWNED_TYPE,
+					iv._16) /* MapTypeCS */
 			},
 			null,
 			null,
@@ -6846,8 +6846,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::MapLiteralPartCS : { ownedKey=ExpCS '<-' ownedValue=ExpCS }
 		private @NonNull SerializationRule _047 = new SerializationRule(50,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._297 /* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : 30 */,
 				ms._298 /* check-rule essentialoclcs::MapLiteralPartCS.ownedValue : 30 */,
+				ms._297 /* check-rule essentialoclcs::MapLiteralPartCS.ownedKey : 30 */,
 				ms._023 /* assert (|MapLiteralPartCS::ownedValue| - 1) == 0 */,
 				ms._022 /* assert (|MapLiteralPartCS::ownedKey| - 1) == 0 */
 			},
@@ -6882,8 +6882,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::MapTypeCS : { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] }
 		private @NonNull SerializationRule _048 = new SerializationRule(51,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
+				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
 				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
 				ms._024 /* assert (|MapTypeCS::name.'Map'| - 1) == 0 */
@@ -6904,9 +6904,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._09)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
+					iv._51) /* TypeExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
 					iv._51) /* TypeExpCS */
 			},
 			null,
@@ -6956,10 +6956,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NameExpCS : { ownedPathName=PathNameCS ownedSquareBracketedClauses+=SquareBracketedClauseCS[*] ownedRoundBracketedClause=RoundBracketedClauseCS[?] ownedCurlyBracketedClause=CurlyBracketedClauseCS[?] { isPre='@' 'pre' }[?] }
 		private @NonNull SerializationRule _050 = new SerializationRule(59,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._271 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93 */,
-				ms._268 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._270 /* check-rule essentialoclcs::AbstractNameExpCS.ownedRoundBracketedClause : 84 */,
+				ms._271 /* check-rule essentialoclcs::AbstractNameExpCS.ownedSquareBracketedClauses : 93 */,
 				ms._269 /* check-rule essentialoclcs::AbstractNameExpCS.ownedPathName : 73 */,
+				ms._268 /* check-rule essentialoclcs::AbstractNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._173 /* assign V3 = |AbstractNameExpCS::isPre.'@'| */,
 				ms._156 /* assign V2 = |AbstractNameExpCS::ownedCurlyBracketedClause| */,
 				ms._113 /* assign V1 = |AbstractNameExpCS::ownedRoundBracketedClause| */,
@@ -6982,14 +6982,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._08)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
-					iv._39) /* SquareBracketedClauseCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
 					iv._5) /* CurlyBracketedClauseCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
+					iv._27) /* PathNameCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_ROUND_BRACKETED_CLAUSE,
 					iv._35) /* RoundBracketedClauseCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._27) /* PathNameCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.ABSTRACT_NAME_EXP_CS__OWNED_SQUARE_BRACKETED_CLAUSES,
+					iv._39) /* SquareBracketedClauseCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -7074,10 +7074,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _053 = new SerializationRule(60,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
-				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._086 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._033 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
@@ -7098,14 +7098,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._38,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._2) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
 					iv._20) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._2) /* CoIteratorVariableCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			null,
 			null,
@@ -7134,9 +7134,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _054 = new SerializationRule(60,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
+				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._087 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._030 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */
@@ -7153,12 +7153,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._37,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._2) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._20) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._2) /* CoIteratorVariableCS */
+					iv._20) /* NavigatingArgExpCS */
 			},
 			null,
 			null,
@@ -7182,10 +7182,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingArgCS : { ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _055 = new SerializationRule(60,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
-				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._031 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
 				ms._121 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
@@ -7206,14 +7206,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._32,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._2) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
 					iv._20) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._2) /* CoIteratorVariableCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			null,
 			null,
@@ -7242,9 +7242,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingBarArgCS : { prefix='|' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 		private @NonNull SerializationRule _056 = new SerializationRule(62,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._036 /* assert (|NavigatingArgCS::prefix.'|'| - 1) == 0 */,
@@ -7269,10 +7269,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._20) /* NavigatingArgExpCS */
+					iv._20) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -7302,10 +7302,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=NavigatingArgExpCS ':' ownedType=TypeExpCS { '<-' ownedCoIterator=CoIteratorVariableCS }[?] { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _057 = new SerializationRule(63,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
-				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._122 /* assign V1 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._086 /* assign V0 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._033 /* assert (|NavigatingArgCS::ownedType| - 1) == 0 */,
@@ -7331,14 +7331,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._05)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._2) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
 					iv._20) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._2) /* CoIteratorVariableCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -7373,9 +7373,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=NavigatingArgExpCS '<-' ownedCoIterator=CoIteratorVariableCS { '=' ownedInitExpression=ExpCS }[?] }
 		private @NonNull SerializationRule _058 = new SerializationRule(63,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
+				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._087 /* assign V0 = |NavigatingArgCS::ownedInitExpression| */,
 				ms._030 /* assert (|NavigatingArgCS::ownedCoIterator| - 1) == 0 */,
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
@@ -7397,12 +7397,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._05)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._2) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._20) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._2) /* CoIteratorVariableCS */
+					iv._20) /* NavigatingArgExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -7432,10 +7432,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingCommaArgCS : { prefix=',' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS }[?] { '<-' ownedCoIterator=CoIteratorVariableCS }[?] 'in' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _059 = new SerializationRule(63,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
-				ms._301 /* check-rule essentialoclcs::NavigatingArgCS.ownedCoIterator : 7 */,
 				ms._031 /* assert (|NavigatingArgCS::ownedInitExpression| - 1) == 0 */,
 				ms._121 /* assign V1 = |NavigatingArgCS::ownedCoIterator| */,
 				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
@@ -7461,14 +7461,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._05)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
+					iv._2) /* CoIteratorVariableCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
 					iv._20) /* NavigatingArgExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_CO_ITERATOR,
-					iv._2) /* CoIteratorVariableCS */
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -7539,9 +7539,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::NavigatingSemiArgCS : { prefix=';' ownedNameExpression=NavigatingArgExpCS { ':' ownedType=TypeExpCS { '=' ownedInitExpression=ExpCS }[?] }[?] }
 		private @NonNull SerializationRule _061 = new SerializationRule(64,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._302 /* check-rule essentialoclcs::NavigatingArgCS.ownedInitExpression : 30 */,
 				ms._304 /* check-rule essentialoclcs::NavigatingArgCS.ownedType : 107 */,
-				ms._303 /* check-rule essentialoclcs::NavigatingArgCS.ownedNameExpression : 61 */,
 				ms._088 /* assign V0 = |NavigatingArgCS::ownedType| */,
 				ms._032 /* assert (|NavigatingArgCS::ownedNameExpression| - 1) == 0 */,
 				ms._035 /* assert (|NavigatingArgCS::prefix.';'| - 1) == 0 */,
@@ -7566,10 +7566,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_INIT_EXPRESSION,
 					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_NAME_EXPRESSION,
-					iv._20) /* NavigatingArgExpCS */
+					iv._20) /* NavigatingArgExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.NAVIGATING_ARG_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -7998,8 +7998,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TupleLiteralPartCS : { name=UnrestrictedName { ':' ownedType=TypeExpCS }[?] '=' ownedInitExpression=ExpCS }
 		private @NonNull SerializationRule _077 = new SerializationRule(104,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
 				ms._319 /* check-rule essentialoclcs::VariableCS.ownedInitExpression : 30 */,
+				ms._320 /* check-rule essentialoclcs::VariableCS.ownedType : 107 */,
 				ms._056 /* assert (|VariableCS::ownedInitExpression| - 1) == 0 */,
 				ms._101 /* assign V0 = |VariableCS::ownedType| */,
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */
@@ -8016,10 +8016,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._57,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
-					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_INIT_EXPRESSION,
-					iv._9) /* ExpCS */
+					iv._9) /* ExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.VARIABLE_CS__OWNED_TYPE,
+					iv._51) /* TypeExpCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -8189,10 +8189,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._10)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
-					iv._50) /* TuplePartCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._19) /* MultiplicityCS */
+					iv._19) /* MultiplicityCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
+					iv._50) /* TuplePartCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -8217,9 +8217,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS : { ownedType=CollectionTypeCS '{' { ownedParts+=PatternExpCS { ',' ownedParts+=PatternExpCS }[*] '++' restVariableName=Identifier }[?] '}' ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _082 = new SerializationRule(107,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._278 /* check-rule essentialoclcs::CollectionPatternCS.ownedType : 11 */,
 				ms._277 /* check-rule essentialoclcs::CollectionPatternCS.ownedParts : 74 */,
+				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._074 /* assign V0 = |CollectionPatternCS::restVariableName| */,
 				ms._105 /* assign V1 = (|CollectionPatternCS::ownedParts| - 1) */,
@@ -8244,10 +8244,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
-					iv._4) /* CollectionTypeCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_PARTS,
-					iv._28) /* PatternExpCS */
+					iv._28) /* PatternExpCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.COLLECTION_PATTERN_CS__OWNED_TYPE,
+					iv._4) /* CollectionTypeCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -8277,9 +8277,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS : { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _083 = new SerializationRule(107,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
 				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
@@ -8335,9 +8335,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS : { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _084 = new SerializationRule(107,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
+				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
+				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._132 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
 				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
 				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
@@ -8360,11 +8360,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._09)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
+					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
-					iv._51) /* TypeExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
 					iv._51) /* TypeExpCS */
 			},
 			null,
@@ -8395,10 +8395,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeExpCS : { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _085 = new SerializationRule(107,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._317 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 73 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._318 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 30 */,
-				ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._096 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
 				ms._050 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
@@ -8418,14 +8418,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._03,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
-					iv._27) /* PathNameCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
+					iv._5) /* CurlyBracketedClauseCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */,
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
+					iv._27) /* PathNameCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
-					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
-					iv._5) /* CurlyBracketedClauseCS */
+					iv._9) /* ExpCS */
 			},
 			null,
 			null,
@@ -8540,10 +8540,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._10)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
-					iv._50) /* TuplePartCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._19) /* MultiplicityCS */
+					iv._19) /* MultiplicityCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
+					iv._50) /* TuplePartCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -8568,9 +8568,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _089 = new SerializationRule(112,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
 				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
@@ -8626,9 +8626,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeLiteralWithMultiplicityCS : { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _090 = new SerializationRule(112,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
+				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
+				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._132 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
 				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
 				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
@@ -8651,11 +8651,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._09)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
+					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
-					iv._51) /* TypeExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
 					iv._51) /* TypeExpCS */
 			},
 			null,
@@ -8686,9 +8686,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// EssentialOCL::TypeNameExpCS : { ownedPathName=PathNameCS { ownedCurlyBracketedClause=CurlyBracketedClauseCS { '{' ownedPatternGuard=ExpCS '}' }[?] }[?] }
 		private @NonNull SerializationRule _091 = new SerializationRule(113,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._317 /* check-rule essentialoclcs::TypeNameExpCS.ownedPathName : 73 */,
 				ms._318 /* check-rule essentialoclcs::TypeNameExpCS.ownedPatternGuard : 30 */,
-				ms._316 /* check-rule essentialoclcs::TypeNameExpCS.ownedCurlyBracketedClause : 13 */,
 				ms._096 /* assign V0 = |TypeNameExpCS::ownedCurlyBracketedClause| */,
 				ms._050 /* assert (|TypeNameExpCS::ownedPathName| - 1) == 0 */,
 				ms._129 /* assign V1 = |TypeNameExpCS::ownedPatternGuard| */
@@ -8706,12 +8706,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._02,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
+					iv._5) /* CurlyBracketedClauseCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATH_NAME,
 					iv._27) /* PathNameCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_PATTERN_GUARD,
-					iv._9) /* ExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.TYPE_NAME_EXP_CS__OWNED_CURLY_BRACKETED_CLAUSE,
-					iv._5) /* CurlyBracketedClauseCS */
+					iv._9) /* ExpCS */
 			},
 			null,
 			null,
@@ -8857,10 +8857,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AnnotationCS : { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[+] '}' }
 		private @NonNull SerializationRule _097 = new SerializationRule(1,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._229 /* check-rule basecs::AnnotationCS.ownedContents : 53 */,
+				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
+				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._196 /* assign V5 = |AnnotationCS::ownedReferences| */,
 				ms._184 /* assign V4 = |AnnotationCS::ownedContents| */,
 				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
@@ -8888,14 +8888,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._71,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES,
-					iv._18) /* ModelElementRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS,
+					iv._17) /* ModelElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS,
-					iv._17) /* ModelElementCS */
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES,
+					iv._18) /* ModelElementRefCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -8930,10 +8930,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AnnotationCS : { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedContents+=ModelElementCS[+] ownedReferences+=ModelElementRefCS[*] '}' }
 		private @NonNull SerializationRule _098 = new SerializationRule(1,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._229 /* check-rule basecs::AnnotationCS.ownedContents : 53 */,
+				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
+				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._196 /* assign V5 = |AnnotationCS::ownedReferences| */,
 				ms._184 /* assign V4 = |AnnotationCS::ownedContents| */,
 				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
@@ -8961,14 +8961,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._71,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES,
-					iv._18) /* ModelElementRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS,
+					iv._17) /* ModelElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS,
-					iv._17) /* ModelElementCS */
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES,
+					iv._18) /* ModelElementRefCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -9003,10 +9003,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AnnotationCS : { 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)[?] { '(' ownedDetails+=DetailCS { ',' ownedDetails+=DetailCS }[*] ')' }[?] '{' ownedAnnotations+=AnnotationElementCS[+] ownedContents+=ModelElementCS[*] ownedReferences+=ModelElementRefCS[*] '}' }
 		private @NonNull SerializationRule _099 = new SerializationRule(1,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._229 /* check-rule basecs::AnnotationCS.ownedContents : 53 */,
+				ms._230 /* check-rule basecs::AnnotationCS.ownedReferences : 54 */,
+				ms._231 /* check-rule basecs::AnnotationElementCS.ownedDetails : 16 */,
 				ms._196 /* assign V5 = |AnnotationCS::ownedReferences| */,
 				ms._184 /* assign V4 = |AnnotationCS::ownedContents| */,
 				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
@@ -9034,14 +9034,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._71,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES,
-					iv._18) /* ModelElementRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS,
+					iv._17) /* ModelElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_ELEMENT_CS__OWNED_DETAILS,
 					iv._6) /* DetailCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_CONTENTS,
-					iv._17) /* ModelElementCS */
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ANNOTATION_CS__OWNED_REFERENCES,
+					iv._18) /* ModelElementRefCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -9139,8 +9139,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS : { 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 		private @NonNull SerializationRule _101 = new SerializationRule(3,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
 				ms._126 /* assign V1 = |StructuralFeatureCS::default| */,
@@ -9188,10 +9188,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._01)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
-					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
+					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
 					iv._60) /* TypedMultiplicityRefCS */
 			},
@@ -9304,8 +9304,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS : { qualifiers+='definition' qualifiers+='static'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 		private @NonNull SerializationRule _103 = new SerializationRule(3,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
 				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
@@ -9357,10 +9357,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._01,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
-					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
+					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
 					iv._60) /* TypedMultiplicityRefCS */
 			},
@@ -9475,8 +9475,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::AttributeCS : { qualifiers+='static' qualifiers+='definition'[?] 'attribute' name=UnrestrictedName { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!derived|!id|!ordered|!readonly|!transient|!unique|!unsettable|!volatile|derived|id|ordered|readonly|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] '}' }
 		private @NonNull SerializationRule _105 = new SerializationRule(3,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
 				ms._162 /* assign V2 = |StructuralFeatureCS::default| */,
@@ -9528,10 +9528,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._01,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
-					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
+					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
 					iv._60) /* TypedMultiplicityRefCS */
 			},
@@ -9612,6 +9612,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._19, GrammarCardinality.ZERO_OR_ONE)
@@ -9620,11 +9625,6 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -9638,9 +9638,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::DataTypeCS : { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 		private @NonNull SerializationRule _107 = new SerializationRule(15,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
+				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
 				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
 				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
@@ -9673,17 +9673,22 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._19)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS,
-					iv._13) /* InvariantConstraintCS */
+					iv._13) /* InvariantConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._19, GrammarCardinality.ZERO_OR_ONE)
@@ -9692,11 +9697,6 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -9754,6 +9754,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._19, GrammarCardinality.ZERO_OR_ONE)
@@ -9762,11 +9767,6 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -9780,9 +9780,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::DataTypeCS : { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 		private @NonNull SerializationRule _109 = new SerializationRule(15,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
+				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
 				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
 				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
@@ -9814,17 +9814,22 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._19)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS,
-					iv._13) /* InvariantConstraintCS */
+					iv._13) /* InvariantConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._19, GrammarCardinality.ZERO_OR_ONE)
@@ -9833,11 +9838,6 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -9886,10 +9886,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			},
 			sl._87,
 			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
-					ev._20),
 				new EAttribute_EnumerationValues(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
-					ev._19)
+					ev._19),
+				new EAttribute_EnumerationValues(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
+					ev._20)
 			},
 			new @NonNull EReference_RuleIndexes [] {
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
@@ -9899,9 +9899,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._20, GrammarCardinality.ZERO_OR_ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -9909,14 +9909,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 						new EnumerationValue_GrammarCardinality(ev._19, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._20, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -9930,9 +9930,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::DataTypeCS : { isPrimitive='primitive'[?] 'datatype' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 		private @NonNull SerializationRule _111 = new SerializationRule(15,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
+				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._206 /* assign V6 = |ClassCS::ownedConstraints| */,
 				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
 				ms._157 /* assign V2 = |ClassCS::instanceClassName| */,
@@ -9962,26 +9962,26 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			},
 			sl._88,
 			new @NonNull EAttribute_EnumerationValues [] {
-				new EAttribute_EnumerationValues(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
-					ev._20),
 				new EAttribute_EnumerationValues(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
-					ev._19)
+					ev._19),
+				new EAttribute_EnumerationValues(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
+					ev._20)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS,
-					iv._13) /* InvariantConstraintCS */
+					iv._13) /* InvariantConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._20, GrammarCardinality.ZERO_OR_ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_PRIMITIVE,
@@ -9989,14 +9989,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 						new EnumerationValue_GrammarCardinality(ev._19, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DATA_TYPE_CS__IS_SERIALIZABLE,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._20, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				)
 			},
@@ -10036,14 +10036,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DETAIL_CS__VALUES,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_MORE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.DETAIL_CS__VALUES,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_MORE)
 					}
 				)
 			},
@@ -10123,14 +10123,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10144,10 +10144,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::EnumerationCS : { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '!serializable' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 		private @NonNull SerializationRule _115 = new SerializationRule(21,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._235 /* check-rule basecs::EnumerationCS.ownedLiterals : 22 */,
-				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
+				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._235 /* check-rule basecs::EnumerationCS.ownedLiterals : 22 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
 				ms._187 /* assign V4 = |EnumerationCS::ownedLiterals| */,
 				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
@@ -10177,27 +10177,27 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._69,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS,
-					iv._8) /* EnumerationLiteralCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS,
-					iv._13) /* InvariantConstraintCS */
+					iv._13) /* InvariantConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS,
+					iv._8) /* EnumerationLiteralCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10255,14 +10255,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10276,10 +10276,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::EnumerationCS : { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 		private @NonNull SerializationRule _117 = new SerializationRule(21,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._235 /* check-rule basecs::EnumerationCS.ownedLiterals : 22 */,
-				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
+				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._235 /* check-rule basecs::EnumerationCS.ownedLiterals : 22 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._197 /* assign V5 = |ClassCS::ownedConstraints| */,
 				ms._187 /* assign V4 = |EnumerationCS::ownedLiterals| */,
 				ms._176 /* assign V3 = |ModelElementCS::ownedAnnotations| */,
@@ -10308,27 +10308,27 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._67,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS,
-					iv._8) /* EnumerationLiteralCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS,
-					iv._13) /* InvariantConstraintCS */
+					iv._13) /* InvariantConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS,
+					iv._8) /* EnumerationLiteralCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10391,9 +10391,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE,
@@ -10401,9 +10401,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 						new EnumerationValue_GrammarCardinality(ev._20, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10417,10 +10417,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::EnumerationCS : { 'enum' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isSerializable='serializable'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedLiterals+=EnumerationLiteralCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 		private @NonNull SerializationRule _119 = new SerializationRule(21,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._235 /* check-rule basecs::EnumerationCS.ownedLiterals : 22 */,
-				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
+				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._235 /* check-rule basecs::EnumerationCS.ownedLiterals : 22 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._206 /* assign V6 = |ClassCS::ownedConstraints| */,
 				ms._198 /* assign V5 = |EnumerationCS::ownedLiterals| */,
 				ms._188 /* assign V4 = |ModelElementCS::ownedAnnotations| */,
@@ -10454,22 +10454,22 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._20)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS,
-					iv._8) /* EnumerationLiteralCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS,
-					iv._13) /* InvariantConstraintCS */
+					iv._13) /* InvariantConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.ENUMERATION_CS__OWNED_LITERALS,
+					iv._8) /* EnumerationLiteralCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.ENUMERATION_CS__IS_SERIALIZABLE,
@@ -10477,9 +10477,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 						new EnumerationValue_GrammarCardinality(ev._20, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10803,8 +10803,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::InvariantConstraintCS : { isCallable='callable'[?] stereotype='invariant' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 		private @NonNull SerializationRule _126 = new SerializationRule(41,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._233 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : 92 */,
+				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._174 /* assign V3 = |ConstraintCS::ownedSpecification| */,
 				ms._120 /* assign V1 = |NamedElementCS::name| */,
 				ms._007 /* assert (|ConstraintCS::stereotype.'invariant'| - 1) == 0 */,
@@ -10833,9 +10833,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._16)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
-					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
+					iv._38) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
 					iv._38) /* SpecificationCS */
 			},
 			null,
@@ -10845,14 +10845,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 						new EnumerationValue_GrammarCardinality(ev._12, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._16, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._16, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10907,14 +10907,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 						new EnumerationValue_GrammarCardinality(ev._12, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._16, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._16, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -10958,10 +10958,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS : { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 		private @NonNull SerializationRule _129 = new SerializationRule(70,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
+				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._179 /* assign V3 = |TypedElementCS::ownedType| */,
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._095 /* assign V0 = |TemplateableElementCS::ownedSignature| */,
@@ -11006,14 +11006,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._02)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
+					iv._61) /* TypedRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS,
 					iv._26) /* ParameterCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._60) /* TypedMultiplicityRefCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
-					iv._61) /* TypedRefCS */
+					iv._60) /* TypedMultiplicityRefCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -11055,14 +11055,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS : { 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 		private @NonNull SerializationRule _130 = new SerializationRule(70,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._239 /* check-rule basecs::OperationCS.ownedBodyExpressions : 92 */,
-				ms._243 /* check-rule basecs::OperationCS.ownedPreconditions : 76 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
-				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._242 /* check-rule basecs::OperationCS.ownedPostconditions : 75 */,
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
+				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
+				ms._239 /* check-rule basecs::OperationCS.ownedBodyExpressions : 92 */,
+				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
+				ms._243 /* check-rule basecs::OperationCS.ownedPreconditions : 76 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._144 /* assign V12 = |OperationCS::ownedPostconditions| */,
 				ms._226 /* assign V9 = |OperationCS::ownedPreconditions| */,
 				ms._219 /* assign V8 = |ModelElementCS::ownedAnnotations| */,
@@ -11121,22 +11121,22 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._02)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS,
-					iv._38) /* SpecificationCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS,
-					iv._31) /* PreconditionConstraintCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS,
+					iv._38) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
+					iv._61) /* TypedRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS,
 					iv._26) /* ParameterCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._60) /* TypedMultiplicityRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS,
 					iv._30) /* PostconditionConstraintCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
-					iv._61) /* TypedRefCS */
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS,
+					iv._31) /* PreconditionConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
+					iv._60) /* TypedMultiplicityRefCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -11198,10 +11198,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS : { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 		private @NonNull SerializationRule _131 = new SerializationRule(70,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
+				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
@@ -11250,14 +11250,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._02,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
+					iv._61) /* TypedRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS,
 					iv._26) /* ParameterCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._60) /* TypedMultiplicityRefCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
-					iv._61) /* TypedRefCS */
+					iv._60) /* TypedMultiplicityRefCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -11301,14 +11301,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS : { qualifiers+='definition' qualifiers+='static'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 		private @NonNull SerializationRule _132 = new SerializationRule(70,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._239 /* check-rule basecs::OperationCS.ownedBodyExpressions : 92 */,
-				ms._243 /* check-rule basecs::OperationCS.ownedPreconditions : 76 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
-				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._242 /* check-rule basecs::OperationCS.ownedPostconditions : 75 */,
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
+				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
+				ms._239 /* check-rule basecs::OperationCS.ownedBodyExpressions : 92 */,
+				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
+				ms._243 /* check-rule basecs::OperationCS.ownedPreconditions : 76 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._146 /* assign V13 = |OperationCS::ownedPostconditions| */,
 				ms._138 /* assign V10 = |OperationCS::ownedPreconditions| */,
 				ms._225 /* assign V9 = |ModelElementCS::ownedAnnotations| */,
@@ -11371,22 +11371,22 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._02,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS,
-					iv._38) /* SpecificationCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS,
-					iv._31) /* PreconditionConstraintCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS,
+					iv._38) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
+					iv._61) /* TypedRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS,
 					iv._26) /* ParameterCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._60) /* TypedMultiplicityRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS,
 					iv._30) /* PostconditionConstraintCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
-					iv._61) /* TypedRefCS */
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS,
+					iv._31) /* PreconditionConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
+					iv._60) /* TypedMultiplicityRefCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -11450,10 +11450,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS : { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] ';' }
 		private @NonNull SerializationRule _133 = new SerializationRule(70,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
+				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
 				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
-				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._190 /* assign V4 = |TypedElementCS::ownedType| */,
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
 				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
@@ -11502,14 +11502,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._02,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
+					iv._61) /* TypedRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS,
 					iv._26) /* ParameterCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._60) /* TypedMultiplicityRefCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
-					iv._61) /* TypedRefCS */
+					iv._60) /* TypedMultiplicityRefCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -11553,14 +11553,14 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::OperationCS : { qualifiers+='static' qualifiers+='definition'[?] 'operation' ownedSignature=TemplateSignatureCS[?] name=UnrestrictedName '(' { ownedParameters+=ParameterCS { ',' ownedParameters+=ParameterCS }[*] }[?] ')' { ':' ownedType=TypedMultiplicityRefCS }[?] { 'throws' ownedExceptions+=TypedRefCS { ',' ownedExceptions+=TypedRefCS }[*] }[?] { '{' { qualifiers+={'!derived|!ordered|!transient|!unique|derived|ordered|transient|unique'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPreconditions+=PreconditionConstraintCS[*] { 'body' ':' ownedBodyExpressions+=SpecificationCS[?] ';' }[*] ownedPostconditions+=PostconditionConstraintCS[*] '}' }
 		private @NonNull SerializationRule _134 = new SerializationRule(70,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._239 /* check-rule basecs::OperationCS.ownedBodyExpressions : 92 */,
-				ms._243 /* check-rule basecs::OperationCS.ownedPreconditions : 76 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
-				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._242 /* check-rule basecs::OperationCS.ownedPostconditions : 75 */,
 				ms._240 /* check-rule basecs::OperationCS.ownedExceptions : 117 */,
+				ms._241 /* check-rule basecs::OperationCS.ownedParameters : 72 */,
+				ms._239 /* check-rule basecs::OperationCS.ownedBodyExpressions : 92 */,
+				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
+				ms._243 /* check-rule basecs::OperationCS.ownedPreconditions : 76 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._146 /* assign V13 = |OperationCS::ownedPostconditions| */,
 				ms._138 /* assign V10 = |OperationCS::ownedPreconditions| */,
 				ms._225 /* assign V9 = |ModelElementCS::ownedAnnotations| */,
@@ -11623,22 +11623,22 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._02,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS,
-					iv._38) /* SpecificationCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS,
-					iv._31) /* PreconditionConstraintCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_BODY_EXPRESSIONS,
+					iv._38) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
+					iv._61) /* TypedRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PARAMETERS,
 					iv._26) /* ParameterCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
-					iv._60) /* TypedMultiplicityRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_POSTCONDITIONS,
 					iv._30) /* PostconditionConstraintCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_EXCEPTIONS,
-					iv._61) /* TypedRefCS */
+				new EReference_RuleIndexes(BaseCSPackage.Literals.OPERATION_CS__OWNED_PRECONDITIONS,
+					iv._31) /* PreconditionConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
+					iv._60) /* TypedMultiplicityRefCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
@@ -11725,11 +11725,6 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.PACKAGE_CS__NS_URI,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
@@ -11739,14 +11734,19 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.PACKAGE_CS__NS_URI,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
 				)
 			},
 			null);
 		// OCLinEcore::PackageCS : { 'package' name=UnrestrictedName { ':' nsPrefix=UnrestrictedName }[?] { '=' nsURI=URI }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedPackages+=PackageCS[*] ownedClasses+=ClassCS[*] '}' }
 		private @NonNull SerializationRule _136 = new SerializationRule(71,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._245 /* check-rule basecs::PackageOwnerCS.ownedPackages : 71 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._245 /* check-rule basecs::PackageOwnerCS.ownedPackages : 71 */,
 				ms._244 /* check-rule basecs::PackageCS.ownedClasses : 6 */,
 				ms._189 /* assign V4 = |PackageCS::ownedClasses| */,
 				ms._177 /* assign V3 = |PackageOwnerCS::ownedPackages| */,
@@ -11774,28 +11774,28 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._79,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES,
-					iv._25) /* PackageCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.PACKAGE_CS__OWNED_CLASSES,
-					iv._1) /* ClassCS */
+					iv._1) /* ClassCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES,
+					iv._25) /* PackageCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.PACKAGE_CS__NS_URI,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.PACKAGE_CS__NS_PREFIX,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.PACKAGE_CS__NS_URI,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
@@ -11887,8 +11887,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::PostconditionConstraintCS : { stereotype='postcondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 		private @NonNull SerializationRule _138 = new SerializationRule(75,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._233 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : 92 */,
+				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._159 /* assign V2 = |ConstraintCS::ownedSpecification| */,
 				ms._085 /* assign V0 = |NamedElementCS::name| */,
 				ms._008 /* assert (|ConstraintCS::stereotype.'postcondition'| - 1) == 0 */,
@@ -11913,21 +11913,21 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._17)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
-					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
+					iv._38) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
 					iv._38) /* SpecificationCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._17, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._17, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -11946,8 +11946,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::PreconditionConstraintCS : { stereotype='precondition' { name=UnrestrictedName { '(' ownedMessageSpecification=SpecificationCS ')' }[?] }[?] ':' ownedSpecification=SpecificationCS[?] ';' }
 		private @NonNull SerializationRule _139 = new SerializationRule(76,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._233 /* check-rule basecs::ConstraintCS.ownedMessageSpecification : 92 */,
+				ms._234 /* check-rule basecs::ConstraintCS.ownedSpecification : 92 */,
 				ms._159 /* assign V2 = |ConstraintCS::ownedSpecification| */,
 				ms._085 /* assign V0 = |NamedElementCS::name| */,
 				ms._009 /* assert (|ConstraintCS::stereotype.'precondition'| - 1) == 0 */,
@@ -11972,21 +11972,21 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._18)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
-					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_MESSAGE_SPECIFICATION,
+					iv._38) /* SpecificationCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.CONSTRAINT_CS__OWNED_SPECIFICATION,
 					iv._38) /* SpecificationCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._18, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CONSTRAINT_CS__STEREOTYPE,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._18, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -12076,9 +12076,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS : { 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 		private @NonNull SerializationRule _141 = new SerializationRule(83,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
-				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
+				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._145 /* assign V12 = |ReferenceCS::ownedImplicitOpposites| */,
 				ms._199 /* assign V5 = |ModelElementCS::ownedAnnotations| */,
@@ -12143,12 +12143,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._00)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
+					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
 					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES,
 					iv._11) /* ImplicitOppositeCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
-					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
 					iv._60) /* TypedMultiplicityRefCS */
 			},
@@ -12282,9 +12282,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS : { qualifiers+='definition' qualifiers+='static'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 		private @NonNull SerializationRule _143 = new SerializationRule(83,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
-				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
+				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._147 /* assign V13 = |ReferenceCS::ownedImplicitOpposites| */,
 				ms._207 /* assign V6 = |ModelElementCS::ownedAnnotations| */,
@@ -12353,12 +12353,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._00,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
+					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
 					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES,
 					iv._11) /* ImplicitOppositeCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
-					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
 					iv._60) /* TypedMultiplicityRefCS */
 			},
@@ -12494,9 +12494,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::ReferenceCS : { qualifiers+='static' qualifiers+='definition'[?] 'property' name=UnrestrictedName { '#' referredOpposite=UnrestrictedName }[?] { ':' ownedType=TypedMultiplicityRefCS }[?] { '=' default=SINGLE_QUOTED_STRING }[?] { '{' { qualifiers+={'!composes|!derived|!ordered|!readonly|!resolve|!transient|!unique|!unsettable|!volatile|composes|derived|ordered|readonly|resolve|transient|unique|unsettable|volatile'} }[+] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] { 'key' referredKeys+=UnrestrictedName { ',' referredKeys+=UnrestrictedName }[*] ';' }[*] { 'initial' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { 'derivation' ':' ownedDefaultExpressions+=SpecificationCS[?] ';' }[*] { ownedImplicitOpposites+=ImplicitOppositeCS ';' }[*] '}' }
 		private @NonNull SerializationRule _145 = new SerializationRule(83,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
-				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
 				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
+				ms._249 /* check-rule basecs::ReferenceCS.ownedImplicitOpposites : 37 */,
+				ms._251 /* check-rule basecs::StructuralFeatureCS.ownedDefaultExpressions : 92 */,
 				ms._263 /* check-rule basecs::TypedElementCS.ownedType : 116 */,
 				ms._147 /* assign V13 = |ReferenceCS::ownedImplicitOpposites| */,
 				ms._207 /* assign V6 = |ModelElementCS::ownedAnnotations| */,
@@ -12565,12 +12565,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._00,ev._13,ev._21)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
+					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURAL_FEATURE_CS__OWNED_DEFAULT_EXPRESSIONS,
 					iv._38) /* SpecificationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.REFERENCE_CS__OWNED_IMPLICIT_OPPOSITES,
 					iv._11) /* ImplicitOppositeCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
-					iv._0) /* AnnotationElementCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_ELEMENT_CS__OWNED_TYPE,
 					iv._60) /* TypedMultiplicityRefCS */
 			},
@@ -12675,8 +12675,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::StructuredClassCS : { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] ';' }
 		private @NonNull SerializationRule _148 = new SerializationRule(97,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._254 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : 117 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._185 /* assign V4 = |ClassCS::instanceClassName| */,
 				ms._128 /* assign V1 = |TemplateableElementCS::ownedSignature| */,
 				ms._029 /* assert (|NamedElementCS::name| - 1) == 0 */,
@@ -12724,24 +12724,24 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._11, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._11, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._15, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -12760,12 +12760,12 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::StructuredClassCS : { isAbstract='abstract'[?] 'class' name=UnrestrictedName ownedSignature=TemplateSignatureCS[?] { 'extends' ownedSuperTypes+=TypedRefCS { ',' ownedSuperTypes+=TypedRefCS }[*] }[?] { ':' instanceClassName=SINGLE_QUOTED_STRING }[?] { '{' isInterface='interface'[?] '}' }[?] '{' ownedAnnotations+=AnnotationElementCS[*] ownedOperations+=OperationCS[*] ownedProperties+=StructuralFeatureCS[*] ownedConstraints+=InvariantConstraintCS[*] '}' }
 		private @NonNull SerializationRule _149 = new SerializationRule(97,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
-				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
-				ms._252 /* check-rule basecs::StructuredClassCS.ownedOperations : 70 */,
 				ms._254 /* check-rule basecs::StructuredClassCS.ownedSuperTypes : 117 */,
 				ms._232 /* check-rule basecs::ClassCS.ownedConstraints : 41 */,
+				ms._237 /* check-rule basecs::ModelElementCS.ownedAnnotations : 2 */,
 				ms._253 /* check-rule basecs::StructuredClassCS.ownedProperties : 96 */,
+				ms._252 /* check-rule basecs::StructuredClassCS.ownedOperations : 70 */,
+				ms._259 /* check-rule basecs::TemplateableElementCS.ownedSignature : 101 */,
 				ms._137 /* assign V10 = |ClassCS::ownedConstraints| */,
 				ms._228 /* assign V9 = |StructuredClassCS::ownedProperties| */,
 				ms._221 /* assign V8 = |StructuredClassCS::ownedOperations| */,
@@ -12813,41 +12813,41 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._15)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
-					iv._48) /* TemplateSignatureCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS,
 					iv._0) /* AnnotationElementCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS,
-					iv._24) /* OperationCS */,
-				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES,
-					iv._61) /* TypedRefCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.CLASS_CS__OWNED_CONSTRAINTS,
 					iv._13) /* InvariantConstraintCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_OPERATIONS,
+					iv._24) /* OperationCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_PROPERTIES,
-					iv._41) /* StructuralFeatureCS */
+					iv._41) /* StructuralFeatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATEABLE_ELEMENT_CS__OWNED_SIGNATURE,
+					iv._48) /* TemplateSignatureCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__OWNED_SUPER_TYPES,
+					iv._61) /* TypedRefCS */
 			},
 			new /*@NonNull*/ EAttribute [] {
 				BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(ev._11, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.CLASS_CS__INSTANCE_CLASS_NAME,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_ABSTRACT,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(ev._11, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.STRUCTURED_CLASS_CS__IS_INTERFACE,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(ev._15, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -13019,10 +13019,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 			sl._36,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES,
-					iv._25) /* PackageCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.ROOT_CS__OWNED_IMPORTS,
-					iv._12) /* ImportCS */
+					iv._12) /* ImportCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.PACKAGE_OWNER_CS__OWNED_PACKAGES,
+					iv._25) /* PackageCS */
 			},
 			null,
 			null,
@@ -13103,10 +13103,10 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._10)
 			},
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
-					iv._50) /* TuplePartCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
-					iv._19) /* MultiplicityCS */
+					iv._19) /* MultiplicityCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TUPLE_TYPE_CS__OWNED_PARTS,
+					iv._50) /* TuplePartCS */
 			},
 			null,
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
@@ -13131,9 +13131,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS : { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _157 = new SerializationRule(116,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
@@ -13178,9 +13178,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS : { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _158 = new SerializationRule(116,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
 				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
@@ -13225,8 +13225,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS : { ownedPathName=PathNameCS ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _159 = new SerializationRule(116,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
+				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._100 /* assign V0 = |TypedRefCS::ownedMultiplicity| */,
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
@@ -13260,9 +13260,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS : { name=CollectionTypeIdentifier { '(' ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS[?] ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _160 = new SerializationRule(116,
 			new @NonNull SerializationMatchStep @NonNull [] {
+				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._279 /* check-rule essentialoclcs::CollectionTypeCS.ownedCollectionMultiplicity : 56 */,
 				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._280 /* check-rule essentialoclcs::CollectionTypeCS.ownedType : 108 */,
 				ms._165 /* assign V2 = |TypedRefCS::ownedMultiplicity| */,
 				ms._075 /* assign V0 = |CollectionTypeCS::ownedType| */,
 				ms._006 /* assert (|CollectionTypeCS::name| - 1) == 0 */,
@@ -13318,9 +13318,9 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedMultiplicityRefCS : { name='Map' { '(' ownedKeyType=TypeExpCS ',' ownedValueType=TypeExpCS ')' }[?] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _161 = new SerializationRule(116,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
-				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
 				ms._299 /* check-rule essentialoclcs::MapTypeCS.ownedKeyType : 107 */,
+				ms._300 /* check-rule essentialoclcs::MapTypeCS.ownedValueType : 107 */,
+				ms._264 /* check-rule basecs::TypedRefCS.ownedMultiplicity : 56 */,
 				ms._132 /* assign V1 = |TypedRefCS::ownedMultiplicity| */,
 				ms._082 /* assign V0 = |MapTypeCS::ownedValueType| */,
 				ms._025 /* assert (|MapTypeCS::ownedKeyType| - V0) == 0 */,
@@ -13343,11 +13343,11 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 					ev._09)
 			},
 			new @NonNull EReference_RuleIndexes [] {
+				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
+					iv._51) /* TypeExpCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY,
 					iv._19) /* MultiplicityCS */,
 				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_VALUE_TYPE,
-					iv._51) /* TypeExpCS */,
-				new EReference_RuleIndexes(EssentialOCLCSPackage.Literals.MAP_TYPE_CS__OWNED_KEY_TYPE,
 					iv._51) /* TypeExpCS */
 			},
 			null,
@@ -13402,8 +13402,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedTypeRefCS : { ownedPathName=PathNameCS '(' ownedBinding=TemplateBindingCS ')' }
 		private @NonNull SerializationRule _163 = new SerializationRule(118,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
+				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
@@ -13439,8 +13439,8 @@ public class OCLinEcoreSerializationMetaData extends AbstractSerializationMetaDa
 		// OCLinEcore::TypedTypeRefCS : { ownedPathName=PathNameCS '<' ownedBinding=TemplateBindingCS '>' }
 		private @NonNull SerializationRule _164 = new SerializationRule(118,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._266 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 73 */,
+				ms._265 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 99 */,
 				ms._054 /* assert (|TypedTypeRefCS::ownedBinding| - 1) == 0 */,
 				ms._055 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
