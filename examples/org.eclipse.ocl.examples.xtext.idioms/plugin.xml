@@ -12,23 +12,7 @@
    E.D.Willink - Initial API and implementation
 -->
 
-<plugin
-      name="%pluginName"
-      id="org.eclipse.ocl.examples.xtext.serializer"
-      version="1.0.0"
-      provider-name="%providerName">
-
-   <requires>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.emf.ecore" export="true"/>
-      <import plugin="org.eclipse.emf.ecore.xmi" export="true"/>
-   </requires>
-
-   <runtime>
-      <library name=".">
-         <export name="*"/>
-      </library>
-   </runtime>
+<plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated Idioms -->
