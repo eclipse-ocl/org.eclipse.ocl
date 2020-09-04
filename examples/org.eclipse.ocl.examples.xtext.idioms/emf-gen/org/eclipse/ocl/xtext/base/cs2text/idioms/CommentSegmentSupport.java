@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model abstract="true"
  * @generated
  */
-public interface CommentSegmentSupport extends CustomSegmentSupport
+public interface CommentSegmentSupport //extends CustomSegmentSupport
 {
 	/**
 	 * Returns the value of the '<em><b>Epilogue</b></em>' attribute.

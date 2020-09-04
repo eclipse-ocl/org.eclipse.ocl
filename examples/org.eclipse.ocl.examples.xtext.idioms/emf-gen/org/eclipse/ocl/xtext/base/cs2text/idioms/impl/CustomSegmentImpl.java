@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.CustomSegmentSupport;
 
 /**
  * <!-- begin-user-doc -->

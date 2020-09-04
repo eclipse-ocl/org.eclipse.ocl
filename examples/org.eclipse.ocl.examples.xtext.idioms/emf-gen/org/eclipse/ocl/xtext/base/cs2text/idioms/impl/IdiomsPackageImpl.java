@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
@@ -40,6 +39,7 @@ import org.eclipse.ocl.xtext.base.cs2text.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.StringSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.ValueSegment;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.CustomSegmentSupport;
 
 /**
  * <!-- begin-user-doc -->
