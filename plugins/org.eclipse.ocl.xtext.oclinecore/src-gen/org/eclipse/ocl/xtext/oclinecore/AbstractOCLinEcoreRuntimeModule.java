@@ -115,12 +115,12 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 		return OCLinEcoreGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends AbstractSerializationMetaData> bindAbstractSerializationMetaData() {
 		return OCLinEcoreSerializationMetaData.class;
 	}
@@ -208,7 +208,7 @@ public abstract class AbstractOCLinEcoreRuntimeModule extends DefaultRuntimeModu
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeFormatterFragment
 	public Class<? extends IdiomsProvider> bindIdiomsProvider() {
 		return OCLinEcoreIdiomsProvider.class;
 	}

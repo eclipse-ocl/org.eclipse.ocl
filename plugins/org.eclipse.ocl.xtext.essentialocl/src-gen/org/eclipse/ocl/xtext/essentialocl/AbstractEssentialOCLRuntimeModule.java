@@ -115,12 +115,12 @@ public abstract class AbstractEssentialOCLRuntimeModule extends DefaultRuntimeMo
 		return EssentialOCLGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends AbstractSerializationMetaData> bindAbstractSerializationMetaData() {
 		return EssentialOCLSerializationMetaData.class;
 	}
@@ -208,7 +208,7 @@ public abstract class AbstractEssentialOCLRuntimeModule extends DefaultRuntimeMo
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeFormatterFragment
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeFormatterFragment
 	public Class<? extends IdiomsProvider> bindIdiomsProvider() {
 		return EssentialOCLIdiomsProvider.class;
 	}

@@ -140,8 +140,8 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				private _GrammarRuleValues gr;
 			
 				/**
-			 * Post constructor/injection initialization to avoid recursions.
-			 */
+				 * Post constructor/injection initialization to avoid recursions.
+				 */
 				@«newTypeReference(Inject)»
 				public void init() {
 					iv = new _GrammarRuleVectors();
@@ -197,11 +197,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 					new «newTypeReference(SerializationRule_SegmentsList)»(«getSerializationRuleId(serializationRule, true)», «getSerializationSegmentsListId(getSerializationSegmentsListString(serializationRule.getStaticSegments()), true)») /* «serializationRule.toRuleString()» */
 				«ENDFOR»
 			}, «IF grammarAnalysis.basicGetEReferenceRuleIndexes(eClass) === null »null«ELSE»
-				new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
-					«FOR eReferenceRuleIndex : getEReferenceRuleIndexesIterable(grammarAnalysis, eClass) SEPARATOR ','»
-						new «newTypeReference(EReference_RuleIndexes)»(«emitLiteral(eReferenceRuleIndex.getEReference())»,
-							«getGrammarRuleVectorId(eReferenceRuleIndex.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceRuleIndex.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
-					«ENDFOR»
+			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
+				«FOR eReferenceRuleIndex : getEReferenceRuleIndexesIterable(grammarAnalysis, eClass) SEPARATOR ','»
+					new «newTypeReference(EReference_RuleIndexes)»(«emitLiteral(eReferenceRuleIndex.getEReference())»,
+						«getGrammarRuleVectorId(eReferenceRuleIndex.getAssignedTargetRuleValueIndexes(), true)») /* «FOR ruleValueIndex : eReferenceRuleIndex.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
+				«ENDFOR»
 			}«ENDIF»
 		)'''
 	}
@@ -284,7 +284,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 							«getSerializationRuleId(serializationRule, true)» /* «serializationRule.toRuleString()» */
 						«ENDFOR»
 					}, 
-				«IF subParserRuleValueIndexes !== null»«getGrammarRuleVectorId(subParserRuleValueIndexes, true)»); /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getGrammarRuleName(index)»«ENDFOR» */«ELSE»null);«ENDIF»
+					«IF subParserRuleValueIndexes !== null»«getGrammarRuleVectorId(subParserRuleValueIndexes, true)»); /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getGrammarRuleName(index)»«ENDFOR» */«ELSE»null);«ENDIF»
 		'''
 	}
 	

@@ -294,10 +294,10 @@ public class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFra
           _builder.append("\t");
           _builder.append("/**");
           _builder.newLine();
-          _builder.append(" ");
+          _builder.append("\t ");
           _builder.append("* Post constructor/injection initialization to avoid recursions.");
           _builder.newLine();
-          _builder.append(" ");
+          _builder.append("\t ");
           _builder.append("*/");
           _builder.newLine();
           _builder.append("\t");
@@ -484,10 +484,9 @@ public class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFra
       } else {
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("\t");
         _builder.append("new @NonNull ");
         String _newTypeReference_3 = this.newTypeReference(SerializationRule.EReference_RuleIndexes.class);
-        _builder.append(_newTypeReference_3, "\t\t");
+        _builder.append(_newTypeReference_3, "\t");
         _builder.append(" [] {");
         _builder.newLineIfNotEmpty();
         {
@@ -497,23 +496,23 @@ public class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFra
             if (!_hasElements_1) {
               _hasElements_1 = true;
             } else {
-              _builder.appendImmediate(",", "\t\t\t");
+              _builder.appendImmediate(",", "\t\t");
             }
             _builder.append("\t");
-            _builder.append("\t\t");
+            _builder.append("\t");
             _builder.append("new ");
             String _newTypeReference_4 = this.newTypeReference(SerializationRule.EReference_RuleIndexes.class);
-            _builder.append(_newTypeReference_4, "\t\t\t");
+            _builder.append(_newTypeReference_4, "\t\t");
             _builder.append("(");
             String _emitLiteral_1 = this.emitLiteral(eReferenceRuleIndex.getEReference());
-            _builder.append(_emitLiteral_1, "\t\t\t");
+            _builder.append(_emitLiteral_1, "\t\t");
             _builder.append(",");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            _builder.append("\t\t");
+            _builder.append("\t");
             _builder.append("\t");
             String _grammarRuleVectorId = this.getGrammarRuleVectorId(eReferenceRuleIndex.getAssignedTargetRuleValueIndexes(), true);
-            _builder.append(_grammarRuleVectorId, "\t\t\t\t");
+            _builder.append(_grammarRuleVectorId, "\t\t\t");
             _builder.append(") /* ");
             {
               GrammarRuleVector _assignedTargetRuleValueIndexes = eReferenceRuleIndex.getAssignedTargetRuleValueIndexes();
@@ -522,10 +521,10 @@ public class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFra
                 if (!_hasElements_2) {
                   _hasElements_2 = true;
                 } else {
-                  _builder.appendImmediate("|", "\t\t\t\t");
+                  _builder.appendImmediate("|", "\t\t\t");
                 }
                 String _string = grammarAnalysis.getRuleValue((ruleValueIndex).intValue()).toString();
-                _builder.append(_string, "\t\t\t\t");
+                _builder.append(_string, "\t\t\t");
               }
             }
             _builder.append(" */");
@@ -779,11 +778,11 @@ public class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFra
       _builder.append("\t\t");
       _builder.append("}, ");
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("\t\t");
       {
         if ((subParserRuleValueIndexes != null)) {
           String _grammarRuleVectorId = this.getGrammarRuleVectorId(subParserRuleValueIndexes, true);
-          _builder.append(_grammarRuleVectorId, "\t");
+          _builder.append(_grammarRuleVectorId, "\t\t");
           _builder.append("); /* ");
           {
             boolean _hasElements_1 = false;
@@ -791,10 +790,10 @@ public class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFra
               if (!_hasElements_1) {
                 _hasElements_1 = true;
               } else {
-                _builder.appendImmediate("|", "\t");
+                _builder.appendImmediate("|", "\t\t");
               }
               String _grammarRuleName = this.getGrammarRuleName(index);
-              _builder.append(_grammarRuleName, "\t");
+              _builder.append(_grammarRuleName, "\t\t");
             }
           }
           _builder.append(" */");

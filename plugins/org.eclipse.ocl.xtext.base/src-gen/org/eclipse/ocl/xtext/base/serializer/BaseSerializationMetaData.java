@@ -1234,8 +1234,8 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		// Base::TypedTypeRefCS : { ownedPathName=PathNameCS { '(' ownedBinding=TemplateBindingCS ')' }[?] }
 		private @NonNull SerializationRule _15 = new SerializationRule(28,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._24 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 17 */,
 				ms._23 /* check-rule basecs::TypedTypeRefCS.ownedBinding : 22 */,
+				ms._24 /* check-rule basecs::TypedTypeRefCS.ownedPathName : 17 */,
 				ms._12 /* assign V0 = |TypedTypeRefCS::ownedBinding| */,
 				ms._05 /* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
 			},
