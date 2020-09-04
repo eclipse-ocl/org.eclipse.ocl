@@ -240,6 +240,8 @@ public class SerializationBuilder implements ToDebugStringable
 		if (!indentsPending) {
 			appendNewLine(s);
 		}
-		return String.valueOf(s);
+		@SuppressWarnings("null")
+		@NonNull String castString = (@NonNull String)String.valueOf(s);
+		return castString;
 	}
 }

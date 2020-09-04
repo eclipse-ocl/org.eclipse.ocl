@@ -650,7 +650,9 @@ public abstract class SerializationMatchTerm
 	 * Return the closure of this and all child solutions.
 	 */
 	public @NonNull Set<@NonNull SerializationMatchTerm> getChildClosure() {
-		return Collections.singleton(this);
+		@SuppressWarnings("null")
+		@NonNull Set<@NonNull SerializationMatchTerm> singleton = Collections.singleton(this);
+		return singleton;
 	}
 
 	@Override
@@ -685,7 +687,9 @@ public abstract class SerializationMatchTerm
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 
 	public abstract void toString(@NonNull StringBuilder s, int depth);

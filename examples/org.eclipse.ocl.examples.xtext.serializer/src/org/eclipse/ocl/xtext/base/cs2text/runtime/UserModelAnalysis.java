@@ -125,7 +125,9 @@ public class UserModelAnalysis
 		s.append("debugSerializeCount = " + debugSerializeCount + "\n");
 		s.append("debugDynamicRuleMatchCount = " + debugDynamicRuleMatchCount + "\n");
 		s.append("debugDynamicSerializationRules = " + debugDynamicSerializationRules + "\n");
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 
 	public @NonNull ICrossReferenceSerializer getCrossReferenceSerializer() {
@@ -165,7 +167,9 @@ public class UserModelAnalysis
 			s.append("\n\n«incompatible '" + eObject.eClass().getName() + "'");
 			userElementAnalysis.getSlotsAnalysis().diagnose(s);
 			s.append("»\n\n");
-			serializationBuilder.appendError(s.toString());
+			@SuppressWarnings("null")
+			@NonNull String castString = s.toString();
+			serializationBuilder.appendError(castString);
 		}
 	}
 
@@ -184,7 +188,9 @@ public class UserModelAnalysis
 			elementAnalysis.toString(s, 1);
 			isFirst = false;
 		}
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 
 }

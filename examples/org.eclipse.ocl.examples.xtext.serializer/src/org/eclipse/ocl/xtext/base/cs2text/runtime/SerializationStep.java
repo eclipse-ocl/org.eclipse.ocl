@@ -225,7 +225,8 @@ public abstract class SerializationStep
 			if (eStructuralFeature instanceof EAttribute) {
 				EnumerationValue enumerationValue2 = enumerationValue;
 				if (enumerationValue2 != null) {
-					String string = String.valueOf(object);
+					@SuppressWarnings("null")
+					@NonNull String string = String.valueOf(object);
 					if (enumerationValue2.isElement(string)) {
 						serializationBuilder.append(string);
 						return;
@@ -508,10 +509,12 @@ public abstract class SerializationStep
 	public abstract void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 
 	@Override
-	public String toString() {
+	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {

@@ -41,15 +41,15 @@ public class RTSerializationRule2 extends SerializationRule
 		int size = stepsList.size();
 		assert size == subIdiomsList.size();
 		@NonNull SerializationStep @NonNull [] serializationSteps = stepsList.toArray(new @NonNull SerializationStep[size]);
-		@Nullable SerializationSegment @NonNull [] @Nullable [] staticSegments = new @Nullable SerializationSegment @NonNull [size] @Nullable [];
+		@NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments = new @NonNull SerializationSegment @NonNull [size] @Nullable [];
 		for (int i = 0; i < size; i++) {
 			assert subIdiomsList != null;
-			@Nullable SerializationSegment[] serializationSegments = null;
+			@NonNull SerializationSegment[] serializationSegments = null;
 			SubIdiom subIdiom = subIdiomsList.get(i);
 			if (subIdiom != null) {
 				List<Segment> segments = subIdiom.getSegments();
 				if (segments != null) {
-					serializationSegments = new @Nullable SerializationSegment[segments.size()];
+					serializationSegments = new @NonNull SerializationSegment[segments.size()];
 					for (int j = 0; j < serializationSegments.length; j++) {
 						Segment segment = segments.get(j);
 						assert segment != null;
@@ -78,7 +78,7 @@ public class RTSerializationRule2 extends SerializationRule
 	private static final @NonNull Map<@NonNull SerializationRuleAnalysis, @NonNull RTSerializationRule2> debugMap = new HashMap<>();
 	private final @NonNull SerializationRuleAnalysis serializationRuleAnalysis;
 
-	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull SerializationMatchStep @NonNull [] solutionSteps, @NonNull SerializationStep @NonNull [] serializationSteps, @Nullable SerializationSegment @NonNull [] @Nullable [] staticSegments) {
+	private RTSerializationRule2(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull SerializationMatchStep @NonNull [] solutionSteps, @NonNull SerializationStep @NonNull [] serializationSteps, @NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments) {
 		super(serializationRuleAnalysis.getRuleAnalysis().getIndex(), solutionSteps, serializationSteps, staticSegments,
 			serializationRuleAnalysis.basicGetEAttribute2EnumerationValues(), serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes(),
 			serializationRuleAnalysis.getStaticRuleMatch().basicGetNeedsDefaultEAttributes(),

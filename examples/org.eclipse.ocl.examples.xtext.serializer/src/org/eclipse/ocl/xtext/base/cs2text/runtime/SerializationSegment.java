@@ -50,7 +50,9 @@ public interface SerializationSegment
 				return supportClassName;
 			}
 			assert supportClass != null;
-			return supportClass.getName();
+			@SuppressWarnings("null")
+			@NonNull String castName = (@NonNull String)supportClass.getName();
+			return castName;
 		}
 
 		@Override

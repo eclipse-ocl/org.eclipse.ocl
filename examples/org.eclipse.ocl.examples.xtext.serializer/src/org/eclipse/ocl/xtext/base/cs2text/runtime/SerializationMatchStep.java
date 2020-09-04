@@ -219,7 +219,9 @@ public abstract class SerializationMatchStep
 
 		@Override
 		public @NonNull Set<@NonNull SerializationMatchTerm> getSolutionClosure() {
-			return Collections.emptySet();
+			@SuppressWarnings("null")
+			@NonNull Set<@NonNull SerializationMatchTerm> emptySet = (@NonNull Set<@NonNull SerializationMatchTerm>)Collections.<@NonNull SerializationMatchTerm>emptySet();
+			return emptySet;
 		}
 
 		protected boolean isInstance(@NonNull UserSlotsAnalysis slotsAnalysis, @NonNull EObject slotContent) {
@@ -426,7 +428,9 @@ public abstract class SerializationMatchStep
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = (@NonNull String)s.toString();
+		return castString;
 	}
 
 	public abstract void toString(@NonNull StringBuilder s, int depth);

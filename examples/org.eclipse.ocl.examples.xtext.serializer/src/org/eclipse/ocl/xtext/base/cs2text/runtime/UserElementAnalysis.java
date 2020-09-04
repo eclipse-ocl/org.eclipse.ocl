@@ -131,7 +131,9 @@ public class UserElementAnalysis implements Nameable
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {

@@ -79,7 +79,10 @@ public class EClassValue implements Nameable
 				newSerializationRuleSegmentsLists.add(serializationRuleSegmentsList);
 			}
 		}
-		return new DynamicSerializationRules(this, newSerializationRuleSegmentsLists.toArray(new @NonNull SerializationRule_SegmentsList[newSerializationRuleSegmentsLists.size()]));
+		@NonNull SerializationRule_SegmentsList @NonNull [] newEmptyArray = new @NonNull SerializationRule_SegmentsList @NonNull [newSerializationRuleSegmentsLists.size()];
+		@SuppressWarnings("null")
+		@NonNull SerializationRule_SegmentsList @NonNull [] newFullArray = newSerializationRuleSegmentsLists.toArray(newEmptyArray);
+		return new DynamicSerializationRules(this, newFullArray);
 	}
 
 	/**

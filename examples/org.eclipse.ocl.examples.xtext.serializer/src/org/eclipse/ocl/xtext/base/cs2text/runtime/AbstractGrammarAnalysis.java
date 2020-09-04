@@ -28,7 +28,7 @@ public abstract class AbstractGrammarAnalysis
 
 	protected void addEClassValue(@NonNull EClassValue eClassValue) {
 		assert eClassValue != null;
-		EClassValue old = eClass2eClassValue.put(eClassValue.getEClass(), eClassValue);
+		EClassValue old = ClassUtil.maybeNull(eClass2eClassValue.put(eClassValue.getEClass(), eClassValue));
 		assert old == null;
 	}
 
@@ -55,6 +55,8 @@ public abstract class AbstractGrammarAnalysis
 			StringUtil.appendIndentation(s, 1);
 			eClassValue.toString(s, 1);
 		}
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 }

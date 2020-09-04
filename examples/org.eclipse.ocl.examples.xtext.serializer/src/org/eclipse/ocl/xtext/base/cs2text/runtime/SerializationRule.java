@@ -225,9 +225,9 @@ public class SerializationRule
 	private final @NonNull EReference_RuleIndex_GrammarCardinality @Nullable [] eReference2ruleValueIndex2grammarCardinality;
 
 	public SerializationRule(int ruleValueIndex,
-			/*@NonNull*/ SerializationMatchStep /*@NonNull*/ [] solutionSteps,
-			/*@NonNull*/ SerializationStep /*@NonNull*/ [] serializationSteps,
-			/*@Nullable*/ SerializationSegment /*@NonNull*/ [] /*@NonNull*/ [] staticSegments,
+			@NonNull SerializationMatchStep @NonNull [] solutionSteps,
+			@NonNull SerializationStep @NonNull [] serializationSteps,
+			@NonNull SerializationSegment @NonNull [] @Nullable [] staticSegments,
 			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
 			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
 			/*@NonNull*/ EAttribute @Nullable [] needsDefaultEAttributes,
@@ -239,7 +239,9 @@ public class SerializationRule
 		this.staticSegments = staticSegments;
 		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
 		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
-		this.needsDefaultEAttributes = needsDefaultEAttributes;
+		@SuppressWarnings("null")
+		@NonNull EAttribute @Nullable [] castNeedsDefaultEAttributes = (@NonNull EAttribute @Nullable [])needsDefaultEAttributes;
+		this.needsDefaultEAttributes = castNeedsDefaultEAttributes;
 		this.eAttribute2enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality;
 		this.eReference2ruleValueIndex2grammarCardinality = eReference2ruleValueIndex2grammarCardinality;
 	}

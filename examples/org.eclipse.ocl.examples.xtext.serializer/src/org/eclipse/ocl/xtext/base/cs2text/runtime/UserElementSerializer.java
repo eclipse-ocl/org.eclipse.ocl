@@ -53,14 +53,18 @@ public class UserElementSerializer
 			this.feature2consumptions = feature2consumptions = new HashMap<>();
 		}
 		int index;
-		Integer count = feature2consumptions.get(eStructuralFeature);
+		Integer count = ClassUtil.maybeNull(feature2consumptions.get(eStructuralFeature));
 		if (count == null) {
-			feature2consumptions.put(eStructuralFeature, Integer.valueOf(1));
+			@SuppressWarnings("null")
+			@NonNull Integer castInteger = Integer.valueOf(1);
+			feature2consumptions.put(eStructuralFeature, castInteger);
 			index = 0;
 		}
 		else {
 			int intValue = count.intValue();
-			feature2consumptions.put(eStructuralFeature, Integer.valueOf(intValue+1));
+			@SuppressWarnings("null")
+			@NonNull Integer castInteger = Integer.valueOf(intValue+1);
+			feature2consumptions.put(eStructuralFeature, castInteger);
 			index = intValue;
 		}
 		Object object = element.eGet(eStructuralFeature);
@@ -134,6 +138,8 @@ public class UserElementSerializer
 				isFirst = false;
 			}
 		}
-		return  s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 }

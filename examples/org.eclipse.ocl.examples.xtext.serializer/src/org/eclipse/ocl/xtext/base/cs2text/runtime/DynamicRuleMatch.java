@@ -118,7 +118,9 @@ public class DynamicRuleMatch implements RuleMatch
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = (@NonNull String)s.toString();
+		return castString;
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {

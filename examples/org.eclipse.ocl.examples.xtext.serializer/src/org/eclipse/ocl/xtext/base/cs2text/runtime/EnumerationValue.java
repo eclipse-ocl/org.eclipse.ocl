@@ -28,6 +28,7 @@ public abstract class EnumerationValue implements Nameable
 		protected final @NonNull String @NonNull [] values;
 		protected final @NonNull String name;
 
+		@SuppressWarnings("null")
 		public EnumerationValueMultiple(@NonNull List<@NonNull String> values) {
 			this(values.toArray(new @NonNull String [values.size()]));
 		}
@@ -46,7 +47,9 @@ public abstract class EnumerationValue implements Nameable
 				s.append(Strings.convertToJavaString(value));
 				isFirst = false;
 			}
-			this.name = s.toString();
+			@SuppressWarnings("null")
+			@NonNull String castString = (@NonNull String)s.toString();
+			this.name = castString;
 		}
 
 		@Override
@@ -110,7 +113,9 @@ public abstract class EnumerationValue implements Nameable
 				isFirst = false;
 			}
 			s.append("'");
-			return s.toString();
+			@SuppressWarnings("null")
+			@NonNull String castString = (@NonNull String)s.toString();
+			return castString;
 		}
 	}
 

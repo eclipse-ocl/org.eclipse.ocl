@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -102,7 +103,9 @@ public class UserSlotsAnalysis
 
 		@Override
 		public @NonNull String toString() {
-			return Integer.toString(count);
+			@SuppressWarnings("null")
+			@NonNull String castString = Integer.toString(count);
+			return castString;
 		}
 	}
 
@@ -126,7 +129,7 @@ public class UserSlotsAnalysis
 
 		@Override
 		public int asEnumerated(@NonNull EnumerationValue enumerationValue) {
-			Integer value = enumerationValue2count.get(enumerationValue);
+			Integer value = ClassUtil.maybeNull(enumerationValue2count.get(enumerationValue));
 			return value != null ? value.intValue() : 0;
 		}
 
@@ -159,7 +162,9 @@ public class UserSlotsAnalysis
 				s.append(enumerationValue2count.get(key));
 				isFirst = false;
 			}
-			return s.toString();
+			@SuppressWarnings("null")
+			@NonNull String castString = s.toString();
+			return castString;
 		}
 	}
 
@@ -223,7 +228,8 @@ public class UserSlotsAnalysis
 				EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
 				int others = 0;
 				for (Object element : elements) {
-					String string = String.valueOf(element);
+					@SuppressWarnings("null")
+					@NonNull String string = String.valueOf(element);
 					boolean gotOne = false;
 					for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
 						if (enumerationValue.isElement(string)) {
@@ -251,7 +257,8 @@ public class UserSlotsAnalysis
 			Iterable<@NonNull EnumerationValue> enumerationValues = serializationRules2.getEnumerationValues(eAttribute);
 			if (enumerationValues != null) {
 				EnumeratedSlotAnalysis enumeratedSlotAnalysis = new EnumeratedSlotAnalysis();
-				String string = String.valueOf(object);
+				@SuppressWarnings("null")
+				@NonNull String string = String.valueOf(object);
 				boolean gotOne = false;
 				for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
 					if (enumerationValue.isElement(string)) {
@@ -320,7 +327,9 @@ public class UserSlotsAnalysis
 	}
 
 	public @NonNull Iterable<@NonNull EStructuralFeature> getEStructuralFeatures() {
-		return eStructuralFeature2slotAnalysis.keySet();
+		@SuppressWarnings("null")
+		@NonNull Set<@NonNull EStructuralFeature> castKeySet = eStructuralFeature2slotAnalysis.keySet();
+		return castKeySet;
 	}
 
 	public @NonNull UserModelAnalysis getModelAnalysis() {
@@ -375,7 +384,9 @@ public class UserSlotsAnalysis
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {

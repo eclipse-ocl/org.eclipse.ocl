@@ -217,7 +217,9 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 			}
 		}
 		s.append("]");
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = (@NonNull String)s.toString();
+		return castString;
 	}
 
 	public @NonNull String toWordsString() {
@@ -232,6 +234,8 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 			s.append("L");
 			isFirst = false;
 		}
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = (@NonNull String)s.toString();
+		return castString;
 	}
 }

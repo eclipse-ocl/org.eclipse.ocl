@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
@@ -57,7 +58,7 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 			assert grammar != null;
 			analyzeGrammar(grammar, eReference2ruleName2crossReference2);
 		}
-		Map<@NonNull String, CrossReference> ruleName2crossReference = eReference2ruleName2crossReference2.get(assignedEReference);
+		Map<@NonNull String, CrossReference> ruleName2crossReference = ClassUtil.maybeNull(eReference2ruleName2crossReference2.get(assignedEReference));
 		if (ruleName2crossReference != null) {
 			CrossReference crossReference = ruleName2crossReference.get(assignedRuleName);
 			if (crossReference != null) {
@@ -90,12 +91,12 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 				AbstractRule calledRule = ruleCall.getRule();
 				String calledRuleName = calledRule.getName();
 				assert calledRuleName != null;
-				Map<@NonNull String, @NonNull CrossReference> ruleName2crossReference = eReference2ruleName2crossReference.get(eReference);
+				Map<@NonNull String, @NonNull CrossReference> ruleName2crossReference = ClassUtil.maybeNull(eReference2ruleName2crossReference.get(eReference));
 				if (ruleName2crossReference == null) {
 					ruleName2crossReference = new HashMap<>();
 					eReference2ruleName2crossReference.put(eReference, ruleName2crossReference);
 				}
-				CrossReference oldCrossReference = ruleName2crossReference.get(calledRuleName);
+				CrossReference oldCrossReference = ClassUtil.maybeNull(ruleName2crossReference.get(calledRuleName));
 				if (oldCrossReference == null) {
 					ruleName2crossReference.put(calledRuleName, crossReference);
 				}
