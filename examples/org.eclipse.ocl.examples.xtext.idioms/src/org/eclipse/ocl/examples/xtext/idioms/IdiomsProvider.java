@@ -8,11 +8,10 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.examples.xtext.idioms;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.idioms.Idiom;
 
 public interface IdiomsProvider
 {

@@ -15,9 +15,9 @@ package org.eclipse.ocl.xtext.essentialocl.formatting;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.idioms.AbstractIdiomsProvider;
 import org.eclipse.ocl.examples.xtext.idioms.Idiom;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomModel;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractIdiomsProvider;
 
 // NonNull
 // Nullable

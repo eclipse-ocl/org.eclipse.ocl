@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.examples.xtext.idioms;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,9 +22,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.idioms.Idiom;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomModel;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public abstract class AbstractIdiomsProvider implements IdiomsProvider
 {
@@ -41,7 +39,8 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 				throw new IllegalStateException("Failed to resolve " + path + " wrt " + contextClass.getName(), e);
 			}
 		}
-		URI uri = URI.createFileURI(url.getPath());
+		@SuppressWarnings("null")
+		@NonNull URI uri = URI.createFileURI(url.getPath());
 		return getIdiomModel(resourceSet, uri);
 	}
 
@@ -49,7 +48,9 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 		IdiomsPackage.eINSTANCE.getClass();
 		Resource resource = resourceSet.getResource(uri, true);
 		EcoreUtil.resolveAll(resourceSet);				// Avoid no-equality of proxies
-		return (IdiomModel)resource.getContents().get(0);
+		@SuppressWarnings("null")
+		@NonNull IdiomModel castIdiomModel = (IdiomModel)resource.getContents().get(0);
+		return castIdiomModel;
 	}
 
 	protected @NonNull Iterable<@NonNull Idiom> getIdioms(/*@NonNull*/ IdiomModel rootIdiomModel) {
@@ -59,7 +60,7 @@ public abstract class AbstractIdiomsProvider implements IdiomsProvider
 			allIdiomModels.add(rootIdiomModel);
 			for (int i = 0; i < allIdiomModels.size(); i++) {
 				IdiomModel idiomModel = allIdiomModels.get(i);
-				allIdioms.addAll(idiomModel.getOwnedIdioms());
+				allIdioms.addAll(ClassUtil.nullFree(idiomModel.getOwnedIdioms()));
 				for (IdiomModel importedIdiomModel : idiomModel.getImports()) {
 					if (!allIdiomModels.contains(importedIdiomModel)) {
 						allIdiomModels.add(importedIdiomModel);

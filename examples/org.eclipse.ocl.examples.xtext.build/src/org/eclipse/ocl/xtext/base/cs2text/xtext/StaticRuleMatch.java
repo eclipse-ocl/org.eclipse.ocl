@@ -33,10 +33,11 @@ import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.RuleMatch;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.UserSlotsAnalysis;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermInteger;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermUnsupported;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
+import org.eclipse.ocl.examples.xtext.serializer.UserSlotsAnalysis;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AssignedSerializationNode;
@@ -140,7 +141,7 @@ public class StaticRuleMatch implements RuleMatch
 		//
 		//	Accumulate enumerated attributes
 		//
-		CardinalityExpression cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
+		CardinalityExpression cardinalityExpression = ClassUtil.maybeNull(eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature));
 		if (eStructuralFeature instanceof EAttribute) {
 			EAttribute eAttribute = (EAttribute)eStructuralFeature;
 			EnumerationValue enumerationValue = assignedSerializationNode.getEnumerationValue();
@@ -163,7 +164,7 @@ public class StaticRuleMatch implements RuleMatch
 			//
 			if (cardinalityExpression == null) {
 				String name = String.format("E%02d", eStructuralFeature2requiredSlotsExpression.size());
-				assert name != null;;
+				assert name != null;
 				if (enumerationValue == null) {
 					cardinalityExpression = new EStructuralFeatureCardinalityExpression(name, eStructuralFeature);
 				}
@@ -209,7 +210,7 @@ public class StaticRuleMatch implements RuleMatch
 			//
 			//	Get / create the  CardinalityExpression accumulating a sum of products for this assigned feature.
 			//
-			cardinalityExpression = eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature);
+			cardinalityExpression = ClassUtil.maybeNull(eStructuralFeature2requiredSlotsExpression.get(eStructuralFeature));
 			if (cardinalityExpression == null) {
 				String name = String.format("E%02d", eStructuralFeature2requiredSlotsExpression.size());
 				assert name != null;;
@@ -239,11 +240,11 @@ public class StaticRuleMatch implements RuleMatch
 				assert name != null;
 				@NonNull Integer @Nullable [] ruleIndexes = serializationNode instanceof AssignedSerializationNode ? ((AssignedSerializationNode)serializationNode).getAssignedRuleIndexes() : null;
 				cardinalityVariable = new CardinalityVariable(index, name, ruleIndexes != null ? new GrammarRuleVector(ruleIndexes) : null, grammarCardinality);
-				CardinalityVariable old2 = node2variable.put(serializationNode, cardinalityVariable);
+				CardinalityVariable old2 = ClassUtil.maybeNull(node2variable.put(serializationNode, cardinalityVariable));
 				assert old2 == null;
-				SerializationNode old3 = variable2node.put(cardinalityVariable, serializationNode);
+				SerializationNode old3 = ClassUtil.maybeNull(variable2node.put(cardinalityVariable, serializationNode));
 				assert old3 == null;
-				SerializationNode old4 = variableIndex2node.put(cardinalityVariable.getIndex(), serializationNode);
+				SerializationNode old4 = ClassUtil.maybeNull(variableIndex2node.put(cardinalityVariable.getIndex(), serializationNode));
 				assert old4 == null;
 			}
 		}

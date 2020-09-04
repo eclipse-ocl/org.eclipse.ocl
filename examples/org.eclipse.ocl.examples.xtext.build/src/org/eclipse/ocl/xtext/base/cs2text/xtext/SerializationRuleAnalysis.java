@@ -41,13 +41,13 @@ import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValue_GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValues;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndex_GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EnumerationValue_GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.RuleIndex_GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.ToDebugString;
 import org.eclipse.ocl.examples.xtext.serializer.ToDebugString.ToDebugStringable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -278,7 +278,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality>> entry : eReference2ruleAnalysis2grammarCardinality.entrySet()) {
 				EReference eReference = entry.getKey();
 				if (eReference.isContainment()) {
-					Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = entry.getValue().keySet();
+					@SuppressWarnings("null")
+					@NonNull Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> value = entry.getValue();
+					@SuppressWarnings("null")
+					@NonNull Collection<@Nullable ParserRuleAnalysis> assignedRuleAnalyses = value.keySet();
 					steps.add(new SerializationMatchStep.MatchStep_RuleCheck(eReference, new GrammarRuleVector(assignedRuleAnalyses)));
 				}
 			}

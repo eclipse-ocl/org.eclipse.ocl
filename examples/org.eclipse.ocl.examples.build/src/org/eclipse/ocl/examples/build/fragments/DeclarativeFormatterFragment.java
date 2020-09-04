@@ -11,8 +11,8 @@
 package org.eclipse.ocl.examples.build.fragments;
 
 import org.apache.log4j.Logger;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractIdiomsProvider;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomsProvider;
+import org.eclipse.ocl.examples.xtext.idioms.AbstractIdiomsProvider;
+import org.eclipse.ocl.examples.xtext.idioms.IdiomsProvider;
 import org.eclipse.xtend2.lib.StringConcatenationClient;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;

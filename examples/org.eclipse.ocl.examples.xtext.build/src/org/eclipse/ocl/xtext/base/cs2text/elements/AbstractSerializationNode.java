@@ -72,7 +72,8 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 
 	@Override
 	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) { // is this needed ?
-		return createFrozenSequence(compoundElement, grammarCardinality, Collections.singletonList(this));
+		List<@NonNull SerializationNode> castSingletonList = Collections.singletonList(this);
+		return createFrozenSequence(compoundElement, grammarCardinality, castSingletonList);
 	}
 
 	@Override

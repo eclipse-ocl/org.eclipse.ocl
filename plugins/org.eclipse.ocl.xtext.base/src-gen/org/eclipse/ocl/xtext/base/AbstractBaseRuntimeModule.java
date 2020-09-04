@@ -16,9 +16,10 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
+
+import org.eclipse.ocl.examples.xtext.idioms.IdiomsProvider;
 import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
-import org.eclipse.ocl.xtext.base.cs2text.xtext.IdiomsProvider;
 import org.eclipse.ocl.xtext.base.formatting.BaseIdiomsProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.base.parser.antlr.BaseParser;
