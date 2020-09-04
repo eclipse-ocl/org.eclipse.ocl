@@ -814,14 +814,14 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -848,14 +848,14 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -883,14 +883,14 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
-					}
-				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -922,9 +922,9 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 				BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
@@ -932,9 +932,9 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 						new EnumerationValue_GrammarCardinality(ev._1, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
-				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
+				new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
 					}
 				)
 			},
@@ -1101,8 +1101,8 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		// Base::TemplateBindingCS : { ownedSubstitutions+=TemplateParameterSubstitutionCS { ',' ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] }
 		private @NonNull SerializationRule _11 = new SerializationRule(22,
 			new @NonNull SerializationMatchStep @NonNull [] {
-				ms._19 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23 */,
 				ms._18 /* check-rule basecs::TemplateBindingCS.ownedMultiplicity : 13 */,
+				ms._19 /* check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23 */,
 				ms._16 /* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
 				ms._07 /* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
 			},
@@ -1117,22 +1117,22 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			sl._02,
 			null,
 			new @NonNull EReference_RuleIndexes [] {
-				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
-					iv._4) /* TemplateParameterSubstitutionCS */,
 				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
-					iv._0) /* MultiplicityCS */
+					iv._0) /* MultiplicityCS */,
+				new EReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
+					iv._4) /* TemplateParameterSubstitutionCS */
 			},
 			null,
 			null,
 			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-				new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
-					new @NonNull RuleIndex_GrammarCardinality [] {
-					new RuleIndex_GrammarCardinality(23, GrammarCardinality.ONE_OR_MORE)
-					}
-				),
 				new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
 					new @NonNull RuleIndex_GrammarCardinality [] {
 					new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(23, GrammarCardinality.ONE_OR_MORE)
 					}
 				)
 			});
@@ -1258,14 +1258,14 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			null,
 			null,
 			new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-				new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
-					new @NonNull RuleIndex_GrammarCardinality [] {
-					new RuleIndex_GrammarCardinality(17, GrammarCardinality.ONE)
-					}
-				),
 				new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
 					new @NonNull RuleIndex_GrammarCardinality [] {
 					new RuleIndex_GrammarCardinality(22, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
+					new @NonNull RuleIndex_GrammarCardinality [] {
+					new RuleIndex_GrammarCardinality(17, GrammarCardinality.ONE)
 					}
 				)
 			});

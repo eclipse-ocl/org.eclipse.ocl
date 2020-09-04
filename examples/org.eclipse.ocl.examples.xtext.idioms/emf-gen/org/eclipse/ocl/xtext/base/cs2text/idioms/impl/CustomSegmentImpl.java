@@ -13,10 +13,8 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage;
-import org.eclipse.ocl.xtext.base.cs2text.runtime.CustomSegmentSupport;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +24,6 @@ import org.eclipse.ocl.xtext.base.cs2text.runtime.CustomSegmentSupport;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getSupportClass <em>Support Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl#getSupportClassName <em>Support Class Name</em>}</li>
  * </ul>
  *
@@ -41,18 +38,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CUSTOM_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 2;
-
-
-	/**
-	 * The cached value of the '{@link #getSupportClass() <em>Support Class</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSupportClass()
-	 * @generated
-	 * @ordered
-	 */
-	protected Class<?> supportClass;
+	public static final int CUSTOM_SEGMENT_FEATURE_COUNT = SegmentImpl.SEGMENT_FEATURE_COUNT + 1;
 
 
 	/**
@@ -104,31 +90,6 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 	 * @generated
 	 */
 	@Override
-	public Class<?> getSupportClass()
-	{
-		return supportClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setSupportClass(Class<?> newSupportClass)
-	{
-		Class<?> oldSupportClass = supportClass;
-		supportClass = newSupportClass;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldSupportClass, supportClass));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public String getSupportClassName()
 	{
 		return supportClassName;
@@ -145,7 +106,7 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		String oldSupportClassName = supportClassName;
 		supportClassName = newSupportClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldSupportClassName, supportClassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldSupportClassName, supportClassName));
 	}
 
 	/**
@@ -159,8 +120,6 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				return getSupportClass();
-			case 2:
 				return getSupportClassName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -177,9 +136,6 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				setSupportClass((Class<?>)newValue);
-				return;
-			case 2:
 				setSupportClassName((String)newValue);
 				return;
 		}
@@ -197,9 +153,6 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				setSupportClass((Class<?>)null);
-				return;
-			case 2:
 				setSupportClassName(SUPPORT_CLASS_NAME_EDEFAULT);
 				return;
 		}
@@ -217,39 +170,13 @@ public class CustomSegmentImpl extends SegmentImpl implements CustomSegment
 		switch (featureID)
 		{
 			case 1:
-				return supportClass != null;
-			case 2:
 				return SUPPORT_CLASS_NAME_EDEFAULT == null ? supportClassName != null : !SUPPORT_CLASS_NAME_EDEFAULT.equals(supportClassName);
 		}
 		return super.eIsSet(featureID);
 	}
 
-	private @Nullable CustomSegmentSupport support = null;
-
-	protected @Nullable CustomSegmentSupport getSupport(Object contextObject) {
-		if (support == null) {
-			Class<?> supportClass = this.supportClass;
-			if ((supportClass == null) && (supportClassName != null)) {
-				ClassLoader classLoader = contextObject.getClass().getClassLoader();
-				try {
-					supportClass = classLoader.loadClass(supportClassName);
-				} catch (ClassNotFoundException e) {
-					return null;
-				}
-			}
-			if (supportClass != null) {
-				try {
-					support = (CustomSegmentSupport) supportClass.newInstance();
-				} catch (InstantiationException | IllegalAccessException e) {
-					return null;
-				}
-			}
-		}
-		return support;
-	}
-
 	@Override
 	public String toString() {
-		return "supported by " + (support != null ? support.getClass().getName() : supportClass != null ? supportClass.getName() : supportClassName);
+		return "supported by " + supportClassName;
 	}
 } //CustomSegmentImpl

@@ -20,19 +20,9 @@
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="Idioms.ecore#//CommentSegmentSupport">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CommentSegmentSupport/epilogue"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CommentSegmentSupport/indentation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CommentSegmentSupport/prologue"/>
-      <genOperations ecoreOperation="Idioms.ecore#//CommentSegmentSupport/getComment">
-        <genParameters ecoreParameter="Idioms.ecore#//CommentSegmentSupport/getComment/eObject"/>
-      </genOperations>
-    </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//CustomSegment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/supportClass"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/supportClassName"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="Idioms.ecore#//CustomSegmentSupport"/>
     <genClasses ecoreClass="Idioms.ecore#//DefaultLocator"/>
     <genClasses ecoreClass="Idioms.ecore#//HalfNewLineSegment"/>
     <genClasses ecoreClass="Idioms.ecore#//Idiom">

@@ -10,14 +10,13 @@
  */
 package org.eclipse.ocl.xtext.base.cs2text.runtime;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * CustomSegmentSupport defines the interface that a user-defined class must implement
  * to contribute custom strings to the overall output.
  */
-public interface CustomSegmentSupport extends EObject
+public interface CustomSegmentSupport
 {
 	void serialize(@NonNull SerializationStep serializationStep, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
 }

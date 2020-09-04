@@ -318,6 +318,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				EnumerationValue enumerationValue = entry2.getKey();
 				enumerationValue_GrammarCardinality[i2++] = new EnumerationValue_GrammarCardinality(enumerationValue, entry2.getValue());
 			}
+			Arrays.sort(enumerationValue_GrammarCardinality, NameUtil.NAMEABLE_COMPARATOR);
 			eAttribute2enumerationValue2grammarCardinality[i1++] = new EAttribute_EnumerationValue_GrammarCardinality(eAttribute, enumerationValue_GrammarCardinality);
 		}
 		return eAttribute2enumerationValue2grammarCardinality;
@@ -347,6 +348,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			Arrays.sort(ruleValueIndex2grammarCardinality);
 			eReference2ruleValueIndex2grammarCardinality[i1++] = new EReference_RuleIndex_GrammarCardinality(eReference, ruleValueIndex2grammarCardinality);
 		}
+		Arrays.sort(eReference2ruleValueIndex2grammarCardinality, NameUtil.NAMEABLE_COMPARATOR);
 		return eReference2ruleValueIndex2grammarCardinality;
 	}
 

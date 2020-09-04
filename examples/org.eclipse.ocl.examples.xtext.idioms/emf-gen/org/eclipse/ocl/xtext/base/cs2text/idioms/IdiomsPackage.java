@@ -76,7 +76,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSegment()
 	 * @generated
 	 */
-	int SEGMENT = 15;
+	int SEGMENT = 13;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.LocatorImpl <em>Locator</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -85,7 +85,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getLocator()
 	 * @generated
 	 */
-	int LOCATOR = 8;
+	int LOCATOR = 6;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.AssignmentLocatorImpl <em>Assignment Locator</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -96,26 +96,6 @@ public interface IdiomsPackage extends EPackage
 	 */
 	int ASSIGNMENT_LOCATOR = 0;
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport <em>Custom Segment Support</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getCustomSegmentSupport()
-	 * @generated
-	 */
-	int CUSTOM_SEGMENT_SUPPORT = 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl <em>Comment Segment Support</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getCommentSegmentSupport()
-	 * @generated
-	 */
-	int COMMENT_SEGMENT_SUPPORT = 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl <em>Custom Segment</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -123,7 +103,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getCustomSegment()
 	 * @generated
 	 */
-	int CUSTOM_SEGMENT = 2;
+	int CUSTOM_SEGMENT = 1;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.DefaultLocatorImpl <em>Default Locator</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -132,7 +112,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getDefaultLocator()
 	 * @generated
 	 */
-	int DEFAULT_LOCATOR = 4;
+	int DEFAULT_LOCATOR = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomImpl <em>Idiom</em>}' class.
@@ -142,7 +122,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getIdiom()
 	 * @generated
 	 */
-	int IDIOM = 6;
+	int IDIOM = 4;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomModelImpl <em>Idiom Model</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -151,7 +131,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getIdiomModel()
 	 * @generated
 	 */
-	int IDIOM_MODEL = 7;
+	int IDIOM_MODEL = 5;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.KeywordLocatorImpl <em>Keyword Locator</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -160,7 +140,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getKeywordLocator()
 	 * @generated
 	 */
-	int KEYWORD_LOCATOR = 9;
+	int KEYWORD_LOCATOR = 7;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NewLineSegmentImpl <em>New Line Segment</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -169,7 +149,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getNewLineSegment()
 	 * @generated
 	 */
-	int NEW_LINE_SEGMENT = 10;
+	int NEW_LINE_SEGMENT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.NoSpaceSegmentImpl <em>No Space Segment</em>}' class.
@@ -179,7 +159,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getNoSpaceSegment()
 	 * @generated
 	 */
-	int NO_SPACE_SEGMENT = 11;
+	int NO_SPACE_SEGMENT = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PopSegmentImpl <em>Pop Segment</em>}' class.
@@ -189,7 +169,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getPopSegment()
 	 * @generated
 	 */
-	int POP_SEGMENT = 12;
+	int POP_SEGMENT = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.ProducedEClassLocatorImpl <em>Produced EClass Locator</em>}' class.
@@ -199,7 +179,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getProducedEClassLocator()
 	 * @generated
 	 */
-	int PRODUCED_ECLASS_LOCATOR = 13;
+	int PRODUCED_ECLASS_LOCATOR = 11;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.PushSegmentImpl <em>Push Segment</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -208,7 +188,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getPushSegment()
 	 * @generated
 	 */
-	int PUSH_SEGMENT = 14;
+	int PUSH_SEGMENT = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftNewLineSegmentImpl <em>Soft New Line Segment</em>}' class.
@@ -218,7 +198,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSoftNewLineSegment()
 	 * @generated
 	 */
-	int SOFT_NEW_LINE_SEGMENT = 16;
+	int SOFT_NEW_LINE_SEGMENT = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SoftSpaceSegmentImpl <em>Soft Space Segment</em>}' class.
@@ -228,7 +208,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSoftSpaceSegment()
 	 * @generated
 	 */
-	int SOFT_SPACE_SEGMENT = 17;
+	int SOFT_SPACE_SEGMENT = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.StringSegmentImpl <em>String Segment</em>}' class.
@@ -238,7 +218,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getStringSegment()
 	 * @generated
 	 */
-	int STRING_SEGMENT = 18;
+	int STRING_SEGMENT = 16;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.HalfNewLineSegmentImpl <em>Half New Line Segment</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -247,7 +227,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getHalfNewLineSegment()
 	 * @generated
 	 */
-	int HALF_NEW_LINE_SEGMENT = 5;
+	int HALF_NEW_LINE_SEGMENT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.SubIdiomImpl <em>Sub Idiom</em>}' class.
@@ -257,7 +237,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getSubIdiom()
 	 * @generated
 	 */
-	int SUB_IDIOM = 19;
+	int SUB_IDIOM = 17;
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.ValueSegmentImpl <em>Value Segment</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -266,7 +246,7 @@ public interface IdiomsPackage extends EPackage
 	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getValueSegment()
 	 * @generated
 	 */
-	int VALUE_SEGMENT = 20;
+	int VALUE_SEGMENT = 18;
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator <em>Assignment Locator</em>}'.
 	 * <!-- begin-user-doc -->
@@ -289,49 +269,6 @@ public interface IdiomsPackage extends EPackage
 	EReference getAssignmentLocator_EStructuralFeature();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport <em>Comment Segment Support</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Comment Segment Support</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport
-	 * @generated
-	 */
-	EClass getCommentSegmentSupport();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getEpilogue <em>Epilogue</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Epilogue</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getEpilogue()
-	 * @see #getCommentSegmentSupport()
-	 * @generated
-	 */
-	EAttribute getCommentSegmentSupport_Epilogue();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getIndentation <em>Indentation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Indentation</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getIndentation()
-	 * @see #getCommentSegmentSupport()
-	 * @generated
-	 */
-	EAttribute getCommentSegmentSupport_Indentation();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getPrologue <em>Prologue</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Prologue</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CommentSegmentSupport#getPrologue()
-	 * @see #getCommentSegmentSupport()
-	 * @generated
-	 */
-	EAttribute getCommentSegmentSupport_Prologue();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment <em>Custom Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -340,17 +277,6 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EClass getCustomSegment();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getSupportClass <em>Support Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Support Class</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getSupportClass()
-	 * @see #getCustomSegment()
-	 * @generated
-	 */
-	EAttribute getCustomSegment_SupportClass();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getSupportClassName <em>Support Class Name</em>}'.
@@ -362,16 +288,6 @@ public interface IdiomsPackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getCustomSegment_SupportClassName();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport <em>Custom Segment Support</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Custom Segment Support</em>'.
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport
-	 * @generated
-	 */
-	EClass getCustomSegmentSupport();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator <em>Default Locator</em>}'.
@@ -772,40 +688,6 @@ public interface IdiomsPackage extends EPackage
 		EReference ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE = eINSTANCE.getAssignmentLocator_EStructuralFeature();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl <em>Comment Segment Support</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getCommentSegmentSupport()
-		 * @generated
-		 */
-		EClass COMMENT_SEGMENT_SUPPORT = eINSTANCE.getCommentSegmentSupport();
-
-		/**
-		 * The meta object literal for the '<em><b>Epilogue</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute COMMENT_SEGMENT_SUPPORT__EPILOGUE = eINSTANCE.getCommentSegmentSupport_Epilogue();
-
-		/**
-		 * The meta object literal for the '<em><b>Indentation</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute COMMENT_SEGMENT_SUPPORT__INDENTATION = eINSTANCE.getCommentSegmentSupport_Indentation();
-
-		/**
-		 * The meta object literal for the '<em><b>Prologue</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute COMMENT_SEGMENT_SUPPORT__PROLOGUE = eINSTANCE.getCommentSegmentSupport_Prologue();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CustomSegmentImpl <em>Custom Segment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -816,30 +698,12 @@ public interface IdiomsPackage extends EPackage
 		EClass CUSTOM_SEGMENT = eINSTANCE.getCustomSegment();
 
 		/**
-		 * The meta object literal for the '<em><b>Support Class</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CUSTOM_SEGMENT__SUPPORT_CLASS = eINSTANCE.getCustomSegment_SupportClass();
-
-		/**
 		 * The meta object literal for the '<em><b>Support Class Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute CUSTOM_SEGMENT__SUPPORT_CLASS_NAME = eINSTANCE.getCustomSegment_SupportClassName();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport <em>Custom Segment Support</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegmentSupport
-		 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.impl.IdiomsPackageImpl#getCustomSegmentSupport()
-		 * @generated
-		 */
-		EClass CUSTOM_SEGMENT_SUPPORT = eINSTANCE.getCustomSegmentSupport();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.impl.DefaultLocatorImpl <em>Default Locator</em>}' class.

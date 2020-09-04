@@ -749,9 +749,14 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 				MarkupPackage.Literals.FIGURE_ELEMENT__SRC
 			},
 			new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
+					}
+				),
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
 				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__DEF,
@@ -759,17 +764,12 @@ public class MarkupSerializationMetaData extends AbstractSerializationMetaData
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}
 				),
+				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__SRC,
+					new @NonNull EnumerationValue_GrammarCardinality [] {
+						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ONE)
+					}
+				),
 				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_HEIGHT,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__ALT,
-					new @NonNull EnumerationValue_GrammarCardinality [] {
-						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
-					}
-				),
-				new EAttribute_EnumerationValue_GrammarCardinality(MarkupPackage.Literals.FIGURE_ELEMENT__REQUIRED_WIDTH,
 					new @NonNull EnumerationValue_GrammarCardinality [] {
 						new EnumerationValue_GrammarCardinality(null, GrammarCardinality.ZERO_OR_ONE)
 					}

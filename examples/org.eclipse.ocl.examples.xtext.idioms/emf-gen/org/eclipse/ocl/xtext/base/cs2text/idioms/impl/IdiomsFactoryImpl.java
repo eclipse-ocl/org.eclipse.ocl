@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.xtext.base.cs2text.idioms.*;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.AssignmentLocator;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment;
 import org.eclipse.ocl.xtext.base.cs2text.idioms.DefaultLocator;
@@ -89,22 +90,22 @@ public class IdiomsFactoryImpl extends EFactoryImpl implements IdiomsFactory
 		switch (eClass.getClassifierID())
 		{
 			case 0: return createAssignmentLocator();
-			case 2: return createCustomSegment();
-			case 4: return createDefaultLocator();
-			case 5: return createHalfNewLineSegment();
-			case 6: return createIdiom();
-			case 7: return createIdiomModel();
-			case 9: return createKeywordLocator();
-			case 10: return createNewLineSegment();
-			case 11: return createNoSpaceSegment();
-			case 12: return createPopSegment();
-			case 13: return createProducedEClassLocator();
-			case 14: return createPushSegment();
-			case 16: return createSoftNewLineSegment();
-			case 17: return createSoftSpaceSegment();
-			case 18: return createStringSegment();
-			case 19: return createSubIdiom();
-			case 20: return createValueSegment();
+			case 1: return createCustomSegment();
+			case 2: return createDefaultLocator();
+			case 3: return createHalfNewLineSegment();
+			case 4: return createIdiom();
+			case 5: return createIdiomModel();
+			case 7: return createKeywordLocator();
+			case 8: return createNewLineSegment();
+			case 9: return createNoSpaceSegment();
+			case 10: return createPopSegment();
+			case 11: return createProducedEClassLocator();
+			case 12: return createPushSegment();
+			case 14: return createSoftNewLineSegment();
+			case 15: return createSoftSpaceSegment();
+			case 16: return createStringSegment();
+			case 17: return createSubIdiom();
+			case 18: return createValueSegment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}

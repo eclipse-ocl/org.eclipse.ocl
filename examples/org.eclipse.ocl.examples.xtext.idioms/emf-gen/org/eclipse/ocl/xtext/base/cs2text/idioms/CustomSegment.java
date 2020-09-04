@@ -27,7 +27,6 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getSupportClass <em>Support Class</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getSupportClassName <em>Support Class Name</em>}</li>
  * </ul>
  *
@@ -37,32 +36,6 @@ package org.eclipse.ocl.xtext.base.cs2text.idioms;
  */
 public interface CustomSegment extends Segment
 {
-	/**
-	 * Returns the value of the '<em><b>Support Class</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Support Class</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Support Class</em>' attribute.
-	 * @see #setSupportClass(Class)
-	 * @see org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage#getCustomSegment_SupportClass()
-	 * @model
-	 * @generated
-	 */
-	Class<?> getSupportClass();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.base.cs2text.idioms.CustomSegment#getSupportClass <em>Support Class</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Support Class</em>' attribute.
-	 * @see #getSupportClass()
-	 * @generated
-	 */
-	void setSupportClass(Class<?> value);
-
 	/**
 	 * Returns the value of the '<em><b>Support Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

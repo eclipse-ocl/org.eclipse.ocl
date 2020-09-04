@@ -16,10 +16,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.impl.CommentSegmentSupportImpl;
+import org.eclipse.ocl.xtext.base.cs2text.runtime.CommentSegmentSupport;
 import org.eclipse.ocl.xtext.base.cs2text.runtime.SerializationBuilder;
 
-public class BaseCommentSegmentSupport extends CommentSegmentSupportImpl
+public class BaseCommentSegmentSupport extends CommentSegmentSupport
 {
 	/**
 	 * To preserve legacy testing functionality, empty comments use an abbreviated one line form. The following
@@ -28,9 +28,7 @@ public class BaseCommentSegmentSupport extends CommentSegmentSupportImpl
 	private static final @NonNull String EMPTY_COMMENT = "/**/";
 
 	public BaseCommentSegmentSupport() {
-		setPrologue("/**");
-		setIndentation(" * ");
-		setEpilogue(" */");
+		super("/**", " * ", " */");
 	}
 
 	@Override
@@ -46,7 +44,7 @@ public class BaseCommentSegmentSupport extends CommentSegmentSupportImpl
 	}
 
 	@Override
-	public @Nullable String getComment(EObject eObject) {
+	public @Nullable String getComment(@NonNull EObject eObject) {
 		if (eObject instanceof Pivotable) {
 			Element asElement = ((Pivotable)eObject).getPivot();
 			if (asElement != null) {
