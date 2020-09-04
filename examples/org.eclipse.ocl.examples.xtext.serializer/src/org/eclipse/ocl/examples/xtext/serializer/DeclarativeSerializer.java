@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.serializer.ISerializer;
@@ -32,8 +33,8 @@ public class DeclarativeSerializer implements ISerializer //extends Serializer
 	private @NonNull SerializationBuilder serializationBuilder;
 
 	@Override
-	public void serialize(EObject obj, Writer writer, SaveOptions options) throws IOException {
-		checkNotNull(obj, "obj must not be null.");
+	public void serialize(EObject eObject, Writer writer, SaveOptions options) throws IOException {
+		checkNotNull(eObject, "eObject must not be null.");
 		checkNotNull(writer, "writer must not be null.");
 		checkNotNull(options, "options must not be null.");
 	//	modelAnalysis.getInjectedGrammarAnalysis().analyze();
@@ -41,25 +42,32 @@ public class DeclarativeSerializer implements ISerializer //extends Serializer
 	//	System.out.println(s1);
 	//	System.out.println("\n");
 		//
-		//	Analyze each eleemnt of the user model to determine the serialization rules.
+		//	Analyze each element of the user model to determine the applicabale serialization rule(s).
 		//
-		modelAnalysis.analyze(obj);
+		modelAnalysis.analyze(eObject);
 	//	String s2 = modelAnalysis.toString();
 	//	System.out.println(s2);
 		//
 		//	Serialize the user model tree as a (virtual) String concatenation to the serializationBuilder.
 		//
-		modelAnalysis.serialize(serializationBuilder, obj, null);
+		modelAnalysis.serialize(serializationBuilder, eObject, null);
 	//	System.out.println(modelAnalysis.diagnose());
 		//
-		//	Render (virtual) String concatenation as a pure string for output.
+		//	Render the (virtual) String concatenation as a pure string for output.
 		//
-		String s3 = serializationBuilder.toString();
-	//	System.out.println(s3);
-		writer.append(s3);
+		String serializedOutput = serializationBuilder.toString();
+	//	System.out.println(serializedOutput);
+		writer.append(serializedOutput);
 		writer.flush();
-		if (serializationBuilder.hasErrors()) {
-			serializationBuilder.throwErrors();
+		Iterable<@NonNull String> errors = serializationBuilder.getErrors();
+		if (errors != null) {
+			StringBuilder s = new StringBuilder();
+			s.append("Failed to serialize '" + EcoreUtil.getURI(eObject) + "'");
+			for (@NonNull String error : errors) {
+				s.append("\n\t");
+				s.append(error);
+			}
+			throw new IOException(s.toString());
 		}
 	}
 

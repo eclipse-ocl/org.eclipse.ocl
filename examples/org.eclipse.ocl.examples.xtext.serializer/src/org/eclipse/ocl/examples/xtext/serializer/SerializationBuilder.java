@@ -148,22 +148,8 @@ public class SerializationBuilder implements ToDebugStringable
 		return null;
 	}
 
-	public boolean hasErrors() {
-		return errors != null;
-	}
-
-	public void throwErrors() {
-		List<@NonNull String> errors2 = errors;
-		if (errors2 != null) {
-			StringBuilder s = new StringBuilder();
-			for (@NonNull String error : errors2) {
-				if (s.length() > 0) {
-					s.append("\n");
-				}
-				s.append(error);
-			}
-			throw new IllegalStateException(s.toString());		// FIXME A more consistent exception
-		}
+	public @Nullable Iterable<@NonNull String> getErrors() {
+		return errors;
 	}
 
 	@Override
