@@ -15,8 +15,8 @@ package org.eclipse.ocl.xtext.completeocl.formatting;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomModel;
+import org.eclipse.ocl.examples.xtext.idioms.Idiom;
+import org.eclipse.ocl.examples.xtext.idioms.IdiomModel;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.AbstractIdiomsProvider;
 
 // NonNull

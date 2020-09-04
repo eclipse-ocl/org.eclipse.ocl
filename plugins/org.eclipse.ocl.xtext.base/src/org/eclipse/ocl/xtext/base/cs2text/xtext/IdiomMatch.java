@@ -15,10 +15,10 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.idioms.Idiom;
+import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.xtext.base.cs2text.elements.SerializationNode;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.Idiom;
-import org.eclipse.ocl.xtext.base.cs2text.idioms.SubIdiom;
 
 /**
  * An IdiomMatch is created after a first successful match of an idiom. It accumulates

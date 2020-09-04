@@ -14,7 +14,7 @@
     <details key="Generate Classifier ints" value="true"/>
   </genAnnotations>
   <foreignModel>Idioms.ecore</foreignModel>
-  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.xtext.base.cs2text" resource="XMI"
+  <genPackages prefix="Idioms" basePackage="org.eclipse.ocl.examples.xtext" resource="XMI"
       disposableProviderFactory="true" generateExampleClass="false" ecorePackage="Idioms.ecore#/"
       publicationLocation="">
     <genClasses ecoreClass="Idioms.ecore#//AssignmentLocator">

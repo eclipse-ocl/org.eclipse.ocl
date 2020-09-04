@@ -8,13 +8,19 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.xtext.base.cs2text.xtext;
+package org.eclipse.ocl.examples.xtext.idioms;
 
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.idioms.Idiom;
 
-public interface IdiomsProvider
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Soft New Line Segment</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ *
+ * @see org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage#getSoftNewLineSegment()
+ * @model
+ * @generated
+ */
+public interface SoftNewLineSegment extends Segment
 {
-	@NonNull Iterable<@NonNull Idiom> getIdioms(@NonNull ResourceSet resourceSet);
-}
+} // SoftNewLineSegment

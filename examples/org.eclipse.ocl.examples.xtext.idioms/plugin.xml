@@ -34,7 +34,7 @@
       <!-- @generated Idioms -->
       <package
             uri="http://www.eclipse.org/ocl/2020/Idioms"
-            class="org.eclipse.ocl.xtext.base.cs2text.idioms.IdiomsPackage"
+            class="org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage"
             genModel="model/Idioms.genmodel"/>
    </extension>
 
@@ -42,7 +42,7 @@
       <!-- @generated Idioms -->
       <parser
             type="idioms"
-            class="org.eclipse.ocl.xtext.base.cs2text.idioms.util.IdiomsResourceFactoryImpl"/>
+            class="org.eclipse.ocl.examples.xtext.idioms.util.IdiomsResourceFactoryImpl"/>
    </extension>
 
 </plugin>
