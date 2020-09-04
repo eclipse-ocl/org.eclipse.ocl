@@ -141,6 +141,8 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 			s.append(targetRuleAnalysis.getName());
 			isFirst = false;
 		}
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 }

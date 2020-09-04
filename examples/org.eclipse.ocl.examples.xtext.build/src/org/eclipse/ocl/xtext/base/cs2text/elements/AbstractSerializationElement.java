@@ -286,7 +286,8 @@ public abstract class AbstractSerializationElement implements SerializationEleme
 	public @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, 0);
-		String castString = s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
 		return castString;
 	}
 }

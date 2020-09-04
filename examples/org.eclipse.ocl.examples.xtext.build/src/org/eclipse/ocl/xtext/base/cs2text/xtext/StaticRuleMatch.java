@@ -651,7 +651,9 @@ public class StaticRuleMatch implements RuleMatch
 	//	s.append(" : ");
 	//	serializationRule.toRuleString(s);
 		toString(s, 1);
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.xtext.base.cs2text.xtext.SerializationRuleAnalysis;
 
 /**
@@ -39,7 +40,7 @@ public class SerializationRuleComparator implements Comparator<@NonNull Serializ
 	}
 
 	private int getSize(@NonNull SerializationRuleAnalysis serializationRule) {
-		Integer size = rule2size.get(serializationRule);
+		Integer size = ClassUtil.maybeNull(rule2size.get(serializationRule));
 		if (size == null) {
 			size = getSize(serializationRule.getRootSerializationNode());
 			rule2size.put(serializationRule, size);

@@ -49,17 +49,17 @@ import org.eclipse.ocl.examples.xtext.idioms.util.IdiomsResourceFactoryImpl;
 import org.eclipse.ocl.examples.xtext.idioms.util.IdiomsResourceImpl;
 import org.eclipse.ocl.examples.xtext.serializer.AbstractGrammarAnalysis;
 import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
+import org.eclipse.ocl.examples.xtext.serializer.EClassValue.SerializationRule_SegmentsList;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationGrammarAnalysis;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.EClassValue.SerializationRule_SegmentsList;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple;
-import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -798,6 +798,8 @@ public class GrammarAnalysis extends AbstractGrammarAnalysis
 		}
 		s.append("\n\nUser EClass <=> Prioritized serialization rule(s)");
 		s.append(super.toString());
-		return s.toString();
+		@SuppressWarnings("null")
+		@NonNull String castString = s.toString();
+		return castString;
 	}
 }
