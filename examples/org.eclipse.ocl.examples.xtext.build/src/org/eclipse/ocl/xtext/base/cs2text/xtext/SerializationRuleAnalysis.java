@@ -49,6 +49,7 @@ import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EnumerationVa
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.RuleIndex_GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.ToDebugString;
 import org.eclipse.ocl.examples.xtext.serializer.ToDebugString.ToDebugStringable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.xtext.base.cs2text.elements.AlternativeAssignedKeywordsSerializationNode;
@@ -241,12 +242,12 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		if (eAttribute2enumerationValue2grammarCardinality2 == null) {
 			eAttribute2enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality2 = new HashMap<>();
 		}
-		Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality2.get(eAttribute);
+		Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = ClassUtil.maybeNull(eAttribute2enumerationValue2grammarCardinality2.get(eAttribute));
 		if (enumerationValue2grammarCardinality == null) {
 			enumerationValue2grammarCardinality = new HashMap<>();
 			eAttribute2enumerationValue2grammarCardinality2.put(eAttribute, enumerationValue2grammarCardinality);
 		}
-		GrammarCardinality oldGrammarCardinality = enumerationValue2grammarCardinality.get(enumerationValue);
+		GrammarCardinality oldGrammarCardinality = ClassUtil.maybeNull(enumerationValue2grammarCardinality.get(enumerationValue));
 		GrammarCardinality newGrammarCardinality = refineGrammarCardinality(netGrammarCardinality, oldGrammarCardinality);
 		enumerationValue2grammarCardinality.put(enumerationValue, newGrammarCardinality);
 	}
@@ -256,7 +257,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		if (eReference2ruleAnalysis2grammarCardinality2 == null) {
 			eReference2ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality2 = new HashMap<>();
 		}
-		Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality2.get(eReference);
+		Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = ClassUtil.maybeNull(eReference2ruleAnalysis2grammarCardinality2.get(eReference));
 		if (ruleAnalysis2grammarCardinality == null) {
 			ruleAnalysis2grammarCardinality = new HashMap<>();
 			eReference2ruleAnalysis2grammarCardinality2.put(eReference, ruleAnalysis2grammarCardinality);
@@ -265,7 +266,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			for (@NonNull Integer ruleIndex : ruleIndexes) {
 				@NonNull AbstractRuleAnalysis ruleAnalysis2 = grammarAnalysis.getRuleAnalysis(ruleIndex);
 				if (ruleAnalysis2 instanceof ParserRuleAnalysis) {
-					GrammarCardinality oldGrammarCardinality = ruleAnalysis2grammarCardinality.get(ruleAnalysis2);
+					GrammarCardinality oldGrammarCardinality = ClassUtil.maybeNull(ruleAnalysis2grammarCardinality.get(ruleAnalysis2));
 					GrammarCardinality newGrammarCardinality = refineGrammarCardinality(netGrammarCardinality, oldGrammarCardinality);
 					ruleAnalysis2grammarCardinality.put((ParserRuleAnalysis) ruleAnalysis2, newGrammarCardinality);
 				}
@@ -276,7 +277,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public void analyzeSolution(@NonNull List<@NonNull SerializationMatchStep> steps) {
 		if (eReference2ruleAnalysis2grammarCardinality != null) {
 			for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality>> entry : eReference2ruleAnalysis2grammarCardinality.entrySet()) {
-				EReference eReference = entry.getKey();
+				@SuppressWarnings("null")
+				@NonNull EReference eReference = entry.getKey();
 				if (eReference.isContainment()) {
 					@SuppressWarnings("null")
 					@NonNull Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> value = entry.getValue();
@@ -297,7 +299,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		@NonNull EAttribute_EnumerationValues[] eAttributeDatas = new @NonNull EAttribute_EnumerationValues[size];
 		int i = 0;
 		for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues.entrySet()) {
+			@SuppressWarnings("null")
 			@NonNull Set<@NonNull EnumerationValue> enumerationValuesSet = entry.getValue();
+			@SuppressWarnings("null")
 			@NonNull EnumerationValue @NonNull [] enumerationValuesArray = enumerationValuesSet.toArray(new @NonNull EnumerationValue[enumerationValuesSet.size()]);
 			Arrays.sort(enumerationValuesArray, NameUtil.NAMEABLE_COMPARATOR);
 			eAttributeDatas[i++] = new EAttribute_EnumerationValues(entry.getKey(), enumerationValuesArray);
@@ -314,8 +318,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		@NonNull EAttribute_EnumerationValue_GrammarCardinality [] eAttribute2enumerationValue2grammarCardinality = new @NonNull EAttribute_EnumerationValue_GrammarCardinality[eAttribute2enumerationValue2grammarCardinality2.size()];
 		int i1 = 0;
 		for (Map.Entry<@NonNull EAttribute, @NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality>> entry1 : eAttribute2enumerationValue2grammarCardinality2.entrySet()) {
-			EAttribute eAttribute = entry1.getKey();
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> value = entry1.getValue();
+			EAttribute eAttribute = ClassUtil.maybeNull(entry1.getKey());
+			@SuppressWarnings("null")
+			@NonNull Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> value = entry1.getValue();
 			@NonNull EnumerationValue_GrammarCardinality [] enumerationValue_GrammarCardinality = new @NonNull EnumerationValue_GrammarCardinality [value.size()];
 			int i2 = 0;
 			for (Map.Entry<@Nullable EnumerationValue, @NonNull GrammarCardinality> entry2 : value.entrySet()) {
@@ -341,8 +346,10 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		@NonNull EReference_RuleIndex_GrammarCardinality [] eReference2ruleValueIndex2grammarCardinality = new @NonNull EReference_RuleIndex_GrammarCardinality[eReference2ruleAnalysis2grammarCardinality2.size()];
 		int i1 = 0;
 		for (Map.Entry<@NonNull EReference, @NonNull Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality>> entry1 : eReference2ruleAnalysis2grammarCardinality2.entrySet()) {
-			EReference eReference = entry1.getKey();
-			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> value = entry1.getValue();
+			@SuppressWarnings("null")
+			@NonNull EReference eReference = entry1.getKey();
+			@SuppressWarnings("null")
+			@NonNull Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> value = entry1.getValue();
 			@NonNull RuleIndex_GrammarCardinality [] ruleValueIndex2grammarCardinality = new @NonNull RuleIndex_GrammarCardinality [value.size()];
 			int i2 = 0;
 			for (Map.Entry<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> entry2 : value.entrySet()) {
@@ -426,7 +433,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		}
 		if (eAttribute2enumerationValues2.size() > 0) {
 			for (Map.Entry<@NonNull EAttribute, @NonNull Set<@NonNull EnumerationValue>> entry : eAttribute2enumerationValues2.entrySet()) {
-				Set<@NonNull EnumerationValue> assignedRuleIndexes = entry.getValue();
+				@SuppressWarnings("null")
+				@NonNull Set<@NonNull EnumerationValue> assignedRuleIndexes = entry.getValue();
 				eAttribute2enumerationValues2.put(entry.getKey(), assignedRuleIndexes);
 			}
 		}
@@ -445,7 +453,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		if (serializationNode instanceof AlternativeAssignedKeywordsSerializationNode) {
 			AlternativeAssignedKeywordsSerializationNode assignedKeywordsSerializationNode = (AlternativeAssignedKeywordsSerializationNode)serializationNode;
 			EAttribute eAttribute = (EAttribute)assignedKeywordsSerializationNode.getEStructuralFeature();
-			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+			Set<@NonNull EnumerationValue> enumerationValues = ClassUtil.maybeNull(eAttribute2enumerationValues.get(eAttribute));
 			if (enumerationValues == null) {
 				enumerationValues = new HashSet<>();
 				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -460,7 +468,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 				EAttribute eAttribute = (EAttribute)eStructuralFeature;
 				EnumerationValue enumerationValue = assignsSerializationNode.getEnumerationValue();
 				if (enumerationValue != null) {
-					Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+					Set<@NonNull EnumerationValue> enumerationValues = ClassUtil.maybeNull(eAttribute2enumerationValues.get(eAttribute));
 					if (enumerationValues == null) {
 						enumerationValues = new HashSet<>();
 						eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -472,7 +480,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 		else if (serializationNode instanceof AssignedKeywordSerializationNode) {
 			AssignedKeywordSerializationNode assignedKeywordSerializationNode = (AssignedKeywordSerializationNode)serializationNode;
 			EAttribute eAttribute = (EAttribute)assignedKeywordSerializationNode.getEStructuralFeature();
-			Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues.get(eAttribute);
+			Set<@NonNull EnumerationValue> enumerationValues = ClassUtil.maybeNull(eAttribute2enumerationValues.get(eAttribute));
 			if (enumerationValues == null) {
 				enumerationValues = new HashSet<>();
 				eAttribute2enumerationValues.put(eAttribute, enumerationValues);
@@ -516,7 +524,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 			EStructuralFeature eStructuralFeature = assignedSerializationNode.getEStructuralFeature();
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
-				GrammarRuleVector assignedRuleIndexes = eReference2assignedRuleIndexes.get(eReference);
+				GrammarRuleVector assignedRuleIndexes = ClassUtil.maybeNull(eReference2assignedRuleIndexes.get(eReference));
 				if (assignedRuleIndexes == null) {
 					assignedRuleIndexes = new GrammarRuleVector();
 					eReference2assignedRuleIndexes.put(eReference, assignedRuleIndexes);
@@ -568,13 +576,13 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EStructuralFeature eStructuralFeature) {
 		assert staticRuleMatch != null;
 		if (eAttribute2enumerationValue2grammarCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality.get(eStructuralFeature);
+			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = ClassUtil.maybeNull(eAttribute2enumerationValue2grammarCardinality.get(eStructuralFeature));
 			if (enumerationValue2grammarCardinality != null) {
 				return enumerationValue2grammarCardinality.get(null);
 			}
 		}
 		if (eReference2ruleAnalysis2grammarCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality.get(eStructuralFeature);
+			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = ClassUtil.maybeNull(eReference2ruleAnalysis2grammarCardinality.get(eStructuralFeature));
 			if (ruleAnalysis2grammarCardinality != null) {
 				return ruleAnalysis2grammarCardinality.get(null);
 			}
@@ -585,7 +593,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 		assert staticRuleMatch != null;
 		if (eAttribute2enumerationValue2grammarCardinality != null) {
-			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality.get(eAttribute);
+			Map<@Nullable EnumerationValue, @NonNull GrammarCardinality> enumerationValue2grammarCardinality = ClassUtil.maybeNull(eAttribute2enumerationValue2grammarCardinality.get(eAttribute));
 			if (enumerationValue2grammarCardinality != null) {
 				return enumerationValue2grammarCardinality.get(enumerationValue);
 			}
@@ -596,7 +604,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EReference eReference, @NonNull ParserRuleAnalysis ruleAnalysis) {
 		assert staticRuleMatch != null;
 		if (eReference2ruleAnalysis2grammarCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality.get(eReference);
+			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = ClassUtil.maybeNull(eReference2ruleAnalysis2grammarCardinality.get(eReference));
 			if (ruleAnalysis2grammarCardinality != null) {
 				return ruleAnalysis2grammarCardinality.get(ruleAnalysis);
 			}
@@ -607,7 +615,7 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
 		assert staticRuleMatch != null;
 		if (eReference2ruleAnalysis2grammarCardinality != null) {
-			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = eReference2ruleAnalysis2grammarCardinality.get(eReference);
+			Map<@Nullable ParserRuleAnalysis, @NonNull GrammarCardinality> ruleAnalysis2grammarCardinality = ClassUtil.maybeNull(eReference2ruleAnalysis2grammarCardinality.get(eReference));
 			if (ruleAnalysis2grammarCardinality != null) {
 				for (@Nullable ParserRuleAnalysis parserRuleAnalysis : ruleAnalysis2grammarCardinality.keySet()) {
 					if ((parserRuleAnalysis != null) && (parserRuleAnalysis.getRuleValue() == ruleValue)) {
@@ -783,7 +791,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable
 	public final @NonNull String toString() {
 		StringBuilder s = new StringBuilder();
 		toString(s, -1);
-		return String.valueOf(s);
+		@SuppressWarnings("null")
+		@NonNull String castString = String.valueOf(s);
+		return castString;
 	}
 
 	public void toString(@NonNull StringBuilder s, int depth) {
