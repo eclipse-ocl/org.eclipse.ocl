@@ -217,6 +217,24 @@ public class SerializationBuilder implements ToDebugStringable
 	{
 		private @NonNull List<@NonNull AbstractContext> childContexts = new ArrayList<>();
 
+		/**
+		 * The lrgaest number of columns required for this region and all transitive;y nested regions when
+		 * no wrapping is in force.
+		 */
+		private int maximumRequiredColumns = -1;
+
+		/**
+		 * The smallest number of columns required for this region and all transitive;y nested regions when
+		 * maximum wrapping is in force.
+		 */
+		private int minimumRequiredColumns = -1;
+
+		/**
+		 * The reduction in maximum line length from wrapping everything within this region
+		 * while leaving all transitively nested regions at their unwrapped maxima.
+		 */
+		private int wrappingGain = -1;
+
 		protected RegionContext(@NonNull WrappingStringBuilder s) {
 			super(s);
 		}
@@ -225,50 +243,12 @@ public class SerializationBuilder implements ToDebugStringable
 			childContexts.add(childContext);
 		}
 
-		public abstract @NonNull RegionContext getParentContext();
-
-		/**
-		 * Return the maximum number of columns to render this region and all its child regions
-		 * using only the the as-is unwrapped indented output.
-		 */
-		public int getMaximumRequiredColumns() {
-			int mostRequiredColumns = 0;
-			for (@NonNull AbstractContext childContext : childContexts) {
-				if (childContext instanceof EndContext) {
-					EndContext endContext = ((EndContext)childContext);
-					int requiredColumns = endContext.column;
-					if (requiredColumns > mostRequiredColumns) {
-						mostRequiredColumns = requiredColumns;
-					}
-				}
-				else if (childContext instanceof NewLineContext) {
-					NewLineContext newLineContext = ((NewLineContext)childContext);
-					int requiredColumns = newLineContext.column;
-					if (requiredColumns > mostRequiredColumns) {
-						mostRequiredColumns = requiredColumns;
-					}
-				}
-				else if (childContext instanceof RegionContext) {
-					RegionContext regionContext = ((RegionContext)childContext);
-					int requiredColumns = regionContext.getMaximumRequiredColumns();
-					if (requiredColumns > mostRequiredColumns) {
-						mostRequiredColumns = requiredColumns;
-					}
-				}
-			}
-			return mostRequiredColumns;
-		}
-
-		/**
-		 * Return the minimum number of columns to render this region and all its child regions
-		 * using only the declared wrapping capabilities; i.e. without using force majeur to
-		 * break at arbitrary spaces.
-		 */
-		public int getMinimumRequiredColumns() {
+		protected void analyzeWrapping() {
+			maximumRequiredColumns = 0;
+			minimumRequiredColumns = 0;
 			int nextLine = line;
 			int nextColumn = column;
 			int anchorColumns = 0;
-			int mostRequiredColumns = 0;
 			for (@NonNull AbstractContext childContext : childContexts) {
 				if (childContext instanceof AnchorContext) {
 					AnchorContext anchorContext = ((AnchorContext)childContext);
@@ -284,8 +264,11 @@ public class SerializationBuilder implements ToDebugStringable
 					int wrappedColumns = endContext.column - nextColumn;
 					assert wrappedColumns >= 0;
 					int requiredColumns = anchorColumns + wrappedColumns;
-					if (requiredColumns > mostRequiredColumns) {
-						mostRequiredColumns = requiredColumns;
+					if (requiredColumns > minimumRequiredColumns) {
+						minimumRequiredColumns = requiredColumns;
+					}
+					if (endContext.column > maximumRequiredColumns) {
+						maximumRequiredColumns = endContext.column;
 					}
 				}
 				else if (childContext instanceof HereContext) {
@@ -313,9 +296,12 @@ public class SerializationBuilder implements ToDebugStringable
 						int wrappedColumns = newLineContext.column - nextColumn;
 						assert wrappedColumns >= 0;
 						int requiredColumns = anchorColumns + wrappedColumns;
-						if (requiredColumns > mostRequiredColumns) {
-							mostRequiredColumns = requiredColumns;
+						if (requiredColumns > minimumRequiredColumns) {
+							minimumRequiredColumns = requiredColumns;
 						}
+					}
+					if (newLineContext.column > maximumRequiredColumns) {
+						maximumRequiredColumns = newLineContext.column;
 					}
 				}
 				else if (childContext instanceof RegionContext) {
@@ -323,26 +309,71 @@ public class SerializationBuilder implements ToDebugStringable
 					assert regionContext.line == nextLine;
 					int wrappedColumns = regionContext.column + regionContext.getMinimumRequiredColumns() - nextColumn;
 					assert wrappedColumns >= 0;
-					int requiredColumns = anchorColumns + wrappedColumns;
-					if (requiredColumns > mostRequiredColumns) {
-						mostRequiredColumns = requiredColumns;
+					int nestedMinimumRequiredColumns = anchorColumns + wrappedColumns;
+					if (nestedMinimumRequiredColumns > minimumRequiredColumns) {
+						minimumRequiredColumns = nestedMinimumRequiredColumns;
+					}
+					int nestedMaximumRequiredColumns = regionContext.getMaximumRequiredColumns();
+					if (nestedMaximumRequiredColumns > maximumRequiredColumns) {
+						maximumRequiredColumns = nestedMaximumRequiredColumns;
 					}
 				}
 				else {
 					throw new UnsupportedOperationException();
 				}
 			}
-			return mostRequiredColumns;
 		}
 
-		@Override
+		public abstract @NonNull RegionContext getParentContext();
+
+		/**
+		 * Return the maximum number of columns to render this region and all its child regions
+		 * using only the the as-is unwrapped indented output.
+		 */
+		public int getMaximumRequiredColumns() {
+			if (maximumRequiredColumns < 0) {
+				analyzeWrapping();
+			}
+			return maximumRequiredColumns;
+		}
+
+		/**
+		 * Return the minimum number of columns to render this region and all its child regions
+		 * using only the declared wrapping capabilities; i.e. without using force majeur to
+		 * break at arbitrary spaces.
+		 */
+		public int getMinimumRequiredColumns() {
+			if (minimumRequiredColumns < 0) {
+				analyzeWrapping();
+			}
+			return minimumRequiredColumns;
+		}
+
+	/*	@Override
 		public int toString(@NonNull StringBuilder sOut, int offset, @NonNull StringBuilder sIn) {
 			offset = super.toString(sOut, offset, sIn);
+			int anchorColumns = 0;
 			for (@NonNull AbstractContext childContext : childContexts) {
-				offset = childContext.toString(sOut, offset, sIn);
+				if (childContext instanceof AnchorContext) {
+					AnchorContext anchorContext = ((AnchorContext)childContext);
+				//	assert anchorContext.line == nextLine;
+					anchorColumns = anchorContext.column - nextColumn;
+					assert anchorColumns >= 0;
+					nextLine = anchorContext.line;
+					nextColumn = anchorContext.column;
+				}
+				else if (childContext instanceof HereContext) {
+					HereContext hereContext = ((HereContext)childContext);
+					assert hereContext.line == nextLine;
+					nextLine = hereContext.line;
+					nextColumn = hereContext.column;
+				}
+				else {
+					offset = childContext.toString(sOut, offset, sIn);
+				}
 			}
 			return offset;
-		}
+		} */
 	}
 
 	/**
