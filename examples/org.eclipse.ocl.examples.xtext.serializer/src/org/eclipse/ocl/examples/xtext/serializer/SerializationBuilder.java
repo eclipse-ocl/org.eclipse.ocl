@@ -11,15 +11,12 @@
 package org.eclipse.ocl.examples.xtext.serializer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.serializer.ToDebugString.ToDebugStringable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * SerializationBuilder builds the intermediate serialization as an interleaving of concrete strings and virtual
@@ -94,61 +91,279 @@ public class SerializationBuilder implements ToDebugStringable
 	public static final @NonNull String WRAP_HERE = new String("«w»");
 
 	/**
-	 * The virtual character/string to mark the indentation reference for subsequent wraps.
+	 * The virtual character/string to mark the indentation anchor/reference for subsequent wraps.
 	 */
-	public static final @NonNull String WRAP_INDENT = new String("«wi»");
+	public static final @NonNull String WRAP_ANCHOR = new String("«wa»");
 
-	protected static class WrappingContext
+	/**
+	 * An AbstractContext identifies (the left edge of) a significant character location in the
+	 * indented but not yet wrapped output text.
+	 */
+	protected static abstract class AbstractContext
 	{
-		private final int startLine;
-		private final int startColumn;
-		private final int startOffset;
-		private int lines = 0;
-		private int columns = 0;
-		private int offsets = 0;
-		protected final boolean isAllOrNone;
-		private final @Nullable WrappingContext parentContext;
-		private @Nullable List<@NonNull WrappingContext> childContexts = null;
-		private final Map<@NonNull Integer, @NonNull Integer> hereColumn2count = new HashMap<>();
-		private final Map<@NonNull Integer, @NonNull Integer> indentsColumn2count = new HashMap<>();
+		protected final int line;
+		protected final int column;
+		protected final int offset;
 
-		public WrappingContext() {
-			this(null, 0, 0, 0, false);
+		protected AbstractContext(@NonNull WrappingStringBuilder s) {
+			this.line = s.getLine();
+			this.column = s.getColumn();
+			this.offset = s.getOffset();
 		}
 
-		protected WrappingContext(@Nullable WrappingContext parentContext, int startLine, int startColumn, int startOffset, boolean isAllOrNone) {
-			this.startLine = startLine;
-			this.startColumn = startColumn;
-			this.startOffset = startOffset;
+		@Override
+		public @NonNull String toString() {
+			return line + ":" + column + ":" + offset;
+		}
+	}
+
+	/**
+	 * An AnchorContext identifies (the left edge of) text that provides a column number to be
+	 * matched in subsequent wrapped text.
+	 */
+	protected static class AnchorContext extends AbstractContext
+	{
+		public AnchorContext(@NonNull WrappingStringBuilder s) {
+			super(s);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "Anchor " + super.toString();
+		}
+	}
+
+	/**
+	 * An EndContext identifies (the left edge of) the first character that follows a RegionContext.
+	 */
+	protected static class EndContext extends AbstractContext
+	{
+		public EndContext(@NonNull WrappingStringBuilder s) {
+			super(s);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "End " + super.toString();
+		}
+	}
+
+	/**
+	 * A HereContext identifies (the left edge of) text that may be preceded by a wrapping new line
+	 * and compensating indentation..
+	 */
+	protected static class HereContext extends AbstractContext
+	{
+		public HereContext(@NonNull WrappingStringBuilder s) {
+			super(s);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "Here " + super.toString();
+		}
+	}
+
+	/**
+	 * An IndentEndContext identifies (the left edge of) text that follows the new line indentation.
+	 */
+	protected static class IndentedContext extends AbstractContext
+	{
+		public IndentedContext(@NonNull WrappingStringBuilder s) {
+			super(s);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "Indented " + super.toString();
+		}
+	}
+
+	/**
+	 * An IndentStartContext identifies (the left edge of) a hard new line.
+	 */
+	protected static class NewLineContext extends AbstractContext
+	{
+		public NewLineContext(@NonNull WrappingStringBuilder s) {
+			super(s);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "NewLine " + super.toString();
+		}
+	}
+
+	/**
+	 * A RegionContext identifies (the left edge of) a wrapping region within which wrap-here
+	 * markers contol mapping with respect to wrpa-anchor contexts.
+	 */
+	protected static abstract class RegionContext extends AbstractContext
+	{
+		private @NonNull List<@NonNull AbstractContext> childContexts = new ArrayList<>();
+
+		protected RegionContext(@NonNull WrappingStringBuilder s) {
+			super(s);
+		}
+
+		public void addContext(@NonNull AbstractContext childContext) {
+			childContexts.add(childContext);
+		}
+
+		public abstract @NonNull RegionContext getParentContext();
+
+		/**
+		 * Return the maximum number of columns to render this region and all its child regions
+		 * using only the the as-is unwrapped indented output.
+		 */
+		public int getMaximumRequiredColumns() {
+			int mostRequiredColumns = 0;
+			for (@NonNull AbstractContext childContext : childContexts) {
+				if (childContext instanceof EndContext) {
+					EndContext endContext = ((EndContext)childContext);
+					int requiredColumns = endContext.column;
+					if (requiredColumns > mostRequiredColumns) {
+						mostRequiredColumns = requiredColumns;
+					}
+				}
+				else if (childContext instanceof NewLineContext) {
+					NewLineContext newLineContext = ((NewLineContext)childContext);
+					int requiredColumns = newLineContext.column;
+					if (requiredColumns > mostRequiredColumns) {
+						mostRequiredColumns = requiredColumns;
+					}
+				}
+				else if (childContext instanceof RegionContext) {
+					RegionContext regionContext = ((RegionContext)childContext);
+					int requiredColumns = regionContext.getMaximumRequiredColumns();
+					if (requiredColumns > mostRequiredColumns) {
+						mostRequiredColumns = requiredColumns;
+					}
+				}
+			}
+			return mostRequiredColumns;
+		}
+
+		/**
+		 * Return the minimum number of columns to render this region and all its child regions
+		 * using only the declared wrapping capabilities; i.e. without using force majeur to
+		 * break at arbitrary spaces.
+		 */
+		public int getMinimumRequiredColumns() {
+			int nextLine = line;
+			int nextColumn = column;
+			int anchorColumns = 0;
+			int mostRequiredColumns = 0;
+			for (@NonNull AbstractContext childContext : childContexts) {
+				if (childContext instanceof AnchorContext) {
+					AnchorContext anchorContext = ((AnchorContext)childContext);
+					assert anchorContext.line == nextLine;
+					anchorColumns = anchorContext.column - nextColumn;
+					assert anchorColumns >= 0;
+					nextLine = anchorContext.line;
+					nextColumn = anchorContext.column;
+				}
+				else if (childContext instanceof EndContext) {
+					EndContext endContext = ((EndContext)childContext);
+					assert endContext.line == nextLine;
+					int wrappedColumns = endContext.column - nextColumn;
+					assert wrappedColumns >= 0;
+					int requiredColumns = anchorColumns + wrappedColumns;
+					if (requiredColumns > mostRequiredColumns) {
+						mostRequiredColumns = requiredColumns;
+					}
+				}
+				else if (childContext instanceof HereContext) {
+					HereContext hereContext = ((HereContext)childContext);
+					assert hereContext.line == nextLine;
+					nextLine = hereContext.line;
+					nextColumn = hereContext.column;
+				}
+				else if (childContext instanceof IndentedContext) {
+					IndentedContext indentedContext = ((IndentedContext)childContext);
+					assert indentedContext.line == nextLine;
+					nextLine = indentedContext.line;
+					nextColumn = indentedContext.column;
+				}
+				else if (childContext instanceof NewLineContext) {
+					NewLineContext newLineContext = ((NewLineContext)childContext);
+					if (newLineContext.column == 0) {					// Blank line may omit IndentedContext
+						assert newLineContext.line == nextLine;
+						nextLine = newLineContext.line + 1;
+						nextColumn = 0;
+					}
+					else {
+						assert newLineContext.line == nextLine;
+						nextLine = newLineContext.line + 1;
+						int wrappedColumns = newLineContext.column - nextColumn;
+						assert wrappedColumns >= 0;
+						int requiredColumns = anchorColumns + wrappedColumns;
+						if (requiredColumns > mostRequiredColumns) {
+							mostRequiredColumns = requiredColumns;
+						}
+					}
+				}
+				else if (childContext instanceof RegionContext) {
+					RegionContext regionContext = ((RegionContext)childContext);
+					assert regionContext.line == nextLine;
+					int wrappedColumns = regionContext.column + regionContext.getMinimumRequiredColumns() - nextColumn;
+					assert wrappedColumns >= 0;
+					int requiredColumns = anchorColumns + wrappedColumns;
+					if (requiredColumns > mostRequiredColumns) {
+						mostRequiredColumns = requiredColumns;
+					}
+				}
+				else {
+					throw new UnsupportedOperationException();
+				}
+			}
+			return mostRequiredColumns;
+		}
+	}
+
+	/**
+	 * The RootContext identifies (the left edge of) the root/orphan wrapping region starting at
+	 * line 0, column 0, offset 0 and ending at the end of the output.
+	 */
+	protected static class RootContext extends RegionContext
+	{
+		public RootContext(@NonNull WrappingStringBuilder s) {
+			super(s);
+		}
+
+		@Override
+		public @NonNull RegionContext getParentContext() {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return "Root " + super.toString();
+		}
+	}
+
+	/**
+	 * A WrappingContext identifies (the left edge of) a nested wrapping region.
+	 */
+	protected static class WrappingContext extends RegionContext
+	{
+		protected final boolean isAllOrNone;
+		private final @NonNull RegionContext parentContext;
+
+		protected WrappingContext(@NonNull RegionContext parentContext, @NonNull WrappingStringBuilder s, boolean isAllOrNone) {
+			super(s);
 			this.isAllOrNone = isAllOrNone;
 			this.parentContext = parentContext;
 		}
 
-		public void addHere(int nextLine, int nextColumn, int length) {
-			// TODO Auto-generated method stub
-
+		@Override
+		public @NonNull RegionContext getParentContext() {
+			return parentContext;
 		}
 
-		public void addIndent(int nextLine, int nextColumn, int length) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public @NonNull WrappingContext pop(int endLine, int endColumn, int endOffset) {
-			this.lines = endLine - startLine;
-			this.columns = endColumn - startColumn;
-			this.offsets = endOffset - startOffset;
-			return ClassUtil.nonNullState(parentContext);
-		}
-
-		public @NonNull WrappingContext push(int startLine, int startColumn, int startOffset, boolean isAllOrNone) {
-			List<@NonNull WrappingContext> childContexts2 = childContexts;
-			if (childContexts2 == null) {
-				childContexts = childContexts2 = new ArrayList<>();
-			}
-			WrappingContext childContext = new WrappingContext(this, startLine, startColumn, startOffset, isAllOrNone);
-			childContexts2.add(childContext);
-			return childContext;
+		@Override
+		public @NonNull String toString() {
+			return "Wrapped " + super.toString();
 		}
 	}
 
@@ -176,31 +391,38 @@ public class SerializationBuilder implements ToDebugStringable
 		 */
 		private int nextColumn = 0;
 
-		private @NonNull WrappingContext rootContext = new WrappingContext();
-		private @NonNull WrappingContext currentContext = rootContext;
+		private final @NonNull RootContext rootContext;
+		private @NonNull RegionContext currentContext;
 
 		public WrappingStringBuilder(@NonNull StringBuilder s, int lineLength, int tabWidth) {
 			this.s = s;
 			this.lineLength = lineLength;
 			this.tabWidth = tabWidth;
+			this.rootContext = new RootContext(this);
+			this.currentContext = rootContext;
 		}
 
 		public void append(@Nullable String string) {
 			if (string != null) {
-				if (WRAP_BEGIN_ALL.equals(string)) {
-					currentContext = currentContext.push(nextLine, nextColumn, s.length(), true);
+				if (WRAP_ANCHOR.equals(string)) {
+					currentContext.addContext(new AnchorContext(this));
+				}
+				else if (WRAP_BEGIN_ALL.equals(string)) {
+					WrappingContext childContext = new WrappingContext(currentContext, this, true);
+					currentContext.addContext(childContext);
+					currentContext = childContext;
 				}
 				else if (WRAP_BEGIN_SOME.equals(string)) {
-					currentContext = currentContext.push(nextLine, nextColumn, s.length(), false);
+					WrappingContext childContext = new WrappingContext(currentContext, this, false);
+					currentContext.addContext(childContext);
+					currentContext = childContext;
 				}
 				else if (WRAP_END.equals(string)) {
-					currentContext = currentContext.pop(nextLine, nextColumn, s.length());
+					currentContext.addContext(new EndContext(this));
+					currentContext = currentContext.getParentContext();
 				}
 				else if (WRAP_HERE.equals(string)) {
-					currentContext.addHere(nextLine, nextColumn, s.length());
-				}
-				else if (WRAP_INDENT.equals(string)) {
-					currentContext.addIndent(nextLine, nextColumn, s.length());
+					currentContext.addContext(new HereContext(this));
 				}
 				else {
 					for (int i = 0; i < string.length(); i++) {
@@ -224,8 +446,37 @@ public class SerializationBuilder implements ToDebugStringable
 			}
 		}
 
-		public void close() {
+		public void appendIndent(@NonNull Stack<@NonNull String> indents) {
+			int size = indents.size();
+			assert size > 0;
+			for (int i = 0; i < size; i++) {
+				append(indents.get(i));
+			}
+			currentContext.addContext(new IndentedContext(this));
+		}
 
+		public void appendNewLine() {
+			currentContext.addContext(new NewLineContext(this));
+		}
+
+		public void close() {
+			int maximumRequiredColumns = rootContext.getMaximumRequiredColumns();
+			int minimumRequiredColumns = rootContext.getMinimumRequiredColumns();
+			if (maximumRequiredColumns > lineLength) {
+				getClass();		// XXX
+			}
+		}
+
+		public int getColumn() {
+			return nextColumn;
+		}
+
+		public int getLine() {
+			return nextLine;
+		}
+
+		public int getOffset() {
+			return s.length();
 		}
 
 		@Override
@@ -255,9 +506,9 @@ public class SerializationBuilder implements ToDebugStringable
 		private @NonNull Stack<@NonNull String> indents = new Stack<>();
 
 		/**
-		 * True if a new-line has been output, and that indentation must preceded further non-white output.
+		 * True if a new-line has been output and not followed by anything else.
 		 */
-		private boolean indentsPending = false;
+		private boolean atStartOfLine = true;
 
 		private final @NonNull WrappingStringBuilder s;
 
@@ -269,32 +520,28 @@ public class SerializationBuilder implements ToDebugStringable
 
 		public void append(@NonNull String string) {
 			s.append(string);
-		}
-
-		protected void appendIndents() {
-			assert indentsPending;
-			for (int i = 0; i < indents.size(); i++) {
-				append(indents.get(i));
+			if (atStartOfLine && !string.isEmpty()) {
+				atStartOfLine = false;
 			}
-			indentsPending = false;
 		}
 
 		protected String appendNewLine() {
+			s.appendNewLine();
 			append(newLineString);
-			indentsPending = true;
+			atStartOfLine = true;
 			return NO_SPACE;
 		}
 
 		protected String appendString(@NonNull String string) {
-			if (indentsPending) {
-				appendIndents();
+			if (atStartOfLine && !string.isEmpty() && !indents.isEmpty()) {
+				s.appendIndent(indents);
 			}
 			append(string);
 			return null;
 		}
 
 		public void close() {
-			if (!indentsPending) {
+			if (!atStartOfLine) {
 				appendNewLine();
 			}
 			s.close();
@@ -366,6 +613,7 @@ public class SerializationBuilder implements ToDebugStringable
 
 	public void append(@Nullable String string) {
 		if (string != null) {
+			assert string.indexOf('\n') < 0;
 			strings.add(string);
 		}
 	}

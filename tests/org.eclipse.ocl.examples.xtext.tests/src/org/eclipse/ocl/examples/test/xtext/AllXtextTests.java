@@ -125,6 +125,7 @@ extends TestCase {
 		result.addTestSuite(StandaloneExecutionTests.class);
 		result.addTestSuite(StandaloneParserTests.class);
 		result.addTestSuite(GrammarRuleVectorTests.class);
+		result.addTestSuite(SerializationBuilderTests.class);
 		result.addTestSuite(StringUtilTests.class);
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			result.addTestSuite(CompletionProposalTests.class);
