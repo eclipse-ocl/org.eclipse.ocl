@@ -115,6 +115,11 @@ public class SerializationBuilder implements ToDebugStringable
 		public @NonNull String toString() {
 			return line + ":" + column + ":" + offset;
 		}
+
+		public int toString(@NonNull StringBuilder sOut, int offset, @NonNull StringBuilder sIn) {
+			sOut.append(sIn.substring(offset, this.offset));
+			return this.offset;
+		}
 	}
 
 	/**
@@ -184,13 +189,23 @@ public class SerializationBuilder implements ToDebugStringable
 	 */
 	protected static class NewLineContext extends AbstractContext
 	{
-		public NewLineContext(@NonNull WrappingStringBuilder s) {
+		protected final int newLineSize;
+
+		public NewLineContext(@NonNull WrappingStringBuilder s, int newLineSize) {
 			super(s);
+			this.newLineSize = newLineSize;
 		}
 
 		@Override
 		public @NonNull String toString() {
 			return "NewLine " + super.toString();
+		}
+
+		@Override
+		public int toString(@NonNull StringBuilder sOut, int offset,@NonNull StringBuilder sIn) {
+			int endOffset = this.offset + newLineSize;
+			sOut.append(sIn.substring(offset, endOffset));
+			return endOffset;
 		}
 	}
 
@@ -318,6 +333,15 @@ public class SerializationBuilder implements ToDebugStringable
 				}
 			}
 			return mostRequiredColumns;
+		}
+
+		@Override
+		public int toString(@NonNull StringBuilder sOut, int offset, @NonNull StringBuilder sIn) {
+			offset = super.toString(sOut, offset, sIn);
+			for (@NonNull AbstractContext childContext : childContexts) {
+				offset = childContext.toString(sOut, offset, sIn);
+			}
+			return offset;
 		}
 	}
 
@@ -455,16 +479,11 @@ public class SerializationBuilder implements ToDebugStringable
 			currentContext.addContext(new IndentedContext(this));
 		}
 
-		public void appendNewLine() {
-			currentContext.addContext(new NewLineContext(this));
+		public void appendNewLine(int newLineSize) {
+			currentContext.addContext(new NewLineContext(this, newLineSize));
 		}
 
 		public void close() {
-			int maximumRequiredColumns = rootContext.getMaximumRequiredColumns();
-			int minimumRequiredColumns = rootContext.getMinimumRequiredColumns();
-			if (maximumRequiredColumns > lineLength) {
-				getClass();		// XXX
-			}
 		}
 
 		public int getColumn() {
@@ -481,9 +500,21 @@ public class SerializationBuilder implements ToDebugStringable
 
 		@Override
 		public @NonNull String toString() {
-			@SuppressWarnings("null")
-			@NonNull String castString = (@NonNull String)String.valueOf(s);
-			return castString;
+			int maximumRequiredColumns = rootContext.getMaximumRequiredColumns();
+			int minimumRequiredColumns = rootContext.getMinimumRequiredColumns();
+			if (maximumRequiredColumns > lineLength) {
+				StringBuilder sOut = new StringBuilder();
+				int offset = rootContext.toString(sOut, 0, s);
+				assert offset == s.length();
+				@SuppressWarnings("null")
+				@NonNull String castString = (@NonNull String)String.valueOf(sOut);
+				return castString;
+			}
+			else {
+				@SuppressWarnings("null")
+				@NonNull String castString = (@NonNull String)String.valueOf(s);
+				return castString;
+			}
 		}
 	}
 
@@ -526,7 +557,7 @@ public class SerializationBuilder implements ToDebugStringable
 		}
 
 		protected String appendNewLine() {
-			s.appendNewLine();
+			s.appendNewLine(newLineString.length());
 			append(newLineString);
 			atStartOfLine = true;
 			return NO_SPACE;

@@ -49,4 +49,31 @@ public class SerializationBuilderTests extends XtextTestCase
 		s.append(SerializationBuilder.NEW_LINE);
 		assertEquals("\r\n\r\n\r\n", s.toString());
 	}
+
+	public void testSerializationBuilder_Wrap() {
+		SerializationBuilder s = new SerializationBuilder("\n", "\t", 50, 8);
+		s.append(SerializationBuilder.PUSH);
+		s.append("prelude");
+		s.append(SerializationBuilder.WRAP_BEGIN_ALL);
+		s.append("(");
+		s.append(SerializationBuilder.WRAP_ANCHOR);
+		s.append("abcdefghijklmnopqrstuvwxyz,");
+		s.append(SerializationBuilder.SOFT_SPACE);
+		s.append(SerializationBuilder.WRAP_HERE);
+/*		s.append("b,");
+		s.append(SerializationBuilder.WRAP_HERE);
+		s.append("c,");
+		s.append(SerializationBuilder.WRAP_HERE);
+		s.append("d,");
+		s.append("e,");
+		s.append(SerializationBuilder.WRAP_HERE);
+		s.append("f,");
+		s.append("g,");
+		s.append(SerializationBuilder.WRAP_HERE); */
+		s.append("0123456789");
+		s.append(")");
+		s.append(SerializationBuilder.WRAP_END);
+		s.append(SerializationBuilder.NEW_LINE);
+		assertEquals("\tprelude(abcdefghijklmnopqrstuvwxyz,\n\t        0123456789)\n", s.toString());
+	}
 }
