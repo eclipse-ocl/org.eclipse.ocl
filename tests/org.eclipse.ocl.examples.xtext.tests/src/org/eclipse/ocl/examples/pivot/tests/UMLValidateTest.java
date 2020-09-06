@@ -865,4 +865,27 @@ public class UMLValidateTest extends AbstractValidateTests
 				"The 'Test::NonNullInterfaceFull' constraint is violated for '«Test»Bug515027::TClass'");
 		ocl.dispose();
 	}
+
+	public void test_umlValidation_Bug566594() throws IOException {
+		//		PartialClasses.ADD_BASE_PROPERTY.setState(true);
+		//		PartialClasses.ADD_EXTENSION_PROPERTY.setState(true);
+		//		PartialClasses.INIT_MEMBER_PROPERTIES.setState(true);
+		resetRegistries();
+		//		BaseLinkingService.DEBUG_RETRY.setState(true);
+		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
+		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
+			new CommonPreferenceInitializer().initializeDefaultPreferences();
+		}
+		OCL ocl = createOCL();
+		ResourceSet resourceSet = ocl.getResourceSet();
+		org.eclipse.ocl.ecore.delegate.OCLDelegateDomain.initialize(resourceSet);
+		OCLDelegateDomain.initializePivotOnlyDiagnosticianResourceSet(resourceSet);
+		@SuppressWarnings("null")@NonNull Resource umlResource = doLoadUML(ocl, getTestModelURI("models/uml/Bug566594.uml"));
+		assertNoResourceErrors("Loading", umlResource);
+		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
+		OCLDelegateDomain.initializePivotOnlyDiagnosticianContext(validationContext);
+		assertValidationDiagnostics("Loading", umlResource, validationContext, NO_MESSAGES);
+		assertUMLOCLValidationDiagnostics(ocl, "UML Load", umlResource);
+		ocl.dispose();
+	}
 }
