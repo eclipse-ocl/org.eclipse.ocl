@@ -17,5 +17,15 @@
       </ownedParameter>
     </ownedTemplateSignature>
     <ownedAttribute xmi:id="_DQhOgO1WEeqCHJpNGm3jHw" name="weight" type="_83yx4O1VEeqCHJpNGm3jHw"/>
+    <ownedOperation xmi:id="_AJAGgPAgEeq51dmulbxAKQ" name="getExtraWeight" bodyCondition="_VS4DQPAgEeq51dmulbxAKQ" isQuery="true">
+      <ownedRule xmi:id="_VS4DQPAgEeq51dmulbxAKQ">
+        <specification xmi:type="uml:OpaqueExpression" xmi:id="_WtDiQPAgEeq51dmulbxAKQ" name="bodySpec">
+          <language>OCL</language>
+          <body>self.weight + refWeight</body>
+        </specification>
+      </ownedRule>
+      <ownedParameter xmi:id="_KcZB4PAgEeq51dmulbxAKQ" type="_83yx4O1VEeqCHJpNGm3jHw" direction="return"/>
+      <ownedParameter xmi:id="_QAdHYPAgEeq51dmulbxAKQ" name="refWeight" type="_83yx4O1VEeqCHJpNGm3jHw"/>
+    </ownedOperation>
   </packagedElement>
 </uml:Model>
