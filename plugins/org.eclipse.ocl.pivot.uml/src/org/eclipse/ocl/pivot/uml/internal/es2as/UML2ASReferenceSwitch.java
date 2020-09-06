@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Slot;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -118,6 +119,22 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		}
 		converter.refreshList(asClass.getSuperClasses(), asSuperClasses);
 		return asClass;
+	}
+
+	@Override
+	public Object caseClassifierTemplateParameter(org.eclipse.uml2.uml.ClassifierTemplateParameter umlTemplateParameter) {
+		assert umlTemplateParameter != null;
+		TemplateParameter asTemplateParameter = converter.getCreated(TemplateParameter.class, umlTemplateParameter);
+		if (asTemplateParameter != null) {
+			for (org.eclipse.uml2.uml.Classifier umlClassifier : umlTemplateParameter.getConstrainingClassifiers()) {
+				assert umlClassifier != null;
+				org.eclipse.ocl.pivot.Class asConstrainingClass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClassifier);
+				if (asConstrainingClass != null) {
+					asTemplateParameter.getConstrainingClasses().add(asConstrainingClass);
+				}
+			}
+		}
+		return asTemplateParameter;
 	}
 
 	@Override
