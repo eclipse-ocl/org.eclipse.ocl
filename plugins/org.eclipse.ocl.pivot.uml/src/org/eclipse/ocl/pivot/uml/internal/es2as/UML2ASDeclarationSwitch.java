@@ -152,12 +152,12 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 	@Override
 	public Object caseClassifierTemplateParameter(org.eclipse.uml2.uml.ClassifierTemplateParameter umlTemplateParameter) {
 		assert umlTemplateParameter != null;
-		@SuppressWarnings("null") org.eclipse.uml2.uml.@NonNull Class umlParameterClass = (org.eclipse.uml2.uml.Class) umlTemplateParameter.getParameteredElement();
+		@SuppressWarnings("null") org.eclipse.uml2.uml.@NonNull Type umlParameterType = (org.eclipse.uml2.uml.Type)umlTemplateParameter.getParameteredElement();
 		TemplateParameter pivotElement = converter.refreshElement(TemplateParameter.class, PivotPackage.Literals.TEMPLATE_PARAMETER, umlTemplateParameter);
 		//		TemplateParameter pivotTemplateParameter = converter.refreshNamedElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, umlTemplateParameter);
 		//		setOriginalMapping(pivotElement, umlTemplateParameter);
 		//		String name = umlTemplateParameter.getName();
-		pivotElement.setName(umlParameterClass.getName());
+		pivotElement.setName(umlParameterType.getName());
 		//		TemplateParameter templateParameter = pivotElement.isTemplateParameter();
 		//		if (templateParameter == null) {
 		//			templateParameter = PivotFactory.eINSTANCE.createTemplateParameter();
