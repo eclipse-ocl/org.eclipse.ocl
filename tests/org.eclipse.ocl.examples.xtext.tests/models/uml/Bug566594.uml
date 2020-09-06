@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_cC6mkO1VEeqCHJpNGm3jHw" name="Bug566594 ">
-  <packageImport xmi:type="uml:PackageImport" xmi:id="_QUn-AO1WEeqCHJpNGm3jHw">
+  <packageImport xmi:id="_QUn-AO1WEeqCHJpNGm3jHw">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
   <packagedElement xmi:type="uml:Class" xmi:id="_ghSPUO1VEeqCHJpNGm3jHw" name="Class1">
-    <ownedRule xmi:type="uml:Constraint" xmi:id="__iy_kO1VEeqCHJpNGm3jHw" name="TestConstraint">
+    <ownedRule xmi:id="__iy_kO1VEeqCHJpNGm3jHw" name="TestConstraint">
       <specification xmi:type="uml:OpaqueExpression" xmi:id="__i00wO1VEeqCHJpNGm3jHw" name="constraintSpec">
         <language>OCL</language>
         <body>self.weight &lt; 5</body>
@@ -13,10 +13,9 @@
     <ownedTemplateSignature xmi:type="uml:RedefinableTemplateSignature" xmi:id="_u1KkoO1VEeqCHJpNGm3jHw" name="RedefinableTemplateSignature1" parameter="_59hZIO1VEeqCHJpNGm3jHw">
       <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_59hZIO1VEeqCHJpNGm3jHw" parameteredElement="_83yx4O1VEeqCHJpNGm3jHw">
         <ownedParameteredElement xmi:type="uml:DataType" xmi:id="_83yx4O1VEeqCHJpNGm3jHw" name="T" templateParameter="_59hZIO1VEeqCHJpNGm3jHw"/>
+        <constrainingClassifier xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
       </ownedParameter>
     </ownedTemplateSignature>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_DQhOgO1WEeqCHJpNGm3jHw" name="weight">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-    </ownedAttribute>
+    <ownedAttribute xmi:id="_DQhOgO1WEeqCHJpNGm3jHw" name="weight" type="_83yx4O1VEeqCHJpNGm3jHw"/>
   </packagedElement>
 </uml:Model>

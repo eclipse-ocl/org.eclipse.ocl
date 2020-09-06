@@ -101,8 +101,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 	protected static final @NonNull String OCLforUML_COLLECTIONS = "OCLforUML::" + OCLforUMLPackage.Literals.COLLECTIONS.getName();
 	protected static final @SuppressWarnings("null")@NonNull String OCLforUML_COLLECTIONS_IS_NULL_FREE_NAME = OCLforUMLPackage.Literals.COLLECTIONS__IS_NULL_FREE.getName();
 
-	public static final @SuppressWarnings("null")@NonNull String STEREOTYPE_BASE_PREFIX = org.eclipse.uml2.uml.Extension.METACLASS_ROLE_PREFIX; //"base_";
-	public static final @SuppressWarnings("null")@NonNull String STEREOTYPE_EXTENSION_PREFIX = org.eclipse.uml2.uml.Extension.STEREOTYPE_ROLE_PREFIX; //"extension_";
+	public static final @NonNull String STEREOTYPE_BASE_PREFIX = org.eclipse.uml2.uml.Extension.METACLASS_ROLE_PREFIX; //"base_";
+	public static final @NonNull String STEREOTYPE_EXTENSION_PREFIX = org.eclipse.uml2.uml.Extension.STEREOTYPE_ROLE_PREFIX; //"extension_";
 
 	public static @NonNull UML2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		UMLStandaloneSetup.assertInitialized();
@@ -697,6 +697,12 @@ public abstract class UML2AS extends AbstractExternal2AS
 		@Override
 		public <T extends Element> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
 			Element element = createMap.get(eObject);
+			if ((element == null) && (eObject instanceof org.eclipse.uml2.uml.ParameterableElement)) {
+				org.eclipse.uml2.uml.TemplateParameter umlTemplateParameter = ((org.eclipse.uml2.uml.ParameterableElement)eObject).getOwningTemplateParameter();
+				if (umlTemplateParameter != null) {
+					element = createMap.get(umlTemplateParameter);
+				}
+			}
 			if (element == null) {
 				Resource resource = eObject.eResource();
 				if (resource == umlResource) {
