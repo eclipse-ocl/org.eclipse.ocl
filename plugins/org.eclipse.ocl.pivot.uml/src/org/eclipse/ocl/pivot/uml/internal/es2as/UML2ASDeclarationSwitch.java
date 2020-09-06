@@ -170,6 +170,9 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		//			doSwitchAll(eBounds);
 		//			converter.queueReference(umlTemplateParameter);
 		//		}
+		if (!umlTemplateParameter.getConstrainingClassifiers().isEmpty()) {
+			converter.queueReference(umlTemplateParameter);
+		}
 		return pivotElement;
 	}
 
