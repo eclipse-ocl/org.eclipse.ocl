@@ -21,11 +21,39 @@
       <ownedRule xmi:id="_VS4DQPAgEeq51dmulbxAKQ">
         <specification xmi:type="uml:OpaqueExpression" xmi:id="_WtDiQPAgEeq51dmulbxAKQ" name="bodySpec">
           <language>OCL</language>
-          <body>self.weight + refWeight</body>
+          <body>let weight : T = self.weight in weight + refWeight</body>
         </specification>
       </ownedRule>
       <ownedParameter xmi:id="_KcZB4PAgEeq51dmulbxAKQ" type="_83yx4O1VEeqCHJpNGm3jHw" direction="return"/>
       <ownedParameter xmi:id="_QAdHYPAgEeq51dmulbxAKQ" name="refWeight" type="_83yx4O1VEeqCHJpNGm3jHw"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_D2aF8PDcEeqO889zq1R-nA" name="getAccumulatedWeight" bodyCondition="_D2aF8fDcEeqO889zq1R-nA" isQuery="true">
+      <ownedRule xmi:id="_D2aF8fDcEeqO889zq1R-nA">
+        <specification xmi:type="uml:OpaqueExpression" xmi:id="_D2aF8vDcEeqO889zq1R-nA" name="bodySpec">
+          <language>OCL</language>
+          <body>self.weight->iterate(w : T; sum : T = refWeight | sum + w)</body>
+        </specification>
+      </ownedRule>
+      <ownedParameter xmi:id="_D2aF8_DcEeqO889zq1R-nA" type="_83yx4O1VEeqCHJpNGm3jHw" direction="return"/>
+      <ownedParameter xmi:id="_D2aF9PDcEeqO889zq1R-nA" name="refWeight" type="_83yx4O1VEeqCHJpNGm3jHw"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_g7NR4PDcEeqO889zq1R-nA" name="getIntegerWeight" bodyCondition="_g7NR4fDcEeqO889zq1R-nA" isQuery="true">
+      <ownedRule xmi:id="_g7NR4fDcEeqO889zq1R-nA">
+        <specification xmi:type="uml:OpaqueExpression" xmi:id="_g7NR4vDcEeqO889zq1R-nA" name="bodySpec">
+          <language>OCL</language>
+          <body>self.weight.oclIsKindOf(Q.oclType())</body>
+        </specification>
+      </ownedRule>
+      <ownedParameter xmi:id="_g7NR4_DcEeqO889zq1R-nA" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedParameter>
+      <ownedParameter xmi:id="_g7NR5PDcEeqO889zq1R-nA" name="refWeight" type="_s1XE0PDeEeqO889zq1R-nA"/>
+      <ownedTemplateSignature xmi:id="_y43KQPDcEeqO889zq1R-nA" parameter="_2WtKIPDcEeqO889zq1R-nA">
+        <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_2WtKIPDcEeqO889zq1R-nA" parameteredElement="_s1XE0PDeEeqO889zq1R-nA">
+          <ownedParameteredElement xmi:type="uml:DataType" xmi:id="_s1XE0PDeEeqO889zq1R-nA" name="Q" templateParameter="_2WtKIPDcEeqO889zq1R-nA"/>
+          <constrainingClassifier xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedParameter>
+      </ownedTemplateSignature>
     </ownedOperation>
   </packagedElement>
 </uml:Model>
