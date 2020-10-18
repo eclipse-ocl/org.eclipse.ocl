@@ -24,7 +24,7 @@ import org.eclipse.xtext.util.ITextRegion;
  * BaseOutlineWithEditorLinker is they key class for mapping a text location to an outline node and
  * so to an AS/CS element.
  * <p>
- * The reverse CS/AS element to text location mapping is in BaseLocationInFileProvider. 
+ * The reverse CS/AS element to text location mapping is in BaseLocationInFileProvider.
  */
 public class BaseOutlineWithEditorLinker extends OutlineWithEditorLinker
 {
@@ -34,7 +34,7 @@ public class BaseOutlineWithEditorLinker extends OutlineWithEditorLinker
 	private static final Logger logger = Logger.getLogger(BaseOutlineWithEditorLinker.class);
 
 	private int depth = 0;
-	
+
 	@Override
 	protected IOutlineNode findBestNode(IOutlineNode input, ITextRegion selectedTextRegion) {
 		int savedDepth = depth++;

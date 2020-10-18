@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *   		references WizardNewFileCreationPage, ResourceDialog and ExtendedLoadResourceDialog
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui.wizards;

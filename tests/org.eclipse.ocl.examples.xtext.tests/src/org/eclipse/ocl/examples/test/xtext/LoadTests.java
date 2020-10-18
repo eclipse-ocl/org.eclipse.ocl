@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
+import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -222,7 +223,9 @@ public class LoadTests extends XtextTestCase
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 			xtextResource.setURI(output2URI);
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+			DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 			xtextResource.save(XMIUtil.createSaveOptions());
+			debugTimestamp.log("Serialization save done");
 			//			System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 			assertNoResourceErrors("Save failed", xtextResource);
 			//
@@ -460,7 +463,9 @@ public class LoadTests extends XtextTestCase
 							CompleteOCLDocumentCS csDocument = (CompleteOCLDocumentCS)csRoot;
 							if (csDocument.getOwnedPackages().size() > 0) {
 								hasOCLcontent = true;
+								DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 								xtextResource.save(XMIUtil.createSaveOptions());
+								debugTimestamp.log("Serialization save done");
 							}
 						}
 					}
@@ -580,7 +585,9 @@ public class LoadTests extends XtextTestCase
 		Map<Object, Object> saveOptions = XMIUtil.createSaveOptions();
 		saveOptions.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 		saveOptions.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 		xtextResource.save(saveOptions);
+		debugTimestamp.log("Serialization save done");
 		xtextResource.setURI(inputURI);
 		assertNoResourceErrors("Save failed", xtextResource);
 		saveAsXMI(xtextResource, cstURI);
@@ -751,13 +758,13 @@ public class LoadTests extends XtextTestCase
 
 	public void testLoad_Overloads_oclinecore() throws IOException, InterruptedException {
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		doLoad_Concrete(ocl, getTestModelURI("models/oclinecore/Overloads.oclinecore"));
 		ocl.dispose();
 	}
 
 	public void testLoad_Refresh_oclinecore() throws IOException, InterruptedException {
-		OCL ocl = createOCL();
+		OCL ocl = createOCLWithProjectMap();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (!EcorePlugin.IS_ECLIPSE_RUNNING) {
 			//			OCLDelegateDomain.initialize(null);

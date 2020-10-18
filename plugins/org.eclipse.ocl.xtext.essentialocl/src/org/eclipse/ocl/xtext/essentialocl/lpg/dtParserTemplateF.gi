@@ -74,7 +74,7 @@
 	        }
 	        return;
 	    }
-	
+
 	    public void ruleAction$rule_number(int ruleNumber)
 	    {
 	        switch (ruleNumber)
@@ -94,26 +94,26 @@
         {
             return parse$entry_name(null, $default_repair_count);
         }
-            
+
         public $ast_class parse$entry_name(Monitor monitor)
         {
             return parse$entry_name(monitor, $default_repair_count);
         }
-            
+
         public $ast_class parse$entry_name(int error_repair_count)
         {
             return parse$entry_name(null, error_repair_count);
         }
-            
+
         public void resetParse$entry_name()
         {
             dtParser.resetParserEntry($sym_type.$entry_marker);
         }
-        
+
         public $ast_class parse$entry_name(Monitor monitor, int error_repair_count)
         {
             dtParser.setMonitor(monitor);
-            
+
             try
             {
                 return ($ast_class) dtParser.parseEntry($sym_type.$entry_marker);
@@ -136,7 +136,7 @@
 	$additional_interfaces /../
 	$ast_class /.$ast_type./
 	$unimplemented_symbols_warning /.false./
-	
+
 	-- Added Macros for the modified template
 	$default_repair_count /.0./
 	$super_parser_class /.AbstractParser./ -- The super class to which the genereated parser inherits
@@ -165,7 +165,7 @@
     public class $action_type extends $super_parser_class implements RuleAction$additional_interfaces
     {
         private $prs_stream_class prsStream = null;
-        
+
         private boolean unimplementedSymbolsWarning = $unimplemented_symbols_warning;
 
         private static ParseTable prsTable = new $prs_type();
@@ -184,7 +184,7 @@
         protected int getRhsTokenIndex(int i) { return dtParser.getToken(i); }
 		@Override
         protected IToken getRhsIToken(int i) { return prsStream.getIToken(getRhsTokenIndex(i)); }
-        
+
 		@Override
         protected int getRhsFirstTokenIndex(int i) { return dtParser.getFirstToken(i); }
 		@Override
@@ -243,7 +243,7 @@
                     for (int i = 0; i < unimplemented_symbols.size(); i++)
                     {
                         Integer id = (Integer) unimplemented_symbols.get(i);
-                        System.out.println("    " + $sym_type.orderedTerminalSymbols[id.intValue()]);               
+                        System.out.println("    " + $sym_type.orderedTerminalSymbols[id.intValue()]);
                     }
                     System.out.println();
                 }
@@ -259,7 +259,7 @@
 		@SuppressWarnings("nls")
         public $action_type($super_lexer_class lexer)
         {
-        		super(lexer);        		
+        		super(lexer);
             try
             {
                 dtParser = new DeterministicParser(prsStream, prsTable, this);
@@ -273,18 +273,18 @@
             {
                 throw new Error(new BadParseSymFileException("Bad Parser Symbol File -- $sym_type.java. Regenerate $prs_type.java"));
             }
-            
+
 	        ILexStream lexStream = lexer.getILexStream();
 	        if (lexStream != null) {
 	        	reset(lexStream);
 	        }
-        }		
+        }
 
 		@Override
         public int numTokenKinds() { return $sym_type.numTokenKinds; }
 		@Override
         public String[] orderedTerminalSymbols() { return $sym_type.orderedTerminalSymbols; }
-        public String getTokenKindName(int kind) { return $sym_type.orderedTerminalSymbols[kind]; }            
+        public String getTokenKindName(int kind) { return $sym_type.orderedTerminalSymbols[kind]; }
         public int getEOFTokenKind() { return prsTable.getEoftSymbol(); }
 		@Override
         public $prs_stream_class getIPrsStream() { return prsStream; }
@@ -294,19 +294,19 @@
         {
             return parser(null, $default_repair_count);
         }
-            
+
 		@Override
         public $ast_class parser(Monitor monitor)
         {
             return parser(monitor, $default_repair_count);
         }
-            
+
 		@Override
         public $ast_class parser(int error_repair_count)
         {
             return parser(null, error_repair_count);
         }
-            
+
 		@Override
         public $ast_class parser(Monitor monitor, int error_repair_count)
         {

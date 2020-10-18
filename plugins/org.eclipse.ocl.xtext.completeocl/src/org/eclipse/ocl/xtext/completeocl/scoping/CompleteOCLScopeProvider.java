@@ -14,9 +14,9 @@ import org.eclipse.ocl.xtext.essentialocl.scoping.EssentialOCLScopeProvider;
 
 /**
  * This class contains custom scoping description.
- * 
+ *
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
- * on how and when to use it 
+ * on how and when to use it
  *
  */
 public class CompleteOCLScopeProvider extends EssentialOCLScopeProvider

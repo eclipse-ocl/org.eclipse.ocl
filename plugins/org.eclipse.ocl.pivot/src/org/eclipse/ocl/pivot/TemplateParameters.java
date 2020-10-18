@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
 
 

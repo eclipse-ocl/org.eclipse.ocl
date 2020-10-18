@@ -18,13 +18,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 /**
- * Initialization support for running Xtext languages 
+ * Initialization support for running Xtext languages
  * without equinox extension registry
  */
 public class MarkupStandaloneSetup extends MarkupStandaloneSetupGenerated
 {
 	private static Injector injector = null;
-	
+
 	public static void doSetup() {
 		if (injector == null) {
 			new MarkupStandaloneSetup().createInjectorAndDoEMFRegistration();

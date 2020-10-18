@@ -1195,6 +1195,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					genModel.reconcile();
 					for (GenPackage genPackage : genModel.getGenPackages()) {
 						if (genPackage != null) {
+							addGenPackage(genPackage);
 							return genPackage;
 						}
 					}

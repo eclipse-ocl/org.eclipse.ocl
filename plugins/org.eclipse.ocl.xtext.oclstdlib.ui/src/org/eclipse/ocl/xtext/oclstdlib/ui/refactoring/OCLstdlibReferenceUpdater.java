@@ -52,8 +52,8 @@ public class OCLstdlibReferenceUpdater extends DefaultReferenceUpdater
 //				IRefactoringDocument document = updateAcceptor.getDocument(targetResource.getURI());
 //				updateAcceptor.accept(targetElementOriginalURI, new ReplaceEdit(0, document.getOriginalContents().length(),
 //					newName));
-				
-				
+
+
 				//				changeUtil.addSaveAsUpdate(referringResource, updateAcceptor);
 				progress.worked(1);
 			} catch (Exception exc) {

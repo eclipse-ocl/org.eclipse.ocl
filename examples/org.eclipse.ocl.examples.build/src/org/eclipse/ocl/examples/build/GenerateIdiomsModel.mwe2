@@ -1,0 +1,42 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2013 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *   E.D.Willink (CEA LIST) - Bug 424034
+ *
+ * Run As->MWE2 Workflow to regenerate the pivot model.
+ *******************************************************************************/
+module GenerateIdiomsModel
+
+import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.ocl.examples.build.xtend.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+var sourceName = "org.eclipse.ocl.examples.xtext.idioms"
+
+/**
+ *	Generate the Idioms Model, by converting idioms.ecore to *.java.
+ */
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = StandaloneSetup { resourceSet = resourceSet
+		scanClassPath = true
+    	platformUri = "../../examples"
+    }
+//    bean = ProjectMapSetup { resourceSet = resourceSet }
+    bean = EcoreGenModelSetup { resourceSet = resourceSet }
+    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true clearResourceSet=false
+    	genModel = "/${sourceName}/model/Idioms.genmodel"
+    }
+	component = ConvertToUnixLineEndings {
+		directory = "../../examples/${sourceName}/emf-gen"
+	}
+}
+

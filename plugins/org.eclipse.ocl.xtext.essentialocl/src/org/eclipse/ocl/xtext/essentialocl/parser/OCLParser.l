@@ -3,35 +3,35 @@ Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.
 
     ACTION-BLOCK=("C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParser.java","/.","./")
 
-    AST-DIRECTORY=""  AST-TYPE="CSTNode"  NOATTRIBUTES  NOAUTOMATIC-AST  
-    NOBACKTRACK  BYTE  CONFLICTS  
+    AST-DIRECTORY=""  AST-TYPE="CSTNode"  NOATTRIBUTES  NOAUTOMATIC-AST
+    NOBACKTRACK  BYTE  CONFLICTS
     DAT-DIRECTORY="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\"
-    
+
     DAT-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserdcl.data"
-    
+
     DCL-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserdcl.java"
-    NODEBUG  
+    NODEBUG
     DEF-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserdef.java"
-    NOEDIT  ERROR-MAPS  ESCAPE='$'  
+    NOEDIT  ERROR-MAPS  ESCAPE='$'
     EXPORT-TERMINALS=("C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserexp.java","","")
-    EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="OCLParser"  NOFIRST  
-    NOFOLLOW  NOGLR  NOGOTO-DEFAULT  
+    EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="OCLParser"  NOFIRST
+    NOFOLLOW  NOGLR  NOGOTO-DEFAULT
     GRM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLParser.g"
-    
+
     IMP-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserimp.java"
     IMPORT-TERMINALS="OCLLexer.gi"  INCLUDE-DIRECTORY=".;../lpg"  LALR=1  LEGACY
     NOLIST  MARGIN=4  MAX-CASES=1024  NAMES=OPTIMIZED  NONT-CHECK  OR_MARKER='|'
     OUT-DIRECTORY="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\"
     PACKAGE="org.eclipse.ocl.xtext.essentialocl.parser"  NOPARENT-SAVE
-    PARSETABLE-INTERFACES="lpg.runtime.ParseTable"  PREFIX="TK_"  PRIORITY  
-    PROGRAMMING_LANGUAGE=JAVA  
+    PARSETABLE-INTERFACES="lpg.runtime.ParseTable"  PREFIX="TK_"  PRIORITY
+    PROGRAMMING_LANGUAGE=JAVA
     PRS-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserprs.java"
     NOQUIET  READ-REDUCE  REMAP-TERMINALS  SCOPES  NOSERIALIZE  NOSHIFT-DEFAULT
-    NOSINGLE-PRODUCTIONS  NOSOFT-KEYWORDS  NOSTATES  SUFFIX=""  
+    NOSINGLE-PRODUCTIONS  NOSOFT-KEYWORDS  NOSTATES  SUFFIX=""
     SYM-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParsersym.java"
-    TAB-FILE="OCLParser.t"  TABLE  TEMPLATE="dtParserTemplateF.gi"  
+    TAB-FILE="OCLParser.t"  TABLE  TEMPLATE="dtParserTemplateF.gi"
     TRACE=CONFLICTS  NOVARIABLES  NOVERBOSE  NOVISITOR  VISITOR-TYPE="Visitor"
-    WARNINGS  NOXREF  
+    WARNINGS  NOXREF
 
 C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCL.gi:92:4:92:6:2781:2783: Warning: The macro "$Id" is undefined. No substitution made
 C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCL.gi:92:68:92:68:2845:2845: Warning: The macro "$" is undefined. No substitution made

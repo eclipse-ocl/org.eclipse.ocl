@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -292,7 +293,7 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	@Override
 	public List<CGClass> getTemplateParameters() {
 		if (templateParameters == null) {
-			templateParameters = new EObjectEList<CGClass>(CGClass.class, this, CGModelPackage.Literals.CG_CLASS__TEMPLATE_PARAMETERS.getFeatureID())
+			templateParameters = new EObjectResolvingEList<CGClass>(CGClass.class, this, CGModelPackage.Literals.CG_CLASS__TEMPLATE_PARAMETERS.getFeatureID())
 			{
 				@Override
 				protected boolean isUnique() {

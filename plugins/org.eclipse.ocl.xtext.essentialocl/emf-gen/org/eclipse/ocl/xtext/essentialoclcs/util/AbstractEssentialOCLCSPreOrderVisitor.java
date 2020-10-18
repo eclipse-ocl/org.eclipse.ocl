@@ -34,7 +34,7 @@ public abstract class AbstractEssentialOCLCSPreOrderVisitor
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractEssentialOCLCSPreOrderVisitor(@NonNull CS2ASConversion context) {

@@ -53,12 +53,12 @@ public final class BasePlugin extends EMFPlugin {
 	/**
 	 * Generates an error log for the specified plug-in, with the specified
 	 * status code, message.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
-	 *  
+	 *
 	 */
 	public static void error(int code, String message) {
 		error(code, message, null);
@@ -67,14 +67,14 @@ public final class BasePlugin extends EMFPlugin {
 	/**
 	 * Generates an error log for the specified plug-in, with the specified
 	 * status code, message, and throwable.
-	 * 
+	 *
 	 * @param code
 	 *            The status code for the log.
 	 * @param message
 	 *            The message for the log.
 	 * @param throwable
 	 *            The throwable for the log.
-	 *  
+	 *
 	 */
 	public static void error(int code, String message, Throwable throwable) {
 		log(Diagnostic.ERROR, code, message, throwable);

@@ -105,7 +105,7 @@ LibClassCS returns LibClassCS:
 ;
 
 ClassCS returns base::ClassCS:
-	LibClassCS 
+	LibClassCS
 ;
 
 DetailCS returns base::DetailCS:
@@ -158,7 +158,7 @@ IteratorCS returns base::ParameterCS:
 ;
 
 LambdaTypeCS returns base::LambdaTypeCS:
-	name='Lambda' (ownedSignature=TemplateSignatureCS)? ownedContextType=LambdaContextTypeRefCS	
+	name='Lambda' (ownedSignature=TemplateSignatureCS)? ownedContextType=LambdaContextTypeRefCS
 	'(' (ownedParameterTypes+=TypedMultiplicityRefCS (',' ownedParameterTypes+=TypedMultiplicityRefCS)*)? ')'
 	':' ownedResultType=TypedRefCS
 ;
@@ -236,7 +236,7 @@ PreCS returns LibConstraintCS:
 
 PrecedenceCS returns PrecedenceCS:
 	('left'|isRightAssociative?='right') ':' name=Name
-;	
+;
 
 SpecificationCS returns essentialocl::ExpSpecificationCS:
 	ownedExpression=ExpCS;

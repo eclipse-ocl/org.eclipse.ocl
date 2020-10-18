@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.markup.ui.contentassist;
 
-import org.eclipse.ocl.xtext.markup.ui.contentassist.AbstractMarkupProposalProvider;
-
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */

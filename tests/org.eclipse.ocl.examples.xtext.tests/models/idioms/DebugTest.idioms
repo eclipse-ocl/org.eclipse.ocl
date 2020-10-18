@@ -1,0 +1,7 @@
+model Idioms
+
+segment/*+++*/
+POST_COMMENT no-space;
+
+mixin idiom/*---*/
+COMMENTS at final do value;

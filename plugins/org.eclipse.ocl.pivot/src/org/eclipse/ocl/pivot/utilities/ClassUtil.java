@@ -217,6 +217,16 @@ public class ClassUtil
 	}
 
 	/**
+	 * Return aT as @Nullable to suppress the compiler's insistence that the value is non-null.
+	 * This may be necessary fo methods that access final non-null fields during construction.
+	 *
+	 * @since 1.13
+	 */
+	public static <T> @Nullable T maybeNull(@NonNull T aT) {
+		return aT;
+	}
+
+	/**
 	 * Check for an in appropriate program state. This should not happen, but is not impossible. For instance
 	 * a Resource should be contained in a ResourceSet, but that doesn't mean it always is.
 	 *<p>

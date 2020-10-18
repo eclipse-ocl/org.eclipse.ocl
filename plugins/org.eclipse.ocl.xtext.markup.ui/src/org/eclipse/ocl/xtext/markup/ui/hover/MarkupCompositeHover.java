@@ -26,7 +26,7 @@ import com.google.inject.Inject;
  */
 public class MarkupCompositeHover extends AbstractCompositeHover
 {
-	@Inject 
+	@Inject
 	protected AnnotationWithQuickFixesHover annotationHover;
 
 	/**
@@ -34,7 +34,7 @@ public class MarkupCompositeHover extends AbstractCompositeHover
 	 */
 	@Inject
 	protected IEObjectHover htmlHover;
-	
+
 	@Override
 	protected List<ITextHover> createHovers() {
 		List<ITextHover> list = new ArrayList<ITextHover>();

@@ -36,7 +36,7 @@ public class MarkupHover extends AbstractEObjectHover
 {
 	@Inject
 	private ILocationInFileProvider locationInFileProvider;
-	
+
 	@Inject
 	IEObjectHoverProvider hoverProvider;
 
@@ -58,7 +58,7 @@ public class MarkupHover extends AbstractEObjectHover
 		this.lastCreatorProvider = creatorProvider;
 		return lastCreatorProvider.getInfo();
 	}
-	
+
 	@Override
 	protected Pair<EObject, IRegion> getXtextElementAt(XtextResource resource, int offset) {
 		//

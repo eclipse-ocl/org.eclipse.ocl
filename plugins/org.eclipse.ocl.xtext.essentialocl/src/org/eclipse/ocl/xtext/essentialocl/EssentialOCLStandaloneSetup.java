@@ -25,20 +25,20 @@ import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import com.google.inject.Injector;
 
 /**
- * Initialization support for running Xtext languages 
+ * Initialization support for running Xtext languages
  * without equinox extension registry
  */
 public class EssentialOCLStandaloneSetup extends EssentialOCLStandaloneSetupGenerated
 {
 	private static Injector injector = null;
-	
+
 	public static void doSetup() {
 		assert !EMFPlugin.IS_ECLIPSE_RUNNING;			// Enforces Bug 382058 fix
 		if (injector == null) {
 			new EssentialOCLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
 	}
-	
+
 	public static void doTearDown() {
 		injector = null;
 	}
@@ -52,7 +52,7 @@ public class EssentialOCLStandaloneSetup extends EssentialOCLStandaloneSetupGene
 		EPackage.Registry.INSTANCE.put(EssentialOCLCSPackage.eNS_URI, EssentialOCLCSPackage.eINSTANCE);
 //		EValidator.Registry.INSTANCE.put(EssentialOCLCSPackage.eINSTANCE, EssentialOCLCSValidator.INSTANCE);
 	}
-	
+
 	/**
 	 * Return the Injector for this plugin.
 	 */

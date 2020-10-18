@@ -96,7 +96,7 @@ public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 			String nonASextension = nonASuri.fileExtension();
 			ASResourceFactory asResourceFactory = nonASextension != null ? ASResourceFactoryRegistry.INSTANCE.getASResourceFactoryForExtension(nonASextension) : null;
 			//
-			//	Otherwise create a *.xxxas by converting the trimmed resource to XXX AS.
+			//	Otherwise create a *.yyyas by converting the trimmed resource to YYY AS.
 			//
 			if (asResourceFactory == null) {			// Must be an Ecore Package registration possibly with a confusing 'extension'
 				asResourceFactory = EcoreASResourceFactory.getInstance();
@@ -107,7 +107,7 @@ public class OCLASResourceFactory extends ResourceSetAwareASResourceFactory
 	}
 
 	private static @Nullable OCLASResourceFactory CONTENT_TYPE_INSTANCE = null;
-	
+
 	/**
 	 * @since 1.5
 	 */

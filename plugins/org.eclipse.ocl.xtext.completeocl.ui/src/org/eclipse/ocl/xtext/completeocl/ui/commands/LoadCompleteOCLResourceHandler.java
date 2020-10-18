@@ -80,7 +80,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 /**
  * A LoadCompleteOCLResourceHandler supports the OCL->Load Document command.
- * 
+ *
  * It provides a pop-up dialog with DND capability for a Complete OCL document to be installed in the
  * ResourceSet associated with the invoking selection.
  */
@@ -132,7 +132,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 				}
 			}
 		}
-		
+
 		/**
 		 * Job scheduled on a worker thread to compute the editor text.
 		 */
@@ -140,12 +140,12 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 		{
 			private final @NonNull List<URI> uris;
 			private boolean processedResourcesReturn = false;
-			
+
 			public DeferredLoadDocumentJob(@NonNull List<URI> uris) {
 				super("Deferred Load OCL Document");
 				this.uris = uris;
 			}
-			
+
 			@Override
 			protected IStatus run(final IProgressMonitor monitor) {
 				processedResourcesReturn = processResources();
@@ -214,7 +214,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 		private DropTarget target;
 		private Set<URI> registeredURIsForResourceSet;
 		private DeferredLoadDocumentJob job = null;
-		
+
 		protected ResourceDialog(Shell parent, EditingDomain domain, @NonNull ResourceSet resourceSet) {
 			super(parent, domain);
 			this.parent = parent;
@@ -275,10 +275,10 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 		      data.right = new FormAttachment(100, -CONTROL_OFFSET);
 		      helpLabel.setLayoutData(data);
 		    }
-			
+
 			return createDialogArea;
 		}
-		
+
 		private void prepareBrowseRegisteredOCLFiles(Button browseRegisteredOCLFiles) {
 			browseRegisteredOCLFiles.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -298,7 +298,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 				}
 			});
 		}
-		
+
 		private class RegisteredOCLFilesDialog extends ElementListSelectionDialog
 		{
 			public RegisteredOCLFilesDialog(Shell parent) {
@@ -315,7 +315,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 				setTitle(CompleteOCLUIMessages.LoadCompleteOCLResource_OCLFileSelection_label);
 				setSize(100, 20);
 			}
-			
+
 			@Override
 			protected Control createDialogArea(Composite parent)
 			{
@@ -392,7 +392,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 			throw new UnsupportedOperationException();		// Never happens since processResources overridden.
 		}
 	}
-	
+
 	public static class URIComparator implements Comparator<URI> {
 		@Override
 		public int compare(URI o1, URI o2) {
@@ -416,7 +416,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 		}
 		return null;
 	}
-	
+
 	public static @Nullable EditingDomain getEditingDomain(@Nullable Object evaluationContext) {
 		Object o = HandlerUtil.getVariable(evaluationContext, ISources.ACTIVE_EDITOR_NAME);
 		if (!(o instanceof IEditorPart)) {
@@ -432,7 +432,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 		}
 		return editingDomain;
 	}
-	
+
 	public static @Nullable ResourceSet getResourceSet(@Nullable Object evaluationContext) {
 		Object o = HandlerUtil.getVariable(evaluationContext, ISources.ACTIVE_EDITOR_NAME);
 		if (!(o instanceof IEditorPart)) {
@@ -463,7 +463,7 @@ public class LoadCompleteOCLResourceHandler extends AbstractHandler
 					else {
 						return xtextResource.getResourceSet();
 					}
-				}					
+				}
 			});
 			return resourceSet;
 		}

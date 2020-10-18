@@ -34,7 +34,7 @@ public abstract class AbstractOCLinEcoreCSLeft2RightVisitor
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractOCLinEcoreCSLeft2RightVisitor(@NonNull CS2ASConversion context) {

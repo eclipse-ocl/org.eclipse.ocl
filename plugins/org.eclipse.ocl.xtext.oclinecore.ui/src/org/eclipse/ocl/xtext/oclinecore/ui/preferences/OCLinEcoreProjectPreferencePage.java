@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Label;
  */
 public class OCLinEcoreProjectPreferencePage extends AbstractProjectPreferencePage
 {
-	
+
 	public OCLinEcoreProjectPreferencePage() {
 		super(PivotConstantsInternal.PLUGIN_ID, OCLinEcoreUIMessages.OCLinEcore_PageTitle);
 	}
@@ -36,7 +36,7 @@ public class OCLinEcoreProjectPreferencePage extends AbstractProjectPreferencePa
 	protected AbstractProjectPreferencePage createClonePage() {
 		return new OCLinEcoreProjectPreferencePage();
 	}
-	
+
 	/**
 	 * Creates the field editors. Field editors are abstractions of
 	 * the common GUI blocks needed to manipulate various types

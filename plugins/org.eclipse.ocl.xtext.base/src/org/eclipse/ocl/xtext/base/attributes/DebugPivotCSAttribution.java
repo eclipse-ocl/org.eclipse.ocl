@@ -28,7 +28,7 @@ public class DebugPivotCSAttribution extends AbstractAttribution
 		if (target instanceof PivotableElementCS) {
 			Element pivot = PivotUtil.getPivot(Element.class, (PivotableElementCS)target);
 			if ((pivot != null) && (pivot.eResource() != null)) {
-				environmentView.computeLookups(pivot, null); //PivotUtil.getPivot(Element.class, scopeView.getChild());	
+				environmentView.computeLookups(pivot, null); //PivotUtil.getPivot(Element.class, scopeView.getChild());
 			}
 		}
 		return scopeView.getParent();

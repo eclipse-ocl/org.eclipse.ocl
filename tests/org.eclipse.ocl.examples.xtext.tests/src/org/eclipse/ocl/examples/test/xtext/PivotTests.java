@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -202,7 +203,9 @@ public class PivotTests extends XtextTestCase
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " validated()");
 		xtextResource.setURI(output2URI);
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " save()");
+		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 		xtextResource.save(XMIUtil.createSaveOptions());
+		debugTimestamp.log("Serialization save done");
 		//		System.out.println(Long.toString(System.currentTimeMillis() - startTime) + " saved()");
 		assertNoResourceErrors("Save failed", xtextResource);
 		Resource xmiResource = resourceSet.createResource(outputURI);

@@ -1,0 +1,44 @@
+/*******************************************************************************
+ * Copyright (c) 2020 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *******************************************************************************/
+model Idioms
+import "platform:/resource/org.eclipse.ocl.examples.xtext.idioms/model/Idioms.ecore#/" as idioms
+
+segment PRE_COMMENT custom "org.eclipse.ocl.examples.xtext.idioms.serializer.XtextPreCommentSegmentSupport";
+segment POST_COMMENT custom "org.eclipse.ocl.examples.xtext.idioms.serializer.XtextPostCommentSegmentSupport";
+
+//mixin idiom COMMENTS at final do PRE_COMMENT value POST_COMMENT;
+mixin idiom COMMENTS at final do pre-comment value post-comment;
+
+idiom BRACES {
+	at "{" do soft-space value push soft-new-line;
+	at "}" do pop soft-space value soft-new-line;
+}
+
+idiom COLON_COLON at "::" do no-space value no-space;
+
+idiom COMMA at "," do no-space value soft-space;
+
+idiom IDIOMS_SPACING at assignment idioms::IdiomsModel::ownedIdioms do new-line soft-new-line value soft-new-line;
+
+idiom LOCATORS_SPACING at all assignment idioms::IdiomsModel::ownedLocatorDeclarations do new-line soft-new-line value soft-new-line;
+
+idiom IMPORTS_SPACING at assignment idioms::IdiomsModel::ownedImports do soft-new-line value soft-new-line;
+
+idiom SEGMENTS_SPACING at all assignment idioms::IdiomsModel::ownedSegmentDeclarations do new-line soft-new-line value soft-new-line;
+
+idiom SEMICOLON at ";" do no-space value soft-new-line;
+
+idiom SUBIDIOMS_SPACING at assignment idioms::Idiom::ownedSubIdioms do value soft-new-line;
+
+idiom WITHS_SPACING at assignment idioms::IdiomsModel::ownedWiths do soft-new-line value soft-new-line;
+
+/** idiom imposing default spacing for leaf terms must be last */
+idiom FINAL at final do soft-space value soft-space;

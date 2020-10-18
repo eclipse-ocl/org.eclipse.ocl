@@ -33,13 +33,13 @@ import org.eclipse.xtext.ui.editor.outline.impl.EObjectNode;
 
 /**
  * customization of the default outline structure
- * 
+ *
  */
 public class BaseOutlineTreeProvider extends DefaultOutlineTreeProvider
 {
 	public static final @NonNull TracingOption CREATE = new TracingOption(
 		BaseUiPluginHelper.PLUGIN_ID, "outline/create"); //$NON-NLS-1$
-	
+
 	@Override
 	protected EObjectNode createEObjectNode(IOutlineNode parentNode, EObject modelElement, Image image, Object text, boolean isLeaf) {
 		EObject asElement = modelElement;
@@ -82,7 +82,7 @@ public class BaseOutlineTreeProvider extends DefaultOutlineTreeProvider
 
 	/**
 	 * The default creation of outline children is refined to create a node for an implicit
-	 * element such as oclAsSet and to ignore null model elements. 
+	 * element such as oclAsSet and to ignore null model elements.
 	 */
 	@Override
 	public void createChildren(IOutlineNode parent, EObject modelElement) {
@@ -92,7 +92,7 @@ public class BaseOutlineTreeProvider extends DefaultOutlineTreeProvider
 	}
 
 	/**
-	 * The default creation of outline node is refined to ignore null model elements. 
+	 * The default creation of outline node is refined to ignore null model elements.
 	 */
 	@Override
 	protected void createNode(IOutlineNode parent, EObject modelElement) {
@@ -100,7 +100,7 @@ public class BaseOutlineTreeProvider extends DefaultOutlineTreeProvider
 			super.createNode(parent, modelElement);
 		}
 	}
-	
+
 	protected @Nullable ElementCS getImplicitCsElement(@NonNull Element asElement) {
 		return null;
 	}
@@ -108,7 +108,7 @@ public class BaseOutlineTreeProvider extends DefaultOutlineTreeProvider
 	/**
 	 * In the absence of a declarative override, creation of the children an outline node for a CS element
 	 * is redirected to its AS counterpart and if this is an implicit node the AS element is corrected to be
-	 * the implicit AS element. 
+	 * the implicit AS element.
 	 */
 	protected void _createChildren(IOutlineNode parent, ModelElementCS csElement) {
 		Element asElement = csElement.getPivot();
@@ -120,7 +120,7 @@ public class BaseOutlineTreeProvider extends DefaultOutlineTreeProvider
 
 	/**
 	 * In the absence of a declarative override, creation of an outline node for a CS element
-	 * is redirected to its AS counterpart. 
+	 * is redirected to its AS counterpart.
 	 */
 	protected void _createNode(DocumentRootNode parentNode, ModelElementCS csElement) {
 		createNode(parentNode, csElement.getPivot());
@@ -128,7 +128,7 @@ public class BaseOutlineTreeProvider extends DefaultOutlineTreeProvider
 
 	/**
 	 * In the absence of a declarative override, creation of an outline node for a CS element
-	 * is redirected to its AS counterpart. 
+	 * is redirected to its AS counterpart.
 	 */
 	protected void _createNode(IOutlineNode parent, ModelElementCS csElement) {
 		createNode(parent, csElement.getPivot());

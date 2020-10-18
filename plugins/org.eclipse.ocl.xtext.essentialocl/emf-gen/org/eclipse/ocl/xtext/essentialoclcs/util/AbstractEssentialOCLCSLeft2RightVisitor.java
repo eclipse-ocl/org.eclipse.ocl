@@ -34,7 +34,7 @@ public abstract class AbstractEssentialOCLCSLeft2RightVisitor
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractEssentialOCLCSLeft2RightVisitor(@NonNull CS2ASConversion context) {

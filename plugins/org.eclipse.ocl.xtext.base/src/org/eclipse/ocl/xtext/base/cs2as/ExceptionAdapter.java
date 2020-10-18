@@ -23,7 +23,7 @@ public class ExceptionAdapter extends AdapterImpl
 	public ExceptionAdapter(Exception exception) {
 		this.exception = exception;
 	}
-	
+
 	@Override
 	public boolean isAdapterForType(Object type) {
 		return type == ExceptionAdapter.class;

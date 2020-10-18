@@ -26,7 +26,7 @@ import org.eclipse.ocl.xtext.completeoclcs.OperationContextDeclCS;
 public class OperationContextFilter implements ScopeFilter
 {
 	private final @NonNull OperationContextDeclCS csOperationContext;
-	
+
 	public OperationContextFilter(@NonNull OperationContextDeclCS csOperationContext) {
 		this.csOperationContext = csOperationContext;
 	}

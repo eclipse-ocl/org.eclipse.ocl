@@ -69,8 +69,11 @@ public class GenerateModel extends AbstractWorkflowComponent {
 
 	private void gatherUsedGenPackages(@NonNull Set<GenPackage> allUsedGenPackages, GenPackage anotherUsedGenPackage) {
 		if (allUsedGenPackages.add(anotherUsedGenPackage)) {
-			for (GenPackage usedGenPackage : anotherUsedGenPackage.getGenModel().getUsedGenPackages()) {
-				gatherUsedGenPackages(allUsedGenPackages, usedGenPackage);
+			GenModel anotherGenModel = anotherUsedGenPackage.getGenModel();
+			if (anotherGenModel != null) {		// FIXME diagnose null or is it always downstream of an IOE
+				for (GenPackage usedGenPackage : anotherGenModel.getUsedGenPackages()) {
+					gatherUsedGenPackages(allUsedGenPackages, usedGenPackage);
+				}
 			}
 		}
 	}

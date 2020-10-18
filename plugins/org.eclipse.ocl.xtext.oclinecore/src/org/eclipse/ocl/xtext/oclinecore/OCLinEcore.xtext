@@ -25,7 +25,7 @@ TopLevelCS :
 ;
 
 terminal UNQUOTED_STRING:	// Never forward parsed; just provides a placeholder
-	'£$%^£$%^'				//  for reverse serialisation of embedded OCL 
+	'£$%^£$%^'				//  for reverse serialisation of embedded OCL
 ;
 
 INTEGER returns ecore::EInt:
@@ -88,6 +88,7 @@ PreconditionConstraintCS returns OCLinEcoreConstraintCS:
 	stereotype='precondition' (name=UnrestrictedName ('(' ownedMessageSpecification=SpecificationCS ')')?)? ':' ownedSpecification=SpecificationCS? ';'
 ;
 
+/** a comment */
 AnnotationCS returns base::AnnotationCS:
 	{base::AnnotationCS} 'annotation' name=(UnrestrictedName|SINGLE_QUOTED_STRING)?
 	('(' ownedDetails+=DetailCS (',' ownedDetails+=DetailCS)* ')')?
@@ -119,7 +120,7 @@ AttributeCS returns base::AttributeCS:
 	    ) ','? )+
 	'}')?
 	(	('{' (ownedAnnotations+=AnnotationElementCS
-	      | ('initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';') 
+	      | ('initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';')
 	      | ('derivation' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';') )* '}')
 	|	';'
 	)
@@ -249,7 +250,7 @@ ReferenceCS returns base::ReferenceCS:
 	'}')?
 	(	('{' (ownedAnnotations+=AnnotationElementCS
 			| ('key' referredKeys+=[pivot::Property|UnrestrictedName] (',' referredKeys+=[pivot::Property|UnrestrictedName])* ';')
-	        | ('initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';') 
+	        | ('initial' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';')
 	        | ('derivation' UnrestrictedName? ':' ownedDefaultExpressions+=SpecificationCS? ';')
 	        | (ownedImplicitOpposites+=ImplicitOppositeCS ';')
 	        )* '}')

@@ -1,0 +1,113 @@
+/*******************************************************************************
+ * Copyright (c) 2020 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *******************************************************************************/
+model Xtext
+import "platform:/resource/org.eclipse.xtext/org/eclipse/xtext/Xtext.ecore#/" as xtext
+
+mixin idiom COMMENTS at final do pre-comment value post-comment;
+
+idiom PARENTHESES {
+	at "(" do value no-space;
+	at ")" do no-space value;
+}
+
+idiom SQUARES {
+	at "[" do value no-space;
+	at "]" do no-space value;
+}
+
+idiom ANGLES {
+	at "<" do value no-space;
+	at ">" do no-space value;
+}
+
+idiom COMMA at "," do no-space value;
+
+idiom COLON_SEMICOLON {
+	at ":" do no-space value push soft-new-line wrap-begin-some;
+	at ";" do no-space value pop wrap-end soft-new-line;
+}
+
+// Grammar
+idiom Grammar_metamodelDeclarations_spacing at assignment xtext::Grammar::metamodelDeclarations do half-new-line value soft-new-line;
+
+idiom Grammar_rules_spacing at assignment xtext::Grammar::rules do half-new-line value half-new-line;
+
+// ParserRule
+idiom Parentheses_for_ParserRule for xtext::ParserRule {
+	at "(" do no-space value soft-space;
+	at ")" do soft-space value soft-space;
+}
+
+// TypeRef
+idiom ColonColon_for_TypeRef for xtext::TypeRef at "::" do no-space value no-space;
+
+// UnorderedGroup
+idiom UnorderedGroup_elements at assignment xtext::UnorderedGroup::elements do no-space value no-space;
+
+// AbstractToken
+idiom CardinalityAsterisk_for_AbstractToken for xtext::AbstractElement at "*" do no-space value;
+
+idiom CardinalityPlusSign_for_AbstractToken for xtext::AbstractElement at "+" do no-space value;
+
+idiom CardinalityQuestionMark_for_AbstractToken for xtext::AbstractElement at "?" do no-space value;
+
+// Action
+idiom Action_operator at assignment xtext::Action::operator do no-space value no-space;
+
+idiom FullStop_for_Action for xtext::Action at "." do no-space value no-space;
+
+idiom CurlyBrackets_for_Action for xtext::Action {
+	at "{" do value soft-space;
+	at "}" do no-space value;
+}
+
+// Assignment
+idiom Assignment_operator at assignment xtext::Assignment::operator do no-space value no-space;
+
+// CrossReference
+idiom VerticalLine_for_CrossReference for xtext::CrossReference at "|" do no-space value no-space;
+
+// TerminalToken
+idiom TerminalToken_cardinality at assignment xtext::AbstractElement::cardinality do no-space value;
+
+// NegatedToken
+idiom ExclamationMark_for_NegatedToken for xtext::NegatedToken at "!" do value no-space;
+
+// UntilToken
+idiom ExclamationMark_for_UntilToken for xtext::UntilToken at "->" do no-space value no-space;
+
+// CharacterRange
+idiom FullStopFullStop_for_CharacterRange for xtext::CharacterRange at ".." do no-space value no-space;
+
+// EnumLiteralDeclaration
+idiom EqualsSign_for_EnumLiteralDeclaration for xtext::EnumLiteralDeclaration at "=" do no-space value no-space;
+
+// GuardCondition
+idiom ExclamationMark_for_UntilTokenNegation for xtext::Negation at "!" do value no-space;
+
+// RuleCall
+idiom LessThanSign_for_RuleCall for xtext::RuleCall at "<" do no-space value;
+
+// NamedArgument
+idiom NamedArgument_calledByName at assignment xtext::NamedArgument::calledByName do no-space value no-space;
+
+idiom NamedArgument_value at assignment xtext::NamedArgument::^value do no-space value no-space;
+
+idiom NamedArgument_parameter at assignment xtext::NamedArgument::parameter do no-space value no-space;
+
+// @Override
+// no need to no-space between since no-space soft-space is no-space anyway
+idiom Annotation_CommercialAt for xtext::Annotation at "@" do soft-space value no-space;
+
+idiom Annotation_spacing at assignment xtext::AbstractRule::annotations do half-new-line value soft-new-line;
+
+/** idiom imposing default spacing for leaf terms must be last */
+idiom FINAL at final do soft-space value soft-space;

@@ -19,9 +19,9 @@ import org.eclipse.ocl.xtext.basecs.NamedElementCS;
 public final class NamedElementCSLabelGenerator extends AbstractLabelGenerator<NamedElementCS>
 {
 	public static void initialize(Registry registry) {
-		registry.install(NamedElementCS.class, new NamedElementCSLabelGenerator());		
+		registry.install(NamedElementCS.class, new NamedElementCSLabelGenerator());
 	}
-	
+
 	public NamedElementCSLabelGenerator() {
 		super(NamedElementCS.class);
 	}

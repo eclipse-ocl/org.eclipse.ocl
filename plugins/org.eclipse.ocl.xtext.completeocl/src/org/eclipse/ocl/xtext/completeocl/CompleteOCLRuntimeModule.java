@@ -36,13 +36,13 @@ public class CompleteOCLRuntimeModule extends org.eclipse.ocl.xtext.completeocl.
 		super.configure(binder);
 		binder.bindConstant().annotatedWith(Names.named(org.eclipse.xtext.validation.CompositeEValidator.USE_EOBJECT_VALIDATOR)).to(false);
 	}
-	
+
 	@SuppressWarnings("restriction")
 	@Override
 	public Class<? extends org.eclipse.xtext.serializer.sequencer.IHiddenTokenSequencer> bindIHiddenTokenSequencer() {
 		return CompleteOCLHiddenTokenSequencer.class;
 	}
-	
+
 	@Override
 	public Class<? extends org.eclipse.xtext.parser.IParser> bindIParser() {
 		return RetokenizingCompleteOCLParser.class;
@@ -60,7 +60,7 @@ public class CompleteOCLRuntimeModule extends org.eclipse.ocl.xtext.completeocl.
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return CompleteOCLScopeProvider.class;
 	}
-	
+
 	@Override
 	public Class<? extends XtextResource> bindXtextResource() {
 		return CompleteOCLCSResource.class;

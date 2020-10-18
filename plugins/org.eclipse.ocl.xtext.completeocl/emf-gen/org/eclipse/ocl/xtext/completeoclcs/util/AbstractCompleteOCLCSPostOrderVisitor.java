@@ -34,7 +34,7 @@ public abstract class AbstractCompleteOCLCSPostOrderVisitor
 {
 	/**
 	 * Initializes me with an initial value for my result.
-	 * 
+	 *
 	 * @param context my initial result value
 	 */
 	protected AbstractCompleteOCLCSPostOrderVisitor(@NonNull CS2ASConversion context) {

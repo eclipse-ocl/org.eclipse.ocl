@@ -17,7 +17,7 @@ import org.eclipse.osgi.util.NLS;
  * An accessor class for externalized strings.
  */
 public class CompleteOCLUIMessages
-{	
+{
 	static {
 		NLS.initializeMessages(CompleteOCLUIMessages.class.getName(), CompleteOCLUIMessages.class);
 	}
@@ -27,7 +27,7 @@ public class CompleteOCLUIMessages
 	public static String NewWizardPage_pageDescription;
 	public static String NewWizardPage_pageSummary;
 	public static String NewWizardPage_pageTitle;
-	
+
 	public static String LoadCompleteOCLResource_BrowseRegisteredOCLFiles;
 	public static String LoadCompleteOCLResource_SelectRegisteredOCLFileURI;
 	public static String LoadCompleteOCLResource_OCLFileSelection_label;

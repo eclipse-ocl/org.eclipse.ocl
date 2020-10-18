@@ -21,7 +21,7 @@ import org.eclipse.xtext.validation.DiagnosticConverterImpl;
 public class PivotDiagnosticConverter extends DiagnosticConverterImpl
 {
 	private boolean getLocationDataInProgress = false;
-	
+
 	@Override
 	protected EObject getCauser(Diagnostic diagnostic) {
 		EObject causer = super.getCauser(diagnostic);

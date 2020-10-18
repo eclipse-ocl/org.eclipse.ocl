@@ -31,10 +31,10 @@ public abstract class AbstractBaseFormatter extends AbstractDeclarativeFormatter
     }
 
 	protected void configureMultiplicityCS(FormattingConfig c, MultiplicityCSElements a) {
-		c.setNoSpace().around(a.getLeftSquareBracketKeyword_0());	
+		c.setNoSpace().around(a.getLeftSquareBracketKeyword_0());
 		c.setNoSpace().around(a.getVerticalLineQuestionMarkKeyword_2_0());
 		c.setNoSpace().around(a.getIsNullFree1Keyword_2_1_0());
-		c.setNoSpace().before(a.getRightSquareBracketKeyword_3());	
+		c.setNoSpace().before(a.getRightSquareBracketKeyword_3());
 	    c.setIndentation(a.getLeftSquareBracketKeyword_0(), a.getRightSquareBracketKeyword_3());
     }
 
@@ -49,26 +49,26 @@ public abstract class AbstractBaseFormatter extends AbstractDeclarativeFormatter
 	}
 
 	protected void configureTemplateBindingCS(FormattingConfig c, TemplateBindingCSElements a) {
-//		c.setNoSpace().around(a.getLeftParenthesisKeyword_0());	
+//		c.setNoSpace().around(a.getLeftParenthesisKeyword_0());
 		c.setNoSpace().before(a.getCommaKeyword_1_0());
-//		c.setNoSpace().before(a.getRightParenthesisKeyword_3());	
+//		c.setNoSpace().before(a.getRightParenthesisKeyword_3());
 //	    c.setIndentation(a.getLeftParenthesisKeyword_0(), a.getRightParenthesisKeyword_3());
 	}
 
 	protected void configureTemplateSignatureCS(FormattingConfig c, TemplateSignatureCSElements a) {
-		c.setNoSpace().around(a.getLeftParenthesisKeyword_0());	
+		c.setNoSpace().around(a.getLeftParenthesisKeyword_0());
 		c.setNoSpace().before(a.getCommaKeyword_2_0());
-		c.setNoSpace().before(a.getRightParenthesisKeyword_3());	
+		c.setNoSpace().before(a.getRightParenthesisKeyword_3());
 	    c.setIndentation(a.getLeftParenthesisKeyword_0(), a.getRightParenthesisKeyword_3());
 	}
 
 	protected void configureTypedTypeRefCS(FormattingConfig c, TypedTypeRefCSElements a) {
-		c.setNoSpace().around(a.getLeftParenthesisKeyword_1_0());	
+		c.setNoSpace().around(a.getLeftParenthesisKeyword_1_0());
 //		c.setNoSpace().before(a.getCommaKeyword_1_0());
-		c.setNoSpace().before(a.getRightParenthesisKeyword_1_2());	
+		c.setNoSpace().before(a.getRightParenthesisKeyword_1_2());
 	    c.setIndentation(a.getLeftParenthesisKeyword_1_0(), a.getRightParenthesisKeyword_1_2());
 	}
-	
+
 	public void setBraces(FormattingConfig c, Keyword leftBrace, Keyword rightBrace) {
 		c.setIndentation(leftBrace, rightBrace);
 	    c.setLinewrap().before(leftBrace);

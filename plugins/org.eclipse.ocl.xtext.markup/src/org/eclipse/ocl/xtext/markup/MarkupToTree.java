@@ -38,7 +38,7 @@ public class MarkupToTree extends MarkupSwitch<@Nullable StringBuilder>
 		assert result != null;
 		return result;
 	}
-	
+
 	protected final @NonNull StringBuilder s = new StringBuilder();
 	private int depth = 0;
 
@@ -77,7 +77,7 @@ public class MarkupToTree extends MarkupSwitch<@Nullable StringBuilder>
 		appendIndented(elements);
 		return s;
 	}
-	
+
 	@Override
 	public StringBuilder caseCompoundElement(CompoundElement object) {
 		assert object != null;

@@ -60,6 +60,7 @@ Workflow {
 			}
 			code = {
 				preferXtendStubs = false
+				lineDelimiter = "\n"
 				encoding = "UTF-8"
 				fileHeader =
 "/*******************************************************************************
@@ -80,8 +81,8 @@ Workflow {
 			name = "${baseProjectName}.Base"
 			fileExtensions = "base"
 			generator = null
-			serializer = {
-				generateStub = false
+			serializer = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragmentXtend {
+				generateStub = true
 			}
 			validator = {
 				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
@@ -97,11 +98,11 @@ Workflow {
 					classSplitting = true
 				}
 			}
-			fragment = org.eclipse.xtext.generator.adapter.FragmentAdapter {
-				fragment = org.eclipse.xtext.generator.formatting.FormatterFragment {}
+			formatter = org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeFormatterFragmentXtend {
+				generateStub = true
 			}
 			// *.xtextbin support on Xtext 2.3		
-			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}			
+			fragment = org.eclipse.ocl.examples.build.fragments.CompatibilityFragment {}
 		}
 	}
 	component = org.eclipse.ocl.examples.build.xtend.GenerateGrammarXtend {
@@ -110,7 +111,22 @@ Workflow {
 		grammarFileStem = "Base"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${baseRuntimeProject}/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${baseRuntimeProject}/emf-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${baseRuntimeProject}/src"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${baseRuntimeProject}/src-gen"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${baseRuntimeProject}.ui/META-INF"
+	}
+	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
+		directory = "${baseRuntimeProject}.ui/src"
 	}
 	component = org.eclipse.ocl.examples.build.utilities.ConvertToUnixLineEndings {
 		directory = "${baseRuntimeProject}.ui/src-gen"

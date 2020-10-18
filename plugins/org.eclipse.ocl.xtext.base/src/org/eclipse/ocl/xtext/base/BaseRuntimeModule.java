@@ -16,6 +16,6 @@ package org.eclipse.ocl.xtext.base;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class BaseRuntimeModule extends org.eclipse.ocl.xtext.base.AbstractBaseRuntimeModule {
-
+public class BaseRuntimeModule extends org.eclipse.ocl.xtext.base.AbstractBaseRuntimeModule
+{
 }

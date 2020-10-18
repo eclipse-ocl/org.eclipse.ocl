@@ -22,7 +22,7 @@ import org.eclipse.ocl.xtext.completeoclcs.util.CompleteOCLCSVisitor;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCS2AS;
 
 public class CompleteOCLCS2AS extends EssentialOCLCS2AS
-{	
+{
 	public CompleteOCLCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull BaseCSResource csResource, @NonNull ASResource asResource) {
 		super(environmentFactory, csResource, asResource);
 	}

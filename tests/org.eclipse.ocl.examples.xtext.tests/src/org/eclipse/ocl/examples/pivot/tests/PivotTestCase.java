@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -181,7 +182,9 @@ public class PivotTestCase extends TestCase
 
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
 		try {
+			DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 			xtextResource.save(null);
+			debugTimestamp.log("Serialization save done");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -189,7 +192,8 @@ public class PivotTestCase extends TestCase
 			Resource xmiResource = resourceSet.createResource(xmiURI);
 			xmiResource.getContents().addAll(xtextResource.getContents());
 			xmiResource.save(null);
-			fail(e.toString());
+		//	fail(e.toString());
+			throw e;
 		}
 		return xtextResource;
 	}
@@ -313,7 +317,12 @@ public class PivotTestCase extends TestCase
 				for (Setting setting : unresolvedProxy.getValue()) {
 					s.append("\n\t");
 					EObject eObject = setting.getEObject();
-					s.append(eObject.toString());
+					try {
+						s.append(eObject.toString());
+					}
+					catch (Exception e) {
+						s.append(EcoreUtil.getURI(eObject).toString());
+					}
 				}
 			}
 			fail(s.toString());

@@ -28,7 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * <p>
  * This class adapts instances of <code>IAction</code> to <code>IHandler</code>.
  * </p>
- * 
+ *
  * Based on ActionHandler,AbstractHandler,EventManager
  */
 public final class ValidateHandler implements IHandler2
@@ -82,7 +82,7 @@ public final class ValidateHandler implements IHandler2
 	/**
 	 * Adds a listener to this manager that will be notified when this manager's
 	 * state changes.
-	 * 
+	 *
 	 * @param listener
 	 *            The listener to be added; must not be <code>null</code>.
 	 */
@@ -137,7 +137,7 @@ public final class ValidateHandler implements IHandler2
 
 	/**
 	 * Removes the property change listener from the action.
-	 * 
+	 *
 	 * @see org.eclipse.core.commands.IHandler#dispose()
 	 */
 	@Override
@@ -194,7 +194,7 @@ public final class ValidateHandler implements IHandler2
 	 * overriding this behaviour. If this method is overridden, then the first
 	 * line of the method should be "<code>super.fireHandlerChanged(handlerEvent);</code>".
 	 * </p>
-	 * 
+	 *
 	 * @param handlerEvent
 	 *            the event describing changes to this instance. Must not be
 	 *            <code>null</code>.
@@ -213,7 +213,7 @@ public final class ValidateHandler implements IHandler2
 
 	/**
 	 * Returns the action associated with this handler
-	 * 
+	 *
 	 * @return the action associated with this handler (not null)
 	 */
 	public final IAction getAction() {
@@ -222,7 +222,7 @@ public final class ValidateHandler implements IHandler2
 
 	/**
 	 * Returns the listeners attached to this event manager.
-	 * 
+	 *
 	 * @return The listeners currently attached; may be empty, but never
 	 *         <code>null</code>
 	 */
@@ -259,7 +259,7 @@ public final class ValidateHandler implements IHandler2
 	 * overriding this behaviour. If this method is overridden, then the return
 	 * value should include "<code>super.hasListeners() ||</code>".
 	 * </p>
-	 * 
+	 *
 	 * @return true iff there is one or more IHandlerListeners attached to this
 	 *         AbstractHandler
 	 */
@@ -269,7 +269,7 @@ public final class ValidateHandler implements IHandler2
 
 	/**
 	 * Whether one or more listeners are attached to the manager.
-	 * 
+	 *
 	 * @return <code>true</code> if listeners are attached to the manager;
 	 *         <code>false</code> otherwise.
 	 */
@@ -287,7 +287,7 @@ public final class ValidateHandler implements IHandler2
 
 	/**
 	 * Removes a listener from this manager.
-	 * 
+	 *
 	 * @param listener
 	 *            The listener to be removed; must not be <code>null</code>.
 	 */
@@ -306,7 +306,7 @@ public final class ValidateHandler implements IHandler2
 	 * will fire a HandlerEvent if necessary. If clients use this method they
 	 * should also consider overriding {@link #setEnabled(Object)} so they can
 	 * be notified about framework execution contexts.
-	 * 
+	 *
 	 * @param state
 	 *            the enabled state
 	 */
@@ -323,7 +323,7 @@ public final class ValidateHandler implements IHandler2
 	 * by extracting the same information available at execution time. Clients
 	 * may override if they need to extract information from the application
 	 * context.
-	 * 
+	 *
 	 * @param evaluationContext
 	 *            the application context. May be <code>null</code>
 	 * @see #setBaseEnabled(boolean)

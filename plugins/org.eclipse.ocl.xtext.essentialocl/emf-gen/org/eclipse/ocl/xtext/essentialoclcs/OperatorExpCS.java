@@ -31,7 +31,7 @@ import org.eclipse.ocl.xtext.basecs.NamedElementCS;
  */
 public interface OperatorExpCS
 		extends ExpCS, NamedElementCS {
-	
+
 	/**
 	 * Returns the value of the '<em><b>Owned Right</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

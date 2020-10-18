@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   E.D.Willink - initial API and implementation 
+ *   E.D.Willink - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.xtext.oclstdlib.ui.wizards;
 
@@ -68,7 +68,7 @@ public class OCLstdlibFileNewWizard extends AbstractFileNewWizard
 	public @NonNull String getNewFileLabel() {
 		return OCLstdlibUIMessages.NewWizardPage_fileNameLabel;
 	}
-	
+
 	@SuppressWarnings("null")
 	@Override
 	public @NonNull String getPageDescription() {

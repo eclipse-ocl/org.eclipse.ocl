@@ -70,7 +70,7 @@ public class ValidateCommand extends ValidateAction
 	 * overriding this behaviour. If this method is overridden, then the first
 	 * line of the method should be "<code>super.fireHandlerChanged(handlerEvent);</code>".
 	 * </p>
-	 * 
+	 *
 	 * @param handlerEvent
 	 *            the event describing changes to this instance. Must not be
 	 *            <code>null</code>.
@@ -225,7 +225,7 @@ public class ValidateCommand extends ValidateAction
 	 * overriding this behaviour. If this method is overridden, then the return
 	 * value should include "<code>super.hasListeners() ||</code>".
 	 * </p>
-	 * 
+	 *
 	 * @return true iff there is one or more IHandlerListeners attached to this
 	 *         AbstractHandler
 	 */

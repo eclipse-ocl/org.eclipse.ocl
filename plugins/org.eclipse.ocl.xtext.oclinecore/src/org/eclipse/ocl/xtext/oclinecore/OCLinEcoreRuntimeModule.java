@@ -12,13 +12,14 @@ package org.eclipse.ocl.xtext.oclinecore;
 
 import org.antlr.runtime.TokenSource;
 import org.eclipse.ocl.xtext.base.services.RetokenizingTokenSource;
-import org.eclipse.ocl.xtext.oclinecore.AbstractOCLinEcoreRuntimeModule;
+import org.eclipse.ocl.xtext.base.utilities.AbstractGrammarResource;
 import org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreParser;
 import org.eclipse.ocl.xtext.oclinecore.services.OCLinEcoreValueConverterService;
 import org.eclipse.ocl.xtext.oclinecore.utilities.OCLinEcoreCSResource;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.service.GrammarProvider;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
@@ -33,7 +34,7 @@ public class OCLinEcoreRuntimeModule extends AbstractOCLinEcoreRuntimeModule
 		super.configure(binder);
 		binder.bindConstant().annotatedWith(Names.named(org.eclipse.xtext.validation.CompositeEValidator.USE_EOBJECT_VALIDATOR)).to(false);
 	}
-	
+
 	@Override
 	public Class<? extends org.eclipse.xtext.parser.IParser> bindIParser() {
 		return RetokenizingOCLinEcoreParser.class;
@@ -55,5 +56,14 @@ public class OCLinEcoreRuntimeModule extends AbstractOCLinEcoreRuntimeModule
 	@Override
 	public Class<? extends XtextResource> bindXtextResource() {
 		return OCLinEcoreCSResource.class;
+	}
+
+	@Override
+	public Class<? extends GrammarProvider> bindGrammarProvider() {
+		return OCLinEcoreGrammarResource.GrammarProvider.class;
+	}
+
+	public Class<? extends AbstractGrammarResource> bindAbstractGrammarResource() {
+		return OCLinEcoreGrammarResource.class;
 	}
 }

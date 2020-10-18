@@ -14,7 +14,6 @@ package org.eclipse.ocl.xtext.oclinecore;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 import org.eclipse.xtext.ISetup;

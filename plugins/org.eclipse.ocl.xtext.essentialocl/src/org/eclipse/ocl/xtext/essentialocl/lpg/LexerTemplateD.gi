@@ -38,13 +38,13 @@
     -- Macros that are be needed in an instance of this template
     --
     $eof_token /.$_EOF_TOKEN./
-    
+
     $additional_interfaces /../
     $super_stream_class /.AbstractLexer./
     $prs_stream_class /.AbstractParser./
     $environment_class /.BasicEnvironment./
     $adapt_environment /.environment./
-    
+
 
     $prs_stream /. // macro prs_stream is deprecated. Use function getPrsStream
                   getPrsStream()./
@@ -106,7 +106,7 @@
 	        }
 	        return;
 	    }
-	
+
 	    public void ruleAction$rule_number(int ruleNumber)
 	    {
 	        switch (ruleNumber)
@@ -146,14 +146,14 @@
         protected boolean printTokens;
         private $prs_stream_class parser;
         private LexParser lexParser = new LexParser(this, prs, this);
-        
+
         private final $environment_class oclEnvironment;
 
         public $action_type($environment_class environment) {
             super($adapt_environment);
             oclEnvironment = environment;
         }
-        
+
 		public $action_class($environment_class environment, char[] chars) {
 			this(environment, chars, "OCL", ECLIPSE_TAB_VALUE);
 			kwLexer = new $kw_lexer_class(getInputChars(), $_IDENTIFIER);
@@ -163,7 +163,7 @@
             super($adapt_environment, input_chars, filename, tab);
             oclEnvironment = environment;
         }
-        
+
 		public $environment_class getOCLEnvironment() {
         	return oclEnvironment;
         }
@@ -192,13 +192,13 @@
 
         @Override
         public String[] orderedExportedSymbols() { return $exp_type.orderedTerminalSymbols; }
-        
+
 	    @Override
 	    public void setInputChars(char[] inputChars) {
 			super.setInputChars(inputChars);
 			kwLexer = new $kw_lexer_class(getInputChars(), $_IDENTIFIER);
 		}
-        
+
         @Override
         public void lexToTokens(Monitor monitor, $prs_stream_class parser)
         {
@@ -208,13 +208,13 @@
             this.parser = parser;
 
             parser.makeToken(0, 0, 0); // Token list must start with a bad token
-                
+
             lexParser.parseCharacters(monitor);  // Lex the input characters
-                
+
             int i = getStreamIndex();
             parser.makeToken(i, i, $eof_token); // and end with the end of file token
             parser.setStreamLength(parser.getSize());
-                
+
             return;
         }
     ./

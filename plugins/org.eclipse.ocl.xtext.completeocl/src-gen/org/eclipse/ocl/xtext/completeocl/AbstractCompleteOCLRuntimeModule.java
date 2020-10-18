@@ -16,6 +16,9 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
+import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
+import org.eclipse.ocl.examples.xtext.serializer.DeclarativeFormatter;
+import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
@@ -28,20 +31,18 @@ import org.eclipse.ocl.xtext.base.services.PivotResourceServiceProvider;
 import org.eclipse.ocl.xtext.base.utilities.CS2ASLinker;
 import org.eclipse.ocl.xtext.base.utilities.PivotDiagnosticConverter;
 import org.eclipse.ocl.xtext.base.utilities.PivotResourceValidator;
-import org.eclipse.ocl.xtext.completeocl.formatting.CompleteOCLFormatter;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLAntlrTokenFileProvider;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLParser;
 import org.eclipse.ocl.xtext.completeocl.parser.antlr.internal.InternalCompleteOCLLexer;
 import org.eclipse.ocl.xtext.completeocl.scoping.CompleteOCLScopeProvider;
-import org.eclipse.ocl.xtext.completeocl.serializer.CompleteOCLSemanticSequencer;
-import org.eclipse.ocl.xtext.completeocl.serializer.CompleteOCLSyntacticSequencer;
+import org.eclipse.ocl.xtext.completeocl.serializer.CompleteOCLSerializationMetaData;
 import org.eclipse.ocl.xtext.completeocl.services.CompleteOCLGrammarAccess;
 import org.eclipse.ocl.xtext.completeocl.validation.CompleteOCLValidator;
 import org.eclipse.ocl.xtext.essentialocl.utilities.EssentialOCLCSResource;
 import org.eclipse.xtext.Constants;
 import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.formatting.IFormatter;
+import org.eclipse.xtext.formatting.INodeModelFormatter;
 import org.eclipse.xtext.linking.ILinker;
 import org.eclipse.xtext.linking.ILinkingDiagnosticMessageProvider;
 import org.eclipse.xtext.linking.ILinkingService;
@@ -73,10 +74,7 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.serializer.impl.Serializer;
 import org.eclipse.xtext.serializer.sequencer.IHiddenTokenSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.serializer.tokens.ICrossReferenceSerializer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.GrammarProvider;
@@ -117,19 +115,19 @@ public abstract class AbstractCompleteOCLRuntimeModule extends DefaultRuntimeMod
 		return CompleteOCLGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISemanticSequencer> bindISemanticSequencer() {
-		return CompleteOCLSemanticSequencer.class;
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends INodeModelFormatter> bindINodeModelFormatter() {
+		return DeclarativeFormatter.class;
 	}
 
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
-	public Class<? extends ISyntacticSequencer> bindISyntacticSequencer() {
-		return CompleteOCLSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
-		return Serializer.class;
+		return DeclarativeSerializer.class;
+	}
+
+	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
+	public Class<? extends AbstractSerializationMetaData> bindAbstractSerializationMetaData() {
+		return CompleteOCLSerializationMetaData.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
@@ -213,11 +211,6 @@ public abstract class AbstractCompleteOCLRuntimeModule extends DefaultRuntimeMod
 	// contributed by org.eclipse.xtext.xtext.generator.builder.BuilderIntegrationFragment2
 	public void configureIResourceDescriptionsPersisted(Binder binder) {
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
-	}
-
-	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
-	public Class<? extends IFormatter> bindIFormatter() {
-		return CompleteOCLFormatter.class;
 	}
 
 	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment

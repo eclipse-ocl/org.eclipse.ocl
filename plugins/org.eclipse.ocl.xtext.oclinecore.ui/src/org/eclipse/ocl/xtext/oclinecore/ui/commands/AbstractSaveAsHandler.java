@@ -23,7 +23,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 public class AbstractSaveAsHandler extends AbstractHandler
 {
 	protected final String persistAs;
-	
+
 	public AbstractSaveAsHandler(String persistAs) {
 		this.persistAs = persistAs;
 	}

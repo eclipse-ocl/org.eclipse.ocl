@@ -27,7 +27,7 @@ import com.google.inject.Injector;
 public class MarkupUtils extends MarkupSwitch<@Nullable StringBuilder>
 {
 /*	public static Markup decode(String text) {
-//		System.out.println("decode: " + text);	
+//		System.out.println("decode: " + text);
 		Injector injector = MarkupStandaloneSetup.getInjector();
 		MarkupParser parser = injector.getInstance(MarkupParser.class);
 		Reader reader = new StringReader(text);
@@ -43,7 +43,7 @@ public class MarkupUtils extends MarkupSwitch<@Nullable StringBuilder>
 	} */
 
 	public static @Nullable IParseResult decode(@NonNull String text) {
-//		System.out.println("decode: " + text);	
+//		System.out.println("decode: " + text);
 		Injector injector = MarkupStandaloneSetup.getInjector();
 		MarkupParser parser = injector.getInstance(MarkupParser.class);
 		Reader reader = new StringReader(text);

@@ -4,33 +4,33 @@ Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.
     ACTION-BLOCK=("","/.","./")
 
     AST-DIRECTORY=""  AST-TYPE="Ast"  NOATTRIBUTES  NOAUTOMATIC-AST  NOBACKTRACK
-    BYTE  CONFLICTS  
+    BYTE  CONFLICTS
     DAT-DIRECTORY="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\"
-    
+
     DAT-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\EssentialOCLdcl.data"
-    
+
     DCL-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\EssentialOCLdcl.xml"
-    NODEBUG  
+    NODEBUG
     DEF-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\EssentialOCLdef.xml"
-    NOEDIT  NOERROR-MAPS  ESCAPE='%'  
+    NOEDIT  NOERROR-MAPS  ESCAPE='%'
     EXPORT-TERMINALS=("C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\EssentialOCLexp.xml","","")
-    EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="EssentialOCL"  NOFIRST  
-    NOFOLLOW  NOGLR  NOGOTO-DEFAULT  
+    EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="EssentialOCL"  NOFIRST
+    NOFOLLOW  NOGLR  NOGOTO-DEFAULT
     GRM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCL.gi"
-    
+
     IMP-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\EssentialOCLimp.xml"
-    
+
     INCLUDE-DIRECTORY="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\"
-    LALR=1  LEGACY  NOLIST  MARGIN=0  MAX-CASES=1024  NAMES=OPTIMIZED  
-    NONT-CHECK  OR_MARKER='|'  
+    LALR=1  LEGACY  NOLIST  MARGIN=0  MAX-CASES=1024  NAMES=OPTIMIZED
+    NONT-CHECK  OR_MARKER='|'
     OUT-DIRECTORY="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\"
-    PACKAGE=""  NOPARENT-SAVE  NOPARSETABLE-INTERFACES  PREFIX=""  PRIORITY  
-    PROGRAMMING_LANGUAGE=XML  
+    PACKAGE=""  NOPARENT-SAVE  NOPARSETABLE-INTERFACES  PREFIX=""  PRIORITY
+    PROGRAMMING_LANGUAGE=XML
     PRS-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\EssentialOCLprs.xml"
-    NOQUIET  READ-REDUCE  REMAP-TERMINALS  NOSCOPES  NOSERIALIZE  
+    NOQUIET  READ-REDUCE  REMAP-TERMINALS  NOSCOPES  NOSERIALIZE
     NOSHIFT-DEFAULT  NOSINGLE-PRODUCTIONS  NOSOFT-KEYWORDS  NOSTATES  SUFFIX=""
     SYM-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\EssentialOCLsym.xml"
-    TAB-FILE="EssentialOCL.t"  NOTABLE  TEMPLATE=""  TRACE=CONFLICTS  
+    TAB-FILE="EssentialOCL.t"  NOTABLE  TEMPLATE=""  TRACE=CONFLICTS
     NOVARIABLES  NOVERBOSE  NOVISITOR  VISITOR-TYPE="Visitor"  WARNINGS  NOXREF
 
 C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCL.gi:25:5:25:25:654:674: Warning: A macro name was expected here instead of a grammar symbol name

@@ -20,19 +20,19 @@ import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 import com.google.inject.Injector;
 
 /**
- * Initialization support for running Xtext languages 
+ * Initialization support for running Xtext languages
  * without equinox extension registry
  */
 public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenerated
 {
 	private static Injector injector = null;
-	
+
 	public static void doSetup() {
 		if (injector == null) {
 			new CompleteOCLStandaloneSetup().createInjectorAndDoEMFRegistration();
 		}
 	}
-	
+
 	public static void doTearDown() {
 		injector = null;
 	}
@@ -43,7 +43,7 @@ public class CompleteOCLStandaloneSetup extends CompleteOCLStandaloneSetupGenera
 		EPackage.Registry.INSTANCE.put(CompleteOCLCSPackage.eNS_URI, CompleteOCLCSPackage.eINSTANCE);
 		PathNameDeclCSLabelGenerator.initialize(ILabelGenerator.Registry.INSTANCE);
 	}
-	
+
 	/**
 	 * Return the Injector for this plugin.
 	 */

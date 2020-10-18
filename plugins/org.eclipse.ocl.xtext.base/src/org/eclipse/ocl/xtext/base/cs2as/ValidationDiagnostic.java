@@ -17,7 +17,7 @@ public class ValidationDiagnostic extends AbstractDiagnostic
 {
 	protected final INode node;
 	protected final String message;
-	
+
 	public ValidationDiagnostic(INode node, String message) {
 		this.node = node;
 		this.message = message;
@@ -36,7 +36,7 @@ public class ValidationDiagnostic extends AbstractDiagnostic
 	@Override
 	public String[] getData() {
 		return null;
-	}		
+	}
 
 	@Override
 	public String getMessage() {

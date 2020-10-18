@@ -33,17 +33,17 @@ public class Continuations implements Continuation<ModelElementCS>
 					}
 					inputContinuation.addTo(continuations);
 				}
-			}		
+			}
 		}
 		return continuations != null ? new Continuations(continuations) : continuation;
 	}
 
 	private final @NonNull List<BasicContinuation<?>> continuations;
-	
+
 	public Continuations() {
 		this.continuations = new ArrayList<BasicContinuation<?>>();
 	}
-	
+
 	public Continuations(@NonNull List<BasicContinuation<?>> continuations) {
 		this.continuations = continuations;
 	}
@@ -51,14 +51,14 @@ public class Continuations implements Continuation<ModelElementCS>
 	public void add(@NonNull BasicContinuation<?> continuation) {
 		continuations.add(continuation);
 	}
-	
+
 	@Override
 	public void addTo(@NonNull List<BasicContinuation<?>> simpleContinuations) {
 		for (BasicContinuation<?> continuation : continuations) {
 			continuation.addTo(simpleContinuations);
 		}
 	}
-	
+
 	public Continuation<?> getContinuation() {
 		if (continuations.isEmpty()) {
 			return null;

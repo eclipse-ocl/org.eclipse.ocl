@@ -73,7 +73,7 @@ public class BaseHiddenTokenSequencer extends HiddenTokenSequencer
 	}
 
 	private static List<String> indents = new ArrayList<String>();
-	
+
 	protected String getCommentIndent(EObject semanticChild) {
 		int i = 0;
 		EObject eObject = semanticChild;

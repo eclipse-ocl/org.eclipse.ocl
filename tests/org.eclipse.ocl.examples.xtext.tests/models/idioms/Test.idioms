@@ -1,0 +1,39 @@
+/*******************************************************************************
+ * Framed comment
+ *******************************************************************************/
+// Prefix single line 1
+// Prefix single line 2
+/**
+ * Javadoc comment
+ */
+// Prefix single line 3
+model Test // Suffix single line
+// Explicit import of the *.ecore ?? should this be derived from the grammar automatically ??
+import "platform:/resource/org.eclipse.ocl.examples.xtext.idioms/model/Idioms.ecore#/" as idioms
+
+mixin idiom COMMENTED_ELEMENT at returns idioms::IdiomsElement do custom "org.eclipse.ocl.examples.xtext.idioms.serializer.XtextPreCommentSegmentSupport" value;
+
+idiom BRACES {
+	at "{" do soft-space value push soft-new-line;
+	at "}" do pop soft-space value soft-new-line;
+}
+
+idiom COLON_COLON at "::" do no-space value no-space;
+
+idiom COMMA at "," do no-space value soft-space;
+
+idiom IDIOMS_SPACING at assignment idioms::IdiomsModel::ownedIdioms do half-new-line value half-new-line;
+
+idiom IMPORTS_SPACING at assignment idioms::IdiomsModel::ownedImports do soft-new-line value soft-new-line;
+
+idiom SEMICOLON at ";" do no-space value soft-new-line;
+
+idiom SUBIDIOMS_SPACING at assignment idioms::Idiom::ownedSubIdioms do value soft-new-line;
+
+/** idiom imposing default spacing for leaf terms must be last */
+// prefix
+idiom FINAL at final // final
+do // do
+soft-space value // value
+soft-space;
+// tail

@@ -34,7 +34,7 @@ import org.eclipse.xtext.util.TextRegion;
  * either a full (!significant) text range, which is the all the characters associated with the element,
  * or a short (significant) text range, which is the characters to be highlighted when selected.
  * <p>
- * The reverse location to CS/AS element is in BaseOutlineWithEditorLinker. 
+ * The reverse location to CS/AS element is in BaseOutlineWithEditorLinker.
  */
 public class BaseLocationInFileProvider extends DefaultLocationInFileProvider
 {
@@ -46,7 +46,7 @@ public class BaseLocationInFileProvider extends DefaultLocationInFileProvider
 			return result;
 		}
 		else {
-			return super.getIdentifierFeature( obj);	// "name" (or "id") used by QVTd's QualifiedPackageCS, TransformationCS 
+			return super.getIdentifierFeature( obj);	// "name" (or "id") used by QVTd's QualifiedPackageCS, TransformationCS
 		}
 	}
 

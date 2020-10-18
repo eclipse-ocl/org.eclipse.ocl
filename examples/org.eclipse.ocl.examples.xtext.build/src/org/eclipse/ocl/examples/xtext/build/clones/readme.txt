@@ -1,0 +1,1 @@
+Files in the package are cloned from mainstream OCL plugins to support isolation for the Bug 567383 contribution to Xtext.

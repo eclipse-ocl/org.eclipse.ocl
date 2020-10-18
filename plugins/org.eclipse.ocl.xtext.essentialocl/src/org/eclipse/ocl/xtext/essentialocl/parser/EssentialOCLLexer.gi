@@ -9,7 +9,7 @@
 -- *
 -- * Contributors:
 -- *   See (or edit) Notice Declaration below
--- *   
+-- *
 -- * </copyright>
 -- */
 --
@@ -41,15 +41,15 @@
     $environment_class /.Environment<?,?,?,?,?,?,?,?,?,?,?,?>./
     $adapt_environment /.OCLUtil.getAdapter(environment, BasicEnvironment.class)./
     $environment_import /.org.eclipse.ocl.Environment./
- 
+
  	--
 	-- Redefinition of macros used in the template
 	-- NB: They are also used in the included file LexerBasicMapF.g
 	--
  	$prs_stream_class /.DerivedPrsStream./
  	$lex_stream_class /.DerivedLexStream./
- 	
- 	 	
+
+
 	--
 	-- Definition of macro used in the included file LexerBasicMapF.g
 	--
@@ -60,7 +60,7 @@
 
 %Headers
 	/.
-        
+
     // Some OCL additions to make lexer work with an input reader
 	/**
 	 * @since 3.0
@@ -70,7 +70,7 @@
 		oclEnvironment = environment;
 		reset(reader, filename);
 	}
-  
+
    // OCL addition to reset the lexer stream from an input reader
 	/**
 	 * @since 3.0
@@ -108,7 +108,7 @@
 %Globals
     /.
     import java.io.Reader;
-    
+
     import $environment_import;
     import org.eclipse.ocl.lpg.BasicEnvironment;
     import org.eclipse.ocl.lpg.DerivedPrsStream;
@@ -124,7 +124,7 @@
 	INTEGER_LITERAL
 	REAL_LITERAL
 	STRING_LITERAL
-	
+
 	PLUS
 	MINUS
 	MULTIPLY
@@ -152,7 +152,7 @@
 	SEMICOLON
 	DOT
 	DOTDOT
-	
+
 	SINGLE_LINE_COMMENT
 	MULTI_LINE_COMMENT
 
@@ -220,19 +220,19 @@
 	---------------------  Rules for Scanned Tokens --------------------------------
 	-- The lexer creates an array list of tokens which is defined in the PrsStream class.
 	-- A token has three attributes: a start offset, an end offset and a kind.
-	-- 
+	--
 	-- Only rules that produce complete tokens have actions to create token objects.
-	-- When making a token, calls to the methods, $getToken(1) and $getRightSpan(), 
+	-- When making a token, calls to the methods, $getToken(1) and $getRightSpan(),
 	-- provide the offsets (i.e. the span) of a rule's right hand side (rhs) and thus of the token.
 	-- For a rule of the form A ::= A1 A2 ... An, the start offset of the rhs of A is given by
 	-- $getToken(1) or by $getLeftSpan() and the end offset by $getRightSpan().
-	--  
-	-- Regarding rules for parsing in general, note that for a rhs symbol Ai, the 
-	-- method $getToken(i) returns the location of the leftmost character derived from Ai.  
+	--
+	-- Regarding rules for parsing in general, note that for a rhs symbol Ai, the
+	-- method $getToken(i) returns the location of the leftmost character derived from Ai.
 	-- The method $getLeftSpan(i) returns the same location unless Ai produces %empty in which case
-	-- it returns the location of the last character derived before reducing Ai to %empty. 
-	-- The method $getRightSpan(i) returns the location of the rightmost character derived from Ai 
-	-- unless Ai produces %empty in which case it returns the location of the last character 
+	-- it returns the location of the last character derived before reducing Ai to %empty.
+	-- The method $getRightSpan(i) returns the location of the rightmost character derived from Ai
+	-- unless Ai produces %empty in which case it returns the location of the last character
 	-- derived before reducing Ai to %empty.
 	--------------------------------------------------------------------------------
 	Token ::= Identifier
@@ -277,7 +277,7 @@
 	Token ::= IntegerLiteral
 		/.$NoAction
 		./
-		
+
 	Token ::= IntegerLiteral DotToken
 		/.$NoAction
 		./
@@ -351,7 +351,7 @@
 					makeToken($_GREATER);
 		  $EndAction
 		./
-		
+
 	Token ::= '<'
 		/.$BeginAction
 					makeToken($_LESS);
@@ -536,7 +536,7 @@
                          '%' | '&' | '^' | ':' | ';' | '|' | '{' | '}' |
                          '[' | ']' | '?' | ',' | '.' | '<' | '>' | '=' | '#' | DollarSign
 
-    
+
     SpecialNotDQ -> SpecialNotSQNotDQ | "'"
     SpecialNotSQ -> SpecialNotSQNotDQ | '"'
 

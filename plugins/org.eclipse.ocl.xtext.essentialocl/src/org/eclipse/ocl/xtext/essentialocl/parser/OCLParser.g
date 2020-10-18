@@ -105,7 +105,7 @@
 	goal -> prePostOrBodyDeclCS
 	goal -> initOrDerValueCS
 	goal -> VariableDeclarationCS
-	goal -> %empty	
+	goal -> %empty
 -----------------------------------------------------------------------
 --  Names
 -----------------------------------------------------------------------
@@ -125,7 +125,7 @@
 	InfixOperator -> '^^'
 
 	unreservedSimpleNameCSopt ::= %empty
-	unreservedSimpleNameCSopt -> unreservedSimpleNameCS	
+	unreservedSimpleNameCSopt -> unreservedSimpleNameCS
 
 -----------------------------------------------------------------------
 --  Types
@@ -142,7 +142,7 @@
 
 	TypedExpressionCS ::= '?'
 	TypedExpressionCS ::= '?' ':' TypeExpCS
-	
+
 	UntypedExpressionCS ::= '?'
 	UntypedExpressionCS ::= '?' ':' TypeExpCS
 
@@ -155,7 +155,7 @@
     packageDeclarationCS -> packageDeclarationCS_A
     packageDeclarationCS -> packageDeclarationCS_B
     packageDeclarationCS_A ::= package NameExpCS contextDeclsCSopt endpackage
-    
+
     packageDeclarationCS_B ::= contextDeclsCS
 
     contextDeclsCSopt ::= %empty
@@ -204,7 +204,7 @@
 
     parametersCSopt ::= %empty
     parametersCSopt -> parametersCS
-	
-	parametersCS ::= VariableDeclarationCS 
+
+	parametersCS ::= VariableDeclarationCS
 	parametersCS ::= parametersCS ',' VariableDeclarationCS
 %End

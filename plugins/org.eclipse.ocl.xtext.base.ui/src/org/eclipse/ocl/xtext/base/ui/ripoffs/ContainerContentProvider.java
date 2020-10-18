@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     E.D.Willink - initial API and implementation
- *     
+ *
  * This file is copied  from org.eclipse.ui.internal.ide.misc.ContainerContentProvider
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.ui.ripoffs;
@@ -118,9 +118,9 @@ public class ContainerContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * Specify whether or not to show closed projects in the tree 
+     * Specify whether or not to show closed projects in the tree
      * viewer.  Default is to show closed projects.
-     * 
+     *
      * @param show boolean if false, do not show closed projects in the tree
      */
     public void showClosedProjects(boolean show) {

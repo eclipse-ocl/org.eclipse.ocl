@@ -22,7 +22,7 @@ import org.eclipse.ocl.xtext.completeocl.attributes.PropertyContextCSAttribution
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage;
 
 public class CompleteOCLScoping
-{	
+{
 	public static void init() {
 		Map<EClassifier, Attribution> registry = Attribution.REGISTRY;
 		registry.put(CompleteOCLCSPackage.Literals.CLASSIFIER_CONTEXT_DECL_CS, ClassifierContextCSAttribution.INSTANCE);

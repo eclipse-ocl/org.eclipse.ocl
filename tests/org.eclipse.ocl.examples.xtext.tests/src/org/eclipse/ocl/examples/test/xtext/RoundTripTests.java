@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.as2es.AS2UML;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -104,7 +105,9 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		XtextResource xtextResource = (XtextResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		((BaseCSResource) xtextResource).updateFrom(asResource, environmentFactory);
+		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 		xtextResource.save(XMIUtil.createSaveOptions());
+		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", xtextResource);
 		return (BaseCSResource) xtextResource;
@@ -123,7 +126,9 @@ public class RoundTripTests extends XtextTestCase
 		ResourceSet resourceSet = environmentFactory.getResourceSet();
 		CSResource xtextResource = (CSResource) resourceSet.createResource(xtextURI, OCLinEcoreCSPackage.eCONTENT_TYPE);
 		xtextResource.updateFrom(asResource, environmentFactory);
+		DebugTimestamp debugTimestamp = new DebugTimestamp(xtextResource.getURI().toString());
 		xtextResource.save(XMIUtil.createSaveOptions());
+		debugTimestamp.log("Serialization save done");
 		assertNoResourceErrors("Conversion failed", xtextResource);
 		assertNoDiagnosticErrors("Concrete Syntax validation failed", (XtextResource) xtextResource);
 		return xtextResource;

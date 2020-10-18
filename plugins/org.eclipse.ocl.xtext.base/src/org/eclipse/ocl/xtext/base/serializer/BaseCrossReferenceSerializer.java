@@ -127,6 +127,10 @@ public class BaseCrossReferenceSerializer extends CrossReferenceSerializer
 	@Inject
 	private IValueConverterService valueConverter;
 
+	public BaseCrossReferenceSerializer() {
+		super();
+	}
+
 	@Override
 	protected String getCrossReferenceNameFromScope(EObject semanticObject,
 			CrossReference crossref, EObject target, IScope scope, Acceptor errors) {

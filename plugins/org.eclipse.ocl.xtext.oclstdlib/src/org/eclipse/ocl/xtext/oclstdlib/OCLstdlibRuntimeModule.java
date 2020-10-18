@@ -31,7 +31,7 @@ import com.google.inject.name.Names;
  * Use this class to register components to be used within the IDE.
  */
 public class OCLstdlibRuntimeModule extends org.eclipse.ocl.xtext.oclstdlib.AbstractOCLstdlibRuntimeModule
-{	
+{
 	@Override
 	public void configure(Binder binder) {
 		super.configure(binder);
@@ -41,7 +41,7 @@ public class OCLstdlibRuntimeModule extends org.eclipse.ocl.xtext.oclstdlib.Abst
 	public Class<? extends CompositeEValidator> bindCompositeEValidator() {
 		return OCLstdlibCompositeEValidator.class;
 	}
-	
+
 	@Override
 	public Class<? extends org.eclipse.xtext.parser.IParser> bindIParser() {
 		return RetokenizingOCLstdlibParser.class;
@@ -64,7 +64,7 @@ public class OCLstdlibRuntimeModule extends org.eclipse.ocl.xtext.oclstdlib.Abst
 	public Class<? extends IScopeProvider> bindIScopeProvider() {
 		return OCLstdlibScopeProvider.class;
 	}
-	
+
 	@Override
 	public Class<? extends XtextResource> bindXtextResource() {
 		return OCLstdlibCSResource.class;

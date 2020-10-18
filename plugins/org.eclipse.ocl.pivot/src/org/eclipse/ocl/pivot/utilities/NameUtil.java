@@ -66,15 +66,54 @@ public class NameUtil
 	 */
 	public static final class ToStringComparator implements Comparator<@NonNull Object>
 	{
-		public static final @NonNull ToStringComparator INSTANCE = new ToStringComparator();
+		/**
+		 * Provide a simple shared INSTABCE for comparison based on toString().
+		 * If toString() is mpre expensive that a Map.get() a toString() cache can be
+		 * activated by constructing a new ToStringComparator instance.
+		 */
+		public static final @NonNull ToStringComparator INSTANCE = new ToStringComparator(null);
+
+		/*
+		 * toString can be expensive so avoid repeated evaluations.
+		 */
+		private final Map<@NonNull Object, String> object2string;
+
+		public ToStringComparator() {
+			this(new HashMap<>());
+		}
+
+		protected ToStringComparator(@Nullable Map<@NonNull Object, String> object2string) {
+			this.object2string = object2string;
+		}
 
 		@Override
 		public int compare(@NonNull Object o1, @NonNull Object o2) {
-			String s1 = o1.toString();
-			String s2 = o2.toString();
-			return ClassUtil.safeCompareTo(s1, s2);
+			if (object2string == null) {
+				String s1 = o1.toString();
+				String s2 = o2.toString();
+				return ClassUtil.safeCompareTo(s1, s2);
+			}
+			else {
+				String s1 = getString(o1);
+				String s2 = getString(o2);
+				return ClassUtil.safeCompareTo(s1, s2);
+			}
+		}
+
+		private String getString(@NonNull Object o) {
+			String string = object2string.get(o);
+			if (string == null) {
+				string = o.toString();
+				object2string.put(o, string);
+			}
+			return string;
 		}
 	}
+
+	/**
+	 * @since 1.13
+	 */
+	public static final @NonNull ENamedElementComparator ENAMED_ELEMENT_COMPARATOR = ENamedElementComparator.INSTANCE;
 
 	public static final @NonNull NameableComparator NAMEABLE_COMPARATOR = NameableComparator.INSTANCE;
 
