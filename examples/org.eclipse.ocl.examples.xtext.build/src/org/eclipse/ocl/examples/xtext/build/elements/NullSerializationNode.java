@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.xtext.build.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
@@ -36,7 +37,7 @@ public class NullSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, boolean isRootAlternative) {
 		return this;
 	}
 
@@ -51,7 +52,7 @@ public class NullSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
 		s.append("«null»");
 	}
 }

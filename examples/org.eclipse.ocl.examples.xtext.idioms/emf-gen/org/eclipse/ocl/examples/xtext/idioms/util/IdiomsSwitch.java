@@ -13,11 +13,9 @@ package org.eclipse.ocl.examples.xtext.idioms.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.idioms.AnyAssignmentLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AnyElementLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
-import org.eclipse.ocl.examples.xtext.idioms.CompoundLocator;
 import org.eclipse.ocl.examples.xtext.idioms.CustomSegment;
 import org.eclipse.ocl.examples.xtext.idioms.EPackageImport;
 import org.eclipse.ocl.examples.xtext.idioms.FinalLocator;
@@ -65,7 +63,7 @@ import org.eclipse.ocl.examples.xtext.idioms.WrapHereSegment;
  * @see org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage
  * @generated
  */
-public class IdiomsSwitch<@Nullable T>
+public class IdiomsSwitch<T>
 		extends Switch<T> {
 
 	/**
@@ -140,17 +138,6 @@ public class IdiomsSwitch<@Nullable T>
 					result = caseLocator(assignmentLocator);
 				if (result == null)
 					result = caseIdiomsElement(assignmentLocator);
-				if (result == null)
-					result = defaultCase(theEObject);
-				return result;
-			}
-			case IdiomsPackage.COMPOUND_LOCATOR : {
-				CompoundLocator compoundLocator = (CompoundLocator) theEObject;
-				T result = caseCompoundLocator(compoundLocator);
-				if (result == null)
-					result = caseLocator(compoundLocator);
-				if (result == null)
-					result = caseIdiomsElement(compoundLocator);
 				if (result == null)
 					result = defaultCase(theEObject);
 				return result;
@@ -532,21 +519,6 @@ public class IdiomsSwitch<@Nullable T>
 	 * @generated
 	 */
 	public T caseAssignmentLocator(AssignmentLocator object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Compound Locator</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Compound Locator</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCompoundLocator(CompoundLocator object) {
 		return null;
 	}
 

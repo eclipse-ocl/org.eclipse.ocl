@@ -13,16 +13,21 @@ package org.eclipse.ocl.examples.xtext.build.elements;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.build.analysis.AnalysisUtils;
+import org.eclipse.ocl.examples.xtext.build.analysis.AbstractRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.DirectAssignmentAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.GrammarAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueNull;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssigns;
@@ -37,15 +42,21 @@ import org.eclipse.xtext.Keyword;
 public class AlternativeAssignsSerializationNode extends AbstractAssignedSerializationNode
 {
 	protected final @Nullable Iterable<@NonNull Keyword> keywords;
-	protected final @Nullable EnumerationValue enumerationValue;
-	protected final @NonNull Integer @Nullable [] calledRuleIndexes;			// Cannot use GrammarRuleVector since need to preseve declaration order
-//	private @Nullable Integer semanticHashCode = null;
+	protected final @NonNull EnumerationValue enumerationValue;
+	protected final int @NonNull [] calledRuleIndexes;			// Cannot use GrammarRuleVector since need to preseve declaration order
+	private @Nullable GrammarRuleVector grammarRuleVector;
 
-	public AlternativeAssignsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis,
-			@NonNull GrammarCardinality grammarCardinality, @Nullable Iterable<@NonNull Keyword> keywords, @NonNull Integer @Nullable [] calledRuleIndexes) {
-		super(assignmentAnalysis, grammarCardinality);
+	public AlternativeAssignsSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, @Nullable Iterable<@NonNull Keyword> keywords, int @NonNull [] calledRuleIndexes) {
+		this(assignmentAnalysis.getGrammarAnalysis(), assignmentAnalysis.getEClass(), assignmentAnalysis.getEStructuralFeature(), grammarCardinality, keywords, calledRuleIndexes, assignmentAnalysis.getTargetRuleAnalyses());
+	}
+
+	public AlternativeAssignsSerializationNode(@NonNull GrammarAnalysis grammarAnalysis,
+			@NonNull EClass assignedEClass,	@NonNull EStructuralFeature eStructuralFeature, @NonNull GrammarCardinality grammarCardinality,
+			@Nullable Iterable<@NonNull Keyword> keywords, int @NonNull [] calledRuleIndexes,
+			@NonNull Iterable<@NonNull AbstractRuleAnalysis> targetRuleAnalyses) {
+		super(grammarAnalysis, assignedEClass, eStructuralFeature, grammarCardinality, targetRuleAnalyses);
 		this.keywords = keywords;
-		this.enumerationValue = keywords != null ? assignmentAnalysis.getGrammarAnalysis().getEnumerationValue(keywords) : null;
+		this.enumerationValue = keywords != null ? grammarAnalysis.getEnumerationValue(keywords) : EnumerationValueNull.INSTANCE;
 		this.calledRuleIndexes = calledRuleIndexes;
 	}
 
@@ -54,7 +65,7 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 		if (grammarCardinality == null) {
 			grammarCardinality = this.grammarCardinality;
 		}
-		return new AlternativeAssignsSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, grammarCardinality, keywords, calledRuleIndexes);
+		return new AlternativeAssignsSerializationNode(grammarAnalysis, assignedEClass, eStructuralFeature, grammarCardinality, keywords, calledRuleIndexes, targetRuleAnalyses);
 	}
 
 	@Override
@@ -65,72 +76,41 @@ public class AlternativeAssignsSerializationNode extends AbstractAssignedSeriali
 	}
 
 	@Override
-	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
+	public @NonNull GrammarRuleVector getAssignedGrammarRuleVector() {
+		GrammarRuleVector grammarRuleVector2 = grammarRuleVector;
+		if (grammarRuleVector2 == null) {
+			grammarRuleVector = grammarRuleVector2 = new GrammarRuleVector(calledRuleIndexes);
+		}
+		return grammarRuleVector2;
+	}
+
+	@Override
+	public int @NonNull [] getAssignedRuleIndexes() {
 		return calledRuleIndexes;
 	}
 
 	@Override
-	public @Nullable EnumerationValue getEnumerationValue() {
+	public @NonNull EnumerationValue getEnumerationValue() {
 		return enumerationValue;
 	}
 
-/*	@Override
-	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
-		if (serializationNode == this) {
-			return true;
-		}
-		if (!(serializationNode instanceof AlternativeAssignsSerializationNode)) {
-			return false;
-		}
-		AlternativeAssignsSerializationNode that = (AlternativeAssignsSerializationNode)serializationNode;
-		if (this.eStructuralFeature != that.eStructuralFeature) {
-			return false;
-		}
-		if (this.enumerationValue != that.enumerationValue) {
-			return false;
-		}
-		if (!ClassUtil.safeEquals(this.calledRuleIndexes, that.calledRuleIndexes)) {
-			return false;
-		}
-		return true;
-	} */
-
-/*	@Override
-	public int semanticHashCode() {
-		if (semanticHashCode == null) {
-			int hash = getClass().hashCode() + eStructuralFeature.hashCode();
-			if (enumerationValue != null) {
-				 hash += enumerationValue.hashCode();
-			}
-			if (calledRuleIndexes != null) {
-				 hash += calledRuleIndexes.hashCode();
-			}
-			this.semanticHashCode = hash;
-		}
-		assert semanticHashCode != null;
-		return semanticHashCode.intValue();
-	} */
-
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
-		GrammarAnalysis grammarAnalysis = assignmentAnalysis.getGrammarAnalysis();
-		AnalysisUtils.appendEStructuralFeatureName(s, assignmentAnalysis);
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
+		s.appendEStructuralFeatureName(assignedEClass, eStructuralFeature);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append("(");
 		boolean isFirst = true;
-		if (enumerationValue != null) {
-			s.append(enumerationValue);
+		if (!enumerationValue.isNull()) {
+			s.appendObject(enumerationValue);
 			isFirst = false;
 		}
-		if (calledRuleIndexes != null) {
-			for (@NonNull Integer calledRuleIndex : calledRuleIndexes) {
-				if (!isFirst) {
-					s.append("|");
-				}
-				GrammarRuleValue ruleValue = grammarAnalysis.basicGetRuleValue(calledRuleIndex);
-				s.append(ruleValue != null ? ruleValue.getRuleName() : calledRuleIndex);
-				isFirst = false;
+		for (int calledRuleIndex : calledRuleIndexes) {
+			if (!isFirst) {
+				s.append("|");
 			}
+			GrammarRuleValue ruleValue = grammarAnalysis.basicGetRuleValue(calledRuleIndex);
+			s.appendRuleName(ruleValue != null ? ruleValue.getIndex() : calledRuleIndex);
+			isFirst = false;
 		}
 		s.append(")");
 		appendCardinality(s, depth);

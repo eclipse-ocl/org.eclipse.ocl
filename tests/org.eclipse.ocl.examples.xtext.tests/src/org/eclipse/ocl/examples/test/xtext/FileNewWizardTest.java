@@ -354,12 +354,9 @@ public class FileNewWizardTest extends TestCase
 		IXtextDocument document = activeEditor.getDocument();
 		String actualContents = document.get();
 		StringBuilder s = new StringBuilder();
-		s.append("package example : ex = 'http://www.example.org/examples/example.ecore'\n");
-		s.append("{\n");
-		s.append("	class Example\n");
-		s.append("	{\n");
-		s.append("		operation ucName() : String[?]\n");
-		s.append("		{\n");
+		s.append("package example : ex = 'http://www.example.org/examples/example.ecore' {\n");
+		s.append("	class Example {\n");
+		s.append("		operation ucName() : String[?] {\n");
 		s.append("			body: name?.toUpperCase();\n");
 		s.append("		}\n");
 		s.append("		attribute name : String[?];\n");
@@ -370,7 +367,8 @@ public class FileNewWizardTest extends TestCase
 		s.append("	}\n");
 		s.append("}\n");
 		String expectedContents = s.toString();
-		assertEquals(expectedContents.trim().replaceAll("\\s+", " "), actualContents.trim().replaceAll("\\s+", " "));
+	//	assertEquals(expectedContents.trim().replaceAll("\\s+", " "), actualContents.trim().replaceAll("\\s+", " "));
+		assertEquals(expectedContents, actualContents);
 		activeEditor.close(false);
 	}
 

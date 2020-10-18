@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.build.analysis;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -22,24 +19,19 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.elements.AssignedCrossReferenceSerializationNode;
 import org.eclipse.ocl.examples.xtext.build.elements.AssignedKeywordSerializationNode;
 import org.eclipse.ocl.examples.xtext.build.elements.AssignedSerializationNode;
-import org.eclipse.ocl.examples.xtext.build.elements.SequenceSerializationNode;
 import org.eclipse.ocl.examples.xtext.build.elements.SerializationNode;
 import org.eclipse.ocl.examples.xtext.build.elements.UnassignedKeywordSerializationNode;
 import org.eclipse.ocl.examples.xtext.idioms.AnyAssignmentLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AnyElementLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
-import org.eclipse.ocl.examples.xtext.idioms.CompoundLocator;
 import org.eclipse.ocl.examples.xtext.idioms.FinalLocator;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsUtils;
 import org.eclipse.ocl.examples.xtext.idioms.KeywordLocator;
 import org.eclipse.ocl.examples.xtext.idioms.Locator;
 import org.eclipse.ocl.examples.xtext.idioms.LocatorDeclaration;
 import org.eclipse.ocl.examples.xtext.idioms.ReturnsLocator;
 import org.eclipse.ocl.examples.xtext.idioms.util.IdiomsSwitch;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.Assignment;
-import org.eclipse.xtext.CompoundElement;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
@@ -71,11 +63,6 @@ public interface LocatorHelper
 		@Override
 		public @Nullable LocatorHelper caseAssignmentLocator(AssignmentLocator assignmentLocator) {
 			return AssignmentLocatorHelper.INSTANCE;
-		}
-
-		@Override
-		public @Nullable LocatorHelper caseCompoundLocator(CompoundLocator finalLocator) {
-			return CompoundLocatorHelper.INSTANCE;
 		}
 
 		@Override
@@ -176,120 +163,6 @@ public interface LocatorHelper
 				return AnalysisUtils.isEqual(assignmentLocator.getEStructuralFeature(), assignedEStructuralFeature);
 			}
 			return false;
-		}
-	}
-
-	public static class CompoundLocatorHelper extends AbstractLocatorHelper
-	{
-		public static final @NonNull CompoundLocatorHelper INSTANCE = new CompoundLocatorHelper();
-
-		protected @NonNull List<@NonNull AbstractElement> getCommonAncestry(@Nullable List<@NonNull AbstractElement> commonAncestry, @NonNull List<@NonNull AbstractElement> anotherAncestry) {
-			if (commonAncestry == null) {
-				commonAncestry = anotherAncestry;
-			}
-			else {
-				int commonSize = commonAncestry.size();
-				int iSize = Math.min(commonSize, anotherAncestry.size());
-				int i = 0;;
-				for ( ; i < iSize; i++) {
-					AbstractElement matchedAncestor = SerializationUtils.maybeNull(anotherAncestry.get(i));
-					AbstractElement commonAncestor = SerializationUtils.maybeNull(commonAncestry.get(i));
-					if (matchedAncestor != commonAncestor) {
-						break;
-					}
-				}
-				for (int j = commonSize; --j >= i; ) {
-					commonAncestry.remove(j);
-				}
-			}
-			return commonAncestry;
-		}
-
-		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
-			if (!(grammarElement instanceof CompoundElement)) {
-				return false;
-			}
-			CompoundLocator compoundLocator = (CompoundLocator)locator;
-			List<@NonNull AbstractElement> commonAncestry = null;
-			for (@NonNull Locator elementLocator : IdiomsUtils.getOwnedLocators(compoundLocator)) {
-				AbstractElement matchedElement = nestedMatch(elementLocator, grammarElement, parserRuleAnalysis);
-				if (matchedElement == null) {
-					return false;
-				}
-				List<@NonNull AbstractElement> matchedAncestry = new ArrayList<>();
-				for (EObject element = matchedElement; element instanceof AbstractElement; element = element.eContainer()) {
-					matchedAncestry.add(0, (AbstractElement)element);
-				}
-				commonAncestry = getCommonAncestry(commonAncestry, matchedAncestry);
-			}
-			if (commonAncestry == null) {
-				return false;
-			}
-			int commonSize = commonAncestry.size();
-			if (commonSize <= 0) {
-				return false;
-			}
-			return grammarElement == commonAncestry.get(commonSize-1);
-		}
-
-		@Override
-		public boolean matches(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
-			if (!(serializationNode instanceof CompoundElement)) {
-				return false;
-			}
-			CompoundLocator compoundLocator = (CompoundLocator)locator;
-			List<@NonNull AbstractElement> commonAncestry = null;
-			for (@NonNull Locator elementLocator : IdiomsUtils.getOwnedLocators(compoundLocator)) {
-				SerializationNode matchedNode = nestedMatch(elementLocator, serializationNode, serializationRuleAnalysis);
-				if (matchedNode == null) {
-					return false;
-				}
-				List<@NonNull AbstractElement> matchedAncestry = new ArrayList<>();
-				for (SerializationNode element = matchedNode; element instanceof AbstractElement; element = serializationRuleAnalysis.getParent(element)) {
-					matchedAncestry.add(0, (AbstractElement)element);
-				}
-				commonAncestry = getCommonAncestry(commonAncestry, matchedAncestry);
-			}
-			if (commonAncestry == null) {
-				return false;
-			}
-			int commonSize = commonAncestry.size();
-			if (commonSize <= 0) {
-				return false;
-			}
-			return serializationNode == commonAncestry.get(commonSize-1);
-		}
-
-		private @Nullable AbstractElement nestedMatch(@NonNull Locator locator, @NonNull AbstractElement grammarElement, @NonNull ParserRuleAnalysis parserRuleAnalysis) {
-			if (parserRuleAnalysis.matches(locator, grammarElement)) {
-				return grammarElement;
-			}
-			if (grammarElement instanceof CompoundElement) {
-				for (AbstractElement nestedElement : ((CompoundElement)grammarElement).getElements()) {
-					assert nestedElement != null;
-					AbstractElement matchedElement = nestedMatch(locator, nestedElement, parserRuleAnalysis);
-					if (matchedElement != null) {
-						return matchedElement;
-					}
-				}
-			}
-			return null;
-		}
-
-		private @Nullable SerializationNode nestedMatch(@NonNull Locator locator, @NonNull SerializationNode serializationNode, @NonNull SerializationRuleAnalysis serializationRuleAnalysis) {
-			if (serializationRuleAnalysis.matches(locator, serializationNode)) {
-				return serializationNode;
-			}
-			if (serializationNode instanceof SequenceSerializationNode) {
-				for (@NonNull SerializationNode nestedNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-					SerializationNode matchedNode = nestedMatch(locator, nestedNode, serializationRuleAnalysis);
-					if (matchedNode != null) {
-						return matchedNode;
-					}
-				}
-			}
-			return null;
 		}
 	}
 

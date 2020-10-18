@@ -18,14 +18,16 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.ActionAssignmentAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 
 public class AssignedCurrentSerializationNode extends AbstractAssignedSerializationNode
 {
 	public AssignedCurrentSerializationNode(@NonNull ActionAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality) {
-		super(assignmentAnalysis, grammarCardinality);
+		super(assignmentAnalysis.getGrammarAnalysis(), assignmentAnalysis.getEClass(), assignmentAnalysis.getEStructuralFeature(), grammarCardinality, assignmentAnalysis.getTargetRuleAnalyses());
 	}
 
 	@Override
@@ -40,14 +42,19 @@ public class AssignedCurrentSerializationNode extends AbstractAssignedSerializat
 	}
 
 	@Override
-	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
+	public @NonNull GrammarRuleVector getAssignedGrammarRuleVector() {
 		throw new UnsupportedOperationException();		// Should have been flattened away
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public int @NonNull [] getAssignedRuleIndexes() {
+		throw new UnsupportedOperationException();		// Should have been flattened away
+	}
+
+	@Override
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
 //		XtextGrammarUtil.appendEStructuralFeatureName(s, eFeatureScope, eStructuralFeature);
-		s.append(SerializationUtils.getName(assignmentAnalysis.getEClass()));
+		s.append(SerializationUtils.getName(assignedEClass));
 		s.append("::");
 		s.append(SerializationUtils.getName(eStructuralFeature));
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");

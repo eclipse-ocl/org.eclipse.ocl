@@ -8,5 +8,5 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-model CompleteOCL
+model org.eclipse.ocl.xtext.completeocl.CompleteOCL
 with "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.idioms"

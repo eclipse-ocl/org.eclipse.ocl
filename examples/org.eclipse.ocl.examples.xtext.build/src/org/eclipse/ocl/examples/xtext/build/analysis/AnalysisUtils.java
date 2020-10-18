@@ -20,18 +20,6 @@ import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 
 public class AnalysisUtils extends SerializationUtils
 {
-	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull EClass eFeatureScope, @NonNull EStructuralFeature eStructuralFeature) {
-	//	if (eFeatureScope != getEContainingClass(eStructuralFeature)) {
-	//		s.append(XtextGrammarUtil.getName(eFeatureScope));
-	//		s.append("::");
-	//	}
-		s.append(getName(eStructuralFeature));
-	}
-
-	public static void appendEStructuralFeatureName(@NonNull StringBuilder s, @NonNull AssignmentAnalysis assignmentAnalysis) {
-		appendEStructuralFeatureName(s, assignmentAnalysis.getEClass(), assignmentAnalysis.getEStructuralFeature());
-	}
-
 	/**
 	 * Return true if the hierachical name of thisEClassifier is the same as thatEClassifier.
 	 *

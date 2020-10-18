@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.xtext.build.analysis;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,16 +36,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.elements.AssignedSerializationNode;
 import org.eclipse.ocl.examples.xtext.build.elements.SerializationNode;
-import org.eclipse.ocl.examples.xtext.idioms.CompoundLocator;
 import org.eclipse.ocl.examples.xtext.idioms.CustomSegment;
 import org.eclipse.ocl.examples.xtext.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.examples.xtext.idioms.Idiom;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsImport;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsModel;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage;
-import org.eclipse.ocl.examples.xtext.idioms.IdiomsProvider;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsUtils;
-import org.eclipse.ocl.examples.xtext.idioms.Locator;
 import org.eclipse.ocl.examples.xtext.idioms.NewLineSegment;
 import org.eclipse.ocl.examples.xtext.idioms.NoSpaceSegment;
 import org.eclipse.ocl.examples.xtext.idioms.PopSegment;
@@ -57,7 +55,9 @@ import org.eclipse.ocl.examples.xtext.idioms.SoftNewLineSegment;
 import org.eclipse.ocl.examples.xtext.idioms.SoftSpaceSegment;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
 import org.eclipse.ocl.examples.xtext.idioms.ValueSegment;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
+import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle;
@@ -65,13 +65,10 @@ import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 import org.eclipse.ocl.examples.xtext.serializer.TreeIterable;
-import org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport;
-import org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
@@ -99,9 +96,6 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 	private @NonNull GrammarProvider grammarProvider;
 
 	@Inject
-	private @Nullable IdiomsProvider idiomsProvider;
-
-	@Inject
 	private @Nullable Provider<ResourceSet> resourceSetProvider;
 
 	private @Nullable Grammar grammar = null;
@@ -127,9 +121,9 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 	private final @NonNull Map<@NonNull EReference, @NonNull List<@NonNull AssignmentAnalysis>> containment2assignmentAnalyses = new HashMap<>();
 
 	/**
-	 * The possible producing rule analyses for each EClass. ??his analysis excludes overrides.
+	 * The possible producing rule analyses for each EClass. ??This analysis excludes overrides.
 	 */
-	private @Nullable Map<@NonNull EClass, List<@NonNull ParserRuleAnalysis>> eClass2ruleAnalyses = null;
+	private @Nullable Map<@NonNull EClass, @NonNull List<@NonNull ParserRuleAnalysis>> eClass2ruleAnalyses = null;
 
 	/**
 	 * The values of enumerated features
@@ -146,15 +140,12 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 
 	private final @NonNull Map<@NonNull EClass, @NonNull EClassValue> eClass2eClassValue = new HashMap<>();
 
-	private @NonNull Map<@NonNull Integer, @NonNull Object> semanticHash2serializationAnalysisOrAnalyses = new HashMap<>();
-
-	private @Nullable List<@NonNull Locator> compoundedLocators = null;
-
-	private final @NonNull SerializationSegment POST_COMMENT = new CustomSerializationSegment(XtextPostCommentSegmentSupport.class);
-	private final @NonNull SerializationSegment PRE_COMMENT = new CustomSerializationSegment(XtextPreCommentSegmentSupport.class);
+//	private @NonNull Map<@NonNull Integer, @NonNull Object> semanticHash2serializationAnalysisOrAnalyses = new HashMap<>();
 
 	private @Nullable Map<@NonNull String, @NonNull String> multipleLineCommentCharacterRanges = null;
 	private @Nullable List<@NonNull String> singleLineCommentKeywords = null;
+
+	private @Nullable GrammarRuleVector leafGrammarRulesVector = null;
 
 	public GrammarAnalysis() {
 		this.grammar = null;
@@ -165,12 +156,12 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 	}
 
 	public void addAssignmentAnalysis(@NonNull AssignmentAnalysis assignmentAnalysis) {
-		AssignmentAnalysis old = assignment2assignmentAnalysis.put(assignmentAnalysis.getActionOrAssignment(), assignmentAnalysis);
+		AssignmentAnalysis old = SerializationUtils.maybeNull(assignment2assignmentAnalysis.put(assignmentAnalysis.getActionOrAssignment(), assignmentAnalysis));
 		assert old == null;
 	}
 
 	public void addContainment(@NonNull AssignmentAnalysis assignmentAnalysis, @NonNull EReference eReference) {
-		List<@NonNull AssignmentAnalysis> assignmentAnalyses = containment2assignmentAnalyses.get(eReference);
+		List<@NonNull AssignmentAnalysis> assignmentAnalyses = SerializationUtils.maybeNull(containment2assignmentAnalyses.get(eReference));
 		if (assignmentAnalyses == null) {
 			assignmentAnalyses = new ArrayList<>();
 			containment2assignmentAnalyses.put(eReference, assignmentAnalyses);
@@ -189,7 +180,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		if (eAttribute2enumerationValues2 == null) {
 			eAttribute2enumerationValues = eAttribute2enumerationValues2 = new HashMap<>();
 		}
-		Set<@NonNull EnumerationValue> enumerationValues = eAttribute2enumerationValues2.get(eAttribute);
+		Set<@NonNull EnumerationValue> enumerationValues = SerializationUtils.maybeNull(eAttribute2enumerationValues2.get(eAttribute));
 		if (enumerationValues == null) {
 			enumerationValues = new HashSet<>();
 			eAttribute2enumerationValues2.put(eAttribute, enumerationValues);
@@ -270,7 +261,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 									if (multipleLineCommentCharacterRanges2 == null) {
 										multipleLineCommentCharacterRanges2 = multipleLineCommentCharacterRanges = new HashMap<>();
 									}
-									multipleLineCommentCharacterRanges2.put(((Keyword)firstElement).getValue(), ((Keyword)terminal).getValue());
+									multipleLineCommentCharacterRanges2.put(SerializationUtils.nonNullState(((Keyword)firstElement).getValue()), SerializationUtils.nonNullState(((Keyword)terminal).getValue()));
 								}
 							}
 						}
@@ -279,7 +270,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 							if (singleLineCommentKeywords2 == null) {
 								singleLineCommentKeywords = singleLineCommentKeywords2 = new ArrayList<>();
 							}
-							singleLineCommentKeywords2.add(((Keyword)firstElement).getValue());
+							singleLineCommentKeywords2.add(SerializationUtils.nonNullState(((Keyword)firstElement).getValue()));
 						}
 					}
 				}
@@ -294,9 +285,9 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 			@NonNull Iterable<@NonNull ParserRuleAnalysis> ruleAnalyses) {
 		Map<@NonNull EClass, @NonNull List<@NonNull ParserRuleAnalysis>> eClass2parserRules = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRuleAnalyses()) {
-				EClass eClass = serializationRule.getProducedEClass();
-				List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = eClass2parserRules.get(eClass);
+			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : ruleAnalysis.getSerializationRuleAnalyses()) {
+				EClass eClass = serializationRuleAnalysis.getProducedEClass();
+				List<@NonNull ParserRuleAnalysis> parserRuleAnalyses = SerializationUtils.maybeNull(eClass2parserRules.get(eClass));
 				if (parserRuleAnalyses == null) {
 					parserRuleAnalyses = new ArrayList<>();
 					eClass2parserRules.put(eClass, parserRuleAnalyses);
@@ -316,7 +307,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		List<@NonNull Grammar> grammars = new ArrayList<>();
 		grammars.add(getGrammar());
 		for (int i = 0; i < grammars.size(); i++) {
-			@NonNull Grammar grammar = grammars.get(i);
+			@NonNull Grammar grammar = SerializationUtils.nonNullState(grammars.get(i));
 			analyzeHiddenRules(grammar);
 			for (@NonNull EObject eObject : new TreeIterable(grammar, true)) {
 				if (eObject instanceof Grammar) {
@@ -329,7 +320,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				else if (eObject instanceof AbstractRule) {
 					AbstractRule abstractRule = (AbstractRule)eObject;
 					String ruleName = SerializationUtils.getName(abstractRule);
-					List<@NonNull AbstractRule> rules = ruleName2rules.get(ruleName);
+					List<@NonNull AbstractRule> rules = SerializationUtils.maybeNull(ruleName2rules.get(ruleName));
 					if (rules == null) {
 						rules = new ArrayList<>();
 						ruleName2rules.put(ruleName, rules);
@@ -339,7 +330,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				else if (eObject instanceof RuleCall) {
 					RuleCall ruleCall = (RuleCall)eObject;
 					AbstractRule rule = SerializationUtils.getRule(ruleCall);
-					List<@NonNull RuleCall> ruleCalls = rule2ruleCalls.get(rule);
+					List<@NonNull RuleCall> ruleCalls = SerializationUtils.maybeNull(rule2ruleCalls.get(rule));
 					if (ruleCalls == null) {
 						ruleCalls = new ArrayList<>();
 						rule2ruleCalls.put(rule, ruleCalls);
@@ -416,34 +407,34 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		serializationRule2aserializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2 = new HashMap<>();
 		Map<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> eClass2serializationRuleList = new HashMap<>();
 		for (@NonNull ParserRuleAnalysis ruleAnalysis : ruleAnalyses) {
-			for (@NonNull SerializationRuleAnalysis serializationRule : ruleAnalysis.getSerializationRuleAnalyses()) {
-				EClass eClass = serializationRule.getProducedEClass();
-				List<@NonNull SerializationRuleAnalysis> serializationRules = eClass2serializationRuleList.get(eClass);
-				if (serializationRules == null) {
-					serializationRules = new ArrayList<>();
-					eClass2serializationRuleList.put(eClass, serializationRules);
+			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : ruleAnalysis.getSerializationRuleAnalyses()) {
+				EClass eClass = serializationRuleAnalysis.getProducedEClass();
+				List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = SerializationUtils.maybeNull(eClass2serializationRuleList.get(eClass));
+				if (serializationRuleAnalyses == null) {
+					serializationRuleAnalyses = new ArrayList<>();
+					eClass2serializationRuleList.put(eClass, serializationRuleAnalyses);
 				}
-				if (!serializationRules.contains(serializationRule)) {
-					serializationRules.add(serializationRule);
+				if (!serializationRuleAnalyses.contains(serializationRuleAnalysis)) {
+					serializationRuleAnalyses.add(serializationRuleAnalysis);
 				}
 			}
 		}
 		for (Map.Entry<@NonNull EClass, @NonNull List<@NonNull SerializationRuleAnalysis>> entry : eClass2serializationRuleList.entrySet()) {
-			EClass eClass = entry.getKey();
-			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = entry.getValue();
+			EClass eClass = SerializationUtils.nonNullState(entry.getKey());
+			List<@NonNull SerializationRuleAnalysis> serializationRuleAnalyses = SerializationUtils.nonNullState(entry.getValue());
 			Map<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> eContainmentFeature2assignedTargetRuleValues = getEContainmentFeature2assignedTargetRuleValues(serializationRuleAnalyses);
-			@NonNull EReference_RuleIndexes[] eReferenceRuleIndexes = null;
+			@NonNull EReference_TargetGrammarRuleVector[] eReferenceRuleIndexes = null;
 			if (eContainmentFeature2assignedTargetRuleValues != null) {
-				eReferenceRuleIndexes = new @NonNull EReference_RuleIndexes[eContainmentFeature2assignedTargetRuleValues.size()];
+				eReferenceRuleIndexes = new @NonNull EReference_TargetGrammarRuleVector[eContainmentFeature2assignedTargetRuleValues.size()];
 				int i2 = 0;
 				for (Map.Entry<@NonNull EReference, @NonNull Set<@NonNull GrammarRuleValue>> entry2 : eContainmentFeature2assignedTargetRuleValues.entrySet()) {
-					Set<@NonNull GrammarRuleValue> values = entry2.getValue();
+					Set<@NonNull GrammarRuleValue> values = SerializationUtils.nonNullState(entry2.getValue());
 					ParserRuleValue[] parserRuleValues = new ParserRuleValue[values.size()];
 					int i3 = 0;
 					for (GrammarRuleValue value : values) {
 						parserRuleValues[i3++] = (ParserRuleValue) value;
 					}
-					eReferenceRuleIndexes[i2++] = new EReference_RuleIndexes(entry2.getKey(), new GrammarRuleVector(parserRuleValues));
+					eReferenceRuleIndexes[i2++] = new EReference_TargetGrammarRuleVector(entry2.getKey(), new GrammarRuleVector(parserRuleValues));
 				}
 			}
 			@NonNull SerializationRule [] serializationRules = new @NonNull SerializationRule [serializationRuleAnalyses.size()];
@@ -456,7 +447,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 			addEClassValue(new EClassValue(eClass, serializationRules, eReferenceRuleIndexes));
 		}
 		for (@NonNull SerializationRule serializationRule : serializationRule2aserializationRuleAnalysis2.keySet()) {
-			SerializationRuleAnalysis serializationRuleAnalysis = serializationRule2aserializationRuleAnalysis2.get(serializationRule);
+			SerializationRuleAnalysis serializationRuleAnalysis = SerializationUtils.maybeNull(serializationRule2aserializationRuleAnalysis2.get(serializationRule));
 			assert serializationRuleAnalysis != null;
 			serializationRule = serializationRuleAnalysis.getSerializationRule();
 		}
@@ -467,7 +458,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 	//		return eClassValue.basicGetEContainmentFeature2assignedTargetRuleValues();
 	//	}
 
-	public @NonNull EReference_RuleIndexes @Nullable [] basicGetEReferenceRuleIndexes(@NonNull EClass eClass) {
+	public @NonNull EReference_TargetGrammarRuleVector @Nullable [] basicGetEReferenceRuleIndexes(@NonNull EClass eClass) {
 		EClassValue eClassValue = getEClassValue(eClass);
 		return eClassValue.basicGetEReferenceRuleIndexes();
 	}
@@ -477,7 +468,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		}
 
 	public @Nullable GrammarRuleValue basicGetRuleValue(int ruleValueIndex) {
-		AbstractRuleAnalysis ruleAnalysis = ruleAnalyses.get(ruleValueIndex);
+		AbstractRuleAnalysis ruleAnalysis = SerializationUtils.nonNullState(ruleAnalyses.get(ruleValueIndex));
 		return ruleAnalysis.basicGetRuleValue();
 	}
 
@@ -498,15 +489,15 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		List<@NonNull String> ruleNames = new ArrayList<>(ruleName2rules.keySet());
 		Collections.sort(ruleNames);
 		for (@NonNull String ruleName : ruleNames) {
-			List<@NonNull AbstractRule> rules = ruleName2rules.get(ruleName);
+			List<@NonNull AbstractRule> rules = SerializationUtils.maybeNull(ruleName2rules.get(ruleName));
 			assert rules != null;
 			AbstractRule activeRule = null;
 			if (rules.size() == 1) {
-				activeRule = rules.get(0);
+				activeRule = SerializationUtils.maybeNull(rules.get(0));
 			}
 			else {
 				for (@NonNull AbstractRule rule : rules) {
-					List<@NonNull RuleCall> ruleCalls = rule2ruleCalls.get(rule);
+					List<@NonNull RuleCall> ruleCalls = SerializationUtils.maybeNull(rule2ruleCalls.get(rule));
 					if (ruleCalls != null) {
 						if (activeRule != null) {
 							throw new IllegalStateException("Duplicate overridden rule '" + ruleName + "'");
@@ -554,39 +545,12 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		return (DirectAssignmentAnalysis) SerializationUtils.nonNullState(assignment2assignmentAnalysis.get(assignment));
 	}
 
-	public @NonNull Iterable<@NonNull Locator> getCompoundedLocators() {
-		List<@NonNull Locator> compoundedLocators2 = compoundedLocators;
-		if (compoundedLocators2 == null) {
-			compoundedLocators = compoundedLocators2 = new ArrayList<>();
-			for (@NonNull Idiom idiom : getIdioms()) {
-				for (@NonNull SubIdiom subIdiom : IdiomsUtils.getOwnedSubIdioms(idiom)) {
-					Locator locator = IdiomsUtils.getLocator(subIdiom);
-					if (locator instanceof CompoundLocator) {
-						getCompoundedLocators(compoundedLocators2, (CompoundLocator)locator);
-					}
-				}
-			}
-		}
-		return compoundedLocators2;
-	}
-	private void getCompoundedLocators(@NonNull List<@NonNull Locator> compoundedLocators, @NonNull CompoundLocator compoundLocator) {
-		for (@NonNull Locator locator : IdiomsUtils.getOwnedLocators(compoundLocator)) {
-			locator = IdiomsUtils.getLocator(locator);
-			if (locator instanceof CompoundLocator) {
-				getCompoundedLocators(compoundedLocators, (CompoundLocator)locator);
-			}
-			else {
-				compoundedLocators.add(locator);
-			}
-		}
-	}
-
 	public @NonNull EClassValue getEClassValue(@NonNull EClass eClass) {
 		assert eClass2eClassValue.size() > 0;
 		return SerializationUtils.nonNullState(eClass2eClassValue.get(eClass));
 	}
 
-	public @NonNull EReference_RuleIndexes @NonNull [] getEReferenceRuleIndexes(@NonNull EClass eClass) {
+	public @NonNull EReference_TargetGrammarRuleVector @NonNull [] getEReferenceRuleIndexes(@NonNull EClass eClass) {
 		return SerializationUtils.nonNullState(basicGetEReferenceRuleIndexes(eClass));
 	}
 
@@ -599,7 +563,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				Iterable<@NonNull AssignedSerializationNode> assignedSerializationNodes = serializationRule.getAssignedSerializationNodes(eContainmentFeature);
 				if (assignedSerializationNodes != null) {
 					for (@NonNull AssignedSerializationNode assignedSerializationNode : assignedSerializationNodes) {
-						for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getAssignmentAnalysis().getTargetRuleAnalyses()) {
+						for (@NonNull AbstractRuleAnalysis targetRuleAnalysis : assignedSerializationNode.getTargetRuleAnalyses()) {
 							if (targetRuleValues == null) {
 								targetRuleValues = new HashSet<>();
 							}
@@ -620,7 +584,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 
 	public @NonNull EnumerationValue getEnumerationValue(@NonNull Keyword keyword) {
 		String value = SerializationUtils.getValue(keyword);
-		EnumerationValueSingle enumerationValue = value2enumerationValue.get(value);
+		EnumerationValueSingle enumerationValue = SerializationUtils.maybeNull(value2enumerationValue.get(value));
 		if (enumerationValue == null) {
 			enumerationValue = new EnumerationValueSingle(value);
 			value2enumerationValue.put(value, enumerationValue);
@@ -634,7 +598,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 			values.add(SerializationUtils.getValue(keyword));
 		}
 		Collections.sort(values);
-		EnumerationValueMultiple enumerationValue = values2enumerationValue.get(values);
+		EnumerationValueMultiple enumerationValue = SerializationUtils.maybeNull(values2enumerationValue.get(values));
 		if (enumerationValue == null) {
 			enumerationValue = new EnumerationValueMultiple(values);
 			values2enumerationValue.put(values, enumerationValue);
@@ -663,35 +627,27 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		return castIdiomModel;
 	}
 
-/*	protected @NonNull Iterable<@NonNull Idiom> getIdioms(/ *@NonNull* / IdiomsModel rootIdiomModel) {
-		List<@NonNull Idiom> allIdioms = new ArrayList<>();
-		if (rootIdiomModel != null) {
-			for (IdiomsModel idiomModel : rootIdiomModel.getIdiomsModels()) {
-				allIdioms.addAll(SerializationUtils.nullFree(idiomModel.getOwnedIdioms()));
-			}
-		}
-		return allIdioms;
-	} */
-
 	public @NonNull Iterable<@NonNull Idiom> getIdioms() {
 		Grammar grammar = getGrammar();
 		ResourceSet resourceSet = grammar.eResource().getResourceSet();
 		if (resourceSet == null) {
 			if (resourceSetProvider != null) {
 				resourceSet = resourceSetProvider.get();
+				assert resourceSet != null;
 			}
 			else {
 				resourceSet = new ResourceSetImpl();
 			}
 		}
-		String idiomsPath =  "/" + grammar.getName().replace('.', '/') + ".idioms";
+	//	String idiomsPath =  "/" + grammar.getName().replace('.', '/') + ".idioms";
 		URI xtextURI = grammar.eResource().getURI();
 		URI idiomsURI = xtextURI.trimFileExtension().appendFileExtension("idioms");
+		assert idiomsURI != null;
 		List<@NonNull IdiomsModel> idiomsModels = Lists.newArrayList(getIdiomsModel(resourceSet, idiomsURI));
 		List<@NonNull Idiom> idioms = new ArrayList<>();
 		StringBuilder s = null;
 		for (int i = 0; i < idiomsModels.size(); i++) {
-			IdiomsModel idiomsModel = idiomsModels.get(i);
+			IdiomsModel idiomsModel = SerializationUtils.nonNullState(idiomsModels.get(i));
 			List<Resource.Diagnostic> errors = SerializationUtils.nonNullState(idiomsModel.eResource().getErrors());
 			if (errors.size() > 0) {
 				if (s == null) {
@@ -707,62 +663,30 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				}
 			}
 		}
-
-/*		protected @NonNull Iterable<@NonNull Idiom> gatherIdiomsModels(@NonNull List<@NonNull Idiom> allIdioms) {
-			List<@NonNull Idiom> allIdioms = new ArrayList<>();
-			if (rootIdiomModel != null) {
-				for (IdiomsModel idiomModel : rootIdiomModel.getIdiomsModels()) {
-					allIdioms.addAll(SerializationUtils.nullFree(idiomModel.getOwnedIdioms()));
-				}
-			}
-			return allIdioms;
-		}
-
-		Iterable<@NonNull Idiom> idioms = getIdioms(idiomModel); */
-
-	/*	IdiomsProvider idiomsProvider2 = idiomsProvider;
-		if (idiomsProvider2 == null) {
-
-			idiomsProvider = idiomsProvider2 = new AbstractIdiomsProvider()
-			{
-				private @Nullable Iterable<@NonNull Idiom> idioms = null;
-
-				@Override
-				public @NonNull Iterable<@NonNull Idiom> getIdioms(@NonNull ResourceSet resourceSet) {
-					Iterable<@NonNull Idiom> idioms2 = idioms;
-					if (idioms2 == null) {
-						URI xtextURI = getGrammar().eResource().getURI();
-						URI idiomsURI = xtextURI.trimFileExtension().appendFileExtension("idioms");
-						IdiomsModel idiomModel = getIdiomModel(resourceSet, idiomsURI);
-						idioms = idioms2 = getIdioms(idiomModel);
-					}
-					return idioms2;
-				}
-			};
-		} */
-	//	Iterable<@NonNull Idiom> idioms = idiomsProvider2.getIdioms(resourceSet);
-	/*	List<@NonNull Idiom> idioms = null;
-		StringBuilder s = null;
-		for (Resource resource : resourceSet.getResources()) {
-			List<EObject> contents = resource.getContents();
-			if (!contents.isEmpty()) {
-				EObject eObject = contents.get(0);
-				if (eObject instanceof IdiomsModel) {
-				//	if (idioms == null) {
-				//		idioms = new ArrayList<>();
-				//	}
-				//	idioms.addAll(SerializationUtils.nullFree(((IdiomsModel)eObject).getOwnedIdioms()));
-				}
-			}
-		} */
 		if (s != null) {
 			throw new IllegalStateException("Failed to load idioms" + s.toString());
 		}
-		return idioms != null ? idioms : Collections.emptyList();
+		return idioms;
 	}
 
 	public @NonNull SerializationSegment @NonNull [] @NonNull []  getInnerFormattingSegments(@NonNull ParserRuleValue parserRuleValue) {
 		return parserRuleValue.getInnerFormattingSegments();
+	}
+
+	public @NonNull GrammarRuleVector getLeafGrammarRulesVector() {
+		GrammarRuleVector leafGrammarRulesVector2 = leafGrammarRulesVector ;
+		if (leafGrammarRulesVector2 == null) {
+			leafGrammarRulesVector2 = new GrammarRuleVector();
+			for (@NonNull AbstractRuleAnalysis ruleAnalysis : rule2ruleAnalysis.values()) {
+				if (ruleAnalysis instanceof ParserRuleAnalysis) {
+					Collection<@NonNull ParserRuleAnalysis> subRuleAnalysesClosure = ((ParserRuleAnalysis)ruleAnalysis).getSubRuleAnalysesClosure();
+					if (subRuleAnalysesClosure.size() <= 1) {
+						leafGrammarRulesVector2.set(ruleAnalysis.getIndex());
+					}
+				}
+			}
+		}
+		return leafGrammarRulesVector2;
 	}
 
 	public LocatorHelper.@NonNull LocatorSwitch getLocatorSwitch() {
@@ -800,7 +724,7 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 	}
 
 	public @NonNull AbstractRuleAnalysis getRuleAnalysis(int ruleValueIndex) {
-		return ruleAnalyses.get(ruleValueIndex);
+		return SerializationUtils.nonNullState(ruleAnalyses.get(ruleValueIndex));
 	}
 
 //	@Override
@@ -813,46 +737,10 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		return getRuleAnalysis(ruleValueIndex).getRuleValue();
 	}
 
-	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull ParserRuleAnalysis parserRuleAnalysis, @NonNull SerializationNode thatSerializationNode) {
-	/*	int hashCode = thatSerializationNode.semanticHashCode();			// Do we really need this ??
-		Object analysisOrAnalyses = semanticHash2serializationAnalysisOrAnalyses.get(hashCode);
-		SerializationRuleAnalysis oldSerializationRuleAnalysis = null;
-		if (analysisOrAnalyses instanceof SerializationRuleAnalysis) {
-			if (((SerializationRuleAnalysis)analysisOrAnalyses).getRootSerializationNode().semanticEquals(thatSerializationNode)) {
-				throw new UnsupportedOperationException();
-			//	oldSerializationRuleAnalysis = (SerializationRuleAnalysis)analysisOrAnalyses;
-			}
-		}
-		else if (analysisOrAnalyses != null) {
-			@SuppressWarnings("unchecked")
-			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
-			for (@NonNull SerializationRuleAnalysis ruleAnalysis : ruleAnalyses) {
-				if (ruleAnalysis.getRootSerializationNode().semanticEquals(thatSerializationNode)) {
-					throw new UnsupportedOperationException();
-				//	oldSerializationRuleAnalysis = ruleAnalysis;
-				}
-			}
-		}
-		if (oldSerializationRuleAnalysis != null) {
-			return oldSerializationRuleAnalysis;
-		} */
-		SerializationRuleAnalysis serializationRuleAnalysis = new SerializationRuleAnalysis(parserRuleAnalysis, thatSerializationNode);
-	/*	if (analysisOrAnalyses == null) {
-			semanticHash2serializationAnalysisOrAnalyses.put(hashCode, serializationRuleAnalysis);
-		}
-		else if (analysisOrAnalyses instanceof SerializationNode) {
-			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = new ArrayList<>();
-			ruleAnalyses.add((SerializationRuleAnalysis)analysisOrAnalyses);
-			ruleAnalyses.add(serializationRuleAnalysis);
-			semanticHash2serializationAnalysisOrAnalyses.put(hashCode, ruleAnalyses);
-		}
-		else {
-			@SuppressWarnings("unchecked")
-			List<@NonNull SerializationRuleAnalysis> ruleAnalyses = (List<@NonNull SerializationRuleAnalysis>)analysisOrAnalyses;
-			ruleAnalyses.add(serializationRuleAnalysis);
-		} */
-		return serializationRuleAnalysis;
-	}
+//	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull ParserRuleAnalysis parserRuleAnalysis, @NonNull SerializationNode thatSerializationNode) {
+//		SerializationRuleAnalysis serializationRuleAnalysis = new SerializationRuleAnalysis(parserRuleAnalysis, thatSerializationNode);
+//		return serializationRuleAnalysis;
+//	}
 
 	public @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(@NonNull SerializationRule serializationRule) {
 		assert serializationRule2aserializationRuleAnalysis != null;
@@ -879,10 +767,10 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				serializationSegment = SerializationSegment.POP;
 			}
 			else if (segment instanceof PostCommentSegment) {
-				serializationSegment = POST_COMMENT;
+				serializationSegment = SerializationSegment.POST_COMMENT;
 			}
 			else if (segment instanceof PreCommentSegment) {
-				serializationSegment = PRE_COMMENT;
+				serializationSegment = SerializationSegment.PRE_COMMENT;
 			}
 			else if (segment instanceof PushSegment) {
 				serializationSegment = SerializationSegment.PUSH;
@@ -897,7 +785,9 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				serializationSegment = SerializationSegment.VALUE;
 			}
 			else if (segment instanceof CustomSegment) {
-				serializationSegment = new CustomSerializationSegment(((CustomSegment) segment).getSupportClassName());
+				String supportClassName = ((CustomSegment) segment).getSupportClassName();
+				assert supportClassName != null;
+				serializationSegment = new CustomSerializationSegment(supportClassName);
 			}
 			else {
 				throw new UnsupportedOperationException();
@@ -907,13 +797,10 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 		return serializationSegment;
 	}
 
-	public @NonNull SerializationSegment @NonNull [] getSerializationSegments(@NonNull List<@NonNull SubIdiom> subIdioms, @Nullable Boolean isAll) {
+	public @NonNull SerializationSegment @Nullable [] getSerializationSegments(@NonNull List<@NonNull SubIdiom> subIdioms, @Nullable Boolean isAll) {
 		@NonNull SerializationSegment @Nullable [] serializationSegments = null;
 		List<@NonNull Segment> mergedSegments = null;
 		for (@NonNull SubIdiom subIdiom : subIdioms) {
-			if (subIdiom.isAll()) {
-				getClass();	// XXX
-			}
 			if ((isAll == null) || (subIdiom.isAll() == isAll.booleanValue())) {
 				List<Segment> segments = subIdiom.getOwnedSegments();
 				if (segments != null) {
@@ -945,9 +832,6 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				serializationSegments[j] = getSerializationSegment(segment);
 			}
 		}
-		else {
-			serializationSegments = SerializationSegment.VALUE_SEGMENTS_ARRAY;
-		}
 		return serializationSegments;
 	}
 
@@ -967,11 +851,11 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 
 	@Override
 	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
+		DiagnosticStringBuilder s = new DiagnosticStringBuilder();
 		s.append("Xtext production rule -> Xtext base rules <=> User EClass - User EStructuralFeatures");
 		for (@NonNull AbstractRuleAnalysis abstractRuleAnalysis : ruleAnalyses) {
 			s.append("\n  ");
-			s.append(abstractRuleAnalysis);
+			s.append(abstractRuleAnalysis.getName());
 			if (abstractRuleAnalysis instanceof ParserRuleAnalysis) {
 				ParserRuleAnalysis parserRuleAnalysis = (ParserRuleAnalysis)abstractRuleAnalysis;
 				s.append(" -");
@@ -986,11 +870,11 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 					else {
 						s.append(",");
 					}
-					List<@NonNull AssignmentAnalysis> assignmentAnalyses = eFeature2assignmentAnalyses.get(eFeature);
+					List<@NonNull AssignmentAnalysis> assignmentAnalyses = SerializationUtils.maybeNull(eFeature2assignmentAnalyses.get(eFeature));
 					assert assignmentAnalyses != null;
 					int size = assignmentAnalyses.size();
 					if (size != 1) {
-						s.append(size);
+						s.appendObject(size);
 						s.append("*");
 					}
 					s.append(eFeature.getName());
@@ -998,9 +882,9 @@ public class GrammarAnalysis //extends AbstractGrammarAnalysis
 				}
 				//
 				for (@NonNull SerializationRuleAnalysis serializationRule : parserRuleAnalysis.getSerializationRuleAnalyses()) {
-					SerializationUtils.appendIndentation(s, 2);
+					s.appendIndentation(2);
 					s.append("|& ");
-					serializationRule.toString(s, -1);
+					serializationRule.toRuleString(s, -1);
 				}
 			}
 		}

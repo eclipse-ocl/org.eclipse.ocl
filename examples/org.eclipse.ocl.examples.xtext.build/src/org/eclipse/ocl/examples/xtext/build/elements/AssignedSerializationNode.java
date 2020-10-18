@@ -13,20 +13,31 @@ package org.eclipse.ocl.examples.xtext.build.elements;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.build.analysis.AssignmentAnalysis;
+import org.eclipse.ocl.examples.xtext.build.analysis.AbstractRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 
 public interface AssignedSerializationNode extends SerializationNode
 {
 	@NonNull EClass getAssignedEClass();
 
 	/**
-	 * Return the possibly many RuleAnalysis that specify matches to this SerializationNode.
+	 * Return a bit vector of the many ParserRules that produce values for assigment to this EReference SerializationNode.
 	 */
-	@NonNull Integer @Nullable [] getAssignedRuleIndexes();
+	@NonNull GrammarRuleVector getAssignedGrammarRuleVector();
 
-	@NonNull AssignmentAnalysis getAssignmentAnalysis();
+	/**
+	 * Return an array of the many ParserRules that produce values for assigment to this EReference SerializationNode.
+	 */
+	int @NonNull [] getAssignedRuleIndexes();
+
 	@NonNull EStructuralFeature getEStructuralFeature();
-	@Nullable EnumerationValue getEnumerationValue();
+
+	/**
+	 * Return the many alternative Strings that may be assigned to this EAttribute SerializationNode.
+	 * Returns an EnumerationValueNull if no Srings assigned.
+	 */
+	@NonNull EnumerationValue getEnumerationValue();
+
+	@NonNull Iterable<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses();
 }

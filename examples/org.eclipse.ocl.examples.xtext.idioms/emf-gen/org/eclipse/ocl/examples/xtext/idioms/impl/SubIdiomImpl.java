@@ -405,7 +405,9 @@ public class SubIdiomImpl
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("at ");
-		s.append(all ? "all " : "each ");
+		s.append(all
+			? "all "
+			: "each ");
 		s.append(ownedLocator != null
 			? ownedLocator.toString()
 			: "«null»");

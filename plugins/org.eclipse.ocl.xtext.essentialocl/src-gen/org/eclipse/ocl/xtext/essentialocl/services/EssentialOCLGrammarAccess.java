@@ -353,6 +353,7 @@ public class EssentialOCLGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.essentialocl.EssentialOCL.UnrestrictedName");
 		private final RuleCall cEssentialOCLUnrestrictedNameParserRuleCall = (RuleCall)rule.eContents().get(1);
 
+		//@Override
 		//UnrestrictedName:
 		//	EssentialOCLUnrestrictedName;
 		@Override public ParserRule getRule() { return rule; }
@@ -401,6 +402,7 @@ public class EssentialOCLGrammarAccess extends AbstractElementFinder.AbstractGra
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.xtext.essentialocl.EssentialOCL.UnreservedName");
 		private final RuleCall cEssentialOCLUnreservedNameParserRuleCall = (RuleCall)rule.eContents().get(1);
 
+		//@Override
 		//UnreservedName:
 		//	EssentialOCLUnreservedName;
 		@Override public ParserRule getRule() { return rule; }
@@ -3110,6 +3112,7 @@ public class EssentialOCLGrammarAccess extends AbstractElementFinder.AbstractGra
 		return getEssentialOCLUnrestrictedNameAccess().getRule();
 	}
 
+	//@Override
 	//UnrestrictedName:
 	//	EssentialOCLUnrestrictedName;
 	public UnrestrictedNameElements getUnrestrictedNameAccess() {
@@ -3135,6 +3138,7 @@ public class EssentialOCLGrammarAccess extends AbstractElementFinder.AbstractGra
 		return getEssentialOCLUnreservedNameAccess().getRule();
 	}
 
+	//@Override
 	//UnreservedName:
 	//	EssentialOCLUnreservedName;
 	public UnreservedNameElements getUnreservedNameAccess() {

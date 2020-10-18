@@ -26,5 +26,6 @@ public interface AssignmentAnalysis extends Nameable
 	@NonNull EClass getEClass();
 	@NonNull EStructuralFeature getEStructuralFeature();
 	@NonNull GrammarAnalysis getGrammarAnalysis();
+	@NonNull ParserRuleAnalysis getSourceRuleAnalysis();
 	@NonNull Iterable<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses();
 }

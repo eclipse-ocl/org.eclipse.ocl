@@ -77,6 +77,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		private final RuleCall cIDParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cRestrictedKeywordsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 
+		//@Override
 		//Identifier:
 		//	ID
 		//	| RestrictedKeywords;
@@ -2234,9 +2235,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		private final RuleCall cTypedTypeRefCSParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cLambdaTypeCSParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 
-		////---------------------------------------------------------------------------------
-		////	Base overrides
-		////---------------------------------------------------------------------------------
+		//@Override
 		//TypedRefCS base::TypedRefCS:
 		//	MapTypeCS | TupleTypeCS | TypedTypeRefCS | LambdaTypeCS;
 		@Override public ParserRule getRule() { return rule; }
@@ -2275,6 +2274,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		private final RuleCall cOwnedBindingTemplateBindingCSParserRuleCall_1_1_1_0 = (RuleCall)cOwnedBindingAssignment_1_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
 
+		//@Override
 		//TypedTypeRefCS base::TypedTypeRefCS:
 		//	isTypeof?='typeof' '(' ownedPathName=LibPathNameCS ')' | ownedPathName=LibPathNameCS ('('
 		//	ownedBinding=TemplateBindingCS ')')?;
@@ -2338,9 +2338,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		private final Assignment cOwnedTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cOwnedTypeTypedMultiplicityRefCSParserRuleCall_2_0 = (RuleCall)cOwnedTypeAssignment_2.eContents().get(0);
 
-		////---------------------------------------------------------------------------------
-		////	EssentialOCL overrides
-		////---------------------------------------------------------------------------------
+		//@Override
 		//TuplePartCS base::TuplePartCS:
 		//	name=Identifier ':' ownedType=TypedMultiplicityRefCS;
 		@Override public ParserRule getRule() { return rule; }
@@ -2496,6 +2494,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		return getLibraryAccess().getRule();
 	}
 
+	//@Override
 	//Identifier:
 	//	ID
 	//	| RestrictedKeywords;
@@ -2895,9 +2894,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		return getTypedMultiplicityRefCSAccess().getRule();
 	}
 
-	////---------------------------------------------------------------------------------
-	////	Base overrides
-	////---------------------------------------------------------------------------------
+	//@Override
 	//TypedRefCS base::TypedRefCS:
 	//	MapTypeCS | TupleTypeCS | TypedTypeRefCS | LambdaTypeCS;
 	public TypedRefCSElements getTypedRefCSAccess() {
@@ -2908,6 +2905,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		return getTypedRefCSAccess().getRule();
 	}
 
+	//@Override
 	//TypedTypeRefCS base::TypedTypeRefCS:
 	//	isTypeof?='typeof' '(' ownedPathName=LibPathNameCS ')' | ownedPathName=LibPathNameCS ('('
 	//	ownedBinding=TemplateBindingCS ')')?;
@@ -2919,9 +2917,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		return getTypedTypeRefCSAccess().getRule();
 	}
 
-	////---------------------------------------------------------------------------------
-	////	EssentialOCL overrides
-	////---------------------------------------------------------------------------------
+	//@Override
 	//TuplePartCS base::TuplePartCS:
 	//	name=Identifier ':' ownedType=TypedMultiplicityRefCS;
 	public TuplePartCSElements getTuplePartCSAccess() {
@@ -3057,6 +3053,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		return getEssentialOCLUnrestrictedNameAccess().getRule();
 	}
 
+	//@Override
 	//UnrestrictedName:
 	//	EssentialOCLUnrestrictedName;
 	public EssentialOCLGrammarAccess.UnrestrictedNameElements getUnrestrictedNameAccess() {
@@ -3082,6 +3079,7 @@ public class OCLstdlibGrammarAccess extends AbstractElementFinder.AbstractGramma
 		return getEssentialOCLUnreservedNameAccess().getRule();
 	}
 
+	//@Override
 	//UnreservedName:
 	//	EssentialOCLUnreservedName;
 	public EssentialOCLGrammarAccess.UnreservedNameElements getUnreservedNameAccess() {

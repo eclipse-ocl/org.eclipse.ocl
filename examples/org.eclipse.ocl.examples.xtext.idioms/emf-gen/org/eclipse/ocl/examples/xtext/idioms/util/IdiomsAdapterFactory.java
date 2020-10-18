@@ -14,11 +14,9 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.idioms.AnyAssignmentLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AnyElementLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
-import org.eclipse.ocl.examples.xtext.idioms.CompoundLocator;
 import org.eclipse.ocl.examples.xtext.idioms.CustomSegment;
 import org.eclipse.ocl.examples.xtext.idioms.EPackageImport;
 import org.eclipse.ocl.examples.xtext.idioms.FinalLocator;
@@ -109,7 +107,7 @@ public class IdiomsAdapterFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected IdiomsSwitch<@Nullable Adapter> modelSwitch = new IdiomsSwitch<@Nullable Adapter>() {
+	protected IdiomsSwitch<Adapter> modelSwitch = new IdiomsSwitch<Adapter>() {
 
 		@Override
 		public Adapter caseAnyAssignmentLocator(AnyAssignmentLocator object) {
@@ -124,11 +122,6 @@ public class IdiomsAdapterFactory
 		@Override
 		public Adapter caseAssignmentLocator(AssignmentLocator object) {
 			return createAssignmentLocatorAdapter();
-		}
-
-		@Override
-		public Adapter caseCompoundLocator(CompoundLocator object) {
-			return createCompoundLocatorAdapter();
 		}
 
 		@Override
@@ -349,20 +342,6 @@ public class IdiomsAdapterFactory
 	 * @generated
 	 */
 	public Adapter createAssignmentLocatorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.xtext.idioms.CompoundLocator <em>Compound Locator</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.examples.xtext.idioms.CompoundLocator
-	 * @generated
-	 */
-	public Adapter createCompoundLocatorAdapter() {
 		return null;
 	}
 

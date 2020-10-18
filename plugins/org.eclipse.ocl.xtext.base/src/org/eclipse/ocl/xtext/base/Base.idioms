@@ -8,20 +8,19 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-model Base
+model org.eclipse.ocl.xtext.base.Base
 import "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS.ecore#/" as basecs
 
 idiom COMMENTED_RULE at returns basecs::ModelElementCS do custom "org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport" value;
-
-idiom BRACES_in_StructuralFeatureCS for basecs::StructuralFeatureCS {
-	at "{" do soft-space value soft-space;
-	at "}" do soft-space value soft-space;
-}
 
 idiom BRACES {
 	at "{" do soft-space value push soft-new-line;
 	at "}" do pop soft-space value soft-new-line;
 }
+
+idiom BAR_ONE at "|1" do no-space value no-space;
+
+idiom BAR_QUERY at "|?" do no-space value no-space;
 
 idiom CLASSES_SPACING at assignment basecs::PackageCS::ownedClasses do half-new-line value half-new-line;
 

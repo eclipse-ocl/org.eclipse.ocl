@@ -21,8 +21,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder.DiagnosticStringBuilderWithHelper;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder.SerializationMetaDataDiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepSequence;
-import org.eclipse.ocl.examples.xtext.serializer.UserSlotsAnalysis.UserSlotAnalysis;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepWrapper;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.GrammarUtil;
@@ -33,141 +35,166 @@ import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
+/**
+ * Each SerializationRule provides the metadat to support serializing or reformatting a user model element
+ * in accordance with a serialization(M2T)-friendly variation of a grammar(T2M) rule.
+ *
+ * Each serialization rule is associated with precisely one user EClass and comprises a potentially nested
+ * sequence of serialization steps to generate the output. There are no root or intermediate alternatives,
+ * since these are multiplied out as distinct serialization rules. There may be leaf alternatives. The
+ * seria;ization is guarded by some match steps that validate the applicability of the rule and deduce the
+ * cardinalities of variables for each serialization loop/condition.
+ */
 public class SerializationRule implements Nameable
 {
-	public static class EAttribute_EnumerationValues implements Nameable
+	/**
+	 * SerializationFeature captures the rule-specific EStructuralFeature metadata for a SerializationRule.
+	 */
+	public static abstract class SerializationFeature implements Nameable
 	{
-		protected final @NonNull EAttribute eAttribute;
+		protected final @NonNull EStructuralFeature eStructuralFeature;
+
+		protected SerializationFeature(@NonNull EStructuralFeature eStructuralFeature) {
+			this.eStructuralFeature = eStructuralFeature;
+		}
+
+		public @NonNull EStructuralFeature getEStructuralFeature() {
+			return eStructuralFeature;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return SerializationUtils.getName(eStructuralFeature);
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName();
+		}
+	}
+
+	/**
+	 * SerializationAttribute captures the rule-specific EAttribute metadata for a SerializationRule.
+	 */
+	public static abstract class SerializationAttribute extends SerializationFeature
+	{
+		/**
+		 * True if the default value must be used to satisfy grammar rule multiplicities.
+		 */
+		protected final boolean needsDefault;
+
+		public SerializationAttribute(@NonNull EAttribute eAttribute, boolean needsDefault) {
+			super(eAttribute);
+			this.needsDefault = needsDefault;
+		}
+
+		public @Nullable SerializationEnumeratedAttribute asEnumerated() {
+			return null;
+		}
+
+		public abstract @Nullable GrammarCardinality basicGetGrammarCardinality(@Nullable EnumerationValue enumerationValue);
+
+	//	public @NonNull EAttribute getEAttribute() {
+	//		return eAttribute;
+	//	}
+
+		public abstract @NonNull EnumerationValue @NonNull [] getEnumerationValues();
+
+		public boolean needsDefault() {
+			return needsDefault;
+		}
+	}
+
+	/**
+	 * SerializationAttribute captures the rule-specific EAttribute metadata for a SerializationRule.
+	 */
+	public static class SerializationEnumeratedAttribute extends SerializationAttribute
+	{
+		/**
+		 * The various groups of strings that may beassigned to the attribute, if string-valued. null if none.
+		 */
 		protected final @NonNull EnumerationValue @NonNull [] enumerationValues;
 
-		public EAttribute_EnumerationValues(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue @NonNull ... enumerationValues) {
-			assert eAttribute != null;
-			this.eAttribute = eAttribute;
+		/**
+		 * The corresponding cardinality for each enumerationValues.
+		 */
+		protected final @NonNull GrammarCardinality @NonNull [] grammarCardinalities;
+
+		public SerializationEnumeratedAttribute(@NonNull EAttribute eAttribute, boolean needsDefault, @NonNull EnumerationValue @NonNull [] enumerationValues, @NonNull GrammarCardinality @NonNull [] grammarCardinalities) {
+			super(eAttribute, needsDefault);
 			this.enumerationValues = enumerationValues;
+			this.grammarCardinalities = grammarCardinalities;
+			for (@NonNull EnumerationValue enumerationValue : enumerationValues) {
+				assert !enumerationValue.isNull();
+			}
 		}
 
-		public @NonNull EAttribute getEAttribute() {
-			return eAttribute;
+		@Override
+		public @Nullable SerializationEnumeratedAttribute asEnumerated() {
+			return this;
 		}
 
+		@Override
 		public @NonNull EnumerationValue @NonNull [] getEnumerationValues() {
 			return enumerationValues;
 		}
 
 		@Override
-		public @NonNull String getName() {
-			return SerializationUtils.getName(eAttribute);
+		public @Nullable GrammarCardinality basicGetGrammarCardinality(@Nullable EnumerationValue enumerationValue) {
+			if (enumerationValue == null) {
+				return eStructuralFeature.isRequired() ? GrammarCardinality.ONE : GrammarCardinality.ZERO_OR_ONE;
+			}
+			for (int i = 0; i < enumerationValues.length; i++) {
+				if (enumerationValues[i] == enumerationValue) {
+					return grammarCardinalities[i];
+				}
+			}
+			return null;
+		}
+
+		public @NonNull GrammarCardinality getGrammarCardinality(@Nullable EnumerationValue enumerationValue) {
+			return SerializationUtils.nonNullState(basicGetGrammarCardinality(enumerationValue));
 		}
 
 		@Override
 		public @NonNull String toString() {
-			return eAttribute.getEContainingClass().getName() + "::" + eAttribute.getName() + " " + enumerationValues;
+			StringBuilder s = new StringBuilder();
+			s.append(eStructuralFeature.getEContainingClass().getName());
+			s.append("::");
+			s.append(eStructuralFeature.getName());
+			s.append(" ");
+			for (int i = 0; i <enumerationValues.length; i++) {
+				if (i > 0) {
+					s.append(",");
+					s.append(enumerationValues[i]);
+					s.append(grammarCardinalities[i]);
+				}
+			}
+			@SuppressWarnings("null")
+			@NonNull String castString = s.toString();
+			return castString;
 		}
 	}
 
-	public static class EAttribute_EnumerationValue_GrammarCardinality implements Nameable
+	/**
+	 * SerializationSimpleAttribute captures the rule-specific EAttribute metadata for a SerializationRule.
+	 * Nothing is known about potential values of the attribute.
+	 */
+	public static class SerializationSimpleAttribute extends SerializationAttribute
 	{
-		protected final @NonNull EAttribute eAttribute;
-		protected final @NonNull EnumerationValue_GrammarCardinality @NonNull [] enumerationValue2grammarCardinality;
-
-		public EAttribute_EnumerationValue_GrammarCardinality(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue_GrammarCardinality @NonNull [] enumerationValue2grammarCardinality) {
-			assert eAttribute != null;
-			this.eAttribute = eAttribute;
-			this.enumerationValue2grammarCardinality = enumerationValue2grammarCardinality;
-		}
-
-		public @NonNull EAttribute getEAttribute() {
-			return eAttribute;
-		}
-
-		public @NonNull EnumerationValue_GrammarCardinality @NonNull [] getEnumerationValue_GrammarCardinality() {
-			return enumerationValue2grammarCardinality;
-		}
-
-		@Override
-		public @NonNull String getName() {
-			return SerializationUtils.getName(eAttribute);
-		}
-
-		@Override
-		public @NonNull String toString() {
-			return eAttribute.getEContainingClass().getName() + "::" + eAttribute.getName() + " " + enumerationValue2grammarCardinality;
-		}
-	}
-
-	public static class EReference_RuleIndexes implements Nameable
-	{
-		protected final @NonNull EReference eReference;
-		protected final @NonNull GrammarRuleVector parserRuleValueIndexes;
-
-		public EReference_RuleIndexes(/*@NonNull*/ EReference eReference, @NonNull GrammarRuleVector parserRuleValueIndexes) {
-			assert eReference != null;
-			this.eReference = eReference;
-			this.parserRuleValueIndexes = parserRuleValueIndexes;
-		}
-
-		public @NonNull EReference getEReference() {
-			return eReference;
-		}
-
-		public @NonNull GrammarRuleVector getAssignedTargetRuleValueIndexes() {
-			return parserRuleValueIndexes;
-		}
-
-		@Override
-		public @NonNull String getName() {
-			return SerializationUtils.getName(eReference);
-		}
-
-		@Override
-		public @NonNull String toString() {
-			return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + parserRuleValueIndexes;
-		}
-	}
-
-	public static class EReference_RuleIndex_GrammarCardinality implements Nameable
-	{
-		protected final @NonNull EReference eReference;
-		protected final @NonNull RuleIndex_GrammarCardinality @NonNull [] ruleIndex2grammarCardinality;
-
-		public EReference_RuleIndex_GrammarCardinality(/*@NonNull*/ EReference eReference, @NonNull RuleIndex_GrammarCardinality @NonNull [] ruleIndex2grammarCardinality) {
-			assert eReference != null;
-			this.eReference = eReference;
-			this.ruleIndex2grammarCardinality = ruleIndex2grammarCardinality;
-		}
-
-		public @NonNull EReference getEReference() {
-			return eReference;
-		}
-
-		@Override
-		public @NonNull String getName() {
-			return SerializationUtils.getName(eReference);
-		}
-
-		public @NonNull RuleIndex_GrammarCardinality @NonNull [] getRuleIndex_GrammarCardinality() {
-			return ruleIndex2grammarCardinality;
-		}
-
-		@Override
-		public @NonNull String toString() {
-			return eReference.getEContainingClass().getName() + "::" + eReference.getName() + " " + ruleIndex2grammarCardinality;
-		}
-	}
-
-	public static class EnumerationValue_GrammarCardinality implements Nameable
-	{
-		protected final @Nullable EnumerationValue enumerationValue;
+		/**
+		 * The cardinality of a single attribute assignment term in the grammar, null for a multiple assignment term even if same rule each time) (.
+		 */
 		protected final @NonNull GrammarCardinality grammarCardinality;
 
-		public EnumerationValue_GrammarCardinality(/*@NonNull*/ EnumerationValue enumerationValue, @NonNull GrammarCardinality grammarCardinality) {
-//			assert enumerationValue != null;
-			this.enumerationValue = enumerationValue;
+		public SerializationSimpleAttribute(@NonNull EAttribute eAttribute, boolean needsDefault, @NonNull GrammarCardinality grammarCardinality) {
+			super(eAttribute, needsDefault);
 			this.grammarCardinality = grammarCardinality;
 		}
 
-		public @Nullable EnumerationValue getEnumerationValue() {
-			return enumerationValue;
+		@Override
+		public @NonNull EnumerationValue @NonNull [] getEnumerationValues() {
+			return EnumerationValue.NO_ENUMERATION_VALUES;
 		}
 
 		public @NonNull GrammarCardinality getGrammarCardinality() {
@@ -175,247 +202,204 @@ public class SerializationRule implements Nameable
 		}
 
 		@Override
-		public @NonNull String getName() {
-			return enumerationValue != null ? enumerationValue.getName() : "«null»";
+		public @Nullable GrammarCardinality basicGetGrammarCardinality(@Nullable EnumerationValue enumerationValue) {
+			return enumerationValue == null ? grammarCardinality : null;
 		}
 
 		@Override
 		public @NonNull String toString() {
-			return getName() + " " + grammarCardinality;
+			return super.toString() + " " + grammarCardinality;
 		}
 	}
 
-	public static class RuleIndex_GrammarCardinality implements Comparable<@NonNull RuleIndex_GrammarCardinality>
+	/**
+	 * SerializationReference captures the rule-specific EReference metadata for a SerializationRule.
+	 */
+	public static class SerializationReference extends SerializationFeature
 	{
-		protected final @NonNull Integer ruleIndex;
-		protected final @NonNull GrammarCardinality grammarCardinality;
+		/**
+		 * The possible rules that may produce a satisfactory type as the target of this reference.
+		 */
+		protected final @Nullable GrammarRuleVector targetGrammarRuleVector;
 
-		public RuleIndex_GrammarCardinality(/*@NonNull*/ Integer ruleIndex, @NonNull GrammarCardinality grammarCardinality) {
-			assert ruleIndex != null;
-			this.ruleIndex = ruleIndex;
-			this.grammarCardinality = grammarCardinality;
+		/**
+		 * The index of the grammar rule for each distinctly-ruled assignment.
+		 */
+		protected final int @NonNull [] grammarRuleIndexes;
+
+		/**
+		 * The corresponding net cardinality for each distinctly-ruled assignment.
+		 */
+		protected final @NonNull GrammarCardinality @NonNull [] grammarCardinalities;
+
+		public SerializationReference(@NonNull EReference eReference, @Nullable GrammarRuleVector targetGrammarRuleVector, int @NonNull [] grammarRuleIndexes, @NonNull GrammarCardinality @NonNull [] grammarCardinalities) {
+			super(eReference);
+		// FIXME	assert targetGrammarRuleVector != null;			// FIXME @NonNull
+			this.targetGrammarRuleVector = targetGrammarRuleVector;
+			this.grammarRuleIndexes = grammarRuleIndexes;
+			this.grammarCardinalities = grammarCardinalities;
 		}
 
-		@Override
-		public int compareTo(@NonNull RuleIndex_GrammarCardinality that) {
-			return this.ruleIndex - that.ruleIndex;
+		public @Nullable GrammarCardinality basicGetGrammarCardinality(int grammarRuleIndex) {
+			for (int i = 0; i < grammarRuleIndexes.length; i++) {
+				if (grammarRuleIndexes[i] == grammarRuleIndex) {
+					return grammarCardinalities[i];
+				}
+			}
+			return null;
 		}
 
-		public @NonNull GrammarCardinality getGrammarCardinality() {
-			return grammarCardinality;
+	//	public @NonNull EReference getEReference() {
+	//		return eReference;
+	//	}
+
+		public @NonNull GrammarCardinality getGrammarCardinality(int grammarRuleIndex) {
+			return SerializationUtils.nonNullState(basicGetGrammarCardinality(grammarRuleIndex));
 		}
 
-		public @NonNull Integer getRuleIndex() {
-			return ruleIndex;
+		public int @NonNull [] getGrammarRuleIndexes() {
+			return grammarRuleIndexes;
+		}
+
+		public @Nullable GrammarRuleVector getTargetGrammarRuleVector() {
+			return targetGrammarRuleVector;
 		}
 
 		@Override
 		public @NonNull String toString() {
-			return ruleIndex + " " + grammarCardinality;
+			StringBuilder s = new StringBuilder();
+			s.append(eStructuralFeature.getEContainingClass().getName());
+			s.append("::");
+			s.append(eStructuralFeature.getName());
+			s.append(":{");
+			for (int i = 0; i <grammarRuleIndexes.length; i++) {
+				if (i > 0) {
+					s.append(",");
+				}
+				s.append(grammarRuleIndexes[i]);
+				s.append(grammarCardinalities[i]);
+			}
+			s.append("}");
+			@SuppressWarnings("null")
+			@NonNull String castString = s.toString();
+			return castString;
 		}
 	}
 
-	protected final @NonNull String name;		// unqualified
-	protected final int ruleValueIndex;
+	private static final @NonNull SerializationMatchStep @NonNull [] RUNTIME_STEP = new @NonNull SerializationMatchStep[] { new SerializationMatchStep.MatchStep_Runtime() };
+
+	private final @Nullable SerializationMetaData serializationMetaData;
+
+	/**
+	 * The unqualified grammar rule name.
+	 */
+	protected final @NonNull String name;
+
+	/**
+	 * The grammar rule for which this is (one of) the serialization rules.
+	 */
+	protected final int grammarRuleValueIndex;
+
+	/**
+	 * The matching instructions to confirm applicability and deduce variables.
+	 */
 	private final @NonNull SerializationMatchStep @NonNull [] matchSteps;
+
+	/**
+	 * The serialization instructions to convert the model element to text..
+	 */
 	private final @NonNull SerializationStep @NonNull [] serializationSteps;
-	private final @NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues;
-	private final @NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes;
 
 	/**
-	 * The EAttributes whose default value must be used to satisfy grammar rule multiplicities..
+	 * The per-EStructuralFeature meta data.
 	 */
-	private final @NonNull EAttribute @Nullable [] needsDefaultEAttributes;
+	private final @NonNull SerializationFeature @Nullable [] serializationFeatures;
 
 	/**
-	 * The assigned EAttributes to which an orthogonal String establishes an enumerated term.
+	 * An optional helper that can translate metadata index to metaobjects for diagnostics.
 	 */
-	private final @NonNull EAttribute_EnumerationValue_GrammarCardinality @Nullable [] eAttribute2enumerationValue2grammarCardinality;
+	private @Nullable SerializationRuleHelper helper;
 
-	/**
-	 * The assigned EReferences to which a not necessarily orthogonal RuleCall establishes a discriminated term.
-	 */
-	private final @NonNull EReference_RuleIndex_GrammarCardinality @Nullable [] eReference2ruleValueIndex2grammarCardinality;
-
-	private @Nullable SerializationRuleHelper helper = null;
-
-	public SerializationRule(@NonNull String name, int ruleValueIndex,
-			@NonNull SerializationMatchStep @NonNull [] matchSteps,
-			@NonNull SerializationStep @NonNull [] serializationSteps,
-			@NonNull EAttribute_EnumerationValues @Nullable [] eAttribute2enumerationValues,
-			@NonNull EReference_RuleIndexes @Nullable [] eReference2assignedRuleValueIndexes,
-			/*@NonNull*/ EAttribute @Nullable [] needsDefaultEAttributes,
-			@NonNull EAttribute_EnumerationValue_GrammarCardinality @Nullable [] eAttribute2enumerationValue2grammarCardinality,
-			@NonNull EReference_RuleIndex_GrammarCardinality @Nullable [] eReference2ruleValueIndex2grammarCardinality) {
+	public SerializationRule(@NonNull SerializationMetaData serializationMetaData, @NonNull String name, int grammarRuleValueIndex,
+			@NonNull SerializationMatchStep @Nullable [] matchSteps, @NonNull SerializationStep @NonNull [] serializationSteps,
+			@NonNull SerializationFeature @Nullable [] serializationFeatures) {
+		this.serializationMetaData = serializationMetaData;
 		this.name = name;
-		this.ruleValueIndex = ruleValueIndex;
-		this.matchSteps = matchSteps;
+		this.grammarRuleValueIndex = grammarRuleValueIndex;
+		this.matchSteps = matchSteps != null ? matchSteps : RUNTIME_STEP;
 		this.serializationSteps = serializationSteps;
-		this.eAttribute2enumerationValues = eAttribute2enumerationValues;
-		this.eReference2assignedRuleValueIndexes = eReference2assignedRuleValueIndexes;
-		@SuppressWarnings("null") @NonNull EAttribute[] castNeedsDefaultEAttributes2 = needsDefaultEAttributes;
-		this.needsDefaultEAttributes = castNeedsDefaultEAttributes2;
-		this.eAttribute2enumerationValue2grammarCardinality = eAttribute2enumerationValue2grammarCardinality;
-		this.eReference2ruleValueIndex2grammarCardinality = eReference2ruleValueIndex2grammarCardinality;
+		this.serializationFeatures = serializationFeatures;
+		this.helper = null;
 	}
 
-	public @Nullable GrammarRuleVector getAssignedRuleValueIndexes(@NonNull EReference eReference) {
-		if (eReference2assignedRuleValueIndexes != null) {
-			for (@NonNull EReference_RuleIndexes eReferenceData : eReference2assignedRuleValueIndexes) {
-				if (eReferenceData.getEReference() == eReference) {
-					return eReferenceData.getAssignedTargetRuleValueIndexes();
+	public SerializationRule(@NonNull SerializationRuleHelper helper, @NonNull String name, int grammarRuleValueIndex,
+			@NonNull SerializationMatchStep @Nullable [] matchSteps, @NonNull SerializationStep @NonNull [] serializationSteps,
+			@NonNull SerializationFeature @Nullable [] serializationFeatures) {
+		this.serializationMetaData = null;
+		this.name = name;
+		this.grammarRuleValueIndex = grammarRuleValueIndex;
+		this.matchSteps = matchSteps != null ? matchSteps : RUNTIME_STEP;
+		this.serializationSteps = serializationSteps;
+		this.serializationFeatures = serializationFeatures;
+		this.helper = helper;
+	}
+
+	public @NonNull EnumerationValue @Nullable [] basicGetEnumerationValues(@NonNull EAttribute eAttribute) {
+		SerializationAttribute serializationAttribute = basicGetSerializationAttribute(eAttribute);
+		return serializationAttribute != null ? serializationAttribute.getEnumerationValues() : null;
+	}
+
+	public @Nullable GrammarCardinality basicGetGrammarCardinality(@NonNull EStructuralFeature eStructuralFeature) {
+		if (eStructuralFeature instanceof EAttribute) {
+			SerializationAttribute serializationAttribute = basicGetSerializationAttribute((EAttribute)eStructuralFeature);
+			if (serializationAttribute != null) {
+				GrammarCardinality grammarCardinality = serializationAttribute.basicGetGrammarCardinality(null);
+			//	assert grammarCardinality == serializationAttribute.getGrammarCardinality();
+				return grammarCardinality;
+			}
+		}
+		return null;
+	}
+
+	public @Nullable GrammarCardinality basicGetGrammarCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
+		SerializationAttribute serializationAttribute = basicGetSerializationAttribute(eAttribute);
+		return serializationAttribute != null ? serializationAttribute.basicGetGrammarCardinality(enumerationValue) : null;
+	}
+
+	public @Nullable GrammarCardinality basicGetGrammarCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
+		SerializationReference serializationReference = basicGetSerializationReference(eReference);
+		return serializationReference != null ? serializationReference.basicGetGrammarCardinality(ruleValue.getIndex()) : null;
+	}
+
+	public @Nullable SerializationAttribute basicGetSerializationAttribute(@NonNull EAttribute eAttribute) {
+		if (serializationFeatures != null) {
+			for (@NonNull SerializationFeature serializationFeature : serializationFeatures) {
+				if (serializationFeature.getEStructuralFeature() == eAttribute) {
+					return (SerializationAttribute)serializationFeature;
 				}
 			}
 		}
 		return null;
 	}
 
-	public @NonNull EnumerationValue @Nullable [] getEnumerationValues(@NonNull EAttribute eAttribute) {
-		if (eAttribute2enumerationValues != null) {
-			for (@NonNull EAttribute_EnumerationValues eAttributeData : eAttribute2enumerationValues) {
-				if (eAttributeData.getEAttribute() == eAttribute) {
-					return eAttributeData.getEnumerationValues();
+	public @NonNull SerializationFeature @Nullable [] basicGetSerializationFeatures() {
+		return serializationFeatures;
+	}
+
+	public @Nullable SerializationReference basicGetSerializationReference(@NonNull EReference eReference) {
+		if (serializationFeatures != null) {
+			for (@NonNull SerializationFeature serializationFeature : serializationFeatures) {
+				if (serializationFeature.getEStructuralFeature() == eReference) {
+					return (SerializationReference)serializationFeature;
 				}
 			}
 		}
 		return null;
 	}
 
-	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EStructuralFeature eStructuralFeature) {
-		if (eAttribute2enumerationValue2grammarCardinality != null) {
-			for (@NonNull EAttribute_EnumerationValue_GrammarCardinality eAttribute_EnumerationValue_GrammarCardinality : eAttribute2enumerationValue2grammarCardinality) {
-				if (eAttribute_EnumerationValue_GrammarCardinality.getEAttribute() == eStructuralFeature) {
-					for (@NonNull EnumerationValue_GrammarCardinality enumerationValue2grammarCardinality : eAttribute_EnumerationValue_GrammarCardinality.getEnumerationValue_GrammarCardinality()) {
-						if (enumerationValue2grammarCardinality.getEnumerationValue() == null) {
-							return enumerationValue2grammarCardinality.getGrammarCardinality();
-						}
-					}
-					return null;
-				}
-			}
-		}
-		return null;
-	}
-
-	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-		if (eAttribute2enumerationValue2grammarCardinality != null) {
-			for (@NonNull EAttribute_EnumerationValue_GrammarCardinality eAttribute_EnumerationValue_GrammarCardinality : eAttribute2enumerationValue2grammarCardinality) {
-				if (eAttribute_EnumerationValue_GrammarCardinality.getEAttribute() == eAttribute) {
-					for (@NonNull EnumerationValue_GrammarCardinality enumerationValue2grammarCardinality : eAttribute_EnumerationValue_GrammarCardinality.getEnumerationValue_GrammarCardinality()) {
-						if (enumerationValue2grammarCardinality.getEnumerationValue() == enumerationValue) {
-							return enumerationValue2grammarCardinality.getGrammarCardinality();
-						}
-					}
-					return null;
-				}
-			}
-		}
-		return null;
-	}
-
-	public @Nullable GrammarCardinality getGrammarCardinality(@NonNull EReference eReference, @NonNull ParserRuleValue ruleValue) {
-		if (eReference2ruleValueIndex2grammarCardinality != null) {
-			for (@NonNull EReference_RuleIndex_GrammarCardinality eReference_RuleIndex_GrammarCardinality : eReference2ruleValueIndex2grammarCardinality) {
-				if (eReference_RuleIndex_GrammarCardinality.getEReference() == eReference) {
-					for (@NonNull RuleIndex_GrammarCardinality ruleIndex2grammarCardinality : eReference_RuleIndex_GrammarCardinality.getRuleIndex_GrammarCardinality()) {
-						if (ruleIndex2grammarCardinality.getRuleIndex() == ruleValue.getIndex()) {
-							return ruleIndex2grammarCardinality.getGrammarCardinality();
-						}
-					}
-					return null;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public @NonNull String getName() {
-		return name;
-	}
-
-	public int getRuleValueIndex() {
-		return ruleValueIndex;
-	}
-
-	public @NonNull SerializationStep @NonNull [] getSerializationSteps() {
-		return serializationSteps;
-	}
-
-	public @Nullable DynamicRuleMatch match(@NonNull UserSlotsAnalysis slotsAnalysis) {
-		//
-		//	Compute the solutions and assign to/check against each CardinalityVariable
-		//
-		DynamicRuleMatch dynamicRuleMatch = slotsAnalysis.basicGetDynamicRuleMatch(this); // new DynamicRuleMatch(this, slotsAnalysis);
-		if (dynamicRuleMatch == null) {
-		//	dynamicRuleMatch = slotsAnalysis.createDynamicRuleMatch(this);
-			assert slotsAnalysis.basicGetDynamicRuleMatch(this) == null;
-			dynamicRuleMatch = new DynamicRuleMatch(slotsAnalysis, this, matchSteps, this);
-			slotsAnalysis.addDynamicRuleMatch(dynamicRuleMatch);
-
-			if (!dynamicRuleMatch.analyze()) {
-				return null;
-			}
-			//
-			//	Evaluate the expressions to determine the required size of each slot.
-			/* -- re-evaluation is redundant - so no expression at run-time
-			for (@NonNull EStructuralFeature_CardinalityExpression eStructuralFeatureData : eStructuralFeature2cardinalityExpression) {
-				CardinalityExpression expression = eStructuralFeatureData.getCardinalityExpression();
-				assert expression != null;
-				if (!expression.checkSize(dynamicRuleMatch)) {
-					return null;
-				}
-			} */
-			//
-			//	Check that no 'unused' features are used.
-			//
-			@NonNull EAttribute_EnumerationValue_GrammarCardinality[] eAttribute2enumerationValue2grammarCardinality2 = eAttribute2enumerationValue2grammarCardinality;
-			@NonNull EReference_RuleIndex_GrammarCardinality[] eReference2ruleValueIndex2grammarCardinality2 = eReference2ruleValueIndex2grammarCardinality;
-			for (@NonNull EStructuralFeature eStructuralFeature : slotsAnalysis.getEStructuralFeatures()) {
-				boolean gotIt = false;
-				if (eAttribute2enumerationValue2grammarCardinality2 != null) {
-					for (@NonNull EAttribute_EnumerationValue_GrammarCardinality eAttributeData : eAttribute2enumerationValue2grammarCardinality2) {
-						if (eAttributeData.getEAttribute() == eStructuralFeature) {
-							gotIt = true;
-						}
-					}
-				}
-				if (eReference2ruleValueIndex2grammarCardinality2 != null) {
-					for (@NonNull EReference_RuleIndex_GrammarCardinality eReferenceData : eReference2ruleValueIndex2grammarCardinality2) {
-						if (eReferenceData.getEReference() == eStructuralFeature) {
-							gotIt = true;
-						}
-					}
-				}
-				if (!gotIt) {
-					UserSlotAnalysis object = slotsAnalysis.getSlotAnalysis(eStructuralFeature);
-					if (!object.isCounted() || (object.asCounted() != 0)) {
-						return null;
-					}
-				}
-			}
-			dynamicRuleMatch.setChecked();
-		}
-		else {
-			if (!dynamicRuleMatch.isChecked()) {
-				return null;
-			}
-		}
-		return dynamicRuleMatch;
-		// TODO Auto-generated method stub
-	//	throw new UnsupportedOperationException();
-	}
-
-	public boolean needsDefault(@NonNull EAttribute eAttribute) {
-		@NonNull EAttribute[] needsDefaultEAttributes2 = needsDefaultEAttributes;
-		if (needsDefaultEAttributes2 != null) {
-			for (@NonNull EAttribute needsDefaultEAttribute : needsDefaultEAttributes2) {
-				if (needsDefaultEAttribute == eAttribute) {
-					return true;
-				}
-			}
-		}
-		return false;
+	public @Nullable GrammarRuleVector basicGetTargetGrammarRuleVector(@NonNull EReference eReference) {
+		SerializationReference serializationReference = basicGetSerializationReference(eReference);
+		return serializationReference != null ? serializationReference.getTargetGrammarRuleVector() : null;
 	}
 
 	public void formatRule(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
@@ -430,6 +414,7 @@ public class SerializationRule implements Nameable
 		Map<@NonNull AbstractRule, @NonNull List<@NonNull ILeafNode>> calledRule2leafNodes = new HashMap<>();
 		Map<@NonNull SerializationRule, @NonNull List<@NonNull ICompositeNode>> serializationRule2compositeNodes = new HashMap<>();
 		ICompositeNode parentNode = NodeModelUtils.getNode(serializer.getElement());
+		assert parentNode != null;
 		for (@NonNull INode childNode : SerializationUtils.getChildren(parentNode)) {
 			if (childNode instanceof ILeafNode) {
 				ILeafNode leafNode = (ILeafNode)childNode;
@@ -479,11 +464,12 @@ public class SerializationRule implements Nameable
 				if (grammarElement instanceof RuleCall) {
 					AbstractRule calledRule = ((RuleCall)grammarElement).getRule();
 					if (calledRule != null) {
-						GrammarRuleValue calledRuleValue = serializationMetaData.basicGetGrammarRuleValue(calledRule.getName());
+						GrammarRuleValue calledRuleValue = serializationMetaData.basicGetGrammarRuleValue(SerializationUtils.getName(calledRule));
 						assert calledRuleValue != null;
 						EObject childElement = compositeNode.getSemanticElement();
+						assert childElement != null;
 						UserElementAnalysis childElementAnalysis = modelAnalysis.getElementAnalysis(childElement);
-						DynamicRuleMatch dynamicRuleMatch = childElementAnalysis.createDynamicRuleMatch(calledRuleValue.getIndex());
+						DynamicRuleMatch dynamicRuleMatch = childElementAnalysis.basicCreateDynamicRuleMatch(calledRuleValue.getIndex());
 						if (dynamicRuleMatch != null) {
 							SerializationRule childSerializationRule = dynamicRuleMatch.getSerializationRule();
 							List<@NonNull ICompositeNode> compositeNodes = SerializationUtils.maybeNull(serializationRule2compositeNodes.get(childSerializationRule));
@@ -538,6 +524,62 @@ public class SerializationRule implements Nameable
 		}
 	}
 
+	public @NonNull DiagnosticStringBuilder getDiagnosticStringBuilder() {
+		if (serializationMetaData != null) {
+			return new SerializationMetaDataDiagnosticStringBuilder(serializationMetaData);
+		}
+		else {
+			return new DiagnosticStringBuilderWithHelper(helper);
+		}
+	}
+
+	public int getGrammarRuleValueIndex() {
+		return grammarRuleValueIndex;
+	}
+
+	@Override
+	public @NonNull String getName() {
+		return name;
+	}
+
+	public @NonNull SerializationAttribute getSerializationAttribute(@NonNull EAttribute eAttribute) {
+		return SerializationUtils.nonNullState(basicGetSerializationAttribute(eAttribute));
+	}
+
+	public @Nullable SerializationFeature getSerializationFeature(@NonNull EStructuralFeature eStructuralFeature) {
+		@NonNull SerializationFeature @Nullable [] serializationFeatures2 = serializationFeatures;
+		if (serializationFeatures2 == null) {
+			return null;
+		}
+		for (@NonNull SerializationFeature serializationFeature : serializationFeatures2) {
+			if (serializationFeature.getEStructuralFeature() == eStructuralFeature) {	// NB == rather than name-equals
+				return serializationFeature;
+			}
+		}
+		return null;
+	}
+
+	public @NonNull SerializationFeature @Nullable [] getSerializationFeatures() {
+		return serializationFeatures;
+	}
+
+	public @NonNull SerializationMatchStep @NonNull [] getSerializationMatchSteps() {
+		return matchSteps;
+	}
+
+	public @NonNull SerializationReference getSerializationReference(@NonNull EReference eReference) {
+		return SerializationUtils.nonNullState(basicGetSerializationReference(eReference));
+	}
+
+	public @NonNull SerializationStep @NonNull [] getSerializationSteps() {
+		return serializationSteps;
+	}
+
+	public boolean needsDefault(@NonNull EAttribute eAttribute) {
+		SerializationAttribute serializationAttribute = basicGetSerializationAttribute(eAttribute);
+		return serializationAttribute != null ? serializationAttribute.needsDefault() : false;
+	}
+
 	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		for (int index = 0; index < serializationSteps.length; ) {
 			SerializationStep serializationStep = serializationSteps[index];
@@ -545,41 +587,63 @@ public class SerializationRule implements Nameable
 		}
 	}
 
-	public void setHelper(SerializationRuleHelper helper) {
-		this.helper = helper;
-	}
-
-	public void toMatchTermString(@NonNull StringBuilder s, int depth) {
-		if (helper != null) {
-			helper.toMatchTermString(s, depth);
+	public void toMatchTermString(@NonNull DiagnosticStringBuilder s, int depth) {
+		toRuleString(s);
+		if (matchSteps.length > 0) {
+			for (@NonNull SerializationMatchStep matchStep : matchSteps) {
+				s.appendIndentation(depth);
+				matchStep.toString(s);
+				s.append(";");
+			}
 		}
 	}
 
-	public String toRuleString() {
-		StringBuilder s = new StringBuilder();
+	public @NonNull String toRuleString() {
+		DiagnosticStringBuilder s = getDiagnosticStringBuilder();
 		toRuleString(s);
 		return s.toString();
 	}
 
-	public void toRuleString(@NonNull StringBuilder s) {
-		if (helper != null) {
-			helper.toRuleString(s);
+	public void toRuleString(@NonNull DiagnosticStringBuilder s) {
+		toRuleString(s, 0, serializationSteps.length);
+	}
+
+	protected void toRuleString(@NonNull DiagnosticStringBuilder s, int start, int end) {
+		for (int i = start; i < end; ) {
+			SerializationStep serializationStep = serializationSteps[i++];
+			if (serializationStep instanceof SerializationStepSequence) {
+				SerializationStepSequence serializationStepSequence = (SerializationStepSequence)serializationStep;
+				s.append("(");
+				toRuleString(s, i, i + serializationStepSequence.getStepsRange());
+				s.append(")[");
+				int variableIndex = serializationStepSequence.getVariableIndex();
+				if (variableIndex >= 0) {
+					s.appendVariableName(variableIndex);
+					s.append(":");
+				}
+				s.appendObject(serializationStepSequence.getGrammarCardinality());
+				s.append("]");
+				i += serializationStepSequence.getStepsRange();
+			}
+			else if (!(serializationStep instanceof SerializationStepWrapper)) {
+				serializationStep.toStepString(s);
+			}
+			if ((i < end) && !(serializationStep instanceof SerializationStepWrapper)) {
+				s.append(" ");
+			}
 		}
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder();
+		DiagnosticStringBuilder s = getDiagnosticStringBuilder();
+		s.append(getName());
+		s.append(": ");
 		toString(s, 0);
 		return s.toString();
 	}
 
-	public void toString(@NonNull StringBuilder s, int depth) {
-		if (helper != null) {
-			helper.toString(s, depth);
-		}
-		else {
-			s.append(getName());
-		}
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
+		toRuleString(s, 0, serializationSteps.length);
 	}
 }

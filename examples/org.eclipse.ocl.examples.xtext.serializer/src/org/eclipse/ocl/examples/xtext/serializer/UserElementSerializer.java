@@ -28,15 +28,17 @@ import org.eclipse.jdt.annotation.Nullable;
 public class UserElementSerializer
 {
 	protected final @NonNull DynamicRuleMatch dynamicRuleMatch;
-	protected final @NonNull SerializationRule serializationRule;
+//	protected final @NonNull UserElementAnalysis elementAnalysis;
 	protected final @NonNull UserModelAnalysis modelAnalysis;
+	protected final @NonNull SerializationRule serializationRule;
 	protected final @NonNull EObject element;
 	private @Nullable Map<@NonNull EStructuralFeature, @NonNull Integer> feature2consumptions = null;
 
-	public UserElementSerializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull UserModelAnalysis modelAnalysis, @NonNull EObject element) {
+	public UserElementSerializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull EObject element) {
 		this.dynamicRuleMatch = dynamicRuleMatch;
+		UserElementAnalysis elementAnalysis = dynamicRuleMatch.getElementAnalysis();
+		this.modelAnalysis = elementAnalysis.getModelAnalysis();
 		this.serializationRule = dynamicRuleMatch.getSerializationRule();
-		this.modelAnalysis = modelAnalysis;
 		this.element = element;
 	}
 
@@ -75,13 +77,17 @@ public class UserElementSerializer
 		return object;
 	}
 
-	public @NonNull DynamicRuleMatch getDynamicRuleMatch() {
-		return dynamicRuleMatch;
-	}
+//	public @NonNull DynamicRuleMatch getDynamicRuleMatch() {
+//		return dynamicRuleMatch;
+//	}
 
 	public @NonNull EObject getElement() {
 		return element;
 	}
+
+//	public @NonNull UserElementAnalysis getElementAnalysis() {
+//		return elementAnalysis;
+//	}
 
 	public @NonNull UserModelAnalysis getModelAnalysis() {
 		return modelAnalysis;
@@ -95,8 +101,8 @@ public class UserElementSerializer
 		return serializationRule;
 	}
 
-	public int getValue(int cardinalityVariableIndex) {
-		return SerializationUtils.nonNullState(dynamicRuleMatch.getValue(cardinalityVariableIndex)).intValue();
+	public int getValue(int variableIndex) {
+		return SerializationUtils.nonNullState(dynamicRuleMatch.getValue(variableIndex)).intValue();
 	}
 
 	/**

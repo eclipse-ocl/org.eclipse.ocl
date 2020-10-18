@@ -23,6 +23,7 @@ Library returns LibRootPackageCS:
 	(ownedPackages+=LibPackageCS)*
 ;
 
+@Override
 Identifier:
 	ID
 |	RestrictedKeywords
@@ -248,10 +249,12 @@ TypedMultiplicityRefCS returns base::TypedRefCS:
 //---------------------------------------------------------------------------------
 //	Base overrides
 //---------------------------------------------------------------------------------
+@Override
 TypedRefCS returns base::TypedRefCS:
 	MapTypeCS | TupleTypeCS | TypedTypeRefCS | LambdaTypeCS
 ;
 
+@Override
 TypedTypeRefCS returns base::TypedTypeRefCS:
     (isTypeof?='typeof' '(' ownedPathName=LibPathNameCS ')')
   | (ownedPathName=LibPathNameCS ('(' ownedBinding=TemplateBindingCS ')')?)
@@ -260,6 +263,7 @@ TypedTypeRefCS returns base::TypedTypeRefCS:
 //---------------------------------------------------------------------------------
 //	EssentialOCL overrides
 //---------------------------------------------------------------------------------
+@Override
 TuplePartCS returns base::TuplePartCS:
 	name=Identifier ':' ownedType=TypedMultiplicityRefCS
 ;

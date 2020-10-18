@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.serializer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -28,7 +31,7 @@ public class BaseCommentSegmentSupport extends CommentSegmentSupport
 	private static final @NonNull String EMPTY_COMMENT = "/**/";
 
 	public BaseCommentSegmentSupport() {
-		super("/**", " * ", " */");
+		super("/**", " * ", "*/");
 	}
 
 	@Override
@@ -44,13 +47,18 @@ public class BaseCommentSegmentSupport extends CommentSegmentSupport
 	}
 
 	@Override
-	public @Nullable String getComment(@NonNull EObject eObject) {
+	public @Nullable Iterable<@NonNull String> getComments(@NonNull EObject eObject) {
 		if (eObject instanceof Pivotable) {
 			Element asElement = ((Pivotable)eObject).getPivot();
 			if (asElement != null) {
-				for (Comment asComment: asElement.getOwnedComments()) {
-					String body = asComment.getBody();
-					return body != null ? body : EMPTY_COMMENT;
+				List<Comment> ownedComments = asElement.getOwnedComments();
+				if (!ownedComments.isEmpty()) {
+					List<@NonNull String> comments = new ArrayList<>();
+					for (Comment asComment: ownedComments) {
+						String body = asComment.getBody();
+						comments.add(body != null ? body : EMPTY_COMMENT);
+					}
+					return comments;
 				}
 			}
 		}

@@ -59,9 +59,6 @@ public class IdiomSerializationMatch implements IdiomMatch
 		this.idiom = idiom;
 		this.locatedNodes = new @NonNull SerializationNode[idiom.getOwnedSubIdioms().size()];
 		locatedNodes[subIdiomIndex++] = serializationNode;
-		if ("SEGMENTS_SPACING".equals(idiom.getName())) {
-			getClass(); // XXX
-		}
 	}
 
 	public @NonNull Idiom getIdiom() {
@@ -113,19 +110,6 @@ public class IdiomSerializationMatch implements IdiomMatch
 		}
 		return true;
 	}
-
-/*	public boolean isMatched() {
-		if (subIdiomIndex < matchNodes.length) {
-			return false;
-		}
-		if (nestedMatch != null) {
-			assert nestedMatch.isMatched();
-		}
-		if (additionalMatch != null) {
-			return additionalMatch.isMatched();
-		}
-		return true;
-	} */
 
 	/**
 	 * Return true if serializationNode is a match for the next subidiom,

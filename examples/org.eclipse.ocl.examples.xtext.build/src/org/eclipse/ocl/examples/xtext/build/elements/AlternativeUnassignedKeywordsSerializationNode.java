@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
@@ -34,7 +35,6 @@ import org.eclipse.xtext.util.Strings;
 public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSerializationNode
 {
 	protected final @NonNull List<@NonNull String> values = new ArrayList<>();
-//	private @Nullable Integer semanticHashCode = null;
 
 	public AlternativeUnassignedKeywordsSerializationNode(@NonNull GrammarCardinality grammarCardinality, @Nullable Iterable<@NonNull String> values) {
 		super(grammarCardinality);
@@ -63,33 +63,8 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 		stepsList.add(new SerializationStepKeyword(values.get(0), eachSerializationSegments));
 	}
 
-/*	@Override
-	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
-		if (serializationNode == this) {
-			return true;
-		}
-		if (!(serializationNode instanceof AlternativeUnassignedKeywordsSerializationNode)) {
-			return false;
-		}
-		AlternativeUnassignedKeywordsSerializationNode that = (AlternativeUnassignedKeywordsSerializationNode)serializationNode;
-		if (!this.values.equals(that.values)) {
-			return false;
-		}
-		return true;
-	}*.
-
-/*	@Override
-	public int semanticHashCode() {
-		if (semanticHashCode == null) {
-			int hash = getClass().hashCode() + values.hashCode();
-			semanticHashCode = hash;
-		}
-		assert semanticHashCode != null;
-		return semanticHashCode.intValue();
-	} */
-
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
 		boolean isFirst = true;
 		if (values.size() > 1) {
 			s.append("{");
@@ -99,7 +74,7 @@ public class AlternativeUnassignedKeywordsSerializationNode extends AbstractSeri
 				s.append("|");
 			}
 			s.append("\"");
-			s.append(Strings.convertToJavaString(value));
+			s.appendObject(Strings.convertToJavaString(value));
 			s.append("\"");
 			isFirst = false;
 		}

@@ -18,9 +18,9 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.GrammarAnalysis;
-import org.eclipse.ocl.examples.xtext.build.analysis.ParserRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
@@ -33,7 +33,6 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 {
 	protected final @NonNull CompoundElement compoundElement;
 	protected final @NonNull List<@NonNull SerializationNode> serializationNodes;
-//	private @Nullable Integer semanticHashCode = null;
 
 	public SequenceSerializationNode(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
 		super(grammarCardinality);
@@ -41,16 +40,10 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		this.serializationNodes = groupSerializationNodes;
 		assert !groupSerializationNodes.isEmpty();
 		assert grammarCardinality.isOne() || noAssignedCurrent(this);
-		assert noUnassignedParserRuleCall(this);
+		assert noUnassignedParserRuleCall();
 		assert groupSerializationNodes.size() == new HashSet<>(groupSerializationNodes).size();
+		assert onlyRootUnassignedSerializationRuleCall(true);
 	}
-
-/*	public SequenceSerializationNode(@NonNull SequenceSerializationNode sequenceSerializationNode, @NonNull List<@NonNull SerializationNode> groupSerializationNodes) {
-		super(sequenceSerializationNode.grammarCardinality);
-		this.compoundElement = sequenceSerializationNode.compoundElement;
-		this.serializationNodes = groupSerializationNodes;
-	//	assert !groupSerializationNodes.isEmpty();
-	} */
 
 	@Override
 	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
@@ -72,17 +65,17 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 			serializationSegments = grammarAnalysis.getSerializationSegments(subIdioms, null);
 		}
 		int cardinalityVariableIndex = serializationRuleAnalysis.getCardinalityVariableIndex(this);
-		if (stepsList.isEmpty() && (cardinalityVariableIndex < 0)) {
-			if (serializationSegments != null) {
-				SerializationStepWrapper sequenceStep = new SerializationStepWrapper(serializationSegments);
-				stepsList.add(sequenceStep);
+		if (cardinalityVariableIndex < 0) {
+			if (stepsList.isEmpty() && (serializationSegments != null)) {
+				SerializationStepWrapper wrapperStep = new SerializationStepWrapper(serializationSegments);
+				stepsList.add(wrapperStep);
 			}
 			for (@NonNull SerializationNode serializationNode : serializationNodes) {
 				serializationNode.gatherStepsAndSubIdioms(serializationRuleAnalysis, stepsList, serializationNode2subIdioms);
 			}
 		}
 		else {
-			SerializationStepSequence sequenceStep = new SerializationStepSequence(cardinalityVariableIndex, 0, null);
+			SerializationStepSequence sequenceStep = new SerializationStepSequence(cardinalityVariableIndex, 0, grammarCardinality, null);
 			stepsList.add(sequenceStep);
 			int loopStartIndex = stepsList.size();
 			for (@NonNull SerializationNode serializationNode : serializationNodes) {
@@ -95,41 +88,6 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 	public @NonNull List<@NonNull SerializationNode> getSerializationNodes() {
 		return serializationNodes;
 	}
-
-/*	@Override
-	public boolean semanticEquals(@NonNull SerializationNode that) {
-		if (that == this) {
-			return true;
-		}
-		if (!(that instanceof SequenceSerializationNode)) {
-			return false;
-		}
-		List<@NonNull SerializationNode> theseNodes = this.serializationNodes;
-		List<@NonNull SerializationNode> thoseNodes = ((SequenceSerializationNode)that).serializationNodes;
-		int size = theseNodes.size();
-		if (size != thoseNodes.size()) {
-			return false;
-		}
-		for (int i = 0; i < size; i++) {
-			if (!theseNodes.get(i).semanticEquals(thoseNodes.get(i))) {
-				return false;
-			}
-		}
-		return true;
-	} */
-
-/*	@Override
-	public int semanticHashCode() {
-		if (semanticHashCode == null) {
-			int hash = getClass().hashCode();
-			for (@NonNull SerializationNode serializationNode : serializationNodes) {
-				hash = 3*hash + + serializationNode.semanticHashCode();;
-			}
-			semanticHashCode = hash;
-		}
-		assert semanticHashCode != null;
-		return semanticHashCode.intValue();
-	} */
 
 	private boolean noAssignedCurrent(@NonNull SerializationNode serializationNode) {
 		if (serializationNode instanceof AssignedCurrentSerializationNode) {
@@ -148,39 +106,38 @@ public class SequenceSerializationNode extends CompositeSerializationNode
 		return true;
 	}
 
-	private boolean noUnassignedParserRuleCall(@NonNull SerializationNode serializationNode) {
-		if (serializationNode instanceof UnassignedRuleCallSerializationNode) {
-			return !(((UnassignedRuleCallSerializationNode)serializationNode).getCalledRuleAnalysis() instanceof ParserRuleAnalysis);
-		}
-		else if (serializationNode instanceof SequenceSerializationNode) {
-			for (@NonNull SerializationNode nestedSerializationNode : ((SequenceSerializationNode)serializationNode).getSerializationNodes()) {
-				if (!noUnassignedParserRuleCall(nestedSerializationNode)) {
-					return false;
-				}
+	@Override
+	public boolean noUnassignedParserRuleCall() {
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			if (!serializationNode.noUnassignedParserRuleCall()) {
+				return false;
 			}
-		}
-		else if (serializationNode.isList() || serializationNode.isListOfList() || serializationNode.isNull() || (serializationNode instanceof AlternativesSerializationNode)) {
-			throw new UnsupportedOperationException();
 		}
 		return true;
 	}
 
-//	@Override
-//	public void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
-//		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-//			serializer.serializeNode(serializationBuilder, serializationNode);
-//		}
-//	}
+	@Override
+	public boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative) {
+		if (serializationNodes.size() > 1) {
+			isRootAlternative = false;
+		}
+		for (@NonNull SerializationNode serializationNode : serializationNodes) {
+			if (!serializationNode.onlyRootUnassignedSerializationRuleCall(isRootAlternative)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
 		s.append("{");
 		for (@NonNull SerializationNode serializationNode : serializationNodes) {
-			SerializationUtils.appendIndentation(s, depth);
+			s.appendIndentation(depth);
 			s.append(depth >= 0 ? "+\t" : " ");
 			serializationNode.toString(s, depth >= 0 ? depth+1 : depth);
 		}
-		SerializationUtils.appendIndentation(s, depth);
+		s.appendIndentation(depth);
 		s.append(" }");
 		appendCardinality(s, depth);
 	}

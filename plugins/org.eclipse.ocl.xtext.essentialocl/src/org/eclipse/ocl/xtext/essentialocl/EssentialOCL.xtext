@@ -67,6 +67,7 @@ UnaryOperatorName: 			// Intended to be overrideable
 EssentialOCLUnrestrictedName returns ecore::EString:
 	Identifier;
 
+@Override
 UnrestrictedName returns ecore::EString: // Intended to be overridden
 	EssentialOCLUnrestrictedName;
 
@@ -79,6 +80,7 @@ EssentialOCLUnreservedName returns ecore::EString:
 |	'Tuple'
 ;
 
+@Override
 UnreservedName returns ecore::EString: // Intended to be overridden
 	EssentialOCLUnreservedName;
 

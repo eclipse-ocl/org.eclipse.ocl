@@ -20,18 +20,13 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValues;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EnumerationValue_GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAbstractFeature;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssignKeyword;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssignedRuleCall;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAssigns;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepCrossReference;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepKeyword;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepSequence;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepWrapper;
+import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueNull;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationAttribute;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationEnumeratedAttribute;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationReference;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationSimpleAttribute;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.CompoundElement;
@@ -39,9 +34,6 @@ import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.service.GrammarProvider;
-
-import com.google.inject.Inject;
 
 /**
  * AbstractSerializationMetaData provides shared functionality for the auto-generated SerializationMetaData for a particular
@@ -49,8 +41,10 @@ import com.google.inject.Inject;
  */
 public abstract class AbstractSerializationMetaData implements SerializationMetaData
 {
-	@Inject
-	private GrammarProvider grammarProvider;
+	/**
+	 * The T2M Xtext grammar for which this MetaData provides M2T serialization capabilities.
+	 */
+	private @NonNull Grammar grammar;
 
 	/**
 	 * The cache of all distinct CrossReferences in the grammar, indexed by the traversed ERefence and the Rule name for the referenced value.
@@ -64,6 +58,10 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	 */
 	private @Nullable Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2innerFormattingSegments;
 	private @Nullable Map<@NonNull AbstractElement, @NonNull SerializationSegment @NonNull []> grammarElement2outerFormattingSegments;
+
+	protected AbstractSerializationMetaData(@NonNull Grammar grammar) {
+		this.grammar = grammar;
+	}
 
 	/**
 	 * Traverse the grammar(s) to discover all distinct CrossREferences.
@@ -155,7 +153,7 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 		int hiIndex = getLastGlobalSerializationStepAssignmentIndex() + 1;	// Exclusive
 		while (loIndex < hiIndex) {
 			int tryIndex = (loIndex + hiIndex - 1) >>> 1;
-			SerializationStepAbstractFeature serializationStep = (SerializationStepAbstractFeature)serializationSteps[tryIndex];
+			SerializationStep.SerializationStepAbstractFeature serializationStep = (SerializationStep.SerializationStepAbstractFeature)serializationSteps[tryIndex];
 			int comparison = SerializationUtils.ENAMED_ELEMENT_COMPARATOR.compare(serializationStep.getEStructuralFeature(), eStructuralFeature);
 			if (comparison < 0) {
 				loIndex = tryIndex + 1;
@@ -174,14 +172,14 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	 * Return the globally consistent serialization step for a keyword or null if not available.
 	 */
 	@Override
-	public @Nullable SerializationStepKeyword basicGetGlobalSerializationStepKeyword(@NonNull String keyword) {
+	public SerializationStep.@Nullable SerializationStepKeyword basicGetGlobalSerializationStepKeyword(@NonNull String keyword) {
 		// This binary search is more efficient than a Map space-wise and quite possibly time-wise too.
 		@NonNull SerializationStep[] serializationSteps = getSerializationSteps();
 		int loIndex = getFirstGlobalSerializationStepLiteralIndex();	// Inclusive
 		int hiIndex = getLastGlobalSerializationStepLiteralIndex() + 1;	// Exclusive
 		while (loIndex < hiIndex) {
 			int tryIndex = (loIndex + hiIndex - 1) >>> 1;
-			SerializationStepKeyword serializationStep = (SerializationStepKeyword)serializationSteps[tryIndex];
+			SerializationStep.SerializationStepKeyword serializationStep = (SerializationStep.SerializationStepKeyword)serializationSteps[tryIndex];
 			int comparison = serializationStep.getKeyword().compareTo(keyword);
 			if (comparison < 0) {
 				loIndex = tryIndex + 1;
@@ -196,25 +194,12 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 		return null;
 	}
 
-	protected @NonNull EReference_RuleIndexes createEReference_RuleIndexes(/*@NonNull*/ EReference eReference, int grammarRuleVectorIndex) {
-		return new EReference_RuleIndexes(eReference, getGrammarRuleVectors()[grammarRuleVectorIndex]);
+	protected @NonNull EReference_TargetGrammarRuleVector createEReference_TargetGrammarRuleVector(/*@NonNull*/ EReference eReference, int targetGrammarRuleVectorIndex) {
+		return new EReference_TargetGrammarRuleVector(eReference, getGrammarRuleVectors()[targetGrammarRuleVectorIndex]);
 	}
 
 	protected @NonNull SerializationMatchStep createMatchStep_Assert(int serializationMatchTermIndex) {
 		return new SerializationMatchStep.MatchStep_Assert(getSerializationMatchTerms()[serializationMatchTermIndex]);
-	}
-
-	protected @NonNull EAttribute_EnumerationValues createEAttribute_EnumerationValues(EAttribute eAttribute, int ... enumerationValueIndexes) {
-		int iMax = enumerationValueIndexes.length;
-		@NonNull EnumerationValue @NonNull [] enumValues = new @NonNull EnumerationValue[iMax];
-		for (int i = 0; i < iMax; i++) {
-			enumValues[i] = getEnumerationValues()[enumerationValueIndexes[i]];
-		}
-		return new EAttribute_EnumerationValues(eAttribute, enumValues);
-	}
-
-	protected @NonNull EnumerationValue_GrammarCardinality createEnumerationValue_GrammarCardinality(int enumerationValueIndex, @NonNull GrammarCardinality grammarCardinality) {
-		return new EnumerationValue_GrammarCardinality(enumerationValueIndex >= 0 ? getEnumerationValues()[enumerationValueIndex] : null, grammarCardinality);
 	}
 
 	protected @NonNull SerializationMatchStep createMatchStep_Assign(int cardinalityVariableIndex, int serializationMatchTermIndex) {
@@ -223,6 +208,10 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 
 	protected @NonNull SerializationMatchStep createMatchStep_RuleCheck(/*@NonNull*/ EReference eReference, int grammarRuleValueIndexes) {
 		return new SerializationMatchStep.MatchStep_RuleCheck(eReference, getGrammarRuleVectors()[grammarRuleValueIndexes]);
+	}
+
+	protected @NonNull SerializationMatchStep createMatchStep_Runtime() {
+		return new SerializationMatchStep.MatchStep_Runtime();
 	}
 
 	protected @NonNull SerializationMatchStep createMatchStep_ValueCheck(int cardinalityVariableIndex, int serializationMatchTermIndex) {
@@ -246,6 +235,22 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 			subParserRuleValueIndexes >= 0 ? getGrammarRuleVectors()[subParserRuleValueIndexes] : null);
 	}
 
+	protected @NonNull SerializationAttribute createSerializationEnumeratedAttribute(/*@NonNull*/ EAttribute eAttribute,
+			boolean needsDefault, int @NonNull ... enumerationValue_grammarCardinalities) {
+		assert eAttribute != null;
+		int iMax = enumerationValue_grammarCardinalities.length;
+		@NonNull EnumerationValue [] enumerationValues = new @NonNull EnumerationValue [iMax];
+		@NonNull GrammarCardinality [] grammarCardinalities = new @NonNull GrammarCardinality [iMax];
+		for (int i = 0; i < iMax; i++) {
+			EnumerationValue enumerationValue = getEnumerationValues()[enumerationValue_grammarCardinalities[i] >> 4];
+			GrammarCardinality grammarCardinality = GrammarCardinality.valueOf(enumerationValue_grammarCardinalities[i] & 0xF);
+			assert enumerationValue != null;
+			enumerationValues[i] = enumerationValue;
+			grammarCardinalities[i] = grammarCardinality;
+		}
+		return new SerializationEnumeratedAttribute(eAttribute, needsDefault, enumerationValues, grammarCardinalities);
+	}
+
 	protected @NonNull SerializationMatchStep @NonNull [] createSerializationMatchSteps(int ... serializationMatchStepIndexes) {
 		int iMax = serializationMatchStepIndexes.length;
 		@NonNull SerializationMatchStep @NonNull [] serializationMatchSteps = new @NonNull SerializationMatchStep[iMax];
@@ -264,19 +269,89 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	}
 
 	protected @NonNull SerializationMatchTerm createSerializationMatchTermEAttributeSize(/*@NonNull*/ EAttribute eAttribute, int enumerationValueIndex) {
-		return new SerializationMatchTermEAttributeSize(eAttribute, getEnumerationValues()[enumerationValueIndex]);
+		assert eAttribute != null;
+		return new SerializationMatchTerm.SerializationMatchTermEAttributeSize(eAttribute, getEnumerationValues()[enumerationValueIndex]);
+	}
+
+	protected @NonNull SerializationMatchTerm createSerializationMatchTermEReferenceSize(/*@NonNull*/ EReference eReference, int grammarRuleVectorIndex) {
+		assert eReference != null;
+		return new SerializationMatchTerm.SerializationMatchTermEReferenceSize(eReference, getGrammarRuleVectors()[grammarRuleVectorIndex]);
+	}
+
+	protected @NonNull SerializationMatchTerm createSerializationMatchTermEStructuralFeatureSize(/*@NonNull*/ EStructuralFeature eStructuralFeature) {
+		assert eStructuralFeature != null;
+		return new SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize(eStructuralFeature);
 	}
 
 	protected @NonNull SerializationMatchTerm createSerializationMatchTermGreaterThan(int leftIndex, int rightIndex) {
 		return new SerializationMatchTerm.SerializationMatchTermGreaterThan(getSerializationMatchTerms()[leftIndex], getSerializationMatchTerms()[rightIndex]);
 	}
 
+	protected @NonNull SerializationMatchTerm createSerializationMatchTermInteger(int value) {
+		return new SerializationMatchTerm.SerializationMatchTermInteger(value);
+	}
+
 	protected @NonNull SerializationMatchTerm createSerializationMatchTermMultiply(int leftIndex, int rightIndex) {
 		return new SerializationMatchTerm.SerializationMatchTermMultiply(getSerializationMatchTerms()[leftIndex], getSerializationMatchTerms()[rightIndex]);
 	}
 
+	protected @NonNull SerializationMatchTerm createSerializationMatchTermRuntime() {
+		return new SerializationMatchTerm()
+		{
+			@Override
+			protected int computeHashCode() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean equals(Object obj) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isConstant(@NonNull DynamicRuleMatch ruleMatch) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public boolean isKnown(@NonNull DynamicRuleMatch ruleMatch) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public void toString(@NonNull DiagnosticStringBuilder s) {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
+
 	protected @NonNull SerializationMatchTerm createSerializationMatchTermSubtract(int leftIndex, int rightIndex) {
 		return new SerializationMatchTerm.SerializationMatchTermSubtract(getSerializationMatchTerms()[leftIndex], getSerializationMatchTerms()[rightIndex]);
+	}
+
+	protected @NonNull SerializationMatchTerm createSerializationMatchTermVariable(int cardinalityVariableIndex) {
+		return new SerializationMatchTerm.SerializationMatchTermVariable(cardinalityVariableIndex);
+	}
+
+	protected @NonNull SerializationReference createSerializationReference(/*@NonNull*/ EReference eReference, int targetGrammarRuleVectorIndex,
+			int @NonNull ... grammarRuleIndex_grammarCardinalities) {
+		assert eReference != null;
+		GrammarRuleVector targetGrammarRuleVector = targetGrammarRuleVectorIndex >= 0 ? getGrammarRuleVectors()[targetGrammarRuleVectorIndex] : null;
+		int iMax = grammarRuleIndex_grammarCardinalities.length;
+		int @NonNull [] grammarRuleIndexes = new int[iMax];
+		@NonNull GrammarCardinality @NonNull [] grammarCardinalities = new @NonNull GrammarCardinality[iMax];
+		for (int i = 0; i < iMax; i++) {
+			grammarRuleIndexes[i] = grammarRuleIndex_grammarCardinalities[i] >> 4;
+			grammarCardinalities[i] = GrammarCardinality.valueOf(grammarRuleIndex_grammarCardinalities[i] & 0xF);
+		}
+		return new SerializationReference(eReference, targetGrammarRuleVector, grammarRuleIndexes, grammarCardinalities);
+	}
+
+	protected @NonNull SerializationRule createSerializationRule(@NonNull String name, int grammarRuleValueIndex,
+			@NonNull SerializationMatchStep @Nullable [] matchSteps,
+			@NonNull SerializationStep @NonNull [] serializationSteps,
+			@NonNull SerializationFeature @Nullable [] serializationFeatures) {
+		return new SerializationRule(this, name, grammarRuleValueIndex, matchSteps, serializationSteps, serializationFeatures);
 	}
 
 	protected @NonNull SerializationRule @NonNull [] createSerializationRules(int ... serializationRuleIndexes) {
@@ -288,39 +363,46 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 		return serializationRules;
 	}
 
+	protected @NonNull SerializationAttribute createSerializationSimpleAttribute(/*@NonNull*/ EAttribute eAttribute, boolean needsDefault, @NonNull GrammarCardinality grammarCardinality) {
+		assert eAttribute != null;
+		return new SerializationSimpleAttribute(eAttribute, needsDefault, grammarCardinality);
+	}
+
 	protected @NonNull SerializationStep createSerializationStepAssignKeyword(/*@NonNull*/ EStructuralFeature eStructuralFeature,int enumerationValueIndex, int serializationSegmentsIndex) {
-		return new SerializationStepAssignKeyword(eStructuralFeature, getEnumerationValues()[enumerationValueIndex], serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
+		assert eStructuralFeature != null;
+		return new SerializationStep.SerializationStepAssignKeyword(eStructuralFeature, getEnumerationValues()[enumerationValueIndex], serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
 	}
 
 	protected @NonNull SerializationStep createSerializationStepAssignedRuleCall(/*@NonNull*/ EStructuralFeature eStructuralFeature, int calledValueIndex, int serializationSegmentsIndex) {
-		return new SerializationStepAssignedRuleCall(eStructuralFeature, calledValueIndex, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
+		assert eStructuralFeature != null;
+		return new SerializationStep.SerializationStepAssignedRuleCall(eStructuralFeature, calledValueIndex, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
 	}
 
-	protected @NonNull SerializationStep createSerializationStepAssigns(/*@NonNull*/ EStructuralFeature eStructuralFeature, int enumerationValueIndex, @NonNull Integer @Nullable [] calledRuleIndexes, int serializationSegmentsIndex) {
-		return new SerializationStepAssigns(eStructuralFeature, enumerationValueIndex >= 0 ? getEnumerationValues()[enumerationValueIndex] : null, calledRuleIndexes, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
+	protected @NonNull SerializationStep createSerializationStepAssigns(/*@NonNull*/ EStructuralFeature eStructuralFeature, int enumerationValueIndex, int @NonNull [] calledRuleIndexes, int serializationSegmentsIndex) {
+		assert eStructuralFeature != null;
+		return new SerializationStep.SerializationStepAssigns(eStructuralFeature, enumerationValueIndex >= 0 ? getEnumerationValues()[enumerationValueIndex] : EnumerationValueNull.INSTANCE, calledRuleIndexes, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
 	}
 
-	protected @NonNull SerializationStep createSerializationStepCrossReference(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference, int serializationSegmentsIndex) {
-		return new SerializationStepCrossReference(eStructuralFeature, crossReference, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
+	protected @NonNull SerializationStep createSerializationStepCrossReference(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference, int calledRuleIndex, int serializationSegmentsIndex) {
+		assert eStructuralFeature != null;
+		return new SerializationStep.SerializationStepCrossReference(eStructuralFeature, crossReference, calledRuleIndex, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
 	}
 
 	protected @NonNull SerializationStep createSerializationStepKeyword(@NonNull String keyword, int serializationSegmentsIndex) {
-		return new SerializationStepKeyword(keyword, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
+		return new SerializationStep.SerializationStepKeyword(keyword, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
 	}
 
-	protected @NonNull SerializationStep createSerializationStepSequence(int variableIndex, int stepsRange) {
-		return new SerializationStepSequence(variableIndex, stepsRange, null);
-	}
-
-	protected @NonNull SerializationStep createSerializationStepSequence(int variableIndex, int stepsRange, int serializationSegmentsIndex) {
-		return new SerializationStepSequence(variableIndex, stepsRange, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
+	protected @NonNull SerializationStep createSerializationStepSequence(int variableIndex_grammarCardinality, int stepsRange, int serializationSegmentsIndex) {
+		int variableIndex = variableIndex_grammarCardinality >> 4;
+		GrammarCardinality grammarCardinality = GrammarCardinality.valueOf(variableIndex_grammarCardinality & 0xF);
+		return new SerializationStep.SerializationStepSequence(variableIndex, stepsRange, grammarCardinality, serializationSegmentsIndex >= 0 ? getSerializationSegments()[serializationSegmentsIndex] : null);
 	}
 
 	protected @NonNull SerializationStep createSerializationStepWrapper(int serializationSegmentsIndex) {
 		assert serializationSegmentsIndex >= 0;
 		@NonNull SerializationSegment[] serializationSegments = getSerializationSegments()[serializationSegmentsIndex];
 		assert serializationSegments != null;
-		return new SerializationStepWrapper(serializationSegments);
+		return new SerializationStep.SerializationStepWrapper(serializationSegments);
 	}
 
 	protected @NonNull SerializationStep @NonNull [] createSerializationSteps(int ... serializationStepIndexes) {
@@ -346,13 +428,11 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 		Map<@NonNull EReference, @NonNull Map<@NonNull String, @NonNull CrossReference>> eReference2ruleName2crossReference2 = eReference2ruleName2crossReference;
 		if (eReference2ruleName2crossReference2 == null) {
 			eReference2ruleName2crossReference = eReference2ruleName2crossReference2 = new HashMap<>();
-			Grammar grammar = grammarProvider.getGrammar(this);
-			assert grammar != null;
 			analyzeGrammar(grammar, eReference2ruleName2crossReference2);
 		}
-		Map<@NonNull String, CrossReference> ruleName2crossReference = SerializationUtils.maybeNull(eReference2ruleName2crossReference2.get(assignedEReference));
+		Map<@NonNull String, @NonNull CrossReference> ruleName2crossReference = SerializationUtils.maybeNull(eReference2ruleName2crossReference2.get(assignedEReference));
 		if (ruleName2crossReference != null) {
-			CrossReference crossReference = ruleName2crossReference.get(assignedRuleName);
+			CrossReference crossReference = SerializationUtils.maybeNull(ruleName2crossReference.get(assignedRuleName));
 			if (crossReference != null) {
 				return crossReference;
 			}
@@ -367,7 +447,7 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 
 	/**
 	 * Return the per-EClass serialization metadata in alphabetical order.
-	 * Use @link{SerializationGrammarAnalysis.getEClassValue(EClass)} to look up an EClass.
+	 * Use {@link SerializationGrammarAnalysis.getEClassValue(EClass)} to look up an EClass.
 	 */
 	public abstract @NonNull EClassValue @NonNull [] getEClassValues();
 
@@ -377,13 +457,13 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	public abstract @NonNull EnumerationValue @NonNull [] getEnumerationValues();
 
 	/**
-	 * Return the @link{getSerializationSteps()) index of the first assignment serialization step that is used consistently
+	 * Return the {@link getSerializationSteps()} index of the first assignment serialization step that is used consistently
 	 * across all rules. Returns -1 if none.
 	 */
 	protected abstract int getFirstGlobalSerializationStepAssignmentIndex();
 
 	/**
-	 * Return the @link{getSerializationSteps()) index of the first keyword/literal serialization step that is used consistently
+	 * Return the {@link getSerializationSteps()} index of the first keyword/literal serialization step that is used consistently
 	 * across all rules. Returns -1 if none.
 	 */
 	protected abstract int getFirstGlobalSerializationStepLiteralIndex();
@@ -445,13 +525,13 @@ public abstract class AbstractSerializationMetaData implements SerializationMeta
 	}
 
 	/**
-	 * Return the @link{getSerializationSteps()) inclusive index of the last assignment serialization step that is used consistently
+	 * Return the {@link getSerializationSteps()) inclusive index of the last assignment serialization step that is used consistently
 	 * across all rules. Returns -1 if none.
 	 */
 	protected abstract int getLastGlobalSerializationStepAssignmentIndex();
 
 	/**
-	 * Return the @link{getSerializationSteps()) inclusive index of the last keyword/literal serialization step that is used consistently
+	 * Return the {@link getSerializationSteps()) inclusive index of the last keyword/literal serialization step that is used consistently
 	 * across all rules. Returns -1 if none.
 	 */
 	protected abstract int getLastGlobalSerializationStepLiteralIndex();

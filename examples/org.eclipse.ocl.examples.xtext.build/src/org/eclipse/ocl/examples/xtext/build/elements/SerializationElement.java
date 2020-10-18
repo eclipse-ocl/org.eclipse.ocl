@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.xtext.build.elements;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
@@ -62,9 +63,8 @@ public interface SerializationElement
 	/**
 	 * Promote all ListOfSerializationNode future sequences into frozen SequenceSerializationNOde with
 	 * current action calls and unassigned rule calls rewritten. The return may be a ListListOfSerializationNode.
-	 * @param GrammarCardinality
 	 */
-	@NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality);
+	@NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, boolean isRootAlternative);
 
 	/**
 	 * Return true if this is a ListOfSerializationNode
@@ -87,9 +87,17 @@ public interface SerializationElement
 	boolean isNull();
 
 	/**
+	 * Return true if the node tree is free of UnassignedParserRuleCalls.
+	 * @return
+	 */
+	boolean noUnassignedParserRuleCall();
+
+	boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative);	// XXX
+
+	/**
 	 * Append a multi-line debug serialization to a StringBuilder with the specified ndentation depth.
 	 */
-	void toString(@NonNull StringBuilder s, int depth);
+	void toString(@NonNull DiagnosticStringBuilder s, int depth);
 
 	/**
 	 * Return an equivalent SerializationElement to this that supports a grammarCardinality or greater as part of a compoundElement.

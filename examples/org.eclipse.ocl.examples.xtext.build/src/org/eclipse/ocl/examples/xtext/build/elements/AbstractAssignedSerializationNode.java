@@ -13,31 +13,41 @@ package org.eclipse.ocl.examples.xtext.build.elements;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.build.analysis.AssignmentAnalysis;
+import org.eclipse.ocl.examples.xtext.build.analysis.AbstractRuleAnalysis;
+import org.eclipse.ocl.examples.xtext.build.analysis.GrammarAnalysis;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
+import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueNull;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 
-public abstract class AbstractAssignedSerializationNode extends SimpleSerializationNode implements AssignedSerializationNode
+public abstract class AbstractAssignedSerializationNode extends AbstractSerializationNode implements AssignedSerializationNode
 {
-	protected final @NonNull AssignmentAnalysis assignmentAnalysis;
+	protected final @NonNull GrammarAnalysis grammarAnalysis;
+
+	/**
+	 * The produced EClass wrt this and preceding nodes as initially defined by the rule's returned EClass and refined by Actions.
+	 * This is often a sub-type of eStructuralFeature.getEContainerClass();
+	 */
+	protected final @NonNull EClass assignedEClass;
 	protected final @NonNull EStructuralFeature eStructuralFeature;
 
-	protected AbstractAssignedSerializationNode(@NonNull AssignmentAnalysis assignmentAnalysis,
-			@NonNull GrammarCardinality grammarCardinality) {
+	/**
+	 * The grammar rules that can produce a compatible target value for the eStructuralFeature.
+	 */
+	protected final @NonNull Iterable<@NonNull AbstractRuleAnalysis> targetRuleAnalyses;
+
+	protected AbstractAssignedSerializationNode(@NonNull GrammarAnalysis grammarAnalysis,
+			@NonNull EClass assignedEClass,	@NonNull EStructuralFeature eStructuralFeature, @NonNull GrammarCardinality grammarCardinality,
+			@NonNull Iterable<@NonNull AbstractRuleAnalysis> targetRuleAnalyses) {
 		super(grammarCardinality);
-		this.assignmentAnalysis = assignmentAnalysis;
-		this.eStructuralFeature = assignmentAnalysis.getEStructuralFeature();
+		this.grammarAnalysis = grammarAnalysis;
+		this.assignedEClass = assignedEClass;
+		this.eStructuralFeature = eStructuralFeature;
+		this.targetRuleAnalyses = targetRuleAnalyses;
 	}
 
 	@Override
 	public @NonNull EClass getAssignedEClass() {
-		return assignmentAnalysis.getEClass();
-	}
-
-	@Override
-	public @NonNull AssignmentAnalysis getAssignmentAnalysis() {
-		return assignmentAnalysis;
+		return assignedEClass;
 	}
 
 	@Override
@@ -46,7 +56,16 @@ public abstract class AbstractAssignedSerializationNode extends SimpleSerializat
 	}
 
 	@Override
-	public @Nullable EnumerationValue getEnumerationValue() {
-		return null;
+	public @NonNull EnumerationValue getEnumerationValue() {
+		return EnumerationValueNull.INSTANCE;
+	}
+
+	public @NonNull GrammarAnalysis getGrammarAnalysis() {
+		return grammarAnalysis;
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull AbstractRuleAnalysis> getTargetRuleAnalyses() {
+		return targetRuleAnalyses;
 	}
 }

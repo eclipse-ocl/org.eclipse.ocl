@@ -169,15 +169,18 @@ SpecificationCS returns essentialocl::ExpSpecificationCS:
 //---------------------------------------------------------------------------------
 //	Base overrides
 //---------------------------------------------------------------------------------
+@Override
 TemplateSignatureCS returns base::TemplateSignatureCS:
 	('(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')')
 |	('<' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* '>')
 ;
 
+@Override
 TypedRefCS returns base::TypedRefCS:
 	TypeLiteralCS | TypedTypeRefCS
 ;
 
+@Override
 UnrestrictedName returns ecore::EString:
 	EssentialOCLUnrestrictedName
 	//| 'body'
@@ -199,14 +202,17 @@ UnrestrictedName returns ecore::EString:
 //---------------------------------------------------------------------------------
 //	EssentialOCL overrides
 //---------------------------------------------------------------------------------
+@Override
 NavigatingArgExpCS returns essentialocl::ExpCS:
 	({OCLMessageArgCS} '?')
 	| ExpCS
 ;
 
+@Override
 NavigationOperatorName:
 	EssentialOCLNavigationOperatorName | CompleteOCLNavigationOperatorName;
 
+@Override
 PrimitiveTypeIdentifier:
 	'Boolean'
 	| 'Integer'

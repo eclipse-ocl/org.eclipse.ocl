@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.AbstractSerializationSegment;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
@@ -25,10 +26,10 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.Strings;
 
 /**
- * XtextAbstractCommentSegmentSupport provides support for serializing and formatting typical
+ * AbstractCommentSerializationSegment provides support for serializing and formatting typical
  * Xtext single and multi-line comments stored as hidden LeafNodes.
  */
-public abstract class XtextAbstractCommentSegmentSupport implements CustomSegmentSupport
+public abstract class AbstractCommentSerializationSegment extends AbstractSerializationSegment
 {
 	public static abstract class Comment
 	{
@@ -69,8 +70,8 @@ public abstract class XtextAbstractCommentSegmentSupport implements CustomSegmen
 		public void append(@NonNull SerializationBuilder serializationBuilder) {
 			serializationBuilder.append(SerializationBuilder.HALF_NEW_LINE);
 			serializationBuilder.append(prefix);
-			serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
 			if (midfix != null) {
+				serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
 				serializationBuilder.append(midfix);
 			}
 			for (int start = 0; true; ) {
@@ -86,7 +87,9 @@ public abstract class XtextAbstractCommentSegmentSupport implements CustomSegmen
 					break;
 				}
 			}
-			serializationBuilder.append(SerializationBuilder.POP);
+			if (midfix != null) {
+				serializationBuilder.append(SerializationBuilder.POP);
+			}
 			if (body.endsWith("\n")) {
 				serializationBuilder.append(" ");
 			}

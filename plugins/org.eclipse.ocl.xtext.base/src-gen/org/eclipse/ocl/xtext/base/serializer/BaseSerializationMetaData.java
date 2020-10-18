@@ -13,12 +13,12 @@
 package org.eclipse.ocl.xtext.base.serializer;
 
 import com.google.inject.Inject;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.DataTypeRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
+import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle;
@@ -27,38 +27,76 @@ import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermInteger;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValue_GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValues;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndex_GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EnumerationValue_GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.RuleIndex_GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
 import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.service.GrammarProvider;
 
+/******* This file is 100% auto-generated - do not edit it *******/
+
+/**
+ * The BaseSerializationMetaData singleton provides the metadata to support a
+ * model to text serialization of a parsed Xtext semantic model or to re-format an Xtext text node model.
+ */
 public class BaseSerializationMetaData extends AbstractSerializationMetaData
 {
-	private boolean initialized = false;
+	/**
+	 * The Provider supports injected creation of the BaseSerializationMetaData singleton.
+	 */
+	public static class Provider implements SerializationMetaData.Provider
+	{
+		private static @Nullable BaseSerializationMetaData INSTANCE = null;
+
+		@Inject
+		private GrammarProvider grammarProvider;
+
+		@Override
+		public synchronized @NonNull SerializationMetaData get() {
+			// synchronized synchronizes the creation of this singleton.
+			// It does not imply that the overall application is threadsafe.
+			BaseSerializationMetaData instance = INSTANCE;
+			if (instance == null) {
+				assert grammarProvider != null;
+				Grammar grammar = grammarProvider.getGrammar(Provider.class);
+				assert grammar != null;
+				INSTANCE = instance = new BaseSerializationMetaData(grammar);
+			}
+			return instance;
+		}
+	}
+
 	private final @NonNull EClassValue @NonNull [] eClassValues = new @NonNull EClassValue[10];
 	private final @NonNull EnumerationValue @NonNull [] enumerationValues = new @NonNull EnumerationValue[2];
 	private final @NonNull GrammarRuleValue @NonNull [] grammarRuleValues = new @NonNull GrammarRuleValue[35];
 	private final @NonNull GrammarRuleVector @NonNull [] grammarRuleVectors = new @NonNull GrammarRuleVector[10];
-	private final @NonNull SerializationMatchStep @NonNull [] serializationMatchSteps = new @NonNull SerializationMatchStep[26];
-	private final @NonNull SerializationMatchTerm @NonNull [] serializationMatchTerms = new @NonNull SerializationMatchTerm[28];
+	private final @NonNull SerializationMatchStep @NonNull [] serializationMatchSteps = new @NonNull SerializationMatchStep[28];
+	private final @NonNull SerializationMatchTerm @NonNull [] serializationMatchTerms = new @NonNull SerializationMatchTerm[32];
 	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[17];
 	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [6] @NonNull [];
-	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[38];
-
+	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[35];
 	private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {" *"};
 	private final @NonNull String @Nullable [] multipleLineCommentPrefixes = new @NonNull String[] {"/*"};
 	private final @NonNull String @Nullable [] multipleLineCommentSuffixes = new @NonNull String[] {"*/"};
 	private final @NonNull String @Nullable [] singleLineCommentPrefixes = new @NonNull String[] {"--"};
+
+	private BaseSerializationMetaData(@NonNull Grammar grammar) {
+		super(grammar);
+		initGrammarRuleVectors();
+		initEnumerationValues();
+		initMatchTerms();
+		initMatchSteps();
+		initSerializationSegments();
+		initSerializationSteps();
+		initSerializationRules();
+		initGrammarRuleValues();
+		initEClassValues();
+	}
 
 	@Override
 	public @NonNull EClassValue @NonNull [] getEClassValues() {
@@ -77,7 +115,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 
 	@Override
 	protected int getFirstGlobalSerializationStepLiteralIndex() {
-		return 12;
+		return 13;
 	}
 
 	@Override
@@ -92,7 +130,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 
 	@Override
 	protected int getLastGlobalSerializationStepAssignmentIndex() {
-		return 11;
+		return 12;
 	}
 
 	@Override
@@ -146,114 +184,95 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 	}
 
 	/**
-	 * Post constructor/injection initialization to avoid recursions.
-	 */
-	@Inject
-	public void init() {
-		if (!initialized) {
-			initialized = true;
-			initGrammarRuleVectors();
-			initEnumerationValues();
-			initMatchTerms();
-			initMatchSteps();
-			initSerializationSegments();
-			initSerializationSteps();
-			initSerializationRules();
-			initGrammarRuleValues();
-			initEClassValues();
-		}
-	}
-
-	/**
 	 * Initialize configuration for each EClass that may be serialized.
 	 */
 	private void initEClassValues() {
 		eClassValues[0] = new EClassValue(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS,
 			createSerializationRules(
-				1 /* { lowerBound=LOWER { ".." upperBound=UPPER }[?] } */,
-				2 /* { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "]" } */,
-				3 /* { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "|?" "]" } */,
-				4 /* { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } isNullFree="|1"[?] "]" } */
+				1 /* MultiplicityBoundsCS-0: MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] */,
+				4 /* MultiplicityCS-2: '[' MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] ']' */,
+				2 /* MultiplicityCS-0: '[' MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] '|?' ']' */,
+				3 /* MultiplicityCS-1: '[' MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] MultiplicityCS::isNullFree?='|1' ']' */
 			), null
 		);
 		eClassValues[1] = new EClassValue(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS,
 			createSerializationRules(
-				5 /* { "[" stringBounds={'*|+|?'} "]" } */,
-				6 /* { "[" stringBounds={'*|+|?'} "|?" "]" } */,
-				7 /* { "[" stringBounds={'*|+|?'} isNullFree="|1"[?] "]" } */,
-				8 /* stringBounds={'*|+|?'} */
+				7 /* MultiplicityCS-5: '[' MultiplicityStringCS::stringBounds='*|+|?' ']' */,
+				5 /* MultiplicityCS-3: '[' MultiplicityStringCS::stringBounds='*|+|?' '|?' ']' */,
+				6 /* MultiplicityCS-4: '[' MultiplicityStringCS::stringBounds='*|+|?' MultiplicityCS::isNullFree?='|1' ']' */,
+				8 /* MultiplicityStringCS-0: MultiplicityStringCS::stringBounds='*|+|?' */
 			), null
 		);
 		eClassValues[2] = new EClassValue(BaseCSPackage.Literals.PATH_ELEMENT_CS,
 			createSerializationRules(
-				0 /* referredElement=UnrestrictedName */,
-				9 /* referredElement=UnreservedName */
+				0 /* FirstPathElementCS-0: PathElementCS::referredElement=UnrestrictedName */,
+				9 /* NextPathElementCS-0: PathElementCS::referredElement=UnreservedName */
 			), null
 		);
 		eClassValues[3] = new EClassValue(BaseCSPackage.Literals.PATH_NAME_CS,
 			createSerializationRules(
-				10 /* { ownedPathElements+=FirstPathElementCS { "::" ownedPathElements+=NextPathElementCS }[*] } */
+				10 /* PathNameCS-0: PathNameCS::ownedPathElements+=FirstPathElementCS ('::' PathNameCS::ownedPathElements+=NextPathElementCS)[V0:*] */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
 					1) /* FirstPathElementCS|NextPathElementCS */
 			}
 		);
 		eClassValues[4] = new EClassValue(BaseCSPackage.Literals.TEMPLATE_BINDING_CS,
 			createSerializationRules(
-				11 /* { ownedSubstitutions+=TemplateParameterSubstitutionCS { "," ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] } */
+				11 /* TemplateBindingCS-0: TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS (',' TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS)[V0:*] (TemplateBindingCS::ownedMultiplicity=MultiplicityCS)[V1:?] */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
 					0) /* MultiplicityCS */,
-				createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
 					4) /* TemplateParameterSubstitutionCS */
 			}
 		);
 		eClassValues[5] = new EClassValue(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS,
 			createSerializationRules(
-				12 /* ownedActualParameter=TypeRefCS */
+				12 /* TemplateParameterSubstitutionCS-0: TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER,
 					9) /* TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS */
 			}
 		);
 		eClassValues[6] = new EClassValue(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS,
 			createSerializationRules(
-				13 /* { "(" ownedParameters+=TypeParameterCS { "," ownedParameters+=TypeParameterCS }[*] ")" } */
+				13 /* TemplateSignatureCS-0: '(' TemplateSignatureCS::ownedParameters+=TypeParameterCS (',' TemplateSignatureCS::ownedParameters+=TypeParameterCS)[V0:*] ')' */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
 					5) /* TypeParameterCS */
 			}
 		);
 		eClassValues[7] = new EClassValue(BaseCSPackage.Literals.TYPE_PARAMETER_CS,
 			createSerializationRules(
-				14 /* { name=UnrestrictedName { "extends" ownedExtends+=TypedRefCS { "&&" ownedExtends+=TypedRefCS }[*] }[?] } */
+				14 /* TypeParameterCS-0: NamedElementCS::name=UnrestrictedName ('extends' TypeParameterCS::ownedExtends+=TypedRefCS ('&&' TypeParameterCS::ownedExtends+=TypedRefCS)[V1:*])[V0:?] */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS,
 					8) /* TypedRefCS|TypedTypeRefCS */
 			}
 		);
 		eClassValues[8] = new EClassValue(BaseCSPackage.Literals.TYPED_TYPE_REF_CS,
 			createSerializationRules(
-				15 /* { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" }[?] } */
+				15 /* TypedTypeRefCS-0: TypedTypeRefCS::ownedPathName=PathNameCS ('(' TypedTypeRefCS::ownedBinding=TemplateBindingCS ')')[V0:?] */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
 					3) /* TemplateBindingCS */,
-				createEReference_RuleIndexes(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
 					2) /* PathNameCS */
 			}
 		);
 		eClassValues[9] = new EClassValue(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS,
 			createSerializationRules(
-				16 /* { "?" { "extends" ownedExtends=TypedRefCS }[?] } */
+				16 /* WildcardTypeRefCS-0: '?' ('extends' WildcardTypeRefCS::ownedExtends=TypedRefCS)[V0:?] */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
 					8) /* TypedRefCS|TypedTypeRefCS */
 			}
 		);
@@ -263,9 +282,9 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize string combinations used by assigned String EAttributes.
 	 */
 	private void initEnumerationValues() {
-		// '*|+|?'
+		// 0: '*|+|?'
 		enumerationValues[0] = new EnumerationValueMultiple(new @NonNull String[]{"*", "+", "?"});
-		// '|1'
+		// 1: '|1'
 		enumerationValues[1] = new EnumerationValueSingle("|1");
 	}
 
@@ -279,7 +298,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		grammarRuleValues[3] = new TerminalRuleValue(3, "ESCAPED_ID");
 		grammarRuleValues[4] = createParserRuleValue(4, "FirstPathElementCS", -1,
 			createSerializationRules(
-				0	/* FirstPathElementCS: referredElement=UnrestrictedName */
+				0	/* FirstPathElementCS-0: PathElementCS::referredElement=UnrestrictedName */
 			),
 			(0 << 16) | 5	/* referredElement=UnrestrictedName : [value] | [soft-space, value, soft-space] */
 		);
@@ -292,7 +311,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		grammarRuleValues[11] = new TerminalRuleValue(11, "ML_SINGLE_QUOTED_STRING");
 		grammarRuleValues[12] = createParserRuleValue(12, "MultiplicityBoundsCS", -1,
 			createSerializationRules(
-				1	/* MultiplicityBoundsCS: { lowerBound=LOWER { ".." upperBound=UPPER }[?] } */
+				1	/* MultiplicityBoundsCS-0: MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 5	/* lowerBound=LOWER : [value] | [soft-space, value, soft-space] */,
@@ -302,12 +321,12 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		);
 		grammarRuleValues[13] = createParserRuleValue(13, "MultiplicityCS", -1,
 			createSerializationRules(
-				2	/* MultiplicityCS: { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "]" } */,
-				3	/* MultiplicityCS: { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "|?" "]" } */,
-				4	/* MultiplicityCS: { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } isNullFree="|1"[?] "]" } */,
-				5	/* MultiplicityCS: { "[" stringBounds={'*|+|?'} "]" } */,
-				6	/* MultiplicityCS: { "[" stringBounds={'*|+|?'} "|?" "]" } */,
-				7	/* MultiplicityCS: { "[" stringBounds={'*|+|?'} isNullFree="|1"[?] "]" } */
+				2	/* MultiplicityCS-0: '[' MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] '|?' ']' */,
+				3	/* MultiplicityCS-1: '[' MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] MultiplicityCS::isNullFree?='|1' ']' */,
+				4	/* MultiplicityCS-2: '[' MultiplicityBoundsCS::lowerBound=LOWER ('..' MultiplicityBoundsCS::upperBound=UPPER)[V0:?] ']' */,
+				5	/* MultiplicityCS-3: '[' MultiplicityStringCS::stringBounds='*|+|?' '|?' ']' */,
+				6	/* MultiplicityCS-4: '[' MultiplicityStringCS::stringBounds='*|+|?' MultiplicityCS::isNullFree?='|1' ']' */,
+				7	/* MultiplicityCS-5: '[' MultiplicityStringCS::stringBounds='*|+|?' ']' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 3	/* "[" : [value] | [no-space, value, no-space] */,
@@ -315,26 +334,26 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			(0 << 16) | 0	/* MultiplicityBoundsCS : [value] | [value] */,
 			(0 << 16) | 0	/* MultiplicityStringCS : [value] | [value] */,
 			(0 << 16) | 0	/* Alternatives? : [value] | [value] */,
-			(0 << 16) | 5	/* "|?" : [value] | [soft-space, value, soft-space] */,
+			(0 << 16) | 3	/* "|?" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 5	/* isNullFree?="|1" : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 1	/* "]" : [value] | [no-space, value] */
 		);
 		grammarRuleValues[14] = createParserRuleValue(14, "MultiplicityStringCS", -1,
 			createSerializationRules(
-				8	/* MultiplicityStringCS: stringBounds={'*|+|?'} */
+				8	/* MultiplicityStringCS-0: MultiplicityStringCS::stringBounds='*|+|?' */
 			),
 			(0 << 16) | 5	/* stringBounds=("*"|"+"|"?") : [value] | [soft-space, value, soft-space] */
 		);
 		grammarRuleValues[15] = new DataTypeRuleValue(15, "NUMBER_LITERAL");
 		grammarRuleValues[16] = createParserRuleValue(16, "NextPathElementCS", -1,
 			createSerializationRules(
-				9	/* NextPathElementCS: referredElement=UnreservedName */
+				9	/* NextPathElementCS-0: PathElementCS::referredElement=UnreservedName */
 			),
 			(0 << 16) | 5	/* referredElement=UnreservedName : [value] | [soft-space, value, soft-space] */
 		);
 		grammarRuleValues[17] = createParserRuleValue(17, "PathNameCS", -1,
 			createSerializationRules(
-				10	/* PathNameCS: { ownedPathElements+=FirstPathElementCS { "::" ownedPathElements+=NextPathElementCS }[*] } */
+				10	/* PathNameCS-0: PathNameCS::ownedPathElements+=FirstPathElementCS ('::' PathNameCS::ownedPathElements+=NextPathElementCS)[V0:*] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* ownedPathElements+=FirstPathElementCS : [value] | [value] */,
@@ -348,7 +367,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		grammarRuleValues[21] = new DataTypeRuleValue(21, "StringLiteral");
 		grammarRuleValues[22] = createParserRuleValue(22, "TemplateBindingCS", -1,
 			createSerializationRules(
-				11	/* TemplateBindingCS: { ownedSubstitutions+=TemplateParameterSubstitutionCS { "," ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] } */
+				11	/* TemplateBindingCS-0: TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS (',' TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS)[V0:*] (TemplateBindingCS::ownedMultiplicity=MultiplicityCS)[V1:?] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* ownedSubstitutions+=TemplateParameterSubstitutionCS : [value] | [value] */,
@@ -359,15 +378,15 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		);
 		grammarRuleValues[23] = createParserRuleValue(23, "TemplateParameterSubstitutionCS", -1,
 			createSerializationRules(
-				12	/* TemplateParameterSubstitutionCS: ownedActualParameter=TypeRefCS */
+				12	/* TemplateParameterSubstitutionCS-0: TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS */
 			),
-			(0 << 16) | 2	/* ownedActualParameter=TypeRefCS : [value] | [supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */
+			(0 << 16) | 2	/* ownedActualParameter=TypeRefCS : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */
 		);
 		grammarRuleValues[24] = createParserRuleValue(24, "TemplateSignatureCS", -1,
 			createSerializationRules(
-				13	/* TemplateSignatureCS: { "(" ownedParameters+=TypeParameterCS { "," ownedParameters+=TypeParameterCS }[*] ")" } */
+				13	/* TemplateSignatureCS-0: '(' TemplateSignatureCS::ownedParameters+=TypeParameterCS (',' TemplateSignatureCS::ownedParameters+=TypeParameterCS)[V0:*] ')' */
 			),
-			(0 << 16) | 2	/* Group : [value] | [supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
+			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
 			(0 << 16) | 3	/* "(" : [value] | [no-space, value, no-space] */,
 			(0 << 16) | 0	/* ownedParameters+=TypeParameterCS : [value] | [value] */,
 			(0 << 16) | 0	/* Group* : [value] | [value] */,
@@ -377,9 +396,9 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		);
 		grammarRuleValues[25] = createParserRuleValue(25, "TypeParameterCS", -1,
 			createSerializationRules(
-				14	/* TypeParameterCS: { name=UnrestrictedName { "extends" ownedExtends+=TypedRefCS { "&&" ownedExtends+=TypedRefCS }[*] }[?] } */
+				14	/* TypeParameterCS-0: NamedElementCS::name=UnrestrictedName ('extends' TypeParameterCS::ownedExtends+=TypedRefCS ('&&' TypeParameterCS::ownedExtends+=TypedRefCS)[V1:*])[V0:?] */
 			),
-			(0 << 16) | 2	/* Group : [value] | [supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
+			(0 << 16) | 2	/* Group : [value] | [org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport, value] */,
 			(0 << 16) | 5	/* name=UnrestrictedName : [value] | [soft-space, value, soft-space] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 5	/* "extends" : [value] | [soft-space, value, soft-space] */,
@@ -390,8 +409,8 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		);
 		grammarRuleValues[26] = createParserRuleValue(26, "TypeRefCS", 9 /* TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS */,
 			createSerializationRules(
-				15	/* TypedTypeRefCS: { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" }[?] } */,
-				16	/* WildcardTypeRefCS: { "?" { "extends" ownedExtends=TypedRefCS }[?] } */
+				15	/* TypedTypeRefCS-0: TypedTypeRefCS::ownedPathName=PathNameCS ('(' TypedTypeRefCS::ownedBinding=TemplateBindingCS ')')[V0:?] */,
+				16	/* WildcardTypeRefCS-0: '?' ('extends' WildcardTypeRefCS::ownedExtends=TypedRefCS)[V0:?] */
 			),
 			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
 			(0 << 16) | 0	/* TypedRefCS : [value] | [value] */,
@@ -399,13 +418,13 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		);
 		grammarRuleValues[27] = createParserRuleValue(27, "TypedRefCS", 8 /* TypedRefCS|TypedTypeRefCS */,
 			createSerializationRules(
-				15	/* TypedTypeRefCS: { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" }[?] } */
+				15	/* TypedTypeRefCS-0: TypedTypeRefCS::ownedPathName=PathNameCS ('(' TypedTypeRefCS::ownedBinding=TemplateBindingCS ')')[V0:?] */
 			),
 			(0 << 16) | 0	/* TypedTypeRefCS : [value] | [value] */
 		);
 		grammarRuleValues[28] = createParserRuleValue(28, "TypedTypeRefCS", -1,
 			createSerializationRules(
-				15	/* TypedTypeRefCS: { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" }[?] } */
+				15	/* TypedTypeRefCS-0: TypedTypeRefCS::ownedPathName=PathNameCS ('(' TypedTypeRefCS::ownedBinding=TemplateBindingCS ')')[V0:?] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* ownedPathName=PathNameCS : [value] | [value] */,
@@ -421,7 +440,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 		grammarRuleValues[33] = new TerminalRuleValue(33, "WS");
 		grammarRuleValues[34] = createParserRuleValue(34, "WildcardTypeRefCS", -1,
 			createSerializationRules(
-				16	/* WildcardTypeRefCS: { "?" { "extends" ownedExtends=TypedRefCS }[?] } */
+				16	/* WildcardTypeRefCS-0: '?' ('extends' WildcardTypeRefCS::ownedExtends=TypedRefCS)[V0:?] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {WildcardTypeRefCS} : [value] | [value] */,
@@ -436,25 +455,25 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize bit vectors of useful grammar rule combinations.
 	 */
 	private void initGrammarRuleVectors() {
-		// MultiplicityCS
+		// 0: MultiplicityCS
 		grammarRuleVectors[0] = new GrammarRuleVector(0x2000L);
-		// FirstPathElementCS|NextPathElementCS
+		// 1: FirstPathElementCS|NextPathElementCS
 		grammarRuleVectors[1] = new GrammarRuleVector(0x10010L);
-		// PathNameCS
+		// 2: PathNameCS
 		grammarRuleVectors[2] = new GrammarRuleVector(0x20000L);
-		// TemplateBindingCS
+		// 3: TemplateBindingCS
 		grammarRuleVectors[3] = new GrammarRuleVector(0x400000L);
-		// TemplateParameterSubstitutionCS
+		// 4: TemplateParameterSubstitutionCS
 		grammarRuleVectors[4] = new GrammarRuleVector(0x800000L);
-		// TypeParameterCS
+		// 5: TypeParameterCS
 		grammarRuleVectors[5] = new GrammarRuleVector(0x2000000L);
-		// TypeRefCS
+		// 6: TypeRefCS
 		grammarRuleVectors[6] = new GrammarRuleVector(0x4000000L);
-		// TypedRefCS
+		// 7: TypedRefCS
 		grammarRuleVectors[7] = new GrammarRuleVector(0x8000000L);
-		// TypedRefCS|TypedTypeRefCS
+		// 8: TypedRefCS|TypedTypeRefCS
 		grammarRuleVectors[8] = new GrammarRuleVector(0x18000000L);
-		// TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS
+		// 9: TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS
 		grammarRuleVectors[9] = new GrammarRuleVector(0x41c000000L);
 	}
 
@@ -462,711 +481,451 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize steps for the matching process.
 	 */
 	private void initMatchSteps() {
-		// assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0
-		serializationMatchSteps[0] = createMatchStep_Assert(17);
-		// assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0
-		serializationMatchSteps[1] = createMatchStep_Assert(18);
-		// assert (|NamedElementCS::name| - 1) == 0
-		serializationMatchSteps[2] = createMatchStep_Assert(19);
-		// assert (|PathElementCS::referredElement| - 1) == 0
-		serializationMatchSteps[3] = createMatchStep_Assert(20);
-		// assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0
-		serializationMatchSteps[4] = createMatchStep_Assert(23);
-		// assert (|TypedTypeRefCS::ownedPathName| - 1) == 0
+		// 0: assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0
+		serializationMatchSteps[0] = createMatchStep_Assert(21);
+		// 1: assert (|MultiplicityCS::isNullFree.'|1'| - 1) == 0
+		serializationMatchSteps[1] = createMatchStep_Assert(22);
+		// 2: assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0
+		serializationMatchSteps[2] = createMatchStep_Assert(23);
+		// 3: assert (|NamedElementCS::name| - 1) == 0
+		serializationMatchSteps[3] = createMatchStep_Assert(24);
+		// 4: assert (|PathElementCS::referredElement| - 1) == 0
+		serializationMatchSteps[4] = createMatchStep_Assert(25);
+		// 5: assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0
 		serializationMatchSteps[5] = createMatchStep_Assert(27);
-		// assign V0 = (|PathNameCS::ownedPathElements| - 1)
-		serializationMatchSteps[6] = createMatchStep_Assign(0, 21);
-		// assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1)
-		serializationMatchSteps[7] = createMatchStep_Assign(0, 22);
-		// assign V0 = (|TemplateSignatureCS::ownedParameters| - 1)
-		serializationMatchSteps[8] = createMatchStep_Assign(0, 24);
-		// assign V0 = (|TypeParameterCS::ownedExtends| > 0)
-		serializationMatchSteps[9] = createMatchStep_Assign(0, 26);
-		// assign V0 = |MultiplicityBoundsCS::upperBound|
-		serializationMatchSteps[10] = createMatchStep_Assign(0, 3);
-		// assign V0 = |MultiplicityCS::isNullFree.'|1'|
-		serializationMatchSteps[11] = createMatchStep_Assign(0, 4);
-		// assign V0 = |TypedTypeRefCS::ownedBinding|
-		serializationMatchSteps[12] = createMatchStep_Assign(0, 14);
-		// assign V0 = |WildcardTypeRefCS::ownedExtends|
-		serializationMatchSteps[13] = createMatchStep_Assign(0, 16);
-		// assign V1 = (|TypeParameterCS::ownedExtends| - 1)
-		serializationMatchSteps[14] = createMatchStep_Assign(1, 25);
-		// assign V1 = |MultiplicityCS::isNullFree.'|1'|
-		serializationMatchSteps[15] = createMatchStep_Assign(1, 4);
-		// assign V1 = |TemplateBindingCS::ownedMultiplicity|
-		serializationMatchSteps[16] = createMatchStep_Assign(1, 9);
-		// check-rule basecs::PathNameCS.ownedPathElements : 4|16
-		serializationMatchSteps[17] = createMatchStep_RuleCheck(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 1/*FirstPathElementCS|NextPathElementCS*/);
-		// check-rule basecs::TemplateBindingCS.ownedMultiplicity : 13
-		serializationMatchSteps[18] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 0/*MultiplicityCS*/);
-		// check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23
-		serializationMatchSteps[19] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 4/*TemplateParameterSubstitutionCS*/);
-		// check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 26
-		serializationMatchSteps[20] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 6/*TypeRefCS*/);
-		// check-rule basecs::TemplateSignatureCS.ownedParameters : 25
-		serializationMatchSteps[21] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 5/*TypeParameterCS*/);
-		// check-rule basecs::TypeParameterCS.ownedExtends : 27
-		serializationMatchSteps[22] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 7/*TypedRefCS*/);
-		// check-rule basecs::TypedTypeRefCS.ownedBinding : 22
-		serializationMatchSteps[23] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 3/*TemplateBindingCS*/);
-		// check-rule basecs::TypedTypeRefCS.ownedPathName : 17
-		serializationMatchSteps[24] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 2/*PathNameCS*/);
-		// check-rule basecs::WildcardTypeRefCS.ownedExtends : 27
-		serializationMatchSteps[25] = createMatchStep_RuleCheck(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 7/*TypedRefCS*/);
+		// 6: assert (|TypedTypeRefCS::ownedPathName| - 1) == 0
+		serializationMatchSteps[6] = createMatchStep_Assert(31);
+		// 7: assert |ModelElementCS::ownedAnnotations| == 0
+		serializationMatchSteps[7] = createMatchStep_Assert(2);
+		// 8: assert |MultiplicityCS::isNullFree| == 0
+		serializationMatchSteps[8] = createMatchStep_Assert(6);
+		// 9: assert |TypedRefCS::ownedMultiplicity| == 0
+		serializationMatchSteps[9] = createMatchStep_Assert(15);
+		// 10: assert |TypedTypeRefCS::isTypeof| == 0
+		serializationMatchSteps[10] = createMatchStep_Assert(16);
+		// 11: assert |WildcardTypeRefCS::ownedSuper| == 0
+		serializationMatchSteps[11] = createMatchStep_Assert(20);
+		// 12: assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1)
+		serializationMatchSteps[12] = createMatchStep_Assign(0, 26);
+		// 13: assign V0 = (|TemplateSignatureCS::ownedParameters| - 1)
+		serializationMatchSteps[13] = createMatchStep_Assign(0, 28);
+		// 14: assign V0 = (|TypeParameterCS::ownedExtends| > 0)
+		serializationMatchSteps[14] = createMatchStep_Assign(0, 30);
+		// 15: assign V0 = |MultiplicityBoundsCS::upperBound|
+		serializationMatchSteps[15] = createMatchStep_Assign(0, 4);
+		// 16: assign V0 = |TypedTypeRefCS::ownedBinding|
+		serializationMatchSteps[16] = createMatchStep_Assign(0, 17);
+		// 17: assign V0 = |WildcardTypeRefCS::ownedExtends|
+		serializationMatchSteps[17] = createMatchStep_Assign(0, 19);
+		// 18: assign V1 = (|TypeParameterCS::ownedExtends| - 1)
+		serializationMatchSteps[18] = createMatchStep_Assign(1, 29);
+		// 19: assign V1 = |TemplateBindingCS::ownedMultiplicity|
+		serializationMatchSteps[19] = createMatchStep_Assign(1, 10);
+		// 20: check-rule basecs::TemplateBindingCS.ownedMultiplicity : 13
+		serializationMatchSteps[20] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 0/*MultiplicityCS*/);
+		// 21: check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23
+		serializationMatchSteps[21] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 4/*TemplateParameterSubstitutionCS*/);
+		// 22: check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 26|27|28|34
+		serializationMatchSteps[22] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 9/*TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS*/);
+		// 23: check-rule basecs::TemplateSignatureCS.ownedParameters : 25
+		serializationMatchSteps[23] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 5/*TypeParameterCS*/);
+		// 24: check-rule basecs::TypeParameterCS.ownedExtends : 27|28
+		serializationMatchSteps[24] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 8/*TypedRefCS|TypedTypeRefCS*/);
+		// 25: check-rule basecs::TypedTypeRefCS.ownedBinding : 22
+		serializationMatchSteps[25] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 3/*TemplateBindingCS*/);
+		// 26: check-rule basecs::TypedTypeRefCS.ownedPathName : 17
+		serializationMatchSteps[26] = createMatchStep_RuleCheck(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 2/*PathNameCS*/);
+		// 27: check-rule basecs::WildcardTypeRefCS.ownedExtends : 27|28
+		serializationMatchSteps[27] = createMatchStep_RuleCheck(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 8/*TypedRefCS|TypedTypeRefCS*/);
 	}
 
 	/**
 	 * Initialize expression terms used during the matching process.
 	 */
 	private void initMatchTerms() {
-		// 0
-		serializationMatchTerms[0] = new SerializationMatchTermInteger(0);
-		// 1
-		serializationMatchTerms[1] = new SerializationMatchTermInteger(1);
-		// |MultiplicityBoundsCS::lowerBound|
-		serializationMatchTerms[2] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
-		// |MultiplicityBoundsCS::upperBound|
-		serializationMatchTerms[3] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
-		// |MultiplicityCS::isNullFree.'|1'|
-		serializationMatchTerms[4] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, 1 /* '|1' */);
-		// |MultiplicityStringCS::stringBounds.'*|+|?'|
-		serializationMatchTerms[5] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, 0 /* '*|+|?' */);
-		// |NamedElementCS::name|
-		serializationMatchTerms[6] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
-		// |PathElementCS::referredElement|
-		serializationMatchTerms[7] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
-		// |PathNameCS::ownedPathElements|
-		serializationMatchTerms[8] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS);
-		// |TemplateBindingCS::ownedMultiplicity|
-		serializationMatchTerms[9] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
-		// |TemplateBindingCS::ownedSubstitutions|
-		serializationMatchTerms[10] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
-		// |TemplateParameterSubstitutionCS::ownedActualParameter|
-		serializationMatchTerms[11] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
-		// |TemplateSignatureCS::ownedParameters|
-		serializationMatchTerms[12] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
-		// |TypeParameterCS::ownedExtends|
-		serializationMatchTerms[13] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
-		// |TypedTypeRefCS::ownedBinding|
-		serializationMatchTerms[14] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
-		// |TypedTypeRefCS::ownedPathName|
-		serializationMatchTerms[15] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
-		// |WildcardTypeRefCS::ownedExtends|
-		serializationMatchTerms[16] = new SerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
-		// (|MultiplicityBoundsCS::lowerBound| - 1)
-		serializationMatchTerms[17] = createSerializationMatchTermSubtract(2, 1);
-		// (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1)
-		serializationMatchTerms[18] = createSerializationMatchTermSubtract(5, 1);
-		// (|NamedElementCS::name| - 1)
-		serializationMatchTerms[19] = createSerializationMatchTermSubtract(6, 1);
-		// (|PathElementCS::referredElement| - 1)
-		serializationMatchTerms[20] = createSerializationMatchTermSubtract(7, 1);
-		// (|PathNameCS::ownedPathElements| - 1)
-		serializationMatchTerms[21] = createSerializationMatchTermSubtract(8, 1);
-		// (|TemplateBindingCS::ownedSubstitutions| - 1)
-		serializationMatchTerms[22] = createSerializationMatchTermSubtract(10, 1);
-		// (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1)
-		serializationMatchTerms[23] = createSerializationMatchTermSubtract(11, 1);
-		// (|TemplateSignatureCS::ownedParameters| - 1)
-		serializationMatchTerms[24] = createSerializationMatchTermSubtract(12, 1);
-		// (|TypeParameterCS::ownedExtends| - 1)
-		serializationMatchTerms[25] = createSerializationMatchTermSubtract(13, 1);
-		// (|TypeParameterCS::ownedExtends| > 0)
-		serializationMatchTerms[26] = createSerializationMatchTermGreaterThan(13, 0);
-		// (|TypedTypeRefCS::ownedPathName| - 1)
-		serializationMatchTerms[27] = createSerializationMatchTermSubtract(15, 1);
+		// 0: 0
+		serializationMatchTerms[0] = createSerializationMatchTermInteger(0);
+		// 1: 1
+		serializationMatchTerms[1] = createSerializationMatchTermInteger(1);
+		// 2: |ModelElementCS::ownedAnnotations|
+		serializationMatchTerms[2] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MODEL_ELEMENT_CS__OWNED_ANNOTATIONS);
+		// 3: |MultiplicityBoundsCS::lowerBound|
+		serializationMatchTerms[3] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND);
+		// 4: |MultiplicityBoundsCS::upperBound|
+		serializationMatchTerms[4] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND);
+		// 5: |MultiplicityCS::isNullFree.'|1'|
+		serializationMatchTerms[5] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, 1 /* '|1' */);
+		// 6: |MultiplicityCS::isNullFree|
+		serializationMatchTerms[6] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE);
+		// 7: |MultiplicityStringCS::stringBounds.'*|+|?'|
+		serializationMatchTerms[7] = createSerializationMatchTermEAttributeSize(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, 0 /* '*|+|?' */);
+		// 8: |NamedElementCS::name|
+		serializationMatchTerms[8] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME);
+		// 9: |PathElementCS::referredElement|
+		serializationMatchTerms[9] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT);
+		// 10: |TemplateBindingCS::ownedMultiplicity|
+		serializationMatchTerms[10] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY);
+		// 11: |TemplateBindingCS::ownedSubstitutions|
+		serializationMatchTerms[11] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS);
+		// 12: |TemplateParameterSubstitutionCS::ownedActualParameter|
+		serializationMatchTerms[12] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER);
+		// 13: |TemplateSignatureCS::ownedParameters|
+		serializationMatchTerms[13] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS);
+		// 14: |TypeParameterCS::ownedExtends|
+		serializationMatchTerms[14] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS);
+		// 15: |TypedRefCS::ownedMultiplicity|
+		serializationMatchTerms[15] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_REF_CS__OWNED_MULTIPLICITY);
+		// 16: |TypedTypeRefCS::isTypeof|
+		serializationMatchTerms[16] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__IS_TYPEOF);
+		// 17: |TypedTypeRefCS::ownedBinding|
+		serializationMatchTerms[17] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING);
+		// 18: |TypedTypeRefCS::ownedPathName|
+		serializationMatchTerms[18] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME);
+		// 19: |WildcardTypeRefCS::ownedExtends|
+		serializationMatchTerms[19] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS);
+		// 20: |WildcardTypeRefCS::ownedSuper|
+		serializationMatchTerms[20] = createSerializationMatchTermEStructuralFeatureSize(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_SUPER);
+		// 21: (|MultiplicityBoundsCS::lowerBound| - 1)
+		serializationMatchTerms[21] = createSerializationMatchTermSubtract(3, 1);
+		// 22: (|MultiplicityCS::isNullFree.'|1'| - 1)
+		serializationMatchTerms[22] = createSerializationMatchTermSubtract(5, 1);
+		// 23: (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1)
+		serializationMatchTerms[23] = createSerializationMatchTermSubtract(7, 1);
+		// 24: (|NamedElementCS::name| - 1)
+		serializationMatchTerms[24] = createSerializationMatchTermSubtract(8, 1);
+		// 25: (|PathElementCS::referredElement| - 1)
+		serializationMatchTerms[25] = createSerializationMatchTermSubtract(9, 1);
+		// 26: (|TemplateBindingCS::ownedSubstitutions| - 1)
+		serializationMatchTerms[26] = createSerializationMatchTermSubtract(11, 1);
+		// 27: (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1)
+		serializationMatchTerms[27] = createSerializationMatchTermSubtract(12, 1);
+		// 28: (|TemplateSignatureCS::ownedParameters| - 1)
+		serializationMatchTerms[28] = createSerializationMatchTermSubtract(13, 1);
+		// 29: (|TypeParameterCS::ownedExtends| - 1)
+		serializationMatchTerms[29] = createSerializationMatchTermSubtract(14, 1);
+		// 30: (|TypeParameterCS::ownedExtends| > 0)
+		serializationMatchTerms[30] = createSerializationMatchTermGreaterThan(14, 0);
+		// 31: (|TypedTypeRefCS::ownedPathName| - 1)
+		serializationMatchTerms[31] = createSerializationMatchTermSubtract(18, 1);
 	}
 
 	/**
 	 * Initialize the various serialization rules that serialize an EClass.
 	 */
 	private void initSerializationRules() {
-		// Base::FirstPathElementCS(basecs::PathElementCS): referredElement=UnrestrictedName
-		serializationRules[0] =
-			new SerializationRule("FirstPathElementCS", 4,
-				createSerializationMatchSteps(
-					3		/* assert (|PathElementCS::referredElement| - 1) == 0 */
+		// Base::FirstPathElementCS-0(basecs::PathElementCS): referredElement=UnrestrictedName
+		serializationRules[0] = createSerializationRule("FirstPathElementCS-0", 4,
+			createSerializationMatchSteps(
+				4		/* assert (|PathElementCS::referredElement| - 1) == 0 */
+			),
+			createSerializationSteps(
+				34		/* PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, -1
+				)
+			});
+		// Base::MultiplicityBoundsCS-0(basecs::MultiplicityBoundsCS): { lowerBound=LOWER { ".." upperBound=UPPER }[?] }
+		serializationRules[1] = createSerializationRule("MultiplicityBoundsCS-0", 12,
+			createSerializationMatchSteps(
+				8		/* assert |MultiplicityCS::isNullFree| == 0 */,
+				15		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
+			),
+			createSerializationSteps(
+				1		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				24		/* V00*2-steps || value */,
+				17		/* '..' || no-space value no-space */,
+				12		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true, GrammarCardinality.ONE),
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false, GrammarCardinality.ZERO_OR_ONE)
+			});
+		// Base::MultiplicityCS-0(basecs::MultiplicityBoundsCS): { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "|?" "]" }
+		serializationRules[2] = createSerializationRule("MultiplicityCS-0", 13,
+			createSerializationMatchSteps(
+				8		/* assert |MultiplicityCS::isNullFree| == 0 */,
+				15		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
+			),
+			createSerializationSteps(
+				20		/* '[' || no-space value no-space */,
+				1		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				24		/* V00*2-steps || value */,
+				17		/* '..' || no-space value no-space */,
+				12		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
+				23		/* '|?' || no-space value no-space */,
+				21		/* ']' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true, GrammarCardinality.ONE),
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false, GrammarCardinality.ZERO_OR_ONE)
+			});
+		// Base::MultiplicityCS-1(basecs::MultiplicityBoundsCS): { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } isNullFree?="|1" "]" }
+		serializationRules[3] = createSerializationRule("MultiplicityCS-1", 13,
+			createSerializationMatchSteps(
+				1		/* assert (|MultiplicityCS::isNullFree.'|1'| - 1) == 0 */,
+				15		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
+			),
+			createSerializationSteps(
+				20		/* '[' || no-space value no-space */,
+				1		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				24		/* V00*2-steps || value */,
+				17		/* '..' || no-space value no-space */,
+				12		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
+				0		/* MultiplicityCS::isNullFree?='|1' || no-space value no-space */,
+				21		/* ']' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, false,
+					(1/*'|1'*/ << 4) | 0 /*[1]*/
 				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					37		/* PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space */
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true, GrammarCardinality.ONE),
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false, GrammarCardinality.ZERO_OR_ONE)
+			});
+		// Base::MultiplicityCS-2(basecs::MultiplicityBoundsCS): { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "]" }
+		serializationRules[4] = createSerializationRule("MultiplicityCS-2", 13,
+			createSerializationMatchSteps(
+				8		/* assert |MultiplicityCS::isNullFree| == 0 */,
+				15		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
+				0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
+			),
+			createSerializationSteps(
+				20		/* '[' || no-space value no-space */,
+				1		/* MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space */,
+				24		/* V00*2-steps || value */,
+				17		/* '..' || no-space value no-space */,
+				12		/* MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space */,
+				21		/* ']' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, true, GrammarCardinality.ONE),
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, false, GrammarCardinality.ZERO_OR_ONE)
+			});
+		// Base::MultiplicityCS-3(basecs::MultiplicityStringCS): { "[" stringBounds={'*|+|?'} "|?" "]" }
+		serializationRules[5] = createSerializationRule("MultiplicityCS-3", 13,
+			createSerializationMatchSteps(
+				8		/* assert |MultiplicityCS::isNullFree| == 0 */,
+				2		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
+			),
+			createSerializationSteps(
+				20		/* '[' || no-space value no-space */,
+				11		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
+				23		/* '|?' || no-space value no-space */,
+				21		/* ']' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false,
+					(0/*'*|+|?'*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Base::MultiplicityCS-4(basecs::MultiplicityStringCS): { "[" stringBounds={'*|+|?'} isNullFree?="|1" "]" }
+		serializationRules[6] = createSerializationRule("MultiplicityCS-4", 13,
+			createSerializationMatchSteps(
+				1		/* assert (|MultiplicityCS::isNullFree.'|1'| - 1) == 0 */,
+				2		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
+			),
+			createSerializationSteps(
+				20		/* '[' || no-space value no-space */,
+				11		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
+				0		/* MultiplicityCS::isNullFree?='|1' || no-space value no-space */,
+				21		/* ']' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, false,
+					(1/*'|1'*/ << 4) | 0 /*[1]*/
 				),
-				null,
-				null,
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Base::MultiplicityBoundsCS(basecs::MultiplicityBoundsCS): { lowerBound=LOWER { ".." upperBound=UPPER }[?] }
-		serializationRules[1] =
-			new SerializationRule("MultiplicityBoundsCS", 12,
-				createSerializationMatchSteps(
-					10		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
-					0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
+				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false,
+					(0/*'*|+|?'*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Base::MultiplicityCS-5(basecs::MultiplicityStringCS): { "[" stringBounds={'*|+|?'} "]" }
+		serializationRules[7] = createSerializationRule("MultiplicityCS-5", 13,
+			createSerializationMatchSteps(
+				8		/* assert |MultiplicityCS::isNullFree| == 0 */,
+				2		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
+			),
+			createSerializationSteps(
+				20		/* '[' || no-space value no-space */,
+				11		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
+				21		/* ']' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false,
+					(0/*'*|+|?'*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Base::MultiplicityStringCS-0(basecs::MultiplicityStringCS): stringBounds={'*|+|?'}
+		serializationRules[8] = createSerializationRule("MultiplicityStringCS-0", 14,
+			createSerializationMatchSteps(
+				8		/* assert |MultiplicityCS::isNullFree| == 0 */,
+				2		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
+			),
+			createSerializationSteps(
+				11		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationEnumeratedAttribute(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, false,
+					(0/*'*|+|?'*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Base::NextPathElementCS-0(basecs::PathElementCS): referredElement=UnreservedName
+		serializationRules[9] = createSerializationRule("NextPathElementCS-0", 16,
+			createSerializationMatchSteps(
+				4		/* assert (|PathElementCS::referredElement| - 1) == 0 */
+			),
+			createSerializationSteps(
+				33		/* PathElementCS::referredElement=UnreservedName || soft-space value soft-space */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, -1
+				)
+			});
+		// Base::PathNameCS-0(basecs::PathNameCS): { ownedPathElements+=FirstPathElementCS { "::" ownedPathElements+=NextPathElementCS }[*] }
+		serializationRules[10] = createSerializationRule("PathNameCS-0", 17,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				32		/* PathNameCS::ownedPathElements+=FirstPathElementCS || value */,
+				25		/* V00*2-steps || value */,
+				18		/* '::' || no-space value no-space */,
+				31		/* PathNameCS::ownedPathElements+=NextPathElementCS || value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 1/* FirstPathElementCS,NextPathElementCS */,
+					(4/*FirstPathElementCS*/ << 4) | 0 /*[1]*/,
+					(16/*NextPathElementCS*/ << 4) | 2 /*[*]*/
+				)
+			});
+		// Base::TemplateBindingCS-0(basecs::TemplateBindingCS): { ownedSubstitutions+=TemplateParameterSubstitutionCS { "," ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] }
+		serializationRules[11] = createSerializationRule("TemplateBindingCS-0", 22,
+			createSerializationMatchSteps(
+				20		/* check-rule basecs::TemplateBindingCS.ownedMultiplicity : MultiplicityCS */,
+				21		/* check-rule basecs::TemplateBindingCS.ownedSubstitutions : TemplateParameterSubstitutionCS */,
+				19		/* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
+				12		/* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
+			),
+			createSerializationSteps(
+				10		/* TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value */,
+				25		/* V00*2-steps || value */,
+				16		/* ',' || no-space value soft-space */,
+				10		/* TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value */,
+				28		/* V01*1-steps || value */,
+				7		/* TemplateBindingCS::ownedMultiplicity=MultiplicityCS || value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 0/* MultiplicityCS */,
+					(13/*MultiplicityCS*/ << 4) | 1 /*[?]*/
 				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					0		/* MultiplicityBoundsCS::lowerBound=9 || soft-space value soft-space */,
-					28		/* V00*4-steps || value */,
-					24		/* 1*1-steps || value */,
-					16		/* '..' || no-space value no-space */,
-					24		/* 1*1-steps || value */,
-					11		/* MultiplicityBoundsCS::upperBound=29 || soft-space value soft-space */
+				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 4/* TemplateParameterSubstitutionCS */,
+					(23/*TemplateParameterSubstitutionCS*/ << 4) | 3 /*[+]*/
+				)
+			});
+		// Base::TemplateParameterSubstitutionCS-0(basecs::TemplateParameterSubstitutionCS): ownedActualParameter=TypeRefCS
+		serializationRules[12] = createSerializationRule("TemplateParameterSubstitutionCS-0", 23,
+			createSerializationMatchSteps(
+				7		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
+				22		/* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : TypeRefCS|TypedRefCS|TypedTypeRefCS|WildcardTypeRefCS */,
+				5		/* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
+			),
+			createSerializationSteps(
+				3		/* TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 6/* TypeRefCS */,
+					(26/*TypeRefCS*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Base::TemplateSignatureCS-0(basecs::TemplateSignatureCS): { "(" ownedParameters+=TypeParameterCS { "," ownedParameters+=TypeParameterCS }[*] ")" }
+		serializationRules[13] = createSerializationRule("TemplateSignatureCS-0", 24,
+			createSerializationMatchSteps(
+				7		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
+				23		/* check-rule basecs::TemplateSignatureCS.ownedParameters : TypeParameterCS */,
+				13		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
+			),
+			createSerializationSteps(
+				30		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				14		/* '(' || no-space value no-space */,
+				8		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
+				25		/* V00*2-steps || value */,
+				16		/* ',' || no-space value soft-space */,
+				8		/* TemplateSignatureCS::ownedParameters+=TypeParameterCS || value */,
+				15		/* ')' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 5/* TypeParameterCS */,
+					(25/*TypeParameterCS*/ << 4) | 3 /*[+]*/
+				)
+			});
+		// Base::TypeParameterCS-0(basecs::TypeParameterCS): { name=UnrestrictedName { "extends" ownedExtends+=TypedRefCS { "&&" ownedExtends+=TypedRefCS }[*] }[?] }
+		serializationRules[14] = createSerializationRule("TypeParameterCS-0", 25,
+			createSerializationMatchSteps(
+				7		/* assert |ModelElementCS::ownedAnnotations| == 0 */,
+				24		/* check-rule basecs::TypeParameterCS.ownedExtends : TypedRefCS|TypedTypeRefCS */,
+				3		/* assert (|NamedElementCS::name| - 1) == 0 */,
+				14		/* assign V0 = (|TypeParameterCS::ownedExtends| > 0) */,
+				18		/* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
+			),
+			createSerializationSteps(
+				30		/* wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
+				2		/* NamedElementCS::name=UnrestrictedName || soft-space value soft-space */,
+				27		/* V00*5-steps || value */,
+				22		/* 'extends' || soft-space value soft-space */,
+				5		/* TypeParameterCS::ownedExtends+=TypedRefCS || value */,
+				29		/* V01*2-steps || value */,
+				13		/* '&&' || soft-space value soft-space */,
+				5		/* TypeParameterCS::ownedExtends+=TypedRefCS || value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, true, GrammarCardinality.ONE),
+				createSerializationReference(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 7/* TypedRefCS */,
+					(27/*TypedRefCS*/ << 4) | 2 /*[*]*/
+				)
+			});
+		// Base::TypedTypeRefCS-0(basecs::TypedTypeRefCS): { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" }[?] }
+		serializationRules[15] = createSerializationRule("TypedTypeRefCS-0", 28,
+			createSerializationMatchSteps(
+				10		/* assert |TypedTypeRefCS::isTypeof| == 0 */,
+				9		/* assert |TypedRefCS::ownedMultiplicity| == 0 */,
+				25		/* check-rule basecs::TypedTypeRefCS.ownedBinding : TemplateBindingCS */,
+				26		/* check-rule basecs::TypedTypeRefCS.ownedPathName : PathNameCS */,
+				16		/* assign V0 = |TypedTypeRefCS::ownedBinding| */,
+				6		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
+			),
+			createSerializationSteps(
+				9		/* TypedTypeRefCS::ownedPathName=PathNameCS || value */,
+				26		/* V00*3-steps || value */,
+				14		/* '(' || no-space value no-space */,
+				4		/* TypedTypeRefCS::ownedBinding=TemplateBindingCS || value */,
+				15		/* ')' || no-space value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 3/* TemplateBindingCS */,
+					(22/*TemplateBindingCS*/ << 4) | 1 /*[?]*/
 				),
-				null,
-				null,
-				new /*@NonNull*/ EAttribute [] {
-					BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::MultiplicityCS(basecs::MultiplicityBoundsCS): { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "]" }
-		serializationRules[2] =
-			new SerializationRule("MultiplicityCS", 13,
-				createSerializationMatchSteps(
-					10		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
-					0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					19		/* '[' || no-space value no-space */,
-					25		/* 1*7-steps || value */,
-					24		/* 1*1-steps || value */,
-					0		/* MultiplicityBoundsCS::lowerBound=9 || soft-space value soft-space */,
-					28		/* V00*4-steps || value */,
-					24		/* 1*1-steps || value */,
-					16		/* '..' || no-space value no-space */,
-					24		/* 1*1-steps || value */,
-					11		/* MultiplicityBoundsCS::upperBound=29 || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					20		/* ']' || no-space value */
-				),
-				null,
-				null,
-				new /*@NonNull*/ EAttribute [] {
-					BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::MultiplicityCS(basecs::MultiplicityBoundsCS): { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } "|?" "]" }
-		serializationRules[3] =
-			new SerializationRule("MultiplicityCS", 13,
-				createSerializationMatchSteps(
-					10		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
-					0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					19		/* '[' || no-space value no-space */,
-					25		/* 1*7-steps || value */,
-					24		/* 1*1-steps || value */,
-					0		/* MultiplicityBoundsCS::lowerBound=9 || soft-space value soft-space */,
-					28		/* V00*4-steps || value */,
-					24		/* 1*1-steps || value */,
-					16		/* '..' || no-space value no-space */,
-					24		/* 1*1-steps || value */,
-					11		/* MultiplicityBoundsCS::upperBound=29 || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					23		/* '|?' || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					20		/* ']' || no-space value */
-				),
-				null,
-				null,
-				new /*@NonNull*/ EAttribute [] {
-					BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::MultiplicityCS(basecs::MultiplicityBoundsCS): { "[" { lowerBound=LOWER { ".." upperBound=UPPER }[?] } isNullFree="|1"[?] "]" }
-		serializationRules[4] =
-			new SerializationRule("MultiplicityCS", 13,
-				createSerializationMatchSteps(
-					15		/* assign V1 = |MultiplicityCS::isNullFree.'|1'| */,
-					10		/* assign V0 = |MultiplicityBoundsCS::upperBound| */,
-					0		/* assert (|MultiplicityBoundsCS::lowerBound| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					19		/* '[' || no-space value no-space */,
-					25		/* 1*7-steps || value */,
-					24		/* 1*1-steps || value */,
-					0		/* MultiplicityBoundsCS::lowerBound=9 || soft-space value soft-space */,
-					28		/* V00*4-steps || value */,
-					24		/* 1*1-steps || value */,
-					16		/* '..' || no-space value no-space */,
-					24		/* 1*1-steps || value */,
-					11		/* MultiplicityBoundsCS::upperBound=29 || soft-space value soft-space */,
-					31		/* V01*1-steps || value */,
-					22		/* '|1' || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					20		/* ']' || no-space value */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-						1	/* '|1' */
-					)
-				},
-				null,
-				new /*@NonNull*/ EAttribute [] {
-					BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(1 /* '|1' */, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::MultiplicityCS(basecs::MultiplicityStringCS): { "[" stringBounds={'*|+|?'} "]" }
-		serializationRules[5] =
-			new SerializationRule("MultiplicityCS", 13,
-				createSerializationMatchSteps(
-					1		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					19		/* '[' || no-space value no-space */,
-					24		/* 1*1-steps || value */,
-					10		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					20		/* ']' || no-space value */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						0	/* '*|+|?' */
-					)
-				},
-				null,
-				null,
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(0 /* '*|+|?' */, GrammarCardinality.ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::MultiplicityCS(basecs::MultiplicityStringCS): { "[" stringBounds={'*|+|?'} "|?" "]" }
-		serializationRules[6] =
-			new SerializationRule("MultiplicityCS", 13,
-				createSerializationMatchSteps(
-					1		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					19		/* '[' || no-space value no-space */,
-					24		/* 1*1-steps || value */,
-					10		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					23		/* '|?' || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					20		/* ']' || no-space value */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						0	/* '*|+|?' */
-					)
-				},
-				null,
-				null,
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(0 /* '*|+|?' */, GrammarCardinality.ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::MultiplicityCS(basecs::MultiplicityStringCS): { "[" stringBounds={'*|+|?'} isNullFree="|1"[?] "]" }
-		serializationRules[7] =
-			new SerializationRule("MultiplicityCS", 13,
-				createSerializationMatchSteps(
-					11		/* assign V0 = |MultiplicityCS::isNullFree.'|1'| */,
-					1		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					19		/* '[' || no-space value no-space */,
-					24		/* 1*1-steps || value */,
-					10		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */,
-					26		/* V00*1-steps || value */,
-					22		/* '|1' || soft-space value soft-space */,
-					24		/* 1*1-steps || value */,
-					20		/* ']' || no-space value */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-						1	/* '|1' */
-					),
-					createEAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						0	/* '*|+|?' */
-					)
-				},
-				null,
-				null,
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(1 /* '|1' */, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(0 /* '*|+|?' */, GrammarCardinality.ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::MultiplicityStringCS(basecs::MultiplicityStringCS): stringBounds={'*|+|?'}
-		serializationRules[8] =
-			new SerializationRule("MultiplicityStringCS", 14,
-				createSerializationMatchSteps(
-					1		/* assert (|MultiplicityStringCS::stringBounds.'*|+|?'| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					10		/* MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						0	/* '*|+|?' */
-					)
-				},
-				null,
-				null,
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(0 /* '*|+|?' */, GrammarCardinality.ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Base::NextPathElementCS(basecs::PathElementCS): referredElement=UnreservedName
-		serializationRules[9] =
-			new SerializationRule("NextPathElementCS", 16,
-				createSerializationMatchSteps(
-					3		/* assert (|PathElementCS::referredElement| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					36		/* PathElementCS::referredElement=UnreservedName || soft-space value soft-space */
-				),
-				null,
-				null,
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Base::PathNameCS(basecs::PathNameCS): { ownedPathElements+=FirstPathElementCS { "::" ownedPathElements+=NextPathElementCS }[*] }
-		serializationRules[10] =
-			new SerializationRule("PathNameCS", 17,
-				createSerializationMatchSteps(
-					17		/* check-rule basecs::PathNameCS.ownedPathElements : 4|16 */,
-					6		/* assign V0 = (|PathNameCS::ownedPathElements| - 1) */
-				),
-				createSerializationSteps(
-					35		/* PathNameCS::ownedPathElements+=4 || value */,
-					27		/* V00*3-steps || value */,
-					24		/* 1*1-steps || value */,
-					17		/* '::' || no-space value no-space */,
-					34		/* PathNameCS::ownedPathElements+=16 || value */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
-						1) /* FirstPathElementCS|NextPathElementCS */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(4, GrammarCardinality.ONE),
-						new RuleIndex_GrammarCardinality(16, GrammarCardinality.ZERO_OR_MORE)
-						}
-					)
-				});
-			;
-		// Base::TemplateBindingCS(basecs::TemplateBindingCS): { ownedSubstitutions+=TemplateParameterSubstitutionCS { "," ownedSubstitutions+=TemplateParameterSubstitutionCS }[*] ownedMultiplicity=MultiplicityCS[?] }
-		serializationRules[11] =
-			new SerializationRule("TemplateBindingCS", 22,
-				createSerializationMatchSteps(
-					18		/* check-rule basecs::TemplateBindingCS.ownedMultiplicity : 13 */,
-					19		/* check-rule basecs::TemplateBindingCS.ownedSubstitutions : 23 */,
-					16		/* assign V1 = |TemplateBindingCS::ownedMultiplicity| */,
-					7		/* assign V0 = (|TemplateBindingCS::ownedSubstitutions| - 1) */
-				),
-				createSerializationSteps(
-					9		/* TemplateBindingCS::ownedSubstitutions+=23 || value */,
-					27		/* V00*3-steps || value */,
-					24		/* 1*1-steps || value */,
-					15		/* ',' || no-space value soft-space */,
-					9		/* TemplateBindingCS::ownedSubstitutions+=23 || value */,
-					31		/* V01*1-steps || value */,
-					6		/* TemplateBindingCS::ownedMultiplicity=13 || value */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
-						0) /* MultiplicityCS */,
-					createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
-						4) /* TemplateParameterSubstitutionCS */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(23, GrammarCardinality.ONE_OR_MORE)
-						}
-					)
-				});
-			;
-		// Base::TemplateParameterSubstitutionCS(basecs::TemplateParameterSubstitutionCS): ownedActualParameter=TypeRefCS
-		serializationRules[12] =
-			new SerializationRule("TemplateParameterSubstitutionCS", 23,
-				createSerializationMatchSteps(
-					20		/* check-rule basecs::TemplateParameterSubstitutionCS.ownedActualParameter : 26 */,
-					4		/* assert (|TemplateParameterSubstitutionCS::ownedActualParameter| - 1) == 0 */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					2		/* TemplateParameterSubstitutionCS::ownedActualParameter=26 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER,
-						6) /* TypeRefCS */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(26, GrammarCardinality.ONE)
-						}
-					)
-				});
-			;
-		// Base::TemplateSignatureCS(basecs::TemplateSignatureCS): { "(" ownedParameters+=TypeParameterCS { "," ownedParameters+=TypeParameterCS }[*] ")" }
-		serializationRules[13] =
-			new SerializationRule("TemplateSignatureCS", 24,
-				createSerializationMatchSteps(
-					21		/* check-rule basecs::TemplateSignatureCS.ownedParameters : 25 */,
-					8		/* assign V0 = (|TemplateSignatureCS::ownedParameters| - 1) */
-				),
-				createSerializationSteps(
-					33		/* wrapper || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-					24		/* 1*1-steps || value */,
-					13		/* '(' || no-space value no-space */,
-					7		/* TemplateSignatureCS::ownedParameters+=25 || value */,
-					27		/* V00*3-steps || value */,
-					24		/* 1*1-steps || value */,
-					15		/* ',' || no-space value soft-space */,
-					7		/* TemplateSignatureCS::ownedParameters+=25 || value */,
-					24		/* 1*1-steps || value */,
-					14		/* ')' || no-space value */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
-						5) /* TypeParameterCS */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(25, GrammarCardinality.ONE_OR_MORE)
-						}
-					)
-				});
-			;
-		// Base::TypeParameterCS(basecs::TypeParameterCS): { name=UnrestrictedName { "extends" ownedExtends+=TypedRefCS { "&&" ownedExtends+=TypedRefCS }[*] }[?] }
-		serializationRules[14] =
-			new SerializationRule("TypeParameterCS", 25,
-				createSerializationMatchSteps(
-					22		/* check-rule basecs::TypeParameterCS.ownedExtends : 27 */,
-					2		/* assert (|NamedElementCS::name| - 1) == 0 */,
-					9		/* assign V0 = (|TypeParameterCS::ownedExtends| > 0) */,
-					14		/* assign V1 = (|TypeParameterCS::ownedExtends| - 1) */
-				),
-				createSerializationSteps(
-					33		/* wrapper || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value */,
-					24		/* 1*1-steps || value */,
-					1		/* NamedElementCS::name=32 || soft-space value soft-space */,
-					30		/* V00*7-steps || value */,
-					24		/* 1*1-steps || value */,
-					21		/* 'extends' || soft-space value soft-space */,
-					4		/* TypeParameterCS::ownedExtends+=27 || value */,
-					32		/* V01*3-steps || value */,
-					24		/* 1*1-steps || value */,
-					12		/* '&&' || soft-space value soft-space */,
-					4		/* TypeParameterCS::ownedExtends+=27 || value */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS,
-						7) /* TypedRefCS */
-				},
-				new /*@NonNull*/ EAttribute [] {
-					BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(27, GrammarCardinality.ZERO_OR_MORE)
-						}
-					)
-				});
-			;
-		// Base::TypedTypeRefCS(basecs::TypedTypeRefCS): { ownedPathName=PathNameCS { "(" ownedBinding=TemplateBindingCS ")" }[?] }
-		serializationRules[15] =
-			new SerializationRule("TypedTypeRefCS", 28,
-				createSerializationMatchSteps(
-					23		/* check-rule basecs::TypedTypeRefCS.ownedBinding : 22 */,
-					24		/* check-rule basecs::TypedTypeRefCS.ownedPathName : 17 */,
-					12		/* assign V0 = |TypedTypeRefCS::ownedBinding| */,
-					5		/* assert (|TypedTypeRefCS::ownedPathName| - 1) == 0 */
-				),
-				createSerializationSteps(
-					8		/* TypedTypeRefCS::ownedPathName=17 || value */,
-					29		/* V00*5-steps || value */,
-					24		/* 1*1-steps || value */,
-					13		/* '(' || no-space value no-space */,
-					3		/* TypedTypeRefCS::ownedBinding=22 || value */,
-					24		/* 1*1-steps || value */,
-					14		/* ')' || no-space value */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
-						3) /* TemplateBindingCS */,
-					createEReference_RuleIndexes(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
-						2) /* PathNameCS */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(22, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(17, GrammarCardinality.ONE)
-						}
-					)
-				});
-			;
-		// Base::WildcardTypeRefCS(basecs::WildcardTypeRefCS): { "?" { "extends" ownedExtends=TypedRefCS }[?] }
-		serializationRules[16] =
-			new SerializationRule("WildcardTypeRefCS", 34,
-				createSerializationMatchSteps(
-					25		/* check-rule basecs::WildcardTypeRefCS.ownedExtends : 27 */,
-					13		/* assign V0 = |WildcardTypeRefCS::ownedExtends| */
-				),
-				createSerializationSteps(
-					24		/* 1*1-steps || value */,
-					18		/* '?' || soft-space value soft-space */,
-					27		/* V00*3-steps || value */,
-					24		/* 1*1-steps || value */,
-					21		/* 'extends' || soft-space value soft-space */,
-					5		/* WildcardTypeRefCS::ownedExtends=27 || value */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
-						7) /* TypedRefCS */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(27, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				});
-			;
+				createSerializationReference(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 2/* PathNameCS */,
+					(17/*PathNameCS*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Base::WildcardTypeRefCS-0(basecs::WildcardTypeRefCS): { "?" { "extends" ownedExtends=TypedRefCS }[?] }
+		serializationRules[16] = createSerializationRule("WildcardTypeRefCS-0", 34,
+			createSerializationMatchSteps(
+				11		/* assert |WildcardTypeRefCS::ownedSuper| == 0 */,
+				27		/* check-rule basecs::WildcardTypeRefCS.ownedExtends : TypedRefCS|TypedTypeRefCS */,
+				17		/* assign V0 = |WildcardTypeRefCS::ownedExtends| */
+			),
+			createSerializationSteps(
+				19		/* '?' || soft-space value soft-space */,
+				24		/* V00*2-steps || value */,
+				22		/* 'extends' || soft-space value soft-space */,
+				6		/* WildcardTypeRefCS::ownedExtends=TypedRefCS || value */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 7/* TypedRefCS */,
+					(27/*TypedRefCS*/ << 4) | 1 /*[?]*/
+				)
+			});
 	}
 
 	/**
@@ -1181,7 +940,7 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 			SerializationSegment.VALUE /* value */
 		};
 		serializationSegments[2] = new @NonNull SerializationSegment @NonNull [] {
-			new CustomSerializationSegment(BaseCommentSegmentSupport.class) /* supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport */,
+			new CustomSerializationSegment(BaseCommentSegmentSupport.class) /* org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport */,
 			SerializationSegment.VALUE /* value */
 		};
 		serializationSegments[3] = new @NonNull SerializationSegment @NonNull [] {
@@ -1205,92 +964,86 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize the various serialization steps used to serialize a serialization rule.
 	 */
 	private void initSerializationSteps() {
-		// MultiplicityBoundsCS::lowerBound=9 || soft-space value soft-space
-		serializationSteps[0] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, 9 /*LOWER*/, 5);
-		// NamedElementCS::name=32 || soft-space value soft-space
-		serializationSteps[1] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 32 /*UnrestrictedName*/, 5);
-		// TemplateParameterSubstitutionCS::ownedActualParameter=26 || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[2] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 26 /*TypeRefCS*/, 2);
-		// TypedTypeRefCS::ownedBinding=22 || value
-		serializationSteps[3] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 22 /*TemplateBindingCS*/, 0);
-		// TypeParameterCS::ownedExtends+=27 || value
-		serializationSteps[4] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 27 /*TypedRefCS*/, 0);
-		// WildcardTypeRefCS::ownedExtends=27 || value
-		serializationSteps[5] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 27 /*TypedRefCS*/, 0);
-		// TemplateBindingCS::ownedMultiplicity=13 || value
-		serializationSteps[6] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 13 /*MultiplicityCS*/, 0);
-		// TemplateSignatureCS::ownedParameters+=25 || value
-		serializationSteps[7] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 25 /*TypeParameterCS*/, 0);
-		// TypedTypeRefCS::ownedPathName=17 || value
-		serializationSteps[8] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 17 /*PathNameCS*/, 0);
-		// TemplateBindingCS::ownedSubstitutions+=23 || value
-		serializationSteps[9] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 23 /*TemplateParameterSubstitutionCS*/, 0);
-		// MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space
-		serializationSteps[10] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, 0 /* '*|+|?' */, 5);
-		// MultiplicityBoundsCS::upperBound=29 || soft-space value soft-space
-		serializationSteps[11] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, 29 /*UPPER*/, 5);
-		// '&&' || soft-space value soft-space
-		serializationSteps[12] = createSerializationStepKeyword("&&", 5);
-		// '(' || no-space value no-space
-		serializationSteps[13] = createSerializationStepKeyword("(", 3);
-		// ')' || no-space value
-		serializationSteps[14] = createSerializationStepKeyword(")", 1);
-		// ',' || no-space value soft-space
-		serializationSteps[15] = createSerializationStepKeyword(",", 4);
-		// '..' || no-space value no-space
-		serializationSteps[16] = createSerializationStepKeyword("..", 3);
-		// '::' || no-space value no-space
-		serializationSteps[17] = createSerializationStepKeyword("::", 3);
-		// '?' || soft-space value soft-space
-		serializationSteps[18] = createSerializationStepKeyword("?", 5);
-		// '[' || no-space value no-space
-		serializationSteps[19] = createSerializationStepKeyword("[", 3);
-		// ']' || no-space value
-		serializationSteps[20] = createSerializationStepKeyword("]", 1);
-		// 'extends' || soft-space value soft-space
-		serializationSteps[21] = createSerializationStepKeyword("extends", 5);
-		// '|1' || soft-space value soft-space
-		serializationSteps[22] = createSerializationStepKeyword("|1", 5);
-		// '|?' || soft-space value soft-space
-		serializationSteps[23] = createSerializationStepKeyword("|?", 5);
-		// 1*1-steps || value
-		serializationSteps[24] = createSerializationStepSequence(-1, 1, 0);
-		// 1*7-steps || value
-		serializationSteps[25] = createSerializationStepSequence(-1, 7, 0);
-		// V00*1-steps || value
-		serializationSteps[26] = createSerializationStepSequence(0, 1, 0);
-		// V00*3-steps || value
-		serializationSteps[27] = createSerializationStepSequence(0, 3, 0);
-		// V00*4-steps || value
-		serializationSteps[28] = createSerializationStepSequence(0, 4, 0);
-		// V00*5-steps || value
-		serializationSteps[29] = createSerializationStepSequence(0, 5, 0);
-		// V00*7-steps || value
-		serializationSteps[30] = createSerializationStepSequence(0, 7, 0);
-		// V01*1-steps || value
-		serializationSteps[31] = createSerializationStepSequence(1, 1, 0);
-		// V01*3-steps || value
-		serializationSteps[32] = createSerializationStepSequence(1, 3, 0);
-		// wrapper || supported by org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
-		serializationSteps[33] = createSerializationStepWrapper(2);
-		// PathNameCS::ownedPathElements+=16 || value
-		serializationSteps[34] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 16 /*NextPathElementCS*/, 0);
-		// PathNameCS::ownedPathElements+=4 || value
-		serializationSteps[35] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 4 /*FirstPathElementCS*/, 0);
-		// PathElementCS::referredElement=UnreservedName || soft-space value soft-space
-		serializationSteps[36] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"), 5);
-		// PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space
-		serializationSteps[37] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"), 5);
+		// 0: MultiplicityCS::isNullFree?='|1' || no-space value no-space
+		serializationSteps[0] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.MULTIPLICITY_CS__IS_NULL_FREE, 1 /* '|1' */, 3);
+		// 1: MultiplicityBoundsCS::lowerBound=LOWER || soft-space value soft-space
+		serializationSteps[1] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__LOWER_BOUND, 9 /*LOWER*/, 5);
+		// 2: NamedElementCS::name=UnrestrictedName || soft-space value soft-space
+		serializationSteps[2] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.NAMED_ELEMENT_CS__NAME, 32 /*UnrestrictedName*/, 5);
+		// 3: TemplateParameterSubstitutionCS::ownedActualParameter=TypeRefCS || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[3] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION_CS__OWNED_ACTUAL_PARAMETER, 26 /*TypeRefCS*/, 2);
+		// 4: TypedTypeRefCS::ownedBinding=TemplateBindingCS || value
+		serializationSteps[4] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_BINDING, 22 /*TemplateBindingCS*/, 0);
+		// 5: TypeParameterCS::ownedExtends+=TypedRefCS || value
+		serializationSteps[5] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPE_PARAMETER_CS__OWNED_EXTENDS, 27 /*TypedRefCS*/, 0);
+		// 6: WildcardTypeRefCS::ownedExtends=TypedRefCS || value
+		serializationSteps[6] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.WILDCARD_TYPE_REF_CS__OWNED_EXTENDS, 27 /*TypedRefCS*/, 0);
+		// 7: TemplateBindingCS::ownedMultiplicity=MultiplicityCS || value
+		serializationSteps[7] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_MULTIPLICITY, 13 /*MultiplicityCS*/, 0);
+		// 8: TemplateSignatureCS::ownedParameters+=TypeParameterCS || value
+		serializationSteps[8] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS__OWNED_PARAMETERS, 25 /*TypeParameterCS*/, 0);
+		// 9: TypedTypeRefCS::ownedPathName=PathNameCS || value
+		serializationSteps[9] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TYPED_TYPE_REF_CS__OWNED_PATH_NAME, 17 /*PathNameCS*/, 0);
+		// 10: TemplateBindingCS::ownedSubstitutions+=TemplateParameterSubstitutionCS || value
+		serializationSteps[10] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.TEMPLATE_BINDING_CS__OWNED_SUBSTITUTIONS, 23 /*TemplateParameterSubstitutionCS*/, 0);
+		// 11: MultiplicityStringCS::stringBounds='*|+|?' || soft-space value soft-space
+		serializationSteps[11] = createSerializationStepAssignKeyword(BaseCSPackage.Literals.MULTIPLICITY_STRING_CS__STRING_BOUNDS, 0 /* '*|+|?' */, 5);
+		// 12: MultiplicityBoundsCS::upperBound=UPPER || soft-space value soft-space
+		serializationSteps[12] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.MULTIPLICITY_BOUNDS_CS__UPPER_BOUND, 29 /*UPPER*/, 5);
+		// 13: '&&' || soft-space value soft-space
+		serializationSteps[13] = createSerializationStepKeyword("&&", 5);
+		// 14: '(' || no-space value no-space
+		serializationSteps[14] = createSerializationStepKeyword("(", 3);
+		// 15: ')' || no-space value
+		serializationSteps[15] = createSerializationStepKeyword(")", 1);
+		// 16: ',' || no-space value soft-space
+		serializationSteps[16] = createSerializationStepKeyword(",", 4);
+		// 17: '..' || no-space value no-space
+		serializationSteps[17] = createSerializationStepKeyword("..", 3);
+		// 18: '::' || no-space value no-space
+		serializationSteps[18] = createSerializationStepKeyword("::", 3);
+		// 19: '?' || soft-space value soft-space
+		serializationSteps[19] = createSerializationStepKeyword("?", 5);
+		// 20: '[' || no-space value no-space
+		serializationSteps[20] = createSerializationStepKeyword("[", 3);
+		// 21: ']' || no-space value
+		serializationSteps[21] = createSerializationStepKeyword("]", 1);
+		// 22: 'extends' || soft-space value soft-space
+		serializationSteps[22] = createSerializationStepKeyword("extends", 5);
+		// 23: '|?' || no-space value no-space
+		serializationSteps[23] = createSerializationStepKeyword("|?", 3);
+		// 24: V00*2-steps || value
+		serializationSteps[24] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 2, 0);
+		// 25: V00*2-steps || value
+		serializationSteps[25] = createSerializationStepSequence((0/*V0*/ << 4) | 2/*[*]*/, 2, 0);
+		// 26: V00*3-steps || value
+		serializationSteps[26] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 3, 0);
+		// 27: V00*5-steps || value
+		serializationSteps[27] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 5, 0);
+		// 28: V01*1-steps || value
+		serializationSteps[28] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 1, 0);
+		// 29: V01*2-steps || value
+		serializationSteps[29] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 2, 0);
+		// 30: wrapper || org.eclipse.ocl.xtext.base.serializer.BaseCommentSegmentSupport value
+		serializationSteps[30] = createSerializationStepWrapper(2);
+		// 31: PathNameCS::ownedPathElements+=NextPathElementCS || value
+		serializationSteps[31] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 16 /*NextPathElementCS*/, 0);
+		// 32: PathNameCS::ownedPathElements+=FirstPathElementCS || value
+		serializationSteps[32] = createSerializationStepAssignedRuleCall(BaseCSPackage.Literals.PATH_NAME_CS__OWNED_PATH_ELEMENTS, 4 /*FirstPathElementCS*/, 0);
+		// 33: PathElementCS::referredElement=UnreservedName || soft-space value soft-space
+		serializationSteps[33] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnreservedName"), 31, 5);
+		// 34: PathElementCS::referredElement=UnrestrictedName || soft-space value soft-space
+		serializationSteps[34] = createSerializationStepCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, getCrossReference(BaseCSPackage.Literals.PATH_ELEMENT_CS__REFERRED_ELEMENT, "UnrestrictedName"), 32, 5);
 	}
 }
 
 //	Commented imports ensure Xtend provides a true import allowing unqualified annotated usage
 //	import Inject;
-//	import EAttribute;
 //	import NonNull;
 //	import Nullable;
 //	import DataTypeRuleValue;
 //	import EClassValue;
+//	import EReference_TargetGrammarRuleVector;
 //	import EnumerationValue;
 //	import EnumerationValueMultiple;
 //	import EnumerationValueSingle;
@@ -1299,18 +1052,14 @@ public class BaseSerializationMetaData extends AbstractSerializationMetaData
 //	import GrammarRuleVector;
 //	import SerializationMatchStep;
 //	import SerializationMatchTerm;
-//	import SerializationMatchTermEStructuralFeatureSize;
-//	import SerializationMatchTermInteger;
+//	import SerializationMetaData;
 //	import SerializationRule;
-//	import EAttribute_EnumerationValue_GrammarCardinality;
-//	import EAttribute_EnumerationValues;
-//	import EReference_RuleIndex_GrammarCardinality;
-//	import EReference_RuleIndexes;
-//	import EnumerationValue_GrammarCardinality;
-//	import RuleIndex_GrammarCardinality;
+//	import SerializationFeature;
 //	import SerializationSegment;
 //	import CustomSerializationSegment;
 //	import SerializationStep;
 //	import TerminalRuleValue;
 //	import BaseCommentSegmentSupport;
 //	import BaseCSPackage;
+//	import Grammar;
+//	import GrammarProvider;

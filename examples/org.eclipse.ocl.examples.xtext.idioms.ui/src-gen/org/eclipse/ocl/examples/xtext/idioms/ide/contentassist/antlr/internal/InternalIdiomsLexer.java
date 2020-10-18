@@ -123,11 +123,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:13:7: ( 'import' )
-            // InternalIdioms.g:13:9: 'import'
+            // InternalIdioms.g:13:7: ( '.' )
+            // InternalIdioms.g:13:9: '.'
             {
-            match("import");
-
+            match('.');
 
             }
 
@@ -144,10 +143,11 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:14:7: ( ';' )
-            // InternalIdioms.g:14:9: ';'
+            // InternalIdioms.g:14:7: ( 'import' )
+            // InternalIdioms.g:14:9: 'import'
             {
-            match(';');
+            match("import");
+
 
             }
 
@@ -164,11 +164,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:15:7: ( 'as' )
-            // InternalIdioms.g:15:9: 'as'
+            // InternalIdioms.g:15:7: ( ';' )
+            // InternalIdioms.g:15:9: ';'
             {
-            match("as");
-
+            match(';');
 
             }
 
@@ -185,10 +184,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:16:7: ( 'with' )
-            // InternalIdioms.g:16:9: 'with'
+            // InternalIdioms.g:16:7: ( 'as' )
+            // InternalIdioms.g:16:9: 'as'
             {
-            match("with");
+            match("as");
 
 
             }
@@ -206,10 +205,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:17:7: ( 'locator' )
-            // InternalIdioms.g:17:9: 'locator'
+            // InternalIdioms.g:17:7: ( 'with' )
+            // InternalIdioms.g:17:9: 'with'
             {
-            match("locator");
+            match("with");
 
 
             }
@@ -227,10 +226,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:18:7: ( 'any-assignment' )
-            // InternalIdioms.g:18:9: 'any-assignment'
+            // InternalIdioms.g:18:7: ( 'locator' )
+            // InternalIdioms.g:18:9: 'locator'
             {
-            match("any-assignment");
+            match("locator");
 
 
             }
@@ -248,10 +247,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:19:7: ( 'any-element' )
-            // InternalIdioms.g:19:9: 'any-element'
+            // InternalIdioms.g:19:7: ( 'any-assignment' )
+            // InternalIdioms.g:19:9: 'any-assignment'
             {
-            match("any-element");
+            match("any-assignment");
 
 
             }
@@ -269,10 +268,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:20:7: ( 'assignment' )
-            // InternalIdioms.g:20:9: 'assignment'
+            // InternalIdioms.g:20:7: ( 'any-element' )
+            // InternalIdioms.g:20:9: 'any-element'
             {
-            match("assignment");
+            match("any-element");
 
 
             }
@@ -290,10 +289,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:21:7: ( '::' )
-            // InternalIdioms.g:21:9: '::'
+            // InternalIdioms.g:21:7: ( 'assignment' )
+            // InternalIdioms.g:21:9: 'assignment'
             {
-            match("::");
+            match("assignment");
 
 
             }
@@ -311,10 +310,11 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:22:7: ( '{' )
-            // InternalIdioms.g:22:9: '{'
+            // InternalIdioms.g:22:7: ( '::' )
+            // InternalIdioms.g:22:9: '::'
             {
-            match('{');
+            match("::");
+
 
             }
 
@@ -331,10 +331,11 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:23:7: ( '}' )
-            // InternalIdioms.g:23:9: '}'
+            // InternalIdioms.g:23:7: ( 'final' )
+            // InternalIdioms.g:23:9: 'final'
             {
-            match('}');
+            match("final");
+
 
             }
 
@@ -351,10 +352,11 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:24:7: ( '|' )
-            // InternalIdioms.g:24:9: '|'
+            // InternalIdioms.g:24:7: ( 'returns' )
+            // InternalIdioms.g:24:9: 'returns'
             {
-            match('|');
+            match("returns");
+
 
             }
 
@@ -371,10 +373,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:25:7: ( 'final' )
-            // InternalIdioms.g:25:9: 'final'
+            // InternalIdioms.g:25:7: ( 'segment' )
+            // InternalIdioms.g:25:9: 'segment'
             {
-            match("final");
+            match("segment");
 
 
             }
@@ -392,10 +394,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:26:7: ( 'returns' )
-            // InternalIdioms.g:26:9: 'returns'
+            // InternalIdioms.g:26:7: ( 'custom' )
+            // InternalIdioms.g:26:9: 'custom'
             {
-            match("returns");
+            match("custom");
 
 
             }
@@ -413,10 +415,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:27:7: ( 'segment' )
-            // InternalIdioms.g:27:9: 'segment'
+            // InternalIdioms.g:27:7: ( 'half-new-line' )
+            // InternalIdioms.g:27:9: 'half-new-line'
             {
-            match("segment");
+            match("half-new-line");
 
 
             }
@@ -434,10 +436,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:28:7: ( 'custom' )
-            // InternalIdioms.g:28:9: 'custom'
+            // InternalIdioms.g:28:7: ( 'new-line' )
+            // InternalIdioms.g:28:9: 'new-line'
             {
-            match("custom");
+            match("new-line");
 
 
             }
@@ -455,10 +457,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:29:7: ( 'half-new-line' )
-            // InternalIdioms.g:29:9: 'half-new-line'
+            // InternalIdioms.g:29:7: ( 'no-space' )
+            // InternalIdioms.g:29:9: 'no-space'
             {
-            match("half-new-line");
+            match("no-space");
 
 
             }
@@ -476,10 +478,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:30:7: ( 'new-line' )
-            // InternalIdioms.g:30:9: 'new-line'
+            // InternalIdioms.g:30:7: ( 'pop' )
+            // InternalIdioms.g:30:9: 'pop'
             {
-            match("new-line");
+            match("pop");
 
 
             }
@@ -497,10 +499,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:31:7: ( 'no-space' )
-            // InternalIdioms.g:31:9: 'no-space'
+            // InternalIdioms.g:31:7: ( 'post-comment' )
+            // InternalIdioms.g:31:9: 'post-comment'
             {
-            match("no-space");
+            match("post-comment");
 
 
             }
@@ -518,10 +520,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:32:7: ( 'pop' )
-            // InternalIdioms.g:32:9: 'pop'
+            // InternalIdioms.g:32:7: ( 'pre-comment' )
+            // InternalIdioms.g:32:9: 'pre-comment'
             {
-            match("pop");
+            match("pre-comment");
 
 
             }
@@ -539,10 +541,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:33:7: ( 'post-comment' )
-            // InternalIdioms.g:33:9: 'post-comment'
+            // InternalIdioms.g:33:7: ( 'push' )
+            // InternalIdioms.g:33:9: 'push'
             {
-            match("post-comment");
+            match("push");
 
 
             }
@@ -560,10 +562,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:34:7: ( 'pre-comment' )
-            // InternalIdioms.g:34:9: 'pre-comment'
+            // InternalIdioms.g:34:7: ( 'soft-new-line' )
+            // InternalIdioms.g:34:9: 'soft-new-line'
             {
-            match("pre-comment");
+            match("soft-new-line");
 
 
             }
@@ -581,10 +583,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:35:7: ( 'push' )
-            // InternalIdioms.g:35:9: 'push'
+            // InternalIdioms.g:35:7: ( 'soft-space' )
+            // InternalIdioms.g:35:9: 'soft-space'
             {
-            match("push");
+            match("soft-space");
 
 
             }
@@ -602,10 +604,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:36:7: ( 'soft-new-line' )
-            // InternalIdioms.g:36:9: 'soft-new-line'
+            // InternalIdioms.g:36:7: ( 'string' )
+            // InternalIdioms.g:36:9: 'string'
             {
-            match("soft-new-line");
+            match("string");
 
 
             }
@@ -623,10 +625,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:37:7: ( 'soft-space' )
-            // InternalIdioms.g:37:9: 'soft-space'
+            // InternalIdioms.g:37:7: ( 'value' )
+            // InternalIdioms.g:37:9: 'value'
             {
-            match("soft-space");
+            match("value");
 
 
             }
@@ -644,10 +646,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:38:7: ( 'string' )
-            // InternalIdioms.g:38:9: 'string'
+            // InternalIdioms.g:38:7: ( 'wrap-anchor' )
+            // InternalIdioms.g:38:9: 'wrap-anchor'
             {
-            match("string");
+            match("wrap-anchor");
 
 
             }
@@ -665,10 +667,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:39:7: ( 'value' )
-            // InternalIdioms.g:39:9: 'value'
+            // InternalIdioms.g:39:7: ( 'wrap-begin-all' )
+            // InternalIdioms.g:39:9: 'wrap-begin-all'
             {
-            match("value");
+            match("wrap-begin-all");
 
 
             }
@@ -686,10 +688,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:40:7: ( 'wrap-anchor' )
-            // InternalIdioms.g:40:9: 'wrap-anchor'
+            // InternalIdioms.g:40:7: ( 'wrap-begin-some' )
+            // InternalIdioms.g:40:9: 'wrap-begin-some'
             {
-            match("wrap-anchor");
+            match("wrap-begin-some");
 
 
             }
@@ -707,10 +709,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:41:7: ( 'wrap-begin-all' )
-            // InternalIdioms.g:41:9: 'wrap-begin-all'
+            // InternalIdioms.g:41:7: ( 'wrap-end' )
+            // InternalIdioms.g:41:9: 'wrap-end'
             {
-            match("wrap-begin-all");
+            match("wrap-end");
 
 
             }
@@ -728,10 +730,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:42:7: ( 'wrap-begin-some' )
-            // InternalIdioms.g:42:9: 'wrap-begin-some'
+            // InternalIdioms.g:42:7: ( 'wrap-here' )
+            // InternalIdioms.g:42:9: 'wrap-here'
             {
-            match("wrap-begin-some");
+            match("wrap-here");
 
 
             }
@@ -749,10 +751,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:43:7: ( 'wrap-end' )
-            // InternalIdioms.g:43:9: 'wrap-end'
+            // InternalIdioms.g:43:7: ( 'idiom' )
+            // InternalIdioms.g:43:9: 'idiom'
             {
-            match("wrap-end");
+            match("idiom");
 
 
             }
@@ -770,10 +772,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:44:7: ( 'wrap-here' )
-            // InternalIdioms.g:44:9: 'wrap-here'
+            // InternalIdioms.g:44:7: ( 'for' )
+            // InternalIdioms.g:44:9: 'for'
             {
-            match("wrap-here");
+            match("for");
 
 
             }
@@ -791,10 +793,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:45:7: ( 'idiom' )
-            // InternalIdioms.g:45:9: 'idiom'
+            // InternalIdioms.g:45:7: ( 'in' )
+            // InternalIdioms.g:45:9: 'in'
             {
-            match("idiom");
+            match("in");
 
 
             }
@@ -812,11 +814,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:46:7: ( 'for' )
-            // InternalIdioms.g:46:9: 'for'
+            // InternalIdioms.g:46:7: ( '{' )
+            // InternalIdioms.g:46:9: '{'
             {
-            match("for");
-
+            match('{');
 
             }
 
@@ -833,11 +834,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:47:7: ( 'in' )
-            // InternalIdioms.g:47:9: 'in'
+            // InternalIdioms.g:47:7: ( '}' )
+            // InternalIdioms.g:47:9: '}'
             {
-            match("in");
-
+            match('}');
 
             }
 
@@ -959,10 +959,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:5016:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // InternalIdioms.g:5016:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalIdioms.g:4849:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalIdioms.g:4849:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // InternalIdioms.g:5016:11: ( '^' )?
+            // InternalIdioms.g:4849:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -971,7 +971,7 @@ public class InternalIdiomsLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // InternalIdioms.g:5016:11: '^'
+                    // InternalIdioms.g:4849:11: '^'
                     {
                     match('^');
 
@@ -989,7 +989,7 @@ public class InternalIdiomsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalIdioms.g:5016:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalIdioms.g:4849:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -1038,10 +1038,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:5018:10: ( ( '0' .. '9' )+ )
-            // InternalIdioms.g:5018:12: ( '0' .. '9' )+
+            // InternalIdioms.g:4851:10: ( ( '0' .. '9' )+ )
+            // InternalIdioms.g:4851:12: ( '0' .. '9' )+
             {
-            // InternalIdioms.g:5018:12: ( '0' .. '9' )+
+            // InternalIdioms.g:4851:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -1055,7 +1055,7 @@ public class InternalIdiomsLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // InternalIdioms.g:5018:13: '0' .. '9'
+            	    // InternalIdioms.g:4851:13: '0' .. '9'
             	    {
             	    matchRange('0','9');
 
@@ -1087,10 +1087,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:5020:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // InternalIdioms.g:5020:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalIdioms.g:4853:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // InternalIdioms.g:4853:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // InternalIdioms.g:5020:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalIdioms.g:4853:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1108,10 +1108,10 @@ public class InternalIdiomsLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalIdioms.g:5020:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // InternalIdioms.g:4853:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"');
-                    // InternalIdioms.g:5020:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // InternalIdioms.g:4853:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -1127,7 +1127,7 @@ public class InternalIdiomsLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // InternalIdioms.g:5020:21: '\\\\' .
+                    	    // InternalIdioms.g:4853:21: '\\\\' .
                     	    {
                     	    match('\\');
                     	    matchAny();
@@ -1135,7 +1135,7 @@ public class InternalIdiomsLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalIdioms.g:5020:28: ~ ( ( '\\\\' | '\"' ) )
+                    	    // InternalIdioms.g:4853:28: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1160,10 +1160,10 @@ public class InternalIdiomsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalIdioms.g:5020:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // InternalIdioms.g:4853:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\'');
-                    // InternalIdioms.g:5020:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // InternalIdioms.g:4853:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -1179,7 +1179,7 @@ public class InternalIdiomsLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // InternalIdioms.g:5020:54: '\\\\' .
+                    	    // InternalIdioms.g:4853:54: '\\\\' .
                     	    {
                     	    match('\\');
                     	    matchAny();
@@ -1187,7 +1187,7 @@ public class InternalIdiomsLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalIdioms.g:5020:61: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // InternalIdioms.g:4853:61: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1230,12 +1230,12 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:5022:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // InternalIdioms.g:5022:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // InternalIdioms.g:4855:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // InternalIdioms.g:4855:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*");
 
-            // InternalIdioms.g:5022:24: ( options {greedy=false; } : . )*
+            // InternalIdioms.g:4855:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -1260,7 +1260,7 @@ public class InternalIdiomsLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // InternalIdioms.g:5022:52: .
+            	    // InternalIdioms.g:4855:52: .
             	    {
             	    matchAny();
 
@@ -1290,12 +1290,12 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:5024:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalIdioms.g:5024:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalIdioms.g:4857:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalIdioms.g:4857:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//");
 
-            // InternalIdioms.g:5024:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalIdioms.g:4857:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -1308,7 +1308,7 @@ public class InternalIdiomsLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalIdioms.g:5024:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalIdioms.g:4857:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1328,7 +1328,7 @@ public class InternalIdiomsLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalIdioms.g:5024:40: ( ( '\\r' )? '\\n' )?
+            // InternalIdioms.g:4857:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1337,9 +1337,9 @@ public class InternalIdiomsLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // InternalIdioms.g:5024:41: ( '\\r' )? '\\n'
+                    // InternalIdioms.g:4857:41: ( '\\r' )? '\\n'
                     {
-                    // InternalIdioms.g:5024:41: ( '\\r' )?
+                    // InternalIdioms.g:4857:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1348,7 +1348,7 @@ public class InternalIdiomsLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // InternalIdioms.g:5024:41: '\\r'
+                            // InternalIdioms.g:4857:41: '\\r'
                             {
                             match('\r');
 
@@ -1380,10 +1380,10 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:5026:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalIdioms.g:5026:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalIdioms.g:4859:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalIdioms.g:4859:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalIdioms.g:5026:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalIdioms.g:4859:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -1437,8 +1437,8 @@ public class InternalIdiomsLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalIdioms.g:5028:16: ( . )
-            // InternalIdioms.g:5028:18: .
+            // InternalIdioms.g:4861:16: ( . )
+            // InternalIdioms.g:4861:18: .
             {
             matchAny();
 
@@ -1808,40 +1808,40 @@ public class InternalIdiomsLexer extends Lexer {
 
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
-        "\1\uffff\3\36\1\uffff\3\36\1\34\3\uffff\11\36\1\34\2\uffff\3\34\2\uffff\1\36\1\uffff\4\36\1\111\1\uffff\1\113\1\36\1\115\4\36\4\uffff\16\36\1\142\5\uffff\5\36\1\uffff\1\36\1\uffff\1\36\1\uffff\1\152\4\36\1\157\7\36\1\uffff\1\167\5\36\1\uffff\1\175\5\36\2\uffff\1\u0085\3\36\1\uffff\6\36\2\uffff\1\36\1\uffff\1\36\1\u0091\1\36\1\uffff\1\u0093\1\u0094\1\36\1\u0096\1\36\4\uffff\1\36\1\u009d\2\36\1\uffff\2\36\2\uffff\1\36\1\uffff\1\u00a5\2\uffff\1\u00a6\1\uffff\1\36\4\uffff\1\36\1\uffff\2\36\2\uffff\1\u00ac\1\u00ad\1\36\2\uffff\1\36\1\uffff\1\u00b1\1\u00b2\1\u00b3\2\uffff\2\36\4\uffff\2\36\1\uffff\1\u00ba\1\u00bb\6\uffff";
+        "\1\uffff\2\36\1\uffff\1\36\1\uffff\3\36\1\34\10\36\2\uffff\1\36\1\34\2\uffff\3\34\2\uffff\1\36\1\uffff\2\36\1\uffff\2\36\1\111\1\uffff\1\113\1\36\1\115\4\36\1\uffff\16\36\2\uffff\1\142\5\uffff\5\36\1\uffff\1\36\1\uffff\1\36\1\uffff\1\152\4\36\1\157\7\36\1\uffff\1\167\5\36\1\uffff\1\175\5\36\2\uffff\1\u0085\3\36\1\uffff\6\36\2\uffff\1\36\1\uffff\1\36\1\u0091\1\36\1\uffff\1\u0093\1\u0094\1\36\1\u0096\1\36\4\uffff\1\36\1\u009d\2\36\1\uffff\2\36\2\uffff\1\36\1\uffff\1\u00a5\2\uffff\1\u00a6\1\uffff\1\36\4\uffff\1\36\1\uffff\2\36\2\uffff\1\u00ac\1\u00ad\1\36\2\uffff\1\36\1\uffff\1\u00b1\1\u00b2\1\u00b3\2\uffff\2\36\4\uffff\2\36\1\uffff\1\u00ba\1\u00bb\6\uffff";
     static final String DFA12_eofS =
         "\u00bf\uffff";
     static final String DFA12_minS =
-        "\1\0\1\141\1\151\1\144\1\uffff\1\154\1\151\1\157\1\72\3\uffff\1\151\2\145\1\165\1\141\1\145\1\157\1\141\1\157\1\101\2\uffff\2\0\1\52\2\uffff\1\143\1\uffff\1\144\1\170\1\160\1\151\1\60\1\uffff\1\60\1\171\1\60\1\154\1\164\1\141\1\143\4\uffff\1\156\1\162\1\164\1\147\1\146\1\162\1\163\1\154\1\167\1\55\1\160\1\145\1\163\1\154\1\60\5\uffff\1\150\1\145\1\151\2\157\1\uffff\1\151\1\uffff\1\55\1\uffff\1\60\1\150\1\160\2\141\1\60\1\165\1\155\1\164\1\151\1\164\1\146\1\55\1\uffff\1\60\1\164\1\55\1\156\1\150\1\165\1\uffff\1\60\1\154\1\156\1\162\1\155\1\147\1\141\1\uffff\1\60\1\55\1\164\1\154\1\uffff\1\162\1\145\1\55\1\156\1\157\1\55\2\uffff\1\55\1\uffff\1\164\1\60\1\145\1\uffff\2\60\1\164\1\60\1\156\3\uffff\1\141\1\157\1\60\3\156\1\147\1\155\2\uffff\1\141\1\uffff\1\60\2\uffff\1\60\1\uffff\1\155\1\uffff\1\145\2\uffff\1\162\1\uffff\1\163\1\164\2\uffff\2\60\1\142\2\uffff\1\145\1\147\3\60\2\uffff\1\154\1\156\1\151\3\uffff\1\145\1\164\1\156\2\60\1\55\2\uffff\1\141\2\uffff";
+        "\1\0\1\141\1\151\1\uffff\1\144\1\uffff\1\154\1\151\1\157\1\72\1\151\2\145\1\165\1\141\1\145\1\157\1\141\2\uffff\1\157\1\101\2\uffff\2\0\1\52\2\uffff\1\143\1\uffff\1\144\1\170\1\uffff\1\160\1\151\1\60\1\uffff\1\60\1\171\1\60\1\154\1\164\1\141\1\143\1\uffff\1\156\1\162\1\164\1\147\1\146\1\162\1\163\1\154\1\167\1\55\1\160\1\145\1\163\1\154\2\uffff\1\60\5\uffff\1\150\1\145\1\151\2\157\1\uffff\1\151\1\uffff\1\55\1\uffff\1\60\1\150\1\160\2\141\1\60\1\165\1\155\1\164\1\151\1\164\1\146\1\55\1\uffff\1\60\1\164\1\55\1\156\1\150\1\165\1\uffff\1\60\1\154\1\156\1\162\1\155\1\147\1\141\1\uffff\1\60\1\55\1\164\1\154\1\uffff\1\162\1\145\1\55\1\156\1\157\1\55\2\uffff\1\55\1\uffff\1\164\1\60\1\145\1\uffff\2\60\1\164\1\60\1\156\3\uffff\1\141\1\157\1\60\3\156\1\147\1\155\2\uffff\1\141\1\uffff\1\60\2\uffff\1\60\1\uffff\1\155\1\uffff\1\145\2\uffff\1\162\1\uffff\1\163\1\164\2\uffff\2\60\1\142\2\uffff\1\145\1\147\3\60\2\uffff\1\154\1\156\1\151\3\uffff\1\145\1\164\1\156\2\60\1\55\2\uffff\1\141\2\uffff";
     static final String DFA12_maxS =
-        "\1\uffff\1\141\1\157\1\156\1\uffff\1\164\1\162\1\157\1\72\3\uffff\1\157\1\145\1\164\1\165\1\141\1\157\1\165\1\141\1\157\1\172\2\uffff\2\uffff\1\57\2\uffff\1\143\1\uffff\1\144\1\170\1\160\1\151\1\172\1\uffff\1\172\1\171\1\172\1\154\1\164\1\141\1\143\4\uffff\1\156\1\162\1\164\1\147\1\146\1\162\1\163\1\154\1\167\1\55\1\163\1\151\1\163\1\154\1\172\5\uffff\1\150\1\145\1\151\2\157\1\uffff\1\151\1\uffff\1\55\1\uffff\1\172\1\150\1\160\2\141\1\172\1\165\1\155\1\164\1\151\1\164\1\146\1\55\1\uffff\1\172\1\164\1\55\1\156\1\150\1\165\1\uffff\1\172\1\154\1\156\1\162\1\155\1\147\1\145\1\uffff\1\172\1\55\1\164\1\154\1\uffff\1\162\1\145\1\55\1\156\1\157\1\55\2\uffff\1\55\1\uffff\1\164\1\172\1\145\1\uffff\2\172\1\164\1\172\1\156\3\uffff\1\150\1\157\1\172\2\156\1\163\1\147\1\155\2\uffff\1\141\1\uffff\1\172\2\uffff\1\172\1\uffff\1\155\1\uffff\1\145\2\uffff\1\162\1\uffff\1\163\1\164\2\uffff\2\172\1\142\2\uffff\1\145\1\147\3\172\2\uffff\1\154\1\156\1\151\3\uffff\1\145\1\164\1\156\2\172\1\55\2\uffff\1\163\2\uffff";
+        "\1\uffff\1\141\1\157\1\uffff\1\156\1\uffff\1\164\1\162\1\157\1\72\1\157\1\145\1\164\1\165\1\141\1\157\1\165\1\141\2\uffff\1\157\1\172\2\uffff\2\uffff\1\57\2\uffff\1\143\1\uffff\1\144\1\170\1\uffff\1\160\1\151\1\172\1\uffff\1\172\1\171\1\172\1\154\1\164\1\141\1\143\1\uffff\1\156\1\162\1\164\1\147\1\146\1\162\1\163\1\154\1\167\1\55\1\163\1\151\1\163\1\154\2\uffff\1\172\5\uffff\1\150\1\145\1\151\2\157\1\uffff\1\151\1\uffff\1\55\1\uffff\1\172\1\150\1\160\2\141\1\172\1\165\1\155\1\164\1\151\1\164\1\146\1\55\1\uffff\1\172\1\164\1\55\1\156\1\150\1\165\1\uffff\1\172\1\154\1\156\1\162\1\155\1\147\1\145\1\uffff\1\172\1\55\1\164\1\154\1\uffff\1\162\1\145\1\55\1\156\1\157\1\55\2\uffff\1\55\1\uffff\1\164\1\172\1\145\1\uffff\2\172\1\164\1\172\1\156\3\uffff\1\150\1\157\1\172\2\156\1\163\1\147\1\155\2\uffff\1\141\1\uffff\1\172\2\uffff\1\172\1\uffff\1\155\1\uffff\1\145\2\uffff\1\162\1\uffff\1\163\1\164\2\uffff\2\172\1\142\2\uffff\1\145\1\147\3\172\2\uffff\1\154\1\156\1\151\3\uffff\1\145\1\164\1\156\2\172\1\55\2\uffff\1\163\2\uffff";
     static final String DFA12_acceptS =
-        "\4\uffff\1\4\4\uffff\1\14\1\15\1\16\12\uffff\1\53\1\54\3\uffff\1\60\1\61\1\uffff\1\53\5\uffff\1\4\7\uffff\1\13\1\14\1\15\1\16\17\uffff\1\54\1\55\1\56\1\57\1\60\5\uffff\1\45\1\uffff\1\5\1\uffff\1\46\15\uffff\1\25\6\uffff\1\47\7\uffff\1\52\4\uffff\1\44\6\uffff\1\24\1\26\1\uffff\1\30\3\uffff\1\1\5\uffff\1\10\1\11\1\6\10\uffff\1\23\1\27\1\uffff\1\31\1\uffff\1\2\1\51\1\uffff\1\43\1\uffff\1\36\1\uffff\1\41\1\42\1\uffff\1\17\2\uffff\1\32\1\33\3\uffff\1\35\1\3\5\uffff\1\34\1\22\3\uffff\1\7\1\20\1\21\6\uffff\1\50\1\12\1\uffff\1\37\1\40";
+        "\3\uffff\1\3\1\uffff\1\5\14\uffff\1\44\1\45\2\uffff\1\53\1\54\3\uffff\1\60\1\61\1\uffff\1\53\2\uffff\1\3\3\uffff\1\5\7\uffff\1\14\16\uffff\1\44\1\45\1\uffff\1\54\1\55\1\56\1\57\1\60\5\uffff\1\43\1\uffff\1\6\1\uffff\1\46\15\uffff\1\23\6\uffff\1\47\7\uffff\1\52\4\uffff\1\42\6\uffff\1\22\1\24\1\uffff\1\26\3\uffff\1\1\5\uffff\1\11\1\12\1\7\10\uffff\1\21\1\25\1\uffff\1\27\1\uffff\1\2\1\51\1\uffff\1\41\1\uffff\1\34\1\uffff\1\37\1\40\1\uffff\1\15\2\uffff\1\30\1\31\3\uffff\1\33\1\4\5\uffff\1\32\1\20\3\uffff\1\10\1\16\1\17\6\uffff\1\50\1\13\1\uffff\1\35\1\36";
     static final String DFA12_specialS =
         "\1\0\27\uffff\1\2\1\1\u00a5\uffff}>";
     static final String[] DFA12_transitionS = DFA12_transitionS_.DFA12_transitionS;
     private static final class DFA12_transitionS_ {
         static final String[] DFA12_transitionS = {
-                "\11\34\2\33\2\34\1\33\22\34\1\33\1\34\1\30\4\34\1\31\7\34\1\32\12\27\1\10\1\4\5\34\32\26\3\34\1\25\1\26\1\34\1\5\1\26\1\17\1\24\1\1\1\14\1\26\1\20\1\3\2\26\1\7\1\2\1\21\1\26\1\22\1\26\1\15\1\16\2\26\1\23\1\6\3\26\1\11\1\13\1\12\uff82\34",
+                "\11\34\2\33\2\34\1\33\22\34\1\33\1\34\1\30\4\34\1\31\6\34\1\3\1\32\12\27\1\11\1\5\5\34\32\26\3\34\1\25\1\26\1\34\1\6\1\26\1\15\1\24\1\1\1\12\1\26\1\16\1\4\2\26\1\10\1\2\1\17\1\26\1\20\1\26\1\13\1\14\2\26\1\21\1\7\3\26\1\22\1\34\1\23\uff82\34",
                 "\1\35",
                 "\1\40\5\uffff\1\37",
-                "\1\42\10\uffff\1\41\1\43",
                 "",
-                "\1\50\1\uffff\1\46\4\uffff\1\45\1\47",
-                "\1\51\10\uffff\1\52",
-                "\1\53",
+                "\1\43\10\uffff\1\42\1\44",
+                "",
+                "\1\51\1\uffff\1\47\4\uffff\1\46\1\50",
+                "\1\52\10\uffff\1\53",
                 "\1\54",
+                "\1\55",
+                "\1\56\5\uffff\1\57",
+                "\1\60",
+                "\1\61\11\uffff\1\62\4\uffff\1\63",
+                "\1\64",
+                "\1\65",
+                "\1\66\11\uffff\1\67",
+                "\1\70\2\uffff\1\71\2\uffff\1\72",
+                "\1\73",
                 "",
                 "",
-                "",
-                "\1\60\5\uffff\1\61",
-                "\1\62",
-                "\1\63\11\uffff\1\64\4\uffff\1\65",
-                "\1\66",
-                "\1\67",
-                "\1\70\11\uffff\1\71",
-                "\1\72\2\uffff\1\73\2\uffff\1\74",
-                "\1\75",
                 "\1\76",
                 "\32\36\4\uffff\1\36\1\uffff\32\36",
                 "",
@@ -1855,6 +1855,7 @@ public class InternalIdiomsLexer extends Lexer {
                 "",
                 "\1\105",
                 "\1\106",
+                "",
                 "\1\107",
                 "\1\110",
                 "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
@@ -1866,9 +1867,6 @@ public class InternalIdiomsLexer extends Lexer {
                 "\1\117",
                 "\1\120",
                 "\1\121",
-                "",
-                "",
-                "",
                 "",
                 "\1\122",
                 "\1\123",
@@ -1884,6 +1882,8 @@ public class InternalIdiomsLexer extends Lexer {
                 "\1\136\3\uffff\1\137",
                 "\1\140",
                 "\1\141",
+                "",
+                "",
                 "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
                 "",
                 "",
@@ -2060,39 +2060,39 @@ public class InternalIdiomsLexer extends Lexer {
 
                         else if ( (LA12_0=='m') ) {s = 2;}
 
-                        else if ( (LA12_0=='i') ) {s = 3;}
+                        else if ( (LA12_0=='.') ) {s = 3;}
 
-                        else if ( (LA12_0==';') ) {s = 4;}
+                        else if ( (LA12_0=='i') ) {s = 4;}
 
-                        else if ( (LA12_0=='a') ) {s = 5;}
+                        else if ( (LA12_0==';') ) {s = 5;}
 
-                        else if ( (LA12_0=='w') ) {s = 6;}
+                        else if ( (LA12_0=='a') ) {s = 6;}
 
-                        else if ( (LA12_0=='l') ) {s = 7;}
+                        else if ( (LA12_0=='w') ) {s = 7;}
 
-                        else if ( (LA12_0==':') ) {s = 8;}
+                        else if ( (LA12_0=='l') ) {s = 8;}
 
-                        else if ( (LA12_0=='{') ) {s = 9;}
+                        else if ( (LA12_0==':') ) {s = 9;}
 
-                        else if ( (LA12_0=='}') ) {s = 10;}
+                        else if ( (LA12_0=='f') ) {s = 10;}
 
-                        else if ( (LA12_0=='|') ) {s = 11;}
+                        else if ( (LA12_0=='r') ) {s = 11;}
 
-                        else if ( (LA12_0=='f') ) {s = 12;}
+                        else if ( (LA12_0=='s') ) {s = 12;}
 
-                        else if ( (LA12_0=='r') ) {s = 13;}
+                        else if ( (LA12_0=='c') ) {s = 13;}
 
-                        else if ( (LA12_0=='s') ) {s = 14;}
+                        else if ( (LA12_0=='h') ) {s = 14;}
 
-                        else if ( (LA12_0=='c') ) {s = 15;}
+                        else if ( (LA12_0=='n') ) {s = 15;}
 
-                        else if ( (LA12_0=='h') ) {s = 16;}
+                        else if ( (LA12_0=='p') ) {s = 16;}
 
-                        else if ( (LA12_0=='n') ) {s = 17;}
+                        else if ( (LA12_0=='v') ) {s = 17;}
 
-                        else if ( (LA12_0=='p') ) {s = 18;}
+                        else if ( (LA12_0=='{') ) {s = 18;}
 
-                        else if ( (LA12_0=='v') ) {s = 19;}
+                        else if ( (LA12_0=='}') ) {s = 19;}
 
                         else if ( (LA12_0=='d') ) {s = 20;}
 
@@ -2110,7 +2110,7 @@ public class InternalIdiomsLexer extends Lexer {
 
                         else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 27;}
 
-                        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='(' && LA12_0<='.')||(LA12_0>='<' && LA12_0<='@')||(LA12_0>='[' && LA12_0<=']')||LA12_0=='`'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 28;}
+                        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='(' && LA12_0<='-')||(LA12_0>='<' && LA12_0<='@')||(LA12_0>='[' && LA12_0<=']')||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 28;}
 
                         if ( s>=0 ) return s;
                         break;

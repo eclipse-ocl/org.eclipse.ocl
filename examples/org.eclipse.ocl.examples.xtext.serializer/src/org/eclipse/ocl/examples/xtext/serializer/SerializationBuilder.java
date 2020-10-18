@@ -269,11 +269,7 @@ public class SerializationBuilder implements ToDebugStringable
 			currentPostAnchorWrappedColumn = nextPostAnchorWrappedColumn;
 			@SuppressWarnings("null")
 			AbstractContext currentContext = childContexts.get(cursor++);
-			if (currentContext instanceof EndContext) {
-				getClass(); 	// XXX
-			}
 			this.currentContext = currentContext;
-
 			// Where this (unwrapped) context starts
 			this.contextLine = currentContext.line;
 			this.contextColumn = currentContext.column;
@@ -284,8 +280,6 @@ public class SerializationBuilder implements ToDebugStringable
 			// Where this (wrapped) context finishes
 			this.nextWrappedLine = currentWrappedLine;
 			this.nextWrappedColumn = currentWrappedColumn;
-
-
 			//
 			//	Track the text movement between contexts
 			//
@@ -1091,7 +1085,8 @@ public class SerializationBuilder implements ToDebugStringable
 
 		protected String appendNewLine(boolean isRaw) {
 			if (atStartOfLine && !indents.isEmpty()) {
-				String indent = indents.peek();
+				@Nullable String indent = indents.peek();
+				assert indent != null;
 				int length = indent.length();
 				if (length > 0) {
 					char lastChar = indent.charAt(length-1);
@@ -1212,7 +1207,9 @@ public class SerializationBuilder implements ToDebugStringable
 				int index = string.indexOf('\n', start);
 				String line = string.substring(start, index >= 0 ? index : string.length());
 				assert line != null;
-				strings.add(line);
+				if (line.length() > 0) {
+					strings.add(line);
+				}
 				if (index >= 0) {
 					strings.add(RAW_NEW_LINE);
 					start = index+1;
@@ -1278,7 +1275,8 @@ public class SerializationBuilder implements ToDebugStringable
 		@Nullable String pendingString = NO_SPACE;
 		final int indexMax = strings.size();
 		for (int index = 0; index < indexMax; ) {
-			@NonNull String nextString = strings.get(index++);
+			@Nullable String nextString = strings.get(index++);
+			assert nextString != null;
 			if (nextString == PUSH) {
 				s.push(indentString);
 			}

@@ -3153,9 +3153,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final RuleCall cOwnedParametersTypeParameterCSParserRuleCall_1_2_1_0 = (RuleCall)cOwnedParametersAssignment_1_2_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 
-		////---------------------------------------------------------------------------------
-		////	Base overrides
-		////---------------------------------------------------------------------------------
+		//@Override
 		//TemplateSignatureCS base::TemplateSignatureCS:
 		//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')' | '<'
 		//	ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* '>';
@@ -3225,6 +3223,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final RuleCall cTypeLiteralCSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cTypedTypeRefCSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 
+		//@Override
 		//TypedRefCS base::TypedRefCS:
 		//	TypeLiteralCS | TypedTypeRefCS;
 		@Override public ParserRule getRule() { return rule; }
@@ -3255,6 +3254,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final RuleCall cOwnedBindingTemplateBindingCSParserRuleCall_1_1_1_0 = (RuleCall)cOwnedBindingAssignment_1_1_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_1_1_2 = (Keyword)cGroup_1_1.eContents().get(2);
 
+		//@Override
 		//TypedTypeRefCS base::TypedTypeRefCS:
 		//	ownedPathName=PathNameCS ('(' ownedBinding=TemplateBindingCS ')' | '<' ownedBinding=TemplateBindingCS '>')?;
 		@Override public ParserRule getRule() { return rule; }
@@ -3313,6 +3313,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final Keyword cSerializableKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
 		private final Keyword cSysmlKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
 
+		//@Override
 		//UnrestrictedName:
 		//	EnumerationLiteralName
 		//	| 'annotation'
@@ -3875,9 +3876,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		return getTypedMultiplicityRefCSAccess().getRule();
 	}
 
-	////---------------------------------------------------------------------------------
-	////	Base overrides
-	////---------------------------------------------------------------------------------
+	//@Override
 	//TemplateSignatureCS base::TemplateSignatureCS:
 	//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')' | '<'
 	//	ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* '>';
@@ -3889,6 +3888,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		return getTemplateSignatureCSAccess().getRule();
 	}
 
+	//@Override
 	//TypedRefCS base::TypedRefCS:
 	//	TypeLiteralCS | TypedTypeRefCS;
 	public TypedRefCSElements getTypedRefCSAccess() {
@@ -3899,6 +3899,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		return getTypedRefCSAccess().getRule();
 	}
 
+	//@Override
 	//TypedTypeRefCS base::TypedTypeRefCS:
 	//	ownedPathName=PathNameCS ('(' ownedBinding=TemplateBindingCS ')' | '<' ownedBinding=TemplateBindingCS '>')?;
 	public TypedTypeRefCSElements getTypedTypeRefCSAccess() {
@@ -3909,6 +3910,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		return getTypedTypeRefCSAccess().getRule();
 	}
 
+	//@Override
 	//UnrestrictedName:
 	//	EnumerationLiteralName
 	//	| 'annotation'
@@ -4066,6 +4068,7 @@ public class OCLinEcoreGrammarAccess extends AbstractElementFinder.AbstractGramm
 		return getEssentialOCLUnreservedNameAccess().getRule();
 	}
 
+	//@Override
 	//UnreservedName:
 	//	EssentialOCLUnreservedName;
 	public EssentialOCLGrammarAccess.UnreservedNameElements getUnreservedNameAccess() {

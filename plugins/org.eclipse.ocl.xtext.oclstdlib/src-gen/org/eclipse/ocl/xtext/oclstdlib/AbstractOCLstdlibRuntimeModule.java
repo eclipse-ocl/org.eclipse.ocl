@@ -16,9 +16,9 @@ import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import java.util.Properties;
-import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeFormatter;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
 import org.eclipse.ocl.xtext.base.cs2as.BaseFragmentProvider;
 import org.eclipse.ocl.xtext.base.serializer.BaseCrossReferenceSerializer;
 import org.eclipse.ocl.xtext.base.serializer.BaseHiddenTokenSequencer;
@@ -126,8 +126,8 @@ public abstract class AbstractOCLstdlibRuntimeModule extends DefaultRuntimeModul
 	}
 
 	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
-	public Class<? extends AbstractSerializationMetaData> bindAbstractSerializationMetaData() {
-		return OCLstdlibSerializationMetaData.class;
+	public Class<? extends SerializationMetaData.Provider> bindSerializationMetaData$Provider() {
+		return OCLstdlibSerializationMetaData.Provider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2

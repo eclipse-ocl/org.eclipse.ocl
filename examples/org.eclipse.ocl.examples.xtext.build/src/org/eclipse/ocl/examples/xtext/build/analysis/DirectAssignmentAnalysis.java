@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.build.analysis;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 import org.eclipse.xtext.AbstractElement;
@@ -25,8 +26,8 @@ import org.eclipse.xtext.RuleCall;
  */
 public class DirectAssignmentAnalysis extends AbstractAssignmentAnalysis<@NonNull Assignment>
 {
-	public DirectAssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull Assignment assignment) {
-		super(sourceRuleAnalysis, SerializationUtils.getEClassScope(assignment), SerializationUtils.getFeature(assignment), assignment);
+	public DirectAssignmentAnalysis(@NonNull ParserRuleAnalysis sourceRuleAnalysis, @NonNull EClass eClass, @NonNull Assignment assignment) {
+		super(sourceRuleAnalysis, eClass, SerializationUtils.getFeature(assignment), assignment);
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -51,6 +52,8 @@ public class SerializationUtils
 {
 	public static @NonNull String defaultIndentation = "    ";
 	public static final @NonNull ENamedElementComparator ENAMED_ELEMENT_COMPARATOR = ENamedElementComparator.INSTANCE;
+
+	public static final @NonNull IndexedComparator INDEXED_COMPARATOR = IndexedComparator.INSTANCE;
 
 	public static final @NonNull NameableComparator NAMEABLE_COMPARATOR = NameableComparator.INSTANCE;
 
@@ -86,14 +89,26 @@ public class SerializationUtils
 		}
 	}
 
-	public static final class NameableComparator implements Comparator<Nameable>
+	public static final class IndexedComparator implements Comparator<@NonNull Indexed>
+	{
+		public static final @NonNull IndexedComparator INSTANCE = new IndexedComparator();
+
+		@Override
+		public int compare(@NonNull Indexed o1, @NonNull Indexed o2) {
+			int n1 = o1.getIndex();
+			int n2 = o2.getIndex();
+			return n1 - n2;
+		}
+	}
+
+	public static final class NameableComparator implements Comparator<@NonNull Nameable>
 	{
 		public static final @NonNull NameableComparator INSTANCE = new NameableComparator();
 
 		@Override
-		public int compare(Nameable o1, Nameable o2) {
-			String n1 = getSafeName(o1);
-			String n2 = getSafeName(o2);
+		public int compare(@NonNull Nameable o1, @NonNull Nameable o2) {
+			String n1 = o1.getName();
+			String n2 = o2.getName();
 			return safeCompareTo(n1, n2);
 		}
 	}
@@ -237,6 +252,22 @@ public class SerializationUtils
 		}
 	}
 
+	public static @NonNull EClass eClass(@NonNull EObject eObject) {
+		return nonNullState(eObject.eClass());
+	}
+
+	public static @NonNull EStructuralFeature eContainingFeature(@NonNull EObject eObject) {
+		return nonNullState(eObject.eContainingFeature());
+	}
+
+	public static @NonNull EReference eContainmentFeature(@NonNull EObject eObject) {
+		return nonNullState(eObject.eContainmentFeature());
+	}
+
+	public static @NonNull EObject eContainer(@NonNull EObject eObject) {
+		return nonNullState(eObject.eContainer());
+	}
+
 	public static void formatDiagnostic(@NonNull StringBuilder s, @NonNull Diagnostic diagnostic, @NonNull String newLine) {
 		if (diagnostic.getSeverity() != Diagnostic.OK) {
 			s.append(newLine);
@@ -319,7 +350,7 @@ public class SerializationUtils
 				type = ((Action)eObject).getType();
 				break;
 			}
-			else if (eObject instanceof Group) {
+			else if ((eObject instanceof Group) && (eChild != null)) {
 				List<@NonNull AbstractElement> elements = getElements((Group)eObject);
 				int index = elements.indexOf(eChild);
 				assert index >= 0;
@@ -359,12 +390,31 @@ public class SerializationUtils
 		throw new IllegalStateException();
 	}
 
+	public static @NonNull EClass getEReferenceType(@NonNull EReference eReference) {
+		return nonNullState(eReference.getEReferenceType());
+	}
+
 	public static @NonNull EStructuralFeature getEStructuralFeature(@NonNull EClass eClass, @NonNull String featureName) {
 		return nonNullState(eClass.getEStructuralFeature(featureName));
 	}
 
 	public static @NonNull EStructuralFeature getEStructuralFeature(@NonNull Assignment assignment) {
-		return getEStructuralFeature(SerializationUtils.getEClassScope(assignment), getFeature(assignment));
+		return getEStructuralFeature(getEClassScope(assignment), getFeature(assignment));
+	}
+
+	public static @NonNull EClass getSubTypeOf(@NonNull EClass thisEClass, @NonNull EClass thatEClass) {
+		if (thisEClass == thatEClass) {
+			return thisEClass;
+		}
+		else if (thisEClass.isSuperTypeOf(thatEClass)) {
+			return thatEClass;
+		}
+		else if (thatEClass.isSuperTypeOf(thisEClass)) {
+			return thisEClass;
+		}
+		else {
+			throw new IllegalStateException("No common subtype");
+		}
 	}
 
 	public static @NonNull String getFeature(@NonNull Action action) {
@@ -410,18 +460,27 @@ public class SerializationUtils
 	public static @NonNull AbstractElement getTerminal(@NonNull Assignment assignment) {
 		return nonNullState(assignment.getTerminal());
 	}
+
 	public static @NonNull AbstractElement getTerminal(@NonNull CrossReference crossReference) {
 		return nonNullState(crossReference.getTerminal());
 	}
+
 	public static @NonNull AbstractElement getTerminal(@NonNull UntilToken untilToken) {
 		return nonNullState(untilToken.getTerminal());
 	}
+
 	public static @NonNull TypeRef getType(@NonNull AbstractRule abstractRule) {
 		return nonNullState(abstractRule.getType());
 	}
+
 	public static @NonNull TypeRef getType(@NonNull Action action) {
 		return nonNullState(action.getType());
 	}
+
+	public static @NonNull Iterable<@NonNull Grammar> getUsedGrammars(@NonNull Grammar grammar) {
+		return nullFree(grammar.getUsedGrammars());
+	}
+
 	public static @NonNull String getValue(@NonNull Keyword keyword) {
 		return nonNullState(keyword.getValue());
 	}

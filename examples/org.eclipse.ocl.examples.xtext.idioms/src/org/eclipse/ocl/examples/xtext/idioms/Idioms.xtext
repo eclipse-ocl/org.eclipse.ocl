@@ -16,7 +16,7 @@ import "platform:/resource/org.eclipse.ocl.examples.xtext.idioms/model/Idioms.ec
 //import "Idioms.ecore"
 
 IdiomsModel:
-	'model' name=ID ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)* ;
+	'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)* ;
 
 EPackageImport:
 	'import' ePackage=[ecore::EPackage|STRING] ('as' ^as=ID)? ';'?;
@@ -27,11 +27,8 @@ IdiomsImport:
 LocatorDeclaration:
 	'locator' name=ID  ownedLocator=Locator ';';
 
-ElementLocator returns Locator:
-	AssignmentLocator | CompoundLocator | KeywordLocator | ReferredLocator;
-
 Locator:
-	AnyAssignmentLocator | AnyElementLocator | ElementLocator | FinalLocator | ReturnsLocator;
+	AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator | ReturnsLocator;
 
 AnyAssignmentLocator:
 	{AnyAssignmentLocator} 'any-assignment';
@@ -41,9 +38,6 @@ AnyElementLocator:
 
 AssignmentLocator:
 	'assignment' ((ePackage=[ecore::EPackage|ID] '::')? eClass=[ecore::EClass|ID] '::')? eStructuralFeature=[ecore::EStructuralFeature];
-
-CompoundLocator:
-	'{' ownedLocators+=ElementLocator ('|' ownedLocators+=ElementLocator)* '}';
 
 FinalLocator:
 	{FinalLocator} 'final';

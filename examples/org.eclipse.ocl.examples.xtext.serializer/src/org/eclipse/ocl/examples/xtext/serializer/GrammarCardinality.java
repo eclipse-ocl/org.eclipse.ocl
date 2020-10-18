@@ -47,7 +47,11 @@ public enum GrammarCardinality
 
 	public static @NonNull GrammarCardinality max(@NonNull GrammarCardinality grammarCardinality1, @NonNull GrammarCardinality grammarCardinality2) {
 		int newState = grammarCardinality1.state | grammarCardinality2.state;
-		switch (newState) {
+		return valueOf(newState);
+	}
+
+	public static @NonNull GrammarCardinality valueOf(int enumValue) {
+		switch (enumValue) {
 			case 0: return ONE;
 			case 1: return ZERO_OR_ONE;
 			case 2: return ONE_OR_MORE;

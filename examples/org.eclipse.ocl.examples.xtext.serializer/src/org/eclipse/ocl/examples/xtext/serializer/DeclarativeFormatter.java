@@ -36,15 +36,6 @@ import com.google.inject.Inject;
  */
 public class DeclarativeFormatter extends AbstractNodeModelFormatter
 {
-	public static class XtextCommentSegmentSupport extends XtextAbstractCommentSegmentSupport
-	{
-		@Override
-		public void format(@NonNull UserElementFormatter formatter, @NonNull SerializationBuilder serializationBuilder) {}
-
-		@Override
-		public void serialize(int serializationStepIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {}
-	}
-
 	/**
 	 * The UserModelAnalysis provides the SerializationMetaData that defines comment and rule formatting instructions.
 	 */

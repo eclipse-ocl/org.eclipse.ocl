@@ -19,7 +19,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.idioms.AnyAssignmentLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AnyElementLocator;
 import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
-import org.eclipse.ocl.examples.xtext.idioms.CompoundLocator;
 import org.eclipse.ocl.examples.xtext.idioms.CustomSegment;
 import org.eclipse.ocl.examples.xtext.idioms.EPackageImport;
 import org.eclipse.ocl.examples.xtext.idioms.FinalLocator;
@@ -105,8 +104,6 @@ public class IdiomsFactoryImpl
 				return createAnyElementLocator();
 			case IdiomsPackage.ASSIGNMENT_LOCATOR :
 				return createAssignmentLocator();
-			case IdiomsPackage.COMPOUND_LOCATOR :
-				return createCompoundLocator();
 			case IdiomsPackage.CUSTOM_SEGMENT :
 				return createCustomSegment();
 			case IdiomsPackage.EPACKAGE_IMPORT :
@@ -202,17 +199,6 @@ public class IdiomsFactoryImpl
 	public @NonNull AssignmentLocator createAssignmentLocator() {
 		AssignmentLocatorImpl assignmentLocator = new AssignmentLocatorImpl();
 		return assignmentLocator;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull CompoundLocator createCompoundLocator() {
-		CompoundLocatorImpl compoundLocator = new CompoundLocatorImpl();
-		return compoundLocator;
 	}
 
 	/**

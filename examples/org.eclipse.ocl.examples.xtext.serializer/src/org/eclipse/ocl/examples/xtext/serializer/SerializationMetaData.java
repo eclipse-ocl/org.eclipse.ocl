@@ -23,6 +23,11 @@ import org.eclipse.xtext.AbstractElement;
  */
 public interface SerializationMetaData
 {
+	public static interface Provider
+	{
+		@NonNull SerializationMetaData get();
+	}
+
 	/**
 	 * Return the EClassValue for eClass or null if not available.
 	 */

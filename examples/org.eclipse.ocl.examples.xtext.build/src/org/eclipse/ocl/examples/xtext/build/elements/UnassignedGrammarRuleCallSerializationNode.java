@@ -13,30 +13,37 @@ package org.eclipse.ocl.examples.xtext.build.elements;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.AbstractRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.xtext.RuleCall;
 
-public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
+/**
+ * An UnassignedGrammarRuleCallSerializationNode uses another GrammarRule to provide the produced EClass.
+ * Additional nodes may provide punctuation decoration or additional assignments.
+ *
+ * An UnassignedGrammarRuleCallSerializationNode is created wheb parsing a GrammarRule and flattened to its content or to
+ * UnassignedSerializationRuleCallSerializationNode delegations.
+ */
+public class UnassignedGrammarRuleCallSerializationNode extends AbstractUnassignedSerializationNode
 {
-	protected final @NonNull RuleCall ruleCall;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
 
-	public UnassignedRuleCallSerializationNode(@NonNull RuleCall ruleCall, @NonNull GrammarCardinality grammarCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
-		super(grammarCardinality);
-		this.ruleCall = ruleCall;
+	public UnassignedGrammarRuleCallSerializationNode(@NonNull EClass producedEClass, @NonNull GrammarCardinality grammarCardinality, @NonNull AbstractRuleAnalysis calledRuleAnalysis) {
+		super(producedEClass, grammarCardinality);
 		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
-		if (grammarCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
-		return new UnassignedRuleCallSerializationNode(ruleCall, grammarCardinality, calledRuleAnalysis);
+		throw new UnsupportedOperationException();		// Should be delegating via UnassignedSerializationRuleCallSerializationNode
+	//	if (grammarCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
+	//	return new UnassignedGrammarRuleCallSerializationNode(producedEClass, grammarCardinality, calledRuleAnalysis);
 	}
 
 	@Override
@@ -55,7 +62,17 @@ public class UnassignedRuleCallSerializationNode extends SimpleSerializationNode
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public boolean noUnassignedParserRuleCall() {
+		return false;
+	}
+
+	@Override
+	public boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative) {
+		throw new UnsupportedOperationException();		// Should have been flattened
+	}
+
+	@Override
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
 		s.append(calledRuleAnalysis.getName());
 		appendCardinality(s, depth);
 	}

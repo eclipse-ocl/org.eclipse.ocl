@@ -25,6 +25,8 @@ public interface SerializationSegment
 	public static final @NonNull SerializationSegment NEW_LINE = new StringSerializationSegment(SerializationBuilder.NEW_LINE);
 	public static final @NonNull SerializationSegment NO_SPACE = new StringSerializationSegment(SerializationBuilder.NO_SPACE);
 	public static final @NonNull SerializationSegment POP = new ControlSerializationSegment(SerializationBuilder.POP);
+	public static final @NonNull SerializationSegment POST_COMMENT = new PostCommentSerializationSegment();
+	public static final @NonNull SerializationSegment PRE_COMMENT = new PreCommentSerializationSegment();
 	public static final @NonNull SerializationSegment PUSH = new ControlSerializationSegment(SerializationBuilder.PUSH);
 	public static final @NonNull SerializationSegment PUSH_NEXT = new ControlSerializationSegment(SerializationBuilder.PUSH_NEXT);
 	public static final @NonNull SerializationSegment SOFT_NEW_LINE = new StringSerializationSegment(SerializationBuilder.SOFT_NEW_LINE);
@@ -153,8 +155,14 @@ public interface SerializationSegment
 		}
 
 		@Override
-		public String toString() {
-			return "supported by " + getSupportClassName();
+		public @NonNull String toString() {
+			if (supportClass == PreCommentSerializationSegment.class) {
+				return "pre-comment";
+			}
+			if (supportClass == PostCommentSerializationSegment.class) {
+				return "post-comment";
+			}
+			return getSupportClassName();
 		}
 	}
 
@@ -213,4 +221,7 @@ public interface SerializationSegment
 			return SerializationBuilder.VALUE;
 		}
 	}
+
+	@Override
+	public abstract @NonNull String toString();
 }

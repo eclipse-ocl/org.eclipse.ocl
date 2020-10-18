@@ -245,6 +245,9 @@ import java.util.GregorianCalendar
 		private static void initParserRules() {
 			«FOR eObject : eObjects»
 			«emit(grammar, eObject)».setAlternatives(«pushIndent»«emitIndent»«emit(grammar, eObject.alternatives)»«popIndent»);
+			«FOR annotation : eObject.annotations»
+			addAnnotation(«emit(grammar, eObject)», "«annotation.name»");
+			«ENDFOR»
 			«ENDFOR»
 		}
 

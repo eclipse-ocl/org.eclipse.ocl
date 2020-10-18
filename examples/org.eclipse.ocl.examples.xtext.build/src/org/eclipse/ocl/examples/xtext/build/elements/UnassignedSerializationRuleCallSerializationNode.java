@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.xtext.build.elements;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
@@ -20,54 +21,54 @@ import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
 import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
-import org.eclipse.xtext.Alternatives;
 
-public class AlternativesSerializationNode extends CompositeSerializationNode
+/**
+ * An UnassignedSerializationRuleCallSerializationNode delegates one of the functionalities of one
+ * SerializationRule to another. It is used when flattening a UnassignedGrammarRuleCallSerializationNode.
+ */
+public class UnassignedSerializationRuleCallSerializationNode extends AbstractUnassignedSerializationNode
 {
-	protected final @NonNull Alternatives alternatives;
-	protected final @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes;
+	protected final @NonNull SerializationRuleAnalysis calledRuleAnalysis;
 
-	public AlternativesSerializationNode(@NonNull Alternatives alternatives, @NonNull GrammarCardinality grammarCardinality, @NonNull List<@NonNull SerializationNode> alternativeSerializationNodes) {
-		super(grammarCardinality);
-		this.alternatives = alternatives;
-		this.alternativeSerializationNodes = alternativeSerializationNodes;
+	public UnassignedSerializationRuleCallSerializationNode(@NonNull EClass producedEClass, @NonNull GrammarCardinality grammarCardinality, @NonNull SerializationRuleAnalysis calledRuleAnalysis) {
+		super(producedEClass, grammarCardinality);
+		this.calledRuleAnalysis = calledRuleAnalysis;
 	}
 
 	@Override
 	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
-		if (grammarCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
-		return new AlternativesSerializationNode(alternatives, grammarCardinality, alternativeSerializationNodes);
+	//	throw new UnsupportedOperationException();		// Should have been flattened already
+	//	if (grammarCardinality == null) throw new IllegalStateException();		// deepClone occurs for flattened SerializationRules
+		return new UnassignedSerializationRuleCallSerializationNode(producedEClass, this.grammarCardinality, calledRuleAnalysis);
 	}
 
 	@Override
 	public void gatherStepsAndSubIdioms(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull List<@NonNull SerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms) {
-		throw new UnsupportedOperationException();		// Should have been flattened away
 	}
 
-	/**
-	 * Return the alternative for alternativeIndex or null for an invalid index, whicj may be appropriate for
-	 * the optional alternative.
-	 */
-	public @Nullable SerializationNode getAlternativeSerializationNode(int alternativeIndex) {
-		return alternativeIndex < alternativeSerializationNodes.size() ? alternativeSerializationNodes.get(alternativeIndex) : null;
+	public @NonNull SerializationRuleAnalysis getCalledRuleAnalysis() {
+		return calledRuleAnalysis;
 	}
+
+//	@Override
+//	public boolean isRedundant() {
+//		return grammarCardinality.mayBeZero();
+//	}
 
 	@Override
 	public boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative) {
-		throw new UnsupportedOperationException();		// Should have been flattened
+		return isRootAlternative;
 	}
 
 	@Override
 	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
-		s.append("{");
-		for (@NonNull SerializationNode alternativeSerializationNode : alternativeSerializationNodes) {
-			s.appendIndentation(depth);
-			s.append("| ");
-			alternativeSerializationNode.toString(s, depth >= 0 ? depth+1 : depth);
-		}
-		s.appendIndentation(depth);
-		s.append("}");
+	//	s.append(calledRuleAnalysis);
+		s.append(calledRuleAnalysis.getVariantName());
+	//	s.append(":");
+	//	s.append(calledRuleAnalysis.getProducedEClass().getName());
 		appendCardinality(s, depth);
+	//	calledRuleAnalysis.toString(s, depth);
+	//	calledRuleAnalysis.getRootSerializationNode().toString(s, depth);
 	}
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-model Idioms
+model org.eclipse.ocl.examples.xtext.idioms.Idioms
 import "platform:/resource/org.eclipse.ocl.examples.xtext.idioms/model/Idioms.ecore#/" as idioms
 
 segment PRE_COMMENT custom "org.eclipse.ocl.examples.xtext.idioms.serializer.XtextPreCommentSegmentSupport";
@@ -25,6 +25,8 @@ idiom BRACES {
 idiom COLON_COLON at "::" do no-space value no-space;
 
 idiom COMMA at "," do no-space value soft-space;
+
+idiom DOT at "." do no-space value no-space;
 
 idiom IDIOMS_SPACING at assignment idioms::IdiomsModel::ownedIdioms do new-line soft-new-line value soft-new-line;
 

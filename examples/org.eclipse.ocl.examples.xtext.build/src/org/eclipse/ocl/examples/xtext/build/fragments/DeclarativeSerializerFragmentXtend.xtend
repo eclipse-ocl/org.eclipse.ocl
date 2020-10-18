@@ -11,14 +11,15 @@
 package org.eclipse.ocl.examples.xtext.build.fragments;
 
 import com.google.inject.Inject
-import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.jdt.annotation.NonNull
 import org.eclipse.jdt.annotation.Nullable
 import org.eclipse.ocl.examples.xtext.build.analysis.GrammarAnalysis
+import org.eclipse.ocl.examples.xtext.build.analysis.SerializationMatchTermRuntime
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis
 import org.eclipse.ocl.examples.xtext.serializer.DataTypeRuleValue
 import org.eclipse.ocl.examples.xtext.serializer.EClassValue
+import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueMultiple
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueOthers
@@ -40,12 +41,9 @@ import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.Serializ
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermSubtract
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermVariable
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValue_GrammarCardinality
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValues
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndex_GrammarCardinality
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EnumerationValue_GrammarCardinality
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.RuleIndex_GrammarCardinality
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationAttribute
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationReference
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationSimpleAttribute
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.StringSerializationSegment
@@ -61,6 +59,12 @@ import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.Serialization
 import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue
 import org.eclipse.xtext.util.Strings
 import org.eclipse.xtext.xtext.generator.model.TypeReference
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature
+import org.eclipse.ocl.examples.xtext.serializer.PreCommentSerializationSegment
+import org.eclipse.ocl.examples.xtext.serializer.PostCommentSerializationSegment
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData
+import org.eclipse.xtext.service.GrammarProvider
+import org.eclipse.xtext.Grammar
 
 /**
  * DeclarativeSerializerFragmentXtend augments DeclarativeSerializerFragment with M2T functionality
@@ -69,6 +73,7 @@ import org.eclipse.xtext.xtext.generator.model.TypeReference
 class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 {
 	protected override doGetSerializationMetaDataContent(GrammarAnalysis grammarAnalysis) {
+		newTypeReference(Inject);
 		newTypeReference(NonNull);
 		newTypeReference(Nullable);
 		initSerializationMetaDataContent(grammarAnalysis);
@@ -77,9 +82,39 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		'''		
 			«var multipleLineCommentCharacterRanges = grammarAnalysis.getMultipleLineCommentCharacterRanges()»
 			«var singleLineCommentKeywords = grammarAnalysis.getSingleLineCommentKeywords()»
+			/******* This file is 100% auto-generated - do not edit it *******/
+			
+			/**
+			 * The «getSerializationMetaDataClass(grammar).simpleName» singleton provides the metadata to support a
+			 * model to text serialization of a parsed Xtext semantic model or to re-format an Xtext text node model.
+			 */
 			public class «getSerializationMetaDataClass(grammar).simpleName» extends «getSerializationMetaDataSuperClass(grammar)»
 			{
-				private boolean initialized = false;
+				/**
+				 * The Provider supports injected creation of the «getSerializationMetaDataClass(grammar).simpleName» singleton.
+				 */
+				public static class Provider implements «newTypeReference(SerializationMetaData)».Provider
+				{
+					private static @Nullable «getSerializationMetaDataClass(grammar).simpleName» INSTANCE = null;
+			
+					@Inject
+					private «newTypeReference(GrammarProvider)» grammarProvider;
+			
+					@Override
+					public synchronized @NonNull «newTypeReference(SerializationMetaData)» get() {
+						// synchronized synchronizes the creation of this singleton.
+						// It does not imply that the overall application is threadsafe.
+						«getSerializationMetaDataClass(grammar).simpleName» instance = INSTANCE;
+						if (instance == null) {
+							assert grammarProvider != null;
+							«newTypeReference(Grammar)» grammar = grammarProvider.getGrammar(Provider.class);
+							assert grammar != null;
+							INSTANCE = instance = new «getSerializationMetaDataClass(grammar).simpleName»(grammar);
+						}
+						return instance;
+					}
+				}
+			
 				private final @NonNull «newTypeReference(EClassValue)» @NonNull [] eClassValues = new @NonNull «newTypeReference(EClassValue)»[«getEClassCount()»];
 				private final @NonNull «newTypeReference(EnumerationValue)» @NonNull [] enumerationValues = new @NonNull «newTypeReference(EnumerationValue)»[«getEnumerationValueCount()»];
 				private final @NonNull «newTypeReference(GrammarRuleValue)» @NonNull [] grammarRuleValues = new @NonNull «newTypeReference(GrammarRuleValue)»[«getGrammarRuleValueCount()»];
@@ -89,15 +124,27 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				private final @NonNull «newTypeReference(SerializationRule)» @NonNull [] serializationRules = new @NonNull «newTypeReference(SerializationRule)»[«getSerializationRuleCount()»];
 				private final @NonNull «newTypeReference(SerializationSegment)» @NonNull [] @NonNull [] serializationSegments = new @NonNull «newTypeReference(SerializationSegment)» @NonNull [«getSerializationSegmentsCount()»] @NonNull [];
 				private final @NonNull «newTypeReference(SerializationStep)» @NonNull [] serializationSteps = new @NonNull «newTypeReference(SerializationStep)»[«getSerializationStepCount()»];
-
 				«IF multipleLineCommentCharacterRanges !== null»
-				private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {«FOR entry : getMultipleLineCommentMidfixes(multipleLineCommentCharacterRanges) SEPARATOR ','»"«entry != null ? Strings.convertToJavaString(entry) : "null"»"«ENDFOR»};
+				private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {«FOR entry : getMultipleLineCommentMidfixes(multipleLineCommentCharacterRanges) SEPARATOR ','»"«entry !== null ? Strings.convertToJavaString(entry) : "null"»"«ENDFOR»};
 				private final @NonNull String @Nullable [] multipleLineCommentPrefixes = new @NonNull String[] {«FOR entry : multipleLineCommentCharacterRanges.entrySet() SEPARATOR ','»"«Strings.convertToJavaString(entry.getKey())»"«ENDFOR»};
 				private final @NonNull String @Nullable [] multipleLineCommentSuffixes = new @NonNull String[] {«FOR entry : multipleLineCommentCharacterRanges.entrySet() SEPARATOR ','»"«Strings.convertToJavaString(entry.getValue())»"«ENDFOR»};
 				«ENDIF»
 				«IF singleLineCommentKeywords !== null»
 					private final @NonNull String @Nullable [] singleLineCommentPrefixes = new @NonNull String[] {«FOR keyword : singleLineCommentKeywords SEPARATOR ','»"«Strings.convertToJavaString(keyword)»"«ENDFOR»};
 				«ENDIF»
+				
+				private «getSerializationMetaDataClass(grammar).simpleName»(@NonNull «newTypeReference(Grammar)» grammar) {
+					super(grammar);
+					«generatePagedInit("GrammarRuleVectors", getGrammarRuleVectorCount(), GRAMMAR_RULE_VECTORS_PER_PAGE)»
+					«generatePagedInit("EnumerationValues", getEnumerationValueCount(), ENUM_VALUES_PER_PAGE)»
+					«generatePagedInit("MatchTerms", getMatchTermCount(), MATCH_TERMS_PER_PAGE)»
+					«generatePagedInit("MatchSteps", getMatchStepCount(), MATCH_STEPS_PER_PAGE)»
+					«generatePagedInit("SerializationSegments", getSerializationSegmentsCount(), SERIALIZATION_SEGMENTS_PER_PAGE)»
+					«generatePagedInit("SerializationSteps", getSerializationStepCount(), SERIALIZATION_STEPS_PER_PAGE)»
+					«generatePagedInit("SerializationRules", getSerializationRuleCount(), SERIALIZATION_RULES_PER_PAGE)»
+					«generatePagedInit("GrammarRuleValues", getGrammarRuleValueCount(), GRAMMAR_RULE_VALUES_PER_PAGE)»
+					«generatePagedInit("EClassValues", getEClassCount(), ECLASS_VALUES_PER_PAGE)»
+				}
 
 				@Override
 				public @NonNull «newTypeReference(EClassValue)» @NonNull [] getEClassValues() {
@@ -183,25 +230,6 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 				public @NonNull String @Nullable [] getSingleLineCommentPrefixes() {
 					return «IF singleLineCommentKeywords !== null»singleLineCommentPrefixes«ELSE»null«ENDIF»;
 				}
-
-				/**
-				 * Post constructor/injection initialization to avoid recursions.
-				 */
-				@«newTypeReference(Inject)»
-				public void init() {
-					if (!initialized) {
-						initialized = true;
-						«generatePagedInit("GrammarRuleVectors", getGrammarRuleVectorCount(), GRAMMAR_RULE_VECTORS_PER_PAGE)»
-						«generatePagedInit("EnumerationValues", getEnumerationValueCount(), ENUM_VALUES_PER_PAGE)»
-						«generatePagedInit("MatchTerms", getMatchTermCount(), MATCH_TERMS_PER_PAGE)»
-						«generatePagedInit("MatchSteps", getMatchStepCount(), MATCH_STEPS_PER_PAGE)»
-						«generatePagedInit("SerializationSegments", getSerializationSegmentsCount(), SERIALIZATION_SEGMENTS_PER_PAGE)»
-						«generatePagedInit("SerializationSteps", getSerializationStepCount(), SERIALIZATION_STEPS_PER_PAGE)»
-						«generatePagedInit("SerializationRules", getSerializationRuleCount(), SERIALIZATION_RULES_PER_PAGE)»
-						«generatePagedInit("GrammarRuleValues", getGrammarRuleValueCount(), GRAMMAR_RULE_VALUES_PER_PAGE)»
-						«generatePagedInit("EClassValues", getEClassCount(), ECLASS_VALUES_PER_PAGE)»
-					}
-				}
 													
 				«generateEClassValues(grammarAnalysis)»
 				
@@ -268,13 +296,13 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		new «newTypeReference(EClassValue)»(«emitLiteral(eClass)»,
 			createSerializationRules(
 				«FOR serializationRule : grammarAnalysis.getEClassValue(eClass).getSerializationRules() SEPARATOR ','»
-					«getSerializationRuleIndex(serializationRule)» /* «serializationRule.toRuleString()» */
+					«getSerializationRuleIndex(serializationRule)» /* «toString(serializationRule)» */
 				«ENDFOR»
 			), «IF grammarAnalysis.basicGetEReferenceRuleIndexes(eClass) === null »null«ELSE»
-			new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
+			new @NonNull «newTypeReference(EReference_TargetGrammarRuleVector)» [] {
 				«FOR eReferenceRuleIndex : getEReferenceRuleIndexesIterable(grammarAnalysis, eClass) SEPARATOR ','»
-					createEReference_RuleIndexes(«emitLiteral(eReferenceRuleIndex.getEReference())»,
-						«getGrammarRuleVectorIndex(eReferenceRuleIndex.getAssignedTargetRuleValueIndexes())») /* «FOR ruleValueIndex : eReferenceRuleIndex.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
+					createEReference_TargetGrammarRuleVector(«emitLiteral(eReferenceRuleIndex.getEReference())»,
+						«getGrammarRuleVectorIndex(eReferenceRuleIndex.getTargetGrammarRuleVector())») /* «FOR ruleValueIndex : eReferenceRuleIndex.getTargetGrammarRuleVector() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
 				«ENDFOR»
 			}«ENDIF»
 		)'''
@@ -294,7 +322,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private void initEnumerationValues«page !== null ? page : ""»() {
 				«FOR elementIndex : getPageElementList(page, enumValuesSize, ENUM_VALUES_PER_PAGE)»
 					«var enumerationValue = enumValues.get(elementIndex)»
-					// «enumerationValue.toString()»
+					// «getEnumerationValueIndex(enumerationValue)»: «enumerationValue.toString()»
 					enumerationValues[«getEnumerationValueIndex(enumerationValue)»] = «generateEnumerationValue(enumerationValue)»;
 				«ENDFOR»
 			}
@@ -363,7 +391,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			createParserRuleValue(«parserRuleValue.getIndex()», "«parserRuleValue.getName()»", «IF subParserRuleValueIndexes !== null»«getGrammarRuleVectorIndex(subParserRuleValueIndexes)» /* «FOR index : subParserRuleValueIndexes SEPARATOR '|'»«getGrammarRuleName(index)»«ENDFOR» */«ELSE»-1«ENDIF»,
 				createSerializationRules(
 					«FOR serializationRule : getSerializationRuleList(grammarAnalysis, parserRuleValue) SEPARATOR ','»
-					«getSerializationRuleIndex(serializationRule)»	/* «getGrammarRuleName(serializationRule.getRuleValueIndex())»: «serializationRule.toRuleString()» */
+					«getSerializationRuleIndex(serializationRule)»	/* «toString(serializationRule)» */
 					«ENDFOR»
 				),
 				«var formattingTexts = getFormattingTexts(grammarAnalysis, parserRuleValue)»
@@ -397,7 +425,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private void initGrammarRuleVectors«page !== null ? page : ""»() {
 				«FOR elementIndex : getPageElementList(page, grammarRuleVectorsSize, GRAMMAR_RULE_VECTORS_PER_PAGE)»
 					«var grammarRuleVector = grammarRuleVectors.get(elementIndex)»
-					// «FOR index : grammarRuleVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»
+					// «getGrammarRuleVectorIndex(grammarRuleVector)»: «FOR index : grammarRuleVector SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»
 					grammarRuleVectors[«getGrammarRuleVectorIndex(grammarRuleVector)»] = new «newTypeReference(GrammarRuleVector)»(«grammarRuleVector.toWordsString()»);
 				«ENDFOR»
 			}
@@ -420,7 +448,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private void initMatchSteps«page !== null ? page : ""»() {
 				«FOR elementIndex : getPageElementList(page, matchStepsSize, MATCH_STEPS_PER_PAGE)»
 					«var matchStep = matchSteps.get(elementIndex)»
-					// «matchStep.toString()»
+					// «getMatchStepIndex(matchStep)»: «matchStep.toString()»
 					serializationMatchSteps[«getMatchStepIndex(matchStep)»] = «generateMatchStep(matchStep)»;
 				«ENDFOR»
 			}
@@ -433,25 +461,30 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		SerializationMatchStep.MatchStep_Assert: return generateMatchStep_Assert(matchStep)
 		SerializationMatchStep.MatchStep_Assign: return generateMatchStep_Assign(matchStep)
 		SerializationMatchStep.MatchStep_RuleCheck: return generateMatchStep_RuleCheck(matchStep)
+		SerializationMatchStep.MatchStep_Runtime: return generateMatchStep_Runtime(matchStep)
 		SerializationMatchStep.MatchStep_ValueCheck: return generateMatchStep_ValueCheck(matchStep)
 		default: throw new UnsupportedOperationException()
 		}
 	}
 	
 	protected def generateMatchStep_Assert(SerializationMatchStep.MatchStep_Assert matchStep) {
-		'''createMatchStep_Assert(«getMatchTermIndex(matchStep.getCardinalitySolution())»)'''
+		'''createMatchStep_Assert(«getMatchTermIndex(matchStep.getMatchTerm())»)'''
 	}
 	
 	protected def generateMatchStep_Assign(SerializationMatchStep.MatchStep_Assign matchStep) {
-		'''createMatchStep_Assign(«matchStep.getVariableIndex()», «getMatchTermIndex(matchStep.getCardinalitySolution())»)'''
+		'''createMatchStep_Assign(«matchStep.getVariableIndex()», «getMatchTermIndex(matchStep.getMatchTerm())»)'''
 	}
 	
 	protected def generateMatchStep_RuleCheck(SerializationMatchStep.MatchStep_RuleCheck matchStep) {
 		'''createMatchStep_RuleCheck(«emitLiteral(matchStep.getEReference())», «getGrammarRuleVectorIndex(matchStep.getRuleValueIndexes())»/*«FOR index : matchStep.getRuleValueIndexes() SEPARATOR '|' »«grammarAnalysis.getRuleName(index)»«ENDFOR»*/)'''
 	}
 	
+	protected def generateMatchStep_Runtime(SerializationMatchStep.MatchStep_Runtime matchStep) {
+		'''createMatchStep_Runtime()'''
+	}
+	
 	protected def generateMatchStep_ValueCheck(SerializationMatchStep.MatchStep_ValueCheck matchStep) {
-		'''createMatchStep_ValueCheck(«matchStep.getVariableIndex()», «getMatchTermIndex(matchStep.getCardinalitySolution())»)'''
+		'''createMatchStep_ValueCheck(«matchStep.getVariableIndex()», «getMatchTermIndex(matchStep.getMatchTerm())»)'''
 	}
 	
 	/* ************************************************************************************************************************** */
@@ -468,7 +501,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private void initMatchTerms«page !== null ? page : ""»() {
 				«FOR elementIndex : getPageElementList(page, matchTermsSize, MATCH_TERMS_PER_PAGE)»
 					«var matchTerm = matchTerms.get(elementIndex)»
-					// «matchTerm.toString()»
+					// «getMatchTermIndex(matchTerm)»: «matchTerm.toString()»
 					serializationMatchTerms[«getMatchTermIndex(matchTerm)»] = «generateMatchTerm(matchTerm)»;
 				«ENDFOR»
 			}
@@ -486,10 +519,10 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 		SerializationMatchTermGreaterThan: return generateMatchTerm_GreaterThan(matchTerm)
 		SerializationMatchTermInteger: return generateMatchTerm_IntegerSolution(matchTerm)
 		SerializationMatchTermMultiply: return generateMatchTerm_Multiply(matchTerm)
-	//	SerializationMatchTermRuntime: return generateMatchTerm_Runtime(matchTerm)
+		SerializationMatchTermRuntime: return generateMatchTerm_Runtime(matchTerm)
 		SerializationMatchTermSubtract: return generateMatchTerm_Subtract(matchTerm)
 		SerializationMatchTermVariable: return generateMatchTerm_Variable(matchTerm)
-		default: throw new UnsupportedOperationException()
+		default: throw new UnsupportedOperationException(matchTerm.getClass().getName())
 		}
 	}
 	
@@ -506,11 +539,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateMatchTerm_EReferenceSize(SerializationMatchTermEReferenceSize matchTerm) {
-		'''new «newTypeReference(SerializationMatchTermEReferenceSize)»(«emitLiteral(matchTerm.getEReference())», "«matchTerm.getParserRuleValue().getName()»")'''
+		'''createSerializationMatchTermEReferenceSize(«emitLiteral(matchTerm.getEReference())», «getGrammarRuleVectorIndex(matchTerm.getGrammarRuleVector())» /* «toString(matchTerm.getGrammarRuleVector())» */)'''
 	}
 	
 	protected def generateMatchTerm_EStructuralFeatureSize(SerializationMatchTermEStructuralFeatureSize matchTerm) {
-		'''new «newTypeReference(SerializationMatchTermEStructuralFeatureSize)»(«emitLiteral(matchTerm.getEStructuralFeature())»)'''
+		'''createSerializationMatchTermEStructuralFeatureSize(«emitLiteral(matchTerm.getEStructuralFeature())»)'''
 	}
 	
 	protected def generateMatchTerm_GreaterThan(SerializationMatchTermGreaterThan matchTerm) {
@@ -518,11 +551,15 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateMatchTerm_IntegerSolution(SerializationMatchTermInteger matchTerm) {
-		'''new «newTypeReference(SerializationMatchTermInteger)»(«matchTerm.getValue()»)'''
+		'''createSerializationMatchTermInteger(«matchTerm.getValue()»)'''
 	}
 	
 	protected def generateMatchTerm_Multiply(SerializationMatchTermMultiply matchTerm) {
 		'''createSerializationMatchTermMultiply(«getMatchTermIndex(matchTerm.getLeft())», «getMatchTermIndex(matchTerm.getRight())»)'''
+	}
+	
+	protected def generateMatchTerm_Runtime(SerializationMatchTermRuntime matchTerm) {
+		'''createSerializationMatchTermRuntime()'''
 	}
 	
 	protected def generateMatchTerm_Subtract(SerializationMatchTermSubtract matchTerm) {
@@ -530,7 +567,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateMatchTerm_Variable(SerializationMatchTermVariable matchTerm) {
-		'''new «newTypeReference(SerializationMatchTermVariable)»(«matchTerm.getVariableIndex()»)'''
+		'''createSerializationMatchTermVariable(«matchTerm.getVariableIndex()»)'''
 	}
 	
 	/* ************************************************************************************************************************** */	
@@ -547,9 +584,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private void initSerializationRules«page !== null ? page : ""»() {
 				«FOR elementIndex : getPageElementList(page, serializationRulesSize, SERIALIZATION_RULES_PER_PAGE)»
 					 «var serializationRuleAnalysis = serializationRuleAnalyses.get(elementIndex)»
-					// «serializationRuleAnalysis.toString()»
-					serializationRules[«getSerializationRuleIndex(serializationRuleAnalysis.getSerializationRule())»] =
-						«generateSerializationRule(serializationRuleAnalysis)»;
+				«generateSerializationRule(serializationRuleAnalysis)»
 				«ENDFOR»
 			}
 		«ENDFOR»
@@ -558,88 +593,74 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSerializationRule(SerializationRuleAnalysis serializationRuleAnalysis) {
 		var SerializationRule serializationRule = serializationRuleAnalysis.getSerializationRule();
+		var matchSteps = serializationRuleAnalysis.getSerializationMatchSteps();
 		'''
-			new «newTypeReference(SerializationRule)»("«serializationRuleAnalysis.getName()»", «serializationRuleAnalysis.getRuleValueIndex()»,
+			// «serializationRuleAnalysis.toString()»
+			serializationRules[«getSerializationRuleIndex(serializationRuleAnalysis.getSerializationRule())»] = createSerializationRule("«serializationRuleAnalysis.getVariantName()»", «serializationRuleAnalysis.getRuleValueIndex()»,
+				«IF matchSteps.size() > 0»
 				createSerializationMatchSteps(
-					«FOR solutionStep : serializationRuleAnalysis.getSerializationMatchSteps() SEPARATOR ','»
-						«getMatchStepIndex(solutionStep)»		/* «solutionStep.toString()» */
+					«FOR matchStep : matchSteps SEPARATOR ','»
+						«getMatchStepIndex(matchStep)»		/* «toString(matchStep)» */
 					«ENDFOR»
 				), 
+				«ELSE»
+				null,	// run-time resolution using SerializationSteps
+				«ENDIF»
 				«var serializationSteps = serializationRule.getSerializationSteps()»
 				createSerializationSteps(
 					«FOR i : integersIterable(serializationSteps.length) SEPARATOR ','»
 						«var serializationStep = serializationSteps.get(i)»
-					«getSerializationStepIndex(serializationStep)»		/* «serializationStep.toString()» */
+					«getSerializationStepIndex(serializationStep)»		/* «toString(serializationStep)» */
 				«ENDFOR»
 				), 
-				«var eAttribute2EnumerationValues = serializationRuleAnalysis.basicGetEAttribute2EnumerationValues()»
-				«IF eAttribute2EnumerationValues !== null»
-				new @NonNull «newTypeReference(EAttribute_EnumerationValues)» [] {
-					«FOR eAttributeData : eAttribute2EnumerationValues SEPARATOR ','»
-					createEAttribute_EnumerationValues(«emitLiteral(eAttributeData.getEAttribute())»,
-						«FOR enumerationValue : eAttributeData.getEnumerationValues() SEPARATOR ','»
-						«getEnumerationValueIndex(enumerationValue)»	/* «enumerationValue.toString()» */
-						«ENDFOR»
-					)
+				«var serializationFeatures = serializationRuleAnalysis.basicGetSerializationFeatures()»
+				«IF serializationFeatures !== null»
+				new @NonNull «newTypeReference(SerializationFeature)» [] {
+					«FOR serializationFeature : serializationFeatures SEPARATOR ','»
+					«generateSerializationRule_Feature(serializationFeature)»
 					«ENDFOR»
-				},
+				});
 				«ELSE»
-				null,
+				null);
 				«ENDIF»
-				«var eReference2AssignedRuleValueIndexes = serializationRuleAnalysis.basicGetEReference2AssignedRuleValueIndexes()»
-				«IF eReference2AssignedRuleValueIndexes !== null»
-					new @NonNull «newTypeReference(EReference_RuleIndexes)» [] {
-						«FOR eReferenceData : eReference2AssignedRuleValueIndexes SEPARATOR ','»
-							createEReference_RuleIndexes(«emitLiteral(eReferenceData.getEReference())»,
-								«getGrammarRuleVectorIndex(eReferenceData.getAssignedTargetRuleValueIndexes())») /* «FOR ruleValueIndex : eReferenceData.getAssignedTargetRuleValueIndexes() SEPARATOR '|'»«grammarAnalysis.getRuleValue(ruleValueIndex).toString()»«ENDFOR» */
-						«ENDFOR»
-					},
-				«ELSE»
-					null,
-				«ENDIF»
-				«var needsDefaultEAttributes = serializationRuleAnalysis.basicGetNeedsDefaultEAttributes()»
-				«IF needsDefaultEAttributes !== null»
-					new /*@NonNull*/ «newTypeReference(EAttribute)» [] {
-						«FOR eAttribute : needsDefaultEAttributes SEPARATOR ','»
-							«emitLiteral(eAttribute)»
-						«ENDFOR»
-					},
-				«ELSE»
-					null,
-				«ENDIF»
-				«var eAttribute2enumerationValue2grammarCardinalityArray = serializationRuleAnalysis.basicGetEAttribute2enumerationValue2grammarCardinality()»
-				«IF eAttribute2enumerationValue2grammarCardinalityArray !== null»
-					new @NonNull «newTypeReference(EAttribute_EnumerationValue_GrammarCardinality)» [] {
-						«FOR eAttribute2enumerationValue2grammarCardinality : eAttribute2enumerationValue2grammarCardinalityArray SEPARATOR ','»
-							new «newTypeReference(EAttribute_EnumerationValue_GrammarCardinality)»(«emitLiteral(eAttribute2enumerationValue2grammarCardinality.getEAttribute())»,
-								new @NonNull «newTypeReference(EnumerationValue_GrammarCardinality)» [] {
-								«FOR enumerationValue2grammarCardinality : eAttribute2enumerationValue2grammarCardinality.getEnumerationValue_GrammarCardinality() SEPARATOR ','»
-									«var enumerationValue = enumerationValue2grammarCardinality.getEnumerationValue()»
-										createEnumerationValue_GrammarCardinality(«enumerationValue !== null ? getEnumerationValueIndex(enumerationValue) : -1»«IF enumerationValue !== null» /* «enumerationValue.toString()» */«ENDIF», «emitGrammarCardinality(enumerationValue2grammarCardinality.getGrammarCardinality())»)
-								«ENDFOR»
-								}
-							)
-						«ENDFOR»
-					},
-				«ELSE»
-					null,
-				«ENDIF»
-				«var eReference2ruleValueIndex2grammarCardinalityArray = serializationRuleAnalysis.basicGetEReference2ruleValueIndex2grammarCardinality()»
-				«IF eReference2ruleValueIndex2grammarCardinalityArray !== null»
-					new @NonNull «newTypeReference(EReference_RuleIndex_GrammarCardinality)» [] {
-						«FOR eReference2ruleValueIndex2grammarCardinality : eReference2ruleValueIndex2grammarCardinalityArray SEPARATOR ','»
-							new «newTypeReference(EReference_RuleIndex_GrammarCardinality)»(«emitLiteral(eReference2ruleValueIndex2grammarCardinality.getEReference())»,
-								new @NonNull «newTypeReference(RuleIndex_GrammarCardinality)» [] {
-								«FOR ruleValueIndex2grammarCardinality : eReference2ruleValueIndex2grammarCardinality.getRuleIndex_GrammarCardinality() SEPARATOR ','»
-									new «newTypeReference(RuleIndex_GrammarCardinality)»(«ruleValueIndex2grammarCardinality.getRuleIndex()», «emitGrammarCardinality(ruleValueIndex2grammarCardinality.getGrammarCardinality())»)
-								«ENDFOR»
-								}
-							)
-						«ENDFOR»
-					});
-				«ELSE»
-					null);
-				«ENDIF»
+		'''
+	}
+
+	protected def generateSerializationRule_Feature(SerializationFeature serializationFeature) {
+		switch serializationFeature {
+		SerializationAttribute : return generateSerializationRule_Attribute(serializationFeature)
+		SerializationReference : return generateSerializationRule_Reference(serializationFeature)
+		default: serializationFeature.getClass().getName() //throw new UnsupportedOperationException()
+		}
+	}
+	
+	protected def generateSerializationRule_Attribute(SerializationAttribute serializationAttribute) {
+		'''
+		«var enumeratedAttribute = serializationAttribute.asEnumerated()»
+		«IF enumeratedAttribute !== null»
+		createSerializationEnumeratedAttribute(«emitLiteral(enumeratedAttribute.getEStructuralFeature())», «Boolean.toString(serializationAttribute.needsDefault())»,
+			«FOR enumerationValue : enumeratedAttribute.getEnumerationValues() SEPARATOR ','»
+			«var enumerationGrammarCardinality = enumeratedAttribute.getGrammarCardinality(enumerationValue)»
+			(«getEnumerationValueIndex(enumerationValue)»/*«enumerationValue.toString()»*/ << 4) | «enumerationGrammarCardinality.ordinal» /*[«enumerationGrammarCardinality.toString()»]*/
+			«ENDFOR»
+		)
+		«ELSE»
+		«var simpleAttribute = serializationAttribute as SerializationSimpleAttribute»
+		createSerializationSimpleAttribute(«emitLiteral(simpleAttribute.getEStructuralFeature())», «Boolean.toString(simpleAttribute.needsDefault())», «emitGrammarCardinality(simpleAttribute.getGrammarCardinality())»)
+		«ENDIF»
+		'''
+	}
+	
+	protected def generateSerializationRule_Reference(SerializationReference serializationReference) {
+		'''
+		«var targetGrammarRuleVector = serializationReference.getTargetGrammarRuleVector()»
+		«var grammarRuleIndexes = serializationReference.getGrammarRuleIndexes()»
+		createSerializationReference(«emitLiteral(serializationReference.getEStructuralFeature())», «IF targetGrammarRuleVector !== null»«getGrammarRuleVectorIndex(targetGrammarRuleVector)»/* «toString(targetGrammarRuleVector)» */«ELSE»-1«ENDIF»«IF grammarRuleIndexes.size() > 0»,«ENDIF»
+			«FOR grammarRuleIndex : serializationReference.getGrammarRuleIndexes() SEPARATOR ','»
+			«var referenceGrammarCardinality = serializationReference.getGrammarCardinality(grammarRuleIndex)»
+			(«grammarRuleIndex»/*«getGrammarRuleName(grammarRuleIndex)»*/ << 4) | «referenceGrammarCardinality.ordinal» /*[«referenceGrammarCardinality.toString()»]*/
+			«ENDFOR»
+		)
 		'''
 	}
 	
@@ -671,6 +692,8 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	protected def generateSerializationSegment(SerializationSegment segment) {
 		switch segment {
 		CustomSerializationSegment: return generateSerializationSegment_Custom(segment)
+		PostCommentSerializationSegment : return generateSerializationSegment_PostComment(segment)
+		PreCommentSerializationSegment : return generateSerializationSegment_PreComment(segment)
 		StringSerializationSegment case segment.getString().equals(SerializationBuilder.HALF_NEW_LINE) : return generateSerializationSegment_HalfNewLine(segment)
 		StringSerializationSegment case segment.getString().equals(SerializationBuilder.NEW_LINE) : return generateSerializationSegment_NewLine(segment)
 		StringSerializationSegment case segment.getString().equals(SerializationBuilder.NO_SPACE) : return generateSerializationSegment_NoSpace(segment)
@@ -707,6 +730,14 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	
 	protected def generateSerializationSegment_Pop(StringSerializationSegment segment) {
 		'''«newTypeReference(SerializationSegment)».POP'''
+	}
+	
+	protected def generateSerializationSegment_PostComment(PostCommentSerializationSegment segment) {
+		'''«newTypeReference(SerializationSegment)».POST_COMMENT'''
+	}
+	
+	protected def generateSerializationSegment_PreComment(PreCommentSerializationSegment segment) {
+		'''«newTypeReference(SerializationSegment)».PRE_COMMENT'''
 	}
 	
 	protected def generateSerializationSegment_Push(StringSerializationSegment segment) {
@@ -767,7 +798,7 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 			private void initSerializationSteps«page !== null ? page : ""»() {
 				«FOR elementIndex : getPageElementList(page, serializationStepsSize, SERIALIZATION_STEPS_PER_PAGE)»
 					«var serializationStep = serializationSteps.get(elementIndex)»
-					// «serializationStep.toString()»
+					// «getSerializationStepIndex(serializationStep)»: «toString(serializationStep)»
 					serializationSteps[«getSerializationStepIndex(serializationStep)»] = «generateSerializationStep(serializationStep)»;
 				«ENDFOR»
 			}
@@ -799,11 +830,11 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	protected def generateSerializationStep_AssignsStep(SerializationStepAssigns serializationStep) {
 		var enumerationValue = serializationStep.getEnumerationValue();
 		var calledRuleIndexes = serializationStep.getCalledRuleIndexes();
-		'''createSerializationStepAssigns(«emitLiteral(serializationStep.getEStructuralFeature())», «IF enumerationValue !== null»«getEnumerationValueIndex(enumerationValue)» /* «enumerationValue.toString()» */«ELSE»-1«ENDIF», «IF calledRuleIndexes !== null»new @NonNull Integer [] { «FOR calledRuleIndex : calledRuleIndexes SEPARATOR ','»«calledRuleIndex»/*«grammarAnalysis.getRuleValue(calledRuleIndex).getName()»*/«ENDFOR»}«ELSE»null«ENDIF», «getSerializationSegmentsIndex(serializationStep.getSerializationSegments())»)'''
+		'''createSerializationStepAssigns(«emitLiteral(serializationStep.getEStructuralFeature())», «getEnumerationValueIndex(enumerationValue)»«IF !enumerationValue.isNull()» /* «enumerationValue.toString()» */«ENDIF», «IF calledRuleIndexes !== null»new int[] { «FOR calledRuleIndex : calledRuleIndexes SEPARATOR ','»«calledRuleIndex»/*«grammarAnalysis.getRuleValue(calledRuleIndex).getName()»*/«ENDFOR»}«ELSE»null«ENDIF», «getSerializationSegmentsIndex(serializationStep.getSerializationSegments())»)'''
 	}
 
 	protected def generateSerializationStep_CrossReference(SerializationStepCrossReference serializationStep) {
-		'''createSerializationStepCrossReference(«emitLiteral(serializationStep.getEStructuralFeature())», getCrossReference(«emitLiteral(serializationStep.getEStructuralFeature())», "«emitCalledRule(serializationStep.getCrossReference())»"), «getSerializationSegmentsIndex(serializationStep.getSerializationSegments())»)'''
+		'''createSerializationStepCrossReference(«emitLiteral(serializationStep.getEStructuralFeature())», getCrossReference(«emitLiteral(serializationStep.getEStructuralFeature())», "«emitCalledRule(serializationStep.getCrossReference())»"), «serializationStep.getCalledRuleIndex()», «getSerializationSegmentsIndex(serializationStep.getSerializationSegments())»)'''
 	}
 	
 	protected def generateSerializationStep_Keyword(SerializationStepKeyword serializationStep) {
@@ -811,8 +842,9 @@ class DeclarativeSerializerFragmentXtend extends DeclarativeSerializerFragment
 	}
 	
 	protected def generateSerializationStep_Sequence(SerializationStepSequence serializationStep) {
+		var stepGrammarCardinality = serializationStep.getGrammarCardinality();
 		var serializationSegmentsIndex = getSerializationSegmentsIndex(serializationStep.getSerializationSegments());
-		'''createSerializationStepSequence(«serializationStep.getVariableIndex()», «serializationStep.getStepsRange()»«IF serializationSegmentsIndex >= 0», «serializationSegmentsIndex»«ENDIF»)'''
+		'''createSerializationStepSequence((«serializationStep.getVariableIndex()»/*V«serializationStep.getVariableIndex()»*/ << 4) | «stepGrammarCardinality.ordinal»/*[«stepGrammarCardinality.toString()»]*/, «serializationStep.getStepsRange()»«IF serializationSegmentsIndex >= 0», «serializationSegmentsIndex»«ENDIF»)'''
 	}
 	
 	protected def generateSerializationStep_Wrapper(SerializationStepWrapper serializationStep) {

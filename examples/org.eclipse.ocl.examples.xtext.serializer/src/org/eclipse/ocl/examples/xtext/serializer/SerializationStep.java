@@ -19,8 +19,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder.SerializationMetaDataDiagnosticStringBuilder;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
@@ -38,7 +40,7 @@ public abstract class SerializationStep
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
 
-		protected SerializationStepAbstractFeature(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull SerializationSegment @Nullable [] serializationSegments) {
+		protected SerializationStepAbstractFeature(@NonNull EStructuralFeature eStructuralFeature, @NonNull SerializationSegment @Nullable [] serializationSegments) {
 			super(serializationSegments);
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
@@ -76,10 +78,14 @@ public abstract class SerializationStep
 	public static class SerializationStepAssignKeyword extends SerializationStepAbstractFeature
 	{
 		protected final @NonNull EnumerationValue enumerationValue;
+		protected final boolean isBoolean;
 
-		public SerializationStepAssignKeyword(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue, @NonNull SerializationSegment @Nullable [] serializationSegments) {
+		public SerializationStepAssignKeyword(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue, @NonNull SerializationSegment @Nullable [] serializationSegments) {
 			super(eStructuralFeature, serializationSegments);
+			assert eStructuralFeature instanceof EAttribute;
 			this.enumerationValue = enumerationValue;
+			Class<?> instanceClass = eStructuralFeature.getEType().getInstanceClass();
+			this.isBoolean = (instanceClass == boolean.class) || (instanceClass == Boolean.class);
 		}
 
 		@Override
@@ -106,16 +112,44 @@ public abstract class SerializationStep
 			return enumerationValue;
 		}
 
-//		@Override
-//		public @NonNull String getGlobalSortKey() {
-//			return getGlobalSortKey("ak");
-//		}
+		@Override
+		public @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+			Integer size = dynamicRuleMatch.getSize((EAttribute)eStructuralFeature, enumerationValue);
+			String prefixReason = size > 0 ? "Incompatible" : "Missing";
+			if (!isBoolean) {
+				return prefixReason + " '" + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + "' String value.";
+			}
+			else {
+				return prefixReason + " '" + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + "' Boolean value.";
+			}
+		}
+
+		@Override
+		public int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			assert matcher.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
+			boolean isOk;
+			Object object = matcher.consumeNext(eStructuralFeature, null);
+			if (!isBoolean) {
+				isOk = (object instanceof String) && enumerationValue.isElement((String)object);
+			}
+			else {
+				isOk = object == Boolean.TRUE;
+			}
+			if (!isOk) {
+				matcher.setFailureStep(this);
+				return -1;
+			}
+			return thisSerializationStepIndex+1;
+		}
 
 		@Override
 		public boolean matches(@NonNull INode node, @NonNull UserElementSerializer serializer) {
 			if (node instanceof LeafNode) {
 				EObject grammarElement = node.getGrammarElement();
-//				return keyword.equals(node.getText());
+				if (grammarElement instanceof Keyword) {
+					String value = ((Keyword)grammarElement).getValue();
+					return SerializationUtils.safeEquals(value, eStructuralFeature.getName());
+				}
 			}
 			return false;
 		}
@@ -124,17 +158,23 @@ public abstract class SerializationStep
 		@Override
 		public void serializeInnerValue(int thisSerializationStepIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 			Object object = serializer.consumeNext(eStructuralFeature);
-			serializationBuilder.append(String.valueOf(object));
+			if (!isBoolean) {
+				serializationBuilder.append(String.valueOf(object));
+			}
+			else if (object == Boolean.TRUE){
+				serializationBuilder.append(enumerationValue.getName());
+			}
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toStepString(@NonNull DiagnosticStringBuilder s) {
 			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
 			s.append(SerializationUtils.getName(eStructuralFeature));
-			s.append(eStructuralFeature.isMany() ? "+=" : "=");
-			s.append(enumerationValue);
-			super.toString(s, depth);
+			s.append(eStructuralFeature.isMany() ? "+=" : isBoolean ? "?=" : "=");
+			s.append("'");
+			s.append(enumerationValue.getName());
+			s.append("'");
 		}
 	}
 
@@ -142,12 +182,9 @@ public abstract class SerializationStep
 	{
 		private int calledRuleIndex;
 
-		public SerializationStepAssignedRuleCall(/*@NonNull*/ EStructuralFeature eStructuralFeature, int calledValueIndex, @NonNull SerializationSegment @Nullable [] serializationSegments) {
+		public SerializationStepAssignedRuleCall(@NonNull EStructuralFeature eStructuralFeature, int calledValueIndex, @NonNull SerializationSegment @Nullable [] serializationSegments) {
 			super(eStructuralFeature, serializationSegments);
 			this.calledRuleIndex = calledValueIndex;
-			if (serializationSegments == null) {
-				getClass();		// XXX
-			}
 		}
 
 		@Override
@@ -172,6 +209,47 @@ public abstract class SerializationStep
 
 		public int getCalledRuleIndex() {
 			return calledRuleIndex;
+		}
+
+		@Override
+		public @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+			SerializationMetaData serializationMetaData = dynamicRuleMatch.getModelAnalysis().getSerializationMetaData();
+			String ruleName = serializationMetaData.getGrammarRuleValue(calledRuleIndex).getRuleName();
+			return "Incompatible/missing '" + ruleName + "' value for a '" + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + "'";
+		}
+
+		private boolean matchInnerValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			UserModelAnalysis modelAnalysis = matcher.getModelAnalysis();
+			Object eGet = matcher.consumeNext(eStructuralFeature, new int [] {calledRuleIndex});
+			if (eGet == UserElementMatcher.NOT_AN_OBJECT) {
+				matcher.setFailureStep(this);
+				return false;
+			}
+			if (eStructuralFeature instanceof EReference) {
+				assert ((EReference)eStructuralFeature).isContainment();
+			}
+			else {
+				try {
+					SerializationMetaData serializationMetaData = modelAnalysis.getSerializationMetaData();
+					GrammarRuleValue grammarRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
+					@SuppressWarnings("unused")
+					String val = modelAnalysis.getValueConverterService().toString(eGet, grammarRuleValue.getRuleName());
+				}
+				catch (Throwable t) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		@Override
+		public int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			assert matcher.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
+			if (!matchInnerValue(thisSerializationStepIndex, matcher)) {
+				assert matcher.hasFailed() : "No matcher failure for a " + getClass().getSimpleName();
+				return -1;
+			}
+			return thisSerializationStepIndex+1;
 		}
 
 		@Override
@@ -206,23 +284,22 @@ public abstract class SerializationStep
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toStepString(@NonNull DiagnosticStringBuilder s) {
 			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
 			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append(eStructuralFeature.isMany() ? "+=" : "=");
-			s.append(calledRuleIndex);
-			super.toString(s, depth);
+			s.appendRuleName(calledRuleIndex);
 		}
 	}
 
 
 	public static class SerializationStepAssigns extends SerializationStepAbstractFeature
 	{
-		private @Nullable EnumerationValue enumerationValue;
-		private @NonNull Integer @Nullable [] calledRuleIndexes;	// Cannot use GrammarRuleVEctor since must preserve declaration order
+		private @NonNull EnumerationValue enumerationValue;
+		private int @NonNull [] calledRuleIndexes;	// Cannot use GrammarRuleVector since must preserve declaration order
 
-		public SerializationStepAssigns(/*@NonNull*/ EStructuralFeature eStructuralFeature, @Nullable EnumerationValue enumerationValue, @NonNull Integer @Nullable [] calledRuleIndexes, @NonNull SerializationSegment @Nullable [] serializationSegments) {
+		public SerializationStepAssigns(@NonNull EStructuralFeature eStructuralFeature, @NonNull EnumerationValue enumerationValue, int @NonNull [] calledRuleIndexes, @NonNull SerializationSegment @Nullable [] serializationSegments) {
 			super(eStructuralFeature, serializationSegments);
 			this.enumerationValue = enumerationValue;
 			this.calledRuleIndexes = calledRuleIndexes;
@@ -230,12 +307,9 @@ public abstract class SerializationStep
 
 		@Override
 		public int computeHashCode() {
-			int hashCode = super.computeHashCode();
-			if (enumerationValue != null) {
-				enumerationValue.hashCode();
-			}
-			if (calledRuleIndexes != null) {
-				calledRuleIndexes.hashCode();
+			int hashCode = super.computeHashCode() + enumerationValue.hashCode();
+			for (int calledRuleIndex : calledRuleIndexes) {
+				hashCode += calledRuleIndex;
 			}
 			return hashCode;
 		}
@@ -255,21 +329,104 @@ public abstract class SerializationStep
 			if (!super.equalTo(that)) {
 				return false;
 			}
-			if (!SerializationUtils.safeEquals(this.enumerationValue, that.enumerationValue)) {
+			if (!this.enumerationValue.equals(that.enumerationValue)) {
 				return false;
 			}
-			if (!SerializationUtils.safeEquals(this.calledRuleIndexes, that.calledRuleIndexes)) {
+			if (this.calledRuleIndexes.length != that.calledRuleIndexes.length) {
 				return false;
+			}
+			for (int i= 0; i < this.calledRuleIndexes.length; i++) {
+				if (this.calledRuleIndexes[i] != that.calledRuleIndexes[i]) {
+					return false;
+				}
 			}
 			return true;
 		}
 
-		public @NonNull Integer @Nullable [] getCalledRuleIndexes() {
+		public int @NonNull [] getCalledRuleIndexes() {
 			return calledRuleIndexes;
 		}
 
-		public @Nullable EnumerationValue getEnumerationValue() {
+		public @NonNull EnumerationValue getEnumerationValue() {
 			return enumerationValue;
+		}
+
+		@Override
+		public @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+			SerializationMetaData serializationMetaData = dynamicRuleMatch.getModelAnalysis().getSerializationMetaData();
+			DiagnosticStringBuilder s = new SerializationMetaDataDiagnosticStringBuilder(serializationMetaData);
+			s.append("Incompatible/missing '");
+			new GrammarRuleVector(calledRuleIndexes).toString(s);
+			s.append("' value for a '");
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
+			s.append("::");
+			s.append(SerializationUtils.getName(eStructuralFeature));
+			s.append("'");
+			return s.toString();
+		}
+
+		private boolean matchInnerValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			Object object = matcher.consumeNext(eStructuralFeature, calledRuleIndexes);
+			if (object == UserElementMatcher.NOT_AN_OBJECT) {
+				matcher.setFailureStep(this);
+				return false;
+			}
+			UserModelAnalysis modelAnalysis = matcher.getModelAnalysis();
+			SerializationMetaData serializationMetaData = modelAnalysis.getSerializationMetaData();
+			if (eStructuralFeature instanceof EAttribute) {
+				EnumerationValue enumerationValue2 = enumerationValue;
+				@SuppressWarnings("null")
+				@NonNull String string = String.valueOf(object);
+				if (enumerationValue2.isElement(string)) {
+					return true;
+				}
+				for (int calledRuleIndex : calledRuleIndexes) {
+					@NonNull GrammarRuleValue calledRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
+					try {
+						@SuppressWarnings("unused")
+						String val = modelAnalysis.getValueConverterService().toString(object, calledRuleValue.getRuleName());
+						return true;
+					}
+					catch (ValueConverterException e) {}
+				}
+			}
+			else if (object != null) {
+				EReference eReference = (EReference)eStructuralFeature;
+				EObject eObject = (EObject)object;
+				assert eReference.isContainment();
+				UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis(eObject);
+			//	GrammarRuleVector callableGrammarRuleVector = elementAnalysis.getSerializationRules().getCallableGrammarRuleVector();
+				@NonNull SerializationRule @NonNull [] callableSerializationRules = elementAnalysis.getSerializationRules();
+				for (int calledRuleIndex : calledRuleIndexes) {			// search for matching rule
+				//	if (callableGrammarRuleVector.test(calledRuleIndex)) {
+						@NonNull GrammarRuleValue calledRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
+						for (@NonNull SerializationRule calledSerializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {
+							for (@NonNull SerializationRule callableSerializationRule : callableSerializationRules) {
+								if (calledSerializationRule == callableSerializationRule) {
+									DynamicRuleMatch match = elementAnalysis.basicCreateDynamicRuleMatch(calledSerializationRule);
+									if (match != null) {
+										return true;
+									}
+									break;
+								}
+							}
+						}
+				//	}
+				}
+			}
+			// else {}		-- null never happens
+			matcher.setFailureStep(this);
+			return false;
+		}
+
+		@Override
+		public int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			assert matcher.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
+			if (!matchInnerValue(thisSerializationStepIndex, matcher)) {
+				assert matcher.hasFailed() : "No matcher failure for a " + getClass().getSimpleName();
+				return -1;
+			}
+			return thisSerializationStepIndex+1;
 		}
 
 		@Override
@@ -280,12 +437,10 @@ public abstract class SerializationStep
 					AbstractRule rule = ((RuleCall)grammarElement).getRule();
 					String ruleName = rule.getName();
 					SerializationMetaData serializationMetaData = serializer.getSerializationMetaData();
-					if (calledRuleIndexes != null) {
-						for (int calledRuleIndex : calledRuleIndexes) {
-							GrammarRuleValue grammarRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
-							if (grammarRuleValue.getName().equals(ruleName)) {
-								return true;
-							}
+					for (int calledRuleIndex : calledRuleIndexes) {
+						GrammarRuleValue grammarRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
+						if (grammarRuleValue.getName().equals(ruleName)) {
+							return true;
 						}
 					}
 				}
@@ -298,40 +453,33 @@ public abstract class SerializationStep
 			Object object = serializer.consumeNext(eStructuralFeature);
 			UserModelAnalysis modelAnalysis = serializer.getModelAnalysis();
 			SerializationMetaData serializationMetaData = modelAnalysis.getSerializationMetaData();
-			@NonNull Integer[] calledRuleIndexes2 = calledRuleIndexes;
 			if (eStructuralFeature instanceof EAttribute) {
-				EnumerationValue enumerationValue2 = enumerationValue;
-				if (enumerationValue2 != null) {
-					@SuppressWarnings("null")
-					@NonNull String string = String.valueOf(object);
-					if (enumerationValue2.isElement(string)) {
-						serializationBuilder.append(string);
+				@SuppressWarnings("null")
+				@NonNull String string = String.valueOf(object);
+				if (enumerationValue.isElement(string)) {
+					serializationBuilder.append(string);
+					return;
+				}
+				for (int calledRuleIndex : calledRuleIndexes) {
+					@NonNull GrammarRuleValue calledRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
+					try {
+						String val = modelAnalysis.getValueConverterService().toString(object, calledRuleValue.getRuleName());
+						serializationBuilder.append(String.valueOf(val));
 						return;
 					}
-				}
-				if (calledRuleIndexes2 != null) {
-					for (int calledRuleIndex : calledRuleIndexes2) {
-						@NonNull GrammarRuleValue calledRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
-						try {
-							String val = modelAnalysis.getValueConverterService().toString(object, calledRuleValue.getRuleName());
-							serializationBuilder.append(String.valueOf(val));
-							return;
-						}
-						catch (ValueConverterException e) {}
-					}
+					catch (ValueConverterException e) {}
 				}
 				serializationBuilder.appendError("Failed to convert '" + String.valueOf(object) + "'");
 			}
-			else if ((object != null) && (calledRuleIndexes2 != null)) {
+			else if (object != null) {
 				EReference eReference = (EReference)eStructuralFeature;
 				EObject eObject = (EObject)object;
 				assert eReference.isContainment();
 				UserElementAnalysis elementAnalysis = modelAnalysis.getElementAnalysis(eObject);
-				UserSlotsAnalysis slotsAnalysis = elementAnalysis.getSlotsAnalysis();
-				for (int calledRuleIndex : calledRuleIndexes2) {			// search for matching rule
+				for (int calledRuleIndex : calledRuleIndexes) {			// search for matching rule
 					@NonNull GrammarRuleValue calledRuleValue = serializationMetaData.getGrammarRuleValue(calledRuleIndex);
 					for (@NonNull SerializationRule serializationRule : ((ParserRuleValue)calledRuleValue).getSerializationRules()) {
-						DynamicRuleMatch match = serializationRule.match(slotsAnalysis);
+						DynamicRuleMatch match = elementAnalysis.basicCreateDynamicRuleMatch(serializationRule);
 						if (match != null) {
 							serializer.serializeElement(serializationBuilder, eObject, calledRuleValue);
 							return;
@@ -344,34 +492,33 @@ public abstract class SerializationStep
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toStepString(@NonNull DiagnosticStringBuilder s) {
 			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
 			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append(eStructuralFeature.isMany() ? "+=" : "=");
 			boolean isFirst = true;
 			// enumerationValue
-			if (calledRuleIndexes != null) {
-				for (int calledRuleIndex : calledRuleIndexes) {
-					if (!isFirst) {
-						s.append("|");
-					}
-					s.append(calledRuleIndex);
-					isFirst = false;
+			for (int calledRuleIndex : calledRuleIndexes) {
+				if (!isFirst) {
+					s.append("|");
 				}
+				s.appendRuleName(calledRuleIndex);
+				isFirst = false;
 			}
-			super.toString(s, depth);
 		}
 	}
 
 	public static class SerializationStepCrossReference extends SerializationStepAbstractFeature
 	{
 		protected final @NonNull CrossReference crossReference;		// May be an equivalent - different container
+		protected final int calledRuleIndex;
 
-		public SerializationStepCrossReference(/*@NonNull*/ EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference, @NonNull SerializationSegment @Nullable [] serializationSegments) {
+		public SerializationStepCrossReference(@NonNull EStructuralFeature eStructuralFeature, @NonNull CrossReference crossReference, int calledRuleIndex, @NonNull SerializationSegment @Nullable [] serializationSegments) {
 			super(eStructuralFeature, serializationSegments);
 			assert eStructuralFeature != null;
 			this.crossReference = crossReference;
+			this.calledRuleIndex = calledRuleIndex;	// A derived property - not needed by hash/equals
 		}
 
 		@Override
@@ -412,15 +559,44 @@ public abstract class SerializationStep
 			}
 		}
 
+		public int getCalledRuleIndex() {
+			return calledRuleIndex;
+		}
+
 		public @NonNull CrossReference getCrossReference() {
 			return crossReference;
+		}
+
+		@Override
+		public @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+			SerializationMetaData serializationMetaData = dynamicRuleMatch.getModelAnalysis().getSerializationMetaData();
+			String ruleName = serializationMetaData.getGrammarRuleValue(calledRuleIndex).getRuleName();
+			return "Incompatible/missing '" + ruleName + "' value for a '" + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName() + "'";
+		}
+
+		@Override
+		public int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			assert matcher.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
+			Object object = matcher.consumeNext(eStructuralFeature, new int[] { calledRuleIndex });
+			if ( object == UserElementMatcher.NOT_AN_OBJECT) {
+				matcher.setFailureStep(this);
+				assert matcher.hasFailed() : "No matcher failure for a " + getClass().getSimpleName();
+				return -1;
+			}
+			return thisSerializationStepIndex+1;
 		}
 
 		@Override
 		public boolean matches(@NonNull INode node, @NonNull UserElementSerializer serializer) {
 			if (node instanceof LeafNode) {
 				EObject grammarElement = node.getGrammarElement();
-//				return keyword.equals(node.getText());
+				if (grammarElement instanceof CrossReference) {
+					EObject grammarContainer = grammarElement.eContainer();
+					if (grammarContainer instanceof Assignment) {
+						EStructuralFeature eStructuralFeature = SerializationUtils.getEStructuralFeature((Assignment)grammarContainer);
+						return eStructuralFeature == this.eStructuralFeature;
+					}
+				}
 			}
 			return false;
 		}
@@ -434,13 +610,12 @@ public abstract class SerializationStep
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toStepString(@NonNull DiagnosticStringBuilder s) {
 			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
 			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append(eStructuralFeature.isMany() ? "+=" : "=");
-			s.append(((RuleCall)crossReference.getTerminal()).getRule().getName());
-			super.toString(s, depth);
+			s.append(SerializationUtils.getName(SerializationUtils.getRule(((RuleCall)SerializationUtils.getTerminal(crossReference)))));
 		}
 	}
 
@@ -474,6 +649,11 @@ public abstract class SerializationStep
 		}
 
 		@Override
+		public @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+			throw new IllegalStateException();		// Cannot happen - cannot fail
+		}
+
+		@Override
 		public @NonNull String getGlobalSortKey(@NonNull Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id) {
 			StringBuilder s = new StringBuilder();
 			s.append("k-");
@@ -488,11 +668,18 @@ public abstract class SerializationStep
 		}
 
 		@Override
+		public int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			assert matcher.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
+			return thisSerializationStepIndex+1;
+		}
+
+		@Override
 		public boolean matches(@NonNull INode node, @NonNull UserElementSerializer serializer) {
 			if (node instanceof LeafNode) {
 				EObject grammarElement = node.getGrammarElement();
 				if (grammarElement instanceof Keyword) {
-					return keyword.equals(((Keyword)grammarElement).getValue());
+					String value = ((Keyword)grammarElement).getValue();
+					return keyword.equals(value);
 				}
 			}
 			return false;
@@ -504,32 +691,36 @@ public abstract class SerializationStep
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toStepString(@NonNull DiagnosticStringBuilder s) {
+			@SuppressWarnings("null")
+			@NonNull String javaString = Strings.convertToJavaString(keyword);
 			s.append("'");
-			s.append(Strings.convertToJavaString(keyword));
+			s.append(javaString);
 			s.append("'");
-			super.toString(s, depth);
 		}
 	}
 
 	public static class SerializationStepSequence extends SerializationStep
 	{
 		protected final int variableIndex;		// -ve for a unit step (with outer segments)
+		protected final @NonNull GrammarCardinality grammarCardinality;
+
 		/**
 		 * The number of steps within the linearized steps for the rule that support the sequence.
 		 */
 		private int stepsRange = 0;			// Exclusive
 
-		public SerializationStepSequence(int variableIndex, int stepsRange, @NonNull SerializationSegment @Nullable [] serializationSegments) {
+		public SerializationStepSequence(int variableIndex, int stepsRange, @NonNull GrammarCardinality grammarCardinality, @NonNull SerializationSegment @Nullable [] serializationSegments) {
 			super(serializationSegments);
 			this.variableIndex = variableIndex;
+			this.grammarCardinality = grammarCardinality;
 			this.stepsRange = stepsRange;
-		//	assert (variableIndex >= 0) || (serializationSegments != null);		// XXX
+			assert (variableIndex >= 0) || (serializationSegments != null);
 		}
 
 		@Override
 		public int computeHashCode() {
-			return super.computeHashCode() + 3 * variableIndex + 5 * stepsRange;
+			return super.computeHashCode() + 3 * variableIndex + 5 * stepsRange + 7 * grammarCardinality.hashCode();
 		}
 
 		@Override
@@ -546,7 +737,13 @@ public abstract class SerializationStep
 		protected boolean equalTo(@NonNull SerializationStepSequence that) {
 			return super.equalTo(that)
 				&& (this.variableIndex == that.variableIndex)
-				&& (this.stepsRange == that.stepsRange);
+				&& (this.stepsRange == that.stepsRange)
+				&& (this.grammarCardinality == that.grammarCardinality);
+		}
+
+		@Override
+		public @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+			throw new IllegalStateException();		// FIXME step cardinality
 		}
 
 		@Override
@@ -556,9 +753,15 @@ public abstract class SerializationStep
 			s.append(variableIndex);
 			s.append("-");
 			s.append(stepsRange);
+			s.append("-");
+			s.append(grammarCardinality.ordinal());
 			getGlobalSortKey(s, serializationSegments2id);
 			@SuppressWarnings("null") @NonNull String castString = s.toString();
 			return castString;
+		}
+
+		public @NonNull GrammarCardinality getGrammarCardinality() {
+			return grammarCardinality;
 		}
 
 		public int getStepsRange() {
@@ -567,6 +770,53 @@ public abstract class SerializationStep
 
 		public int getVariableIndex() {
 			return variableIndex;
+		}
+
+		private boolean matchInnerValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			@NonNull SerializationStep[] serializationSteps = matcher.getSerializationRule().getSerializationSteps();
+			assert serializationSteps[thisSerializationStepIndex] == this;
+			int startIndex = thisSerializationStepIndex + 1;
+			int endIndex = startIndex + stepsRange;
+			for (int index = startIndex; index < endIndex; ) {
+				SerializationStep serializationStep = serializationSteps[index];
+				index = serializationStep.matchOuterValue(index, matcher);
+				if (index < startIndex) {
+					assert matcher.hasFailed();
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private int matchNextValue(int thisSerializationStepIndex, UserElementMatcher matcher, int matchedCount) {
+			matcher.push();
+			boolean matches = matchInnerValue(thisSerializationStepIndex, matcher) && matcher.hasProgressed();
+			if (matches) {
+				matchedCount = matchNextValue(thisSerializationStepIndex, matcher, matchedCount+1);		// FIXME support ?/+ cardinality
+			}
+			matcher.pop(matches);
+			return matchedCount;
+		}
+
+		@Override
+		public int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			Integer knownValue;
+			if (variableIndex < 0) {
+				knownValue = -variableIndex;
+			}
+			else {
+				knownValue = matcher.basicGetValue(variableIndex);
+			}
+			if (knownValue != null) {
+				if (!matchInnerValue(thisSerializationStepIndex, matcher)) {
+					assert matcher.hasFailed() : "No matcher failure for a " + getClass().getSimpleName();
+				}
+			}
+			else {
+				int matchedCount = matchNextValue(thisSerializationStepIndex, matcher, 0);
+				matcher.setValue(variableIndex, matchedCount);
+			}
+			return thisSerializationStepIndex + 1 + stepsRange;
 		}
 
 		@Override
@@ -603,17 +853,18 @@ public abstract class SerializationStep
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toStepString(@NonNull DiagnosticStringBuilder s) {
+			@SuppressWarnings("null")
+			@NonNull String rangeString = Integer.toString(stepsRange);
 			if (variableIndex >= 0) {
-				s.append(String.format("V%02d", variableIndex));
+				s.appendWithFormat("V%02d", variableIndex);
 			}
 			else {
 				s.append("1");
 			}
 			s.append("*");
-			s.append(stepsRange);
+			s.append(rangeString);
 			s.append("-steps");
-			super.toString(s, depth);
 		}
 	}
 
@@ -635,12 +886,23 @@ public abstract class SerializationStep
 		}
 
 		@Override
+		public @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch) {
+			throw new IllegalStateException();		// Cannot happen - cannot fail
+		}
+
+		@Override
 		public @NonNull String getGlobalSortKey(@NonNull Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id) {
 			StringBuilder s = new StringBuilder();
 			s.append("w");
 			getGlobalSortKey(s, serializationSegments2id);
 			@SuppressWarnings("null") @NonNull String castString = s.toString();
 			return castString;
+		}
+
+		@Override
+		public int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher) {
+			assert matcher.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
+			return thisSerializationStepIndex+1;
 		}
 
 		@Override
@@ -669,9 +931,8 @@ public abstract class SerializationStep
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toStepString(@NonNull DiagnosticStringBuilder s) {
 			s.append("wrapper");
-			super.toString(s, depth);
 		}
 	}
 
@@ -685,10 +946,8 @@ public abstract class SerializationStep
 
 	protected int computeHashCode() {
 		int hash = getClass().hashCode();
-		if (serializationSegments != null) {
-			for (@NonNull SerializationSegment serializationSegment : serializationSegments) {
-				hash = 3 * hash + serializationSegment.hashCode();
-			}
+		for (@NonNull SerializationSegment serializationSegment : serializationSegments) {
+			hash = 3 * hash + serializationSegment.hashCode();
 		}
 		return hash;
 	}
@@ -699,17 +958,12 @@ public abstract class SerializationStep
 	protected boolean equalTo(@NonNull SerializationStep that) {
 		@NonNull SerializationSegment[] theseSegments = this.serializationSegments;
 		@NonNull SerializationSegment[] thoseSegments = that.serializationSegments;
-		if ((theseSegments != null) || (thoseSegments != null)) {
-			if ((theseSegments == null) || (thoseSegments == null)) {
+		if (theseSegments.length != thoseSegments.length) {
+			return false;
+		}
+		for (int i = 0; i < theseSegments.length; i++) {
+			if (!theseSegments[i].equals(thoseSegments[i])) {
 				return false;
-			}
-			if (theseSegments.length != thoseSegments.length) {
-				return false;
-			}
-			for (int i = 0; i < theseSegments.length; i++) {
-				if (!theseSegments[i].equals(thoseSegments[i])) {
-					return false;
-				}
 			}
 		}
 		return true;
@@ -721,6 +975,10 @@ public abstract class SerializationStep
 	public void formatInnerValue(@NonNull UserElementFormatter formatter, @NonNull SerializationBuilder serializationBuilder) {
 		serializationBuilder.append(formatter.getLeafNode().getText());
 	} */
+
+	public abstract @NonNull String getFailureReason(@NonNull DynamicRuleMatch dynamicRuleMatch);// {
+//		return "BUG -- missing failure reason for a '" + getClass().getSimpleName() + "'";
+//	}
 
 	/**
 	 * Accumulate the outer value of this serialization step as determined by its serialization segements,
@@ -742,10 +1000,9 @@ public abstract class SerializationStep
 	public abstract @NonNull String getGlobalSortKey(@NonNull Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id);
 
 	protected void getGlobalSortKey(@NonNull StringBuilder s, @NonNull Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id) {
-		@NonNull SerializationSegment[] serializationSegments2 = serializationSegments;
 		s.append("-");
-		if ((serializationSegments2 != null) && (serializationSegments2.length > 0)) {
-			s.append(serializationSegments2id.get(Lists.newArrayList(serializationSegments2)));
+		if (serializationSegments.length > 0) {
+			s.append(serializationSegments2id.get(Lists.newArrayList(serializationSegments)));
 		}
 		else {
 			s.append("0");
@@ -766,9 +1023,15 @@ public abstract class SerializationStep
 	}
 
 	/**
-	 * Return true if this serialization step si appropriate for a node,
-	 * @param childNode
-	 * @return
+	 * Accumulate the outer value of this serialization step as determined by its serialization segements,
+	 * to serializationBuilder using the serializer for context. A coumpound step such as a sequence may
+	 * use additional steps from serializer.getSerializationRule().getSerialiationSteps() starting at thisSerializationStepIndex+1,
+	 * and returning the index following this and any additionally used steps.
+	 */
+	public abstract int matchOuterValue(int thisSerializationStepIndex, @NonNull UserElementMatcher matcher);
+
+	/**
+	 * Return true if this serialization step is appropriate for a node,
 	 */
 	public abstract boolean matches(@NonNull INode node, @NonNull UserElementSerializer serializer);
 
@@ -785,37 +1048,33 @@ public abstract class SerializationStep
 	 */
 	public int serializeOuterValue(int thisSerializationStepIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		assert serializer.getSerializationRule().getSerializationSteps()[thisSerializationStepIndex] == this;
-		if (serializationSegments != null) {
-			for (@NonNull SerializationSegment serializationSegment : serializationSegments) {
-				serializationSegment.serialize(thisSerializationStepIndex, serializer, serializationBuilder);
-			}
-		}
-		else {
-			serializeInnerValue(thisSerializationStepIndex, serializer, serializationBuilder);
+		for (@NonNull SerializationSegment serializationSegment : serializationSegments) {
+			serializationSegment.serialize(thisSerializationStepIndex, serializer, serializationBuilder);
 		}
 		return thisSerializationStepIndex+1;
 	}
 
-	@Override
-	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 0);
-		@SuppressWarnings("null")
-		@NonNull String castString = s.toString();
-		return castString;
+	public void toSegmentsString(@NonNull DiagnosticStringBuilder s, int depth) {
+		@NonNull SerializationSegment[] serializationSegments2 = serializationSegments;
+		for (@NonNull SerializationSegment serializationSegment : serializationSegments2) {
+			s.append(" ");
+			s.append(serializationSegment.toString());
+		}
 	}
 
-	public void toString(@NonNull StringBuilder s, int depth) {
-		@NonNull SerializationSegment[] serializationSegments2 = serializationSegments;
-		s.append(" ||");
-		if (serializationSegments2 != null) {
-			for (@NonNull SerializationSegment serializationSegment : serializationSegments2) {
-				s.append(" ");
-				s.append(serializationSegment.toString());
-			}
-		}
-		else {
-			s.append(" value");
-		}
+	public abstract void toStepString(@NonNull DiagnosticStringBuilder s);
+
+	@Override
+	public @NonNull String toString() {
+		DiagnosticStringBuilder s = new DiagnosticStringBuilder();
+		toString(s, 0);
+		return s.toString();
 	}
+
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
+		toStepString(s);
+		s.append(" ||");
+		toSegmentsString(s, depth);
+	}
+
 }

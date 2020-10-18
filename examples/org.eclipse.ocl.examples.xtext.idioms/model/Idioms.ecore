@@ -28,13 +28,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CompoundLocator" eSuperTypes="#//Locator">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A CompoundLocator identifies the smllest compound element composing the locators for the member elements."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedLocators" lowerBound="1"
-        upperBound="-1" eType="#//Locator" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomSegment" eSuperTypes="#//Segment">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CustomSegment enables a user defined class to contribute segments to the&#xA;overall output. This is most useful for implementing the appropriate code&#xA;to locate comment text that may be hidden irregularly. The user class should&#xA;derive from at least CustomSegmentSupport and may inherit some useful&#xA;functionality by deriving from CommentSegmentSupport."/>
@@ -101,7 +94,14 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The IdiomModel prpvodes the root of the Idiom Model configuring an Xtext grammar and importing&#xA;IdiomModels for other used Xtext grammars. Locators and Segemnts are shared by the Idioms."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A convenience name for the IdiomModel."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="names" lowerBound="1" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A convenience name for the IdiomModel."/>
       </eAnnotations>

@@ -65,16 +65,6 @@ public interface IdiomsFactory
 	AssignmentLocator createAssignmentLocator();
 
 	/**
-	 * Returns a new object of class '<em>Compound Locator</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Compound Locator</em>'.
-	 * @generated
-	 */
-	@NonNull
-	CompoundLocator createCompoundLocator();
-
-	/**
 	 * Returns a new object of class '<em>Custom Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

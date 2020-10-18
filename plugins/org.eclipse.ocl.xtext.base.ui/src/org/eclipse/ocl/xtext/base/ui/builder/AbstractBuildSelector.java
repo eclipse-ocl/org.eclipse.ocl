@@ -116,7 +116,6 @@ public abstract class AbstractBuildSelector implements IResourceVisitor, IResour
 	 * Return the appropriate Problem Marked Id for the results of validating iFile.
 	 * Defaults to "org.eclipse.emf.ecore.diagnostic". Subclasses should override.
 	 */
-	@SuppressWarnings("null")
 	protected @NonNull String getMarkerId(@NonNull IFile iFile) {
 		return EValidator.MARKER;
 	}

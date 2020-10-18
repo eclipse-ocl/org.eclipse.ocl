@@ -120,6 +120,7 @@ public abstract class AbstractAssignmentAnalysis<T extends AbstractElement> impl
 		return SerializationUtils.getName(sourceRuleAnalysis.getRule()) + "-" + eStructuralFeature.getName();
 	}
 
+	@Override
 	public @NonNull ParserRuleAnalysis getSourceRuleAnalysis() {
 		return sourceRuleAnalysis;
 	}

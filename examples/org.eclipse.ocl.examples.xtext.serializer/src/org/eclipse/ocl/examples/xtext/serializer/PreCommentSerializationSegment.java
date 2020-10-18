@@ -14,10 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.xtext.nodemodel.INode;
 
 /**
- * XtextPreCommentSegmentSupport provides support for serializing and formatting typical
+ * PreCommentSerializationSegment provides support for serializing and formatting typical
  * Xtext single and multi-line comments stored as leading hidden LeafNodes.
  */
-public class XtextPreCommentSegmentSupport extends XtextAbstractCommentSegmentSupport
+public class PreCommentSerializationSegment extends AbstractCommentSerializationSegment
 {
 	@Override
 	public void format(@NonNull UserElementFormatter formatter, @NonNull SerializationBuilder serializationBuilder) {
@@ -41,5 +41,10 @@ public class XtextPreCommentSegmentSupport extends XtextAbstractCommentSegmentSu
 				}
 			}
 		}
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return SerializationBuilder.PRE_COMMENT;
 	}
 }

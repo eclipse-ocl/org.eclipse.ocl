@@ -27,6 +27,7 @@ import org.eclipse.xtext.AbstractMetamodelDeclaration;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Annotation;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CharacterRange;
 import org.eclipse.xtext.CrossReference;
@@ -62,6 +63,17 @@ public abstract class AbstractGrammarResource extends XMIResourceImpl
 			// Ignore - method not available in Xtext < 2.6.
 		}
 		ABSTRACT_ELEMENT_SET_FIRST_SET_PREDICATED_METHOD = abstractElement_setFirstSetPredicated_Method;
+	}
+
+	protected static void addAnnotation(/*@NonNull*/ AbstractRule rule, @NonNull String name) {
+		try {
+			@SuppressWarnings("null")@NonNull Annotation annotation = XtextFactory.eINSTANCE.createAnnotation();
+			annotation.setName(name);
+			rule.getAnnotations().add(annotation);
+		}
+		catch (Throwable t) {
+			// Igbnore annotations are recent and cosmetic.
+		}
 	}
 
 	protected static @NonNull Action createAction(@Nullable String feature, @Nullable String operator, @NonNull TypeRef typeRef) {

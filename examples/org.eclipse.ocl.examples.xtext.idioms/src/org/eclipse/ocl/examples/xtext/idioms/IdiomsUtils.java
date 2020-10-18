@@ -45,10 +45,6 @@ public class IdiomsUtils extends SerializationUtils
 		return nonNullState(subIdiom.getOwnedLocator());
 	}
 
-	public static @NonNull Iterable<@NonNull Locator> getOwnedLocators(@NonNull CompoundLocator compoundLocator) {
-		return nullFree(compoundLocator.getOwnedLocators());
-	}
-
 	public static @NonNull Segment getOwnedSegment(@NonNull SegmentDeclaration segmentDeclaration) {
 		return nonNullState(segmentDeclaration.getOwnedSegment());
 	}

@@ -648,8 +648,10 @@ public class EssentialOCLGrammarResource extends AbstractGrammarResource
 					createKeyword("*")));
 			PR_UnreservedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnreservedName));
+			addAnnotation(PR_UnreservedName, "Override");
 			PR_UnrestrictedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnrestrictedName));
+			addAnnotation(PR_UnrestrictedName, "Override");
 		}
 
 		private static @NonNull Grammar initGrammar() {

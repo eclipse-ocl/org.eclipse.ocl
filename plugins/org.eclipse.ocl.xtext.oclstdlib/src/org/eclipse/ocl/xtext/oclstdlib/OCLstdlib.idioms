@@ -8,5 +8,5 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-model OCLstdlib
+model org.eclipse.ocl.xtext.oclstdlib.OCLstdlib
 with "platform:/resource/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.idioms"

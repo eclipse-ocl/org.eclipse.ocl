@@ -40,14 +40,14 @@ public class IdiomsParser extends AbstractContentAssistParser {
 		}
 
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, IdiomsGrammarAccess grammarAccess) {
-			builder.put(grammarAccess.getIdiomsModelAccess().getAlternatives_4(), "rule__IdiomsModel__Alternatives_4");
-			builder.put(grammarAccess.getElementLocatorAccess().getAlternatives(), "rule__ElementLocator__Alternatives");
+			builder.put(grammarAccess.getIdiomsModelAccess().getAlternatives_5(), "rule__IdiomsModel__Alternatives_5");
 			builder.put(grammarAccess.getLocatorAccess().getAlternatives(), "rule__Locator__Alternatives");
 			builder.put(grammarAccess.getSegmentAccess().getAlternatives(), "rule__Segment__Alternatives");
 			builder.put(grammarAccess.getIdiomAccess().getAlternatives_5(), "rule__Idiom__Alternatives_5");
 			builder.put(grammarAccess.getSubIdiomAccess().getAlternatives_1(), "rule__SubIdiom__Alternatives_1");
 			builder.put(grammarAccess.getSubIdiomAccess().getOwnedSegmentsAlternatives_3_1_0(), "rule__SubIdiom__OwnedSegmentsAlternatives_3_1_0");
 			builder.put(grammarAccess.getIdiomsModelAccess().getGroup(), "rule__IdiomsModel__Group__0");
+			builder.put(grammarAccess.getIdiomsModelAccess().getGroup_2(), "rule__IdiomsModel__Group_2__0");
 			builder.put(grammarAccess.getEPackageImportAccess().getGroup(), "rule__EPackageImport__Group__0");
 			builder.put(grammarAccess.getEPackageImportAccess().getGroup_2(), "rule__EPackageImport__Group_2__0");
 			builder.put(grammarAccess.getIdiomsImportAccess().getGroup(), "rule__IdiomsImport__Group__0");
@@ -58,8 +58,6 @@ public class IdiomsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAssignmentLocatorAccess().getGroup(), "rule__AssignmentLocator__Group__0");
 			builder.put(grammarAccess.getAssignmentLocatorAccess().getGroup_1(), "rule__AssignmentLocator__Group_1__0");
 			builder.put(grammarAccess.getAssignmentLocatorAccess().getGroup_1_0(), "rule__AssignmentLocator__Group_1_0__0");
-			builder.put(grammarAccess.getCompoundLocatorAccess().getGroup(), "rule__CompoundLocator__Group__0");
-			builder.put(grammarAccess.getCompoundLocatorAccess().getGroup_2(), "rule__CompoundLocator__Group_2__0");
 			builder.put(grammarAccess.getFinalLocatorAccess().getGroup(), "rule__FinalLocator__Group__0");
 			builder.put(grammarAccess.getReturnsLocatorAccess().getGroup(), "rule__ReturnsLocator__Group__0");
 			builder.put(grammarAccess.getReturnsLocatorAccess().getGroup_1(), "rule__ReturnsLocator__Group_1__0");
@@ -92,12 +90,13 @@ public class IdiomsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getIdiomAccess().getGroup_5_1(), "rule__Idiom__Group_5_1__0");
 			builder.put(grammarAccess.getSubIdiomAccess().getGroup(), "rule__SubIdiom__Group__0");
 			builder.put(grammarAccess.getSubIdiomAccess().getGroup_3(), "rule__SubIdiom__Group_3__0");
-			builder.put(grammarAccess.getIdiomsModelAccess().getNameAssignment_1(), "rule__IdiomsModel__NameAssignment_1");
-			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedWithsAssignment_2(), "rule__IdiomsModel__OwnedWithsAssignment_2");
-			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedImportsAssignment_3(), "rule__IdiomsModel__OwnedImportsAssignment_3");
-			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedLocatorDeclarationsAssignment_4_0(), "rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_4_0");
-			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedSegmentDeclarationsAssignment_4_1(), "rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_4_1");
-			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedIdiomsAssignment_4_2(), "rule__IdiomsModel__OwnedIdiomsAssignment_4_2");
+			builder.put(grammarAccess.getIdiomsModelAccess().getNamesAssignment_1(), "rule__IdiomsModel__NamesAssignment_1");
+			builder.put(grammarAccess.getIdiomsModelAccess().getNamesAssignment_2_1(), "rule__IdiomsModel__NamesAssignment_2_1");
+			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedWithsAssignment_3(), "rule__IdiomsModel__OwnedWithsAssignment_3");
+			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedImportsAssignment_4(), "rule__IdiomsModel__OwnedImportsAssignment_4");
+			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedLocatorDeclarationsAssignment_5_0(), "rule__IdiomsModel__OwnedLocatorDeclarationsAssignment_5_0");
+			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedSegmentDeclarationsAssignment_5_1(), "rule__IdiomsModel__OwnedSegmentDeclarationsAssignment_5_1");
+			builder.put(grammarAccess.getIdiomsModelAccess().getOwnedIdiomsAssignment_5_2(), "rule__IdiomsModel__OwnedIdiomsAssignment_5_2");
 			builder.put(grammarAccess.getEPackageImportAccess().getEPackageAssignment_1(), "rule__EPackageImport__EPackageAssignment_1");
 			builder.put(grammarAccess.getEPackageImportAccess().getAsAssignment_2_1(), "rule__EPackageImport__AsAssignment_2_1");
 			builder.put(grammarAccess.getIdiomsImportAccess().getIdiomsModelAssignment_1(), "rule__IdiomsImport__IdiomsModelAssignment_1");
@@ -107,8 +106,6 @@ public class IdiomsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAssignmentLocatorAccess().getEPackageAssignment_1_0_0(), "rule__AssignmentLocator__EPackageAssignment_1_0_0");
 			builder.put(grammarAccess.getAssignmentLocatorAccess().getEClassAssignment_1_1(), "rule__AssignmentLocator__EClassAssignment_1_1");
 			builder.put(grammarAccess.getAssignmentLocatorAccess().getEStructuralFeatureAssignment_2(), "rule__AssignmentLocator__EStructuralFeatureAssignment_2");
-			builder.put(grammarAccess.getCompoundLocatorAccess().getOwnedLocatorsAssignment_1(), "rule__CompoundLocator__OwnedLocatorsAssignment_1");
-			builder.put(grammarAccess.getCompoundLocatorAccess().getOwnedLocatorsAssignment_2_1(), "rule__CompoundLocator__OwnedLocatorsAssignment_2_1");
 			builder.put(grammarAccess.getKeywordLocatorAccess().getStringAssignment(), "rule__KeywordLocator__StringAssignment");
 			builder.put(grammarAccess.getReturnsLocatorAccess().getEPackageAssignment_1_0(), "rule__ReturnsLocator__EPackageAssignment_1_0");
 			builder.put(grammarAccess.getReturnsLocatorAccess().getEClassAssignment_2(), "rule__ReturnsLocator__EClassAssignment_2");

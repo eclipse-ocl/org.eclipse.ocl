@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.build.fragments;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,11 +23,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.AbstractRuleAnalysis;
@@ -36,7 +41,9 @@ import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeFormatter;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
+import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
@@ -45,8 +52,12 @@ import org.eclipse.ocl.examples.xtext.serializer.ParserRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEAttributeSize;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEReferenceSize;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationAttribute;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationReference;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepAbstractFeature;
@@ -71,6 +82,7 @@ import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.formatting.INodeModelFormatter;
 import org.eclipse.xtext.serializer.ISerializer;
 import org.eclipse.xtext.util.Strings;
+import org.eclipse.xtext.xtext.generator.CodeConfig;
 import org.eclipse.xtext.xtext.generator.IXtextGeneratorLanguage;
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming;
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory;
@@ -79,6 +91,7 @@ import org.eclipse.xtext.xtext.generator.model.JavaFileAccess;
 import org.eclipse.xtext.xtext.generator.model.TypeReference;
 import org.eclipse.xtext.xtext.generator.serializer.SerializerFragment2;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -91,6 +104,17 @@ import com.google.inject.Provider;
 @SuppressWarnings("restriction")
 public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 {
+	@Inject CodeConfig codeConfig;
+
+	protected final class DeclarativeSerializerFragmentDiagnosticStringBuilder extends DiagnosticStringBuilder
+	{
+		@Override
+		public void appendRuleName(int ruleValueIndex) {
+			assert grammarRuleValueIndex2ruleName != null;
+			append(grammarRuleValueIndex2ruleName.get(ruleValueIndex));
+		}
+	}
+
 	protected static final class SerializationStepComparator extends SerializationUtils.ToStringComparator<@NonNull SerializationStep>
 	{
 		protected final @NonNull Map<@NonNull List<@NonNull SerializationSegment>, @Nullable Integer> serializationSegments2id;
@@ -164,14 +188,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	private static final @NonNull List<@Nullable Integer> UNPAGED_PAGE_NUMBER_LIST = Collections.singletonList(null);
 
 	// Following are empirically set to comfortably avoid 64k limits.
-	public static int ECLASS_VALUES_PER_PAGE = 100;
-	public static int ENUM_VALUES_PER_PAGE = 256;
+	public static int ECLASS_VALUES_PER_PAGE = 128;
+	public static int ENUM_VALUES_PER_PAGE = 512;
 	public static int GRAMMAR_RULE_VALUES_PER_PAGE = 256;
-	public static int GRAMMAR_RULE_VECTORS_PER_PAGE = 256;
+	public static int GRAMMAR_RULE_VECTORS_PER_PAGE = 512;
 	public static int MATCH_STEPS_PER_PAGE = 512;
 	public static int MATCH_TERMS_PER_PAGE = 512;
 	public static int SERIALIZATION_RULES_PER_PAGE = 64;
-	public static int SERIALIZATION_SEGMENTS_PER_PAGE = 128;
+	public static int SERIALIZATION_SEGMENTS_PER_PAGE = 512;
 	public static int SERIALIZATION_STEPS_PER_PAGE = 512;
 
 	@Inject
@@ -224,14 +248,23 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 
 	protected void doGenerateAnalysisStubFile() {
 		JavaFileAccess javaFile = this.doGetAnalysisStubFile();
-		timestamp.log("generate write analysis stub");
+		timestamp.log("generate analysis stub");
 		if (javaFile != null) {
 			javaFile.setMarkedAsGenerated(true);		// FIXME There must be a smarter way to force output
 			javaFile.writeTo(this.getProjectConfig().getRuntime().getSrcGen());
 		}
 	}
 
-	protected JavaFileAccess doGetAnalysisStubFile() {
+/*	protected void doGenerateIdiomsStubFile() {
+		TextFileAccess idiomsFile = this.doGetIdiomsStubFile();
+		timestamp.log("generate idioms stub");
+		if (idiomsFile != null) {
+		//	idiomsFile.setMarkedAsGenerated(true);		// FIXME There must be a smarter way to force output
+			idiomsFile.writeTo(this.getProjectConfig().getRuntime().getSrc());
+		}
+	} */
+
+	protected @Nullable JavaFileAccess doGetAnalysisStubFile() {
 		if (!isGenerateStub()) {
 			return null;
 		}
@@ -249,6 +282,65 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		GrammarAnalysis grammarAnalysis = getGrammarAnalysis();
 		javaFile.setContent(doGetSerializationMetaDataContent(grammarAnalysis));
 		return javaFile;
+	}
+
+	protected void doGetIdiomsStubFile() throws IOException {
+		if (!isGenerateStub()) {
+			return;
+		}
+		IXtextGeneratorLanguage language = getLanguage();
+		Grammar grammar = getGrammar();
+		assert grammar != null;
+		URI xtextURI = grammar.eResource().getURI();
+		URI idiomsURI = xtextURI.trimFileExtension().appendFileExtension("idioms");
+		ResourceSet resourceSet = language.getResourceSet();
+		URIConverter uriConverter = resourceSet.getURIConverter();
+		boolean idiomsExists = uriConverter.exists(idiomsURI, null);
+		if (idiomsExists) {
+			return;
+		}
+		OutputStream outputStream = uriConverter.createOutputStream(idiomsURI);
+		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
+		writer.append(codeConfig.getFileHeader());
+		writer.append("\nmodel " + grammar.getName() + "\n");
+		Iterable<@NonNull Grammar> usedGrammars = SerializationUtils.getUsedGrammars(grammar);
+		if (!Iterables.isEmpty(usedGrammars)) {
+			writer.append("\n/** Inherit idioms from inherited grammars. */\n");
+			for (@NonNull Grammar usedGrammar : usedGrammars) {
+				writer.append("// with \"platform:/resource/... " + usedGrammar.eResource().getURI().toString() + "...idioms\"\n");
+			}
+		}
+
+		writer.append("\n/** Import any Ecore metamodels used by EClass or assignment-location. */\n");
+		writer.append("// import \"platform:/resource/...ecore#/\" as mymodel\n");
+
+		writer.append("\n/** Mix-in idiom weaving standard Xtext comments everywhere visible. */\n");
+		writer.append("mixin idiom COMMENTS at final do pre-comment value post-comment;\n");
+
+		writer.append("\n/** Idiom indenting text between braces */\n");
+		writer.append("idiom BRACES {\n");
+		writer.append("\tat \"{\" do soft-space value push soft-new-line;\n");
+		writer.append("\tat \"}\" do pop soft-space value soft-new-line;\n");
+		writer.append("}\n");
+
+		writer.append("\n/** Returned EClass-Localized idiom overiding a subsequent global idiom imposing spacing around colons */\n");
+		writer.append("//idiom COLON for mymodel::MyClass at \":\" do soft-space value soft-space;\n");
+
+		writer.append("\n/** Rule-Localized idiom overiding a subsequent global idiom imposing lines around colons */\n");
+		writer.append("//idiom COLON in MyRule at \":\" do soft-new-line value soft-new-line;\n");
+
+		writer.append("\n/** Idiom suppressing spaces before all colons */\n");
+		writer.append("idiom COLON at \":\" do no-space value soft-space;\n");
+
+		writer.append("\n/** Idiom separating repeated XXX assignments by a blank line */\n");
+		writer.append("//idiom XXX_SPACING at each assignment mymodel::MyClass::XXX do half-new-line value half-new-line;\n");
+
+		writer.append("\n/** Idiom surrounding repeated YYY assignments by a blank line */\n");
+		writer.append("//idiom YYY_SPACING at all assignment mymodel::MyClass::YYY do new-line soft-new-line value soft-new-line;\n");
+
+		writer.append("\n/** Default idiom imposing spacing for visible leaf terms must be last */\n");
+		writer.append("idiom FINAL at final do soft-space value soft-space;\n");
+		writer.close();
 	}
 
 	protected @NonNull String emitCalledRule(@NonNull CrossReference crossReference) {
@@ -378,13 +470,23 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			GuiceModuleAccess runtimeGenModule = this.getLanguage().getRuntimeGenModule();
 			bindingFactory.addTypeToType(TypeReference.typeRef(INodeModelFormatter.class), TypeReference.typeRef(DeclarativeFormatter.class)).contributeTo(runtimeGenModule);
 			bindingFactory.addTypeToType(TypeReference.typeRef(ISerializer.class), TypeReference.typeRef(DeclarativeSerializer.class)).contributeTo(runtimeGenModule);
-			bindingFactory.addTypeToType(TypeReference.typeRef(AbstractSerializationMetaData.class), getSerializationMetaDataClass(grammar)).contributeTo(runtimeGenModule);
+	//		bindingFactory.addTypeToType(TypeReference.typeRef(AbstractSerializationMetaData.class), getSerializationMetaDataClass(grammar)).contributeTo(runtimeGenModule);
+			bindingFactory.addTypeToType(TypeReference.typeRef(SerializationMetaData.Provider.class), getSerializationMetaDataProviderClass(grammar)).contributeTo(runtimeGenModule);
+			timestamp.log("generate idioms stub");
+			doGetIdiomsStubFile();
 			timestamp.log("generate analysis stub");
 			doGenerateAnalysisStubFile();
 			timestamp.log("generate end");
 		}
 		catch (AssertionError e) {
-			throw new RuntimeException(e);
+			LOG.error("Assertion failed", e);
+		}
+		catch (IOException e) {
+			LOG.error("File access failed", e);
+		}
+		catch (Exception e) {
+			LOG.error("Failure", e);
+			throw e;
 		}
 	}
 
@@ -462,6 +564,9 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 	}
 
 	protected int getEnumerationValueIndex(@NonNull EnumerationValue enumerationValue) {
+		if (enumerationValue.isNull()) {
+			return -1;
+		}
 		assert enumerationValue2id != null;
 		Integer id = enumerationValue2id.get(enumerationValue);
 		assert id != null;
@@ -485,7 +590,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 				for (@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
 					SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 					for (@NonNull SerializationMatchStep solutionStep : serializationRuleAnalysis.getSerializationMatchSteps()) {
-						for (@NonNull SerializationMatchTerm solution : solutionStep.getSolutionClosure()) {
+						for (@NonNull SerializationMatchTerm solution : solutionStep.getMatchTermClosure()) {
 							if (solution instanceof SerializationMatchTermEAttributeSize) {
 								enumerationValue2id2.put(((SerializationMatchTermEAttributeSize)solution).getEnumerationValue(), null);
 							}
@@ -494,6 +599,14 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					for(@NonNull SerializationStep serializationStep : serializationRule.getSerializationSteps()) {
 						if (serializationStep instanceof SerializationStepAssignKeyword) {
 							enumerationValue2id2.put(((SerializationStepAssignKeyword)serializationStep).getEnumerationValue(), null);
+						}
+					}
+					@NonNull SerializationAttribute[] serializationAttributes = serializationRuleAnalysis.basicGetSerializationAttributes();
+					if (serializationAttributes != null) {
+						for (@NonNull SerializationAttribute serializationAttribute : serializationAttributes) {
+							for (@NonNull EnumerationValue enumerationValue : serializationAttribute.getEnumerationValues()) {
+								enumerationValue2id2.put(enumerationValue, null);
+							}
 						}
 					}
 				}
@@ -508,8 +621,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return enumerationValuesList2;
 	}
 
-	protected @NonNull List<@NonNull EReference_RuleIndexes> getEReferenceRuleIndexesIterable(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EClass eClass) {
-		List<@NonNull EReference_RuleIndexes> eReferenceRuleIndexes = Lists.newArrayList(grammarAnalysis.getEReferenceRuleIndexes(eClass));
+	protected @NonNull List<@NonNull EReference_TargetGrammarRuleVector> getEReferenceRuleIndexesIterable(@NonNull GrammarAnalysis grammarAnalysis, @NonNull EClass eClass) {
+		List<@NonNull EReference_TargetGrammarRuleVector> eReferenceRuleIndexes = Lists.newArrayList(grammarAnalysis.getEReferenceRuleIndexes(eClass));
 		assert eReferenceRuleIndexes != null;
 		Collections.sort(eReferenceRuleIndexes, SerializationUtils.NAMEABLE_COMPARATOR);
 		return eReferenceRuleIndexes;
@@ -645,10 +758,10 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			timestamp.log("getGrammarRuleVectorList start");
 			grammarRuleVector2id = grammarRuleVector2id2 = new HashMap<>();
 			for (@NonNull EClass eClass : getEClassList(grammarAnalysis)) {
-				@NonNull EReference_RuleIndexes[] eReferenceRuleIndexes = grammarAnalysis.basicGetEReferenceRuleIndexes(eClass);
+				@NonNull EReference_TargetGrammarRuleVector[] eReferenceRuleIndexes = grammarAnalysis.basicGetEReferenceRuleIndexes(eClass);
 				if (eReferenceRuleIndexes != null) {
-					for (@NonNull EReference_RuleIndexes eReferenceRuleIndex : eReferenceRuleIndexes) {
-						GrammarRuleVector assignedTargetRuleValues = eReferenceRuleIndex.getAssignedTargetRuleValueIndexes();
+					for (@NonNull EReference_TargetGrammarRuleVector eReferenceRuleIndex : eReferenceRuleIndexes) {
+						GrammarRuleVector assignedTargetRuleValues = eReferenceRuleIndex.getTargetGrammarRuleVector();
 						grammarRuleVector2id2.put(assignedTargetRuleValues, null);
 					}
 				}
@@ -668,11 +781,30 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			}
 			for (@NonNull EClassValue eClassValue : grammarAnalysis.getSortedProducedEClassValues()) {
 				for (@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
+					SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
+					for (@NonNull SerializationMatchStep solutionStep : serializationRuleAnalysis.getSerializationMatchSteps()) {
+						for (@NonNull SerializationMatchTerm solution : solutionStep.getMatchTermClosure()) {
+							if (solution instanceof SerializationMatchTermEReferenceSize) {
+								grammarRuleVector2id2.put(((SerializationMatchTermEReferenceSize)solution).getGrammarRuleVector(), null);
+							}
+						}
+					}
 					for (@NonNull SerializationStep serializationStep : serializationRule.getSerializationSteps()) {
 						if (serializationStep instanceof SerializationStepAssigns) {
-							@NonNull Integer[] calledRuleIndexes = ((SerializationStepAssigns)serializationStep).getCalledRuleIndexes();
-							if (calledRuleIndexes != null) {
-								grammarRuleVector2id2.put(new GrammarRuleVector(calledRuleIndexes), null);
+							int [] calledRuleIndexes = ((SerializationStepAssigns)serializationStep).getCalledRuleIndexes();
+							grammarRuleVector2id2.put(new GrammarRuleVector(calledRuleIndexes), null);
+						}
+					}
+					@NonNull
+					SerializationFeature[] serializationFeatures = serializationRule.basicGetSerializationFeatures();
+					if (serializationFeatures != null) {
+						for (@NonNull SerializationFeature serializationFeature : serializationFeatures) {
+							if (serializationFeature instanceof SerializationReference) {
+								GrammarRuleVector grammarRuleVector = ((SerializationReference)serializationFeature).getTargetGrammarRuleVector();
+							// FIXME	assert grammarRuleVector != null;
+								if (grammarRuleVector != null) {
+									grammarRuleVector2id2.put(grammarRuleVector, null);
+								}
 							}
 						}
 					}
@@ -773,7 +905,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 					for(@NonNull SerializationRule serializationRule : eClassValue.getSerializationRules()) {
 						SerializationRuleAnalysis serializationRuleAnalysis = grammarAnalysis.getSerializationRuleAnalysis(serializationRule);
 						for(@NonNull SerializationMatchStep solutionStep : serializationRuleAnalysis.getSerializationMatchSteps()) {
-							for (@NonNull SerializationMatchTerm matchTerm : solutionStep.getSolutionClosure()) {
+							for (@NonNull SerializationMatchTerm matchTerm : solutionStep.getMatchTermClosure()) {
 								matchTerm2id2.put(matchTerm, null);
 							}
 						}
@@ -879,9 +1011,20 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		return new TypeReference(getSerializerBasePackage(grammar), GrammarUtil.getSimpleName(grammar) + "SerializationMetaData");
 	}
 
+	protected TypeReference getSerializationMetaDataProviderClass(Grammar grammar) {
+		return new TypeReference(getSerializerBasePackage(grammar), GrammarUtil.getSimpleName(grammar) + "SerializationMetaData.Provider");
+	}
+
 	protected TypeReference getSerializationMetaDataSuperClass(Grammar grammar) {
 		return new TypeReference(AbstractSerializationMetaData.class);
 	}
+
+/*	protected @NonNull SerializationRuleAnalysis getSerializationRuleAnalysis(int ruleIndex) {
+		assert serializationRuleAnalysisList != null;
+		SerializationRuleAnalysis serializationRuleAnalysis = serializationRuleAnalysisList.get(ruleIndex);
+		assert serializationRuleAnalysis != null;
+		return serializationRuleAnalysis;
+	} */
 
 	protected @NonNull List<@NonNull SerializationRuleAnalysis> getSerializationRuleAnalysisList(@NonNull GrammarAnalysis grammarAnalysis) {
 		List<@NonNull SerializationRuleAnalysis> serializationRuleAnalysisList2 = serializationRuleAnalysisList;
@@ -901,8 +1044,8 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			Map<@NonNull SerializationRule, @Nullable Integer> serializationRule2id2 = serializationRule2id;
 			serializationRule2id = serializationRule2id2 = new HashMap<>();
 			int i = 0;
-			for (@NonNull SerializationRuleAnalysis serializationRule : serializationRuleAnalysisList2) {
-				serializationRule2id2.put(serializationRule.getSerializationRule(), i++);
+			for (@NonNull SerializationRuleAnalysis serializationRuleAnalysis : serializationRuleAnalysisList2) {
+				serializationRule2id2.put(serializationRuleAnalysis.getSerializationRule(), i++);
 			}
 		}
 		return serializationRuleAnalysisList2;
@@ -1103,5 +1246,31 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 			assert substring != null;
 			return substring;
 		}
+	}
+
+	public @NonNull String toString(@NonNull GrammarRuleVector grammarRuleVector) {
+		DiagnosticStringBuilder s = new DeclarativeSerializerFragmentDiagnosticStringBuilder();
+		grammarRuleVector.toString(s);
+		return s.toString();
+	}
+
+	public @NonNull String toString(@NonNull SerializationMatchStep matchStep) {
+		DiagnosticStringBuilder s = new DeclarativeSerializerFragmentDiagnosticStringBuilder();
+		matchStep.toString(s);
+		return s.toString();
+	}
+
+	public @NonNull String toString(@NonNull SerializationRule serializationRule) {
+		DiagnosticStringBuilder s = new DeclarativeSerializerFragmentDiagnosticStringBuilder();
+		s.append(serializationRule.getName());
+		s.append(": ");
+		serializationRule.toRuleString(s);
+		return s.toString();
+	}
+
+	public @NonNull String toString(@NonNull SerializationStep serializationStep) {
+		DiagnosticStringBuilder s = new DeclarativeSerializerFragmentDiagnosticStringBuilder();
+		serializationStep.toString(s, 0);
+		return s.toString();
 	}
 }

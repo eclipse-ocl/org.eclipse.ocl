@@ -78,7 +78,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getIdiomsElement()
 	 * @generated
 	 */
-	int IDIOMS_ELEMENT = 9;
+	int IDIOMS_ELEMENT = 8;
 
 	/**
 	 * The number of structural features of the '<em>Element</em>' class.
@@ -97,7 +97,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getSegment()
 	 * @generated
 	 */
-	int SEGMENT = 24;
+	int SEGMENT = 23;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.LocatorImpl <em>Locator</em>}' class.
@@ -107,7 +107,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getLocator()
 	 * @generated
 	 */
-	int LOCATOR = 13;
+	int LOCATOR = 12;
 
 	/**
 	 * The number of structural features of the '<em>Locator</em>' class.
@@ -203,34 +203,6 @@ public interface IdiomsPackage
 	int ASSIGNMENT_LOCATOR_FEATURE_COUNT = LOCATOR_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.CompoundLocatorImpl <em>Compound Locator</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.CompoundLocatorImpl
-	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getCompoundLocator()
-	 * @generated
-	 */
-	int COMPOUND_LOCATOR = 3;
-
-	/**
-	 * The feature id for the '<em><b>Owned Locators</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOUND_LOCATOR__OWNED_LOCATORS = LOCATOR_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Compound Locator</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOUND_LOCATOR_FEATURE_COUNT = LOCATOR_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>Segment</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -247,7 +219,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getCustomSegment()
 	 * @generated
 	 */
-	int CUSTOM_SEGMENT = 4;
+	int CUSTOM_SEGMENT = 3;
 
 	/**
 	 * The feature id for the '<em><b>Support Class Name</b></em>' attribute.
@@ -275,7 +247,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getEPackageImport()
 	 * @generated
 	 */
-	int EPACKAGE_IMPORT = 5;
+	int EPACKAGE_IMPORT = 4;
 
 	/**
 	 * The feature id for the '<em><b>As</b></em>' attribute.
@@ -312,7 +284,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getFinalLocator()
 	 * @generated
 	 */
-	int FINAL_LOCATOR = 6;
+	int FINAL_LOCATOR = 5;
 
 	/**
 	 * The number of structural features of the '<em>Final Locator</em>' class.
@@ -331,7 +303,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getIdiom()
 	 * @generated
 	 */
-	int IDIOM = 8;
+	int IDIOM = 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsImportImpl <em>Import</em>}' class.
@@ -341,7 +313,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getIdiomsImport()
 	 * @generated
 	 */
-	int IDIOMS_IMPORT = 10;
+	int IDIOMS_IMPORT = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsModelImpl <em>Model</em>}' class.
@@ -351,7 +323,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getIdiomsModel()
 	 * @generated
 	 */
-	int IDIOMS_MODEL = 11;
+	int IDIOMS_MODEL = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.KeywordLocatorImpl <em>Keyword Locator</em>}' class.
@@ -361,7 +333,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getKeywordLocator()
 	 * @generated
 	 */
-	int KEYWORD_LOCATOR = 12;
+	int KEYWORD_LOCATOR = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.LocatorDeclarationImpl <em>Locator Declaration</em>}' class.
@@ -371,7 +343,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getLocatorDeclaration()
 	 * @generated
 	 */
-	int LOCATOR_DECLARATION = 14;
+	int LOCATOR_DECLARATION = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.NewLineSegmentImpl <em>New Line Segment</em>}' class.
@@ -381,7 +353,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getNewLineSegment()
 	 * @generated
 	 */
-	int NEW_LINE_SEGMENT = 15;
+	int NEW_LINE_SEGMENT = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.NoSpaceSegmentImpl <em>No Space Segment</em>}' class.
@@ -391,7 +363,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getNoSpaceSegment()
 	 * @generated
 	 */
-	int NO_SPACE_SEGMENT = 16;
+	int NO_SPACE_SEGMENT = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.PopSegmentImpl <em>Pop Segment</em>}' class.
@@ -401,7 +373,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getPopSegment()
 	 * @generated
 	 */
-	int POP_SEGMENT = 17;
+	int POP_SEGMENT = 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.ReferredLocatorImpl <em>Referred Locator</em>}' class.
@@ -411,7 +383,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getReferredLocator()
 	 * @generated
 	 */
-	int REFERRED_LOCATOR = 20;
+	int REFERRED_LOCATOR = 19;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.ReferredSegmentImpl <em>Referred Segment</em>}' class.
@@ -421,7 +393,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getReferredSegment()
 	 * @generated
 	 */
-	int REFERRED_SEGMENT = 21;
+	int REFERRED_SEGMENT = 20;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.ReturnsLocatorImpl <em>Returns Locator</em>}' class.
@@ -431,7 +403,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getReturnsLocator()
 	 * @generated
 	 */
-	int RETURNS_LOCATOR = 22;
+	int RETURNS_LOCATOR = 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.PushSegmentImpl <em>Push Segment</em>}' class.
@@ -441,7 +413,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getPushSegment()
 	 * @generated
 	 */
-	int PUSH_SEGMENT = 23;
+	int PUSH_SEGMENT = 22;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.SegmentDeclarationImpl <em>Segment Declaration</em>}' class.
@@ -451,7 +423,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getSegmentDeclaration()
 	 * @generated
 	 */
-	int SEGMENT_DECLARATION = 25;
+	int SEGMENT_DECLARATION = 24;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.SoftNewLineSegmentImpl <em>Soft New Line Segment</em>}' class.
@@ -461,7 +433,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getSoftNewLineSegment()
 	 * @generated
 	 */
-	int SOFT_NEW_LINE_SEGMENT = 26;
+	int SOFT_NEW_LINE_SEGMENT = 25;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.SoftSpaceSegmentImpl <em>Soft Space Segment</em>}' class.
@@ -471,7 +443,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getSoftSpaceSegment()
 	 * @generated
 	 */
-	int SOFT_SPACE_SEGMENT = 27;
+	int SOFT_SPACE_SEGMENT = 26;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.StringSegmentImpl <em>String Segment</em>}' class.
@@ -481,7 +453,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getStringSegment()
 	 * @generated
 	 */
-	int STRING_SEGMENT = 28;
+	int STRING_SEGMENT = 27;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.HalfNewLineSegmentImpl <em>Half New Line Segment</em>}' class.
@@ -491,7 +463,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getHalfNewLineSegment()
 	 * @generated
 	 */
-	int HALF_NEW_LINE_SEGMENT = 7;
+	int HALF_NEW_LINE_SEGMENT = 6;
 
 	/**
 	 * The number of structural features of the '<em>Half New Line Segment</em>' class.
@@ -602,13 +574,22 @@ public interface IdiomsPackage
 	int IDIOMS_MODEL__NAME = IDIOMS_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Names</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDIOMS_MODEL__NAMES = IDIOMS_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The feature id for the '<em><b>Owned Idioms</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDIOMS_MODEL__OWNED_IDIOMS = IDIOMS_ELEMENT_FEATURE_COUNT + 1;
+	int IDIOMS_MODEL__OWNED_IDIOMS = IDIOMS_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Owned Imports</b></em>' containment reference list.
@@ -617,7 +598,7 @@ public interface IdiomsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IDIOMS_MODEL__OWNED_IMPORTS = IDIOMS_ELEMENT_FEATURE_COUNT + 2;
+	int IDIOMS_MODEL__OWNED_IMPORTS = IDIOMS_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Owned Locator Declarations</b></em>' containment reference list.
@@ -627,7 +608,7 @@ public interface IdiomsPackage
 	 * @ordered
 	 */
 	int IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS = IDIOMS_ELEMENT_FEATURE_COUNT
-		+ 3;
+		+ 4;
 
 	/**
 	 * The feature id for the '<em><b>Owned Segment Declarations</b></em>' containment reference list.
@@ -637,7 +618,7 @@ public interface IdiomsPackage
 	 * @ordered
 	 */
 	int IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS = IDIOMS_ELEMENT_FEATURE_COUNT
-		+ 4;
+		+ 5;
 
 	/**
 	 * The feature id for the '<em><b>Owned Withs</b></em>' containment reference list.
@@ -646,7 +627,7 @@ public interface IdiomsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IDIOMS_MODEL__OWNED_WITHS = IDIOMS_ELEMENT_FEATURE_COUNT + 5;
+	int IDIOMS_MODEL__OWNED_WITHS = IDIOMS_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of structural features of the '<em>Model</em>' class.
@@ -655,7 +636,7 @@ public interface IdiomsPackage
 	 * @generated
 	 * @ordered
 	 */
-	int IDIOMS_MODEL_FEATURE_COUNT = IDIOMS_ELEMENT_FEATURE_COUNT + 6;
+	int IDIOMS_MODEL_FEATURE_COUNT = IDIOMS_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>String</b></em>' attribute.
@@ -747,7 +728,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getPostCommentSegment()
 	 * @generated
 	 */
-	int POST_COMMENT_SEGMENT = 18;
+	int POST_COMMENT_SEGMENT = 17;
 
 	/**
 	 * The number of structural features of the '<em>Post Comment Segment</em>' class.
@@ -766,7 +747,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getPreCommentSegment()
 	 * @generated
 	 */
-	int PRE_COMMENT_SEGMENT = 19;
+	int PRE_COMMENT_SEGMENT = 18;
 
 	/**
 	 * The number of structural features of the '<em>Pre Comment Segment</em>' class.
@@ -957,7 +938,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getSubIdiom()
 	 * @generated
 	 */
-	int SUB_IDIOM = 29;
+	int SUB_IDIOM = 28;
 
 	/**
 	 * The feature id for the '<em><b>All</b></em>' attribute.
@@ -1012,7 +993,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getValueSegment()
 	 * @generated
 	 */
-	int VALUE_SEGMENT = 30;
+	int VALUE_SEGMENT = 29;
 
 	/**
 	 * The number of structural features of the '<em>Value Segment</em>' class.
@@ -1031,7 +1012,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getWrapAnchorSegment()
 	 * @generated
 	 */
-	int WRAP_ANCHOR_SEGMENT = 31;
+	int WRAP_ANCHOR_SEGMENT = 30;
 
 	/**
 	 * The number of structural features of the '<em>Wrap Anchor Segment</em>' class.
@@ -1050,7 +1031,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getWrapBeginSomeSegment()
 	 * @generated
 	 */
-	int WRAP_BEGIN_SOME_SEGMENT = 32;
+	int WRAP_BEGIN_SOME_SEGMENT = 31;
 
 	/**
 	 * The number of structural features of the '<em>Wrap Begin Some Segment</em>' class.
@@ -1069,7 +1050,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getWrapBeginAllSegment()
 	 * @generated
 	 */
-	int WRAP_BEGIN_ALL_SEGMENT = 33;
+	int WRAP_BEGIN_ALL_SEGMENT = 32;
 
 	/**
 	 * The number of structural features of the '<em>Wrap Begin All Segment</em>' class.
@@ -1088,7 +1069,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getWrapEndSegment()
 	 * @generated
 	 */
-	int WRAP_END_SEGMENT = 34;
+	int WRAP_END_SEGMENT = 33;
 
 	/**
 	 * The number of structural features of the '<em>Wrap End Segment</em>' class.
@@ -1107,7 +1088,7 @@ public interface IdiomsPackage
 	 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getWrapHereSegment()
 	 * @generated
 	 */
-	int WRAP_HERE_SEGMENT = 35;
+	int WRAP_HERE_SEGMENT = 34;
 
 	/**
 	 * The number of structural features of the '<em>Wrap Here Segment</em>' class.
@@ -1180,27 +1161,6 @@ public interface IdiomsPackage
 	 * @generated
 	 */
 	EReference getAssignmentLocator_EStructuralFeature();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext.idioms.CompoundLocator <em>Compound Locator</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Compound Locator</em>'.
-	 * @see org.eclipse.ocl.examples.xtext.idioms.CompoundLocator
-	 * @generated
-	 */
-	EClass getCompoundLocator();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.xtext.idioms.CompoundLocator#getOwnedLocators <em>Owned Locators</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Owned Locators</em>'.
-	 * @see org.eclipse.ocl.examples.xtext.idioms.CompoundLocator#getOwnedLocators()
-	 * @see #getCompoundLocator()
-	 * @generated
-	 */
-	EReference getCompoundLocator_OwnedLocators();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.xtext.idioms.CustomSegment <em>Custom Segment</em>}'.
@@ -1413,6 +1373,17 @@ public interface IdiomsPackage
 	 * @generated
 	 */
 	EAttribute getIdiomsModel_Name();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getNames <em>Names</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Names</em>'.
+	 * @see org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getNames()
+	 * @see #getIdiomsModel()
+	 * @generated
+	 */
+	EAttribute getIdiomsModel_Names();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getOwnedImports <em>Owned Imports</em>}'.
@@ -1999,25 +1970,6 @@ public interface IdiomsPackage
 			.getAssignmentLocator_EStructuralFeature();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.CompoundLocatorImpl <em>Compound Locator</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.examples.xtext.idioms.impl.CompoundLocatorImpl
-		 * @see org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsPackageImpl#getCompoundLocator()
-		 * @generated
-		 */
-		EClass COMPOUND_LOCATOR = eINSTANCE.getCompoundLocator();
-
-		/**
-		 * The meta object literal for the '<em><b>Owned Locators</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference COMPOUND_LOCATOR__OWNED_LOCATORS = eINSTANCE
-			.getCompoundLocator_OwnedLocators();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.xtext.idioms.impl.CustomSegmentImpl <em>Custom Segment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2196,6 +2148,14 @@ public interface IdiomsPackage
 		 * @generated
 		 */
 		EAttribute IDIOMS_MODEL__NAME = eINSTANCE.getIdiomsModel_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Names</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IDIOMS_MODEL__NAMES = eINSTANCE.getIdiomsModel_Names();
 
 		/**
 		 * The meta object literal for the '<em><b>Owned Imports</b></em>' containment reference list feature.

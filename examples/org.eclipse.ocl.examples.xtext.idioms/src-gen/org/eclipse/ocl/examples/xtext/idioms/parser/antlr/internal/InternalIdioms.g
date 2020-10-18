@@ -97,28 +97,52 @@ ruleIdiomsModel returns [EObject current=null]
 		}
 		(
 			(
-				lv_name_1_0=RULE_ID
+				lv_names_1_0=RULE_ID
 				{
-					newLeafNode(lv_name_1_0, grammarAccess.getIdiomsModelAccess().getNameIDTerminalRuleCall_1_0());
+					newLeafNode(lv_names_1_0, grammarAccess.getIdiomsModelAccess().getNamesIDTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getIdiomsModelRule());
 					}
-					setWithLastConsumed(
+					addWithLastConsumed(
 						$current,
-						"name",
-						lv_name_1_0,
+						"names",
+						lv_names_1_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
 		(
+			otherlv_2='.'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getIdiomsModelAccess().getFullStopKeyword_2_0());
+			}
+			(
+				(
+					lv_names_3_0=RULE_ID
+					{
+						newLeafNode(lv_names_3_0, grammarAccess.getIdiomsModelAccess().getNamesIDTerminalRuleCall_2_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getIdiomsModelRule());
+						}
+						addWithLastConsumed(
+							$current,
+							"names",
+							lv_names_3_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
+				)
+			)
+		)*
+		(
 			(
 				{
-					newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedWithsIdiomsImportParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedWithsIdiomsImportParserRuleCall_3_0());
 				}
-				lv_ownedWiths_2_0=ruleIdiomsImport
+				lv_ownedWiths_4_0=ruleIdiomsImport
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getIdiomsModelRule());
@@ -126,7 +150,7 @@ ruleIdiomsModel returns [EObject current=null]
 					add(
 						$current,
 						"ownedWiths",
-						lv_ownedWiths_2_0,
+						lv_ownedWiths_4_0,
 						"org.eclipse.ocl.examples.xtext.idioms.Idioms.IdiomsImport");
 					afterParserOrEnumRuleCall();
 				}
@@ -135,9 +159,9 @@ ruleIdiomsModel returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedImportsEPackageImportParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedImportsEPackageImportParserRuleCall_4_0());
 				}
-				lv_ownedImports_3_0=ruleEPackageImport
+				lv_ownedImports_5_0=ruleEPackageImport
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getIdiomsModelRule());
@@ -145,7 +169,7 @@ ruleIdiomsModel returns [EObject current=null]
 					add(
 						$current,
 						"ownedImports",
-						lv_ownedImports_3_0,
+						lv_ownedImports_5_0,
 						"org.eclipse.ocl.examples.xtext.idioms.Idioms.EPackageImport");
 					afterParserOrEnumRuleCall();
 				}
@@ -155,9 +179,9 @@ ruleIdiomsModel returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_4_0_0());
+						newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_5_0_0());
 					}
-					lv_ownedLocatorDeclarations_4_0=ruleLocatorDeclaration
+					lv_ownedLocatorDeclarations_6_0=ruleLocatorDeclaration
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getIdiomsModelRule());
@@ -165,7 +189,7 @@ ruleIdiomsModel returns [EObject current=null]
 						add(
 							$current,
 							"ownedLocatorDeclarations",
-							lv_ownedLocatorDeclarations_4_0,
+							lv_ownedLocatorDeclarations_6_0,
 							"org.eclipse.ocl.examples.xtext.idioms.Idioms.LocatorDeclaration");
 						afterParserOrEnumRuleCall();
 					}
@@ -175,9 +199,9 @@ ruleIdiomsModel returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_5_1_0());
 					}
-					lv_ownedSegmentDeclarations_5_0=ruleSegmentDeclaration
+					lv_ownedSegmentDeclarations_7_0=ruleSegmentDeclaration
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getIdiomsModelRule());
@@ -185,7 +209,7 @@ ruleIdiomsModel returns [EObject current=null]
 						add(
 							$current,
 							"ownedSegmentDeclarations",
-							lv_ownedSegmentDeclarations_5_0,
+							lv_ownedSegmentDeclarations_7_0,
 							"org.eclipse.ocl.examples.xtext.idioms.Idioms.SegmentDeclaration");
 						afterParserOrEnumRuleCall();
 					}
@@ -195,9 +219,9 @@ ruleIdiomsModel returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedIdiomsIdiomParserRuleCall_4_2_0());
+						newCompositeNode(grammarAccess.getIdiomsModelAccess().getOwnedIdiomsIdiomParserRuleCall_5_2_0());
 					}
-					lv_ownedIdioms_6_0=ruleIdiom
+					lv_ownedIdioms_8_0=ruleIdiom
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getIdiomsModelRule());
@@ -205,7 +229,7 @@ ruleIdiomsModel returns [EObject current=null]
 						add(
 							$current,
 							"ownedIdioms",
-							lv_ownedIdioms_6_0,
+							lv_ownedIdioms_8_0,
 							"org.eclipse.ocl.examples.xtext.idioms.Idioms.Idiom");
 						afterParserOrEnumRuleCall();
 					}
@@ -417,72 +441,6 @@ ruleLocatorDeclaration returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleElementLocator
-entryRuleElementLocator returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getElementLocatorRule()); }
-	iv_ruleElementLocator=ruleElementLocator
-	{ $current=$iv_ruleElementLocator.current; }
-	EOF;
-
-// Rule ElementLocator
-ruleElementLocator returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getElementLocatorAccess().getAssignmentLocatorParserRuleCall_0());
-		}
-		this_AssignmentLocator_0=ruleAssignmentLocator
-		{
-			$current = $this_AssignmentLocator_0.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getElementLocatorAccess().getCompoundLocatorParserRuleCall_1());
-		}
-		this_CompoundLocator_1=ruleCompoundLocator
-		{
-			$current = $this_CompoundLocator_1.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getElementLocatorAccess().getKeywordLocatorParserRuleCall_2());
-		}
-		this_KeywordLocator_2=ruleKeywordLocator
-		{
-			$current = $this_KeywordLocator_2.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getElementLocatorAccess().getReferredLocatorParserRuleCall_3());
-		}
-		this_ReferredLocator_3=ruleReferredLocator
-		{
-			$current = $this_ReferredLocator_3.current;
-			afterParserOrEnumRuleCall();
-		}
-	)
-;
-
 // Entry rule entryRuleLocator
 entryRuleLocator returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getLocatorRule()); }
@@ -527,11 +485,11 @@ ruleLocator returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getLocatorAccess().getElementLocatorParserRuleCall_2());
+			newCompositeNode(grammarAccess.getLocatorAccess().getAssignmentLocatorParserRuleCall_2());
 		}
-		this_ElementLocator_2=ruleElementLocator
+		this_AssignmentLocator_2=ruleAssignmentLocator
 		{
-			$current = $this_ElementLocator_2.current;
+			$current = $this_AssignmentLocator_2.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -551,11 +509,35 @@ ruleLocator returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getLocatorAccess().getReturnsLocatorParserRuleCall_4());
+			newCompositeNode(grammarAccess.getLocatorAccess().getKeywordLocatorParserRuleCall_4());
 		}
-		this_ReturnsLocator_4=ruleReturnsLocator
+		this_KeywordLocator_4=ruleKeywordLocator
 		{
-			$current = $this_ReturnsLocator_4.current;
+			$current = $this_KeywordLocator_4.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getLocatorAccess().getReferredLocatorParserRuleCall_5());
+		}
+		this_ReferredLocator_5=ruleReferredLocator
+		{
+			$current = $this_ReferredLocator_5.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getLocatorAccess().getReturnsLocatorParserRuleCall_6());
+		}
+		this_ReturnsLocator_6=ruleReturnsLocator
+		{
+			$current = $this_ReturnsLocator_6.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
@@ -707,77 +689,6 @@ ruleAssignmentLocator returns [EObject current=null]
 				}
 			)
 		)
-	)
-;
-
-// Entry rule entryRuleCompoundLocator
-entryRuleCompoundLocator returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getCompoundLocatorRule()); }
-	iv_ruleCompoundLocator=ruleCompoundLocator
-	{ $current=$iv_ruleCompoundLocator.current; }
-	EOF;
-
-// Rule CompoundLocator
-ruleCompoundLocator returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='{'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getCompoundLocatorAccess().getLeftCurlyBracketKeyword_0());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getCompoundLocatorAccess().getOwnedLocatorsElementLocatorParserRuleCall_1_0());
-				}
-				lv_ownedLocators_1_0=ruleElementLocator
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getCompoundLocatorRule());
-					}
-					add(
-						$current,
-						"ownedLocators",
-						lv_ownedLocators_1_0,
-						"org.eclipse.ocl.examples.xtext.idioms.Idioms.ElementLocator");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_2='|'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getCompoundLocatorAccess().getVerticalLineKeyword_2_0());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getCompoundLocatorAccess().getOwnedLocatorsElementLocatorParserRuleCall_2_1_0());
-					}
-					lv_ownedLocators_3_0=ruleElementLocator
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getCompoundLocatorRule());
-						}
-						add(
-							$current,
-							"ownedLocators",
-							lv_ownedLocators_3_0,
-							"org.eclipse.ocl.examples.xtext.idioms.Idioms.ElementLocator");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-		)*
-		otherlv_4='}'
-		{
-			newLeafNode(otherlv_4, grammarAccess.getCompoundLocatorAccess().getRightCurlyBracketKeyword_3());
-		}
 	)
 ;
 

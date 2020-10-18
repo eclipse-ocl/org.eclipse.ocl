@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getNames <em>Names</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getOwnedIdioms <em>Owned Idioms</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getOwnedImports <em>Owned Imports</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getOwnedLocatorDeclarations <em>Owned Locator Declarations</em>}</li>
@@ -55,22 +56,26 @@ public interface IdiomsModel
 	 * A convenience name for the IdiomModel.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
 	 * @see org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage#getIdiomsModel_Name()
-	 * @model required="true"
+	 * @model required="true" changeable="false" derived="true"
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.xtext.idioms.IdiomsModel#getName <em>Name</em>}' attribute.
+	 * Returns the value of the '<em><b>Names</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
+	 * <!-- begin-model-doc -->
+	 * A convenience name for the IdiomModel.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Names</em>' attribute list.
+	 * @see org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage#getIdiomsModel_Names()
+	 * @model required="true"
 	 * @generated
 	 */
-	void setName(String value);
+	EList<String> getNames();
 
 	/**
 	 * Returns the value of the '<em><b>Owned Imports</b></em>' containment reference list.

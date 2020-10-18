@@ -21,7 +21,6 @@ import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 public class CompleteOCLUiModule extends AbstractCompleteOCLUiModule
 {
 	public static final @NonNull String PLUGIN_ID = "org.eclipse.ocl.xtext.completeocl.ui";
-	@SuppressWarnings("null")
 	public static final @NonNull String EDITOR_ID = CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL;
 	public static final @NonNull String MARKER_ID = "org.eclipse.ocl.xtext.completeocl.ui.Marker";
 

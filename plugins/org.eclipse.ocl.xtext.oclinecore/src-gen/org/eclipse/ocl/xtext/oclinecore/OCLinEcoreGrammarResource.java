@@ -677,6 +677,7 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 							createKeyword(","),
 							createAssignment("ownedParameters", "+=", createRuleCall(_Base.PR_TypeParameterCS)))),
 						createKeyword(">"))));
+			addAnnotation(PR_TemplateSignatureCS, "Override");
 			PR_TopLevelCS.setAlternatives(
 				createGroup(
 					createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage.Literals.TOP_LEVEL_CS)),
@@ -697,6 +698,7 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 				createAlternatives(
 					createRuleCall(_EssentialOCL.PR_TypeLiteralCS),
 					createRuleCall(PR_TypedTypeRefCS)));
+			addAnnotation(PR_TypedRefCS, "Override");
 			PR_TypedTypeRefCS.setAlternatives(
 				createGroup(
 					createAssignment("ownedPathName", "=", createRuleCall(_Base.PR_PathNameCS)),
@@ -709,6 +711,7 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 							createKeyword("<"),
 							createAssignment("ownedBinding", "=", createRuleCall(_Base.PR_TemplateBindingCS)),
 							createKeyword(">"))))));
+			addAnnotation(PR_TypedTypeRefCS, "Override");
 			PR_UnrestrictedName.setAlternatives(
 				createAlternatives(
 					createRuleCall(PR_EnumerationLiteralName),
@@ -719,6 +722,7 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 					createKeyword("opposite"),
 					createKeyword("serializable"),
 					createKeyword("sysml")));
+			addAnnotation(PR_UnrestrictedName, "Override");
 		}
 
 		private static @NonNull Grammar initGrammar() {
@@ -1343,8 +1347,10 @@ public class OCLinEcoreGrammarResource extends AbstractGrammarResource
 					createKeyword("*")));
 			PR_UnreservedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnreservedName));
+			addAnnotation(PR_UnreservedName, "Override");
 			PR_UnrestrictedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnrestrictedName));
+			addAnnotation(PR_UnrestrictedName, "Override");
 		}
 
 		private static @NonNull Grammar initGrammar() {

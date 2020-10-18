@@ -10,17 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.serializer;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 /**
  * SerializationRuleHelper enables the SerializationRuleAnalysis-bland SerializationRule to use its
  * originating SerializationRuleAnalysis to contribute informative comments to the SerializationMetaData.
  */
 public interface SerializationRuleHelper
 {
-	void toMatchTermString(@NonNull StringBuilder s, int depth);
+	GrammarRuleValue getGrammarRuleValue(int ruleValueIndex);
 
-	void toRuleString(@NonNull StringBuilder s);
+//	void toMatchTermString(@NonNull DiagnosticStringBuilder s, int depth);
 
-	void toString(@NonNull StringBuilder s, int depth);
+//	void toRuleString(@NonNull DiagnosticStringBuilder s);
+
+//	void toString(@NonNull DiagnosticStringBuilder s, int depth);
 }

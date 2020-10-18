@@ -37,72 +37,88 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.IdiomsModel");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cModelKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Assignment cOwnedWithsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cOwnedWithsIdiomsImportParserRuleCall_2_0 = (RuleCall)cOwnedWithsAssignment_2.eContents().get(0);
-		private final Assignment cOwnedImportsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cOwnedImportsEPackageImportParserRuleCall_3_0 = (RuleCall)cOwnedImportsAssignment_3.eContents().get(0);
-		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
-		private final Assignment cOwnedLocatorDeclarationsAssignment_4_0 = (Assignment)cAlternatives_4.eContents().get(0);
-		private final RuleCall cOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_4_0_0 = (RuleCall)cOwnedLocatorDeclarationsAssignment_4_0.eContents().get(0);
-		private final Assignment cOwnedSegmentDeclarationsAssignment_4_1 = (Assignment)cAlternatives_4.eContents().get(1);
-		private final RuleCall cOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_4_1_0 = (RuleCall)cOwnedSegmentDeclarationsAssignment_4_1.eContents().get(0);
-		private final Assignment cOwnedIdiomsAssignment_4_2 = (Assignment)cAlternatives_4.eContents().get(2);
-		private final RuleCall cOwnedIdiomsIdiomParserRuleCall_4_2_0 = (RuleCall)cOwnedIdiomsAssignment_4_2.eContents().get(0);
+		private final Assignment cNamesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNamesIDTerminalRuleCall_1_0 = (RuleCall)cNamesAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cFullStopKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cNamesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cNamesIDTerminalRuleCall_2_1_0 = (RuleCall)cNamesAssignment_2_1.eContents().get(0);
+		private final Assignment cOwnedWithsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cOwnedWithsIdiomsImportParserRuleCall_3_0 = (RuleCall)cOwnedWithsAssignment_3.eContents().get(0);
+		private final Assignment cOwnedImportsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cOwnedImportsEPackageImportParserRuleCall_4_0 = (RuleCall)cOwnedImportsAssignment_4.eContents().get(0);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Assignment cOwnedLocatorDeclarationsAssignment_5_0 = (Assignment)cAlternatives_5.eContents().get(0);
+		private final RuleCall cOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_5_0_0 = (RuleCall)cOwnedLocatorDeclarationsAssignment_5_0.eContents().get(0);
+		private final Assignment cOwnedSegmentDeclarationsAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
+		private final RuleCall cOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_5_1_0 = (RuleCall)cOwnedSegmentDeclarationsAssignment_5_1.eContents().get(0);
+		private final Assignment cOwnedIdiomsAssignment_5_2 = (Assignment)cAlternatives_5.eContents().get(2);
+		private final RuleCall cOwnedIdiomsIdiomParserRuleCall_5_2_0 = (RuleCall)cOwnedIdiomsAssignment_5_2.eContents().get(0);
 
 		////import "http://www.eclipse.org/ocl/2020/Idioms"
 		////import "Idioms.ecore"
 		//IdiomsModel:
-		//	'model' name=ID ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration
-		//	| ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*;
+		//	'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport*
+		//	(ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'model' name=ID ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration |
-		//ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*
+		//'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport*
+		//(ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*
 		public Group getGroup() { return cGroup; }
 
 		//'model'
 		public Keyword getModelKeyword_0() { return cModelKeyword_0; }
 
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//names+=ID
+		public Assignment getNamesAssignment_1() { return cNamesAssignment_1; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getNamesIDTerminalRuleCall_1_0() { return cNamesIDTerminalRuleCall_1_0; }
+
+		//('.' names+=ID)*
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'.'
+		public Keyword getFullStopKeyword_2_0() { return cFullStopKeyword_2_0; }
+
+		//names+=ID
+		public Assignment getNamesAssignment_2_1() { return cNamesAssignment_2_1; }
+
+		//ID
+		public RuleCall getNamesIDTerminalRuleCall_2_1_0() { return cNamesIDTerminalRuleCall_2_1_0; }
 
 		//ownedWiths+=IdiomsImport*
-		public Assignment getOwnedWithsAssignment_2() { return cOwnedWithsAssignment_2; }
+		public Assignment getOwnedWithsAssignment_3() { return cOwnedWithsAssignment_3; }
 
 		//IdiomsImport
-		public RuleCall getOwnedWithsIdiomsImportParserRuleCall_2_0() { return cOwnedWithsIdiomsImportParserRuleCall_2_0; }
+		public RuleCall getOwnedWithsIdiomsImportParserRuleCall_3_0() { return cOwnedWithsIdiomsImportParserRuleCall_3_0; }
 
 		//ownedImports+=EPackageImport*
-		public Assignment getOwnedImportsAssignment_3() { return cOwnedImportsAssignment_3; }
+		public Assignment getOwnedImportsAssignment_4() { return cOwnedImportsAssignment_4; }
 
 		//EPackageImport
-		public RuleCall getOwnedImportsEPackageImportParserRuleCall_3_0() { return cOwnedImportsEPackageImportParserRuleCall_3_0; }
+		public RuleCall getOwnedImportsEPackageImportParserRuleCall_4_0() { return cOwnedImportsEPackageImportParserRuleCall_4_0; }
 
 		//(ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*
-		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//ownedLocatorDeclarations+=LocatorDeclaration
-		public Assignment getOwnedLocatorDeclarationsAssignment_4_0() { return cOwnedLocatorDeclarationsAssignment_4_0; }
+		public Assignment getOwnedLocatorDeclarationsAssignment_5_0() { return cOwnedLocatorDeclarationsAssignment_5_0; }
 
 		//LocatorDeclaration
-		public RuleCall getOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_4_0_0() { return cOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_4_0_0; }
+		public RuleCall getOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_5_0_0() { return cOwnedLocatorDeclarationsLocatorDeclarationParserRuleCall_5_0_0; }
 
 		//ownedSegmentDeclarations+=SegmentDeclaration
-		public Assignment getOwnedSegmentDeclarationsAssignment_4_1() { return cOwnedSegmentDeclarationsAssignment_4_1; }
+		public Assignment getOwnedSegmentDeclarationsAssignment_5_1() { return cOwnedSegmentDeclarationsAssignment_5_1; }
 
 		//SegmentDeclaration
-		public RuleCall getOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_4_1_0() { return cOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_4_1_0; }
+		public RuleCall getOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_5_1_0() { return cOwnedSegmentDeclarationsSegmentDeclarationParserRuleCall_5_1_0; }
 
 		//ownedIdioms+=Idiom
-		public Assignment getOwnedIdiomsAssignment_4_2() { return cOwnedIdiomsAssignment_4_2; }
+		public Assignment getOwnedIdiomsAssignment_5_2() { return cOwnedIdiomsAssignment_5_2; }
 
 		//Idiom
-		public RuleCall getOwnedIdiomsIdiomParserRuleCall_4_2_0() { return cOwnedIdiomsIdiomParserRuleCall_4_2_0; }
+		public RuleCall getOwnedIdiomsIdiomParserRuleCall_5_2_0() { return cOwnedIdiomsIdiomParserRuleCall_5_2_0; }
 	}
 	public class EPackageImportElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.EPackageImport");
@@ -233,47 +249,24 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//';'
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
-	public class ElementLocatorElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.ElementLocator");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cAssignmentLocatorParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cCompoundLocatorParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cKeywordLocatorParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cReferredLocatorParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-
-		//ElementLocator Locator:
-		//	AssignmentLocator | CompoundLocator | KeywordLocator | ReferredLocator;
-		@Override public ParserRule getRule() { return rule; }
-
-		//AssignmentLocator | CompoundLocator | KeywordLocator | ReferredLocator
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//AssignmentLocator
-		public RuleCall getAssignmentLocatorParserRuleCall_0() { return cAssignmentLocatorParserRuleCall_0; }
-
-		//CompoundLocator
-		public RuleCall getCompoundLocatorParserRuleCall_1() { return cCompoundLocatorParserRuleCall_1; }
-
-		//KeywordLocator
-		public RuleCall getKeywordLocatorParserRuleCall_2() { return cKeywordLocatorParserRuleCall_2; }
-
-		//ReferredLocator
-		public RuleCall getReferredLocatorParserRuleCall_3() { return cReferredLocatorParserRuleCall_3; }
-	}
 	public class LocatorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.Locator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cAnyAssignmentLocatorParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cAnyElementLocatorParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cElementLocatorParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cAssignmentLocatorParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cFinalLocatorParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cReturnsLocatorParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cKeywordLocatorParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cReferredLocatorParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cReturnsLocatorParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 
 		//Locator:
-		//	AnyAssignmentLocator | AnyElementLocator | ElementLocator | FinalLocator | ReturnsLocator;
+		//	AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator |
+		//	ReturnsLocator;
 		@Override public ParserRule getRule() { return rule; }
 
-		//AnyAssignmentLocator | AnyElementLocator | ElementLocator | FinalLocator | ReturnsLocator
+		//AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator |
+		//ReturnsLocator
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//AnyAssignmentLocator
@@ -282,14 +275,20 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//AnyElementLocator
 		public RuleCall getAnyElementLocatorParserRuleCall_1() { return cAnyElementLocatorParserRuleCall_1; }
 
-		//ElementLocator
-		public RuleCall getElementLocatorParserRuleCall_2() { return cElementLocatorParserRuleCall_2; }
+		//AssignmentLocator
+		public RuleCall getAssignmentLocatorParserRuleCall_2() { return cAssignmentLocatorParserRuleCall_2; }
 
 		//FinalLocator
 		public RuleCall getFinalLocatorParserRuleCall_3() { return cFinalLocatorParserRuleCall_3; }
 
+		//KeywordLocator
+		public RuleCall getKeywordLocatorParserRuleCall_4() { return cKeywordLocatorParserRuleCall_4; }
+
+		//ReferredLocator
+		public RuleCall getReferredLocatorParserRuleCall_5() { return cReferredLocatorParserRuleCall_5; }
+
 		//ReturnsLocator
-		public RuleCall getReturnsLocatorParserRuleCall_4() { return cReturnsLocatorParserRuleCall_4; }
+		public RuleCall getReturnsLocatorParserRuleCall_6() { return cReturnsLocatorParserRuleCall_6; }
 	}
 	public class AnyAssignmentLocatorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.AnyAssignmentLocator");
@@ -397,49 +396,6 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 
 		//ID
 		public RuleCall getEStructuralFeatureEStructuralFeatureIDTerminalRuleCall_2_0_1() { return cEStructuralFeatureEStructuralFeatureIDTerminalRuleCall_2_0_1; }
-	}
-	public class CompoundLocatorElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.CompoundLocator");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cOwnedLocatorsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cOwnedLocatorsElementLocatorParserRuleCall_1_0 = (RuleCall)cOwnedLocatorsAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cVerticalLineKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cOwnedLocatorsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cOwnedLocatorsElementLocatorParserRuleCall_2_1_0 = (RuleCall)cOwnedLocatorsAssignment_2_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-
-		//CompoundLocator:
-		//	'{' ownedLocators+=ElementLocator ('|' ownedLocators+=ElementLocator)* '}';
-		@Override public ParserRule getRule() { return rule; }
-
-		//'{' ownedLocators+=ElementLocator ('|' ownedLocators+=ElementLocator)* '}'
-		public Group getGroup() { return cGroup; }
-
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
-
-		//ownedLocators+=ElementLocator
-		public Assignment getOwnedLocatorsAssignment_1() { return cOwnedLocatorsAssignment_1; }
-
-		//ElementLocator
-		public RuleCall getOwnedLocatorsElementLocatorParserRuleCall_1_0() { return cOwnedLocatorsElementLocatorParserRuleCall_1_0; }
-
-		//('|' ownedLocators+=ElementLocator)*
-		public Group getGroup_2() { return cGroup_2; }
-
-		//'|'
-		public Keyword getVerticalLineKeyword_2_0() { return cVerticalLineKeyword_2_0; }
-
-		//ownedLocators+=ElementLocator
-		public Assignment getOwnedLocatorsAssignment_2_1() { return cOwnedLocatorsAssignment_2_1; }
-
-		//ElementLocator
-		public RuleCall getOwnedLocatorsElementLocatorParserRuleCall_2_1_0() { return cOwnedLocatorsElementLocatorParserRuleCall_2_1_0; }
-
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 	public class FinalLocatorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.ocl.examples.xtext.idioms.Idioms.FinalLocator");
@@ -1259,12 +1215,10 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	private final EPackageImportElements pEPackageImport;
 	private final IdiomsImportElements pIdiomsImport;
 	private final LocatorDeclarationElements pLocatorDeclaration;
-	private final ElementLocatorElements pElementLocator;
 	private final LocatorElements pLocator;
 	private final AnyAssignmentLocatorElements pAnyAssignmentLocator;
 	private final AnyElementLocatorElements pAnyElementLocator;
 	private final AssignmentLocatorElements pAssignmentLocator;
-	private final CompoundLocatorElements pCompoundLocator;
 	private final FinalLocatorElements pFinalLocator;
 	private final KeywordLocatorElements pKeywordLocator;
 	private final ReturnsLocatorElements pReturnsLocator;
@@ -1305,12 +1259,10 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		this.pEPackageImport = new EPackageImportElements();
 		this.pIdiomsImport = new IdiomsImportElements();
 		this.pLocatorDeclaration = new LocatorDeclarationElements();
-		this.pElementLocator = new ElementLocatorElements();
 		this.pLocator = new LocatorElements();
 		this.pAnyAssignmentLocator = new AnyAssignmentLocatorElements();
 		this.pAnyElementLocator = new AnyElementLocatorElements();
 		this.pAssignmentLocator = new AssignmentLocatorElements();
-		this.pCompoundLocator = new CompoundLocatorElements();
 		this.pFinalLocator = new FinalLocatorElements();
 		this.pKeywordLocator = new KeywordLocatorElements();
 		this.pReturnsLocator = new ReturnsLocatorElements();
@@ -1369,8 +1321,8 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	////import "http://www.eclipse.org/ocl/2020/Idioms"
 	////import "Idioms.ecore"
 	//IdiomsModel:
-	//	'model' name=ID ownedWiths+=IdiomsImport* ownedImports+=EPackageImport* (ownedLocatorDeclarations+=LocatorDeclaration
-	//	| ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*;
+	//	'model' names+=ID ('.' names+=ID)* ownedWiths+=IdiomsImport* ownedImports+=EPackageImport*
+	//	(ownedLocatorDeclarations+=LocatorDeclaration | ownedSegmentDeclarations+=SegmentDeclaration | ownedIdioms+=Idiom)*;
 	public IdiomsModelElements getIdiomsModelAccess() {
 		return pIdiomsModel;
 	}
@@ -1409,18 +1361,9 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		return getLocatorDeclarationAccess().getRule();
 	}
 
-	//ElementLocator Locator:
-	//	AssignmentLocator | CompoundLocator | KeywordLocator | ReferredLocator;
-	public ElementLocatorElements getElementLocatorAccess() {
-		return pElementLocator;
-	}
-
-	public ParserRule getElementLocatorRule() {
-		return getElementLocatorAccess().getRule();
-	}
-
 	//Locator:
-	//	AnyAssignmentLocator | AnyElementLocator | ElementLocator | FinalLocator | ReturnsLocator;
+	//	AnyAssignmentLocator | AnyElementLocator | AssignmentLocator | FinalLocator | KeywordLocator | ReferredLocator |
+	//	ReturnsLocator;
 	public LocatorElements getLocatorAccess() {
 		return pLocator;
 	}
@@ -1458,16 +1401,6 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 
 	public ParserRule getAssignmentLocatorRule() {
 		return getAssignmentLocatorAccess().getRule();
-	}
-
-	//CompoundLocator:
-	//	'{' ownedLocators+=ElementLocator ('|' ownedLocators+=ElementLocator)* '}';
-	public CompoundLocatorElements getCompoundLocatorAccess() {
-		return pCompoundLocator;
-	}
-
-	public ParserRule getCompoundLocatorRule() {
-		return getCompoundLocatorAccess().getRule();
 	}
 
 	//FinalLocator:

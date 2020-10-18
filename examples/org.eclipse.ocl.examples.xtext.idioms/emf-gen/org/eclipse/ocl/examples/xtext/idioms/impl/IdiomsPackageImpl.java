@@ -22,7 +22,6 @@ import org.eclipse.ocl.examples.xtext.idioms.AssignmentLocator;
 import org.eclipse.ocl.examples.xtext.idioms.CustomSegment;
 import org.eclipse.ocl.examples.xtext.idioms.EPackageImport;
 import org.eclipse.ocl.examples.xtext.idioms.FinalLocator;
-import org.eclipse.ocl.examples.xtext.idioms.CompoundLocator;
 import org.eclipse.ocl.examples.xtext.idioms.HalfNewLineSegment;
 import org.eclipse.ocl.examples.xtext.idioms.Idiom;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsElement;
@@ -85,13 +84,6 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	private EClass assignmentLocatorEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass compoundLocatorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -455,27 +447,6 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EClass getCompoundLocator() {
-		return compoundLocatorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getCompoundLocator_OwnedLocators() {
-		return (EReference) compoundLocatorEClass.getEStructuralFeatures()
-			.get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getCustomSegment() {
 		return customSegmentEClass;
 	}
@@ -678,8 +649,8 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getIdiomsModel_OwnedImports() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(2);
+	public EAttribute getIdiomsModel_Names() {
+		return (EAttribute) idiomsModelEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -688,7 +659,7 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getIdiomsModel_OwnedLocatorDeclarations() {
+	public EReference getIdiomsModel_OwnedImports() {
 		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -698,7 +669,7 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	@Override
-	public EReference getIdiomsModel_OwnedSegmentDeclarations() {
+	public EReference getIdiomsModel_OwnedLocatorDeclarations() {
 		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -708,8 +679,18 @@ public class IdiomsPackageImpl
 	 * @generated
 	 */
 	@Override
+	public EReference getIdiomsModel_OwnedSegmentDeclarations() {
+		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EReference getIdiomsModel_OwnedIdioms() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(1);
+		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -719,7 +700,7 @@ public class IdiomsPackageImpl
 	 */
 	@Override
 	public EReference getIdiomsModel_OwnedWiths() {
-		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(5);
+		return (EReference) idiomsModelEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1205,10 +1186,6 @@ public class IdiomsPackageImpl
 		createEReference(assignmentLocatorEClass,
 			ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE);
 
-		compoundLocatorEClass = createEClass(COMPOUND_LOCATOR);
-		createEReference(compoundLocatorEClass,
-			COMPOUND_LOCATOR__OWNED_LOCATORS);
-
 		customSegmentEClass = createEClass(CUSTOM_SEGMENT);
 		createEAttribute(customSegmentEClass,
 			CUSTOM_SEGMENT__SUPPORT_CLASS_NAME);
@@ -1237,6 +1214,7 @@ public class IdiomsPackageImpl
 
 		idiomsModelEClass = createEClass(IDIOMS_MODEL);
 		createEAttribute(idiomsModelEClass, IDIOMS_MODEL__NAME);
+		createEAttribute(idiomsModelEClass, IDIOMS_MODEL__NAMES);
 		createEReference(idiomsModelEClass, IDIOMS_MODEL__OWNED_IDIOMS);
 		createEReference(idiomsModelEClass, IDIOMS_MODEL__OWNED_IMPORTS);
 		createEReference(idiomsModelEClass,
@@ -1351,7 +1329,6 @@ public class IdiomsPackageImpl
 		anyAssignmentLocatorEClass.getESuperTypes().add(this.getLocator());
 		anyElementLocatorEClass.getESuperTypes().add(this.getLocator());
 		assignmentLocatorEClass.getESuperTypes().add(this.getLocator());
-		compoundLocatorEClass.getESuperTypes().add(this.getLocator());
 		customSegmentEClass.getESuperTypes().add(this.getSegment());
 		ePackageImportEClass.getESuperTypes().add(this.getIdiomsElement());
 		finalLocatorEClass.getESuperTypes().add(this.getLocator());
@@ -1410,15 +1387,6 @@ public class IdiomsPackageImpl
 			null, 1, 1, AssignmentLocator.class, !IS_TRANSIENT, !IS_VOLATILE,
 			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(compoundLocatorEClass, CompoundLocator.class,
-			"CompoundLocator", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCompoundLocator_OwnedLocators(), this.getLocator(),
-			null, "ownedLocators", null, 1, -1, CompoundLocator.class, //$NON-NLS-1$
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
 
 		initEClass(customSegmentEClass, CustomSegment.class, "CustomSegment", //$NON-NLS-1$
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1490,8 +1458,12 @@ public class IdiomsPackageImpl
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getIdiomsModel_Name(), ecorePackage.getEString(), "name", //$NON-NLS-1$
 			null, 1, 1, IdiomsModel.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			!IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
 			IS_ORDERED);
+		initEAttribute(getIdiomsModel_Names(), ecorePackage.getEString(),
+			"names", null, 1, -1, IdiomsModel.class, !IS_TRANSIENT, //$NON-NLS-1$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 		initEReference(getIdiomsModel_OwnedIdioms(), this.getIdiom(), null,
 			"ownedIdioms", null, 0, -1, IdiomsModel.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,

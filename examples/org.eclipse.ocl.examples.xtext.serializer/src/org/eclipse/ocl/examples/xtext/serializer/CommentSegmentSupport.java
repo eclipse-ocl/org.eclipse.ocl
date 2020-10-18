@@ -36,9 +36,29 @@ public abstract class CommentSegmentSupport implements CustomSegmentSupport
 		serializationBuilder.append(prologue);
 		serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
 		serializationBuilder.append(indentation);
-		serializationBuilder.append(SerializationBuilder.NEW_LINE);
-		serializationBuilder.append(comment);
+//		serializationBuilder.append(SerializationBuilder.NEW_LINE);
+
+		for (int start = 0; true; ) {
+			int index = comment.indexOf('\n', start);
+			String line = comment.substring(start, index >= 0 ? index : comment.length());
+			assert line != null;
+			serializationBuilder.append(line);
+			if (index >= 0) {
+				serializationBuilder.append(SerializationBuilder.NEW_LINE);
+				start = index+1;
+			}
+			else {
+				break;
+			}
+		}
+
+
+
+//		serializationBuilder.append(comment);
 		serializationBuilder.append(SerializationBuilder.POP);
+		if (comment.endsWith("\n")) {
+			serializationBuilder.append(" ");
+		}
 		serializationBuilder.append(SerializationBuilder.NEW_LINE);
 		serializationBuilder.append(epilogue);
 		serializationBuilder.append(SerializationBuilder.NEW_LINE);
@@ -47,13 +67,15 @@ public abstract class CommentSegmentSupport implements CustomSegmentSupport
 	@Override
 	public void format(@NonNull UserElementFormatter fomatter, @NonNull SerializationBuilder serializationBuilder) {
 		EObject eObject = fomatter.getElement();
-		String comment = getComment(eObject);
-		if (comment != null) {
-			appendComment(serializationBuilder, comment);
+		Iterable<@NonNull String> comments = getComments(eObject);
+		if (comments != null) {
+			for (String comment : comments) {
+				appendComment(serializationBuilder, comment);
+			}
 		}
 	}
 
-	protected abstract String getComment(@NonNull EObject eObject);
+	protected abstract @Nullable Iterable<@NonNull String> getComments(@NonNull EObject eObject);
 
 	public @Nullable String getEpilogue() {
 		return epilogue;
@@ -70,9 +92,11 @@ public abstract class CommentSegmentSupport implements CustomSegmentSupport
 	@Override
 	public void serialize(int serializationStepIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
 		EObject eObject = serializer.getElement();
-		String comment = getComment(eObject);
-		if (comment != null) {
-			appendComment(serializationBuilder, comment);
+		Iterable<@NonNull String> comments = getComments(eObject);
+		if (comments != null) {
+			for (String comment : comments) {
+				appendComment(serializationBuilder, comment);
+			}
 		}
 	}
 

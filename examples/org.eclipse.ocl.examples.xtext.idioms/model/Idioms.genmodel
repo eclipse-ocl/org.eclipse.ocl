@@ -24,9 +24,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eClass"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Idioms.ecore#//AssignmentLocator/eStructuralFeature"/>
     </genClasses>
-    <genClasses ecoreClass="Idioms.ecore#//CompoundLocator">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//CompoundLocator/ownedLocators"/>
-    </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//CustomSegment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//CustomSegment/supportClassName"/>
     </genClasses>
@@ -51,6 +48,7 @@
     </genClasses>
     <genClasses ecoreClass="Idioms.ecore#//IdiomsModel">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//IdiomsModel/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Idioms.ecore#//IdiomsModel/names"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomsModel/ownedIdioms"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomsModel/ownedImports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Idioms.ecore#//IdiomsModel/ownedLocatorDeclarations"/>

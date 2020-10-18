@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - initial API and implementation
  *******************************************************************************/
-model EssentialOCL
+model org.eclipse.ocl.xtext.essentialocl.EssentialOCL
 with "platform:/resource/org.eclipse.ocl.xtext.base/src/org/eclipse/ocl/xtext/base/Base.idioms"
 
 idiom HASH at "#" do no-space value no-space;

@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -72,12 +72,16 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences( @NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
-		if (listOfNodes.isEmpty()) {
+	public @NonNull SerializationElement freezeSequences( @NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, boolean isRootAlternative) {
+		int size = listOfNodes.size();
+		if (size <= 0) {
 			return NullSerializationNode.INSTANCE;
 		}
 		else {
-			return createFrozenSequence(compoundElement, grammarCardinality, listOfNodes);
+			if (size > 1) {
+				isRootAlternative = false;
+			}
+			return createFrozenSequence(compoundElement, grammarCardinality, listOfNodes, isRootAlternative);
 		}
 	}
 
@@ -87,6 +91,29 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 
 	@Override
 	public boolean isList() {
+		return true;
+	}
+
+	@Override
+	public boolean noUnassignedParserRuleCall() {
+		for (@NonNull SerializationNode serializationNode : listOfNodes) {
+			if (!serializationNode.noUnassignedParserRuleCall()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative) {
+		if (listOfNodes.size() > 1) {
+			isRootAlternative = false;
+		}
+		for (@NonNull SerializationNode serializationNode : listOfNodes) {
+			if (!serializationNode.onlyRootUnassignedSerializationRuleCall(isRootAlternative)) {
+				return false;
+			}
+		}
 		return true;
 	}
 
@@ -101,15 +128,15 @@ public class ListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
 		s.append("{");
 		if (listOfNodes.size() > 0) {
 			for (@NonNull SerializationNode serializationNode : listOfNodes) {
-				SerializationUtils.appendIndentation(s, depth);
+				s.appendIndentation(depth);
 				s.append("+\t");
 				serializationNode.toString(s, depth+1);
 			}
-			SerializationUtils.appendIndentation(s, depth);
+			s.appendIndentation(depth);
 		}
 		s.append("}");
 	//	appendCardinality(s, depth);

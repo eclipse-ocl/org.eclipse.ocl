@@ -216,10 +216,12 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 						createAction(null, null, createTypeRef(MM, org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage.Literals.OCL_MESSAGE_ARG_CS)),
 						createKeyword("?")),
 					createRuleCall(_EssentialOCL.PR_ExpCS)));
+			addAnnotation(PR_NavigatingArgExpCS, "Override");
 			PR_NavigationOperatorName.setAlternatives(
 				createAlternatives(
 					createRuleCall(_EssentialOCL.PR_EssentialOCLNavigationOperatorName),
 					createRuleCall(PR_CompleteOCLNavigationOperatorName)));
+			addAnnotation(PR_NavigationOperatorName, "Override");
 			PR_OperationContextDeclCS.setAlternatives(
 				createGroup(
 					createKeyword("context"),
@@ -273,6 +275,7 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createKeyword("OclMessage"),
 					createKeyword("OclState"),
 					createKeyword("OclVoid")));
+			addAnnotation(PR_PrimitiveTypeIdentifier, "Override");
 			PR_PropertyContextDeclCS.setAlternatives(
 				createGroup(
 					createKeyword("context"),
@@ -310,16 +313,19 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 							createKeyword(","),
 							createAssignment("ownedParameters", "+=", createRuleCall(_Base.PR_TypeParameterCS)))),
 						createKeyword(">"))));
+			addAnnotation(PR_TemplateSignatureCS, "Override");
 			PR_TypedRefCS.setAlternatives(
 				createAlternatives(
 					createRuleCall(_EssentialOCL.PR_TypeLiteralCS),
 					createRuleCall(_Base.PR_TypedTypeRefCS)));
+			addAnnotation(PR_TypedRefCS, "Override");
 			PR_UnrestrictedName.setAlternatives(
 				createAlternatives(
 					createRuleCall(_EssentialOCL.PR_EssentialOCLUnrestrictedName),
 					createKeyword("import"),
 					createKeyword("include"),
 					createKeyword("library")));
+			addAnnotation(PR_UnrestrictedName, "Override");
 		}
 
 		private static @NonNull Grammar initGrammar() {
@@ -931,8 +937,10 @@ public class CompleteOCLGrammarResource extends AbstractGrammarResource
 					createKeyword("*")));
 			PR_UnreservedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnreservedName));
+			addAnnotation(PR_UnreservedName, "Override");
 			PR_UnrestrictedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnrestrictedName));
+			addAnnotation(PR_UnrestrictedName, "Override");
 		}
 
 		private static @NonNull Grammar initGrammar() {

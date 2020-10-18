@@ -108,6 +108,7 @@ import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.impl.RootNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 import com.google.common.collect.Iterables;
@@ -890,7 +891,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public void refreshComments(Element pivotElement, ElementCS csElement) {
 		ICompositeNode node = NodeModelUtils.getNode(csElement);
-		if (node != null) {
+		if ((node != null) && !(node instanceof RootNode)) {
 			List<ILeafNode> documentationNodes = CS2AS.getDocumentationNodes(node);
 			List<Comment> ownedComments = pivotElement.getOwnedComments();
 			if (documentationNodes != null) {

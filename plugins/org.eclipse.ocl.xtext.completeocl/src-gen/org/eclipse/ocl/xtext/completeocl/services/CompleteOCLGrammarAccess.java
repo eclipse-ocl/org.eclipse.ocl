@@ -970,9 +970,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final RuleCall cOwnedParametersTypeParameterCSParserRuleCall_1_2_1_0 = (RuleCall)cOwnedParametersAssignment_1_2_1.eContents().get(0);
 		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 
-		////---------------------------------------------------------------------------------
-		////	Base overrides
-		////---------------------------------------------------------------------------------
+		//@Override
 		//TemplateSignatureCS base::TemplateSignatureCS:
 		//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')' | '<'
 		//	ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* '>';
@@ -1042,6 +1040,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final RuleCall cTypeLiteralCSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cTypedTypeRefCSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 
+		//@Override
 		//TypedRefCS base::TypedRefCS:
 		//	TypeLiteralCS | TypedTypeRefCS;
 		@Override public ParserRule getRule() { return rule; }
@@ -1063,6 +1062,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Keyword cIncludeKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
 		private final Keyword cLibraryKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
 
+		//@Override
 		//UnrestrictedName:
 		//	EssentialOCLUnrestrictedName
 		//	//| 'body'
@@ -1112,9 +1112,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Keyword cQuestionMarkKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final RuleCall cExpCSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 
-		////---------------------------------------------------------------------------------
-		////	EssentialOCL overrides
-		////---------------------------------------------------------------------------------
+		//@Override
 		//NavigatingArgExpCS essentialocl::ExpCS:
 		//	{OCLMessageArgCS} '?' | ExpCS;
 		@Override public ParserRule getRule() { return rule; }
@@ -1140,6 +1138,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final RuleCall cEssentialOCLNavigationOperatorNameParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cCompleteOCLNavigationOperatorNameParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 
+		//@Override
 		//NavigationOperatorName:
 		//	EssentialOCLNavigationOperatorName | CompleteOCLNavigationOperatorName;
 		@Override public ParserRule getRule() { return rule; }
@@ -1167,6 +1166,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Keyword cOclStateKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
 		private final Keyword cOclVoidKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
 
+		//@Override
 		//PrimitiveTypeIdentifier:
 		//	'Boolean'
 		//	| 'Integer'
@@ -1549,9 +1549,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getSpecificationCSAccess().getRule();
 	}
 
-	////---------------------------------------------------------------------------------
-	////	Base overrides
-	////---------------------------------------------------------------------------------
+	//@Override
 	//TemplateSignatureCS base::TemplateSignatureCS:
 	//	'(' ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* ')' | '<'
 	//	ownedParameters+=TypeParameterCS (',' ownedParameters+=TypeParameterCS)* '>';
@@ -1563,6 +1561,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getTemplateSignatureCSAccess().getRule();
 	}
 
+	//@Override
 	//TypedRefCS base::TypedRefCS:
 	//	TypeLiteralCS | TypedTypeRefCS;
 	public TypedRefCSElements getTypedRefCSAccess() {
@@ -1573,6 +1572,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getTypedRefCSAccess().getRule();
 	}
 
+	//@Override
 	//UnrestrictedName:
 	//	EssentialOCLUnrestrictedName
 	//	//| 'body'
@@ -1598,9 +1598,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getUnrestrictedNameAccess().getRule();
 	}
 
-	////---------------------------------------------------------------------------------
-	////	EssentialOCL overrides
-	////---------------------------------------------------------------------------------
+	//@Override
 	//NavigatingArgExpCS essentialocl::ExpCS:
 	//	{OCLMessageArgCS} '?' | ExpCS;
 	public NavigatingArgExpCSElements getNavigatingArgExpCSAccess() {
@@ -1611,6 +1609,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getNavigatingArgExpCSAccess().getRule();
 	}
 
+	//@Override
 	//NavigationOperatorName:
 	//	EssentialOCLNavigationOperatorName | CompleteOCLNavigationOperatorName;
 	public NavigationOperatorNameElements getNavigationOperatorNameAccess() {
@@ -1621,6 +1620,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getNavigationOperatorNameAccess().getRule();
 	}
 
+	//@Override
 	//PrimitiveTypeIdentifier:
 	//	'Boolean'
 	//	| 'Integer'
@@ -1770,6 +1770,7 @@ public class CompleteOCLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getEssentialOCLUnreservedNameAccess().getRule();
 	}
 
+	//@Override
 	//UnreservedName:
 	//	EssentialOCLUnreservedName;
 	public EssentialOCLGrammarAccess.UnreservedNameElements getUnreservedNameAccess() {

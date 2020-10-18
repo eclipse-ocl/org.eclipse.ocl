@@ -31,12 +31,15 @@ public class SerializationRuleAnalysisComparator implements Comparator<@NonNull 
 	public int compare(@NonNull SerializationRuleAnalysis rule1, @NonNull SerializationRuleAnalysis rule2) {
 		int size1 = getSize(rule1);
 		int size2 = getSize(rule2);
-		if (size1 != size2) {
-			return size1 - size2;
+		int diff = size1 - size2;
+		if (diff != 0) {
+			return diff;
 		}
-		String string1 = rule1.toString();
-		String string2 = rule2.toString();
-		return string1.compareTo(string2);
+		String name1 = rule1.getVariantName();
+		String name2 = rule2.getVariantName();
+		diff = name1.compareTo(name2);
+		assert diff != 0;
+		return diff;
 	}
 
 	private int getSize(@NonNull SerializationRuleAnalysis serializationRule) {

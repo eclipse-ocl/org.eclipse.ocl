@@ -13,12 +13,12 @@
 package org.eclipse.ocl.examples.xtext.idioms.serializer;
 
 import com.google.inject.Inject;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsPackage;
 import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.EClassValue;
+import org.eclipse.ocl.examples.xtext.serializer.EClassValue.EReference_TargetGrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue;
 import org.eclipse.ocl.examples.xtext.serializer.EnumerationValue.EnumerationValueSingle;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
@@ -26,39 +26,74 @@ import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleValue;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermEStructuralFeatureSize;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm.SerializationMatchTermInteger;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationRule;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValue_GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EAttribute_EnumerationValues;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndex_GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EReference_RuleIndexes;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.EnumerationValue_GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.RuleIndex_GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationRule.SerializationFeature;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment.CustomSerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
 import org.eclipse.ocl.examples.xtext.serializer.TerminalRuleValue;
-import org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport;
-import org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.service.GrammarProvider;
 
+/******* This file is 100% auto-generated - do not edit it *******/
+
+/**
+ * The IdiomsSerializationMetaData singleton provides the metadata to support a
+ * model to text serialization of a parsed Xtext semantic model or to re-format an Xtext text node model.
+ */
 public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 {
-	private boolean initialized = false;
-	private final @NonNull EClassValue @NonNull [] eClassValues = new @NonNull EClassValue[33];
-	private final @NonNull EnumerationValue @NonNull [] enumerationValues = new @NonNull EnumerationValue[3];
-	private final @NonNull GrammarRuleValue @NonNull [] grammarRuleValues = new @NonNull GrammarRuleValue[43];
-	private final @NonNull GrammarRuleVector @NonNull [] grammarRuleVectors = new @NonNull GrammarRuleVector[14];
-	private final @NonNull SerializationMatchStep @NonNull [] serializationMatchSteps = new @NonNull SerializationMatchStep[52];
-	private final @NonNull SerializationMatchTerm @NonNull [] serializationMatchTerms = new @NonNull SerializationMatchTerm[59];
-	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[36];
-	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [9] @NonNull [];
-	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[91];
+	/**
+	 * The Provider supports injected creation of the IdiomsSerializationMetaData singleton.
+	 */
+	public static class Provider implements SerializationMetaData.Provider
+	{
+		private static @Nullable IdiomsSerializationMetaData INSTANCE = null;
 
+		@Inject
+		private GrammarProvider grammarProvider;
+
+		@Override
+		public synchronized @NonNull SerializationMetaData get() {
+			// synchronized synchronizes the creation of this singleton.
+			// It does not imply that the overall application is threadsafe.
+			IdiomsSerializationMetaData instance = INSTANCE;
+			if (instance == null) {
+				assert grammarProvider != null;
+				Grammar grammar = grammarProvider.getGrammar(Provider.class);
+				assert grammar != null;
+				INSTANCE = instance = new IdiomsSerializationMetaData(grammar);
+			}
+			return instance;
+		}
+	}
+
+	private final @NonNull EClassValue @NonNull [] eClassValues = new @NonNull EClassValue[32];
+	private final @NonNull EnumerationValue @NonNull [] enumerationValues = new @NonNull EnumerationValue[3];
+	private final @NonNull GrammarRuleValue @NonNull [] grammarRuleValues = new @NonNull GrammarRuleValue[41];
+	private final @NonNull GrammarRuleVector @NonNull [] grammarRuleVectors = new @NonNull GrammarRuleVector[12];
+	private final @NonNull SerializationMatchStep @NonNull [] serializationMatchSteps = new @NonNull SerializationMatchStep[49];
+	private final @NonNull SerializationMatchTerm @NonNull [] serializationMatchTerms = new @NonNull SerializationMatchTerm[59];
+	private final @NonNull SerializationRule @NonNull [] serializationRules = new @NonNull SerializationRule[35];
+	private final @NonNull SerializationSegment @NonNull [] @NonNull [] serializationSegments = new @NonNull SerializationSegment @NonNull [9] @NonNull [];
+	private final @NonNull SerializationStep @NonNull [] serializationSteps = new @NonNull SerializationStep[90];
 	private final @Nullable String @Nullable [] multipleLineCommentMidfixes = new @Nullable String[] {" *"};
 	private final @NonNull String @Nullable [] multipleLineCommentPrefixes = new @NonNull String[] {"/*"};
 	private final @NonNull String @Nullable [] multipleLineCommentSuffixes = new @NonNull String[] {"*/"};
 	private final @NonNull String @Nullable [] singleLineCommentPrefixes = new @NonNull String[] {"//"};
+
+	private IdiomsSerializationMetaData(@NonNull Grammar grammar) {
+		super(grammar);
+		initGrammarRuleVectors();
+		initEnumerationValues();
+		initMatchTerms();
+		initMatchSteps();
+		initSerializationSegments();
+		initSerializationSteps();
+		initSerializationRules();
+		initGrammarRuleValues();
+		initEClassValues();
+	}
 
 	@Override
 	public @NonNull EClassValue @NonNull [] getEClassValues() {
@@ -77,7 +112,7 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 
 	@Override
 	protected int getFirstGlobalSerializationStepLiteralIndex() {
-		return 34;
+		return 36;
 	}
 
 	@Override
@@ -92,12 +127,12 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 
 	@Override
 	protected int getLastGlobalSerializationStepAssignmentIndex() {
-		return 33;
+		return 35;
 	}
 
 	@Override
 	protected int getLastGlobalSerializationStepLiteralIndex() {
-		return 75;
+		return 74;
 	}
 
 	@Override
@@ -146,228 +181,200 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 	}
 
 	/**
-	 * Post constructor/injection initialization to avoid recursions.
-	 */
-	@Inject
-	public void init() {
-		if (!initialized) {
-			initialized = true;
-			initGrammarRuleVectors();
-			initEnumerationValues();
-			initMatchTerms();
-			initMatchSteps();
-			initSerializationSegments();
-			initSerializationSteps();
-			initSerializationRules();
-			initGrammarRuleValues();
-			initEClassValues();
-		}
-	}
-
-	/**
 	 * Initialize configuration for each EClass that may be serialized.
 	 */
 	private void initEClassValues() {
 		eClassValues[0] = new EClassValue(IdiomsPackage.Literals.ANY_ASSIGNMENT_LOCATOR,
 			createSerializationRules(
-				0 /* "any-assignment" */
+				0 /* AnyAssignmentLocator-0: 'any-assignment' */
 			), null
 		);
 		eClassValues[1] = new EClassValue(IdiomsPackage.Literals.ANY_ELEMENT_LOCATOR,
 			createSerializationRules(
-				1 /* "any-element" */
+				1 /* AnyElementLocator-0: 'any-element' */
 			), null
 		);
 		eClassValues[2] = new EClassValue(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR,
 			createSerializationRules(
-				2 /* { "assignment" { { ePackage=ID "::" }[?] eClass=ID "::" }[?] eStructuralFeature=ID } */
+				2 /* AssignmentLocator-0: 'assignment' ((AssignmentLocator::ePackage=ID '::')[V1:?] AssignmentLocator::eClass=ID '::')[V0:?] AssignmentLocator::eStructuralFeature=ID */
 			), null
 		);
-		eClassValues[3] = new EClassValue(IdiomsPackage.Literals.COMPOUND_LOCATOR,
+		eClassValues[3] = new EClassValue(IdiomsPackage.Literals.CUSTOM_SEGMENT,
 			createSerializationRules(
-				3 /* { "{" ownedLocators+=ElementLocator { "|" ownedLocators+=ElementLocator }[*] "}" } */
+				3 /* CustomSegment-0: 'custom' CustomSegment::supportClassName=STRING */
+			), null
+		);
+		eClassValues[4] = new EClassValue(IdiomsPackage.Literals.EPACKAGE_IMPORT,
+			createSerializationRules(
+				4 /* EPackageImport-0: 'import' EPackageImport::ePackage=STRING ('as' EPackageImport::as=ID)[V0:?] */
+			), null
+		);
+		eClassValues[5] = new EClassValue(IdiomsPackage.Literals.FINAL_LOCATOR,
+			createSerializationRules(
+				5 /* FinalLocator-0: 'final' */
+			), null
+		);
+		eClassValues[6] = new EClassValue(IdiomsPackage.Literals.HALF_NEW_LINE_SEGMENT,
+			createSerializationRules(
+				6 /* HalfNewLineSegment-0: 'half-new-line' */
+			), null
+		);
+		eClassValues[7] = new EClassValue(IdiomsPackage.Literals.IDIOM,
+			createSerializationRules(
+				8 /* Idiom-1: (Idiom::mixin?='mixin')[V0:?] 'idiom' Idiom::name=ID ('for' (Idiom::forEPackage=ID '::')[V2:?] Idiom::forEClass=ID)[V1:?] ('in' Idiom::inRuleRegex=STRING)[V3:?] Idiom::ownedSubIdioms+=SubIdiom */,
+				7 /* Idiom-0: (Idiom::mixin?='mixin')[V0:?] 'idiom' Idiom::name=ID ('for' (Idiom::forEPackage=ID '::')[V2:?] Idiom::forEClass=ID)[V1:?] ('in' Idiom::inRuleRegex=STRING)[V3:?] '{' (Idiom::ownedSubIdioms+=SubIdiom)[V4:*] '}' */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(IdiomsPackage.Literals.COMPOUND_LOCATOR__OWNED_LOCATORS,
-					6) /* AssignmentLocator|CompoundLocator|ElementLocator|KeywordLocator|ReferredLocator */
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS,
+					9) /* SubIdiom */
 			}
 		);
-		eClassValues[4] = new EClassValue(IdiomsPackage.Literals.CUSTOM_SEGMENT,
+		eClassValues[8] = new EClassValue(IdiomsPackage.Literals.IDIOMS_IMPORT,
 			createSerializationRules(
-				4 /* { "custom" supportClassName=STRING } */
+				9 /* IdiomsImport-0: 'with' IdiomsImport::idiomsModel=STRING ('as' IdiomsImport::as=ID)[V0:?] */
 			), null
 		);
-		eClassValues[5] = new EClassValue(IdiomsPackage.Literals.EPACKAGE_IMPORT,
+		eClassValues[9] = new EClassValue(IdiomsPackage.Literals.IDIOMS_MODEL,
 			createSerializationRules(
-				5 /* { "import" ePackage=STRING { "as" as=ID }[?] } */
-			), null
-		);
-		eClassValues[6] = new EClassValue(IdiomsPackage.Literals.FINAL_LOCATOR,
-			createSerializationRules(
-				6 /* "final" */
-			), null
-		);
-		eClassValues[7] = new EClassValue(IdiomsPackage.Literals.HALF_NEW_LINE_SEGMENT,
-			createSerializationRules(
-				7 /* "half-new-line" */
-			), null
-		);
-		eClassValues[8] = new EClassValue(IdiomsPackage.Literals.IDIOM,
-			createSerializationRules(
-				8 /* { mixin="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] ownedSubIdioms+=SubIdiom } */,
-				9 /* { mixin="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] { "{" ownedSubIdioms+=SubIdiom[*] "}" } } */
+				10 /* IdiomsModel-0: 'model' IdiomsModel::names+=ID ('.' IdiomsModel::names+=ID)[V0:*] (IdiomsModel::ownedWiths+=IdiomsImport)[V1:*] (IdiomsModel::ownedImports+=EPackageImport)[V2:*] (IdiomsModel::ownedLocatorDeclarations+=LocatorDeclaration)[V3:*] (IdiomsModel::ownedSegmentDeclarations+=SegmentDeclaration)[V4:*] (IdiomsModel::ownedIdioms+=Idiom)[V5:*] */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS,
-					11) /* SubIdiom */
-			}
-		);
-		eClassValues[9] = new EClassValue(IdiomsPackage.Literals.IDIOMS_IMPORT,
-			createSerializationRules(
-				10 /* { "with" idiomsModel=STRING { "as" as=ID }[?] } */
-			), null
-		);
-		eClassValues[10] = new EClassValue(IdiomsPackage.Literals.IDIOMS_MODEL,
-			createSerializationRules(
-				11 /* { "model" name=ID ownedWiths+=IdiomsImport[*] ownedImports+=EPackageImport[*] { ownedLocatorDeclarations+=LocatorDeclaration[*] ownedSegmentDeclarations+=SegmentDeclaration[*] ownedIdioms+=Idiom[*] } } */
-			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS,
-					2) /* Idiom */,
-				createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS,
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS,
+					1) /* Idiom */,
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS,
 					0) /* EPackageImport */,
-				createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS,
-					5) /* LocatorDeclaration */,
-				createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS,
-					10) /* SegmentDeclaration */,
-				createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS,
-					3) /* IdiomsImport */
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS,
+					4) /* LocatorDeclaration */,
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS,
+					8) /* SegmentDeclaration */,
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS,
+					2) /* IdiomsImport */
 			}
 		);
-		eClassValues[11] = new EClassValue(IdiomsPackage.Literals.KEYWORD_LOCATOR,
+		eClassValues[10] = new EClassValue(IdiomsPackage.Literals.KEYWORD_LOCATOR,
 			createSerializationRules(
-				12 /* string=STRING */
+				11 /* KeywordLocator-0: KeywordLocator::string=STRING */
 			), null
 		);
-		eClassValues[12] = new EClassValue(IdiomsPackage.Literals.LOCATOR_DECLARATION,
+		eClassValues[11] = new EClassValue(IdiomsPackage.Literals.LOCATOR_DECLARATION,
 			createSerializationRules(
-				13 /* { "locator" name=ID ownedLocator=Locator ";" } */
+				12 /* LocatorDeclaration-0: 'locator' LocatorDeclaration::name=ID LocatorDeclaration::ownedLocator=Locator ';' */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR,
-					7) /* AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|CompoundLocator|ElementLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR,
+					5) /* AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */
 			}
 		);
-		eClassValues[13] = new EClassValue(IdiomsPackage.Literals.NEW_LINE_SEGMENT,
+		eClassValues[12] = new EClassValue(IdiomsPackage.Literals.NEW_LINE_SEGMENT,
 			createSerializationRules(
-				14 /* "new-line" */
+				13 /* NewLineSegment-0: 'new-line' */
 			), null
 		);
-		eClassValues[14] = new EClassValue(IdiomsPackage.Literals.NO_SPACE_SEGMENT,
+		eClassValues[13] = new EClassValue(IdiomsPackage.Literals.NO_SPACE_SEGMENT,
 			createSerializationRules(
-				15 /* "no-space" */
+				14 /* NoSpaceSegment-0: 'no-space' */
 			), null
 		);
-		eClassValues[15] = new EClassValue(IdiomsPackage.Literals.POP_SEGMENT,
+		eClassValues[14] = new EClassValue(IdiomsPackage.Literals.POP_SEGMENT,
 			createSerializationRules(
-				16 /* "pop" */
+				15 /* PopSegment-0: 'pop' */
 			), null
 		);
-		eClassValues[16] = new EClassValue(IdiomsPackage.Literals.POST_COMMENT_SEGMENT,
+		eClassValues[15] = new EClassValue(IdiomsPackage.Literals.POST_COMMENT_SEGMENT,
 			createSerializationRules(
-				17 /* "post-comment" */
+				16 /* PostCommentSegment-0: 'post-comment' */
 			), null
 		);
-		eClassValues[17] = new EClassValue(IdiomsPackage.Literals.PRE_COMMENT_SEGMENT,
+		eClassValues[16] = new EClassValue(IdiomsPackage.Literals.PRE_COMMENT_SEGMENT,
 			createSerializationRules(
-				18 /* "pre-comment" */
+				17 /* PreCommentSegment-0: 'pre-comment' */
 			), null
 		);
-		eClassValues[18] = new EClassValue(IdiomsPackage.Literals.PUSH_SEGMENT,
+		eClassValues[17] = new EClassValue(IdiomsPackage.Literals.PUSH_SEGMENT,
 			createSerializationRules(
-				19 /* "push" */
+				18 /* PushSegment-0: 'push' */
 			), null
 		);
-		eClassValues[19] = new EClassValue(IdiomsPackage.Literals.REFERRED_LOCATOR,
+		eClassValues[18] = new EClassValue(IdiomsPackage.Literals.REFERRED_LOCATOR,
 			createSerializationRules(
-				20 /* { { idiomsModel=ID "::" }[?] locatorDeclaration=ID } */
+				19 /* ReferredLocator-0: (ReferredLocator::idiomsModel=ID '::')[V0:?] ReferredLocator::locatorDeclaration=ID */
 			), null
 		);
-		eClassValues[20] = new EClassValue(IdiomsPackage.Literals.REFERRED_SEGMENT,
+		eClassValues[19] = new EClassValue(IdiomsPackage.Literals.REFERRED_SEGMENT,
 			createSerializationRules(
-				21 /* { { idiomsModel=ID "::" }[?] segmentDeclaration=ID } */
+				20 /* ReferredSegment-0: (ReferredSegment::idiomsModel=ID '::')[V0:?] ReferredSegment::segmentDeclaration=ID */
 			), null
 		);
-		eClassValues[21] = new EClassValue(IdiomsPackage.Literals.RETURNS_LOCATOR,
+		eClassValues[20] = new EClassValue(IdiomsPackage.Literals.RETURNS_LOCATOR,
 			createSerializationRules(
-				22 /* { "returns" { ePackage=ID "::" }[?] eClass=ID } */
+				21 /* ReturnsLocator-0: 'returns' (ReturnsLocator::ePackage=ID '::')[V0:?] ReturnsLocator::eClass=ID */
 			), null
 		);
-		eClassValues[22] = new EClassValue(IdiomsPackage.Literals.SEGMENT_DECLARATION,
+		eClassValues[21] = new EClassValue(IdiomsPackage.Literals.SEGMENT_DECLARATION,
 			createSerializationRules(
-				23 /* { "segment" name=ID ownedSegment=Segment ";" } */
+				22 /* SegmentDeclaration-0: 'segment' SegmentDeclaration::name=ID SegmentDeclaration::ownedSegment=Segment ';' */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT,
-					12) /* CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT,
+					10) /* CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */
 			}
 		);
-		eClassValues[23] = new EClassValue(IdiomsPackage.Literals.SOFT_NEW_LINE_SEGMENT,
+		eClassValues[22] = new EClassValue(IdiomsPackage.Literals.SOFT_NEW_LINE_SEGMENT,
 			createSerializationRules(
-				24 /* "soft-new-line" */
+				23 /* SoftNewLineSegment-0: 'soft-new-line' */
 			), null
 		);
-		eClassValues[24] = new EClassValue(IdiomsPackage.Literals.SOFT_SPACE_SEGMENT,
+		eClassValues[23] = new EClassValue(IdiomsPackage.Literals.SOFT_SPACE_SEGMENT,
 			createSerializationRules(
-				25 /* "soft-space" */
+				24 /* SoftSpaceSegment-0: 'soft-space' */
 			), null
 		);
-		eClassValues[25] = new EClassValue(IdiomsPackage.Literals.STRING_SEGMENT,
+		eClassValues[24] = new EClassValue(IdiomsPackage.Literals.STRING_SEGMENT,
 			createSerializationRules(
-				26 /* { "string" string=STRING printable="printable" } */
+				25 /* StringSegment-0: 'string' StringSegment::string=STRING StringSegment::printable?='printable' */
 			), null
 		);
-		eClassValues[26] = new EClassValue(IdiomsPackage.Literals.SUB_IDIOM,
+		eClassValues[25] = new EClassValue(IdiomsPackage.Literals.SUB_IDIOM,
 			createSerializationRules(
-				29 /* { "at" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" } */,
-				27 /* { "at" "each" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" } */,
-				28 /* { "at" all="all"[?] ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" } */
+				28 /* SubIdiom-2: 'at' SubIdiom::ownedLocator=Locator ('do' (SubIdiom::ownedSegments+=Segment|ReferredSegment)[V1:*])[V0:?] ';' */,
+				26 /* SubIdiom-0: 'at' 'each' SubIdiom::ownedLocator=Locator ('do' (SubIdiom::ownedSegments+=Segment|ReferredSegment)[V1:*])[V0:?] ';' */,
+				27 /* SubIdiom-1: 'at' SubIdiom::all?='all' SubIdiom::ownedLocator=Locator ('do' (SubIdiom::ownedSegments+=Segment|ReferredSegment)[V1:*])[V0:?] ';' */
 			),
-			new @NonNull EReference_RuleIndexes [] {
-				createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
-					7) /* AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|CompoundLocator|ElementLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
-				createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
-					13) /* CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */
+			new @NonNull EReference_TargetGrammarRuleVector [] {
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
+					5) /* AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
+				createEReference_TargetGrammarRuleVector(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
+					11) /* CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */
 			}
 		);
-		eClassValues[27] = new EClassValue(IdiomsPackage.Literals.VALUE_SEGMENT,
+		eClassValues[26] = new EClassValue(IdiomsPackage.Literals.VALUE_SEGMENT,
 			createSerializationRules(
-				30 /* "value" */
+				29 /* ValueSegment-0: 'value' */
 			), null
 		);
-		eClassValues[28] = new EClassValue(IdiomsPackage.Literals.WRAP_ANCHOR_SEGMENT,
+		eClassValues[27] = new EClassValue(IdiomsPackage.Literals.WRAP_ANCHOR_SEGMENT,
 			createSerializationRules(
-				31 /* "wrap-anchor" */
+				30 /* WrapAnchorSegment-0: 'wrap-anchor' */
 			), null
 		);
-		eClassValues[29] = new EClassValue(IdiomsPackage.Literals.WRAP_BEGIN_ALL_SEGMENT,
+		eClassValues[28] = new EClassValue(IdiomsPackage.Literals.WRAP_BEGIN_ALL_SEGMENT,
 			createSerializationRules(
-				32 /* "wrap-begin-all" */
+				31 /* WrapBeginAllSegment-0: 'wrap-begin-all' */
 			), null
 		);
-		eClassValues[30] = new EClassValue(IdiomsPackage.Literals.WRAP_BEGIN_SOME_SEGMENT,
+		eClassValues[29] = new EClassValue(IdiomsPackage.Literals.WRAP_BEGIN_SOME_SEGMENT,
 			createSerializationRules(
-				33 /* "wrap-begin-some" */
+				32 /* WrapBeginSomeSegment-0: 'wrap-begin-some' */
 			), null
 		);
-		eClassValues[31] = new EClassValue(IdiomsPackage.Literals.WRAP_END_SEGMENT,
+		eClassValues[30] = new EClassValue(IdiomsPackage.Literals.WRAP_END_SEGMENT,
 			createSerializationRules(
-				34 /* "wrap-end" */
+				33 /* WrapEndSegment-0: 'wrap-end' */
 			), null
 		);
-		eClassValues[32] = new EClassValue(IdiomsPackage.Literals.WRAP_HERE_SEGMENT,
+		eClassValues[31] = new EClassValue(IdiomsPackage.Literals.WRAP_HERE_SEGMENT,
 			createSerializationRules(
-				35 /* "wrap-here" */
+				34 /* WrapHereSegment-0: 'wrap-here' */
 			), null
 		);
 	}
@@ -376,11 +383,11 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize string combinations used by assigned String EAttributes.
 	 */
 	private void initEnumerationValues() {
-		// 'all'
+		// 0: 'all'
 		enumerationValues[0] = new EnumerationValueSingle("all");
-		// 'mixin'
+		// 1: 'mixin'
 		enumerationValues[1] = new EnumerationValueSingle("mixin");
-		// 'printable'
+		// 2: 'printable'
 		enumerationValues[2] = new EnumerationValueSingle("printable");
 	}
 
@@ -391,141 +398,119 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 		grammarRuleValues[0] = new TerminalRuleValue(0, "ANY_OTHER");
 		grammarRuleValues[1] = createParserRuleValue(1, "AnyAssignmentLocator", -1,
 			createSerializationRules(
-				0	/* AnyAssignmentLocator: "any-assignment" */
+				0	/* AnyAssignmentLocator-0: 'any-assignment' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {AnyAssignmentLocator} : [value] | [value] */,
-			(0 << 16) | 6	/* "any-assignment" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "any-assignment" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
 		grammarRuleValues[2] = createParserRuleValue(2, "AnyElementLocator", -1,
 			createSerializationRules(
-				1	/* AnyElementLocator: "any-element" */
+				1	/* AnyElementLocator-0: 'any-element' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {AnyElementLocator} : [value] | [value] */,
-			(0 << 16) | 6	/* "any-element" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "any-element" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
 		grammarRuleValues[3] = createParserRuleValue(3, "AssignmentLocator", -1,
 			createSerializationRules(
-				2	/* AssignmentLocator: { "assignment" { { ePackage=ID "::" }[?] eClass=ID "::" }[?] eStructuralFeature=ID } */
+				2	/* AssignmentLocator-0: 'assignment' ((AssignmentLocator::ePackage=ID '::')[V1:?] AssignmentLocator::eClass=ID '::')[V0:?] AssignmentLocator::eStructuralFeature=ID */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "assignment" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "assignment" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* ePackage=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 4	/* "::" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, no-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* eClass=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 4	/* "::" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, no-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* eStructuralFeature=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* ePackage=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 4	/* "::" : [value] | [pre-comment, no-space, value, no-space, post-comment] */,
+			(0 << 16) | 6	/* eClass=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 4	/* "::" : [value] | [pre-comment, no-space, value, no-space, post-comment] */,
+			(0 << 16) | 6	/* eStructuralFeature=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[4] = createParserRuleValue(4, "CompoundLocator", -1,
+		grammarRuleValues[4] = createParserRuleValue(4, "CustomSegment", -1,
 			createSerializationRules(
-				3	/* CompoundLocator: { "{" ownedLocators+=ElementLocator { "|" ownedLocators+=ElementLocator }[*] "}" } */
+				3	/* CustomSegment-0: 'custom' CustomSegment::supportClassName=STRING */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 8	/* "{" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, push, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 0	/* ownedLocators+=ElementLocator : [value] | [value] */,
-			(0 << 16) | 0	/* Group* : [value] | [value] */,
-			(0 << 16) | 6	/* "|" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 0	/* ownedLocators+=ElementLocator : [value] | [value] */,
-			(0 << 16) | 7	/* "}" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, pop, soft-space, value, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "custom" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* supportClassName=STRING : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[5] = createParserRuleValue(5, "CustomSegment", -1,
+		grammarRuleValues[5] = createParserRuleValue(5, "EPackageImport", -1,
 			createSerializationRules(
-				4	/* CustomSegment: { "custom" supportClassName=STRING } */
+				4	/* EPackageImport-0: 'import' EPackageImport::ePackage=STRING ('as' EPackageImport::as=ID)[V0:?] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "custom" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* supportClassName=STRING : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
-		);
-		grammarRuleValues[6] = createParserRuleValue(6, "EPackageImport", -1,
-			createSerializationRules(
-				5	/* EPackageImport: { "import" ePackage=STRING { "as" as=ID }[?] } */
-			),
-			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "import" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* ePackage=STRING : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "import" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* ePackage=STRING : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* "as" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* as=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 5	/* ";"? : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "as" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* as=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 5	/* ";"? : [value] | [pre-comment, no-space, value, soft-new-line, post-comment] */
 		);
-		grammarRuleValues[7] = createParserRuleValue(7, "ElementLocator", 6 /* AssignmentLocator|CompoundLocator|ElementLocator|KeywordLocator|ReferredLocator */,
+		grammarRuleValues[6] = createParserRuleValue(6, "FinalLocator", -1,
 			createSerializationRules(
-				2	/* AssignmentLocator: { "assignment" { { ePackage=ID "::" }[?] eClass=ID "::" }[?] eStructuralFeature=ID } */,
-				3	/* CompoundLocator: { "{" ownedLocators+=ElementLocator { "|" ownedLocators+=ElementLocator }[*] "}" } */,
-				12	/* KeywordLocator: string=STRING */,
-				20	/* ReferredLocator: { { idiomsModel=ID "::" }[?] locatorDeclaration=ID } */
-			),
-			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
-			(0 << 16) | 0	/* AssignmentLocator : [value] | [value] */,
-			(0 << 16) | 0	/* CompoundLocator : [value] | [value] */,
-			(0 << 16) | 0	/* KeywordLocator : [value] | [value] */,
-			(0 << 16) | 0	/* ReferredLocator : [value] | [value] */
-		);
-		grammarRuleValues[8] = createParserRuleValue(8, "FinalLocator", -1,
-			createSerializationRules(
-				6	/* FinalLocator: "final" */
+				5	/* FinalLocator-0: 'final' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {FinalLocator} : [value] | [value] */,
-			(0 << 16) | 6	/* "final" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "final" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[9] = createParserRuleValue(9, "HalfNewLineSegment", -1,
+		grammarRuleValues[7] = createParserRuleValue(7, "HalfNewLineSegment", -1,
 			createSerializationRules(
-				7	/* HalfNewLineSegment: "half-new-line" */
+				6	/* HalfNewLineSegment-0: 'half-new-line' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {HalfNewLineSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "half-new-line" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "half-new-line" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[10] = new TerminalRuleValue(10, "ID");
-		grammarRuleValues[11] = new TerminalRuleValue(11, "INT");
-		grammarRuleValues[12] = createParserRuleValue(12, "Idiom", -1,
+		grammarRuleValues[8] = new TerminalRuleValue(8, "ID");
+		grammarRuleValues[9] = new TerminalRuleValue(9, "INT");
+		grammarRuleValues[10] = createParserRuleValue(10, "Idiom", -1,
 			createSerializationRules(
-				8	/* Idiom: { mixin="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] ownedSubIdioms+=SubIdiom } */,
-				9	/* Idiom: { mixin="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] { "{" ownedSubIdioms+=SubIdiom[*] "}" } } */
+				7	/* Idiom-0: (Idiom::mixin?='mixin')[V0:?] 'idiom' Idiom::name=ID ('for' (Idiom::forEPackage=ID '::')[V2:?] Idiom::forEClass=ID)[V1:?] ('in' Idiom::inRuleRegex=STRING)[V3:?] '{' (Idiom::ownedSubIdioms+=SubIdiom)[V4:*] '}' */,
+				8	/* Idiom-1: (Idiom::mixin?='mixin')[V0:?] 'idiom' Idiom::name=ID ('for' (Idiom::forEPackage=ID '::')[V2:?] Idiom::forEClass=ID)[V1:?] ('in' Idiom::inRuleRegex=STRING)[V3:?] Idiom::ownedSubIdioms+=SubIdiom */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* mixin?="mixin"? : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* "idiom" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* name=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* mixin?="mixin"? : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* "idiom" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* name=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* "for" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "for" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* forEPackage=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 4	/* "::" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, no-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* forEClass=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* forEPackage=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 4	/* "::" : [value] | [pre-comment, no-space, value, no-space, post-comment] */,
+			(0 << 16) | 6	/* forEClass=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* "in" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* inRuleRegex=STRING : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "in" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* inRuleRegex=STRING : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
 			(0 << 16) | 1	/* ownedSubIdioms+=SubIdiom : [value] | [value, soft-new-line] */,
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 8	/* "{" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, push, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 8	/* "{" : [value] | [pre-comment, soft-space, value, push, soft-new-line, post-comment] */,
 			(0 << 16) | 1	/* ownedSubIdioms+=SubIdiom* : [value] | [value, soft-new-line] */,
-			(0 << 16) | 7	/* "}" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, pop, soft-space, value, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 7	/* "}" : [value] | [pre-comment, pop, soft-space, value, soft-new-line, post-comment] */
 		);
-		grammarRuleValues[13] = createParserRuleValue(13, "IdiomsImport", -1,
+		grammarRuleValues[11] = createParserRuleValue(11, "IdiomsImport", -1,
 			createSerializationRules(
-				10	/* IdiomsImport: { "with" idiomsModel=STRING { "as" as=ID }[?] } */
+				9	/* IdiomsImport-0: 'with' IdiomsImport::idiomsModel=STRING ('as' IdiomsImport::as=ID)[V0:?] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "with" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* idiomsModel=STRING : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "with" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* idiomsModel=STRING : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* "as" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* as=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 5	/* ";"? : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "as" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* as=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 5	/* ";"? : [value] | [pre-comment, no-space, value, soft-new-line, post-comment] */
 		);
-		grammarRuleValues[14] = createParserRuleValue(14, "IdiomsModel", -1,
+		grammarRuleValues[12] = createParserRuleValue(12, "IdiomsModel", -1,
 			createSerializationRules(
-				11	/* IdiomsModel: { "model" name=ID ownedWiths+=IdiomsImport[*] ownedImports+=EPackageImport[*] { ownedLocatorDeclarations+=LocatorDeclaration[*] ownedSegmentDeclarations+=SegmentDeclaration[*] ownedIdioms+=Idiom[*] } } */
+				10	/* IdiomsModel-0: 'model' IdiomsModel::names+=ID ('.' IdiomsModel::names+=ID)[V0:*] (IdiomsModel::ownedWiths+=IdiomsImport)[V1:*] (IdiomsModel::ownedImports+=EPackageImport)[V2:*] (IdiomsModel::ownedLocatorDeclarations+=LocatorDeclaration)[V3:*] (IdiomsModel::ownedSegmentDeclarations+=SegmentDeclaration)[V4:*] (IdiomsModel::ownedIdioms+=Idiom)[V5:*] */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "model" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* name=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "model" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* names+=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 0	/* Group* : [value] | [value] */,
+			(0 << 16) | 4	/* "." : [value] | [pre-comment, no-space, value, no-space, post-comment] */,
+			(0 << 16) | 6	/* names+=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 2	/* ownedWiths+=IdiomsImport* : [value] | [soft-new-line, value, soft-new-line] */,
 			(0 << 16) | 2	/* ownedImports+=EPackageImport* : [value] | [soft-new-line, value, soft-new-line] */,
 			(0 << 16) | 0	/* Alternatives* : [value] | [value] */,
@@ -533,141 +518,142 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 			(3 << 16) | 0	/* ownedSegmentDeclarations+=SegmentDeclaration : [new-line, soft-new-line, value, soft-new-line] | [value] */,
 			(0 << 16) | 3	/* ownedIdioms+=Idiom : [value] | [new-line, soft-new-line, value, soft-new-line] */
 		);
-		grammarRuleValues[15] = createParserRuleValue(15, "KeywordLocator", -1,
+		grammarRuleValues[13] = createParserRuleValue(13, "KeywordLocator", -1,
 			createSerializationRules(
-				12	/* KeywordLocator: string=STRING */
+				11	/* KeywordLocator-0: KeywordLocator::string=STRING */
 			),
-			(0 << 16) | 6	/* string=STRING : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* string=STRING : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[16] = createParserRuleValue(16, "Locator", 7 /* AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|CompoundLocator|ElementLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
+		grammarRuleValues[14] = createParserRuleValue(14, "Locator", 5 /* AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
 			createSerializationRules(
-				0	/* AnyAssignmentLocator: "any-assignment" */,
-				1	/* AnyElementLocator: "any-element" */,
-				2	/* AssignmentLocator: { "assignment" { { ePackage=ID "::" }[?] eClass=ID "::" }[?] eStructuralFeature=ID } */,
-				3	/* CompoundLocator: { "{" ownedLocators+=ElementLocator { "|" ownedLocators+=ElementLocator }[*] "}" } */,
-				6	/* FinalLocator: "final" */,
-				12	/* KeywordLocator: string=STRING */,
-				20	/* ReferredLocator: { { idiomsModel=ID "::" }[?] locatorDeclaration=ID } */,
-				22	/* ReturnsLocator: { "returns" { ePackage=ID "::" }[?] eClass=ID } */
+				0	/* AnyAssignmentLocator-0: 'any-assignment' */,
+				1	/* AnyElementLocator-0: 'any-element' */,
+				2	/* AssignmentLocator-0: 'assignment' ((AssignmentLocator::ePackage=ID '::')[V1:?] AssignmentLocator::eClass=ID '::')[V0:?] AssignmentLocator::eStructuralFeature=ID */,
+				5	/* FinalLocator-0: 'final' */,
+				11	/* KeywordLocator-0: KeywordLocator::string=STRING */,
+				19	/* ReferredLocator-0: (ReferredLocator::idiomsModel=ID '::')[V0:?] ReferredLocator::locatorDeclaration=ID */,
+				21	/* ReturnsLocator-0: 'returns' (ReturnsLocator::ePackage=ID '::')[V0:?] ReturnsLocator::eClass=ID */
 			),
 			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
 			(0 << 16) | 0	/* AnyAssignmentLocator : [value] | [value] */,
 			(0 << 16) | 0	/* AnyElementLocator : [value] | [value] */,
-			(0 << 16) | 0	/* ElementLocator : [value] | [value] */,
+			(0 << 16) | 0	/* AssignmentLocator : [value] | [value] */,
 			(0 << 16) | 0	/* FinalLocator : [value] | [value] */,
+			(0 << 16) | 0	/* KeywordLocator : [value] | [value] */,
+			(0 << 16) | 0	/* ReferredLocator : [value] | [value] */,
 			(0 << 16) | 0	/* ReturnsLocator : [value] | [value] */
 		);
-		grammarRuleValues[17] = createParserRuleValue(17, "LocatorDeclaration", -1,
+		grammarRuleValues[15] = createParserRuleValue(15, "LocatorDeclaration", -1,
 			createSerializationRules(
-				13	/* LocatorDeclaration: { "locator" name=ID ownedLocator=Locator ";" } */
+				12	/* LocatorDeclaration-0: 'locator' LocatorDeclaration::name=ID LocatorDeclaration::ownedLocator=Locator ';' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "locator" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* name=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "locator" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* name=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* ownedLocator=Locator : [value] | [value] */,
-			(0 << 16) | 5	/* ";" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 5	/* ";" : [value] | [pre-comment, no-space, value, soft-new-line, post-comment] */
 		);
-		grammarRuleValues[18] = new TerminalRuleValue(18, "ML_COMMENT");
-		grammarRuleValues[19] = createParserRuleValue(19, "NewLineSegment", -1,
+		grammarRuleValues[16] = new TerminalRuleValue(16, "ML_COMMENT");
+		grammarRuleValues[17] = createParserRuleValue(17, "NewLineSegment", -1,
 			createSerializationRules(
-				14	/* NewLineSegment: "new-line" */
+				13	/* NewLineSegment-0: 'new-line' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {NewLineSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "new-line" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "new-line" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[20] = createParserRuleValue(20, "NoSpaceSegment", -1,
+		grammarRuleValues[18] = createParserRuleValue(18, "NoSpaceSegment", -1,
 			createSerializationRules(
-				15	/* NoSpaceSegment: "no-space" */
+				14	/* NoSpaceSegment-0: 'no-space' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {NoSpaceSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "no-space" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "no-space" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[21] = createParserRuleValue(21, "PopSegment", -1,
+		grammarRuleValues[19] = createParserRuleValue(19, "PopSegment", -1,
 			createSerializationRules(
-				16	/* PopSegment: "pop" */
+				15	/* PopSegment-0: 'pop' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {PopSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "pop" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "pop" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[22] = createParserRuleValue(22, "PostCommentSegment", -1,
+		grammarRuleValues[20] = createParserRuleValue(20, "PostCommentSegment", -1,
 			createSerializationRules(
-				17	/* PostCommentSegment: "post-comment" */
+				16	/* PostCommentSegment-0: 'post-comment' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {PostCommentSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "post-comment" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "post-comment" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[23] = createParserRuleValue(23, "PreCommentSegment", -1,
+		grammarRuleValues[21] = createParserRuleValue(21, "PreCommentSegment", -1,
 			createSerializationRules(
-				18	/* PreCommentSegment: "pre-comment" */
+				17	/* PreCommentSegment-0: 'pre-comment' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {PreCommentSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "pre-comment" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "pre-comment" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[24] = createParserRuleValue(24, "PushSegment", -1,
+		grammarRuleValues[22] = createParserRuleValue(22, "PushSegment", -1,
 			createSerializationRules(
-				19	/* PushSegment: "push" */
+				18	/* PushSegment-0: 'push' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {PushSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "push" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "push" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[25] = createParserRuleValue(25, "ReferredLocator", -1,
+		grammarRuleValues[23] = createParserRuleValue(23, "ReferredLocator", -1,
 			createSerializationRules(
-				20	/* ReferredLocator: { { idiomsModel=ID "::" }[?] locatorDeclaration=ID } */
+				19	/* ReferredLocator-0: (ReferredLocator::idiomsModel=ID '::')[V0:?] ReferredLocator::locatorDeclaration=ID */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* idiomsModel=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 4	/* "::" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, no-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* locatorDeclaration=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* idiomsModel=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 4	/* "::" : [value] | [pre-comment, no-space, value, no-space, post-comment] */,
+			(0 << 16) | 6	/* locatorDeclaration=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[26] = createParserRuleValue(26, "ReferredSegment", -1,
+		grammarRuleValues[24] = createParserRuleValue(24, "ReferredSegment", -1,
 			createSerializationRules(
-				21	/* ReferredSegment: { { idiomsModel=ID "::" }[?] segmentDeclaration=ID } */
+				20	/* ReferredSegment-0: (ReferredSegment::idiomsModel=ID '::')[V0:?] ReferredSegment::segmentDeclaration=ID */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* idiomsModel=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 4	/* "::" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, no-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* segmentDeclaration=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* idiomsModel=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 4	/* "::" : [value] | [pre-comment, no-space, value, no-space, post-comment] */,
+			(0 << 16) | 6	/* segmentDeclaration=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[27] = createParserRuleValue(27, "ReturnsLocator", -1,
+		grammarRuleValues[25] = createParserRuleValue(25, "ReturnsLocator", -1,
 			createSerializationRules(
-				22	/* ReturnsLocator: { "returns" { ePackage=ID "::" }[?] eClass=ID } */
+				21	/* ReturnsLocator-0: 'returns' (ReturnsLocator::ePackage=ID '::')[V0:?] ReturnsLocator::eClass=ID */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "returns" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "returns" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* ePackage=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 4	/* "::" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, no-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* eClass=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* ePackage=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 4	/* "::" : [value] | [pre-comment, no-space, value, no-space, post-comment] */,
+			(0 << 16) | 6	/* eClass=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[28] = new TerminalRuleValue(28, "SL_COMMENT");
-		grammarRuleValues[29] = new TerminalRuleValue(29, "STRING");
-		grammarRuleValues[30] = createParserRuleValue(30, "Segment", 12 /* CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */,
+		grammarRuleValues[26] = new TerminalRuleValue(26, "SL_COMMENT");
+		grammarRuleValues[27] = new TerminalRuleValue(27, "STRING");
+		grammarRuleValues[28] = createParserRuleValue(28, "Segment", 10 /* CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */,
 			createSerializationRules(
-				4	/* CustomSegment: { "custom" supportClassName=STRING } */,
-				7	/* HalfNewLineSegment: "half-new-line" */,
-				14	/* NewLineSegment: "new-line" */,
-				15	/* NoSpaceSegment: "no-space" */,
-				16	/* PopSegment: "pop" */,
-				17	/* PostCommentSegment: "post-comment" */,
-				18	/* PreCommentSegment: "pre-comment" */,
-				19	/* PushSegment: "push" */,
-				24	/* SoftNewLineSegment: "soft-new-line" */,
-				25	/* SoftSpaceSegment: "soft-space" */,
-				26	/* StringSegment: { "string" string=STRING printable="printable" } */,
-				30	/* ValueSegment: "value" */,
-				31	/* WrapAnchorSegment: "wrap-anchor" */,
-				32	/* WrapBeginAllSegment: "wrap-begin-all" */,
-				33	/* WrapBeginSomeSegment: "wrap-begin-some" */,
-				34	/* WrapEndSegment: "wrap-end" */,
-				35	/* WrapHereSegment: "wrap-here" */
+				3	/* CustomSegment-0: 'custom' CustomSegment::supportClassName=STRING */,
+				6	/* HalfNewLineSegment-0: 'half-new-line' */,
+				13	/* NewLineSegment-0: 'new-line' */,
+				14	/* NoSpaceSegment-0: 'no-space' */,
+				15	/* PopSegment-0: 'pop' */,
+				16	/* PostCommentSegment-0: 'post-comment' */,
+				17	/* PreCommentSegment-0: 'pre-comment' */,
+				18	/* PushSegment-0: 'push' */,
+				23	/* SoftNewLineSegment-0: 'soft-new-line' */,
+				24	/* SoftSpaceSegment-0: 'soft-space' */,
+				25	/* StringSegment-0: 'string' StringSegment::string=STRING StringSegment::printable?='printable' */,
+				29	/* ValueSegment-0: 'value' */,
+				30	/* WrapAnchorSegment-0: 'wrap-anchor' */,
+				31	/* WrapBeginAllSegment-0: 'wrap-begin-all' */,
+				32	/* WrapBeginSomeSegment-0: 'wrap-begin-some' */,
+				33	/* WrapEndSegment-0: 'wrap-end' */,
+				34	/* WrapHereSegment-0: 'wrap-here' */
 			),
 			(0 << 16) | 0	/* Alternatives : [value] | [value] */,
 			(0 << 16) | 0	/* CustomSegment : [value] | [value] */,
@@ -688,106 +674,106 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 			(0 << 16) | 0	/* WrapEndSegment : [value] | [value] */,
 			(0 << 16) | 0	/* WrapHereSegment : [value] | [value] */
 		);
-		grammarRuleValues[31] = createParserRuleValue(31, "SegmentDeclaration", -1,
+		grammarRuleValues[29] = createParserRuleValue(29, "SegmentDeclaration", -1,
 			createSerializationRules(
-				23	/* SegmentDeclaration: { "segment" name=ID ownedSegment=Segment ";" } */
+				22	/* SegmentDeclaration-0: 'segment' SegmentDeclaration::name=ID SegmentDeclaration::ownedSegment=Segment ';' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "segment" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* name=ID : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "segment" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* name=ID : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* ownedSegment=Segment : [value] | [value] */,
-			(0 << 16) | 5	/* ";" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 5	/* ";" : [value] | [pre-comment, no-space, value, soft-new-line, post-comment] */
 		);
-		grammarRuleValues[32] = createParserRuleValue(32, "SoftNewLineSegment", -1,
+		grammarRuleValues[30] = createParserRuleValue(30, "SoftNewLineSegment", -1,
 			createSerializationRules(
-				24	/* SoftNewLineSegment: "soft-new-line" */
+				23	/* SoftNewLineSegment-0: 'soft-new-line' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {SoftNewLineSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "soft-new-line" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "soft-new-line" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[33] = createParserRuleValue(33, "SoftSpaceSegment", -1,
+		grammarRuleValues[31] = createParserRuleValue(31, "SoftSpaceSegment", -1,
 			createSerializationRules(
-				25	/* SoftSpaceSegment: "soft-space" */
+				24	/* SoftSpaceSegment-0: 'soft-space' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {SoftSpaceSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "soft-space" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "soft-space" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[34] = createParserRuleValue(34, "StringSegment", -1,
+		grammarRuleValues[32] = createParserRuleValue(32, "StringSegment", -1,
 			createSerializationRules(
-				26	/* StringSegment: { "string" string=STRING printable="printable" } */
+				25	/* StringSegment-0: 'string' StringSegment::string=STRING StringSegment::printable?='printable' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "string" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* string=STRING : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* printable?="printable" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "string" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* string=STRING : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* printable?="printable" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[35] = createParserRuleValue(35, "SubIdiom", -1,
+		grammarRuleValues[33] = createParserRuleValue(33, "SubIdiom", -1,
 			createSerializationRules(
-				27	/* SubIdiom: { "at" "each" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" } */,
-				28	/* SubIdiom: { "at" all="all"[?] ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" } */,
-				29	/* SubIdiom: { "at" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" } */
+				26	/* SubIdiom-0: 'at' 'each' SubIdiom::ownedLocator=Locator ('do' (SubIdiom::ownedSegments+=Segment|ReferredSegment)[V1:*])[V0:?] ';' */,
+				27	/* SubIdiom-1: 'at' SubIdiom::all?='all' SubIdiom::ownedLocator=Locator ('do' (SubIdiom::ownedSegments+=Segment|ReferredSegment)[V1:*])[V0:?] ';' */,
+				28	/* SubIdiom-2: 'at' SubIdiom::ownedLocator=Locator ('do' (SubIdiom::ownedSegments+=Segment|ReferredSegment)[V1:*])[V0:?] ';' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
-			(0 << 16) | 6	/* "at" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "at" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* Alternatives? : [value] | [value] */,
-			(0 << 16) | 6	/* all?="all" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
-			(0 << 16) | 6	/* "each" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* all?="all" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
+			(0 << 16) | 6	/* "each" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* ownedLocator=Locator : [value] | [value] */,
 			(0 << 16) | 0	/* Group? : [value] | [value] */,
-			(0 << 16) | 6	/* "do" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */,
+			(0 << 16) | 6	/* "do" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */,
 			(0 << 16) | 0	/* ownedSegments+=(Segment|ReferredSegment)* : [value] | [value] */,
-			(0 << 16) | 5	/* ";" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, no-space, value, soft-new-line, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 5	/* ";" : [value] | [pre-comment, no-space, value, soft-new-line, post-comment] */
 		);
-		grammarRuleValues[36] = createParserRuleValue(36, "ValueSegment", -1,
+		grammarRuleValues[34] = createParserRuleValue(34, "ValueSegment", -1,
 			createSerializationRules(
-				30	/* ValueSegment: "value" */
+				29	/* ValueSegment-0: 'value' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {ValueSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "value" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "value" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[37] = new TerminalRuleValue(37, "WS");
-		grammarRuleValues[38] = createParserRuleValue(38, "WrapAnchorSegment", -1,
+		grammarRuleValues[35] = new TerminalRuleValue(35, "WS");
+		grammarRuleValues[36] = createParserRuleValue(36, "WrapAnchorSegment", -1,
 			createSerializationRules(
-				31	/* WrapAnchorSegment: "wrap-anchor" */
+				30	/* WrapAnchorSegment-0: 'wrap-anchor' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {WrapAnchorSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "wrap-anchor" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "wrap-anchor" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[39] = createParserRuleValue(39, "WrapBeginAllSegment", -1,
+		grammarRuleValues[37] = createParserRuleValue(37, "WrapBeginAllSegment", -1,
 			createSerializationRules(
-				32	/* WrapBeginAllSegment: "wrap-begin-all" */
+				31	/* WrapBeginAllSegment-0: 'wrap-begin-all' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {WrapBeginAllSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "wrap-begin-all" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "wrap-begin-all" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[40] = createParserRuleValue(40, "WrapBeginSomeSegment", -1,
+		grammarRuleValues[38] = createParserRuleValue(38, "WrapBeginSomeSegment", -1,
 			createSerializationRules(
-				33	/* WrapBeginSomeSegment: "wrap-begin-some" */
+				32	/* WrapBeginSomeSegment-0: 'wrap-begin-some' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {WrapBeginSomeSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "wrap-begin-some" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "wrap-begin-some" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[41] = createParserRuleValue(41, "WrapEndSegment", -1,
+		grammarRuleValues[39] = createParserRuleValue(39, "WrapEndSegment", -1,
 			createSerializationRules(
-				34	/* WrapEndSegment: "wrap-end" */
+				33	/* WrapEndSegment-0: 'wrap-end' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {WrapEndSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "wrap-end" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "wrap-end" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
-		grammarRuleValues[42] = createParserRuleValue(42, "WrapHereSegment", -1,
+		grammarRuleValues[40] = createParserRuleValue(40, "WrapHereSegment", -1,
 			createSerializationRules(
-				35	/* WrapHereSegment: "wrap-here" */
+				34	/* WrapHereSegment-0: 'wrap-here' */
 			),
 			(0 << 16) | 0	/* Group : [value] | [value] */,
 			(0 << 16) | 0	/* {WrapHereSegment} : [value] | [value] */,
-			(0 << 16) | 6	/* "wrap-here" : [value] | [supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport, soft-space, value, soft-space, supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport] */
+			(0 << 16) | 6	/* "wrap-here" : [value] | [pre-comment, soft-space, value, soft-space, post-comment] */
 		);
 	}
 
@@ -795,267 +781,257 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize bit vectors of useful grammar rule combinations.
 	 */
 	private void initGrammarRuleVectors() {
-		// EPackageImport
-		grammarRuleVectors[0] = new GrammarRuleVector(0x40L);
-		// ElementLocator
-		grammarRuleVectors[1] = new GrammarRuleVector(0x80L);
-		// Idiom
-		grammarRuleVectors[2] = new GrammarRuleVector(0x1000L);
-		// IdiomsImport
-		grammarRuleVectors[3] = new GrammarRuleVector(0x2000L);
-		// Locator
-		grammarRuleVectors[4] = new GrammarRuleVector(0x10000L);
-		// LocatorDeclaration
-		grammarRuleVectors[5] = new GrammarRuleVector(0x20000L);
-		// AssignmentLocator|CompoundLocator|ElementLocator|KeywordLocator|ReferredLocator
-		grammarRuleVectors[6] = new GrammarRuleVector(0x2008098L);
-		// AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|CompoundLocator|ElementLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator
-		grammarRuleVectors[7] = new GrammarRuleVector(0xa01819eL);
-		// Segment
-		grammarRuleVectors[8] = new GrammarRuleVector(0x40000000L);
-		// ReferredSegment|Segment
-		grammarRuleVectors[9] = new GrammarRuleVector(0x44000000L);
-		// SegmentDeclaration
-		grammarRuleVectors[10] = new GrammarRuleVector(0x80000000L);
-		// SubIdiom
-		grammarRuleVectors[11] = new GrammarRuleVector(0x800000000L);
-		// CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment
-		grammarRuleVectors[12] = new GrammarRuleVector(0x7d741f80220L);
-		// CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment
-		grammarRuleVectors[13] = new GrammarRuleVector(0x7d745f80220L);
+		// 0: EPackageImport
+		grammarRuleVectors[0] = new GrammarRuleVector(0x20L);
+		// 1: Idiom
+		grammarRuleVectors[1] = new GrammarRuleVector(0x400L);
+		// 2: IdiomsImport
+		grammarRuleVectors[2] = new GrammarRuleVector(0x800L);
+		// 3: Locator
+		grammarRuleVectors[3] = new GrammarRuleVector(0x4000L);
+		// 4: LocatorDeclaration
+		grammarRuleVectors[4] = new GrammarRuleVector(0x8000L);
+		// 5: AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator
+		grammarRuleVectors[5] = new GrammarRuleVector(0x280604eL);
+		// 6: Segment
+		grammarRuleVectors[6] = new GrammarRuleVector(0x10000000L);
+		// 7: ReferredSegment|Segment
+		grammarRuleVectors[7] = new GrammarRuleVector(0x11000000L);
+		// 8: SegmentDeclaration
+		grammarRuleVectors[8] = new GrammarRuleVector(0x20000000L);
+		// 9: SubIdiom
+		grammarRuleVectors[9] = new GrammarRuleVector(0x200000000L);
+		// 10: CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment
+		grammarRuleVectors[10] = new GrammarRuleVector(0x1f5d07e0090L);
+		// 11: CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment
+		grammarRuleVectors[11] = new GrammarRuleVector(0x1f5d17e0090L);
 	}
 
 	/**
 	 * Initialize steps for the matching process.
 	 */
 	private void initMatchSteps() {
-		// assert (|AssignmentLocator::eStructuralFeature| - 1) == 0
+		// 0: assert (|AssignmentLocator::eStructuralFeature| - 1) == 0
 		serializationMatchSteps[0] = createMatchStep_Assert(39);
-		// assert (|CustomSegment::supportClassName| - 1) == 0
-		serializationMatchSteps[1] = createMatchStep_Assert(41);
-		// assert (|EPackageImport::ePackage| - 1) == 0
-		serializationMatchSteps[2] = createMatchStep_Assert(42);
-		// assert (|Idiom::name| - 1) == 0
-		serializationMatchSteps[3] = createMatchStep_Assert(43);
-		// assert (|Idiom::ownedSubIdioms| - 1) == 0
-		serializationMatchSteps[4] = createMatchStep_Assert(44);
-		// assert (|IdiomsImport::idiomsModel| - 1) == 0
-		serializationMatchSteps[5] = createMatchStep_Assert(45);
-		// assert (|IdiomsModel::name| - 1) == 0
+		// 1: assert (|CustomSegment::supportClassName| - 1) == 0
+		serializationMatchSteps[1] = createMatchStep_Assert(40);
+		// 2: assert (|EPackageImport::ePackage| - 1) == 0
+		serializationMatchSteps[2] = createMatchStep_Assert(41);
+		// 3: assert (|Idiom::name| - 1) == 0
+		serializationMatchSteps[3] = createMatchStep_Assert(42);
+		// 4: assert (|Idiom::ownedSubIdioms| - 1) == 0
+		serializationMatchSteps[4] = createMatchStep_Assert(43);
+		// 5: assert (|IdiomsImport::idiomsModel| - 1) == 0
+		serializationMatchSteps[5] = createMatchStep_Assert(44);
+		// 6: assert (|KeywordLocator::string| - 1) == 0
 		serializationMatchSteps[6] = createMatchStep_Assert(46);
-		// assert (|KeywordLocator::string| - 1) == 0
+		// 7: assert (|LocatorDeclaration::name| - 1) == 0
 		serializationMatchSteps[7] = createMatchStep_Assert(47);
-		// assert (|LocatorDeclaration::name| - 1) == 0
+		// 8: assert (|LocatorDeclaration::ownedLocator| - 1) == 0
 		serializationMatchSteps[8] = createMatchStep_Assert(48);
-		// assert (|LocatorDeclaration::ownedLocator| - 1) == 0
+		// 9: assert (|ReferredLocator::locatorDeclaration| - 1) == 0
 		serializationMatchSteps[9] = createMatchStep_Assert(49);
-		// assert (|ReferredLocator::locatorDeclaration| - 1) == 0
+		// 10: assert (|ReferredSegment::segmentDeclaration| - 1) == 0
 		serializationMatchSteps[10] = createMatchStep_Assert(50);
-		// assert (|ReferredSegment::segmentDeclaration| - 1) == 0
+		// 11: assert (|ReturnsLocator::eClass| - 1) == 0
 		serializationMatchSteps[11] = createMatchStep_Assert(51);
-		// assert (|ReturnsLocator::eClass| - 1) == 0
+		// 12: assert (|SegmentDeclaration::name| - 1) == 0
 		serializationMatchSteps[12] = createMatchStep_Assert(52);
-		// assert (|SegmentDeclaration::name| - 1) == 0
+		// 13: assert (|SegmentDeclaration::ownedSegment| - 1) == 0
 		serializationMatchSteps[13] = createMatchStep_Assert(53);
-		// assert (|SegmentDeclaration::ownedSegment| - 1) == 0
+		// 14: assert (|StringSegment::printable.'printable'| - 1) == 0
 		serializationMatchSteps[14] = createMatchStep_Assert(54);
-		// assert (|StringSegment::printable.'printable'| - 1) == 0
+		// 15: assert (|StringSegment::string| - 1) == 0
 		serializationMatchSteps[15] = createMatchStep_Assert(55);
-		// assert (|StringSegment::string| - 1) == 0
+		// 16: assert (|SubIdiom::all.'all'| - 1) == 0
 		serializationMatchSteps[16] = createMatchStep_Assert(56);
-		// assert (|SubIdiom::ownedLocator| - 1) == 0
+		// 17: assert (|SubIdiom::ownedLocator| - 1) == 0
 		serializationMatchSteps[17] = createMatchStep_Assert(57);
-		// assign V0 = (|CompoundLocator::ownedLocators| - 1)
-		serializationMatchSteps[18] = createMatchStep_Assign(0, 40);
-		// assign V0 = (|SubIdiom::ownedSegments| > 0)
-		serializationMatchSteps[19] = createMatchStep_Assign(0, 58);
-		// assign V0 = |AssignmentLocator::eClass|
-		serializationMatchSteps[20] = createMatchStep_Assign(0, 2);
-		// assign V0 = |EPackageImport::as|
-		serializationMatchSteps[21] = createMatchStep_Assign(0, 7);
-		// assign V0 = |Idiom::mixin.'mixin'|
-		serializationMatchSteps[22] = createMatchStep_Assign(0, 12);
-		// assign V0 = |IdiomsImport::as|
-		serializationMatchSteps[23] = createMatchStep_Assign(0, 15);
-		// assign V0 = |IdiomsModel::ownedWiths|
-		serializationMatchSteps[24] = createMatchStep_Assign(0, 22);
-		// assign V0 = |ReferredLocator::idiomsModel|
-		serializationMatchSteps[25] = createMatchStep_Assign(0, 26);
-		// assign V0 = |ReferredSegment::idiomsModel|
-		serializationMatchSteps[26] = createMatchStep_Assign(0, 28);
-		// assign V0 = |ReturnsLocator::ePackage|
-		serializationMatchSteps[27] = createMatchStep_Assign(0, 31);
-		// assign V0 = |SubIdiom::all.'all'|
-		serializationMatchSteps[28] = createMatchStep_Assign(0, 36);
-		// assign V1 = (|SubIdiom::ownedSegments| > 0)
-		serializationMatchSteps[29] = createMatchStep_Assign(1, 58);
-		// assign V1 = |AssignmentLocator::ePackage|
-		serializationMatchSteps[30] = createMatchStep_Assign(1, 3);
-		// assign V1 = |Idiom::forEClass|
-		serializationMatchSteps[31] = createMatchStep_Assign(1, 9);
-		// assign V1 = |IdiomsModel::ownedImports|
-		serializationMatchSteps[32] = createMatchStep_Assign(1, 19);
-		// assign V1 = |SubIdiom::ownedSegments|
-		serializationMatchSteps[33] = createMatchStep_Assign(1, 38);
-		// assign V2 = |Idiom::forEPackage|
-		serializationMatchSteps[34] = createMatchStep_Assign(2, 10);
-		// assign V2 = |IdiomsModel::ownedLocatorDeclarations|
-		serializationMatchSteps[35] = createMatchStep_Assign(2, 20);
-		// assign V2 = |SubIdiom::ownedSegments|
-		serializationMatchSteps[36] = createMatchStep_Assign(2, 38);
-		// assign V3 = |Idiom::inRuleRegex|
-		serializationMatchSteps[37] = createMatchStep_Assign(3, 11);
-		// assign V3 = |IdiomsModel::ownedSegmentDeclarations|
-		serializationMatchSteps[38] = createMatchStep_Assign(3, 21);
-		// assign V4 = |Idiom::ownedSubIdioms|
-		serializationMatchSteps[39] = createMatchStep_Assign(4, 14);
-		// assign V4 = |IdiomsModel::ownedIdioms|
-		serializationMatchSteps[40] = createMatchStep_Assign(4, 18);
-		// check-rule idioms::CompoundLocator.ownedLocators : 7
-		serializationMatchSteps[41] = createMatchStep_RuleCheck(IdiomsPackage.Literals.COMPOUND_LOCATOR__OWNED_LOCATORS, 1/*ElementLocator*/);
-		// check-rule idioms::Idiom.ownedSubIdioms : 35
-		serializationMatchSteps[42] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS, 11/*SubIdiom*/);
-		// check-rule idioms::IdiomsModel.ownedIdioms : 12
-		serializationMatchSteps[43] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS, 2/*Idiom*/);
-		// check-rule idioms::IdiomsModel.ownedImports : 6
-		serializationMatchSteps[44] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS, 0/*EPackageImport*/);
-		// check-rule idioms::IdiomsModel.ownedLocatorDeclarations : 17
-		serializationMatchSteps[45] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS, 5/*LocatorDeclaration*/);
-		// check-rule idioms::IdiomsModel.ownedSegmentDeclarations : 31
-		serializationMatchSteps[46] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS, 10/*SegmentDeclaration*/);
-		// check-rule idioms::IdiomsModel.ownedWiths : 13
-		serializationMatchSteps[47] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS, 3/*IdiomsImport*/);
-		// check-rule idioms::LocatorDeclaration.ownedLocator : 16
-		serializationMatchSteps[48] = createMatchStep_RuleCheck(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR, 4/*Locator*/);
-		// check-rule idioms::SegmentDeclaration.ownedSegment : 30
-		serializationMatchSteps[49] = createMatchStep_RuleCheck(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT, 8/*Segment*/);
-		// check-rule idioms::SubIdiom.ownedLocator : 16
-		serializationMatchSteps[50] = createMatchStep_RuleCheck(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR, 4/*Locator*/);
-		// check-rule idioms::SubIdiom.ownedSegments : 26|30
-		serializationMatchSteps[51] = createMatchStep_RuleCheck(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS, 9/*ReferredSegment|Segment*/);
+		// 18: assert |SubIdiom::all| == 0
+		serializationMatchSteps[18] = createMatchStep_Assert(36);
+		// 19: assign V0 = (|IdiomsModel::names| - 1)
+		serializationMatchSteps[19] = createMatchStep_Assign(0, 45);
+		// 20: assign V0 = (|SubIdiom::ownedSegments| > 0)
+		serializationMatchSteps[20] = createMatchStep_Assign(0, 58);
+		// 21: assign V0 = |AssignmentLocator::eClass|
+		serializationMatchSteps[21] = createMatchStep_Assign(0, 2);
+		// 22: assign V0 = |EPackageImport::as|
+		serializationMatchSteps[22] = createMatchStep_Assign(0, 6);
+		// 23: assign V0 = |Idiom::mixin.'mixin'|
+		serializationMatchSteps[23] = createMatchStep_Assign(0, 11);
+		// 24: assign V0 = |IdiomsImport::as|
+		serializationMatchSteps[24] = createMatchStep_Assign(0, 14);
+		// 25: assign V0 = |ReferredLocator::idiomsModel|
+		serializationMatchSteps[25] = createMatchStep_Assign(0, 25);
+		// 26: assign V0 = |ReferredSegment::idiomsModel|
+		serializationMatchSteps[26] = createMatchStep_Assign(0, 27);
+		// 27: assign V0 = |ReturnsLocator::ePackage|
+		serializationMatchSteps[27] = createMatchStep_Assign(0, 30);
+		// 28: assign V1 = |AssignmentLocator::ePackage|
+		serializationMatchSteps[28] = createMatchStep_Assign(1, 3);
+		// 29: assign V1 = |Idiom::forEClass|
+		serializationMatchSteps[29] = createMatchStep_Assign(1, 8);
+		// 30: assign V1 = |IdiomsModel::ownedWiths|
+		serializationMatchSteps[30] = createMatchStep_Assign(1, 21);
+		// 31: assign V1 = |SubIdiom::ownedSegments|
+		serializationMatchSteps[31] = createMatchStep_Assign(1, 38);
+		// 32: assign V2 = |Idiom::forEPackage|
+		serializationMatchSteps[32] = createMatchStep_Assign(2, 9);
+		// 33: assign V2 = |IdiomsModel::ownedImports|
+		serializationMatchSteps[33] = createMatchStep_Assign(2, 18);
+		// 34: assign V3 = |Idiom::inRuleRegex|
+		serializationMatchSteps[34] = createMatchStep_Assign(3, 10);
+		// 35: assign V3 = |IdiomsModel::ownedLocatorDeclarations|
+		serializationMatchSteps[35] = createMatchStep_Assign(3, 19);
+		// 36: assign V4 = |Idiom::ownedSubIdioms|
+		serializationMatchSteps[36] = createMatchStep_Assign(4, 13);
+		// 37: assign V4 = |IdiomsModel::ownedSegmentDeclarations|
+		serializationMatchSteps[37] = createMatchStep_Assign(4, 20);
+		// 38: assign V5 = |IdiomsModel::ownedIdioms|
+		serializationMatchSteps[38] = createMatchStep_Assign(5, 17);
+		// 39: check-rule idioms::Idiom.ownedSubIdioms : 33
+		serializationMatchSteps[39] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS, 9/*SubIdiom*/);
+		// 40: check-rule idioms::IdiomsModel.ownedIdioms : 10
+		serializationMatchSteps[40] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS, 1/*Idiom*/);
+		// 41: check-rule idioms::IdiomsModel.ownedImports : 5
+		serializationMatchSteps[41] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS, 0/*EPackageImport*/);
+		// 42: check-rule idioms::IdiomsModel.ownedLocatorDeclarations : 15
+		serializationMatchSteps[42] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS, 4/*LocatorDeclaration*/);
+		// 43: check-rule idioms::IdiomsModel.ownedSegmentDeclarations : 29
+		serializationMatchSteps[43] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS, 8/*SegmentDeclaration*/);
+		// 44: check-rule idioms::IdiomsModel.ownedWiths : 11
+		serializationMatchSteps[44] = createMatchStep_RuleCheck(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS, 2/*IdiomsImport*/);
+		// 45: check-rule idioms::LocatorDeclaration.ownedLocator : 1|2|3|6|13|14|23|25
+		serializationMatchSteps[45] = createMatchStep_RuleCheck(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR, 5/*AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator*/);
+		// 46: check-rule idioms::SegmentDeclaration.ownedSegment : 4|7|17|18|19|20|21|22|28|30|31|32|34|36|37|38|39|40
+		serializationMatchSteps[46] = createMatchStep_RuleCheck(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT, 10/*CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment*/);
+		// 47: check-rule idioms::SubIdiom.ownedLocator : 1|2|3|6|13|14|23|25
+		serializationMatchSteps[47] = createMatchStep_RuleCheck(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR, 5/*AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator*/);
+		// 48: check-rule idioms::SubIdiom.ownedSegments : 4|7|17|18|19|20|21|22|24|28|30|31|32|34|36|37|38|39|40
+		serializationMatchSteps[48] = createMatchStep_RuleCheck(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS, 11/*CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment*/);
 	}
 
 	/**
 	 * Initialize expression terms used during the matching process.
 	 */
 	private void initMatchTerms() {
-		// 0
-		serializationMatchTerms[0] = new SerializationMatchTermInteger(0);
-		// 1
-		serializationMatchTerms[1] = new SerializationMatchTermInteger(1);
-		// |AssignmentLocator::eClass|
-		serializationMatchTerms[2] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS);
-		// |AssignmentLocator::ePackage|
-		serializationMatchTerms[3] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE);
-		// |AssignmentLocator::eStructuralFeature|
-		serializationMatchTerms[4] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE);
-		// |CompoundLocator::ownedLocators|
-		serializationMatchTerms[5] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.COMPOUND_LOCATOR__OWNED_LOCATORS);
-		// |CustomSegment::supportClassName|
-		serializationMatchTerms[6] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME);
-		// |EPackageImport::as|
-		serializationMatchTerms[7] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.EPACKAGE_IMPORT__AS);
-		// |EPackageImport::ePackage|
-		serializationMatchTerms[8] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE);
-		// |Idiom::forEClass|
-		serializationMatchTerms[9] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__FOR_ECLASS);
-		// |Idiom::forEPackage|
-		serializationMatchTerms[10] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE);
-		// |Idiom::inRuleRegex|
-		serializationMatchTerms[11] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX);
-		// |Idiom::mixin.'mixin'|
-		serializationMatchTerms[12] = createSerializationMatchTermEAttributeSize(IdiomsPackage.Literals.IDIOM__MIXIN, 1 /* 'mixin' */);
-		// |Idiom::name|
-		serializationMatchTerms[13] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__NAME);
-		// |Idiom::ownedSubIdioms|
-		serializationMatchTerms[14] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS);
-		// |IdiomsImport::as|
-		serializationMatchTerms[15] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_IMPORT__AS);
-		// |IdiomsImport::idiomsModel|
-		serializationMatchTerms[16] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL);
-		// |IdiomsModel::name|
-		serializationMatchTerms[17] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__NAME);
-		// |IdiomsModel::ownedIdioms|
-		serializationMatchTerms[18] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS);
-		// |IdiomsModel::ownedImports|
-		serializationMatchTerms[19] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS);
-		// |IdiomsModel::ownedLocatorDeclarations|
-		serializationMatchTerms[20] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS);
-		// |IdiomsModel::ownedSegmentDeclarations|
-		serializationMatchTerms[21] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS);
-		// |IdiomsModel::ownedWiths|
-		serializationMatchTerms[22] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS);
-		// |KeywordLocator::string|
-		serializationMatchTerms[23] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.KEYWORD_LOCATOR__STRING);
-		// |LocatorDeclaration::name|
-		serializationMatchTerms[24] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME);
-		// |LocatorDeclaration::ownedLocator|
-		serializationMatchTerms[25] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR);
-		// |ReferredLocator::idiomsModel|
-		serializationMatchTerms[26] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL);
-		// |ReferredLocator::locatorDeclaration|
-		serializationMatchTerms[27] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION);
-		// |ReferredSegment::idiomsModel|
-		serializationMatchTerms[28] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL);
-		// |ReferredSegment::segmentDeclaration|
-		serializationMatchTerms[29] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION);
-		// |ReturnsLocator::eClass|
-		serializationMatchTerms[30] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS);
-		// |ReturnsLocator::ePackage|
-		serializationMatchTerms[31] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE);
-		// |SegmentDeclaration::name|
-		serializationMatchTerms[32] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME);
-		// |SegmentDeclaration::ownedSegment|
-		serializationMatchTerms[33] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT);
-		// |StringSegment::printable.'printable'|
-		serializationMatchTerms[34] = createSerializationMatchTermEAttributeSize(IdiomsPackage.Literals.STRING_SEGMENT__PRINTABLE, 2 /* 'printable' */);
-		// |StringSegment::string|
-		serializationMatchTerms[35] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.STRING_SEGMENT__STRING);
-		// |SubIdiom::all.'all'|
-		serializationMatchTerms[36] = createSerializationMatchTermEAttributeSize(IdiomsPackage.Literals.SUB_IDIOM__ALL, 0 /* 'all' */);
-		// |SubIdiom::ownedLocator|
-		serializationMatchTerms[37] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR);
-		// |SubIdiom::ownedSegments|
-		serializationMatchTerms[38] = new SerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS);
-		// (|AssignmentLocator::eStructuralFeature| - 1)
+		// 0: 0
+		serializationMatchTerms[0] = createSerializationMatchTermInteger(0);
+		// 1: 1
+		serializationMatchTerms[1] = createSerializationMatchTermInteger(1);
+		// 2: |AssignmentLocator::eClass|
+		serializationMatchTerms[2] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS);
+		// 3: |AssignmentLocator::ePackage|
+		serializationMatchTerms[3] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE);
+		// 4: |AssignmentLocator::eStructuralFeature|
+		serializationMatchTerms[4] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE);
+		// 5: |CustomSegment::supportClassName|
+		serializationMatchTerms[5] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME);
+		// 6: |EPackageImport::as|
+		serializationMatchTerms[6] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.EPACKAGE_IMPORT__AS);
+		// 7: |EPackageImport::ePackage|
+		serializationMatchTerms[7] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE);
+		// 8: |Idiom::forEClass|
+		serializationMatchTerms[8] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__FOR_ECLASS);
+		// 9: |Idiom::forEPackage|
+		serializationMatchTerms[9] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE);
+		// 10: |Idiom::inRuleRegex|
+		serializationMatchTerms[10] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX);
+		// 11: |Idiom::mixin.'mixin'|
+		serializationMatchTerms[11] = createSerializationMatchTermEAttributeSize(IdiomsPackage.Literals.IDIOM__MIXIN, 1 /* 'mixin' */);
+		// 12: |Idiom::name|
+		serializationMatchTerms[12] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__NAME);
+		// 13: |Idiom::ownedSubIdioms|
+		serializationMatchTerms[13] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS);
+		// 14: |IdiomsImport::as|
+		serializationMatchTerms[14] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_IMPORT__AS);
+		// 15: |IdiomsImport::idiomsModel|
+		serializationMatchTerms[15] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL);
+		// 16: |IdiomsModel::names|
+		serializationMatchTerms[16] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__NAMES);
+		// 17: |IdiomsModel::ownedIdioms|
+		serializationMatchTerms[17] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS);
+		// 18: |IdiomsModel::ownedImports|
+		serializationMatchTerms[18] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS);
+		// 19: |IdiomsModel::ownedLocatorDeclarations|
+		serializationMatchTerms[19] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS);
+		// 20: |IdiomsModel::ownedSegmentDeclarations|
+		serializationMatchTerms[20] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS);
+		// 21: |IdiomsModel::ownedWiths|
+		serializationMatchTerms[21] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS);
+		// 22: |KeywordLocator::string|
+		serializationMatchTerms[22] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.KEYWORD_LOCATOR__STRING);
+		// 23: |LocatorDeclaration::name|
+		serializationMatchTerms[23] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME);
+		// 24: |LocatorDeclaration::ownedLocator|
+		serializationMatchTerms[24] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR);
+		// 25: |ReferredLocator::idiomsModel|
+		serializationMatchTerms[25] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL);
+		// 26: |ReferredLocator::locatorDeclaration|
+		serializationMatchTerms[26] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION);
+		// 27: |ReferredSegment::idiomsModel|
+		serializationMatchTerms[27] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL);
+		// 28: |ReferredSegment::segmentDeclaration|
+		serializationMatchTerms[28] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION);
+		// 29: |ReturnsLocator::eClass|
+		serializationMatchTerms[29] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS);
+		// 30: |ReturnsLocator::ePackage|
+		serializationMatchTerms[30] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE);
+		// 31: |SegmentDeclaration::name|
+		serializationMatchTerms[31] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME);
+		// 32: |SegmentDeclaration::ownedSegment|
+		serializationMatchTerms[32] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT);
+		// 33: |StringSegment::printable.'printable'|
+		serializationMatchTerms[33] = createSerializationMatchTermEAttributeSize(IdiomsPackage.Literals.STRING_SEGMENT__PRINTABLE, 2 /* 'printable' */);
+		// 34: |StringSegment::string|
+		serializationMatchTerms[34] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.STRING_SEGMENT__STRING);
+		// 35: |SubIdiom::all.'all'|
+		serializationMatchTerms[35] = createSerializationMatchTermEAttributeSize(IdiomsPackage.Literals.SUB_IDIOM__ALL, 0 /* 'all' */);
+		// 36: |SubIdiom::all|
+		serializationMatchTerms[36] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SUB_IDIOM__ALL);
+		// 37: |SubIdiom::ownedLocator|
+		serializationMatchTerms[37] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR);
+		// 38: |SubIdiom::ownedSegments|
+		serializationMatchTerms[38] = createSerializationMatchTermEStructuralFeatureSize(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS);
+		// 39: (|AssignmentLocator::eStructuralFeature| - 1)
 		serializationMatchTerms[39] = createSerializationMatchTermSubtract(4, 1);
-		// (|CompoundLocator::ownedLocators| - 1)
+		// 40: (|CustomSegment::supportClassName| - 1)
 		serializationMatchTerms[40] = createSerializationMatchTermSubtract(5, 1);
-		// (|CustomSegment::supportClassName| - 1)
-		serializationMatchTerms[41] = createSerializationMatchTermSubtract(6, 1);
-		// (|EPackageImport::ePackage| - 1)
-		serializationMatchTerms[42] = createSerializationMatchTermSubtract(8, 1);
-		// (|Idiom::name| - 1)
+		// 41: (|EPackageImport::ePackage| - 1)
+		serializationMatchTerms[41] = createSerializationMatchTermSubtract(7, 1);
+		// 42: (|Idiom::name| - 1)
+		serializationMatchTerms[42] = createSerializationMatchTermSubtract(12, 1);
+		// 43: (|Idiom::ownedSubIdioms| - 1)
 		serializationMatchTerms[43] = createSerializationMatchTermSubtract(13, 1);
-		// (|Idiom::ownedSubIdioms| - 1)
-		serializationMatchTerms[44] = createSerializationMatchTermSubtract(14, 1);
-		// (|IdiomsImport::idiomsModel| - 1)
+		// 44: (|IdiomsImport::idiomsModel| - 1)
+		serializationMatchTerms[44] = createSerializationMatchTermSubtract(15, 1);
+		// 45: (|IdiomsModel::names| - 1)
 		serializationMatchTerms[45] = createSerializationMatchTermSubtract(16, 1);
-		// (|IdiomsModel::name| - 1)
-		serializationMatchTerms[46] = createSerializationMatchTermSubtract(17, 1);
-		// (|KeywordLocator::string| - 1)
+		// 46: (|KeywordLocator::string| - 1)
+		serializationMatchTerms[46] = createSerializationMatchTermSubtract(22, 1);
+		// 47: (|LocatorDeclaration::name| - 1)
 		serializationMatchTerms[47] = createSerializationMatchTermSubtract(23, 1);
-		// (|LocatorDeclaration::name| - 1)
+		// 48: (|LocatorDeclaration::ownedLocator| - 1)
 		serializationMatchTerms[48] = createSerializationMatchTermSubtract(24, 1);
-		// (|LocatorDeclaration::ownedLocator| - 1)
-		serializationMatchTerms[49] = createSerializationMatchTermSubtract(25, 1);
-		// (|ReferredLocator::locatorDeclaration| - 1)
-		serializationMatchTerms[50] = createSerializationMatchTermSubtract(27, 1);
-		// (|ReferredSegment::segmentDeclaration| - 1)
+		// 49: (|ReferredLocator::locatorDeclaration| - 1)
+		serializationMatchTerms[49] = createSerializationMatchTermSubtract(26, 1);
+		// 50: (|ReferredSegment::segmentDeclaration| - 1)
+		serializationMatchTerms[50] = createSerializationMatchTermSubtract(28, 1);
+		// 51: (|ReturnsLocator::eClass| - 1)
 		serializationMatchTerms[51] = createSerializationMatchTermSubtract(29, 1);
-		// (|ReturnsLocator::eClass| - 1)
-		serializationMatchTerms[52] = createSerializationMatchTermSubtract(30, 1);
-		// (|SegmentDeclaration::name| - 1)
+		// 52: (|SegmentDeclaration::name| - 1)
+		serializationMatchTerms[52] = createSerializationMatchTermSubtract(31, 1);
+		// 53: (|SegmentDeclaration::ownedSegment| - 1)
 		serializationMatchTerms[53] = createSerializationMatchTermSubtract(32, 1);
-		// (|SegmentDeclaration::ownedSegment| - 1)
+		// 54: (|StringSegment::printable.'printable'| - 1)
 		serializationMatchTerms[54] = createSerializationMatchTermSubtract(33, 1);
-		// (|StringSegment::printable.'printable'| - 1)
+		// 55: (|StringSegment::string| - 1)
 		serializationMatchTerms[55] = createSerializationMatchTermSubtract(34, 1);
-		// (|StringSegment::string| - 1)
+		// 56: (|SubIdiom::all.'all'| - 1)
 		serializationMatchTerms[56] = createSerializationMatchTermSubtract(35, 1);
-		// (|SubIdiom::ownedLocator| - 1)
+		// 57: (|SubIdiom::ownedLocator| - 1)
 		serializationMatchTerms[57] = createSerializationMatchTermSubtract(37, 1);
-		// (|SubIdiom::ownedSegments| > 0)
+		// 58: (|SubIdiom::ownedSegments| > 0)
 		serializationMatchTerms[58] = createSerializationMatchTermGreaterThan(38, 0);
 	}
 
@@ -1063,1088 +1039,550 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize the various serialization rules that serialize an EClass.
 	 */
 	private void initSerializationRules() {
-		// Idioms::AnyAssignmentLocator(idioms::AnyAssignmentLocator): "any-assignment"
-		serializationRules[0] =
-			new SerializationRule("AnyAssignmentLocator", 1,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					37		/* 'any-assignment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::AnyElementLocator(idioms::AnyElementLocator): "any-element"
-		serializationRules[1] =
-			new SerializationRule("AnyElementLocator", 2,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					38		/* 'any-element' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::AssignmentLocator(idioms::AssignmentLocator): { "assignment" { { ePackage=ID "::" }[?] eClass=ID "::" }[?] eStructuralFeature=ID }
-		serializationRules[2] =
-			new SerializationRule("AssignmentLocator", 3,
-				createSerializationMatchSteps(
-					0		/* assert (|AssignmentLocator::eStructuralFeature| - 1) == 0 */,
-					20		/* assign V0 = |AssignmentLocator::eClass| */,
-					30		/* assign V1 = |AssignmentLocator::ePackage| */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					40		/* 'assignment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					81		/* V00*9-steps || value */,
-					83		/* V01*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					4		/* AssignmentLocator::ePackage=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					34		/* '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					2		/* AssignmentLocator::eClass=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					34		/* '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					7		/* AssignmentLocator::eStructuralFeature=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Idioms::CompoundLocator(idioms::CompoundLocator): { "{" ownedLocators+=ElementLocator { "|" ownedLocators+=ElementLocator }[*] "}" }
-		serializationRules[3] =
-			new SerializationRule("CompoundLocator", 4,
-				createSerializationMatchSteps(
-					41		/* check-rule idioms::CompoundLocator.ownedLocators : 7 */,
-					18		/* assign V0 = (|CompoundLocator::ownedLocators| - 1) */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					73		/* '{' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value push soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					24		/* CompoundLocator::ownedLocators+=7 || value */,
-					79		/* V00*3-steps || value */,
-					76		/* 1*1-steps || value */,
-					74		/* '|' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					24		/* CompoundLocator::ownedLocators+=7 || value */,
-					76		/* 1*1-steps || value */,
-					75		/* '}' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport pop soft-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.COMPOUND_LOCATOR__OWNED_LOCATORS,
-						1) /* ElementLocator */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.COMPOUND_LOCATOR__OWNED_LOCATORS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(7, GrammarCardinality.ONE_OR_MORE)
-						}
-					)
-				});
-			;
-		// Idioms::CustomSegment(idioms::CustomSegment): { "custom" supportClassName=STRING }
-		serializationRules[4] =
-			new SerializationRule("CustomSegment", 5,
-				createSerializationMatchSteps(
-					1		/* assert (|CustomSegment::supportClassName| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					42		/* 'custom' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					33		/* CustomSegment::supportClassName=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Idioms::EPackageImport(idioms::EPackageImport): { "import" ePackage=STRING { "as" as=ID }[?] }
-		serializationRules[5] =
-			new SerializationRule("EPackageImport", 6,
-				createSerializationMatchSteps(
-					21		/* assign V0 = |EPackageImport::as| */,
-					2		/* assert (|EPackageImport::ePackage| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					49		/* 'import' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					5		/* EPackageImport::ePackage=STRING || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					80		/* V00*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					39		/* 'as' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					0		/* EPackageImport::as=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.EPACKAGE_IMPORT__AS,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Idioms::FinalLocator(idioms::FinalLocator): "final"
-		serializationRules[6] =
-			new SerializationRule("FinalLocator", 8,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					45		/* 'final' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::HalfNewLineSegment(idioms::HalfNewLineSegment): "half-new-line"
-		serializationRules[7] =
-			new SerializationRule("HalfNewLineSegment", 9,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					47		/* 'half-new-line' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::Idiom(idioms::Idiom): { mixin="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] ownedSubIdioms+=SubIdiom }
-		serializationRules[8] =
-			new SerializationRule("Idiom", 12,
-				createSerializationMatchSteps(
-					42		/* check-rule idioms::Idiom.ownedSubIdioms : 35 */,
-					4		/* assert (|Idiom::ownedSubIdioms| - 1) == 0 */,
-					37		/* assign V3 = |Idiom::inRuleRegex| */,
-					31		/* assign V1 = |Idiom::forEClass| */,
-					34		/* assign V2 = |Idiom::forEPackage| */,
-					3		/* assert (|Idiom::name| - 1) == 0 */,
-					22		/* assign V0 = |Idiom::mixin.'mixin'| */
-				),
-				createSerializationSteps(
-					78		/* V00*1-steps || value */,
-					52		/* 'mixin' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					48		/* 'idiom' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					15		/* Idiom::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					84		/* V01*9-steps || value */,
-					76		/* 1*1-steps || value */,
-					46		/* 'for' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					87		/* V02*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					9		/* Idiom::forEPackage=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					34		/* '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					8		/* Idiom::forEClass=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					89		/* V03*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					50		/* 'in' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					13		/* Idiom::inRuleRegex=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					28		/* Idiom::ownedSubIdioms+=35 || value soft-new-line */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(IdiomsPackage.Literals.IDIOM__MIXIN,
-						1	/* 'mixin' */
-					)
-				},
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS,
-						11) /* SubIdiom */
-				},
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.IDIOM__NAME
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOM__MIXIN,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(1 /* 'mixin' */, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOM__NAME,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOM__FOR_ECLASS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(35, GrammarCardinality.ONE)
-						}
-					)
-				});
-			;
-		// Idioms::Idiom(idioms::Idiom): { mixin="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] { "{" ownedSubIdioms+=SubIdiom[*] "}" } }
-		serializationRules[9] =
-			new SerializationRule("Idiom", 12,
-				createSerializationMatchSteps(
-					42		/* check-rule idioms::Idiom.ownedSubIdioms : 35 */,
-					39		/* assign V4 = |Idiom::ownedSubIdioms| */,
-					37		/* assign V3 = |Idiom::inRuleRegex| */,
-					31		/* assign V1 = |Idiom::forEClass| */,
-					34		/* assign V2 = |Idiom::forEPackage| */,
-					3		/* assert (|Idiom::name| - 1) == 0 */,
-					22		/* assign V0 = |Idiom::mixin.'mixin'| */
-				),
-				createSerializationSteps(
-					78		/* V00*1-steps || value */,
-					52		/* 'mixin' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					48		/* 'idiom' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					15		/* Idiom::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					84		/* V01*9-steps || value */,
-					76		/* 1*1-steps || value */,
-					46		/* 'for' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					87		/* V02*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					9		/* Idiom::forEPackage=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					34		/* '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					8		/* Idiom::forEClass=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					89		/* V03*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					50		/* 'in' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					13		/* Idiom::inRuleRegex=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					77		/* 1*6-steps || value */,
-					76		/* 1*1-steps || value */,
-					73		/* '{' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value push soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					90		/* V04*1-steps || value */,
-					28		/* Idiom::ownedSubIdioms+=35 || value soft-new-line */,
-					76		/* 1*1-steps || value */,
-					75		/* '}' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport pop soft-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(IdiomsPackage.Literals.IDIOM__MIXIN,
-						1	/* 'mixin' */
-					)
-				},
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS,
-						11) /* SubIdiom */
-				},
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.IDIOM__NAME
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOM__MIXIN,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(1 /* 'mixin' */, GrammarCardinality.ZERO_OR_ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOM__NAME,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOM__FOR_ECLASS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(35, GrammarCardinality.ZERO_OR_MORE)
-						}
-					)
-				});
-			;
-		// Idioms::IdiomsImport(idioms::IdiomsImport): { "with" idiomsModel=STRING { "as" as=ID }[?] }
-		serializationRules[10] =
-			new SerializationRule("IdiomsImport", 13,
-				createSerializationMatchSteps(
-					23		/* assign V0 = |IdiomsImport::as| */,
-					5		/* assert (|IdiomsImport::idiomsModel| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					67		/* 'with' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					10		/* IdiomsImport::idiomsModel=STRING || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					80		/* V00*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					39		/* 'as' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					1		/* IdiomsImport::as=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_IMPORT__AS,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Idioms::IdiomsModel(idioms::IdiomsModel): { "model" name=ID ownedWiths+=IdiomsImport[*] ownedImports+=EPackageImport[*] { ownedLocatorDeclarations+=LocatorDeclaration[*] ownedSegmentDeclarations+=SegmentDeclaration[*] ownedIdioms+=Idiom[*] } }
-		serializationRules[11] =
-			new SerializationRule("IdiomsModel", 14,
-				createSerializationMatchSteps(
-					43		/* check-rule idioms::IdiomsModel.ownedIdioms : 12 */,
-					44		/* check-rule idioms::IdiomsModel.ownedImports : 6 */,
-					45		/* check-rule idioms::IdiomsModel.ownedLocatorDeclarations : 17 */,
-					46		/* check-rule idioms::IdiomsModel.ownedSegmentDeclarations : 31 */,
-					47		/* check-rule idioms::IdiomsModel.ownedWiths : 13 */,
-					40		/* assign V4 = |IdiomsModel::ownedIdioms| */,
-					38		/* assign V3 = |IdiomsModel::ownedSegmentDeclarations| */,
-					35		/* assign V2 = |IdiomsModel::ownedLocatorDeclarations| */,
-					32		/* assign V1 = |IdiomsModel::ownedImports| */,
-					24		/* assign V0 = |IdiomsModel::ownedWiths| */,
-					6		/* assert (|IdiomsModel::name| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					53		/* 'model' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					16		/* IdiomsModel::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					78		/* V00*1-steps || value */,
-					29		/* IdiomsModel::ownedWiths+=13 || soft-new-line value soft-new-line */,
-					82		/* V01*1-steps || value */,
-					20		/* IdiomsModel::ownedImports+=6 || soft-new-line value soft-new-line */,
-					77		/* 1*6-steps || value */,
-					86		/* V02*1-steps || new-line soft-new-line value soft-new-line */,
-					23		/* IdiomsModel::ownedLocatorDeclarations+=17 || value */,
-					88		/* V03*1-steps || new-line soft-new-line value soft-new-line */,
-					26		/* IdiomsModel::ownedSegmentDeclarations+=31 || value */,
-					90		/* V04*1-steps || value */,
-					19		/* IdiomsModel::ownedIdioms+=12 || new-line soft-new-line value soft-new-line */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS,
-						2) /* Idiom */,
-					createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS,
-						0) /* EPackageImport */,
-					createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS,
-						5) /* LocatorDeclaration */,
-					createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS,
-						10) /* SegmentDeclaration */,
-					createEReference_RuleIndexes(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS,
-						3) /* IdiomsImport */
-				},
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.IDIOMS_MODEL__NAME
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_MODEL__NAME,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(12, GrammarCardinality.ZERO_OR_MORE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(6, GrammarCardinality.ZERO_OR_MORE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(17, GrammarCardinality.ZERO_OR_MORE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(31, GrammarCardinality.ZERO_OR_MORE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(13, GrammarCardinality.ZERO_OR_MORE)
-						}
-					)
-				});
-			;
-		// Idioms::KeywordLocator(idioms::KeywordLocator): string=STRING
-		serializationRules[12] =
-			new SerializationRule("KeywordLocator", 15,
-				createSerializationMatchSteps(
-					7		/* assert (|KeywordLocator::string| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					31		/* KeywordLocator::string=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.KEYWORD_LOCATOR__STRING
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.KEYWORD_LOCATOR__STRING,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Idioms::LocatorDeclaration(idioms::LocatorDeclaration): { "locator" name=ID ownedLocator=Locator ";" }
-		serializationRules[13] =
-			new SerializationRule("LocatorDeclaration", 17,
-				createSerializationMatchSteps(
-					48		/* check-rule idioms::LocatorDeclaration.ownedLocator : 16 */,
-					9		/* assert (|LocatorDeclaration::ownedLocator| - 1) == 0 */,
-					8		/* assert (|LocatorDeclaration::name| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					51		/* 'locator' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					17		/* LocatorDeclaration::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					21		/* LocatorDeclaration::ownedLocator=16 || value */,
-					76		/* 1*1-steps || value */,
-					35		/* ';' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR,
-						4) /* Locator */
-				},
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(16, GrammarCardinality.ONE)
-						}
-					)
-				});
-			;
-		// Idioms::NewLineSegment(idioms::NewLineSegment): "new-line"
-		serializationRules[14] =
-			new SerializationRule("NewLineSegment", 19,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					54		/* 'new-line' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::NoSpaceSegment(idioms::NoSpaceSegment): "no-space"
-		serializationRules[15] =
-			new SerializationRule("NoSpaceSegment", 20,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					55		/* 'no-space' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::PopSegment(idioms::PopSegment): "pop"
-		serializationRules[16] =
-			new SerializationRule("PopSegment", 21,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					56		/* 'pop' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::PostCommentSegment(idioms::PostCommentSegment): "post-comment"
-		serializationRules[17] =
-			new SerializationRule("PostCommentSegment", 22,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					57		/* 'post-comment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::PreCommentSegment(idioms::PreCommentSegment): "pre-comment"
-		serializationRules[18] =
-			new SerializationRule("PreCommentSegment", 23,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					58		/* 'pre-comment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::PushSegment(idioms::PushSegment): "push"
-		serializationRules[19] =
-			new SerializationRule("PushSegment", 24,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					60		/* 'push' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::ReferredLocator(idioms::ReferredLocator): { { idiomsModel=ID "::" }[?] locatorDeclaration=ID }
-		serializationRules[20] =
-			new SerializationRule("ReferredLocator", 25,
-				createSerializationMatchSteps(
-					10		/* assert (|ReferredLocator::locatorDeclaration| - 1) == 0 */,
-					25		/* assign V0 = |ReferredLocator::idiomsModel| */
-				),
-				createSerializationSteps(
-					80		/* V00*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					11		/* ReferredLocator::idiomsModel=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					34		/* '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					14		/* ReferredLocator::locatorDeclaration=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Idioms::ReferredSegment(idioms::ReferredSegment): { { idiomsModel=ID "::" }[?] segmentDeclaration=ID }
-		serializationRules[21] =
-			new SerializationRule("ReferredSegment", 26,
-				createSerializationMatchSteps(
-					11		/* assert (|ReferredSegment::segmentDeclaration| - 1) == 0 */,
-					26		/* assign V0 = |ReferredSegment::idiomsModel| */
-				),
-				createSerializationSteps(
-					80		/* V00*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					12		/* ReferredSegment::idiomsModel=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					34		/* '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					30		/* ReferredSegment::segmentDeclaration=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Idioms::ReturnsLocator(idioms::ReturnsLocator): { "returns" { ePackage=ID "::" }[?] eClass=ID }
-		serializationRules[22] =
-			new SerializationRule("ReturnsLocator", 27,
-				createSerializationMatchSteps(
-					12		/* assert (|ReturnsLocator::eClass| - 1) == 0 */,
-					27		/* assign V0 = |ReturnsLocator::ePackage| */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					61		/* 'returns' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					80		/* V00*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					6		/* ReturnsLocator::ePackage=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					34		/* '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					3		/* ReturnsLocator::eClass=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						}
-					)
-				});
-			;
-		// Idioms::SegmentDeclaration(idioms::SegmentDeclaration): { "segment" name=ID ownedSegment=Segment ";" }
-		serializationRules[23] =
-			new SerializationRule("SegmentDeclaration", 31,
-				createSerializationMatchSteps(
-					49		/* check-rule idioms::SegmentDeclaration.ownedSegment : 30 */,
-					14		/* assert (|SegmentDeclaration::ownedSegment| - 1) == 0 */,
-					13		/* assert (|SegmentDeclaration::name| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					62		/* 'segment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					18		/* SegmentDeclaration::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					25		/* SegmentDeclaration::ownedSegment=30 || value */,
-					76		/* 1*1-steps || value */,
-					35		/* ';' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT,
-						8) /* Segment */
-				},
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(30, GrammarCardinality.ONE)
-						}
-					)
-				});
-			;
-		// Idioms::SoftNewLineSegment(idioms::SoftNewLineSegment): "soft-new-line"
-		serializationRules[24] =
-			new SerializationRule("SoftNewLineSegment", 32,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					63		/* 'soft-new-line' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::SoftSpaceSegment(idioms::SoftSpaceSegment): "soft-space"
-		serializationRules[25] =
-			new SerializationRule("SoftSpaceSegment", 33,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					64		/* 'soft-space' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::StringSegment(idioms::StringSegment): { "string" string=STRING printable="printable" }
-		serializationRules[26] =
-			new SerializationRule("StringSegment", 34,
-				createSerializationMatchSteps(
-					15		/* assert (|StringSegment::printable.'printable'| - 1) == 0 */,
-					16		/* assert (|StringSegment::string| - 1) == 0 */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					65		/* 'string' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					32		/* StringSegment::string=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					59		/* 'printable' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(IdiomsPackage.Literals.STRING_SEGMENT__PRINTABLE,
-						2	/* 'printable' */
-					)
-				},
-				null,
-				new /*@NonNull*/ EAttribute [] {
-					IdiomsPackage.Literals.STRING_SEGMENT__STRING
-				},
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.STRING_SEGMENT__PRINTABLE,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(2 /* 'printable' */, GrammarCardinality.ONE)
-						}
-					),
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.STRING_SEGMENT__STRING,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(-1, GrammarCardinality.ONE)
-						}
-					)
-				},
-				null);
-			;
-		// Idioms::SubIdiom(idioms::SubIdiom): { "at" "each" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" }
-		serializationRules[27] =
-			new SerializationRule("SubIdiom", 35,
-				createSerializationMatchSteps(
-					50		/* check-rule idioms::SubIdiom.ownedLocator : 16 */,
-					51		/* check-rule idioms::SubIdiom.ownedSegments : 26|30 */,
-					17		/* assert (|SubIdiom::ownedLocator| - 1) == 0 */,
-					19		/* assign V0 = (|SubIdiom::ownedSegments| > 0) */,
-					33		/* assign V1 = |SubIdiom::ownedSegments| */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					41		/* 'at' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					76		/* 1*1-steps || value */,
-					44		/* 'each' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					22		/* SubIdiom::ownedLocator=16 || value */,
-					80		/* V00*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					43		/* 'do' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					82		/* V01*1-steps || value */,
-					27		/* SubIdiom::ownedSegments+=30|26 || value */,
-					76		/* 1*1-steps || value */,
-					35		/* ';' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
-						4) /* Locator */,
-					createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
-						9) /* ReferredSegment|Segment */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(16, GrammarCardinality.ONE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(26, GrammarCardinality.ZERO_OR_MORE),
-						new RuleIndex_GrammarCardinality(30, GrammarCardinality.ZERO_OR_MORE)
-						}
-					)
-				});
-			;
-		// Idioms::SubIdiom(idioms::SubIdiom): { "at" all="all"[?] ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" }
-		serializationRules[28] =
-			new SerializationRule("SubIdiom", 35,
-				createSerializationMatchSteps(
-					50		/* check-rule idioms::SubIdiom.ownedLocator : 16 */,
-					51		/* check-rule idioms::SubIdiom.ownedSegments : 26|30 */,
-					17		/* assert (|SubIdiom::ownedLocator| - 1) == 0 */,
-					28		/* assign V0 = |SubIdiom::all.'all'| */,
-					29		/* assign V1 = (|SubIdiom::ownedSegments| > 0) */,
-					36		/* assign V2 = |SubIdiom::ownedSegments| */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					41		/* 'at' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					78		/* V00*1-steps || value */,
-					36		/* 'all' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					22		/* SubIdiom::ownedLocator=16 || value */,
-					83		/* V01*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					43		/* 'do' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					85		/* V02*1-steps || value */,
-					27		/* SubIdiom::ownedSegments+=30|26 || value */,
-					76		/* 1*1-steps || value */,
-					35		/* ';' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				new @NonNull EAttribute_EnumerationValues [] {
-					createEAttribute_EnumerationValues(IdiomsPackage.Literals.SUB_IDIOM__ALL,
-						0	/* 'all' */
-					)
-				},
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
-						4) /* Locator */,
-					createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
-						9) /* ReferredSegment|Segment */
-				},
-				null,
-				new @NonNull EAttribute_EnumerationValue_GrammarCardinality [] {
-					new EAttribute_EnumerationValue_GrammarCardinality(IdiomsPackage.Literals.SUB_IDIOM__ALL,
-						new @NonNull EnumerationValue_GrammarCardinality [] {
-							createEnumerationValue_GrammarCardinality(0 /* 'all' */, GrammarCardinality.ZERO_OR_ONE)
-						}
-					)
-				},
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(16, GrammarCardinality.ONE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(26, GrammarCardinality.ZERO_OR_MORE),
-						new RuleIndex_GrammarCardinality(30, GrammarCardinality.ZERO_OR_MORE)
-						}
-					)
-				});
-			;
-		// Idioms::SubIdiom(idioms::SubIdiom): { "at" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" }
-		serializationRules[29] =
-			new SerializationRule("SubIdiom", 35,
-				createSerializationMatchSteps(
-					50		/* check-rule idioms::SubIdiom.ownedLocator : 16 */,
-					51		/* check-rule idioms::SubIdiom.ownedSegments : 26|30 */,
-					17		/* assert (|SubIdiom::ownedLocator| - 1) == 0 */,
-					19		/* assign V0 = (|SubIdiom::ownedSegments| > 0) */,
-					33		/* assign V1 = |SubIdiom::ownedSegments| */
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					41		/* 'at' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					22		/* SubIdiom::ownedLocator=16 || value */,
-					80		/* V00*4-steps || value */,
-					76		/* 1*1-steps || value */,
-					43		/* 'do' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */,
-					82		/* V01*1-steps || value */,
-					27		/* SubIdiom::ownedSegments+=30|26 || value */,
-					76		/* 1*1-steps || value */,
-					35		/* ';' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				new @NonNull EReference_RuleIndexes [] {
-					createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
-						4) /* Locator */,
-					createEReference_RuleIndexes(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
-						9) /* ReferredSegment|Segment */
-				},
-				null,
-				null,
-				new @NonNull EReference_RuleIndex_GrammarCardinality [] {
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(16, GrammarCardinality.ONE)
-						}
-					),
-					new EReference_RuleIndex_GrammarCardinality(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS,
-						new @NonNull RuleIndex_GrammarCardinality [] {
-						new RuleIndex_GrammarCardinality(26, GrammarCardinality.ZERO_OR_MORE),
-						new RuleIndex_GrammarCardinality(30, GrammarCardinality.ZERO_OR_MORE)
-						}
-					)
-				});
-			;
-		// Idioms::ValueSegment(idioms::ValueSegment): "value"
-		serializationRules[30] =
-			new SerializationRule("ValueSegment", 36,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					66		/* 'value' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::WrapAnchorSegment(idioms::WrapAnchorSegment): "wrap-anchor"
-		serializationRules[31] =
-			new SerializationRule("WrapAnchorSegment", 38,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					68		/* 'wrap-anchor' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::WrapBeginAllSegment(idioms::WrapBeginAllSegment): "wrap-begin-all"
-		serializationRules[32] =
-			new SerializationRule("WrapBeginAllSegment", 39,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					69		/* 'wrap-begin-all' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::WrapBeginSomeSegment(idioms::WrapBeginSomeSegment): "wrap-begin-some"
-		serializationRules[33] =
-			new SerializationRule("WrapBeginSomeSegment", 40,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					70		/* 'wrap-begin-some' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::WrapEndSegment(idioms::WrapEndSegment): "wrap-end"
-		serializationRules[34] =
-			new SerializationRule("WrapEndSegment", 41,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					71		/* 'wrap-end' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
-		// Idioms::WrapHereSegment(idioms::WrapHereSegment): "wrap-here"
-		serializationRules[35] =
-			new SerializationRule("WrapHereSegment", 42,
-				createSerializationMatchSteps(
-				),
-				createSerializationSteps(
-					76		/* 1*1-steps || value */,
-					72		/* 'wrap-here' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
-				),
-				null,
-				null,
-				null,
-				null,
-				null);
-			;
+		// Idioms::AnyAssignmentLocator-0(idioms::AnyAssignmentLocator): "any-assignment"
+		serializationRules[0] = createSerializationRule("AnyAssignmentLocator-0", 1,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				39		/* 'any-assignment' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::AnyElementLocator-0(idioms::AnyElementLocator): "any-element"
+		serializationRules[1] = createSerializationRule("AnyElementLocator-0", 2,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				40		/* 'any-element' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::AssignmentLocator-0(idioms::AssignmentLocator): { "assignment" { { ePackage=ID "::" }[?] eClass=ID "::" }[?] eStructuralFeature=ID }
+		serializationRules[2] = createSerializationRule("AssignmentLocator-0", 3,
+			createSerializationMatchSteps(
+				0		/* assert (|AssignmentLocator::eStructuralFeature| - 1) == 0 */,
+				21		/* assign V0 = |AssignmentLocator::eClass| */,
+				28		/* assign V1 = |AssignmentLocator::ePackage| */
+			),
+			createSerializationSteps(
+				42		/* 'assignment' || pre-comment soft-space value soft-space post-comment */,
+				79		/* V00*5-steps || value */,
+				81		/* V01*2-steps || value */,
+				5		/* AssignmentLocator::ePackage=ID || pre-comment soft-space value soft-space post-comment */,
+				37		/* '::' || pre-comment no-space value no-space post-comment */,
+				3		/* AssignmentLocator::eClass=ID || pre-comment soft-space value soft-space post-comment */,
+				37		/* '::' || pre-comment no-space value no-space post-comment */,
+				8		/* AssignmentLocator::eStructuralFeature=ID || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE, -1
+				)
+			});
+		// Idioms::CustomSegment-0(idioms::CustomSegment): { "custom" supportClassName=STRING }
+		serializationRules[3] = createSerializationRule("CustomSegment-0", 4,
+			createSerializationMatchSteps(
+				1		/* assert (|CustomSegment::supportClassName| - 1) == 0 */
+			),
+			createSerializationSteps(
+				44		/* 'custom' || pre-comment soft-space value soft-space post-comment */,
+				35		/* CustomSegment::supportClassName=STRING || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME, true, GrammarCardinality.ONE)
+			});
+		// Idioms::EPackageImport-0(idioms::EPackageImport): { "import" ePackage=STRING { "as" as=ID }[?] }
+		serializationRules[4] = createSerializationRule("EPackageImport-0", 5,
+			createSerializationMatchSteps(
+				22		/* assign V0 = |EPackageImport::as| */,
+				2		/* assert (|EPackageImport::ePackage| - 1) == 0 */
+			),
+			createSerializationSteps(
+				51		/* 'import' || pre-comment soft-space value soft-space post-comment */,
+				6		/* EPackageImport::ePackage=STRING || pre-comment soft-space value soft-space post-comment */,
+				76		/* V00*2-steps || value */,
+				41		/* 'as' || pre-comment soft-space value soft-space post-comment */,
+				1		/* EPackageImport::as=ID || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.EPACKAGE_IMPORT__AS, false, GrammarCardinality.ZERO_OR_ONE),
+				createSerializationReference(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE, -1
+				)
+			});
+		// Idioms::FinalLocator-0(idioms::FinalLocator): "final"
+		serializationRules[5] = createSerializationRule("FinalLocator-0", 6,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				47		/* 'final' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::HalfNewLineSegment-0(idioms::HalfNewLineSegment): "half-new-line"
+		serializationRules[6] = createSerializationRule("HalfNewLineSegment-0", 7,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				49		/* 'half-new-line' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::Idiom-0(idioms::Idiom): { mixin?="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] { "{" ownedSubIdioms+=SubIdiom[*] "}" } }
+		serializationRules[7] = createSerializationRule("Idiom-0", 10,
+			createSerializationMatchSteps(
+				39		/* check-rule idioms::Idiom.ownedSubIdioms : SubIdiom */,
+				36		/* assign V4 = |Idiom::ownedSubIdioms| */,
+				34		/* assign V3 = |Idiom::inRuleRegex| */,
+				29		/* assign V1 = |Idiom::forEClass| */,
+				32		/* assign V2 = |Idiom::forEPackage| */,
+				3		/* assert (|Idiom::name| - 1) == 0 */,
+				23		/* assign V0 = |Idiom::mixin.'mixin'| */
+			),
+			createSerializationSteps(
+				75		/* V00*1-steps || value */,
+				16		/* Idiom::mixin?='mixin' || pre-comment soft-space value soft-space post-comment */,
+				50		/* 'idiom' || pre-comment soft-space value soft-space post-comment */,
+				17		/* Idiom::name=ID || pre-comment soft-space value soft-space post-comment */,
+				82		/* V01*5-steps || value */,
+				48		/* 'for' || pre-comment soft-space value soft-space post-comment */,
+				84		/* V02*2-steps || value */,
+				10		/* Idiom::forEPackage=ID || pre-comment soft-space value soft-space post-comment */,
+				37		/* '::' || pre-comment no-space value no-space post-comment */,
+				9		/* Idiom::forEClass=ID || pre-comment soft-space value soft-space post-comment */,
+				86		/* V03*2-steps || value */,
+				52		/* 'in' || pre-comment soft-space value soft-space post-comment */,
+				14		/* Idiom::inRuleRegex=STRING || pre-comment soft-space value soft-space post-comment */,
+				73		/* '{' || pre-comment soft-space value push soft-new-line post-comment */,
+				87		/* V04*1-steps || value */,
+				29		/* Idiom::ownedSubIdioms+=SubIdiom || value soft-new-line */,
+				74		/* '}' || pre-comment pop soft-space value soft-new-line post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX, false, GrammarCardinality.ZERO_OR_ONE),
+				createSerializationEnumeratedAttribute(IdiomsPackage.Literals.IDIOM__MIXIN, false,
+					(1/*'mixin'*/ << 4) | 1 /*[?]*/
+				),
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.IDIOM__NAME, true, GrammarCardinality.ONE),
+				createSerializationReference(IdiomsPackage.Literals.IDIOM__FOR_ECLASS, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS, 9/* SubIdiom */,
+					(33/*SubIdiom*/ << 4) | 2 /*[*]*/
+				)
+			});
+		// Idioms::Idiom-1(idioms::Idiom): { mixin?="mixin"[?] "idiom" name=ID { "for" { forEPackage=ID "::" }[?] forEClass=ID }[?] { "in" inRuleRegex=STRING }[?] ownedSubIdioms+=SubIdiom }
+		serializationRules[8] = createSerializationRule("Idiom-1", 10,
+			createSerializationMatchSteps(
+				39		/* check-rule idioms::Idiom.ownedSubIdioms : SubIdiom */,
+				4		/* assert (|Idiom::ownedSubIdioms| - 1) == 0 */,
+				34		/* assign V3 = |Idiom::inRuleRegex| */,
+				29		/* assign V1 = |Idiom::forEClass| */,
+				32		/* assign V2 = |Idiom::forEPackage| */,
+				3		/* assert (|Idiom::name| - 1) == 0 */,
+				23		/* assign V0 = |Idiom::mixin.'mixin'| */
+			),
+			createSerializationSteps(
+				75		/* V00*1-steps || value */,
+				16		/* Idiom::mixin?='mixin' || pre-comment soft-space value soft-space post-comment */,
+				50		/* 'idiom' || pre-comment soft-space value soft-space post-comment */,
+				17		/* Idiom::name=ID || pre-comment soft-space value soft-space post-comment */,
+				82		/* V01*5-steps || value */,
+				48		/* 'for' || pre-comment soft-space value soft-space post-comment */,
+				84		/* V02*2-steps || value */,
+				10		/* Idiom::forEPackage=ID || pre-comment soft-space value soft-space post-comment */,
+				37		/* '::' || pre-comment no-space value no-space post-comment */,
+				9		/* Idiom::forEClass=ID || pre-comment soft-space value soft-space post-comment */,
+				86		/* V03*2-steps || value */,
+				52		/* 'in' || pre-comment soft-space value soft-space post-comment */,
+				14		/* Idiom::inRuleRegex=STRING || pre-comment soft-space value soft-space post-comment */,
+				29		/* Idiom::ownedSubIdioms+=SubIdiom || value soft-new-line */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX, false, GrammarCardinality.ZERO_OR_ONE),
+				createSerializationEnumeratedAttribute(IdiomsPackage.Literals.IDIOM__MIXIN, false,
+					(1/*'mixin'*/ << 4) | 1 /*[?]*/
+				),
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.IDIOM__NAME, true, GrammarCardinality.ONE),
+				createSerializationReference(IdiomsPackage.Literals.IDIOM__FOR_ECLASS, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS, 9/* SubIdiom */,
+					(33/*SubIdiom*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Idioms::IdiomsImport-0(idioms::IdiomsImport): { "with" idiomsModel=STRING { "as" as=ID }[?] }
+		serializationRules[9] = createSerializationRule("IdiomsImport-0", 11,
+			createSerializationMatchSteps(
+				24		/* assign V0 = |IdiomsImport::as| */,
+				5		/* assert (|IdiomsImport::idiomsModel| - 1) == 0 */
+			),
+			createSerializationSteps(
+				67		/* 'with' || pre-comment soft-space value soft-space post-comment */,
+				11		/* IdiomsImport::idiomsModel=STRING || pre-comment soft-space value soft-space post-comment */,
+				76		/* V00*2-steps || value */,
+				41		/* 'as' || pre-comment soft-space value soft-space post-comment */,
+				2		/* IdiomsImport::as=ID || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.IDIOMS_IMPORT__AS, false, GrammarCardinality.ZERO_OR_ONE),
+				createSerializationReference(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL, -1
+				)
+			});
+		// Idioms::IdiomsModel-0(idioms::IdiomsModel): { "model" names+=ID { "." names+=ID }[*] ownedWiths+=IdiomsImport[*] ownedImports+=EPackageImport[*] { ownedLocatorDeclarations+=LocatorDeclaration[*] ownedSegmentDeclarations+=SegmentDeclaration[*] ownedIdioms+=Idiom[*] } }
+		serializationRules[10] = createSerializationRule("IdiomsModel-0", 12,
+			createSerializationMatchSteps(
+				40		/* check-rule idioms::IdiomsModel.ownedIdioms : Idiom */,
+				41		/* check-rule idioms::IdiomsModel.ownedImports : EPackageImport */,
+				42		/* check-rule idioms::IdiomsModel.ownedLocatorDeclarations : LocatorDeclaration */,
+				43		/* check-rule idioms::IdiomsModel.ownedSegmentDeclarations : SegmentDeclaration */,
+				44		/* check-rule idioms::IdiomsModel.ownedWiths : IdiomsImport */,
+				38		/* assign V5 = |IdiomsModel::ownedIdioms| */,
+				37		/* assign V4 = |IdiomsModel::ownedSegmentDeclarations| */,
+				35		/* assign V3 = |IdiomsModel::ownedLocatorDeclarations| */,
+				33		/* assign V2 = |IdiomsModel::ownedImports| */,
+				30		/* assign V1 = |IdiomsModel::ownedWiths| */,
+				19		/* assign V0 = (|IdiomsModel::names| - 1) */
+			),
+			createSerializationSteps(
+				54		/* 'model' || pre-comment soft-space value soft-space post-comment */,
+				20		/* IdiomsModel::names+=ID || pre-comment soft-space value soft-space post-comment */,
+				77		/* V00*2-steps || value */,
+				36		/* '.' || pre-comment no-space value no-space post-comment */,
+				20		/* IdiomsModel::names+=ID || pre-comment soft-space value soft-space post-comment */,
+				80		/* V01*1-steps || value */,
+				30		/* IdiomsModel::ownedWiths+=IdiomsImport || soft-new-line value soft-new-line */,
+				83		/* V02*1-steps || value */,
+				22		/* IdiomsModel::ownedImports+=EPackageImport || soft-new-line value soft-new-line */,
+				85		/* V03*1-steps || new-line soft-new-line value soft-new-line */,
+				25		/* IdiomsModel::ownedLocatorDeclarations+=LocatorDeclaration || value */,
+				88		/* V04*1-steps || new-line soft-new-line value soft-new-line */,
+				27		/* IdiomsModel::ownedSegmentDeclarations+=SegmentDeclaration || value */,
+				89		/* V05*1-steps || value */,
+				21		/* IdiomsModel::ownedIdioms+=Idiom || new-line soft-new-line value soft-new-line */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.IDIOMS_MODEL__NAMES, false, GrammarCardinality.ONE_OR_MORE),
+				createSerializationReference(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS, 1/* Idiom */,
+					(10/*Idiom*/ << 4) | 2 /*[*]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS, 0/* EPackageImport */,
+					(5/*EPackageImport*/ << 4) | 2 /*[*]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS, 4/* LocatorDeclaration */,
+					(15/*LocatorDeclaration*/ << 4) | 2 /*[*]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS, 8/* SegmentDeclaration */,
+					(29/*SegmentDeclaration*/ << 4) | 2 /*[*]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS, 2/* IdiomsImport */,
+					(11/*IdiomsImport*/ << 4) | 2 /*[*]*/
+				)
+			});
+		// Idioms::KeywordLocator-0(idioms::KeywordLocator): string=STRING
+		serializationRules[11] = createSerializationRule("KeywordLocator-0", 13,
+			createSerializationMatchSteps(
+				6		/* assert (|KeywordLocator::string| - 1) == 0 */
+			),
+			createSerializationSteps(
+				33		/* KeywordLocator::string=STRING || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.KEYWORD_LOCATOR__STRING, true, GrammarCardinality.ONE)
+			});
+		// Idioms::LocatorDeclaration-0(idioms::LocatorDeclaration): { "locator" name=ID ownedLocator=Locator ";" }
+		serializationRules[12] = createSerializationRule("LocatorDeclaration-0", 15,
+			createSerializationMatchSteps(
+				45		/* check-rule idioms::LocatorDeclaration.ownedLocator : AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
+				8		/* assert (|LocatorDeclaration::ownedLocator| - 1) == 0 */,
+				7		/* assert (|LocatorDeclaration::name| - 1) == 0 */
+			),
+			createSerializationSteps(
+				53		/* 'locator' || pre-comment soft-space value soft-space post-comment */,
+				18		/* LocatorDeclaration::name=ID || pre-comment soft-space value soft-space post-comment */,
+				23		/* LocatorDeclaration::ownedLocator=Locator || value */,
+				38		/* ';' || pre-comment no-space value soft-new-line post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME, true, GrammarCardinality.ONE),
+				createSerializationReference(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR, 3/* Locator */,
+					(14/*Locator*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Idioms::NewLineSegment-0(idioms::NewLineSegment): "new-line"
+		serializationRules[13] = createSerializationRule("NewLineSegment-0", 17,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				55		/* 'new-line' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::NoSpaceSegment-0(idioms::NoSpaceSegment): "no-space"
+		serializationRules[14] = createSerializationRule("NoSpaceSegment-0", 18,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				56		/* 'no-space' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::PopSegment-0(idioms::PopSegment): "pop"
+		serializationRules[15] = createSerializationRule("PopSegment-0", 19,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				57		/* 'pop' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::PostCommentSegment-0(idioms::PostCommentSegment): "post-comment"
+		serializationRules[16] = createSerializationRule("PostCommentSegment-0", 20,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				58		/* 'post-comment' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::PreCommentSegment-0(idioms::PreCommentSegment): "pre-comment"
+		serializationRules[17] = createSerializationRule("PreCommentSegment-0", 21,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				59		/* 'pre-comment' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::PushSegment-0(idioms::PushSegment): "push"
+		serializationRules[18] = createSerializationRule("PushSegment-0", 22,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				60		/* 'push' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::ReferredLocator-0(idioms::ReferredLocator): { { idiomsModel=ID "::" }[?] locatorDeclaration=ID }
+		serializationRules[19] = createSerializationRule("ReferredLocator-0", 23,
+			createSerializationMatchSteps(
+				9		/* assert (|ReferredLocator::locatorDeclaration| - 1) == 0 */,
+				25		/* assign V0 = |ReferredLocator::idiomsModel| */
+			),
+			createSerializationSteps(
+				76		/* V00*2-steps || value */,
+				12		/* ReferredLocator::idiomsModel=ID || pre-comment soft-space value soft-space post-comment */,
+				37		/* '::' || pre-comment no-space value no-space post-comment */,
+				15		/* ReferredLocator::locatorDeclaration=ID || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION, -1
+				)
+			});
+		// Idioms::ReferredSegment-0(idioms::ReferredSegment): { { idiomsModel=ID "::" }[?] segmentDeclaration=ID }
+		serializationRules[20] = createSerializationRule("ReferredSegment-0", 24,
+			createSerializationMatchSteps(
+				10		/* assert (|ReferredSegment::segmentDeclaration| - 1) == 0 */,
+				26		/* assign V0 = |ReferredSegment::idiomsModel| */
+			),
+			createSerializationSteps(
+				76		/* V00*2-steps || value */,
+				13		/* ReferredSegment::idiomsModel=ID || pre-comment soft-space value soft-space post-comment */,
+				37		/* '::' || pre-comment no-space value no-space post-comment */,
+				32		/* ReferredSegment::segmentDeclaration=ID || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION, -1
+				)
+			});
+		// Idioms::ReturnsLocator-0(idioms::ReturnsLocator): { "returns" { ePackage=ID "::" }[?] eClass=ID }
+		serializationRules[21] = createSerializationRule("ReturnsLocator-0", 25,
+			createSerializationMatchSteps(
+				11		/* assert (|ReturnsLocator::eClass| - 1) == 0 */,
+				27		/* assign V0 = |ReturnsLocator::ePackage| */
+			),
+			createSerializationSteps(
+				61		/* 'returns' || pre-comment soft-space value soft-space post-comment */,
+				76		/* V00*2-steps || value */,
+				7		/* ReturnsLocator::ePackage=ID || pre-comment soft-space value soft-space post-comment */,
+				37		/* '::' || pre-comment no-space value no-space post-comment */,
+				4		/* ReturnsLocator::eClass=ID || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS, -1
+				),
+				createSerializationReference(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE, -1
+				)
+			});
+		// Idioms::SegmentDeclaration-0(idioms::SegmentDeclaration): { "segment" name=ID ownedSegment=Segment ";" }
+		serializationRules[22] = createSerializationRule("SegmentDeclaration-0", 29,
+			createSerializationMatchSteps(
+				46		/* check-rule idioms::SegmentDeclaration.ownedSegment : CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */,
+				13		/* assert (|SegmentDeclaration::ownedSegment| - 1) == 0 */,
+				12		/* assert (|SegmentDeclaration::name| - 1) == 0 */
+			),
+			createSerializationSteps(
+				62		/* 'segment' || pre-comment soft-space value soft-space post-comment */,
+				19		/* SegmentDeclaration::name=ID || pre-comment soft-space value soft-space post-comment */,
+				26		/* SegmentDeclaration::ownedSegment=Segment || value */,
+				38		/* ';' || pre-comment no-space value soft-new-line post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME, true, GrammarCardinality.ONE),
+				createSerializationReference(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT, 6/* Segment */,
+					(28/*Segment*/ << 4) | 0 /*[1]*/
+				)
+			});
+		// Idioms::SoftNewLineSegment-0(idioms::SoftNewLineSegment): "soft-new-line"
+		serializationRules[23] = createSerializationRule("SoftNewLineSegment-0", 30,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				63		/* 'soft-new-line' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::SoftSpaceSegment-0(idioms::SoftSpaceSegment): "soft-space"
+		serializationRules[24] = createSerializationRule("SoftSpaceSegment-0", 31,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				64		/* 'soft-space' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::StringSegment-0(idioms::StringSegment): { "string" string=STRING printable?="printable" }
+		serializationRules[25] = createSerializationRule("StringSegment-0", 32,
+			createSerializationMatchSteps(
+				14		/* assert (|StringSegment::printable.'printable'| - 1) == 0 */,
+				15		/* assert (|StringSegment::string| - 1) == 0 */
+			),
+			createSerializationSteps(
+				65		/* 'string' || pre-comment soft-space value soft-space post-comment */,
+				34		/* StringSegment::string=STRING || pre-comment soft-space value soft-space post-comment */,
+				31		/* StringSegment::printable?='printable' || pre-comment soft-space value soft-space post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationEnumeratedAttribute(IdiomsPackage.Literals.STRING_SEGMENT__PRINTABLE, false,
+					(2/*'printable'*/ << 4) | 0 /*[1]*/
+				),
+				createSerializationSimpleAttribute(IdiomsPackage.Literals.STRING_SEGMENT__STRING, true, GrammarCardinality.ONE)
+			});
+		// Idioms::SubIdiom-0(idioms::SubIdiom): { "at" "each" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" }
+		serializationRules[26] = createSerializationRule("SubIdiom-0", 33,
+			createSerializationMatchSteps(
+				18		/* assert |SubIdiom::all| == 0 */,
+				47		/* check-rule idioms::SubIdiom.ownedLocator : AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
+				48		/* check-rule idioms::SubIdiom.ownedSegments : CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */,
+				17		/* assert (|SubIdiom::ownedLocator| - 1) == 0 */,
+				20		/* assign V0 = (|SubIdiom::ownedSegments| > 0) */,
+				31		/* assign V1 = |SubIdiom::ownedSegments| */
+			),
+			createSerializationSteps(
+				43		/* 'at' || pre-comment soft-space value soft-space post-comment */,
+				46		/* 'each' || pre-comment soft-space value soft-space post-comment */,
+				24		/* SubIdiom::ownedLocator=Locator || value */,
+				78		/* V00*3-steps || value */,
+				45		/* 'do' || pre-comment soft-space value soft-space post-comment */,
+				80		/* V01*1-steps || value */,
+				28		/* SubIdiom::ownedSegments+=Segment|ReferredSegment || value */,
+				38		/* ';' || pre-comment no-space value soft-new-line post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR, 3/* Locator */,
+					(14/*Locator*/ << 4) | 0 /*[1]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS, 7/* ReferredSegment,Segment */,
+					(24/*ReferredSegment*/ << 4) | 2 /*[*]*/,
+					(28/*Segment*/ << 4) | 2 /*[*]*/
+				)
+			});
+		// Idioms::SubIdiom-1(idioms::SubIdiom): { "at" all?="all" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" }
+		serializationRules[27] = createSerializationRule("SubIdiom-1", 33,
+			createSerializationMatchSteps(
+				47		/* check-rule idioms::SubIdiom.ownedLocator : AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
+				48		/* check-rule idioms::SubIdiom.ownedSegments : CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */,
+				17		/* assert (|SubIdiom::ownedLocator| - 1) == 0 */,
+				16		/* assert (|SubIdiom::all.'all'| - 1) == 0 */,
+				20		/* assign V0 = (|SubIdiom::ownedSegments| > 0) */,
+				31		/* assign V1 = |SubIdiom::ownedSegments| */
+			),
+			createSerializationSteps(
+				43		/* 'at' || pre-comment soft-space value soft-space post-comment */,
+				0		/* SubIdiom::all?='all' || pre-comment soft-space value soft-space post-comment */,
+				24		/* SubIdiom::ownedLocator=Locator || value */,
+				78		/* V00*3-steps || value */,
+				45		/* 'do' || pre-comment soft-space value soft-space post-comment */,
+				80		/* V01*1-steps || value */,
+				28		/* SubIdiom::ownedSegments+=Segment|ReferredSegment || value */,
+				38		/* ';' || pre-comment no-space value soft-new-line post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationEnumeratedAttribute(IdiomsPackage.Literals.SUB_IDIOM__ALL, false,
+					(0/*'all'*/ << 4) | 0 /*[1]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR, 3/* Locator */,
+					(14/*Locator*/ << 4) | 0 /*[1]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS, 7/* ReferredSegment,Segment */,
+					(24/*ReferredSegment*/ << 4) | 2 /*[*]*/,
+					(28/*Segment*/ << 4) | 2 /*[*]*/
+				)
+			});
+		// Idioms::SubIdiom-2(idioms::SubIdiom): { "at" ownedLocator=Locator { "do" ownedSegments+=(Segment|ReferredSegment)[*] }[?] ";" }
+		serializationRules[28] = createSerializationRule("SubIdiom-2", 33,
+			createSerializationMatchSteps(
+				18		/* assert |SubIdiom::all| == 0 */,
+				47		/* check-rule idioms::SubIdiom.ownedLocator : AnyAssignmentLocator|AnyElementLocator|AssignmentLocator|FinalLocator|KeywordLocator|Locator|ReferredLocator|ReturnsLocator */,
+				48		/* check-rule idioms::SubIdiom.ownedSegments : CustomSegment|HalfNewLineSegment|NewLineSegment|NoSpaceSegment|PopSegment|PostCommentSegment|PreCommentSegment|PushSegment|ReferredSegment|Segment|SoftNewLineSegment|SoftSpaceSegment|StringSegment|ValueSegment|WrapAnchorSegment|WrapBeginAllSegment|WrapBeginSomeSegment|WrapEndSegment|WrapHereSegment */,
+				17		/* assert (|SubIdiom::ownedLocator| - 1) == 0 */,
+				20		/* assign V0 = (|SubIdiom::ownedSegments| > 0) */,
+				31		/* assign V1 = |SubIdiom::ownedSegments| */
+			),
+			createSerializationSteps(
+				43		/* 'at' || pre-comment soft-space value soft-space post-comment */,
+				24		/* SubIdiom::ownedLocator=Locator || value */,
+				78		/* V00*3-steps || value */,
+				45		/* 'do' || pre-comment soft-space value soft-space post-comment */,
+				80		/* V01*1-steps || value */,
+				28		/* SubIdiom::ownedSegments+=Segment|ReferredSegment || value */,
+				38		/* ';' || pre-comment no-space value soft-new-line post-comment */
+			),
+			new @NonNull SerializationFeature [] {
+				createSerializationReference(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR, 3/* Locator */,
+					(14/*Locator*/ << 4) | 0 /*[1]*/
+				),
+				createSerializationReference(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS, 7/* ReferredSegment,Segment */,
+					(24/*ReferredSegment*/ << 4) | 2 /*[*]*/,
+					(28/*Segment*/ << 4) | 2 /*[*]*/
+				)
+			});
+		// Idioms::ValueSegment-0(idioms::ValueSegment): "value"
+		serializationRules[29] = createSerializationRule("ValueSegment-0", 34,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				66		/* 'value' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::WrapAnchorSegment-0(idioms::WrapAnchorSegment): "wrap-anchor"
+		serializationRules[30] = createSerializationRule("WrapAnchorSegment-0", 36,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				68		/* 'wrap-anchor' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::WrapBeginAllSegment-0(idioms::WrapBeginAllSegment): "wrap-begin-all"
+		serializationRules[31] = createSerializationRule("WrapBeginAllSegment-0", 37,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				69		/* 'wrap-begin-all' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::WrapBeginSomeSegment-0(idioms::WrapBeginSomeSegment): "wrap-begin-some"
+		serializationRules[32] = createSerializationRule("WrapBeginSomeSegment-0", 38,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				70		/* 'wrap-begin-some' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::WrapEndSegment-0(idioms::WrapEndSegment): "wrap-end"
+		serializationRules[33] = createSerializationRule("WrapEndSegment-0", 39,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				71		/* 'wrap-end' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
+		// Idioms::WrapHereSegment-0(idioms::WrapHereSegment): "wrap-here"
+		serializationRules[34] = createSerializationRule("WrapHereSegment-0", 40,
+			null,	// run-time resolution using SerializationSteps
+			createSerializationSteps(
+				72		/* 'wrap-here' || pre-comment soft-space value soft-space post-comment */
+			),
+			null);
 	}
 
 	/**
@@ -2170,41 +1608,41 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */
 		};
 		serializationSegments[4] = new @NonNull SerializationSegment @NonNull [] {
-			new CustomSerializationSegment(XtextPreCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport */,
+			SerializationSegment.PRE_COMMENT /* pre-comment */,
 			SerializationSegment.NO_SPACE /* no-space */,
 			SerializationSegment.VALUE /* value */,
 			SerializationSegment.NO_SPACE /* no-space */,
-			new CustomSerializationSegment(XtextPostCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
+			SerializationSegment.POST_COMMENT /* post-comment */
 		};
 		serializationSegments[5] = new @NonNull SerializationSegment @NonNull [] {
-			new CustomSerializationSegment(XtextPreCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport */,
+			SerializationSegment.PRE_COMMENT /* pre-comment */,
 			SerializationSegment.NO_SPACE /* no-space */,
 			SerializationSegment.VALUE /* value */,
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
-			new CustomSerializationSegment(XtextPostCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
+			SerializationSegment.POST_COMMENT /* post-comment */
 		};
 		serializationSegments[6] = new @NonNull SerializationSegment @NonNull [] {
-			new CustomSerializationSegment(XtextPreCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport */,
+			SerializationSegment.PRE_COMMENT /* pre-comment */,
 			SerializationSegment.SOFT_SPACE /* soft-space */,
 			SerializationSegment.VALUE /* value */,
 			SerializationSegment.SOFT_SPACE /* soft-space */,
-			new CustomSerializationSegment(XtextPostCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
+			SerializationSegment.POST_COMMENT /* post-comment */
 		};
 		serializationSegments[7] = new @NonNull SerializationSegment @NonNull [] {
-			new CustomSerializationSegment(XtextPreCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport */,
+			SerializationSegment.PRE_COMMENT /* pre-comment */,
 			SerializationSegment.POP /* pop */,
 			SerializationSegment.SOFT_SPACE /* soft-space */,
 			SerializationSegment.VALUE /* value */,
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
-			new CustomSerializationSegment(XtextPostCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
+			SerializationSegment.POST_COMMENT /* post-comment */
 		};
 		serializationSegments[8] = new @NonNull SerializationSegment @NonNull [] {
-			new CustomSerializationSegment(XtextPreCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport */,
+			SerializationSegment.PRE_COMMENT /* pre-comment */,
 			SerializationSegment.SOFT_SPACE /* soft-space */,
 			SerializationSegment.VALUE /* value */,
 			SerializationSegment.PUSH /* push */,
 			SerializationSegment.SOFT_NEW_LINE /* soft-new-line */,
-			new CustomSerializationSegment(XtextPostCommentSegmentSupport.class) /* supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport */
+			SerializationSegment.POST_COMMENT /* post-comment */
 		};
 	}
 
@@ -2212,198 +1650,196 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 	 * Initialize the various serialization steps used to serialize a serialization rule.
 	 */
 	private void initSerializationSteps() {
-		// EPackageImport::as=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[0] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.EPACKAGE_IMPORT__AS, 10 /*ID*/, 6);
-		// IdiomsImport::as=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[1] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_IMPORT__AS, 10 /*ID*/, 6);
-		// AssignmentLocator::eClass=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[2] = createSerializationStepCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS, getCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS, "ID"), 6);
-		// ReturnsLocator::eClass=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[3] = createSerializationStepCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS, getCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS, "ID"), 6);
-		// AssignmentLocator::ePackage=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[4] = createSerializationStepCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE, getCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE, "ID"), 6);
-		// EPackageImport::ePackage=STRING || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[5] = createSerializationStepCrossReference(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE, getCrossReference(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE, "STRING"), 6);
-		// ReturnsLocator::ePackage=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[6] = createSerializationStepCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE, getCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE, "ID"), 6);
-		// AssignmentLocator::eStructuralFeature=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[7] = createSerializationStepCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE, getCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE, "ID"), 6);
-		// Idiom::forEClass=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[8] = createSerializationStepCrossReference(IdiomsPackage.Literals.IDIOM__FOR_ECLASS, getCrossReference(IdiomsPackage.Literals.IDIOM__FOR_ECLASS, "ID"), 6);
-		// Idiom::forEPackage=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[9] = createSerializationStepCrossReference(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE, getCrossReference(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE, "ID"), 6);
-		// IdiomsImport::idiomsModel=STRING || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[10] = createSerializationStepCrossReference(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL, getCrossReference(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL, "STRING"), 6);
-		// ReferredLocator::idiomsModel=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[11] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL, getCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL, "ID"), 6);
-		// ReferredSegment::idiomsModel=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[12] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL, getCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL, "ID"), 6);
-		// Idiom::inRuleRegex=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[13] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX, 29 /*STRING*/, 6);
-		// ReferredLocator::locatorDeclaration=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[14] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION, getCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION, "ID"), 6);
-		// Idiom::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[15] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOM__NAME, 10 /*ID*/, 6);
-		// IdiomsModel::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[16] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__NAME, 10 /*ID*/, 6);
-		// LocatorDeclaration::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[17] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME, 10 /*ID*/, 6);
-		// SegmentDeclaration::name=10 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[18] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME, 10 /*ID*/, 6);
-		// IdiomsModel::ownedIdioms+=12 || new-line soft-new-line value soft-new-line
-		serializationSteps[19] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS, 12 /*Idiom*/, 3);
-		// IdiomsModel::ownedImports+=6 || soft-new-line value soft-new-line
-		serializationSteps[20] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS, 6 /*EPackageImport*/, 2);
-		// LocatorDeclaration::ownedLocator=16 || value
-		serializationSteps[21] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR, 16 /*Locator*/, 0);
-		// SubIdiom::ownedLocator=16 || value
-		serializationSteps[22] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR, 16 /*Locator*/, 0);
-		// IdiomsModel::ownedLocatorDeclarations+=17 || value
-		serializationSteps[23] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS, 17 /*LocatorDeclaration*/, 0);
-		// CompoundLocator::ownedLocators+=7 || value
-		serializationSteps[24] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.COMPOUND_LOCATOR__OWNED_LOCATORS, 7 /*ElementLocator*/, 0);
-		// SegmentDeclaration::ownedSegment=30 || value
-		serializationSteps[25] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT, 30 /*Segment*/, 0);
-		// IdiomsModel::ownedSegmentDeclarations+=31 || value
-		serializationSteps[26] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS, 31 /*SegmentDeclaration*/, 0);
-		// SubIdiom::ownedSegments+=30|26 || value
-		serializationSteps[27] = createSerializationStepAssigns(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS, -1, new @NonNull Integer [] { 30/*Segment*/,26/*ReferredSegment*/}, 0);
-		// Idiom::ownedSubIdioms+=35 || value soft-new-line
-		serializationSteps[28] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS, 35 /*SubIdiom*/, 1);
-		// IdiomsModel::ownedWiths+=13 || soft-new-line value soft-new-line
-		serializationSteps[29] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS, 13 /*IdiomsImport*/, 2);
-		// ReferredSegment::segmentDeclaration=ID || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[30] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION, getCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION, "ID"), 6);
-		// KeywordLocator::string=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[31] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.KEYWORD_LOCATOR__STRING, 29 /*STRING*/, 6);
-		// StringSegment::string=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[32] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.STRING_SEGMENT__STRING, 29 /*STRING*/, 6);
-		// CustomSegment::supportClassName=29 || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[33] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME, 29 /*STRING*/, 6);
-		// '::' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value no-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[34] = createSerializationStepKeyword("::", 4);
-		// ';' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport no-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[35] = createSerializationStepKeyword(";", 5);
-		// 'all' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[36] = createSerializationStepKeyword("all", 6);
-		// 'any-assignment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[37] = createSerializationStepKeyword("any-assignment", 6);
-		// 'any-element' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[38] = createSerializationStepKeyword("any-element", 6);
-		// 'as' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[39] = createSerializationStepKeyword("as", 6);
-		// 'assignment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[40] = createSerializationStepKeyword("assignment", 6);
-		// 'at' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[41] = createSerializationStepKeyword("at", 6);
-		// 'custom' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[42] = createSerializationStepKeyword("custom", 6);
-		// 'do' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[43] = createSerializationStepKeyword("do", 6);
-		// 'each' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[44] = createSerializationStepKeyword("each", 6);
-		// 'final' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[45] = createSerializationStepKeyword("final", 6);
-		// 'for' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[46] = createSerializationStepKeyword("for", 6);
-		// 'half-new-line' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[47] = createSerializationStepKeyword("half-new-line", 6);
-		// 'idiom' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[48] = createSerializationStepKeyword("idiom", 6);
-		// 'import' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[49] = createSerializationStepKeyword("import", 6);
-		// 'in' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[50] = createSerializationStepKeyword("in", 6);
-		// 'locator' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[51] = createSerializationStepKeyword("locator", 6);
-		// 'mixin' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[52] = createSerializationStepKeyword("mixin", 6);
-		// 'model' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[53] = createSerializationStepKeyword("model", 6);
-		// 'new-line' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[54] = createSerializationStepKeyword("new-line", 6);
-		// 'no-space' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[55] = createSerializationStepKeyword("no-space", 6);
-		// 'pop' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[56] = createSerializationStepKeyword("pop", 6);
-		// 'post-comment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[57] = createSerializationStepKeyword("post-comment", 6);
-		// 'pre-comment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[58] = createSerializationStepKeyword("pre-comment", 6);
-		// 'printable' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[59] = createSerializationStepKeyword("printable", 6);
-		// 'push' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 0: SubIdiom::all?='all' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[0] = createSerializationStepAssignKeyword(IdiomsPackage.Literals.SUB_IDIOM__ALL, 0 /* 'all' */, 6);
+		// 1: EPackageImport::as=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[1] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.EPACKAGE_IMPORT__AS, 8 /*ID*/, 6);
+		// 2: IdiomsImport::as=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[2] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_IMPORT__AS, 8 /*ID*/, 6);
+		// 3: AssignmentLocator::eClass=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[3] = createSerializationStepCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS, getCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ECLASS, "ID"), 8, 6);
+		// 4: ReturnsLocator::eClass=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[4] = createSerializationStepCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS, getCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__ECLASS, "ID"), 8, 6);
+		// 5: AssignmentLocator::ePackage=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[5] = createSerializationStepCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE, getCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__EPACKAGE, "ID"), 8, 6);
+		// 6: EPackageImport::ePackage=STRING || pre-comment soft-space value soft-space post-comment
+		serializationSteps[6] = createSerializationStepCrossReference(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE, getCrossReference(IdiomsPackage.Literals.EPACKAGE_IMPORT__EPACKAGE, "STRING"), 27, 6);
+		// 7: ReturnsLocator::ePackage=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[7] = createSerializationStepCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE, getCrossReference(IdiomsPackage.Literals.RETURNS_LOCATOR__EPACKAGE, "ID"), 8, 6);
+		// 8: AssignmentLocator::eStructuralFeature=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[8] = createSerializationStepCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE, getCrossReference(IdiomsPackage.Literals.ASSIGNMENT_LOCATOR__ESTRUCTURAL_FEATURE, "ID"), 8, 6);
+		// 9: Idiom::forEClass=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[9] = createSerializationStepCrossReference(IdiomsPackage.Literals.IDIOM__FOR_ECLASS, getCrossReference(IdiomsPackage.Literals.IDIOM__FOR_ECLASS, "ID"), 8, 6);
+		// 10: Idiom::forEPackage=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[10] = createSerializationStepCrossReference(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE, getCrossReference(IdiomsPackage.Literals.IDIOM__FOR_EPACKAGE, "ID"), 8, 6);
+		// 11: IdiomsImport::idiomsModel=STRING || pre-comment soft-space value soft-space post-comment
+		serializationSteps[11] = createSerializationStepCrossReference(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL, getCrossReference(IdiomsPackage.Literals.IDIOMS_IMPORT__IDIOMS_MODEL, "STRING"), 27, 6);
+		// 12: ReferredLocator::idiomsModel=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[12] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL, getCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__IDIOMS_MODEL, "ID"), 8, 6);
+		// 13: ReferredSegment::idiomsModel=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[13] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL, getCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__IDIOMS_MODEL, "ID"), 8, 6);
+		// 14: Idiom::inRuleRegex=STRING || pre-comment soft-space value soft-space post-comment
+		serializationSteps[14] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOM__IN_RULE_REGEX, 27 /*STRING*/, 6);
+		// 15: ReferredLocator::locatorDeclaration=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[15] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION, getCrossReference(IdiomsPackage.Literals.REFERRED_LOCATOR__LOCATOR_DECLARATION, "ID"), 8, 6);
+		// 16: Idiom::mixin?='mixin' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[16] = createSerializationStepAssignKeyword(IdiomsPackage.Literals.IDIOM__MIXIN, 1 /* 'mixin' */, 6);
+		// 17: Idiom::name=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[17] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOM__NAME, 8 /*ID*/, 6);
+		// 18: LocatorDeclaration::name=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[18] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.LOCATOR_DECLARATION__NAME, 8 /*ID*/, 6);
+		// 19: SegmentDeclaration::name=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[19] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.SEGMENT_DECLARATION__NAME, 8 /*ID*/, 6);
+		// 20: IdiomsModel::names+=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[20] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__NAMES, 8 /*ID*/, 6);
+		// 21: IdiomsModel::ownedIdioms+=Idiom || new-line soft-new-line value soft-new-line
+		serializationSteps[21] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IDIOMS, 10 /*Idiom*/, 3);
+		// 22: IdiomsModel::ownedImports+=EPackageImport || soft-new-line value soft-new-line
+		serializationSteps[22] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_IMPORTS, 5 /*EPackageImport*/, 2);
+		// 23: LocatorDeclaration::ownedLocator=Locator || value
+		serializationSteps[23] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.LOCATOR_DECLARATION__OWNED_LOCATOR, 14 /*Locator*/, 0);
+		// 24: SubIdiom::ownedLocator=Locator || value
+		serializationSteps[24] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.SUB_IDIOM__OWNED_LOCATOR, 14 /*Locator*/, 0);
+		// 25: IdiomsModel::ownedLocatorDeclarations+=LocatorDeclaration || value
+		serializationSteps[25] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_LOCATOR_DECLARATIONS, 15 /*LocatorDeclaration*/, 0);
+		// 26: SegmentDeclaration::ownedSegment=Segment || value
+		serializationSteps[26] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.SEGMENT_DECLARATION__OWNED_SEGMENT, 28 /*Segment*/, 0);
+		// 27: IdiomsModel::ownedSegmentDeclarations+=SegmentDeclaration || value
+		serializationSteps[27] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_SEGMENT_DECLARATIONS, 29 /*SegmentDeclaration*/, 0);
+		// 28: SubIdiom::ownedSegments+=Segment|ReferredSegment || value
+		serializationSteps[28] = createSerializationStepAssigns(IdiomsPackage.Literals.SUB_IDIOM__OWNED_SEGMENTS, -1, new int[] { 28/*Segment*/,24/*ReferredSegment*/}, 0);
+		// 29: Idiom::ownedSubIdioms+=SubIdiom || value soft-new-line
+		serializationSteps[29] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOM__OWNED_SUB_IDIOMS, 33 /*SubIdiom*/, 1);
+		// 30: IdiomsModel::ownedWiths+=IdiomsImport || soft-new-line value soft-new-line
+		serializationSteps[30] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.IDIOMS_MODEL__OWNED_WITHS, 11 /*IdiomsImport*/, 2);
+		// 31: StringSegment::printable?='printable' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[31] = createSerializationStepAssignKeyword(IdiomsPackage.Literals.STRING_SEGMENT__PRINTABLE, 2 /* 'printable' */, 6);
+		// 32: ReferredSegment::segmentDeclaration=ID || pre-comment soft-space value soft-space post-comment
+		serializationSteps[32] = createSerializationStepCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION, getCrossReference(IdiomsPackage.Literals.REFERRED_SEGMENT__SEGMENT_DECLARATION, "ID"), 8, 6);
+		// 33: KeywordLocator::string=STRING || pre-comment soft-space value soft-space post-comment
+		serializationSteps[33] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.KEYWORD_LOCATOR__STRING, 27 /*STRING*/, 6);
+		// 34: StringSegment::string=STRING || pre-comment soft-space value soft-space post-comment
+		serializationSteps[34] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.STRING_SEGMENT__STRING, 27 /*STRING*/, 6);
+		// 35: CustomSegment::supportClassName=STRING || pre-comment soft-space value soft-space post-comment
+		serializationSteps[35] = createSerializationStepAssignedRuleCall(IdiomsPackage.Literals.CUSTOM_SEGMENT__SUPPORT_CLASS_NAME, 27 /*STRING*/, 6);
+		// 36: '.' || pre-comment no-space value no-space post-comment
+		serializationSteps[36] = createSerializationStepKeyword(".", 4);
+		// 37: '::' || pre-comment no-space value no-space post-comment
+		serializationSteps[37] = createSerializationStepKeyword("::", 4);
+		// 38: ';' || pre-comment no-space value soft-new-line post-comment
+		serializationSteps[38] = createSerializationStepKeyword(";", 5);
+		// 39: 'any-assignment' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[39] = createSerializationStepKeyword("any-assignment", 6);
+		// 40: 'any-element' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[40] = createSerializationStepKeyword("any-element", 6);
+		// 41: 'as' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[41] = createSerializationStepKeyword("as", 6);
+		// 42: 'assignment' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[42] = createSerializationStepKeyword("assignment", 6);
+		// 43: 'at' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[43] = createSerializationStepKeyword("at", 6);
+		// 44: 'custom' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[44] = createSerializationStepKeyword("custom", 6);
+		// 45: 'do' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[45] = createSerializationStepKeyword("do", 6);
+		// 46: 'each' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[46] = createSerializationStepKeyword("each", 6);
+		// 47: 'final' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[47] = createSerializationStepKeyword("final", 6);
+		// 48: 'for' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[48] = createSerializationStepKeyword("for", 6);
+		// 49: 'half-new-line' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[49] = createSerializationStepKeyword("half-new-line", 6);
+		// 50: 'idiom' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[50] = createSerializationStepKeyword("idiom", 6);
+		// 51: 'import' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[51] = createSerializationStepKeyword("import", 6);
+		// 52: 'in' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[52] = createSerializationStepKeyword("in", 6);
+		// 53: 'locator' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[53] = createSerializationStepKeyword("locator", 6);
+		// 54: 'model' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[54] = createSerializationStepKeyword("model", 6);
+		// 55: 'new-line' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[55] = createSerializationStepKeyword("new-line", 6);
+		// 56: 'no-space' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[56] = createSerializationStepKeyword("no-space", 6);
+		// 57: 'pop' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[57] = createSerializationStepKeyword("pop", 6);
+		// 58: 'post-comment' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[58] = createSerializationStepKeyword("post-comment", 6);
+		// 59: 'pre-comment' || pre-comment soft-space value soft-space post-comment
+		serializationSteps[59] = createSerializationStepKeyword("pre-comment", 6);
+		// 60: 'push' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[60] = createSerializationStepKeyword("push", 6);
-		// 'returns' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 61: 'returns' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[61] = createSerializationStepKeyword("returns", 6);
-		// 'segment' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 62: 'segment' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[62] = createSerializationStepKeyword("segment", 6);
-		// 'soft-new-line' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 63: 'soft-new-line' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[63] = createSerializationStepKeyword("soft-new-line", 6);
-		// 'soft-space' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 64: 'soft-space' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[64] = createSerializationStepKeyword("soft-space", 6);
-		// 'string' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 65: 'string' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[65] = createSerializationStepKeyword("string", 6);
-		// 'value' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 66: 'value' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[66] = createSerializationStepKeyword("value", 6);
-		// 'with' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 67: 'with' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[67] = createSerializationStepKeyword("with", 6);
-		// 'wrap-anchor' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 68: 'wrap-anchor' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[68] = createSerializationStepKeyword("wrap-anchor", 6);
-		// 'wrap-begin-all' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 69: 'wrap-begin-all' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[69] = createSerializationStepKeyword("wrap-begin-all", 6);
-		// 'wrap-begin-some' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 70: 'wrap-begin-some' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[70] = createSerializationStepKeyword("wrap-begin-some", 6);
-		// 'wrap-end' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 71: 'wrap-end' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[71] = createSerializationStepKeyword("wrap-end", 6);
-		// 'wrap-here' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 72: 'wrap-here' || pre-comment soft-space value soft-space post-comment
 		serializationSteps[72] = createSerializationStepKeyword("wrap-here", 6);
-		// '{' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value push soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
+		// 73: '{' || pre-comment soft-space value push soft-new-line post-comment
 		serializationSteps[73] = createSerializationStepKeyword("{", 8);
-		// '|' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport soft-space value soft-space supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[74] = createSerializationStepKeyword("|", 6);
-		// '}' || supported by org.eclipse.ocl.examples.xtext.serializer.XtextPreCommentSegmentSupport pop soft-space value soft-new-line supported by org.eclipse.ocl.examples.xtext.serializer.XtextPostCommentSegmentSupport
-		serializationSteps[75] = createSerializationStepKeyword("}", 7);
-		// 1*1-steps || value
-		serializationSteps[76] = createSerializationStepSequence(-1, 1, 0);
-		// 1*6-steps || value
-		serializationSteps[77] = createSerializationStepSequence(-1, 6, 0);
-		// V00*1-steps || value
-		serializationSteps[78] = createSerializationStepSequence(0, 1, 0);
-		// V00*3-steps || value
-		serializationSteps[79] = createSerializationStepSequence(0, 3, 0);
-		// V00*4-steps || value
-		serializationSteps[80] = createSerializationStepSequence(0, 4, 0);
-		// V00*9-steps || value
-		serializationSteps[81] = createSerializationStepSequence(0, 9, 0);
-		// V01*1-steps || value
-		serializationSteps[82] = createSerializationStepSequence(1, 1, 0);
-		// V01*4-steps || value
-		serializationSteps[83] = createSerializationStepSequence(1, 4, 0);
-		// V01*9-steps || value
-		serializationSteps[84] = createSerializationStepSequence(1, 9, 0);
-		// V02*1-steps || value
-		serializationSteps[85] = createSerializationStepSequence(2, 1, 0);
-		// V02*1-steps || new-line soft-new-line value soft-new-line
-		serializationSteps[86] = createSerializationStepSequence(2, 1, 3);
-		// V02*4-steps || value
-		serializationSteps[87] = createSerializationStepSequence(2, 4, 0);
-		// V03*1-steps || new-line soft-new-line value soft-new-line
-		serializationSteps[88] = createSerializationStepSequence(3, 1, 3);
-		// V03*4-steps || value
-		serializationSteps[89] = createSerializationStepSequence(3, 4, 0);
-		// V04*1-steps || value
-		serializationSteps[90] = createSerializationStepSequence(4, 1, 0);
+		// 74: '}' || pre-comment pop soft-space value soft-new-line post-comment
+		serializationSteps[74] = createSerializationStepKeyword("}", 7);
+		// 75: V00*1-steps || value
+		serializationSteps[75] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 1, 0);
+		// 76: V00*2-steps || value
+		serializationSteps[76] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 2, 0);
+		// 77: V00*2-steps || value
+		serializationSteps[77] = createSerializationStepSequence((0/*V0*/ << 4) | 2/*[*]*/, 2, 0);
+		// 78: V00*3-steps || value
+		serializationSteps[78] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 3, 0);
+		// 79: V00*5-steps || value
+		serializationSteps[79] = createSerializationStepSequence((0/*V0*/ << 4) | 1/*[?]*/, 5, 0);
+		// 80: V01*1-steps || value
+		serializationSteps[80] = createSerializationStepSequence((1/*V1*/ << 4) | 2/*[*]*/, 1, 0);
+		// 81: V01*2-steps || value
+		serializationSteps[81] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 2, 0);
+		// 82: V01*5-steps || value
+		serializationSteps[82] = createSerializationStepSequence((1/*V1*/ << 4) | 1/*[?]*/, 5, 0);
+		// 83: V02*1-steps || value
+		serializationSteps[83] = createSerializationStepSequence((2/*V2*/ << 4) | 2/*[*]*/, 1, 0);
+		// 84: V02*2-steps || value
+		serializationSteps[84] = createSerializationStepSequence((2/*V2*/ << 4) | 1/*[?]*/, 2, 0);
+		// 85: V03*1-steps || new-line soft-new-line value soft-new-line
+		serializationSteps[85] = createSerializationStepSequence((3/*V3*/ << 4) | 2/*[*]*/, 1, 3);
+		// 86: V03*2-steps || value
+		serializationSteps[86] = createSerializationStepSequence((3/*V3*/ << 4) | 1/*[?]*/, 2, 0);
+		// 87: V04*1-steps || value
+		serializationSteps[87] = createSerializationStepSequence((4/*V4*/ << 4) | 2/*[*]*/, 1, 0);
+		// 88: V04*1-steps || new-line soft-new-line value soft-new-line
+		serializationSteps[88] = createSerializationStepSequence((4/*V4*/ << 4) | 2/*[*]*/, 1, 3);
+		// 89: V05*1-steps || value
+		serializationSteps[89] = createSerializationStepSequence((5/*V5*/ << 4) | 2/*[*]*/, 1, 0);
 	}
 }
 
 //	Commented imports ensure Xtend provides a true import allowing unqualified annotated usage
 //	import Inject;
-//	import EAttribute;
 //	import NonNull;
 //	import Nullable;
 //	import IdiomsPackage;
 //	import EClassValue;
+//	import EReference_TargetGrammarRuleVector;
 //	import EnumerationValue;
 //	import EnumerationValueSingle;
 //	import GrammarCardinality;
@@ -2411,18 +1847,11 @@ public class IdiomsSerializationMetaData extends AbstractSerializationMetaData
 //	import GrammarRuleVector;
 //	import SerializationMatchStep;
 //	import SerializationMatchTerm;
-//	import SerializationMatchTermEStructuralFeatureSize;
-//	import SerializationMatchTermInteger;
+//	import SerializationMetaData;
 //	import SerializationRule;
-//	import EAttribute_EnumerationValue_GrammarCardinality;
-//	import EAttribute_EnumerationValues;
-//	import EReference_RuleIndex_GrammarCardinality;
-//	import EReference_RuleIndexes;
-//	import EnumerationValue_GrammarCardinality;
-//	import RuleIndex_GrammarCardinality;
+//	import SerializationFeature;
 //	import SerializationSegment;
-//	import CustomSerializationSegment;
 //	import SerializationStep;
 //	import TerminalRuleValue;
-//	import XtextPostCommentSegmentSupport;
-//	import XtextPreCommentSegmentSupport;
+//	import Grammar;
+//	import GrammarProvider;

@@ -7,6 +7,25 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable<@NonNull GrammarRuleVector>
 {
+	public static final int @NonNull [] NO_INDEXES = new int[0];
+	public static final @NonNull GrammarRuleVector NO_INDEXES_VECTOR = new GrammarRuleVector() {
+
+		@Override
+		public @NonNull GrammarRuleVector set(int bitIndex) {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public @NonNull GrammarRuleVector setAll(@NonNull GrammarRuleVector bits) {
+			throw new IllegalStateException();
+		}
+
+		@Override
+		public @NonNull GrammarRuleVector setCapacity(int capacity) {
+			throw new IllegalStateException();
+		}
+	};
+
 	protected class IndexIterator implements Iterator<@NonNull Integer>
 	{
 		private int cursor;
@@ -44,6 +63,13 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 	private @Nullable Integer hashCode;
 
 	public GrammarRuleVector() {}
+
+	public GrammarRuleVector(int @NonNull [] indexes) {
+		this.longs = null;
+		for (int index : indexes) {
+			set(index);
+		}
+	}
 
 	public GrammarRuleVector(long @NonNull ... longs) {
 		this.longs = longs;
@@ -136,6 +162,7 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 
 	@Override
 	public final int hashCode() {
+		assert longs != null;
 		Integer hashCode2 = hashCode;
 		if (hashCode2 == null) {
 			int hash = getClass().hashCode();
@@ -152,12 +179,24 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 		return hashCode2.intValue();
 	}
 
+	public @NonNull GrammarRuleVector intersection(@NonNull GrammarRuleVector that) {
+		int iThis = this.getLength();
+		int iThat = that.getLength();
+		int iCommon = Math.min(iThis, iThat);
+		long[] results = new long[iCommon];
+		for (int i = 0; i < iCommon; i++) {
+			results[i] = this.longs[i] & that.longs[i];
+		}
+		return new GrammarRuleVector(results);
+	}
+
 	@Override
 	public @NonNull Iterator<@NonNull Integer> iterator() {
 		return new IndexIterator();
 	}
 
 	public @NonNull GrammarRuleVector set(int bitIndex) {
+		assert hashCode == null;
 		setCapacity(bitIndex+1);
 		long mask = 1L << (bitIndex % Long.SIZE);
 		longs[bitIndex / Long.SIZE] |= mask;
@@ -165,6 +204,7 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 	}
 
 	public @NonNull GrammarRuleVector setAll(@NonNull GrammarRuleVector bits) {
+		assert hashCode == null;
 		if (bits.longs != null) {
 			setCapacity(Long.SIZE * bits.longs.length);
 			for (int i = 0; i < bits.longs.length; i++) {
@@ -175,6 +215,7 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 	}
 
 	public @NonNull GrammarRuleVector setCapacity(int capacity) {
+		assert hashCode == null;
 		int newLength = (capacity + Long.SIZE - 1)/Long.SIZE;
 		if (longs == null) {
 			longs = new long[newLength];
@@ -196,6 +237,18 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 		}
 		long mask = 1L << (bitIndex % Long.SIZE);
 		return (longs[bitIndex / Long.SIZE] & mask) != 0;
+	}
+
+	public boolean testAny(@NonNull GrammarRuleVector that) {
+		int iThis = this.getLength();
+		int iThat = that.getLength();
+		int iCommon = Math.min(iThis, iThat);
+		for (int i = 0; i < iCommon; i++) {
+			if ((this.longs[i] & that.longs[i]) != 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -220,6 +273,23 @@ public class GrammarRuleVector implements Iterable<@NonNull Integer>, Comparable
 		@SuppressWarnings("null")
 		@NonNull String castString = (@NonNull String)s.toString();
 		return castString;
+	}
+
+	public void toString(@NonNull DiagnosticStringBuilder s) {
+		boolean isFirst = true;
+		for (int i = 0; i < getLength(); i++) {
+			long word = longs[i];
+			long mask = 1L;
+			for (int j = 0; j < Long.SIZE; j++, mask <<= 1) {
+				if ((word & mask) != 0) {
+					if (!isFirst) {
+						s.append(",");
+					}
+					s.appendRuleName(Long.SIZE*i + j);
+					isFirst = false;
+				}
+			}
+		}
 	}
 
 	public @NonNull String toWordsString() {

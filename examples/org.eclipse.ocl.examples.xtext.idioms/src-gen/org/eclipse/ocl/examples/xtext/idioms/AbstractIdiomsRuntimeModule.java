@@ -23,9 +23,9 @@ import org.eclipse.ocl.examples.xtext.idioms.scoping.IdiomsScopeProvider;
 import org.eclipse.ocl.examples.xtext.idioms.serializer.IdiomsSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.idioms.services.IdiomsGrammarAccess;
 import org.eclipse.ocl.examples.xtext.idioms.validation.IdiomsValidator;
-import org.eclipse.ocl.examples.xtext.serializer.AbstractSerializationMetaData;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeFormatter;
 import org.eclipse.ocl.examples.xtext.serializer.DeclarativeSerializer;
+import org.eclipse.ocl.examples.xtext.serializer.SerializationMetaData;
 import org.eclipse.xtext.Constants;
 import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.formatting.INodeModelFormatter;
@@ -101,8 +101,8 @@ public abstract class AbstractIdiomsRuntimeModule extends DefaultRuntimeModule {
 	}
 
 	// contributed by org.eclipse.ocl.examples.xtext.build.fragments.DeclarativeSerializerFragment
-	public Class<? extends AbstractSerializationMetaData> bindAbstractSerializationMetaData() {
-		return IdiomsSerializationMetaData.class;
+	public Class<? extends SerializationMetaData.Provider> bindSerializationMetaData$Provider() {
+		return IdiomsSerializationMetaData.Provider.class;
 	}
 
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.xtext.build.analysis;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.DynamicRuleMatch;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationMatchTerm;
 
@@ -18,7 +19,7 @@ public class SerializationMatchTermRuntime extends SerializationMatchTerm
 {
 //	protected final @NonNull CardinalityExpression cardinalityExpression;
 //	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
-	protected final @NonNull Iterable<@NonNull Integer> unresolvedVariables;
+	protected final @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables;
 	protected final @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions;
 
 //	public RuntimeSolution(@NonNull CardinalityExpression cardinalityExpression, @NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables) {
@@ -26,15 +27,15 @@ public class SerializationMatchTermRuntime extends SerializationMatchTerm
 //		this.unresolvedVariables = unresolvedVariables;
 //	}
 
-	public SerializationMatchTermRuntime(@NonNull Iterable<@NonNull Integer> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
+	public SerializationMatchTermRuntime(@NonNull Iterable<@NonNull CardinalityVariable> unresolvedVariables, @NonNull Iterable<@NonNull CardinalityExpression> unresolvedExpressions) {
 		this.unresolvedVariables = unresolvedVariables;
 		this.unresolvedExpressions = unresolvedExpressions;
 	}
 
 	@Override
 	public int computeHashCode() {
-		int hash = super.computeHashCode();
-		for (@NonNull Integer unresolvedVariable : unresolvedVariables) {
+		int hash = getClass().hashCode();
+		for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
 			hash += 3 + unresolvedVariable.hashCode();
 		}
 		for (@NonNull CardinalityExpression unresolvedExpression : unresolvedExpressions) {
@@ -65,19 +66,19 @@ public class SerializationMatchTermRuntime extends SerializationMatchTerm
 		return false;
 	}
 
-	@Override
-	public boolean isRuntime() {
-		return true;
-	}
+//	@Override
+//	public boolean isRuntime() {
+//		return true;
+//	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public void toString(@NonNull DiagnosticStringBuilder s) {
 		boolean isFirst = true;
-		for (@NonNull Integer unresolvedVariable : unresolvedVariables) {
+		for (@NonNull CardinalityVariable unresolvedVariable : unresolvedVariables) {
 			if (!isFirst) {
 				s.append(",");
 			}
-			s.append(unresolvedVariable);
+			s.appendVariableName(unresolvedVariable.getIndex());
 			isFirst = false;
 		}
 		s.append(" in ");
@@ -86,7 +87,7 @@ public class SerializationMatchTermRuntime extends SerializationMatchTerm
 			if (!isFirst) {
 				s.append(",");
 			}
-			s.append(unresolvedExpression);
+			s.append(unresolvedExpression.toString());
 			isFirst = false;
 		}
 	}

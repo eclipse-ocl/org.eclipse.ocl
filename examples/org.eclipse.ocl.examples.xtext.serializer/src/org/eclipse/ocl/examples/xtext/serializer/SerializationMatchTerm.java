@@ -21,12 +21,18 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * A CardinalitySolution defines the behaviour of nodes in an expression tree that provides the
- * limited capability to compute the cardinalities of SerilaizationRule terms from the actual
- * feture slot sizes of an actual element to be serialized.
+ * A SerializationMatchTerm defines the behaviour of SerializationMetaData nodes in an expression tree
+ * that provides the limited capability to compute the cardinalities of SerializationRule terms from the
+ * actual feature slot sizes of an actual element to be serialized.
+ *
+ * SerializationMatchTerm implements equals/hashCode so that the SerializationMetaData can share singletons.
  */
 public abstract class SerializationMatchTerm
 {
+	/**
+	 * SerializationMatchTermAbstractBinary provides the common functionality of binary expression terms
+	 * such as Add/Multiply.
+	 */
 	public abstract static class SerializationMatchTermAbstractBinary extends SerializationMatchTerm
 	{
 		protected final @NonNull SerializationMatchTerm left;
@@ -40,7 +46,7 @@ public abstract class SerializationMatchTerm
 
 		@Override
 		public int computeHashCode() {
-			return super.computeHashCode() + 3 * left.hashCode() + 7 * right.hashCode();
+			return getClass().hashCode() + 3 * left.hashCode() + 7 * right.hashCode();
 		}
 
 		@Override
@@ -74,6 +80,9 @@ public abstract class SerializationMatchTerm
 		}
 	}
 
+	/**
+	 * SerializationMatchTermAdd provides the functionality to add two terms.
+	 */
 	public static class SerializationMatchTermAdd extends SerializationMatchTermAbstractBinary
 	{
 		public SerializationMatchTermAdd(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
@@ -108,15 +117,18 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("(");
-			left.toString(s, depth);
+			left.toString(s);
 			s.append(" + ");
-			right.toString(s, depth);
+			right.toString(s);
 			s.append(")");
 		}
 	}
 
+	/**
+	 * SerializationMatchTermDivide provides the functionality to divide a first term by a second.
+	 */
 	public static class SerializationMatchTermDivide extends SerializationMatchTermAbstractBinary
 	{
 		public SerializationMatchTermDivide(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
@@ -154,26 +166,25 @@ public abstract class SerializationMatchTerm
 			return true;
 		}
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("(");
-			left.toString(s, depth);
+			left.toString(s);
 			s.append(" / ");
-			right.toString(s, depth);
+			right.toString(s);
 			s.append(")");
 		}
 	}
 
 	/**
-	 * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
-	 * expression determining the cardinality of a SerializationRule term.
+	 * A SerializationMatchTermEAttributeSize contributes the actual (constant) number of String-valued attribute
+	 * slot elements that match one of a specified set of known String values.
 	 */
 	public static class SerializationMatchTermEAttributeSize extends SerializationMatchTerm
 	{
 		protected final @NonNull EAttribute eAttribute;
 		protected final @NonNull EnumerationValue enumerationValue;
 
-		public SerializationMatchTermEAttributeSize(/*@NonNull*/ EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
-			assert eAttribute != null;
+		public SerializationMatchTermEAttributeSize(@NonNull EAttribute eAttribute, @NonNull EnumerationValue enumerationValue) {
 			this.eAttribute = eAttribute;
 			this.enumerationValue = enumerationValue;
 		}
@@ -185,7 +196,7 @@ public abstract class SerializationMatchTerm
 
 		@Override
 		public int computeHashCode() {
-			return super.computeHashCode() + 3 * eAttribute.hashCode() + 7 * enumerationValue.hashCode();
+			return getClass().hashCode() + 3 * eAttribute.hashCode() + 7 * enumerationValue.hashCode();
 		}
 
 		@Override
@@ -221,11 +232,11 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("|");
-			s.append(eAttribute.getEContainingClass().getName());
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eAttribute)));
 			s.append("::");
-			s.append(eAttribute.getName());
+			s.append(SerializationUtils.getName(eAttribute));
 			s.append(".'");
 			s.append(enumerationValue.getName());
 			s.append("'|");
@@ -233,27 +244,27 @@ public abstract class SerializationMatchTerm
 	}
 
 	/**
-	 * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
-	 * expression determining the cardinality of a SerializationRule term.
+	 * A SerializationMatchTermEReferenceSize contributes the actual (constant) number of contained/referenced
+	 * slot elements that are able to be generated by one of a specified set of parser rules.
 	 */
 	public static class SerializationMatchTermEReferenceSize extends SerializationMatchTerm
 	{
 		protected final @NonNull EReference eReference;
-		protected final @NonNull ParserRuleValue parserRuleValue;
+		protected final @NonNull GrammarRuleVector grammarRuleVector;
 
-		public SerializationMatchTermEReferenceSize(@NonNull EReference eReference, @NonNull ParserRuleValue parserRuleValue) {
+		public SerializationMatchTermEReferenceSize(@NonNull EReference eReference, @NonNull GrammarRuleVector grammarRuleVector) {
 			this.eReference = eReference;
-			this.parserRuleValue = parserRuleValue;
+			this.grammarRuleVector = grammarRuleVector;
 		}
 
 		@Override
 		public @Nullable Integer basicGetIntegerSolution(@NonNull RuleMatch ruleMatch) {
-			return ruleMatch.getSize(eReference, parserRuleValue);
+			return ruleMatch.getSize(eReference, grammarRuleVector);
 		}
 
 		@Override
 		public int computeHashCode() {
-			return super.computeHashCode() + 3 * eReference.hashCode() + 7 * parserRuleValue.hashCode();
+			return getClass().hashCode() + 3 * eReference.hashCode() + 7 * grammarRuleVector.hashCode();
 		}
 
 		@Override
@@ -266,7 +277,7 @@ public abstract class SerializationMatchTerm
 			}
 			SerializationMatchTermEReferenceSize that = (SerializationMatchTermEReferenceSize) obj;
 			if (this.eReference != that.eReference) return false;
-			if (!this.parserRuleValue.equals(that.parserRuleValue)) return false;
+			if (!this.grammarRuleVector.equals(that.grammarRuleVector)) return false;
 			return true;
 		}
 
@@ -274,8 +285,8 @@ public abstract class SerializationMatchTerm
 			return eReference;
 		}
 
-		public @NonNull ParserRuleValue getParserRuleValue() {
-			return parserRuleValue;
+		public @NonNull GrammarRuleVector getGrammarRuleVector() {
+			return grammarRuleVector;
 		}
 
 		@Override
@@ -289,26 +300,26 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("|");
-			s.append(eReference.getEContainingClass().getName());
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eReference)));
 			s.append("::");
-			s.append(eReference.getName());
-			s.append(".'");
-			s.append(parserRuleValue.getRuleName());
-			s.append("'|");
+			s.append(SerializationUtils.getName(eReference));
+			s.append(":{");
+			grammarRuleVector.toString(s);
+			s.append("}|");
 		}
 	}
 
 	/**
-	 * An EAttributeSizeCardinalitySolution contributes the actual (constant) size of a, possibly enumerated, slot to an
-	 * expression determining the cardinality of a SerializationRule term.
+	 * A SerializationMatchTermEStructuralFeatureSize contributes the actual (constant) size of an EList-valued slot or 1/0 for
+	 * an optional slot when determining the cardinality of a SerializationRule term.
 	 */
 	public static class SerializationMatchTermEStructuralFeatureSize extends SerializationMatchTerm
 	{
 		protected final @NonNull EStructuralFeature eStructuralFeature;
 
-		public SerializationMatchTermEStructuralFeatureSize(/*@NonNull*/ EStructuralFeature eStructuralFeature) {
+		public SerializationMatchTermEStructuralFeatureSize(@NonNull EStructuralFeature eStructuralFeature) {
 			assert eStructuralFeature != null;
 			this.eStructuralFeature = eStructuralFeature;
 		}
@@ -320,7 +331,7 @@ public abstract class SerializationMatchTerm
 
 		@Override
 		public int computeHashCode() {
-			return super.computeHashCode() + 3 * eStructuralFeature.hashCode();
+			return getClass().hashCode() + 3 * eStructuralFeature.hashCode();
 		}
 
 		@Override
@@ -351,15 +362,19 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("|");
-			s.append(eStructuralFeature.getEContainingClass().getName());
+			s.append(SerializationUtils.getName(SerializationUtils.getEContainingClass(eStructuralFeature)));
 			s.append("::");
-			s.append(eStructuralFeature.getName());
+			s.append(SerializationUtils.getName(eStructuralFeature));
 			s.append("|");
 		}
 	}
 
+	/**
+	 * SerializationMatchTermGreaterThan provides the functionality to compare a first term with a second.
+	 * Its value is 1 if greater than or equal to or 0 if less than.
+	 */
 	public static class SerializationMatchTermGreaterThan extends SerializationMatchTermAbstractBinary
 	{
 		public SerializationMatchTermGreaterThan(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
@@ -394,15 +409,18 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("(");
-			left.toString(s, depth);
+			left.toString(s);
 			s.append(" > ");
-			right.toString(s, depth);
+			right.toString(s);
 			s.append(")");
 		}
 	}
 
+	/**
+	 * SerializationMatchTermInteger provides the functionality og a term with a literal integer value.
+	 */
 	public static class SerializationMatchTermInteger extends SerializationMatchTerm
 	{
 		protected final int value;
@@ -413,7 +431,7 @@ public abstract class SerializationMatchTerm
 
 		@Override
 		public int computeHashCode() {
-			return super.computeHashCode() + value;
+			return getClass().hashCode() + value;
 		}
 
 		@Override
@@ -449,11 +467,16 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
-			s.append(Integer.toString(value));
+		public void toString(@NonNull DiagnosticStringBuilder s) {
+			String string = Integer.toString(value);
+			assert string != null;
+			s.append(string);
 		}
 	}
 
+	/**
+	 * SerializationMatchTermMultiply provides the functionality to multiply two terms.
+	 */
 	public static class SerializationMatchTermMultiply extends SerializationMatchTermAbstractBinary
 	{
 		public SerializationMatchTermMultiply(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
@@ -487,15 +510,18 @@ public abstract class SerializationMatchTerm
 			return true;
 		}
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("(");
-			left.toString(s, depth);
+			left.toString(s);
 			s.append(" * ");
-			right.toString(s, depth);
+			right.toString(s);
 			s.append(")");
 		}
 	}
 
+	/**
+	 * SerializationMatchTermSubtract provides the functionality to subtract a second term from a first.
+	 */
 	public static class SerializationMatchTermSubtract extends SerializationMatchTermAbstractBinary
 	{
 		public SerializationMatchTermSubtract(@NonNull SerializationMatchTerm left, @NonNull SerializationMatchTerm right) {
@@ -530,18 +556,27 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("(");
-			left.toString(s, depth);
+			left.toString(s);
 			s.append(" - ");
-			right.toString(s, depth);
+			right.toString(s);
 			s.append(")");
 		}
 	}
 
+	/**
+	 * A SerializationMatchTermUnsupported is a place holder used to loclize the problem the anlysis has failed.
+	 * Hopefully the resifual result may assist in de ugging,
+	 */
 	public static class SerializationMatchTermUnsupported extends SerializationMatchTerm
 	{
 		public SerializationMatchTermUnsupported() {}
+
+		@Override
+		public int computeHashCode() {
+			return getClass().hashCode();
+		}
 
 		@Override
 		public boolean equals(Object obj) {
@@ -565,13 +600,13 @@ public abstract class SerializationMatchTerm
 		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("?");
 		}
 	}
 
 	/**
-	 * A VariableCardinalitySolution contributes the already computed value of a cardinality variable to an
+	 * A SerializationMatchTermVariable contributes the already computed value of a cardinality variable to an
 	 * expression determining the cardinality of a SerializationRule term.
 	 */
 	public static class SerializationMatchTermVariable extends SerializationMatchTerm
@@ -589,7 +624,7 @@ public abstract class SerializationMatchTerm
 
 		@Override
 		public int computeHashCode() {
-			return super.computeHashCode() + 3 * cardinalityVariableIndex;
+			return getClass().hashCode() + 3 * cardinalityVariableIndex;
 		}
 
 		@Override
@@ -624,11 +659,14 @@ public abstract class SerializationMatchTerm
 //		}
 
 		@Override
-		public void toString(@NonNull StringBuilder s, int depth) {
+		public void toString(@NonNull DiagnosticStringBuilder s) {
 			s.append("V" + cardinalityVariableIndex);
 		}
 	}
 
+	/**
+	 * The hashCode - null until lazily evaluated by {@link computeHashCode()}.
+	 */
 	private @Nullable Integer hashCode = null;
 
 	/**
@@ -639,10 +677,13 @@ public abstract class SerializationMatchTerm
 		return null;
 	}
 
-	protected int computeHashCode() {
-		return getClass().hashCode();
-	}
+	/**
+	 * Compute the hashCode for caching by {@link hashCode()}. Derived classes must override.
+	 * @return
+	 */
+	protected abstract int computeHashCode();
 
+	// Force derived classes to override.
 	@Override
 	public abstract boolean equals(Object obj);
 
@@ -655,6 +696,9 @@ public abstract class SerializationMatchTerm
 		return singleton;
 	}
 
+	/**
+	 * The hashCode is lazily computed by  and cached.
+	 */
 	@Override
 	public final int hashCode() {
 		Integer hashCode2 = hashCode;
@@ -665,32 +709,30 @@ public abstract class SerializationMatchTerm
 	}
 
 	/**
-	 * Return true if this is a foldable constant value at compile time. i.e an expression involving integer literals.
+	 * Return true if this is a foldable constant value at compile time.
+	 * i.e an expression transitively involving integer literals.
 	 */
 	public abstract boolean isConstant(@NonNull DynamicRuleMatch ruleMatch);
 
 	/**
-	 * Return true if this will be a known constant value at run time. i.e. an expression involving actual feature slot counts.
+	 * Return true if this will be a known constant value at run time.
+	 * i.e. an expression transitively involving integer literals and actual feature slot sizes.
 	 */
 	public abstract boolean isKnown(@NonNull DynamicRuleMatch ruleMatch);
 
-//	@Override
-//	public boolean isOptional() {
-//		return false;
-//	}
-
-	public boolean isRuntime() {
-		return false;
-	}
-
+	/**
+	 *  Overridden to redirect to {@link toString(@NonNull DiagnosticStringBuilder)}.
+	 */
 	@Override
 	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
-		toString(s, 0);
-		@SuppressWarnings("null")
+		DiagnosticStringBuilder s = new DiagnosticStringBuilder();
+		toString(s);
 		@NonNull String castString = s.toString();
 		return castString;
 	}
 
-	public abstract void toString(@NonNull StringBuilder s, int depth);
+	/**
+	 * Append a readble representatio of this object to a DiagnosticStringBuilder.
+	 */
+	public abstract void toString(@NonNull DiagnosticStringBuilder s);
 }

@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.GrammarAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
@@ -61,10 +62,10 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		}
 	}
 
-	protected void appendCardinality(@NonNull StringBuilder s, int depth) {
+	protected void appendCardinality(@NonNull DiagnosticStringBuilder s, int depth) {
 		if ((depth >= 0) || !grammarCardinality.isOne()) {
 			s.append("[");
-			s.append(grammarCardinality);
+			s.appendObject(grammarCardinality);
 			s.append("]");
 		}
 	}
@@ -80,29 +81,11 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) { // is this needed ?
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, boolean isRootAlternative) { // is this needed ?
 		@SuppressWarnings("null")
 		@NonNull List<@NonNull SerializationNode> castSingletonList = Collections.singletonList(this);
-		return createFrozenSequence(compoundElement, grammarCardinality, castSingletonList);
+		return createFrozenSequence(compoundElement, grammarCardinality, castSingletonList, isRootAlternative);
 	}
-
-	@Override
-	public @NonNull GrammarCardinality getGrammarCardinality() {
-		return grammarCardinality;
-	}
-
-/*	protected @NonNull SerializationSegment @Nullable [] getSerializationSegments(@NonNull SerializationRuleAnalysis serializationRuleAnalysis,
-			@NonNull Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms) {
-		@NonNull SerializationSegment @Nullable [] serializationSegments = null;
-		List<@NonNull SubIdiom> subIdioms = SerializationUtils.maybeNull(serializationNode2subIdioms.get(this));
-		if (subIdioms != null) {
-			return serializationRuleAnalysis.getGrammarAnalysis().getSerializationSegments(subIdioms);
-		}
-		else if (!(this instanceof SequenceSerializationNode)) {
-			getClass();	// XXX
-		}
-		return serializationSegments;
-	} */
 
 	protected @NonNull SerializationSegment @Nullable [] gatherStepsAndSubIdiomsAll(@NonNull SerializationRuleAnalysis serializationRuleAnalysis,
 			@NonNull List<@NonNull SerializationStep> stepsList, @NonNull Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms) {
@@ -116,9 +99,14 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 		}
 		int cardinalityVariableIndex = serializationRuleAnalysis.getCardinalityVariableIndex(this);
 		if ((cardinalityVariableIndex >= 0) || (allSerializationSegments != null)) {
-			stepsList.add(new SerializationStepSequence(cardinalityVariableIndex, 1, allSerializationSegments));
+			stepsList.add(new SerializationStepSequence(cardinalityVariableIndex, 1, grammarCardinality, allSerializationSegments));
 		}
 		return eachSerializationSegments;
+	}
+
+	@Override
+	public @NonNull GrammarCardinality getGrammarCardinality() {
+		return grammarCardinality;
 	}
 
 	@Override
@@ -135,16 +123,6 @@ public abstract class AbstractSerializationNode extends AbstractSerializationEle
 	public boolean isRedundant() {
 		return false;
 	}
-
-/*	@Override
-	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
-		throw new UnsupportedOperationException("Missing " + getClass().getName() + ".semanticEquals implementation.");
-	} */
-
-/*	@Override
-	public int semanticHashCode() {
-		throw new UnsupportedOperationException("Missing " + getClass().getName() + ".semanticHashCode implementation.");
-	} */
 
 	@Override
 	public @NonNull SerializationNode setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {

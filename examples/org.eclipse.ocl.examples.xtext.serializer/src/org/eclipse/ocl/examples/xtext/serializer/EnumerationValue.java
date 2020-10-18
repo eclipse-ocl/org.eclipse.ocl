@@ -22,6 +22,43 @@ import org.eclipse.xtext.util.Strings;
  */
 public abstract class EnumerationValue implements Nameable
 {
+	public static final @NonNull EnumerationValue @NonNull [] NO_ENUMERATION_VALUES = new @NonNull EnumerationValue[0];
+
+	/**
+	 * The EnumerationValueAny provides a reserved EnumerationValue to key the usage of any enumeration values.
+	 */
+	public static class EnumerationValueAny extends EnumerationValue
+	{
+		public static final @NonNull EnumerationValueAny INSTANCE = new EnumerationValueAny();
+
+		private EnumerationValueAny() {}
+
+		@Override
+		public boolean equals(Object obj) {
+			return obj == this;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return "«any»";
+		}
+
+		@Override
+		public boolean isAny() {
+			return true;
+		}
+
+		@Override
+		public boolean isElement(@NonNull String string) {
+			return false;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return getName();
+		}
+	}
+
 	public static class EnumerationValueMultiple extends EnumerationValue
 	{
 		protected final @NonNull String @NonNull [] values;
@@ -119,7 +156,42 @@ public abstract class EnumerationValue implements Nameable
 	}
 
 	/**
-	 * The OthersEnumerationValue provides a reserved EnumerationValue to key the usage of unknown enumeration values.
+	 * The EnumerationValueNull provides a reserved EnumerationValue to key the usage of no enumeration values.
+	 */
+	public static class EnumerationValueNull extends EnumerationValue
+	{
+		public static final @NonNull EnumerationValueNull INSTANCE = new EnumerationValueNull();
+
+		private EnumerationValueNull() {}
+
+		@Override
+		public boolean equals(Object obj) {
+			return obj == this;
+		}
+
+		@Override
+		public @NonNull String getName() {
+			return "«null»";
+		}
+
+		@Override
+		public boolean isElement(@NonNull String string) {
+			return false;
+		}
+
+		@Override
+		public boolean isNull() {
+			return true;
+		}
+
+		@Override
+		public @NonNull String toString() {
+			return getName();
+		}
+	}
+
+	/**
+	 * The EnumerationValueOthers provides a reserved EnumerationValue to key the usage of unknown enumeration values.
 	 */
 	public static class EnumerationValueOthers extends EnumerationValue
 	{
@@ -211,7 +283,15 @@ public abstract class EnumerationValue implements Nameable
 		return hashCode2.intValue();
 	}
 
+	public boolean isAny() {
+		return false;
+	}
+
 	public abstract boolean isElement(@NonNull String string);
+
+	public boolean isNull() {
+		return false;
+	}
 
 	public boolean isOthers() {
 		return false;

@@ -51,22 +51,6 @@ public interface SerializationNode extends SerializationElement
 	 */
 	boolean isRedundant();
 
-	/**
-	 * Return true if this and that serialization node have the same pattern.
-	 */
-//	boolean semanticEquals(@NonNull SerializationNode that);
-
-	/**
-	 * Return the hash code for the pattern.
-	 */
-//	int semanticHashCode();
-
-	/**
-	 * Traverse the serialization node hoderarchy of a serializer's serializationRule to append appropriate string
-	 * segments to the serializationBuilder to represent the serializer's user element.
-	 */
-//	void serialize(@NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder);
-
 	@Override
 	@NonNull SerializationNode setGrammarCardinality(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality);
 }

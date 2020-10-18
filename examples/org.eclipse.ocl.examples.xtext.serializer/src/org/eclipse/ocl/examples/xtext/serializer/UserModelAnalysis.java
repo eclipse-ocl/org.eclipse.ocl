@@ -16,12 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder.SerializationMetaDataDiagnosticStringBuilder;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.nodemodel.INode;
@@ -42,23 +41,11 @@ public class UserModelAnalysis
 	private @NonNull ICrossReferenceSerializer crossReferenceSerializer;
 
 	@Inject
-	private @NonNull AbstractSerializationMetaData serializationMetaData;
+	private SerializationMetaData.@NonNull Provider serializationMetaDataProvider;
 
-	public static @NonNull EClass eClass(@NonNull EObject eObject) {
-		return SerializationUtils.nonNullState(eObject.eClass());
-	}
+//	private AbstractSerializationMetaData serializationMetaData;
 
-	public static @NonNull EStructuralFeature eContainingFeature(@NonNull EObject eObject) {
-		return SerializationUtils.nonNullState(eObject.eContainingFeature());
-	}
-
-	public static @NonNull EReference eContainmentFeature(@NonNull EObject eObject) {
-		return SerializationUtils.nonNullState(eObject.eContainmentFeature());
-	}
-
-	public static @NonNull EObject eContainer(@NonNull EObject eObject) {
-		return SerializationUtils.nonNullState(eObject.eContainer());
-	}
+	private @Nullable SerializationMetaData serializationMetaData;
 
 	/**
 	 * The analysis of each user model element.
@@ -66,10 +53,8 @@ public class UserModelAnalysis
 	private final @NonNull Map<@NonNull EObject, @NonNull UserElementAnalysis> element2elementAnalysis = new HashMap<>();
 
 	private int debugUserElementAnalysisCount = 0;
-	private int debugUserSlotsAnalysisCount = 0;
 	private int debugSerializeCount = 0;
 	private int debugDynamicRuleMatchCount = 0;
-	private int debugDynamicSerializationRules = 0;
 
 	public UserModelAnalysis() {
 		super();
@@ -80,7 +65,7 @@ public class UserModelAnalysis
 	 */
 	public void analyze(@NonNull EObject model) {
 		assert model.eContainer() == null;
-		UserElementAnalysis rootElementAnalysis = new UserElementAnalysis(this, null, null, model);
+		UserElementAnalysis rootElementAnalysis = new UserElementAnalysis(this, null, model);
 		analyzeHierarchy(rootElementAnalysis, model);
 		rootElementAnalysis.getSerializationRules();		// Avoid lazy serializationRules being omiited by a toString().
 	}
@@ -90,7 +75,7 @@ public class UserModelAnalysis
 		for (EObject eChild : eParent.eContents()) {
 			EReference eContainmentFeature = eChild.eContainmentFeature();
 			assert eContainmentFeature.isContainment() && !eContainmentFeature.isDerived() && !eContainmentFeature.isTransient() && !eContainmentFeature.isVolatile();
-			UserElementAnalysis childAnalysis = new UserElementAnalysis(this, parentAnalysis, eContainmentFeature, eChild);
+			UserElementAnalysis childAnalysis = new UserElementAnalysis(this, parentAnalysis, eChild);
 			analyzeHierarchy(childAnalysis, eChild);
 		//	if (Iterables.size(elementAnalysis.getSerializationRules()) > 1) {
 		//		unresolvedModelObjects.add(elementAnalysis);
@@ -103,11 +88,7 @@ public class UserModelAnalysis
 	}
 
 	public @NonNull UserElementSerializer createUserElementSerializer(@NonNull DynamicRuleMatch dynamicRuleMatch, @NonNull EObject eObject) {
-		return new UserElementSerializer(dynamicRuleMatch, this, eObject);
-	}
-
-	public void debugAddDynamicSerializationRules(@NonNull DynamicSerializationRules dynamicSerializationRules) {
-		debugDynamicSerializationRules++;
+		return new UserElementSerializer(dynamicRuleMatch, eObject);
 	}
 
 	public void debugAddDynamicRuleMatch(@NonNull DynamicRuleMatch dynamicRuleMatch) {
@@ -118,20 +99,32 @@ public class UserModelAnalysis
 		debugUserElementAnalysisCount++;
 	}
 
-	public void debugAddUserSlotsAnalysis(UserSlotsAnalysis userSlotsAnalysis) {
-		debugUserSlotsAnalysisCount++;
-	}
-
 	public @NonNull String diagnose() {
 		StringBuilder s = new StringBuilder();
 		s.append("debugUserElementAnalysisCount = " + debugUserElementAnalysisCount + "\n");
-		s.append("debugUserSlotsAnalysisCount = " + debugUserSlotsAnalysisCount + "\n");
 		s.append("debugSerializeCount = " + debugSerializeCount + "\n");
 		s.append("debugDynamicRuleMatchCount = " + debugDynamicRuleMatchCount + "\n");
-		s.append("debugDynamicSerializationRules = " + debugDynamicSerializationRules + "\n");
 		@SuppressWarnings("null")
 		@NonNull String castString = s.toString();
 		return castString;
+	}
+
+	/**
+	 * Descend the user model containment tree diagnosing the elements that failed to serialize depth-first.
+	 */
+	private boolean diagnose(@NonNull DiagnosticStringBuilder s, @NonNull EObject eObject, int depth) {
+		boolean childDiagnosed = false;
+		for (EObject eChild : eObject.eContents()) {
+			assert eChild != null;
+			if (diagnose(s, eChild, depth+1)) {
+				childDiagnosed = true;
+			}
+		}
+		if (childDiagnosed) {
+			return true;
+		}
+		UserElementAnalysis elementAnalysis = getElementAnalysis(eObject);
+		return elementAnalysis.diagnose(s);
 	}
 
 	public @NonNull ICrossReferenceSerializer getCrossReferenceSerializer() {
@@ -146,7 +139,11 @@ public class UserModelAnalysis
 	}
 
 	public @NonNull SerializationMetaData getSerializationMetaData() {
-		return serializationMetaData;
+		SerializationMetaData serializationMetaData2 = serializationMetaData;
+		if (serializationMetaData2  == null) {
+			serializationMetaData = serializationMetaData2 = serializationMetaDataProvider.get();
+		}
+		return serializationMetaData2;
 	}
 
 	public @NonNull IValueConverterService getValueConverterService() {
@@ -159,18 +156,35 @@ public class UserModelAnalysis
 	 */
 	public void serialize(@NonNull SerializationBuilder serializationBuilder, @NonNull EObject eObject, @Nullable GrammarRuleValue targetRuleValue) {
 		debugSerializeCount++;
-		UserElementAnalysis userElementAnalysis = getElementAnalysis(eObject);
-		DynamicRuleMatch dynamicRuleMatch = userElementAnalysis.createDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);
-		if (dynamicRuleMatch != null) {
-			UserElementSerializer serializer = createUserElementSerializer(dynamicRuleMatch, eObject);
+		if ("MappingCallCS".equals(eObject.eClass().getName())) {
+			getClass();		// XXX
+		}
+		UserElementAnalysis elementAnalysis = getElementAnalysis(eObject);
+		String tos = elementAnalysis.toString();		// XXX
+		DynamicRuleMatch okMatch = elementAnalysis.basicCreateDynamicRuleMatch(targetRuleValue != null ? (ParserRuleValue)targetRuleValue : null);
+		if (okMatch != null) {
+			UserElementSerializer serializer = createUserElementSerializer(okMatch, eObject);
 			serializer.serialize(serializationBuilder);
 		}
 		else {
-			StringBuilder s = new StringBuilder();
-			s.append("\n\n«incompatible '" + eObject.eClass().getName() + "'");
-			userElementAnalysis.getSlotsAnalysis().diagnose(s);
+			DiagnosticStringBuilder s = new SerializationMetaDataDiagnosticStringBuilder(getSerializationMetaData());
+			boolean hasContext = diagnose(s, eObject, 0);
+			s.append("\n\n«incompatible");
+			if (!hasContext) {
+				elementAnalysis.diagnoseEObject(s, eObject);
+				s.append("\n");
+			}
+			else {
+				s.append("'");
+				s.appendObject(eObject.eClass().getName());
+				s.append("'\n");
+			}
+			if (!elementAnalysis.diagnose(s) && (targetRuleValue != null)) {
+				s.append(" - ");
+				s.appendObject(targetRuleValue);
+				s.append(" required.");
+			}
 			s.append("»\n\n");
-			@SuppressWarnings("null")
 			@NonNull String castString = s.toString();
 			serializationBuilder.appendError(castString);
 		}
@@ -178,7 +192,7 @@ public class UserModelAnalysis
 
 	@Override
 	public @NonNull String toString() {
-		StringBuilder s = new StringBuilder();
+		DiagnosticStringBuilder s = new SerializationMetaDataDiagnosticStringBuilder(getSerializationMetaData());
 		s.append("User object <=> Xtext containing assignment(s) : Xtext production rule\n");
 		List<@NonNull UserElementAnalysis> elementAnalyses = new ArrayList<>(element2elementAnalysis.values());
 		Collections.sort(elementAnalyses, SerializationUtils.NAMEABLE_COMPARATOR);
@@ -191,8 +205,6 @@ public class UserModelAnalysis
 			elementAnalysis.toString(s, 1);
 			isFirst = false;
 		}
-		@SuppressWarnings("null")
-		@NonNull String castString = s.toString();
-		return castString;
+		return s.toString();
 	}
 }

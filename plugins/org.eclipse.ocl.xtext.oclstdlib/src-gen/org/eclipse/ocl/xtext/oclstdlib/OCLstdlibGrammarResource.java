@@ -194,6 +194,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 				createAlternatives(
 					createRuleCall(_Base.PR_ID),
 					createRuleCall(PR_RestrictedKeywords)));
+			addAnnotation(PR_Identifier, "Override");
 			PR_ImportCS.setAlternatives(
 				createGroup(
 					createKeyword("import"),
@@ -512,6 +513,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					createAssignment("name", "=", createRuleCall(PR_Identifier)),
 					createKeyword(":"),
 					createAssignment("ownedType", "=", createRuleCall(PR_TypedMultiplicityRefCS))));
+			addAnnotation(PR_TuplePartCS, "Override");
 			PR_TypedMultiplicityRefCS.setAlternatives(
 				createGroup(
 					createAlternatives(
@@ -526,6 +528,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					createRuleCall(_EssentialOCL.PR_TupleTypeCS),
 					createRuleCall(PR_TypedTypeRefCS),
 					createRuleCall(PR_LambdaTypeCS)));
+			addAnnotation(PR_TypedRefCS, "Override");
 			PR_TypedTypeRefCS.setAlternatives(
 				createAlternatives(
 					createGroup(
@@ -539,6 +542,7 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 							createKeyword("("),
 							createAssignment("ownedBinding", "=", createRuleCall(_Base.PR_TemplateBindingCS)),
 							createKeyword(")"))))));
+			addAnnotation(PR_TypedTypeRefCS, "Override");
 		}
 
 		private static @NonNull Grammar initGrammar() {
@@ -1163,8 +1167,10 @@ public class OCLstdlibGrammarResource extends AbstractGrammarResource
 					createKeyword("*")));
 			PR_UnreservedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnreservedName));
+			addAnnotation(PR_UnreservedName, "Override");
 			PR_UnrestrictedName.setAlternatives(
 				createRuleCall(PR_EssentialOCLUnrestrictedName));
+			addAnnotation(PR_UnrestrictedName, "Override");
 		}
 
 		private static @NonNull Grammar initGrammar() {

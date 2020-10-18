@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
-import org.eclipse.ocl.examples.xtext.serializer.SerializationUtils;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.CompoundElement;
 
@@ -135,10 +135,10 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality) {
+	public @NonNull SerializationElement freezeSequences(@NonNull CompoundElement compoundElement, @NonNull GrammarCardinality grammarCardinality, boolean isRootAlternative) {
 		List<@NonNull List<@NonNull SerializationNode>> newListOfList = new ArrayList<>();
 		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-			SerializationElement frozenSequence = createFrozenSequence(compoundElement, grammarCardinality, listOfNodes);
+			SerializationElement frozenSequence = createFrozenSequence(compoundElement, grammarCardinality, listOfNodes, isRootAlternative);
 			if (frozenSequence.isListOfList()) {
 				newListOfList.addAll(frozenSequence.asListOfList().getLists());
 			}
@@ -162,6 +162,30 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 
 	@Override
 	public boolean isListOfList() {
+		return true;
+	}
+
+	@Override
+	public boolean noUnassignedParserRuleCall() {
+		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+			for (@NonNull SerializationNode serializationNode : listOfNodes) {
+				if (!serializationNode.noUnassignedParserRuleCall()) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onlyRootUnassignedSerializationRuleCall(boolean isRootAlternative) {
+		for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
+			for (@NonNull SerializationNode serializationNode : listOfNodes) {
+				if (!serializationNode.onlyRootUnassignedSerializationRuleCall(isRootAlternative)) {
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
@@ -192,23 +216,23 @@ public class ListOfListOfSerializationNode extends AbstractSerializationElement
 	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
 		s.append("{");
 		if (listOfListOfNodes.size() > 0) {
 			for (@NonNull List<@NonNull SerializationNode> listOfNodes : listOfListOfNodes) {
-				SerializationUtils.appendIndentation(s, depth);
+				s.appendIndentation(depth);
 				s.append("|\t{");
 				if (listOfNodes.size() > 0) {
 					for (@NonNull SerializationNode serializationNode : listOfNodes) {
-						SerializationUtils.appendIndentation(s, depth+1);
+						s.appendIndentation(depth+1);
 						s.append("+\t");
 						serializationNode.toString(s, depth+2);
 					}
-					SerializationUtils.appendIndentation(s, depth+1);
+					s.appendIndentation(depth+1);
 				}
 				s.append("}");
 			}
-			SerializationUtils.appendIndentation(s, depth);
+			s.appendIndentation(depth);
 		}
 		s.append("}");
 	}

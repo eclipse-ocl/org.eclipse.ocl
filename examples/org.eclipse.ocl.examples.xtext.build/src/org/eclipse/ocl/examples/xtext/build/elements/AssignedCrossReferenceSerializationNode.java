@@ -13,15 +13,19 @@ package org.eclipse.ocl.examples.xtext.build.elements;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.build.analysis.AbstractRuleAnalysis;
-import org.eclipse.ocl.examples.xtext.build.analysis.AnalysisUtils;
 import org.eclipse.ocl.examples.xtext.build.analysis.DirectAssignmentAnalysis;
+import org.eclipse.ocl.examples.xtext.build.analysis.GrammarAnalysis;
 import org.eclipse.ocl.examples.xtext.build.analysis.SerializationRuleAnalysis;
 import org.eclipse.ocl.examples.xtext.idioms.SubIdiom;
+import org.eclipse.ocl.examples.xtext.serializer.DiagnosticStringBuilder;
 import org.eclipse.ocl.examples.xtext.serializer.GrammarCardinality;
+import org.eclipse.ocl.examples.xtext.serializer.GrammarRuleVector;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationSegment;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationStep.SerializationStepCrossReference;
@@ -34,68 +38,55 @@ public class AssignedCrossReferenceSerializationNode extends AbstractAssignedSer
 {
 	protected final @NonNull CrossReference crossReference;
 	protected final @NonNull AbstractRuleAnalysis calledRuleAnalysis;
-	protected final @NonNull Integer [] calledRuleIndexes;
-//	private @Nullable Integer semanticHashCode = null;
+	protected final int @NonNull [] calledRuleIndexes;
+	private @Nullable GrammarRuleVector grammarRuleVector =null;
 
 	public AssignedCrossReferenceSerializationNode(@NonNull DirectAssignmentAnalysis assignmentAnalysis, @NonNull GrammarCardinality grammarCardinality, @NonNull CrossReference crossReference) {
-		super(assignmentAnalysis, grammarCardinality);
+		this(assignmentAnalysis.getGrammarAnalysis(), assignmentAnalysis.getEClass(), assignmentAnalysis.getEStructuralFeature(), grammarCardinality, crossReference, assignmentAnalysis.getTargetRuleAnalyses());
+	}
+
+	private AssignedCrossReferenceSerializationNode(@NonNull GrammarAnalysis grammarAnalysis,
+			@NonNull EClass assignedEClass,	@NonNull EStructuralFeature eStructuralFeature, @NonNull GrammarCardinality grammarCardinality,
+			@NonNull CrossReference crossReference, @NonNull Iterable<@NonNull AbstractRuleAnalysis> targetRuleAnalyses) {
+		super(grammarAnalysis, assignedEClass, eStructuralFeature, grammarCardinality, targetRuleAnalyses);
 		RuleCall ruleCall = (RuleCall) SerializationUtils.getTerminal(crossReference);
 		AbstractRule calledRule = SerializationUtils.getRule(ruleCall);
-		this.calledRuleAnalysis = assignmentAnalysis.getGrammarAnalysis().getRuleAnalysis(calledRule);
-		this.calledRuleIndexes = new @NonNull Integer[] { calledRuleAnalysis.getIndex() };
+		this.calledRuleAnalysis = grammarAnalysis.getRuleAnalysis(calledRule);
+		this.calledRuleIndexes = new int [] { calledRuleAnalysis.getIndex() };
 		this.crossReference = crossReference;
 		assert !((EReference)eStructuralFeature).isContainment();
 	}
 
 	@Override
-	public @NonNull Integer @Nullable [] getAssignedRuleIndexes() {
-		return calledRuleIndexes;
-	}
-
-	@Override
 	public @NonNull SerializationNode clone(@Nullable GrammarCardinality grammarCardinality) {
 		if (grammarCardinality == null) grammarCardinality = this.grammarCardinality;
-		return new AssignedCrossReferenceSerializationNode((DirectAssignmentAnalysis)assignmentAnalysis, grammarCardinality, crossReference);
+		return new AssignedCrossReferenceSerializationNode(grammarAnalysis, assignedEClass, eStructuralFeature, grammarCardinality, crossReference, targetRuleAnalyses);
 	}
 
 	@Override
 	public void gatherStepsAndSubIdioms(@NonNull SerializationRuleAnalysis serializationRuleAnalysis, @NonNull List<@NonNull SerializationStep> stepsList,
 			@NonNull Map<@NonNull SerializationNode, @NonNull List<@NonNull SubIdiom>> serializationNode2subIdioms) {
 		@NonNull SerializationSegment @Nullable [] eachSerializationSegments = gatherStepsAndSubIdiomsAll(serializationRuleAnalysis, stepsList, serializationNode2subIdioms);
-		stepsList.add(new SerializationStepCrossReference(eStructuralFeature, crossReference, eachSerializationSegments));
+		stepsList.add(new SerializationStepCrossReference(eStructuralFeature, crossReference, calledRuleAnalysis.getIndex(), eachSerializationSegments));
 	}
 
-/*	@Override
-	public boolean semanticEquals(@NonNull SerializationNode serializationNode) {
-		if (serializationNode == this) {
-			return true;
+	@Override
+	public @NonNull GrammarRuleVector getAssignedGrammarRuleVector() {
+		GrammarRuleVector grammarRuleVector2 = grammarRuleVector;
+		if (grammarRuleVector2 == null) {
+			grammarRuleVector = grammarRuleVector2 = new GrammarRuleVector(calledRuleIndexes);
 		}
-		if (!(serializationNode instanceof AssignedCrossReferenceSerializationNode)) {
-			return false;
-		}
-		AssignedCrossReferenceSerializationNode that = (AssignedCrossReferenceSerializationNode)serializationNode;
-		if (this.eStructuralFeature != that.eStructuralFeature) {
-			return false;
-		}
-		if (this.calledRuleAnalysis != that.calledRuleAnalysis) {
-			return false;
-		}
-		return true;
-	} */
-
-/*	@Override
-	public int semanticHashCode() {
-		if (semanticHashCode == null) {
-			int hash = getClass().hashCode() + eStructuralFeature.hashCode() + calledRuleAnalysis.hashCode();
-			semanticHashCode = hash;
-		}
-		assert semanticHashCode != null;
-		return semanticHashCode.intValue();
-	} */
+		return grammarRuleVector2;
+	}
 
 	@Override
-	public void toString(@NonNull StringBuilder s, int depth) {
-		AnalysisUtils.appendEStructuralFeatureName(s, assignmentAnalysis);
+	public int @NonNull [] getAssignedRuleIndexes() {
+		return calledRuleIndexes;
+	}
+
+	@Override
+	public void toString(@NonNull DiagnosticStringBuilder s, int depth) {
+		s.appendEStructuralFeatureName(assignedEClass, eStructuralFeature);
 		s.append(eStructuralFeature.isMany() ? "+=" : "=");
 		s.append(calledRuleAnalysis.getName());
 		appendCardinality(s, depth);

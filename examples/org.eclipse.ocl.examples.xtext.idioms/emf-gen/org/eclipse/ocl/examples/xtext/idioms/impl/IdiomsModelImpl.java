@@ -14,12 +14,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -42,6 +41,7 @@ import org.eclipse.ocl.examples.xtext.idioms.SegmentDeclaration;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsModelImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsModelImpl#getNames <em>Names</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsModelImpl#getOwnedIdioms <em>Owned Idioms</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsModelImpl#getOwnedImports <em>Owned Imports</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.xtext.idioms.impl.IdiomsModelImpl#getOwnedLocatorDeclarations <em>Owned Locator Declarations</em>}</li>
@@ -74,6 +74,16 @@ public class IdiomsModelImpl
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getNames() <em>Names</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNames()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> names;
 
 	/**
 	 * The cached value of the '{@link #getOwnedIdioms() <em>Owned Idioms</em>}' containment reference list.
@@ -147,10 +157,20 @@ public class IdiomsModelImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getName() {
+		if (name == null) {
+			StringBuilder s = new StringBuilder();
+			for (String n : names) {
+				if (s.length() > 0) {
+					s.append(".");
+				}
+				s.append(n);
+			}
+			name = s.toString();
+		}
 		return name;
 	}
 
@@ -160,12 +180,12 @@ public class IdiomsModelImpl
 	 * @generated
 	 */
 	@Override
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				IdiomsPackage.IDIOMS_MODEL__NAME, oldName, name));
+	public EList<String> getNames() {
+		if (names == null) {
+			names = new EDataTypeUniqueEList<String>(String.class, this,
+				IdiomsPackage.IDIOMS_MODEL__NAMES);
+		}
+		return names;
 	}
 
 	/**
@@ -302,6 +322,8 @@ public class IdiomsModelImpl
 		switch (featureID) {
 			case IdiomsPackage.IDIOMS_MODEL__NAME :
 				return getName();
+			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+				return getNames();
 			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
 				return getOwnedIdioms();
 			case IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS :
@@ -325,8 +347,9 @@ public class IdiomsModelImpl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__NAME :
-				setName((String) newValue);
+			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+				getNames().clear();
+				getNames().addAll((Collection<? extends String>) newValue);
 				return;
 			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
 				getOwnedIdioms().clear();
@@ -364,8 +387,8 @@ public class IdiomsModelImpl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case IdiomsPackage.IDIOMS_MODEL__NAME :
-				setName(NAME_EDEFAULT);
+			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+				getNames().clear();
 				return;
 			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
 				getOwnedIdioms().clear();
@@ -398,6 +421,8 @@ public class IdiomsModelImpl
 				return NAME_EDEFAULT == null
 					? name != null
 					: !NAME_EDEFAULT.equals(name);
+			case IdiomsPackage.IDIOMS_MODEL__NAMES :
+				return names != null && !names.isEmpty();
 			case IdiomsPackage.IDIOMS_MODEL__OWNED_IDIOMS :
 				return ownedIdioms != null && !ownedIdioms.isEmpty();
 			case IdiomsPackage.IDIOMS_MODEL__OWNED_IMPORTS :
@@ -427,6 +452,8 @@ public class IdiomsModelImpl
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
+		result.append(", names: "); //$NON-NLS-1$
+		result.append(names);
 		result.append(')');
 		return result.toString();
 	}
