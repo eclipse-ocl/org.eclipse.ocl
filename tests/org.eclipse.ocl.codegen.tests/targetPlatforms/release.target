@@ -8,7 +8,7 @@
     <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
     <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
     <repository location="https://download.eclipse.org/releases/latest"/>
-    <repository location="https://download.eclipse.org/staging/2020-06"/>
+    <repository location="https://download.eclipse.org/staging/2020-12"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
     <unit id="org.eclipse.ocl.master.feature.group" version="0.0.0"/>
