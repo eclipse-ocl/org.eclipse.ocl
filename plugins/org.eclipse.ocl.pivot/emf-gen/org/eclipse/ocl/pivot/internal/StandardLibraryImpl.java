@@ -10,8 +10,6 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -469,64 +467,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	@Override
 	public @Nullable PrimitiveType getBehavioralClass(@NonNull Class<?> instanceClass) {
-		if (instanceClass == boolean.class) {
-			return getBooleanType();
-		}
-		if (instanceClass == byte.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == char.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == double.class) {
-			return getRealType();
-		}
-		if (instanceClass == float.class) {
-			return getRealType();
-		}
-		if (instanceClass == int.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == long.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == short.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == BigDecimal.class) {
-			return getRealType();
-		}
-		if (instanceClass == BigInteger.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == Boolean.class) {
-			return getBooleanType();
-		}
-		if (instanceClass == Byte.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == Character.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == Double.class) {
-			return getRealType();
-		}
-		if (instanceClass == Float.class) {
-			return getRealType();
-		}
-		if (instanceClass == Integer.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == Long.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == Short.class) {
-			return getIntegerType();
-		}
-		if (instanceClass == String.class) {
-			return getStringType();
-		}
-		return null;
+		return (PrimitiveType)PivotUtil.getBehavioralClass(this, instanceClass);
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
@@ -50,7 +49,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	//	@Override
-	public Class getBehavioralClass() {
+	public org.eclipse.ocl.pivot.Class getBehavioralClass() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -179,7 +178,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	//	@Override
-	public void setBehavioralClass(Class value) {
+	public void setBehavioralClass(org.eclipse.ocl.pivot.Class value) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -110,6 +112,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -946,6 +949,70 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.13
+	 */
+	public static org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull StandardLibrary standardLibrary, @NonNull Class<?> instanceClass) {
+		if (instanceClass == boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (instanceClass == byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == char.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == int.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == BigDecimal.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == BigInteger.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Boolean.class) {
+			return standardLibrary.getBooleanType();
+		}
+		if (instanceClass == Byte.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Character.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Double.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == Float.class) {
+			return standardLibrary.getRealType();
+		}
+		if (instanceClass == Integer.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Long.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == Short.class) {
+			return standardLibrary.getIntegerType();
+		}
+		if (instanceClass == String.class) {
+			return standardLibrary.getStringType();
+		}
+		return null;
+	}
+
+	/**
 	 * @since 1.7
 	 */
 	public static @NonNull Type getBehavioralReturnType(@NonNull Type type) {
@@ -959,6 +1026,13 @@ public class PivotUtil
 		if (type instanceof DataType) {
 			DataType asDataType = (DataType)type;
 			Type resolvedClass = asDataType.getBehavioralClass();
+			if (resolvedClass != null) {
+				return resolvedClass;
+			}
+		}
+		else if (type instanceof EcoreReflectiveType) {
+			EcoreReflectiveType reflectiveType = (EcoreReflectiveType)type;
+			Type resolvedClass = reflectiveType.getBehavioralClass();
 			if (resolvedClass != null) {
 				return resolvedClass;
 			}

@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInherit
 import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
@@ -50,6 +51,17 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+	}
+
+	@Override
+	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+		Class<?> instanceClass = eClassifier.getInstanceClass();
+		org.eclipse.ocl.pivot.@Nullable Class behavioralClass = instanceClass != null ? PivotUtil.getBehavioralClass(standardLibrary, instanceClass) : null;
+		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
+		if (behavioralClass == thatInheritance) {
+			return true;
+		}
+		return thatInheritance.isSuperInheritanceOf(this);
 	}
 
 	@Override
