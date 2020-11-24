@@ -41,10 +41,12 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.presentation.EcoreEditor;
@@ -1115,6 +1117,64 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
 		doGenModel(genModelURI);
 		doCompile(ocl, testProjectName);
+		ocl.dispose();
+	}
+
+	public void testBug567919() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug567919";
+		String testProjectName = "bug567919";
+		String oclinecoreFile =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
+						+ "package bug567919 : bug567919 = 'http://bug567919'\n"
+						+ "{\n"
+						+ "    class Backlog\n"
+						+ "	{\n"
+						+ "		property workItems : WorkItem[+|1] { ordered composes };\n"
+						+ "	}\n"
+						+ "	class WorkItem\n"
+						+ "	{\n"
+						+ "		attribute effort : ecore::EInt[1];\n"
+						+ "	}\n"
+						+ "	class Plan\n"
+						+ "	{\n"
+						+ "		property backlog : Backlog[1] { composes };\n"
+						+ "		attribute maxTeamVelocity : ecore::EInt[1];\n"
+						+ "		attribute derivedMinSprintCount : ecore::EInt[1] { derived readonly volatile }\n"
+						+ "		{\n"
+						+ "			initial: self.backlog.workItems->collect(effort)->sum();\n"
+						+ "		}\n"
+						+ "	}\n"
+						+ "}\n";
+		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
+		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
+		doGenModel(genModelURI);
+		doCompile(ocl, testProjectName);
+
+
+		File classFilePath = getTestProject().getOutputFolder(JavaFileUtil.TEST_BIN_FOLDER_NAME + "/").getFile();
+		List<@NonNull String> packagePaths = JavaFileUtil.gatherPackageNames(classFilePath, null);
+		ExplicitClassLoader classLoader = new ExplicitClassLoader(classFilePath, packagePaths, getClass().getClassLoader());
+		String qualifiedPackageName = testProjectName + ".Bug567919Package";
+		EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
+		EClass ePlanClass = (EClass) ePackage.getEClassifier("Plan");
+		EReference ePlan_backlog = (EReference) ePlanClass.getEStructuralFeature("backlog");
+		EAttribute ePlan_derivedMinSprintCount = (EAttribute) ePlanClass.getEStructuralFeature("derivedMinSprintCount");
+		EClass eBacklogClass = (EClass) ePackage.getEClassifier("Backlog");
+		EReference eBacklog_workItems = (EReference) eBacklogClass.getEStructuralFeature("workItems");
+		EClass eWorkItemClass = (EClass) ePackage.getEClassifier("WorkItem");
+		EAttribute eWorkItem_effort = (EAttribute) eWorkItemClass.getEStructuralFeature("effort");
+		EFactory eFactory = ePackage.getEFactoryInstance();
+		EObject plan = eFactory.create(ePlanClass);
+		EObject backlog = eFactory.create(eBacklogClass);
+		EObject workItem = eFactory.create(eWorkItemClass);
+		workItem.eSet(eWorkItem_effort, 3);
+		((List<EObject>)backlog.eGet(eBacklog_workItems)).add(workItem);
+		plan.eSet(ePlan_backlog, backlog);
+
+		int count = (int) plan.eGet(ePlan_derivedMinSprintCount);
+		assertEquals(3, count);
 		ocl.dispose();
 	}
 }
