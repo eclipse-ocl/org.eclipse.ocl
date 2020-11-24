@@ -1177,4 +1177,29 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		assertEquals(3, count);
 		ocl.dispose();
 	}
+
+/*	FIXME Bug 569113
+	public void testBug569113() throws Exception {
+		TestOCL ocl = createOCL();
+		String testFileStem = "Bug569113";
+		String testProjectName = "bug569113";
+		String oclinecoreFile =
+				"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
+						+ "package bug569113 : bug569113 = 'http://bug569113'\n"
+						+ "{\n"
+						+ "    class MyClass\n"
+						+ "    {\n"
+						+ "    	   attribute eInts : ecore::EInt[*];\n"
+						+ "        operation sum() : Integer {\n"
+						+ "             body : eInts->sum();\n"
+						+ "        }\n"
+						+ "    }\n"
+						+ "}\n";
+		String genmodelFile = createGenModelContent(testFileStem, null);
+		createManifestFile();
+		URI genModelURI = createModels(testFileStem, oclinecoreFile, genmodelFile);
+		doGenModel(genModelURI);
+		doCompile(ocl, testProjectName);
+		ocl.dispose();
+	} */
 }

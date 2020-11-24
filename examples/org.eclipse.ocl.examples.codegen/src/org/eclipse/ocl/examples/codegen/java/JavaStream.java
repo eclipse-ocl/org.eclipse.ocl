@@ -203,6 +203,7 @@ public class JavaStream
 		}
 	}
 
+	// FIXME Bug 569113 This class is never used.
 	private static class EcoreTypeRepresentation extends AbstractTypeRepresentation
 	{
 		protected final @Nullable Class<?> instanceClass;
@@ -242,8 +243,8 @@ public class JavaStream
 	private @NonNull String defaultIndentationString = "\t";
 	private @NonNull Stack<@NonNull String> classNameStack = new Stack<>();
 
-	private @NonNull TypeRepresentation boxedTypeRepresentation;
-	private @NonNull TypeRepresentation unboxedTypeRepresentation;
+	private final @NonNull TypeRepresentation boxedTypeRepresentation;
+	private final @NonNull TypeRepresentation unboxedTypeRepresentation;
 
 	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor<@NonNull ?> cg2java) {
 		this.codeGenerator = codeGenerator;
