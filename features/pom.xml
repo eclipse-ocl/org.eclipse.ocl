@@ -18,6 +18,7 @@
       <module>org.eclipse.ocl-feature</module> 
       <module>org.eclipse.ocl.all-feature</module>
       <module>org.eclipse.ocl.all.sdk-feature</module>
+      <module>org.eclipse.ocl.build-feature</module>
       <module>org.eclipse.ocl.core.sdk-feature</module>
       <module>org.eclipse.ocl.doc-feature</module>
       <module>org.eclipse.ocl.edit-feature</module>

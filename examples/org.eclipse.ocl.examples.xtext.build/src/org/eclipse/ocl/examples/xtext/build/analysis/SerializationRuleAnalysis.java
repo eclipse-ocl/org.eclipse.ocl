@@ -394,7 +394,9 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			List<@Nullable EnumerationValue> enumerationValueList = new ArrayList<>(enumerationValue2grammarCardinality.keySet());
 			EnumerationValue firstEnumerationValue;
 			if ((enumerationValueList.size() == 1) && ((firstEnumerationValue = enumerationValueList.get(0)) != null) && firstEnumerationValue.isNull()) {
-				serializationAttributes[i1++] = new SerializationSimpleAttribute(eAttribute, needsDefault, enumerationValue2grammarCardinality.get(firstEnumerationValue));
+				GrammarCardinality grammarCardinality = enumerationValue2grammarCardinality.get(firstEnumerationValue);
+				assert grammarCardinality != null;
+				serializationAttributes[i1++] = new SerializationSimpleAttribute(eAttribute, needsDefault, grammarCardinality);
 			}
 			else {
 				@SuppressWarnings("null") List<@NonNull EnumerationValue> enumerationValueList2 = (List<@NonNull EnumerationValue>)enumerationValueList;
@@ -595,8 +597,8 @@ public class SerializationRuleAnalysis implements Nameable, ToDebugStringable, R
 			if (eContainments != null) {
 				Collections.sort(eContainments, SerializationUtils.ENAMED_ELEMENT_COMPARATOR);
 				for (@NonNull EReference eReference : eContainments) {
-					@SuppressWarnings("null")
-					@NonNull Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> value = eReference2ruleAnalysis2grammarCardinality2.get(eReference);
+					Map<@NonNull ParserRuleAnalysis, @NonNull GrammarCardinality> value = eReference2ruleAnalysis2grammarCardinality2.get(eReference);
+					assert value != null;
 				//	@SuppressWarnings("null")
 					GrammarRuleVector grammarRuleVector = new GrammarRuleVector();
 					for (@NonNull ParserRuleAnalysis assignedRuleAnalysis : value.keySet()) {

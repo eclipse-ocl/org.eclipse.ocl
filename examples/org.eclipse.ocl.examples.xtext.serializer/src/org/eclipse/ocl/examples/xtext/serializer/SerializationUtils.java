@@ -488,7 +488,7 @@ public class SerializationUtils
 	 * Return aT as @Nullable to suppress the compiler's insistence that the value is non-null.
 	 * This may be necessary fo methods that access final non-null fields during construction.
 	 */
-	public static <T> @Nullable T maybeNull(@NonNull T aT) {
+	public static <T> @Nullable T maybeNull(T aT) {
 		return aT;
 	}
 

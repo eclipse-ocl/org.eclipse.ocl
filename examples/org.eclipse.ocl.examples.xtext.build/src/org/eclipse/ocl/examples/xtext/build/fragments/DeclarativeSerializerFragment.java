@@ -111,7 +111,7 @@ public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 		@Override
 		public void appendRuleName(int ruleValueIndex) {
 			assert grammarRuleValueIndex2ruleName != null;
-			append(grammarRuleValueIndex2ruleName.get(ruleValueIndex));
+			appendObject(grammarRuleValueIndex2ruleName.get(ruleValueIndex));
 		}
 	}
 

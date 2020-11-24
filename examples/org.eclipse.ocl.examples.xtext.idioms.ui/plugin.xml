@@ -21,7 +21,7 @@
 			default="true"
 			extensions="idioms"
 			id="org.eclipse.ocl.examples.xtext.idioms.Idioms"
-			name="Idioms Editor">
+			name="OCL Xtext Idioms Editor">
 		</editor>
 	</extension>
 	<extension

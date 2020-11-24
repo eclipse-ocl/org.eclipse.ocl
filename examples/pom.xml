@@ -15,6 +15,7 @@
 
   <modules>
       <module>org.eclipse.ocl.examples</module>
+      <!--module>org.eclipse.ocl.examples.build</module-->
       <module>org.eclipse.ocl.examples.classic</module>
       <module>org.eclipse.ocl.examples.codegen</module>
       <module>org.eclipse.ocl.examples.debug</module> 

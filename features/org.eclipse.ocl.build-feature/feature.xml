@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.ocl.master"
+      id="org.eclipse.ocl.build"
       label="%featureName"
       version="6.13.0.qualifier"
       provider-name="%providerName"
-      plugin="org.eclipse.ocl.master"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
@@ -16,25 +15,20 @@
       [Documentation] Copyright text will be taken from the shared license feature
    </copyright>
 
-   <license url="%licenseURL">
-      %license
-   </license>
-
    <url>
       <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates"/>
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates"/>
    </url>
 
-   <includes
-         id="org.eclipse.ocl.examples"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ocl.build"
-         version="0.0.0"/>
+   <!--plugin
+         id="org.eclipse.ocl.examples.build"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/-->
 
    <plugin
-         id="org.eclipse.ocl.master"
+         id="org.eclipse.ocl.examples.xtext.build"
          download-size="0"
          install-size="0"
          version="0.0.0"

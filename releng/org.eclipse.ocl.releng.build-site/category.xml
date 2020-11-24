@@ -24,6 +24,12 @@
    <feature id="org.eclipse.ocl.examples.unified.source" version="0.0.0">
       <category name="mdt.ocl"/>
    </feature>
+   <feature id="org.eclipse.ocl.build" version="0.0.0">
+      <category name="mdt.ocl.build"/>
+   </feature>
+   <feature id="org.eclipse.ocl.build.source" version="0.0.0">
+      <category name="mdt.ocl.build"/>
+   </feature>
    <feature id="org.eclipse.ocl.tests" version="0.0.0">
       <category name="mdt.ocl.tests"/>
    </feature>
@@ -39,6 +45,11 @@
    <category-def name="mdt.ocl" label="OCL">
       <description>
          Eclipse OCL.
+      </description>
+   </category-def>
+   <category-def name="mdt.ocl.build" label="OCL build">
+      <description>
+         Eclipse OCL build.
       </description>
    </category-def>
    <category-def name="mdt.ocl.tests" label="OCL tests">

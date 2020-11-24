@@ -34,10 +34,10 @@ public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	protected XtendFileAccess doGetXtendStubFile() {
-		throw new UnsupportedOperationException();
-	}
+//	@Override
+//	protected XtendFileAccess doGetXtendStubFile() {
+//		throw new UnsupportedOperationException();
+//	}
 
 	@Override
 	protected TypeReference getFormatter2Stub(final Grammar grammar) {

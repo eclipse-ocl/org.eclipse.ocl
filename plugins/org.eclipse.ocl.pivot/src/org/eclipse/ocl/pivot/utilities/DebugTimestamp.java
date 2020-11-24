@@ -30,7 +30,7 @@ public class DebugTimestamp
 	}
 
 	protected void doLog(String message) {	// Override for a logger
-		System.out.println(message);
+	//	System.out.println(message);
 	}
 
 	public void log(@NonNull String event) {
