@@ -13,14 +13,12 @@ package org.eclipse.ocl.examples.xtext.build.fragments;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.xtext.generator.formatting.Formatter2Fragment2;
 import org.eclipse.xtext.xtext.generator.model.TypeReference;
-import org.eclipse.xtext.xtext.generator.model.XtendFileAccess;
 
 /**
  * The DeclarativeFormatterFragment collaborates with the DeclarativeSerializerFragment to replace the
  * backtracking serializer and the Xtend-dependent formatting specifiation approach of the 'new infrastructure'
  * by a statically determined serializer and declarative idiom-based formatter.
  */
-@SuppressWarnings("restriction")
 public abstract class DeclarativeFormatterFragment extends Formatter2Fragment2
 {
 	@Override

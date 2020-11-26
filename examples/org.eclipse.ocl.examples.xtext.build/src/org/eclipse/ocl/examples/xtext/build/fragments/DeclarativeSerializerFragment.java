@@ -101,7 +101,6 @@ import com.google.inject.Provider;
  * backtracking serializer and the Xtend-dependent formatting specifiation approach of the 'new infrastructure'
  * by a largely statically determined serializer and declarative idiom-based formatter.
  */
-@SuppressWarnings("restriction")
 public abstract class DeclarativeSerializerFragment extends SerializerFragment2
 {
 	@Inject CodeConfig codeConfig;
