@@ -112,6 +112,9 @@ Workflow {
 //		javaPackageName = "${idiomsProjectName}"
 //		grammarFileStem = "Idioms"
 //	}
+	component = org.eclipse.ocl.examples.xtext.build.clones.InjectCompatibilityAbstractInternalAntlrParser {
+		fileName = "${idiomsRuntimeProject}/src-gen/org/eclipse/ocl/examples/xtext/idioms/parser/antlr/internal/InternalIdiomsParser.java"
+	}
 	component = org.eclipse.ocl.examples.xtext.build.clones.ConvertToUnixLineEndings {
 		directory = "${idiomsRuntimeProject}/META-INF"
 	}

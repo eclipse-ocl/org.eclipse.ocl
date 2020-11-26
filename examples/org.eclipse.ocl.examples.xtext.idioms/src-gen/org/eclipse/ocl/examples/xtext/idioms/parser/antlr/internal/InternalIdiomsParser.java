@@ -32,7 +32,7 @@ import java.util.HashMap;
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
 @SuppressWarnings("all")
-public class InternalIdiomsParser extends AbstractInternalAntlrParser {
+public class InternalIdiomsParser extends org.eclipse.ocl.examples.xtext.idioms.CompatibilityAbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'model'", "'.'", "'import'", "'as'", "';'", "'with'", "'locator'", "'any-assignment'", "'any-element'", "'assignment'", "'::'", "'final'", "'returns'", "'segment'", "'custom'", "'half-new-line'", "'new-line'", "'no-space'", "'pop'", "'post-comment'", "'pre-comment'", "'push'", "'soft-new-line'", "'soft-space'", "'string'", "'printable'", "'value'", "'wrap-anchor'", "'wrap-begin-all'", "'wrap-begin-some'", "'wrap-end'", "'wrap-here'", "'mixin'", "'idiom'", "'for'", "'in'", "'{'", "'}'", "'at'", "'all'", "'each'", "'do'"
     };
