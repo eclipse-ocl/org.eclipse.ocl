@@ -16,37 +16,79 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.CommentSegmentSupport;
+import org.eclipse.ocl.examples.xtext.serializer.CustomSegmentSupport;
 import org.eclipse.ocl.examples.xtext.serializer.SerializationBuilder;
+import org.eclipse.ocl.examples.xtext.serializer.UserElementFormatter;
+import org.eclipse.ocl.examples.xtext.serializer.UserElementSerializer;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 
-public class BaseCommentSegmentSupport extends CommentSegmentSupport
+public class BaseCommentSegmentSupport implements CustomSegmentSupport
 {
+	protected @Nullable String prologue = "/**";
+	protected @Nullable String indentation = " * ";
+	protected @Nullable String epilogue = " */";
+
 	/**
 	 * To preserve legacy testing functionality, empty comments use an abbreviated one line form. The following
 	 * reserved string serves to distinguish the empty case from the no-comment case.
 	 */
 	private static final @NonNull String EMPTY_COMMENT = "/**/";
 
-	public BaseCommentSegmentSupport() {
-		super("/**", " * ", "*/");
-	}
-
-	@Override
 	protected void appendComment(@NonNull SerializationBuilder serializationBuilder, @NonNull String comment) {
+		serializationBuilder.append(SerializationBuilder.HALF_NEW_LINE);
 		if (comment == EMPTY_COMMENT) {		// NB == rather than equals() for private instance
-			serializationBuilder.append(SerializationBuilder.HALF_NEW_LINE);
 			serializationBuilder.append(EMPTY_COMMENT);
-			serializationBuilder.append(SerializationBuilder.NEW_LINE);
 		}
 		else {
-			super.appendComment(serializationBuilder, comment);
+			serializationBuilder.append(prologue);
+			serializationBuilder.append(SerializationBuilder.PUSH_NEXT);
+			serializationBuilder.append(indentation);
+			boolean hasLeadingNewLine = false;
+			for (int start = 0; true; ) {
+				int index = comment.indexOf('\n', start);
+				if (index >= 0) {
+					if (!hasLeadingNewLine) {
+						hasLeadingNewLine = true;
+						serializationBuilder.append(SerializationBuilder.NEW_LINE);
+					}
+					String line = comment.substring(start, index);
+					assert line != null;
+					serializationBuilder.append(line);
+					serializationBuilder.append(SerializationBuilder.NEW_LINE);
+					start = index+1;
+				}
+				else {
+					if (!hasLeadingNewLine) {
+						serializationBuilder.append(" ");
+					}
+					String line = comment.substring(start, comment.length());
+					assert line != null;
+					serializationBuilder.append(line);
+					break;
+				}
+			}
+			serializationBuilder.append(SerializationBuilder.POP);
+			if (hasLeadingNewLine) {
+				serializationBuilder.append(SerializationBuilder.NEW_LINE);
+			}
+			serializationBuilder.append(epilogue);
 		}
+		serializationBuilder.append(SerializationBuilder.NEW_LINE);
 	}
 
 	@Override
+	public void format(@NonNull UserElementFormatter fomatter, @NonNull SerializationBuilder serializationBuilder) {
+		EObject eObject = fomatter.getElement();
+		Iterable<@NonNull String> comments = getComments(eObject);
+		if (comments != null) {
+			for (String comment : comments) {
+				appendComment(serializationBuilder, comment);
+			}
+		}
+	}
+
 	public @Nullable Iterable<@NonNull String> getComments(@NonNull EObject eObject) {
 		if (eObject instanceof Pivotable) {
 			Element asElement = ((Pivotable)eObject).getPivot();
@@ -63,5 +105,16 @@ public class BaseCommentSegmentSupport extends CommentSegmentSupport
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void serialize(int serializationStepIndex, @NonNull UserElementSerializer serializer, @NonNull SerializationBuilder serializationBuilder) {
+		EObject eObject = serializer.getElement();
+		Iterable<@NonNull String> comments = getComments(eObject);
+		if (comments != null) {
+			for (String comment : comments) {
+				appendComment(serializationBuilder, comment);
+			}
+		}
 	}
 }
