@@ -35,6 +35,7 @@ Require-Bundle: org.junit;visibility:=reexport,
  org.eclipse.ocl.examples.project.completeocltutorial;resolution:=optional,
  org.eclipse.ocl.examples.debug.ui,
  org.eclipse.ocl.examples.debug.vm.ui,
+ org.eclipse.ocl.examples.xtext.idioms,
  org.eclipse.emf.mwe.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
