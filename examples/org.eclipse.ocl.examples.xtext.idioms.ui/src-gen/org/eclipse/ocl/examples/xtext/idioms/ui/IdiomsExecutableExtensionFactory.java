@@ -13,10 +13,10 @@
 package org.eclipse.ocl.examples.xtext.idioms.ui;
 
 import com.google.inject.Injector;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.ocl.examples.xtext.idioms.ui.internal.IdiomsActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -26,7 +26,7 @@ public class IdiomsExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 
 	@Override
 	protected Bundle getBundle() {
-		return Platform.getBundle(IdiomsActivator.PLUGIN_ID);
+		return FrameworkUtil.getBundle(IdiomsActivator.class);
 	}
 
 	@Override
