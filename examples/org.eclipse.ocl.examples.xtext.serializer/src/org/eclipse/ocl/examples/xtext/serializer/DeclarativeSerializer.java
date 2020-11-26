@@ -74,6 +74,7 @@ public class DeclarativeSerializer extends Serializer // implements ISerializer 
 		//
 		//	Render the (virtual) String concatenation as a pure string for output.
 		//
+		serializationBuilder.close();
 		String serializedOutput = serializationBuilder.toString();
 	//	System.out.println(serializedOutput);
 		writer.append(serializedOutput);

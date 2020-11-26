@@ -18,16 +18,17 @@ import java.util.Stack;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.xtext.serializer.ToDebugString.ToDebugStringable;
 
 /**
- * SerializationBuilder builds the intermediate serialization as an interleaving of concrete strings and virtual
- * characters such as soft-space. The append merthods do the building.
+ * SerializationBuilder builds the intermediate serialization from an interleaving of concrete strings and virtual
+ * characters such as soft-space.  {@link append()} does the building.
  *
- * Finally the toString returns a simple string with the virtual characters converted to concrete equivalents where
+ * {@link close() ensures new line termination. }
+ *
+ * Finally   {@link toString()} returns a simple string with the virtual characters converted to concrete equivalents where
  * appropriate.
  */
-public class SerializationBuilder implements ToDebugStringable
+public class SerializationBuilder
 {
 	/**
 	 * The virtual character/string to start a new line, but pairs of half new lines generate one
@@ -1083,7 +1084,7 @@ public class SerializationBuilder implements ToDebugStringable
 			}
 		}
 
-		protected String appendNewLine(boolean isRaw) {
+		protected void appendNewLine(boolean isRaw) {
 			if (atStartOfLine && !indents.isEmpty()) {
 				@Nullable String indent = indents.peek();
 				assert indent != null;
@@ -1098,7 +1099,6 @@ public class SerializationBuilder implements ToDebugStringable
 			s.appendNewLine(lineDelimiter.length());
 			append(lineDelimiter);
 			atStartOfLine = !isRaw;
-			return NO_SPACE;
 		}
 
 		protected String appendString(@NonNull String string) {
@@ -1161,18 +1161,35 @@ public class SerializationBuilder implements ToDebugStringable
 	 */
 	protected int tabWidth;
 
+	protected final @NonNull IndentingStringBuilder s;
+
 	/**
-	 * The strings to be rendered as output after resolving virtual character strings such as SOFT_SPACE.
+	 * The serialization state hanging over from the previous append.
+	 * pushingNext is the state of a two-valued concurrent state machine.
+	 *
+	 *</br> null - unadulterated output
+	 *</br> NO_SPACE - unadulterated output greedily absorbing SOFT_SPACEs
+	 *</br> SOFT_SPACE - a single space is needed and pending
+	 *</br> SOFT_NEW_LINE - a single new line is needed and pending
+	 *</br> HALF_NEW_LINE - a half new line is needed and pending if followed by another half new line
 	 */
-	protected final @NonNull List<@NonNull String> strings = new ArrayList<>(1000);
+	private @Nullable String trailingStringState = NO_SPACE;
+
+	/**
+	 * True if the last append was PUSH_NEXT and so the next append is its argument.
+	 * trailingStringState is the state of a five-valued concurrent state machine.
+	 */
+	private boolean pushingNext = false;
+
+	/**
+	 * Debug trace of the strings to be rendered as output.
+	 */
+//	private final @Nullable List<@Nullable String> debugStrings = null; // new ArrayList<>(1000);
 
 	/**
 	 * Errors embedded in the output and also here.
 	 */
 	private @Nullable List<@NonNull String> errors = null;
-
-	@SuppressWarnings("unused")		// Used to obtain a raw debug representation
-	private @NonNull ToDebugString toDebugString = new ToDebugString(this);
 
 	public SerializationBuilder() {
 		// See Bug 439440 for the inability to pass useful EMF save options via SaveOptions forcing in-built Xtext defaults
@@ -1188,39 +1205,104 @@ public class SerializationBuilder implements ToDebugStringable
 		this.indentString = indentString;
 		this.lineLength = lineLength;
 		this.tabWidth = tabWidth;
+		WrappingStringBuilder sw = new WrappingStringBuilder(new StringBuilder(), lineLength, lineDelimiter, tabWidth);
+		this.s = new IndentingStringBuilder(sw, lineDelimiter, indentString);
 	}
 
-	public void append(@Nullable String string) {
-		if ((string == NEW_LINE) || (string == HALF_NEW_LINE) || (string == RAW_NEW_LINE) || (string == SOFT_NEW_LINE)) {
-			assert string != null;
-			strings.add(string);
+	/**
+	 * Append nextString, which may be a virtual character such as SOFT_SPACE, to the serialized output.
+	 */
+	public void append(@Nullable String nextString) {
+	//	if (debugStrings != null) {
+	//		debugStrings.add(nextString);
+	//	}
+		// == rather than String.equals() in the following to use the dedicated non-interned singletons
+		if (nextString == null) {
+			/* ignore */;
 		}
-		else if (string == SOFT_SPACE) {
-			assert string != null;
-			int size = strings.size();
-			if ((size == 0) || (strings.get(size-1) != SOFT_SPACE)) {	// Double SOFT_SPACE is common and so worth pruning
-				strings.add(string);
+		else if (pushingNext) {
+			pushingNext = false;
+			s.push(nextString);
+		}
+		else if (nextString == PUSH_NEXT) {
+			pushingNext = true;
+		}
+		else if (nextString == PUSH) {
+			s.push(indentString);
+		}
+		else if (nextString == POP) {
+			s.pop();
+		}
+		else if (nextString == NEW_LINE) {
+			s.appendNewLine(false);
+			trailingStringState = NO_SPACE;
+		}
+		else if (nextString == RAW_NEW_LINE) {
+			s.appendNewLine(true);
+			trailingStringState = NO_SPACE;
+		}
+		else if (nextString == HALF_NEW_LINE) {
+			if ((trailingStringState == SOFT_NEW_LINE) || (trailingStringState == HALF_NEW_LINE)) {
+				s.appendNewLine(false);
+				trailingStringState = NO_SPACE;
+			}
+			else {
+				trailingStringState = HALF_NEW_LINE;
 			}
 		}
-		else if (string != null) {
+		else if (nextString == SOFT_NEW_LINE) {
+			trailingStringState = SOFT_NEW_LINE;
+		}
+		else if (nextString == SOFT_SPACE) {
+			if (trailingStringState == NO_SPACE) {
+				trailingStringState = NO_SPACE;
+			}
+			else if ((trailingStringState == NEW_LINE) || (trailingStringState == RAW_NEW_LINE) || (trailingStringState == HALF_NEW_LINE)) {
+				trailingStringState = NO_SPACE;
+			}
+			else if (trailingStringState == SOFT_NEW_LINE) {
+				s.appendNewLine(false);
+				trailingStringState = NO_SPACE;
+			}
+			else {	// trailingStringState == null
+				trailingStringState = SOFT_SPACE;
+			}
+		}
+		else if (nextString == NO_SPACE) {
+			if (trailingStringState == SOFT_NEW_LINE) {
+				s.appendNewLine(false);
+			}
+			trailingStringState = NO_SPACE;
+		}
+		else {	// nextString - hard text
+			if (trailingStringState == SOFT_NEW_LINE) {
+				s.appendNewLine(false);
+			}
+			else if ((trailingStringState == SOFT_SPACE) && !nextString.startsWith("\n")) {
+				s.appendString(" ");
+			}
 			for (int start = 0; true; ) {
-				int index = string.indexOf('\n', start);
-				String line = string.substring(start, index >= 0 ? index : string.length());
+				int index = nextString.indexOf('\n', start);
+				String line = nextString.substring(start, index >= 0 ? index : nextString.length());
 				assert line != null;
 				if (line.length() > 0) {
-					strings.add(line);
+					s.appendString(line);
 				}
 				if (index >= 0) {
-					strings.add(RAW_NEW_LINE);
+					s.appendNewLine(true);
 					start = index+1;
 				}
 				else {
 					break;
 				}
 			}
+			trailingStringState = null;
 		}
 	}
 
+	/**
+	 * Append string to the serialized output and also to the list of errors maintained for return by {@link getErrors()}.
+	 */
 	public void appendError(@NonNull String string) {
 		List<@NonNull String> errors2 = errors;
 		if (errors2 == null) {
@@ -1228,6 +1310,13 @@ public class SerializationBuilder implements ToDebugStringable
 		}
 		errors2.add(string);
 		append(string);
+	}
+
+	/**
+	 * Ensure that the internal string buffers are terminated thereby ensuring a trainling new line.
+	 */
+	public void close() {
+		s.close();
 	}
 
 	public @Nullable Iterable<@NonNull String> getErrors() {
@@ -1258,83 +1347,24 @@ public class SerializationBuilder implements ToDebugStringable
 		this.tabWidth = tabWidth;
 	}
 
-	@Override
+/*	@Override
 	public void toDebugString(@NonNull StringBuilder s, int depth) {
-		for (@NonNull String string : strings) {
-			s.append(string);
-			if ((string == NEW_LINE) || (string == HALF_NEW_LINE) || (string == RAW_NEW_LINE) || (string == SOFT_NEW_LINE)) {
-				s.append("\n");
+		if (debugStrings != null) {
+			for (@Nullable String string : debugStrings) {
+				s.append(string);
+				if ((string == NEW_LINE) || (string == HALF_NEW_LINE) || (string == RAW_NEW_LINE) || (string == SOFT_NEW_LINE)) {
+					s.append("\n");
+				}
 			}
 		}
-	}
+		else {
+			s.append(this.s.toString());
+			s.append("\n");
+		}
+	} */
 
 	@Override
 	public @NonNull String toString() {
-		WrappingStringBuilder sw = new WrappingStringBuilder(new StringBuilder(), lineLength, lineDelimiter, tabWidth);
-		IndentingStringBuilder s = new IndentingStringBuilder(sw, lineDelimiter, indentString);
-		@Nullable String pendingString = NO_SPACE;
-		final int indexMax = strings.size();
-		for (int index = 0; index < indexMax; ) {
-			@Nullable String nextString = strings.get(index++);
-			assert nextString != null;
-			if (nextString == PUSH) {
-				s.push(indentString);
-			}
-			else if (nextString == PUSH_NEXT) {
-				if (index < indexMax) {
-					s.push(strings.get(index++));
-				}
-			}
-			else if (nextString == POP) {
-				s.pop();
-			}
-			else if (nextString == NEW_LINE) {
-				pendingString = s.appendNewLine(false);
-			}
-			else if (nextString == RAW_NEW_LINE) {
-				pendingString = s.appendNewLine(true);
-			}
-			else if (nextString == HALF_NEW_LINE) {
-				if ((pendingString == null) || (pendingString == NO_SPACE) || (pendingString == SOFT_SPACE)) {
-					pendingString = HALF_NEW_LINE;
-				}
-				else if ((pendingString == SOFT_NEW_LINE) || (pendingString == HALF_NEW_LINE)) {
-					s.appendNewLine(false);
-					pendingString = NO_SPACE;
-				}
-			}
-			else if (nextString == SOFT_NEW_LINE) {
-				if ((pendingString == null) || (pendingString == NO_SPACE) || (pendingString == SOFT_SPACE)) {
-					pendingString = SOFT_NEW_LINE;
-				}
-			}
-			else if (nextString == SOFT_SPACE) {
-				if (pendingString == null) {
-					pendingString = SOFT_SPACE;
-				}
-				else if ((pendingString == SOFT_NEW_LINE) || (pendingString == HALF_NEW_LINE)) {
-					pendingString = s.appendNewLine(false);
-				}
-			}
-			else if (nextString == NO_SPACE) {
-				if ((pendingString == null) || (pendingString == SOFT_SPACE)) {
-					pendingString = NO_SPACE;
-				}
-				else if ((pendingString == SOFT_NEW_LINE) || (pendingString == HALF_NEW_LINE)) {
-					pendingString = s.appendNewLine(false);
-				}
-			}
-			else {	// nextString - hard text
-				if (pendingString == SOFT_NEW_LINE) {
-					pendingString = s.appendNewLine(false);
-				}
-				else if (pendingString == SOFT_SPACE) {
-					s.appendString(" ");
-				}
-				pendingString = s.appendString(nextString);
-			}
-		}
-		s.close();
 		return s.toString();
 	}
 }

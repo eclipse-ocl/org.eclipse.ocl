@@ -60,10 +60,11 @@ public class SerializationBuilderTests extends XtextTestCase
 		SerializationBuilder s = new SerializationBuilder(nl, ht);
 		appends(s,              x2, PUSH, y2, NL,         z2, POP);
 		String concat1 = concat(x2,       y2, nl, ht, z2);
-		assertEquals(concat1 + nl, s.toString());
+		assertEquals(concat1 + nl, s.toString() + "\n");
 		//
 		appends(s, PUSH,        a1, NL, PUSH, b2, PUSH, NL,      c3, NL, POP, POP, POP);
 		String concat2 = concat(a1, nl, ht2,  b2,       nl, ht3, c3);
+		s.close();
 		assertEquals(concat1 + concat2 + nl, s.toString());
 	}
 
@@ -81,6 +82,7 @@ public class SerializationBuilderTests extends XtextTestCase
 		//
 		appends(s, NL);
 		assertEquals(nl + nl + nl, s.toString());
+		s.close();
 	}
 
 	public void testSerializationBuilder_Wrap() {
@@ -105,6 +107,7 @@ public class SerializationBuilderTests extends XtextTestCase
 		appends(s, PUSH,           a, WBA, "(", WA, b, ",", SS, WH, / * "b,", WH,"c,", WH,"d,", "e,", WH,"f,","g,", WH, * / c, ")", WE, NL);
 		String concat = concat(ht, a,      "(",     b, ",", nl, ht, "        ",                                           c, ")");
 		assertEquals(concat + nl, s.toString()); */
+		s.close();
 	}
 
 	private @NonNull String spaces(int count) {
