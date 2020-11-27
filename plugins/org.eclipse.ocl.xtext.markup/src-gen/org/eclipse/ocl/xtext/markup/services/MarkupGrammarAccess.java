@@ -74,16 +74,7 @@ public class MarkupGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//	| 'oclText';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'b'
-		//| 'e'
-		//| 'bullet'
-		//| 'figure'
-		//| 'figureRef'
-		//| 'footnote'
-		//| 'heading'
-		//| 'oclCode'
-		//| 'oclEval'
-		//| 'oclText'
+		//'b' | 'e' | 'bullet' | 'figure' | 'figureRef' | 'footnote' | 'heading' | 'oclCode' | 'oclEval' | 'oclText'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'b'
@@ -148,18 +139,8 @@ public class MarkupGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//FontElement
-		//| NewLineElement
-		//| BulletElement
-		//| FigureElement
-		//| FigureRefElement
-		//| FootnoteElement
-		//| HeadingElement
-		//| NullElement
-		//| OCLCodeElement
-		//| OCLEvalElement
-		//| OCLTextElement
-		//| TextElement
+		//FontElement | NewLineElement | BulletElement | FigureElement | FigureRefElement | FootnoteElement | HeadingElement |
+		//NullElement | OCLCodeElement | OCLEvalElement | OCLTextElement | TextElement
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//FontElement
