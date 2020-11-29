@@ -129,6 +129,11 @@
               </requirement>
               <requirement>
                 <type>eclipse-plugin</type>
+                <id>javax.annotation</id>
+                <versionRange>[1.0.0,2.0.0)</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-plugin</type>
                 <id>org.eclipse.xtext.logging</id>
                 <versionRange>[1.0.0,2.0.0)</versionRange>
               </requirement>
@@ -574,6 +579,26 @@
       <properties>
         <buildType></buildType>
         <targetRelease>2020-03</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2020-06</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>2020-06</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2020-09</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>2020-09</targetRelease>
       </properties>
     </profile>
   </profiles>
