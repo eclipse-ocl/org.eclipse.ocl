@@ -347,12 +347,12 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 		private final RuleCall cEStructuralFeatureEStructuralFeatureIDTerminalRuleCall_2_0_1 = (RuleCall)cEStructuralFeatureEStructuralFeatureCrossReference_2_0.eContents().get(1);
 
 		//AssignmentLocator:
-		//	'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')? eStructuralFeature=
-		//	[ecore::EStructuralFeature];
+		//	'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')?
+		//	eStructuralFeature=[ecore::EStructuralFeature];
 		@Override public ParserRule getRule() { return rule; }
 
-		//'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')? eStructuralFeature=
-		//[ecore::EStructuralFeature]
+		//'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')?
+		//eStructuralFeature=[ecore::EStructuralFeature]
 		public Group getGroup() { return cGroup; }
 
 		//'assignment'
@@ -1393,8 +1393,8 @@ public class IdiomsGrammarAccess extends AbstractElementFinder.AbstractGrammarEl
 	}
 
 	//AssignmentLocator:
-	//	'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')? eStructuralFeature=
-	//	[ecore::EStructuralFeature];
+	//	'assignment' ((ePackage=[ecore::EPackage] '::')? eClass=[ecore::EClass] '::')?
+	//	eStructuralFeature=[ecore::EStructuralFeature];
 	public AssignmentLocatorElements getAssignmentLocatorAccess() {
 		return pAssignmentLocator;
 	}
