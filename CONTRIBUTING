@@ -28,6 +28,10 @@ This project uses Bugzilla to track ongoing development and issues.
 Be sure to search for existing bugs before you create another one. Remember that
 contributions are always welcome!
 
+A project distribution can be built by one of the launch configurations such as
+
+/org.eclipse.ocl.releng.tycho/.launches/Build OCL Distribution - Nightly.launch
+
 ## Eclipse Contributor Agreement
 
 Before your contribution can be accepted by the project team contributors must
