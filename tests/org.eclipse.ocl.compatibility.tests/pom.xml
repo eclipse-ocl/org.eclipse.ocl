@@ -37,6 +37,7 @@
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
     <buildId>${buildType}${buildTimestamp}</buildId>
+    <executionEnvironment>unspecified</executionEnvironment>
     <targetRelease>unspecified</targetRelease>
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
@@ -49,24 +50,27 @@
     <os-jvm-flags/>
 
     <!-- plugin versions -->
-    <!-- cd to the releng/org.eclipse.ocl.releng.tycho folder then use 'mvn versions:display-plugin-updates' to check for the latest -->
-    <exec-maven-version>1.3.1</exec-maven-version>
+    <!-- copied from /org.eclipse.ocl.releng.tycho/pom.xml -->
+    <eclipse-jarsigner-version>1.1.2</eclipse-jarsigner-version>
+    <exec-maven-version>3.0.0</exec-maven-version>
     <findbugs-maven-version>3.0.0</findbugs-maven-version>
-    <jacoco-maven-version>0.7.1.201405082137</jacoco-maven-version>
-    <maven-antrun-version>1.7</maven-antrun-version>
-    <maven-assembly-version>2.4</maven-assembly-version>
-    <maven-checkstyle-version>2.12.1</maven-checkstyle-version>
-    <maven-clean-version>2.5</maven-clean-version>
-    <maven-compiler-version>3.1</maven-compiler-version>
-    <maven-deploy-version>2.8.1</maven-deploy-version>
-    <maven-install-version>2.5.1</maven-install-version>
-    <maven-jar-version>2.5</maven-jar-version>
-    <maven-jxr-version>2.3</maven-jxr-version>
-    <maven-pmd-version>3.1</maven-pmd-version>
-    <maven-resources-version>2.6</maven-resources-version>
-    <maven-site-version>3.4</maven-site-version>
-    <maven-surefire-version>2.17</maven-surefire-version>
-    <tycho-version>1.3.0</tycho-version>
+    <jacoco-maven-version>0.8.17</jacoco-maven-version>
+    <maven-antrun-version>3.0.0</maven-antrun-version>
+    <maven-assembly-version>3.3.0</maven-assembly-version>
+    <maven-checkstyle-version>3.1.1</maven-checkstyle-version>
+    <maven-clean-version>3.1.0</maven-clean-version>
+    <maven-compiler-version>3.8.1</maven-compiler-version>
+    <maven-deploy-version>3.0.0-M1</maven-deploy-version>
+    <maven-enforcer-version>3.0.0-M3</maven-enforcer-version>
+    <maven-install-version>3.0.0-M1</maven-install-version>
+    <maven-jar-version>3.2.0</maven-jar-version>
+    <maven-javadoc-version>3.2.0</maven-javadoc-version>
+    <maven-jxr-version>3.0.0</maven-jxr-version>
+    <maven-pmd-version>3.13.0</maven-pmd-version>
+    <maven-resources-version>3.2.0</maven-resources-version>
+    <maven-site-version>3.9.1</maven-site-version>
+    <maven-surefire-version>3.0.0-M5</maven-surefire-version>
+    <tycho-version>1.6.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
@@ -90,6 +94,29 @@
 
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-version}</version>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>3.6.3</version>
+                </requireMavenVersion>
+                <!--requireJavaVersion>
+                  <version>1.5</version>
+                </requireJavaVersion-->
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
         <!--version>${tycho-version}</version-->
@@ -101,7 +128,7 @@
         <configuration>
           <includePackedArtifacts>true</includePackedArtifacts>
           <resolver>p2</resolver>
-          <executionEnvironment>JavaSE-1.8</executionEnvironment>
+          <executionEnvironment>${executionEnvironment}</executionEnvironment>
           <target>
             <artifact>
               <groupId>org.eclipse.ocl</groupId>
@@ -468,6 +495,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.6</executionEnvironment>
         <targetRelease>luna</targetRelease>
       </properties>
     </profile>
@@ -478,6 +506,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.7</executionEnvironment>
         <targetRelease>mars</targetRelease>
       </properties>
     </profile>
@@ -488,6 +517,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>neon</targetRelease>
       </properties>
     </profile>
@@ -498,6 +528,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>oxygen</targetRelease>
       </properties>
     </profile>
@@ -508,6 +539,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>photon</targetRelease>
       </properties>
     </profile>
@@ -518,6 +550,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2018-09</targetRelease>
       </properties>
     </profile>
@@ -528,6 +561,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2018-12</targetRelease>
       </properties>
     </profile>
@@ -538,6 +572,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2019-03</targetRelease>
       </properties>
     </profile>
@@ -548,6 +583,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2019-06</targetRelease>
       </properties>
     </profile>
@@ -558,6 +594,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2019-09</targetRelease>
       </properties>
     </profile>
@@ -568,6 +605,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2019-12</targetRelease>
       </properties>
     </profile>
@@ -578,6 +616,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2020-03</targetRelease>
       </properties>
     </profile>
@@ -588,6 +627,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-1.8</executionEnvironment>
         <targetRelease>2020-06</targetRelease>
       </properties>
     </profile>
@@ -598,6 +638,7 @@
       </activation>
       <properties>
         <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
         <targetRelease>2020-09</targetRelease>
       </properties>
     </profile>
