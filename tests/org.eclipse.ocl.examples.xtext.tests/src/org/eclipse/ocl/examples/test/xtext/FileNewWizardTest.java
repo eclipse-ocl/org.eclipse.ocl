@@ -367,8 +367,8 @@ public class FileNewWizardTest extends TestCase
 		s.append("	}\n");
 		s.append("}\n");
 		String expectedContents = s.toString();
-	//	assertEquals(expectedContents.trim().replaceAll("\\s+", " "), actualContents.trim().replaceAll("\\s+", " "));
-		assertEquals(expectedContents, actualContents);
+		assertEquals(expectedContents.trim().replaceAll("\\s+", " "), actualContents.trim().replaceAll("\\s+", " "));
+	//	assertEquals(expectedContents, actualContents);
 		activeEditor.close(false);
 	}
 
